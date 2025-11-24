@@ -111,7 +111,7 @@ class WebsiteBuilder:
             
         # 生成小说相关页面
         for novel_id, novel_data in novels_to_build.items():
-            self.build_novel_pages(novel_data)
+            self.build_novel_pages(novel_data, novels)
             
         # 生成首页（总是重新生成）
         print("\n=== 第4步: 生成首页 ===")
@@ -128,7 +128,7 @@ class WebsiteBuilder:
         if novels_to_build:
             print(f"本次构建: {len(novels_to_build)} 本小说")
             
-    def build_novel_pages(self, novel_data: Dict):
+    def build_novel_pages(self, novel_data: Dict, all_novels: Dict = None):
         """构建单本小说的所有页面"""
         novel_slug = novel_data['slug']
         novel_dir = self.output_path / 'novels' / novel_slug
@@ -140,7 +140,7 @@ class WebsiteBuilder:
         self.build_novel_detail_page(novel_data, novel_dir)
         
         # 2. 生成所有章节页面
-        self.build_chapter_pages(novel_data, novel_dir)
+        self.build_chapter_pages(novel_data, novel_dir, all_novels)
         
     def build_novel_detail_page(self, novel_data: Dict, novel_dir: Path):
         """生成小说详情页"""
@@ -186,13 +186,16 @@ class WebsiteBuilder:
         with open(output_file, 'w', encoding='utf-8') as f:
             f.write(html_content)
             
-    def build_chapter_pages(self, novel_data: Dict, novel_dir: Path):
+    def build_chapter_pages(self, novel_data: Dict, novel_dir: Path, all_novels: Dict = None):
         """生成章节页面（包括带广告版本和clean版本）"""
         # 加载两个模板
         template_with_ads = self.env.get_template('chapter.html')
         template_clean = self.env.get_template('chapter-clean.html')
         
         chapters = novel_data['chapters']
+        
+        # 使用传入的 all_novels 或者空字典
+        novels = all_novels if all_novels is not None else {}
         
         for i, chapter in enumerate(chapters):
             # 准备导航数据
@@ -239,6 +242,16 @@ class WebsiteBuilder:
             # 从10个广告单元中随机选择5个（每个页面都不同）
             selected_ad_units = random.sample(all_ad_units, 5)
             
+            # 准备所有小说数据用于推荐系统
+            all_novels_for_recommendation = []
+            for slug, other_novel in novels.items():
+                all_novels_for_recommendation.append({
+                    'title': other_novel['title'],
+                    'slug': slug,
+                    'url': f"/novels/{slug}/",
+                    'chapters': other_novel['total_chapters']
+                })
+            
             # 准备渲染数据（两个版本使用相同的数据）
             render_data = {
                 'chapter': {
@@ -253,12 +266,14 @@ class WebsiteBuilder:
                     'author': novel_data['author'],
                     'cover_url': self.get_cover_url(novel_data),
                     'url': f"/novels/{novel_data['slug']}/",
+                    'slug': novel_data['slug'],
                     'chapters': all_chapters,
                     'tags': novel_data['tags']
                 },
                 'selected_ad_units': selected_ad_units,  # 传递选中的5个广告单元完整信息
                 'prev_chapter': prev_chapter,
                 'next_chapter': next_chapter,
+                'all_novels': all_novels_for_recommendation,  # 所有小说数据用于推荐
                 'site_url': self.site_url
             }
                 
