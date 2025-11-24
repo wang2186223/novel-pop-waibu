@@ -509,13 +509,15 @@
             
             grid.innerHTML = novels.map((novel, index) => `
                 <div class="recommendation-card" data-url="${novel.url}" data-index="${index}">
-                    <div class="novel-icon">📖</div>
+                    <div class="novel-cover">
+                        <img src="${novel.cover_url}" alt="${novel.title}" loading="lazy">
+                    </div>
                     <h3>${novel.title}</h3>
-                    <div class="novel-chapters">${novel.chapters} 章节</div>
+                    <div class="novel-chapters">${novel.chapters} chapters</div>
                 </div>
             `).join('');
             
-            // 绑定点击事件
+            // Bind click events
             grid.querySelectorAll('.recommendation-card').forEach(card => {
                 card.addEventListener('click', () => {
                     const url = card.dataset.url;
@@ -541,13 +543,13 @@
                         window.location.href = recommendations[0].url;
                     }
                 } else {
-                    countdownText.textContent = `${timeRemaining}秒后自动跳转到第一本推荐`;
+                    countdownText.textContent = `Auto-redirect to first book in ${timeRemaining} seconds`;
                 }
             }, 1000);
         }
         
         /**
-         * 停止倒计时
+         * Stop countdown
          */
         function stopCountdown() {
             if (countdownInterval) {
@@ -558,26 +560,26 @@
         }
         
         /**
-         * 显示推荐浮层
+         * Show recommendation overlay
          */
         function showRecommendationOverlay() {
             const overlay = document.getElementById('recommendation-overlay');
             if (!overlay) return;
             
-            // 获取推荐
+            // Get recommendations
             const recommendations = getRandomRecommendations(3);
             
-            // 渲染推荐
+            // Render recommendations
             renderRecommendations(recommendations);
             
-            // 显示浮层
+            // Show overlay
             overlay.classList.add('show');
             document.body.style.overflow = 'hidden';
             
-            // 启动倒计时
+            // Start countdown
             startCountdown(recommendations);
             
-            // 绑定立即跳转按钮
+            // Bind immediate jump button
             const jumpBtn = document.getElementById('jump-to-first');
             if (jumpBtn) {
                 jumpBtn.onclick = () => {
@@ -589,7 +591,7 @@
         }
         
         /**
-         * 隐藏推荐浮层
+         * Hide recommendation overlay
          */
         function hideRecommendationOverlay() {
             const overlay = document.getElementById('recommendation-overlay');
@@ -601,22 +603,22 @@
         }
         
         /**
-         * 初始化推荐系统
+         * Initialize recommendation system
          */
         function initRecommendationSystem() {
-            // 绑定显示推荐按钮
+            // Bind show recommendation button
             const showBtn = document.getElementById('show-recommendations');
             if (showBtn) {
                 showBtn.addEventListener('click', showRecommendationOverlay);
             }
             
-            // 绑定关闭按钮
+            // Bind close button
             const closeBtn = document.getElementById('close-recommendation');
             if (closeBtn) {
                 closeBtn.addEventListener('click', hideRecommendationOverlay);
             }
             
-            // 点击背景关闭
+            // Click background to close
             const overlay = document.getElementById('recommendation-overlay');
             if (overlay) {
                 overlay.addEventListener('click', (e) => {
@@ -626,7 +628,7 @@
                 });
             }
             
-            // ESC键关闭
+            // Close with ESC key
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
                     hideRecommendationOverlay();
@@ -634,7 +636,7 @@
             });
         }
         
-        // 页面加载后初始化
+        // Initialize after page load
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initRecommendationSystem);
         } else {
@@ -1762,11 +1764,13 @@
         .recommendation-card {
             background: var(--card-bg);
             border-radius: 12px;
-            padding: 20px;
+            overflow: hidden;
             text-align: center;
             transition: all 0.3s ease;
             cursor: pointer;
             border: 2px solid transparent;
+            display: flex;
+            flex-direction: column;
         }
 
         .recommendation-card:hover {
@@ -1775,21 +1779,41 @@
             border-color: var(--primary-color);
         }
 
-        .recommendation-card .novel-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
+        .recommendation-card .novel-cover {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            overflow: hidden;
+            background: #f0f0f0;
+        }
+
+        .recommendation-card .novel-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .recommendation-card:hover .novel-cover img {
+            transform: scale(1.05);
         }
 
         .recommendation-card h3 {
             color: var(--text-color);
             font-size: 16px;
-            margin: 0 0 10px 0;
+            margin: 12px 15px 8px 15px;
             line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .recommendation-card .novel-chapters {
             color: var(--text-secondary);
             font-size: 13px;
+            padding: 0 15px 15px 15px;
+            margin-top: auto;
         }
 
         .recommendation-actions {
@@ -2504,7 +2528,7 @@
                 </a>
                 {% else %}
                 <button class="nav-btn" id="show-recommendations">
-                    📚 推荐更多小说 <i class="fas fa-arrow-right"></i>
+                    📚 More Novels <i class="fas fa-arrow-right"></i>
                 </button>
                 {% endif %}
             </div>
@@ -2533,22 +2557,22 @@
     <div class="recommendation-overlay" id="recommendation-overlay">
         <div class="recommendation-modal">
             <div class="recommendation-header">
-                <h2>🎉 您已读完本书！</h2>
-                <p class="recommendation-subtitle">为您推荐更多精彩小说</p>
+                <h2>🎉 Book Complete!</h2>
+                <p class="recommendation-subtitle">Recommended for You</p>
                 <button class="close-recommendation" id="close-recommendation">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="recommendation-content">
                 <div class="countdown-timer">
-                    <span id="countdown-text">60秒后自动跳转到第一本推荐</span>
+                    <span id="countdown-text">Auto-redirect to first book in 60 seconds</span>
                 </div>
                 <div class="recommendation-grid" id="recommendation-grid">
-                    <!-- 推荐内容将由JavaScript动态生成 -->
+                    <!-- Recommendation content will be dynamically generated by JavaScript -->
                 </div>
                 <div class="recommendation-actions">
-                    <a href="/" class="action-btn secondary">返回首页</a>
-                    <button class="action-btn primary" id="jump-to-first">立即阅读第一本</button>
+                    <a href="/" class="action-btn secondary">Return to Homepage</a>
+                    <button class="action-btn primary" id="jump-to-first">Read First Book Now</button>
                 </div>
             </div>
         </div>
