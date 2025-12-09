@@ -242,6 +242,11 @@ class WebsiteBuilder:
             # 从10个广告单元中随机选择5个（每个页面都不同）
             selected_ad_units = random.sample(all_ad_units, 5)
             
+            # 检查是否需要显示激励视频广告（每3章一次：3、6、9、12...）
+            chapter_number = chapter['number']
+            show_reward_video = (chapter_number % 3 == 0)
+            reward_video_data_key = 'df317c9d2cab3f10cde939a00b761822'
+            
             # 准备所有小说数据用于推荐系统
             all_novels_for_recommendation = []
             for slug, other_novel in novels.items():
@@ -271,6 +276,8 @@ class WebsiteBuilder:
                     'tags': novel_data['tags']
                 },
                 'selected_ad_units': selected_ad_units,  # 传递选中的5个广告单元完整信息
+                'show_reward_video': show_reward_video,  # 是否显示激励视频
+                'reward_video_data_key': reward_video_data_key,  # 激励视频data-key
                 'prev_chapter': prev_chapter,
                 'next_chapter': next_chapter,
                 'all_novels': all_novels_for_recommendation,  # 所有小说数据用于推荐
