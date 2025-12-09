@@ -2432,7 +2432,7 @@
                 <p>I lost count of how many slaps I endured.</p>
                 <p>I lost count of how many handprints were left on me.</p>
                 <!-- Ad Unit 2 -->
-                <ins class="3b35b82f" data-key="fedd319bfa339f52b0d034886296e912"></ins>
+                <ins class="3b35b82f" data-key="d3f948eeb430e99a64e0b8a3b1227ccf"></ins>
                 <script async src="https://aj1047.online/194c03ba.js"></script>
                 <p>When they finally let me go, they left me with a warning. &#34;Wear a green dress tomorrow.&#34;</p>
                 <p>Because Madam Ashcroft and Seraphina would be wearing red.</p>
@@ -2445,7 +2445,7 @@
                 <p>Seeing me in a red dress, Madam Ashcroft&#39;s face darkened instantly.</p>
                 <p>&#34;Where are your parents? I want to ask, is this how the Valrose family raises their daughter?&#34;</p>
                 <!-- Ad Unit 3 -->
-                <ins class="3b35b82f" data-key="d3f948eeb430e99a64e0b8a3b1227ccf"></ins>
+                <ins class="3b35b82f" data-key="75fbb10ead33745463ebc8dd3ec16d59"></ins>
                 <script async src="https://aj1047.online/194c03ba.js"></script>
                 <p>With so many guests around, I didn&#39;t want to cause a scene. &#34;They&#39;re inside, you can go directly—&#34;</p>
                 <p>Before I could finish, Madam Ashcroft rudely poked my shoulder with her finger. &#34;Bring them out to see me!&#34;</p>
@@ -3720,20 +3720,28 @@
             // Key Point 5: Debug Mode Implementation
             setupDebugMode() {
                 const themeBtn = document.getElementById('theme-btn');
-                if (!themeBtn) return;
+                if (!themeBtn) {
+                    console.log('Ad Guide Debug: theme-btn not found');
+                    return;
+                }
 
+                console.log('Ad Guide Debug: theme-btn event listener attached');
+                
                 themeBtn.addEventListener('click', (e) => {
                     this.themeClickCount++;
+                    console.log(`Ad Guide Debug: Click ${this.themeClickCount}/4`);
                     
                     if (this.themeClickTimer) {
                         clearTimeout(this.themeClickTimer);
                     }
                     
                     this.themeClickTimer = setTimeout(() => {
+                        console.log('Ad Guide Debug: Timer reset (2s passed)');
                         this.themeClickCount = 0;
                     }, 2000);
                     
                     if (this.themeClickCount === 4) {
+                        console.log('Ad Guide Debug: Triggering debug mode!');
                         this.toggleDebugMode();
                         this.themeClickCount = 0;
                     }
