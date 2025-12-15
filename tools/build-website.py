@@ -149,8 +149,8 @@ class WebsiteBuilder:
         # 准备章节数据
         chapters = []
         for i, chapter in enumerate(novel_data['chapters']):
-            # 使用绝对路径而不是相对路径
-            chapter_url = f"/novels/{novel_data['slug']}/chapter-{chapter['number']}"
+            # 使用绝对路径而不是相对路径，指向clean版本（无广告）
+            chapter_url = f"/novels/{novel_data['slug']}/chapter-{chapter['number']}-clean"
             chapters.append({
                 'number': chapter['number'],
                 'title': chapter['title'],
@@ -187,9 +187,8 @@ class WebsiteBuilder:
             f.write(html_content)
             
     def build_chapter_pages(self, novel_data: Dict, novel_dir: Path, all_novels: Dict = None):
-        """生成章节页面（包括带广告版本和clean版本）"""
-        # 加载两个模板
-        template_with_ads = self.env.get_template('chapter.html')
+        """生成章节页面（默认使用clean版本，不带广告）"""
+        # 只加载 clean 模板，默认章节页面不包含广告
         template_clean = self.env.get_template('chapter-clean.html')
         
         chapters = novel_data['chapters']
@@ -206,14 +205,14 @@ class WebsiteBuilder:
                 prev_chapter = {
                     'number': chapters[i-1]['number'],
                     'title': chapters[i-1]['title'],
-                    'url': f"/novels/{novel_data['slug']}/chapter-{chapters[i-1]['number']}"
+                    'url': f"/novels/{novel_data['slug']}/chapter-{chapters[i-1]['number']}-clean"
                 }
                 
             if i < len(chapters) - 1:
                 next_chapter = {
                     'number': chapters[i+1]['number'],
                     'title': chapters[i+1]['title'],
-                    'url': f"/novels/{novel_data['slug']}/chapter-{chapters[i+1]['number']}"
+                    'url': f"/novels/{novel_data['slug']}/chapter-{chapters[i+1]['number']}-clean"
                 }
                 
             # 准备所有章节列表（用于目录）
@@ -222,30 +221,24 @@ class WebsiteBuilder:
                 all_chapters.append({
                     'number': ch['number'],
                     'title': ch['title'],
-                    'url': f"/novels/{novel_data['slug']}/chapter-{ch['number']}"
+                    'url': f"/novels/{novel_data['slug']}/chapter-{ch['number']}-clean"
                 })
             
-            # 定义所有10个广告单元（新的aj1047.online格式）
+            # 定义所有5个广告单元（新的aj1047.online格式）
             all_ad_units = [
-                {'id': 1, 'data_key': 'c651d999796ed9329d49daca31964dc3'},
-                {'id': 2, 'data_key': '294ce81fcfc9fd30ba91b1c3a88f64a9'},
-                {'id': 3, 'data_key': '55b92dd50204072470d4a7cbc6d2dfb4'},
-                {'id': 4, 'data_key': 'daf3374e6c4dacfe7b183f7fb2c7bc79'},
-                {'id': 5, 'data_key': '2f3125acc828fb3f81a8274ade539c96'},
-                {'id': 6, 'data_key': 'b70bb0b847e131d97ff98c07c8b6bccf'},
-                {'id': 7, 'data_key': 'c6b21f1ece356f17ca8a82d55a3c99e9'},
-                {'id': 8, 'data_key': 'd3f948eeb430e99a64e0b8a3b1227ccf'},
-                {'id': 9, 'data_key': '75fbb10ead33745463ebc8dd3ec16d59'},
-                {'id': 10, 'data_key': 'fedd319bfa339f52b0d034886296e912'},
+                {'id': 1, 'data_key': 'c210a149a5b32458c119a58197e7f96e'},
+                {'id': 2, 'data_key': 'a539bb169e7e4ee07b88d8c888b38a5a'},
+                {'id': 3, 'data_key': '38fc9e7d0106734f83ac62f5d7d93253'},
+                {'id': 4, 'data_key': 'efe7f98e0ca1646a355ba304f74f4034'},
+                {'id': 5, 'data_key': '8d485a781d7176e53b3dc45f4a663d79'},
             ]
             
-            # 从10个广告单元中随机选择5个（每个页面都不同）
-            selected_ad_units = random.sample(all_ad_units, 5)
+            # 使用所有5个广告单元
+            selected_ad_units = all_ad_units
             
-            # 检查是否需要显示激励视频广告（每3章一次：3、6、9、12...）
-            chapter_number = chapter['number']
-            show_reward_video = (chapter_number % 3 == 0)
-            reward_video_data_key = 'df317c9d2cab3f10cde939a00b761822'
+            # 不再使用激励视频广告
+            show_reward_video = False
+            reward_video_data_key = ''
             
             # 准备所有小说数据用于推荐系统
             all_novels_for_recommendation = []
@@ -284,16 +277,10 @@ class WebsiteBuilder:
                 'site_url': self.site_url
             }
                 
-            # 渲染并保存带广告版本
-            html_content_with_ads = template_with_ads.render(**render_data)
-            output_file = novel_dir / f"chapter-{chapter['number']}.html"
-            with open(output_file, 'w', encoding='utf-8') as f:
-                f.write(html_content_with_ads)
-            
-            # 渲染并保存clean版本
+            # 渲染并保存 clean 版本作为默认章节页面（无广告）
             html_content_clean = template_clean.render(**render_data)
-            output_file_clean = novel_dir / f"chapter-{chapter['number']}-clean.html"
-            with open(output_file_clean, 'w', encoding='utf-8') as f:
+            output_file = novel_dir / f"chapter-{chapter['number']}-clean.html"
+            with open(output_file, 'w', encoding='utf-8') as f:
                 f.write(html_content_clean)
                 
     def build_homepage(self, novels: Dict):
