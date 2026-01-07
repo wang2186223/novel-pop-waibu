@@ -149,8 +149,8 @@ class WebsiteBuilder:
         # 准备章节数据
         chapters = []
         for i, chapter in enumerate(novel_data['chapters']):
-            # 使用绝对路径而不是相对路径，指向clean版本（无广告）
-            chapter_url = f"/novels/{novel_data['slug']}/chapter-{chapter['number']}-clean"
+            # 使用绝对路径而不是相对路径
+            chapter_url = f"/novels/{novel_data['slug']}/chapter-{chapter['number']}"
             chapters.append({
                 'number': chapter['number'],
                 'title': chapter['title'],
@@ -187,9 +187,9 @@ class WebsiteBuilder:
             f.write(html_content)
             
     def build_chapter_pages(self, novel_data: Dict, novel_dir: Path, all_novels: Dict = None):
-        """生成章节页面（默认使用clean版本，不带广告）"""
-        # 只加载 clean 模板，默认章节页面不包含广告
-        template_clean = self.env.get_template('chapter-clean.html')
+        """生成章节页面"""
+        # 加载章节模板
+        template = self.env.get_template('chapter.html')
         
         chapters = novel_data['chapters']
         
@@ -205,14 +205,14 @@ class WebsiteBuilder:
                 prev_chapter = {
                     'number': chapters[i-1]['number'],
                     'title': chapters[i-1]['title'],
-                    'url': f"/novels/{novel_data['slug']}/chapter-{chapters[i-1]['number']}-clean"
+                    'url': f"/novels/{novel_data['slug']}/chapter-{chapters[i-1]['number']}"
                 }
                 
             if i < len(chapters) - 1:
                 next_chapter = {
                     'number': chapters[i+1]['number'],
                     'title': chapters[i+1]['title'],
-                    'url': f"/novels/{novel_data['slug']}/chapter-{chapters[i+1]['number']}-clean"
+                    'url': f"/novels/{novel_data['slug']}/chapter-{chapters[i+1]['number']}"
                 }
                 
             # 准备所有章节列表（用于目录）
@@ -221,7 +221,7 @@ class WebsiteBuilder:
                 all_chapters.append({
                     'number': ch['number'],
                     'title': ch['title'],
-                    'url': f"/novels/{novel_data['slug']}/chapter-{ch['number']}-clean"
+                    'url': f"/novels/{novel_data['slug']}/chapter-{ch['number']}"
                 })
             
             # 定义所有5个广告单元（新的aj1047.online格式）
@@ -277,11 +277,11 @@ class WebsiteBuilder:
                 'site_url': self.site_url
             }
                 
-            # 渲染并保存 clean 版本作为默认章节页面（无广告）
-            html_content_clean = template_clean.render(**render_data)
-            output_file = novel_dir / f"chapter-{chapter['number']}-clean.html"
+            # 渲染并保存章节页面
+            html_content = template.render(**render_data)
+            output_file = novel_dir / f"chapter-{chapter['number']}.html"
             with open(output_file, 'w', encoding='utf-8') as f:
-                f.write(html_content_clean)
+                f.write(html_content)
                 
     def build_homepage(self, novels: Dict):
         """生成首页"""
