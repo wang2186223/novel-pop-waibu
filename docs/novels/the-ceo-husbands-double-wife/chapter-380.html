@@ -974,7 +974,8 @@
       gtag('config', 'G-1TFKEB1Q55');
     </script>
     
-    <!-- aj1047.online Ad Script -->
+    <!-- 新广告系统基础脚本 -->
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
     <script async src="https://aj1047.online/194c03ba.js"></script>
     
     <!-- Facebook Pixel Code -->
@@ -1690,11 +1691,11 @@
         // 检查广告是否存在
         function checkAds() {
             const checkInterval = setInterval(() => {
-                // 支持aj1047广告
-                const aj1047Ads = document.querySelectorAll('ins.3b35b82f');
-                if (aj1047Ads.length > 0) {
+                // 支持Google Publisher Tag广告
+                const gptAds = document.querySelectorAll('[id^="div-gpt-ad-"]');
+                if (gptAds.length > 0) {
                     hasAds = true;
-                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到aj1047广告');
+                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到GPT广告');
                     clearInterval(checkInterval);
                 }
             }, 500);
@@ -1726,9 +1727,9 @@
             const totalClicks = incrementClicks();
             const stayDuration = Math.round((Date.now() - pageLoadTime) / 1000);
             
-            // 优先获取aj1047广告信息
-            const firstAd = document.querySelector('ins.3b35b82f');
-            const adSlot = firstAd ? firstAd.getAttribute('data-key') : 'unknown';
+            // 优先获取GPT广告信息
+            const firstAd = document.querySelector('[id^="div-gpt-ad-"]');
+            const adSlot = firstAd ? firstAd.id : 'unknown';
             const adPosition = firstAd ? Math.round(firstAd.getBoundingClientRect().top + window.scrollY) : 0;
             
             const data = {
@@ -2380,34 +2381,24 @@
                 <p>He shot his father a miserable look. Homework followed him everywhere like an unshakable shadow!</p>
                 <p>Evelyn&#39;s thoughts drifted to the baby photo she&#39;d seen earlier. How had that tiny infant grown into this bright-eyed boy?</p>
                 <p>An unexpected warmth filled her chest. She ruffled his soft curls affectionately. &#34;I&#39;ll play with you tomorrow, okay?&#34;</p>
-                <!-- Ad Unit 1 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
-                </div>
+                <!-- 广告位 1 -->
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Oliver blinked those enormous blue eyes, his lower lip trembling.</p>
                 <p>Just when Evelyn thought he&#39;d accept this compromise, the little boy suddenly clutched her skirt in a death grip.</p>
-                <!-- Ad Unit 2 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
-                </div>
+                <!-- 广告位 2 -->
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;No! No homework!&#34; His voice took on a mischievous edge. &#34;I want to sleep with Muse and go home with you! Daddy can stay here alone!&#34;</p>
                 <p>Preston&#39;s eyes narrowed dangerously. He knew his son&#39;s manipulative tactics all too well. With a sharp gesture, a towering bodyguard appeared.</p>
-                <!-- Ad Unit 3 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
-                </div>
+                <!-- 广告位 3 -->
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>The man scooped up the squirming child effortlessly, ignoring Oliver&#39;s dramatic protests.</p>
                 <p>&#34;Noooooo! I won&#39;t go! Muse is mine forever!&#34; Oliver wailed as he was carried away, kicking his little legs furiously.</p>
-                <!-- Ad Unit 4 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
-                </div>
+                <!-- 广告位 4 -->
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Evelyn paused, meeting Preston&#39;s gaze. His dark eyes brimmed with unspoken emotions - joy, longing, regret all swirling together.</p>
                 <p>After a moment&#39;s hesitation, Evelyn slid into the waiting car. The drive stretched interminably, the silence between her and Nathan Blackwood growing heavier with each passing mile.</p>
-                <!-- Ad Unit 5 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
-                </div>
+                <!-- 广告位 5 -->
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Finally, Nathan broke the tension. &#34;You only remembered me because of that incident, didn&#39;t you?&#34;</p>
                 <p>Evelyn pressed her lips together before answering. &#34;Yes.&#34;</p>
                 <p>&#34;Why didn&#39;t you tell me?&#34; His voice held the same wounded confusion as when he&#39;d learned about the underground fight club.</p>
@@ -2415,10 +2406,8 @@
                 <p>&#34;Even?&#34; Nathan&#39;s hands trembled slightly. The raw pain in his gaze made Evelyn instinctively tense.</p>
                 <p>Her voice turned frosty. &#34;There are no second chances in life.&#34;</p>
                 <p>If she could turn back time, she&#39;d never have walked down that aisle. Their marriage had been the most painful lesson of her life.</p>
-                <!-- Ad Unit 6 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
-                </div>
+                <!-- 广告位 6 -->
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">
@@ -6921,8 +6910,8 @@
 
             startAdMonitoring() {
                 const checkForAds = () => {
-                    // Monitor all aj1047 ad slots - support multiple banners
-                    const adElements = document.querySelectorAll('ins.3b35b82f');
+                    // Monitor all GPT ad slots - support multiple banners
+                    const adElements = document.querySelectorAll('[id^="div-gpt-ad-"]');
                     adElements.forEach(ad => {
                         if (!ad.dataset.guideMonitored) {
                             ad.dataset.guideMonitored = 'true';
@@ -8197,11 +8186,11 @@
         /* Purpose: Add a protective overlay on top of ad containers */
         /* This is a standalone feature and does not modify any advertising code */
         
-        ins.3b35b82f {
+        [id^="div-gpt-ad-"] {
             position: relative !important;
         }
 
-        ins.3b35b82f::before {
+        [id^="div-gpt-ad-"]::before {
             content: '';
             position: absolute;
             top: 0;

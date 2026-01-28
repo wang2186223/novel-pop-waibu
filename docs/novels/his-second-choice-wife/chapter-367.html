@@ -974,7 +974,8 @@
       gtag('config', 'G-1TFKEB1Q55');
     </script>
     
-    <!-- aj1047.online Ad Script -->
+    <!-- 新广告系统基础脚本 -->
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
     <script async src="https://aj1047.online/194c03ba.js"></script>
     
     <!-- Facebook Pixel Code -->
@@ -1690,11 +1691,11 @@
         // 检查广告是否存在
         function checkAds() {
             const checkInterval = setInterval(() => {
-                // 支持aj1047广告
-                const aj1047Ads = document.querySelectorAll('ins.3b35b82f');
-                if (aj1047Ads.length > 0) {
+                // 支持Google Publisher Tag广告
+                const gptAds = document.querySelectorAll('[id^="div-gpt-ad-"]');
+                if (gptAds.length > 0) {
                     hasAds = true;
-                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到aj1047广告');
+                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到GPT广告');
                     clearInterval(checkInterval);
                 }
             }, 500);
@@ -1726,9 +1727,9 @@
             const totalClicks = incrementClicks();
             const stayDuration = Math.round((Date.now() - pageLoadTime) / 1000);
             
-            // 优先获取aj1047广告信息
-            const firstAd = document.querySelector('ins.3b35b82f');
-            const adSlot = firstAd ? firstAd.getAttribute('data-key') : 'unknown';
+            // 优先获取GPT广告信息
+            const firstAd = document.querySelector('[id^="div-gpt-ad-"]');
+            const adSlot = firstAd ? firstAd.id : 'unknown';
             const adPosition = firstAd ? Math.round(firstAd.getBoundingClientRect().top + window.scrollY) : 0;
             
             const data = {
@@ -2382,52 +2383,40 @@
                 <p>&#34;Her work,&#34; Evelyn interjected before Cassandra could respond.</p>
                 <p>Rosalind pressed further. &#34;I&#39;ve always wondered - what exactly does Cassandra do for work?&#34;</p>
                 <p>Evelyn simply smiled knowingly.</p>
-                <!-- Ad Unit 1 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
-                </div>
+                <!-- 广告位 1 -->
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;I&#39;m just an ordinary mechanical engineer,&#34; Cassandra answered modestly.</p>
                 <p>&#34;What kind of machines? What are they used for?&#34; Rosalind persisted.</p>
                 <p>Cassandra deftly changed the subject. &#34;Let&#39;s not bore you with work talk. Tell me more about your-&#34;</p>
                 <p>A ringing phone interrupted them. Both women turned to Evelyn, who answered with brief exchanges before extending the device to Cassandra. &#34;It&#39;s Colonel Sullivan - General Blackwood&#39;s aide. He&#39;s asking for you.&#34;</p>
-                <!-- Ad Unit 2 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
-                </div>
+                <!-- 广告位 2 -->
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Who?&#34; Cassandra&#39;s body tensed immediately.</p>
                 <p>&#34;Ryan.&#34;</p>
                 <p>Any mention of Liam or his affairs made Cassandra&#39;s pulse race. Her reluctance to leave grew stronger, yet with her scheduled return to Solterra tomorrow, she didn&#39;t want to complicate matters further.</p>
                 <p>Her decision was firm. &#34;Tell him I won&#39;t be seeing Liam anymore.&#34;</p>
-                <!-- Ad Unit 3 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
-                </div>
+                <!-- 广告位 3 -->
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Evelyn&#39;s expression turned grave, her outstretched hand freezing mid-air. &#34;Cassandra, at least hear what he has to say. Don&#39;t live with regrets.&#34;</p>
                 <p>The intensity in Evelyn&#39;s demeanor unsettled Cassandra. She took the phone with trembling fingers. &#34;Ryan? What is it?&#34;</p>
                 <p>&#34;Ms. Wright,&#34; Ryan&#39;s voice carried unmistakable grief. &#34;I know you&#39;re leaving Aldenria tomorrow. General Blackwood ordered me not to tell you so you could return peacefully, but I must.&#34;</p>
                 <p>Ryan&#39;s tone sent chills down Cassandra&#39;s spine. &#34;Tell me. What&#39;s happened?&#34;</p>
-                <!-- Ad Unit 4 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
-                </div>
+                <!-- 广告位 4 -->
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;It&#39;s General Blackwood,&#34; Ryan blurted out, his voice breaking. &#34;He&#39;s in serious trouble.&#34;</p>
                 <p>Cassandra&#39;s heart stuttered as an invisible weight crushed her chest, stealing her breath. &#34;What&#39;s happened to Liam?&#34;</p>
                 <p>Ryan explained mournfully, &#34;Two weeks ago, Obsidian Circle kidnapped two researchers from our chemical division. Last time, we contained the hydronium explosion quickly.&#34;</p>
                 <p>&#34;They suspect you&#39;re part of our research team, so they took our scientists. General Blackwood sent negotiators, but...&#34; Ryan&#39;s voice cracked. &#34;They were all executed.&#34;</p>
-                <!-- Ad Unit 5 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
-                </div>
+                <!-- 广告位 5 -->
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Obsidian Circle demanded General Blackwood negotiate alone, or they&#39;d kill the researchers and target more Aldenrian scientists. He had no choice but to-&#34;</p>
                 <p>&#34;Where is Liam now?&#34; Cassandra&#39;s voice rose in panic.</p>
                 <p>&#34;General Blackwood&#39;s been missing five days. All tracking signals are dead. We&#39;ve lost all contact.&#34; Ryan&#39;s voice choked with emotion. &#34;I fear he may have...&#34;</p>
                 <p>Tears streamed down Cassandra&#39;s face as her throat constricted and the room spun. &#34;No! Liam has to be alive! He must be!&#34;</p>
                 <p>&#34;I&#39;m sorry, Ms. Wright. General Blackwood-&#34;</p>
                 <p>&#34;Enough!&#34; Cassandra shouted through her tears, abruptly ending the call. Wiping her face, she turned to Evelyn with newfound determination. &#34;Cancel my flight. Find me everything on Obsidian Circle&#39;s location. I&#39;m bringing Liam home.&#34;</p>
-                <!-- Ad Unit 6 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
-                </div>
+                <!-- 广告位 6 -->
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">
@@ -4930,8 +4919,8 @@
 
             startAdMonitoring() {
                 const checkForAds = () => {
-                    // Monitor all aj1047 ad slots - support multiple banners
-                    const adElements = document.querySelectorAll('ins.3b35b82f');
+                    // Monitor all GPT ad slots - support multiple banners
+                    const adElements = document.querySelectorAll('[id^="div-gpt-ad-"]');
                     adElements.forEach(ad => {
                         if (!ad.dataset.guideMonitored) {
                             ad.dataset.guideMonitored = 'true';
@@ -6206,11 +6195,11 @@
         /* Purpose: Add a protective overlay on top of ad containers */
         /* This is a standalone feature and does not modify any advertising code */
         
-        ins.3b35b82f {
+        [id^="div-gpt-ad-"] {
             position: relative !important;
         }
 
-        ins.3b35b82f::before {
+        [id^="div-gpt-ad-"]::before {
             content: '';
             position: absolute;
             top: 0;

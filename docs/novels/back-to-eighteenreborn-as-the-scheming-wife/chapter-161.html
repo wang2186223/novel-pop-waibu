@@ -974,7 +974,8 @@
       gtag('config', 'G-1TFKEB1Q55');
     </script>
     
-    <!-- aj1047.online Ad Script -->
+    <!-- 新广告系统基础脚本 -->
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
     <script async src="https://aj1047.online/194c03ba.js"></script>
     
     <!-- Facebook Pixel Code -->
@@ -1690,11 +1691,11 @@
         // 检查广告是否存在
         function checkAds() {
             const checkInterval = setInterval(() => {
-                // 支持aj1047广告
-                const aj1047Ads = document.querySelectorAll('ins.3b35b82f');
-                if (aj1047Ads.length > 0) {
+                // 支持Google Publisher Tag广告
+                const gptAds = document.querySelectorAll('[id^="div-gpt-ad-"]');
+                if (gptAds.length > 0) {
                     hasAds = true;
-                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到aj1047广告');
+                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到GPT广告');
                     clearInterval(checkInterval);
                 }
             }, 500);
@@ -1726,9 +1727,9 @@
             const totalClicks = incrementClicks();
             const stayDuration = Math.round((Date.now() - pageLoadTime) / 1000);
             
-            // 优先获取aj1047广告信息
-            const firstAd = document.querySelector('ins.3b35b82f');
-            const adSlot = firstAd ? firstAd.getAttribute('data-key') : 'unknown';
+            // 优先获取GPT广告信息
+            const firstAd = document.querySelector('[id^="div-gpt-ad-"]');
+            const adSlot = firstAd ? firstAd.id : 'unknown';
             const adPosition = firstAd ? Math.round(firstAd.getBoundingClientRect().top + window.scrollY) : 0;
             
             const data = {
@@ -2381,38 +2382,28 @@
                 <p>The girl&#39;s eyes widened in disbelief. She had assumed Luna was Ethan&#39;s companion, but instead, she was just a cold bystander.</p>
                 <p>&#34;I&#39;m not leaving!&#34; She stubbornly planted herself beside Ethan, though her voice trembled.</p>
                 <p>Luna raised an eyebrow. &#34;Can you fight?&#34;</p>
-                <!-- Ad Unit 1 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
-                </div>
+                <!-- 广告位 1 -->
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;I... I can&#39;t.&#34; The girl bit her lip. &#34;But I won&#39;t let good people suffer for helping me!&#34;</p>
                 <p>The scar-faced man leered and reached out to touch her face. &#34;Feisty little thing—&#34;</p>
                 <p>Before he could finish, Ethan twisted his wrist with a swift motion. A sharp crack echoed as the man screamed and collapsed. A side kick sent another thug sprawling.</p>
-                <!-- Ad Unit 2 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
-                </div>
+                <!-- 广告位 2 -->
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Get back!&#34; Ethan gently pushed the girl away.</p>
                 <p>The remaining two thugs lunged with their knives. The girl tried to rush forward to help, but Luna yanked her back.</p>
                 <p>&#34;Are you insane?&#34;</p>
-                <!-- Ad Unit 3 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
-                </div>
+                <!-- 广告位 3 -->
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;I can&#39;t just watch him—&#34;</p>
                 <p>&#34;Save it!&#34; Luna rolled her eyes. &#34;My brother&#39;s a special forces soldier.&#34;</p>
                 <p>The girl froze. By then, Ethan had already dispatched the last two thugs with lightning-fast precision.</p>
-                <!-- Ad Unit 4 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
-                </div>
+                <!-- 广告位 4 -->
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Cheers erupted through the bus. Several brave young men jumped out to assist.</p>
                 <p>Suddenly, one of the thugs bolted blindly into the road.</p>
                 <p>&#34;Look out!&#34;</p>
-                <!-- Ad Unit 5 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
-                </div>
+                <!-- 广告位 5 -->
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>A military jeep swerved sharply but collided with a bus behind it. The screech of twisting metal filled the air as three vehicles crumpled into a tangled wreck.</p>
                 <p>Thick smoke billowed upward.</p>
                 <p>&#34;Rescue first!&#34; Ethan sprinted toward the wreckage like an arrow.</p>
@@ -2420,10 +2411,8 @@
                 <p>The scene was horrific. The jeep had been crushed, its windshield shattered like a spiderweb. The driver, his face covered in blood, weakly pointed to the back seat. &#34;Save... the officer first...&#34;</p>
                 <p>In the rear seat, a military officer had been impaled through the chest by a steel pipe, blood gushing from the wound. Another man lay unconscious, his arm twisted at an unnatural angle.</p>
                 <p>Luna sucked in a sharp breath. With injuries like these, every second counted...</p>
-                <!-- Ad Unit 6 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
-                </div>
+                <!-- 广告位 6 -->
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">
@@ -4930,8 +4919,8 @@
 
             startAdMonitoring() {
                 const checkForAds = () => {
-                    // Monitor all aj1047 ad slots - support multiple banners
-                    const adElements = document.querySelectorAll('ins.3b35b82f');
+                    // Monitor all GPT ad slots - support multiple banners
+                    const adElements = document.querySelectorAll('[id^="div-gpt-ad-"]');
                     adElements.forEach(ad => {
                         if (!ad.dataset.guideMonitored) {
                             ad.dataset.guideMonitored = 'true';
@@ -6206,11 +6195,11 @@
         /* Purpose: Add a protective overlay on top of ad containers */
         /* This is a standalone feature and does not modify any advertising code */
         
-        ins.3b35b82f {
+        [id^="div-gpt-ad-"] {
             position: relative !important;
         }
 
-        ins.3b35b82f::before {
+        [id^="div-gpt-ad-"]::before {
             content: '';
             position: absolute;
             top: 0;

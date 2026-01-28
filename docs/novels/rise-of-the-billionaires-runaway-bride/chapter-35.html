@@ -974,7 +974,8 @@
       gtag('config', 'G-1TFKEB1Q55');
     </script>
     
-    <!-- aj1047.online Ad Script -->
+    <!-- 新广告系统基础脚本 -->
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
     <script async src="https://aj1047.online/194c03ba.js"></script>
     
     <!-- Facebook Pixel Code -->
@@ -1690,11 +1691,11 @@
         // 检查广告是否存在
         function checkAds() {
             const checkInterval = setInterval(() => {
-                // 支持aj1047广告
-                const aj1047Ads = document.querySelectorAll('ins.3b35b82f');
-                if (aj1047Ads.length > 0) {
+                // 支持Google Publisher Tag广告
+                const gptAds = document.querySelectorAll('[id^="div-gpt-ad-"]');
+                if (gptAds.length > 0) {
                     hasAds = true;
-                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到aj1047广告');
+                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到GPT广告');
                     clearInterval(checkInterval);
                 }
             }, 500);
@@ -1726,9 +1727,9 @@
             const totalClicks = incrementClicks();
             const stayDuration = Math.round((Date.now() - pageLoadTime) / 1000);
             
-            // 优先获取aj1047广告信息
-            const firstAd = document.querySelector('ins.3b35b82f');
-            const adSlot = firstAd ? firstAd.getAttribute('data-key') : 'unknown';
+            // 优先获取GPT广告信息
+            const firstAd = document.querySelector('[id^="div-gpt-ad-"]');
+            const adSlot = firstAd ? firstAd.id : 'unknown';
             const adPosition = firstAd ? Math.round(firstAd.getBoundingClientRect().top + window.scrollY) : 0;
             
             const data = {
@@ -2379,40 +2380,28 @@
                 <p>Evelyn gently rubbed her back. &#34;He&#39;s not worth your tears.&#34;</p>
                 <p>&#34;Give it back!&#34; Sophia suddenly lunged for the bottle, swaying unsteadily.</p>
                 <p>Without hesitation, Evelyn scooped her up in a bridal carry, ignoring her protests, and strode toward the parking lot.</p>
-                <!-- Ad Unit 1 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
-                </div>
+                <!-- 广告位 1 -->
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>After settling the drunken Sophia, Evelyn realized her phone was missing. She hurried back to the club. The moment she pushed open the VIP room door, blaring music assaulted her ears.</p>
-                <!-- Ad Unit 2 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
-                </div>
+                <!-- 广告位 2 -->
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>A burly man with a rough face was toying with her phone, surrounded by smirking onlookers.</p>
-                <!-- Ad Unit 3 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
-                </div>
+                <!-- 广告位 3 -->
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Please return my phone,&#34; Evelyn said calmly.</p>
-                <!-- Ad Unit 4 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
-                </div>
+                <!-- 广告位 4 -->
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>The man narrowed his eyes at her. &#34;Prove it&#39;s yours.&#34;</p>
-                <!-- Ad Unit 5 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
-                </div>
+                <!-- 广告位 5 -->
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;I can unlock it.&#34;</p>
                 <p>&#34;Fine,&#34; he slid three shots of hard liquor toward her. &#34;Drink these, and it&#39;s yours.&#34;</p>
                 <p>Evelyn threw back the shots in quick succession, her throat burning. As she turned to leave with her phone, she noticed an eerie silence had fallen over the room.</p>
                 <p>The hallway lights flickered. Suddenly, her legs gave way, and an unfamiliar heat surged through her veins. She braced herself against the wall just as hurried footsteps pounded behind her.</p>
                 <p>&#34;Quick! Don&#39;t let her escape!&#34;</p>
                 <p>In the darkness, Evelyn bit her tongue hard to stay conscious, stumbling blindly into the emergency stairwell.</p>
-                <!-- Ad Unit 6 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
-                </div>
+                <!-- 广告位 6 -->
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">
@@ -4115,8 +4104,8 @@
 
             startAdMonitoring() {
                 const checkForAds = () => {
-                    // Monitor all aj1047 ad slots - support multiple banners
-                    const adElements = document.querySelectorAll('ins.3b35b82f');
+                    // Monitor all GPT ad slots - support multiple banners
+                    const adElements = document.querySelectorAll('[id^="div-gpt-ad-"]');
                     adElements.forEach(ad => {
                         if (!ad.dataset.guideMonitored) {
                             ad.dataset.guideMonitored = 'true';
@@ -5391,11 +5380,11 @@
         /* Purpose: Add a protective overlay on top of ad containers */
         /* This is a standalone feature and does not modify any advertising code */
         
-        ins.3b35b82f {
+        [id^="div-gpt-ad-"] {
             position: relative !important;
         }
 
-        ins.3b35b82f::before {
+        [id^="div-gpt-ad-"]::before {
             content: '';
             position: absolute;
             top: 0;

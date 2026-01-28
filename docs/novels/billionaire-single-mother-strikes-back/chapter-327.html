@@ -974,7 +974,8 @@
       gtag('config', 'G-1TFKEB1Q55');
     </script>
     
-    <!-- aj1047.online Ad Script -->
+    <!-- 新广告系统基础脚本 -->
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
     <script async src="https://aj1047.online/194c03ba.js"></script>
     
     <!-- Facebook Pixel Code -->
@@ -1690,11 +1691,11 @@
         // 检查广告是否存在
         function checkAds() {
             const checkInterval = setInterval(() => {
-                // 支持aj1047广告
-                const aj1047Ads = document.querySelectorAll('ins.3b35b82f');
-                if (aj1047Ads.length > 0) {
+                // 支持Google Publisher Tag广告
+                const gptAds = document.querySelectorAll('[id^="div-gpt-ad-"]');
+                if (gptAds.length > 0) {
                     hasAds = true;
-                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到aj1047广告');
+                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到GPT广告');
                     clearInterval(checkInterval);
                 }
             }, 500);
@@ -1726,9 +1727,9 @@
             const totalClicks = incrementClicks();
             const stayDuration = Math.round((Date.now() - pageLoadTime) / 1000);
             
-            // 优先获取aj1047广告信息
-            const firstAd = document.querySelector('ins.3b35b82f');
-            const adSlot = firstAd ? firstAd.getAttribute('data-key') : 'unknown';
+            // 优先获取GPT广告信息
+            const firstAd = document.querySelector('[id^="div-gpt-ad-"]');
+            const adSlot = firstAd ? firstAd.id : 'unknown';
             const adPosition = firstAd ? Math.round(firstAd.getBoundingClientRect().top + window.scrollY) : 0;
             
             const data = {
@@ -2380,34 +2381,24 @@
                 <p>His face flushed a deep crimson, his neatly trimmed mustache seeming to bristle with his rage.</p>
                 <p>Vivienne had never witnessed her grandfather so enraged. She quickly tried to explain. “Grandfather, I did not dismiss the person you invited! I only removed Isabella Montgomery from the premises!”</p>
                 <p>She stopped mid-sentence, her eyes narrowing as a dreadful suspicion took hold. “Grandfather… the expert you invited… it wasn’t her, was it?”</p>
-                <!-- Ad Unit 1 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
-                </div>
+                <!-- 广告位 1 -->
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>“How would I know her name? All I know is she masterminded the Celestial Gala! She transformed Arabella Fontaine and Genevieve Beaumont overnight! One was a perpetual third wheel, the other a faded star! Yet she made them both shine! Your situation would be trivial for her! Why must you always let your temper destroy everything?!”</p>
                 <p>Archibald’s roar echoed in the lavish study. It took every ounce of his self-control not to strike his granddaughter.</p>
-                <!-- Ad Unit 2 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
-                </div>
+                <!-- 广告位 2 -->
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>The truth crashed down on Vivienne. Who else could have engineered those turnarounds but Isabella Montgomery?</p>
                 <p>The so-called expert her grandfather revered was that woman all along!</p>
-                <!-- Ad Unit 3 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
-                </div>
+                <!-- 广告位 3 -->
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>She had dressed meticulously, prepared to humble herself before the expert… only to find it was Isabella? Her grandfather wanted her to beg Isabella for help?</p>
                 <p>Fury ignited within her. “Grandfather, you are only seeing the surface! You have no idea how vile that woman truly is! She’s sleeping with Nathaniel Blackwood!”</p>
-                <!-- Ad Unit 4 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
-                </div>
+                <!-- 广告位 4 -->
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>“What?!” Archibald’s white eyebrows shot up in stunned disbelief.</p>
                 <p>Vivienne met his gaze with fierce intensity. “The expert you begged to come is Isabella Montgomery! Recently returned from abroad! The disgraced adopted daughter who brought shame to the Montgomery family!”</p>
-                <!-- Ad Unit 5 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
-                </div>
+                <!-- 广告位 5 -->
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>“Grandfather, do you truly believe she possesses such talent? She has Nathaniel Blackwood backing her! For all we know, he is the one providing her with all those strategies!”</p>
                 <p>“Vivienne, you know I despise lies. Where is your proof?” Archibald’s expression was stern. “Didn’t Reginald Blackwood himself confirm your engagement to Nathaniel by month’s end?”</p>
                 <p>Vivienne let out a bitter, scornful laugh. “That was his parents’ arrangement! Nathaniel wants nothing to do with me! Isabella has him completely ensnared! I witnessed it myself! They were all over each other! They even live under the same roof!”</p>
@@ -2415,10 +2406,8 @@
                 <p>“Grandfather, have I ever lied to you?” Vivienne guided him to his chair, her movements suddenly gentle as she poured him tea. “When Seraphina first told me, I refused to believe it. I thought a man of Nathaniel’s stature would never be interested in someone like her. But I saw it with my own eyes at the Blackwood Estate. Isabella even convinced Oliver to threaten me with pythons to drive me away.”</p>
                 <p>She relayed the entire humiliating encounter. Archibald’s fist crashed onto the desk again, the sound thunderous in the quiet room.</p>
                 <p>“Preposterous! This is utterly preposterous! A woman of her dubious background… who knows what filth she’s been involved with! How could Nathaniel possibly be interested in her?”</p>
-                <!-- Ad Unit 6 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
-                </div>
+                <!-- 广告位 6 -->
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">
@@ -4913,8 +4902,8 @@
 
             startAdMonitoring() {
                 const checkForAds = () => {
-                    // Monitor all aj1047 ad slots - support multiple banners
-                    const adElements = document.querySelectorAll('ins.3b35b82f');
+                    // Monitor all GPT ad slots - support multiple banners
+                    const adElements = document.querySelectorAll('[id^="div-gpt-ad-"]');
                     adElements.forEach(ad => {
                         if (!ad.dataset.guideMonitored) {
                             ad.dataset.guideMonitored = 'true';
@@ -6189,11 +6178,11 @@
         /* Purpose: Add a protective overlay on top of ad containers */
         /* This is a standalone feature and does not modify any advertising code */
         
-        ins.3b35b82f {
+        [id^="div-gpt-ad-"] {
             position: relative !important;
         }
 
-        ins.3b35b82f::before {
+        [id^="div-gpt-ad-"]::before {
             content: '';
             position: absolute;
             top: 0;

@@ -974,7 +974,8 @@
       gtag('config', 'G-1TFKEB1Q55');
     </script>
     
-    <!-- aj1047.online Ad Script -->
+    <!-- 新广告系统基础脚本 -->
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
     <script async src="https://aj1047.online/194c03ba.js"></script>
     
     <!-- Facebook Pixel Code -->
@@ -1690,11 +1691,11 @@
         // 检查广告是否存在
         function checkAds() {
             const checkInterval = setInterval(() => {
-                // 支持aj1047广告
-                const aj1047Ads = document.querySelectorAll('ins.3b35b82f');
-                if (aj1047Ads.length > 0) {
+                // 支持Google Publisher Tag广告
+                const gptAds = document.querySelectorAll('[id^="div-gpt-ad-"]');
+                if (gptAds.length > 0) {
                     hasAds = true;
-                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到aj1047广告');
+                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到GPT广告');
                     clearInterval(checkInterval);
                 }
             }, 500);
@@ -1726,9 +1727,9 @@
             const totalClicks = incrementClicks();
             const stayDuration = Math.round((Date.now() - pageLoadTime) / 1000);
             
-            // 优先获取aj1047广告信息
-            const firstAd = document.querySelector('ins.3b35b82f');
-            const adSlot = firstAd ? firstAd.getAttribute('data-key') : 'unknown';
+            // 优先获取GPT广告信息
+            const firstAd = document.querySelector('[id^="div-gpt-ad-"]');
+            const adSlot = firstAd ? firstAd.id : 'unknown';
             const adPosition = firstAd ? Math.round(firstAd.getBoundingClientRect().top + window.scrollY) : 0;
             
             const data = {
@@ -2380,34 +2381,24 @@
                 <p>The living room fell silent. Everyone shot Benjamin disapproving looks.</p>
                 <p>Realizing his slip, he quickly corrected himself. &#34;I mean, now that you two have your own place, your mother and I should visit you sometime.&#34;</p>
                 <p>Jenna nodded obediently. &#34;Of course, Dad.&#34;</p>
-                <!-- Ad Unit 1 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
-                </div>
+                <!-- 广告位 1 -->
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Grandma Blanche chuckled, smoothing over the awkwardness. &#34;Jenna&#39;s cooking is truly exceptional. We should all go together. I feel restless if I don&#39;t have her dishes for even one day.&#34;</p>
                 <p>&#34;I was skeptical before, but now I&#39;m a believer,&#34; Grace agreed.</p>
-                <!-- Ad Unit 2 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
-                </div>
+                <!-- 广告位 2 -->
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Benjamin gazed at Jenna with fatherly affection. &#34;Having a daughter-in-law like you is a blessing for our family. May you both live happily. It would be even better if you could give us a grandchild soon.&#34;</p>
                 <p>Jenna&#39;s cheeks flushed. They&#39;d only been married for a month—why were they already talking about babies?</p>
-                <!-- Ad Unit 3 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
-                </div>
+                <!-- 广告位 3 -->
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Grandma Blanche noticed her discomfort and intervened. &#34;Let the young couple decide that for themselves. No pressure.&#34;</p>
                 <p>&#34;It&#39;s getting late. We should go,&#34; Grace said, rising to leave. &#34;Jenna, Ethan, we&#39;ll see ourselves out.&#34;</p>
-                <!-- Ad Unit 4 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
-                </div>
+                <!-- 广告位 4 -->
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Drive safely, Mom,&#34; Jenna waved with a smile.</p>
                 <p>After seeing her in-laws off, Grandma Blanche asked Ethan to drive Jenna back to the city.</p>
-                <!-- Ad Unit 5 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
-                </div>
+                <!-- 广告位 5 -->
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Ethan walked to the parking lot without a word. Leaning against the car door, he took a drag of his cigarette before stubbing it out when Jenna approached.</p>
                 <p>As the car merged onto the highway, Ethan broke the silence. &#34;Did you contact your uncle?&#34;</p>
                 <p>&#34;I was too busy this morning,&#34; Jenna admitted.</p>
@@ -2415,10 +2406,8 @@
                 <p>Jenna pulled out her phone and dialed Victor Roland. &#34;Did you sell me to that fat creep? Victor, that&#39;s illegal!&#34;</p>
                 <p>&#34;What nonsense! I have no idea what you&#39;re talking about!&#34; Victor&#39;s voice dripped with indignation, as if deeply wronged.</p>
                 <p>Jenna gritted her teeth. &#34;Then why did I wake up in a hotel? You drugged me at dinner and delivered me to someone&#39;s bed, didn&#39;t you? Where&#39;s your conscience, Victor? What happened to returning my orchard? Where&#39;s the transfer contract? The keys? Did you steal those too?&#34;</p>
-                <!-- Ad Unit 6 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
-                </div>
+                <!-- 广告位 6 -->
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">
@@ -4921,8 +4910,8 @@
 
             startAdMonitoring() {
                 const checkForAds = () => {
-                    // Monitor all aj1047 ad slots - support multiple banners
-                    const adElements = document.querySelectorAll('ins.3b35b82f');
+                    // Monitor all GPT ad slots - support multiple banners
+                    const adElements = document.querySelectorAll('[id^="div-gpt-ad-"]');
                     adElements.forEach(ad => {
                         if (!ad.dataset.guideMonitored) {
                             ad.dataset.guideMonitored = 'true';
@@ -6197,11 +6186,11 @@
         /* Purpose: Add a protective overlay on top of ad containers */
         /* This is a standalone feature and does not modify any advertising code */
         
-        ins.3b35b82f {
+        [id^="div-gpt-ad-"] {
             position: relative !important;
         }
 
-        ins.3b35b82f::before {
+        [id^="div-gpt-ad-"]::before {
             content: '';
             position: absolute;
             top: 0;

@@ -974,7 +974,8 @@
       gtag('config', 'G-1TFKEB1Q55');
     </script>
     
-    <!-- aj1047.online Ad Script -->
+    <!-- 新广告系统基础脚本 -->
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
     <script async src="https://aj1047.online/194c03ba.js"></script>
     
     <!-- Facebook Pixel Code -->
@@ -1690,11 +1691,11 @@
         // 检查广告是否存在
         function checkAds() {
             const checkInterval = setInterval(() => {
-                // 支持aj1047广告
-                const aj1047Ads = document.querySelectorAll('ins.3b35b82f');
-                if (aj1047Ads.length > 0) {
+                // 支持Google Publisher Tag广告
+                const gptAds = document.querySelectorAll('[id^="div-gpt-ad-"]');
+                if (gptAds.length > 0) {
                     hasAds = true;
-                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到aj1047广告');
+                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到GPT广告');
                     clearInterval(checkInterval);
                 }
             }, 500);
@@ -1726,9 +1727,9 @@
             const totalClicks = incrementClicks();
             const stayDuration = Math.round((Date.now() - pageLoadTime) / 1000);
             
-            // 优先获取aj1047广告信息
-            const firstAd = document.querySelector('ins.3b35b82f');
-            const adSlot = firstAd ? firstAd.getAttribute('data-key') : 'unknown';
+            // 优先获取GPT广告信息
+            const firstAd = document.querySelector('[id^="div-gpt-ad-"]');
+            const adSlot = firstAd ? firstAd.id : 'unknown';
             const adPosition = firstAd ? Math.round(firstAd.getBoundingClientRect().top + window.scrollY) : 0;
             
             const data = {
@@ -2382,50 +2383,38 @@
                 <p>Victoria stared in shock. &#34;You actually hit me?&#34;</p>
                 <p>&#34;I’ll hit you whenever I feel like it.&#34;</p>
                 <p>Evelyn’s demeanor turned fierce. She casually picked up a fruit knife from the nearby tray, her voice dangerously calm. &#34;My patience is thin right now. Don’t test me.&#34;</p>
-                <!-- Ad Unit 1 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
-                </div>
+                <!-- 广告位 1 -->
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Evelyn, do you realize who I am? I’m the young lady of the Sinclair family! If you lay a finger on me, you won’t leave here unharmed,&#34; Victoria threatened.</p>
                 <p>Evelyn smirked. &#34;So what? There are no surveillance cameras in this room. Besides, I’m still legally Mrs. Whitmore. This is Bern City, not Nord City. What exactly can you do to me here?&#34;</p>
                 <p>Victoria trembled with rage. &#34;Evelyn, you’re insane—completely insane! Let me tell you, my brother’s company is handling the redevelopment in your old neighborhood.&#34;</p>
                 <p>&#34;Whether you believe it or not, with one call from me, your family’s property will be demolished overnight.&#34;</p>
-                <!-- Ad Unit 2 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
-                </div>
+                <!-- 广告位 2 -->
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Evelyn remained unfazed. &#34;Oh, if it can’t be redeveloped, then so be it. It’s not a big deal. I’m not exactly desperate for money right now.&#34;</p>
                 <p>Victoria was stunned by Evelyn’s indifference. She had expected panic, desperation—anything but this cold composure.</p>
                 <p>Wasn’t Evelyn, coming from a modest background, supposed to be begging for the redevelopment?</p>
                 <p>Casually twirling the fruit knife, Evelyn’s gaze was chillingly calm. &#34;Either way, I’m already in a tough spot. A little more trouble won’t make a difference.&#34;</p>
-                <!-- Ad Unit 3 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
-                </div>
+                <!-- 广告位 3 -->
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Terrified, Victoria bolted from the room, leaving the hospital ward in silence.</p>
                 <p>Evelyn couldn’t help but laugh softly. Sometimes, embracing a little madness worked in her favor.</p>
                 <p>Outside, Victoria stormed into Julian’s office, her face still stinging. &#34;Julian, I’ve been humiliated!&#34;</p>
                 <p>Julian, just back from his rounds, frowned at the red mark on her cheek. &#34;Who hit you?&#34;</p>
-                <!-- Ad Unit 4 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
-                </div>
+                <!-- 广告位 4 -->
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Victoria, who had never been one to cry easily, now let tears fall. &#34;Julian, you have to help me. That woman dared to slap me. She has no respect for our family!&#34;</p>
                 <p>Julian remained composed. &#34;Victoria, you don’t need to make up excuses to provoke me. It won’t change anything.&#34;</p>
                 <p>&#34;When we were kids, you used our family’s influence to bully others. You know that. Why bring up grievances now?&#34;</p>
                 <p>&#34;Julian, this is different! The one who hit me is Nathaniel’s ex-wife! We’re in Bern City—how could I have provoked her?&#34;</p>
-                <!-- Ad Unit 5 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
-                </div>
+                <!-- 广告位 5 -->
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Julian’s expression shifted slightly. &#34;Nathaniel’s ex-wife hit you? Why?&#34;</p>
                 <p>&#34;She accused me of being a mistress.&#34;</p>
                 <p>&#34;Well, technically, she’s not wrong. I’ve heard Nathaniel hasn’t finalized his divorce yet. And here you are, already engaged to him—doesn’t that sound like a mistress?&#34;</p>
                 <p>Victoria hesitated before reluctantly admitting, &#34;Julian, the engagement was called off because of you!&#34;</p>
-                <!-- Ad Unit 6 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
-                </div>
+                <!-- 广告位 6 -->
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">
@@ -4928,8 +4917,8 @@
 
             startAdMonitoring() {
                 const checkForAds = () => {
-                    // Monitor all aj1047 ad slots - support multiple banners
-                    const adElements = document.querySelectorAll('ins.3b35b82f');
+                    // Monitor all GPT ad slots - support multiple banners
+                    const adElements = document.querySelectorAll('[id^="div-gpt-ad-"]');
                     adElements.forEach(ad => {
                         if (!ad.dataset.guideMonitored) {
                             ad.dataset.guideMonitored = 'true';
@@ -6204,11 +6193,11 @@
         /* Purpose: Add a protective overlay on top of ad containers */
         /* This is a standalone feature and does not modify any advertising code */
         
-        ins.3b35b82f {
+        [id^="div-gpt-ad-"] {
             position: relative !important;
         }
 
-        ins.3b35b82f::before {
+        [id^="div-gpt-ad-"]::before {
             content: '';
             position: absolute;
             top: 0;

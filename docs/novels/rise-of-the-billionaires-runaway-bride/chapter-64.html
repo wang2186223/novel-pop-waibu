@@ -974,7 +974,8 @@
       gtag('config', 'G-1TFKEB1Q55');
     </script>
     
-    <!-- aj1047.online Ad Script -->
+    <!-- 新广告系统基础脚本 -->
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
     <script async src="https://aj1047.online/194c03ba.js"></script>
     
     <!-- Facebook Pixel Code -->
@@ -1690,11 +1691,11 @@
         // 检查广告是否存在
         function checkAds() {
             const checkInterval = setInterval(() => {
-                // 支持aj1047广告
-                const aj1047Ads = document.querySelectorAll('ins.3b35b82f');
-                if (aj1047Ads.length > 0) {
+                // 支持Google Publisher Tag广告
+                const gptAds = document.querySelectorAll('[id^="div-gpt-ad-"]');
+                if (gptAds.length > 0) {
                     hasAds = true;
-                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到aj1047广告');
+                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到GPT广告');
                     clearInterval(checkInterval);
                 }
             }, 500);
@@ -1726,9 +1727,9 @@
             const totalClicks = incrementClicks();
             const stayDuration = Math.round((Date.now() - pageLoadTime) / 1000);
             
-            // 优先获取aj1047广告信息
-            const firstAd = document.querySelector('ins.3b35b82f');
-            const adSlot = firstAd ? firstAd.getAttribute('data-key') : 'unknown';
+            // 优先获取GPT广告信息
+            const firstAd = document.querySelector('[id^="div-gpt-ad-"]');
+            const adSlot = firstAd ? firstAd.id : 'unknown';
             const adPosition = firstAd ? Math.round(firstAd.getBoundingClientRect().top + window.scrollY) : 0;
             
             const data = {
@@ -2380,34 +2381,24 @@
                 <p>The instructor was explaining safety precautions to Evelyn while holding the horse&#39;s reins. Sensing someone approach, Evelyn turned and met Ryan&#39;s worried gaze.</p>
                 <p>&#34;Miss Sullivan, this horse is too spirited for a beginner.&#34;</p>
                 <p>The corner of Evelyn&#39;s lips lifted. &#34;Thank you for your concern, Mr. Paisley. But my decision is made.&#34;</p>
-                <!-- Ad Unit 1 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
-                </div>
+                <!-- 广告位 1 -->
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Ryan frowned. &#34;Even if you&#39;re upset with Ethan, don&#39;t gamble with your safety.&#34;</p>
                 <p>&#34;You worry too much,&#34; she said lightly. &#34;He&#39;s not worth that much to me.&#34;</p>
-                <!-- Ad Unit 2 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
-                </div>
+                <!-- 广告位 2 -->
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Before he could respond, she swung onto the horse with effortless grace. The deep red riding habit accentuated her slender waist, her ponytail swaying in the wind—radiant and fearless.</p>
                 <p>Ryan&#39;s breath hitched. He quickly lowered his gaze to hide his awe. When he looked up again, Evelyn was already galloping toward the heart of the equestrian center.</p>
-                <!-- Ad Unit 3 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
-                </div>
+                <!-- 广告位 3 -->
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Ethan&#39;s eyes tracked the retreating figure in red. He&#39;d never seen Evelyn like this—confident, bold, like a blazing flame.</p>
                 <p>In his memories, she had always been gentle and obedient, clinging to him like ivy. This unfamiliar version of her stirred something foreign in his chest.</p>
-                <!-- Ad Unit 4 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
-                </div>
+                <!-- 广告位 4 -->
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Nearby, Isabella Jackson dug her nails into her palms, though her smile remained sweet. &#34;Lily, shall we go riding too?&#34;</p>
                 <p>Lily White caught her meaning and nodded. &#34;Perfect. A little exercise would be nice.&#34;</p>
-                <!-- Ad Unit 5 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
-                </div>
+                <!-- 广告位 5 -->
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>They soon changed into riding gear and selected docile horses while the others lingered in the lounge.</p>
                 <p>Alexander King approached Ethan with sincere remorse. &#34;Ethan, I was foolish before—&#34;</p>
                 <p>Ethan cut him off coldly. &#34;Keep your girlfriend away from Evelyn.&#34;</p>
@@ -2415,10 +2406,8 @@
                 <p>The sound of hooves echoed in the distance as Evelyn reappeared, galloping toward them on the spirited stallion, her hair whipping behind her like a living painting.</p>
                 <p>Unconsciously, Ethan rose to his feet, his gaze locked onto her.</p>
                 <p>Then, chaos erupted—Isabella and Lily&#39;s horses suddenly bolted, charging straight toward Evelyn!</p>
-                <!-- Ad Unit 6 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
-                </div>
+                <!-- 广告位 6 -->
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">
@@ -4121,8 +4110,8 @@
 
             startAdMonitoring() {
                 const checkForAds = () => {
-                    // Monitor all aj1047 ad slots - support multiple banners
-                    const adElements = document.querySelectorAll('ins.3b35b82f');
+                    // Monitor all GPT ad slots - support multiple banners
+                    const adElements = document.querySelectorAll('[id^="div-gpt-ad-"]');
                     adElements.forEach(ad => {
                         if (!ad.dataset.guideMonitored) {
                             ad.dataset.guideMonitored = 'true';
@@ -5397,11 +5386,11 @@
         /* Purpose: Add a protective overlay on top of ad containers */
         /* This is a standalone feature and does not modify any advertising code */
         
-        ins.3b35b82f {
+        [id^="div-gpt-ad-"] {
             position: relative !important;
         }
 
-        ins.3b35b82f::before {
+        [id^="div-gpt-ad-"]::before {
             content: '';
             position: absolute;
             top: 0;

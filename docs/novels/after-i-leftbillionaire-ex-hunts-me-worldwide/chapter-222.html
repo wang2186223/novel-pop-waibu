@@ -974,7 +974,8 @@
       gtag('config', 'G-1TFKEB1Q55');
     </script>
     
-    <!-- aj1047.online Ad Script -->
+    <!-- 新广告系统基础脚本 -->
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
     <script async src="https://aj1047.online/194c03ba.js"></script>
     
     <!-- Facebook Pixel Code -->
@@ -1690,11 +1691,11 @@
         // 检查广告是否存在
         function checkAds() {
             const checkInterval = setInterval(() => {
-                // 支持aj1047广告
-                const aj1047Ads = document.querySelectorAll('ins.3b35b82f');
-                if (aj1047Ads.length > 0) {
+                // 支持Google Publisher Tag广告
+                const gptAds = document.querySelectorAll('[id^="div-gpt-ad-"]');
+                if (gptAds.length > 0) {
                     hasAds = true;
-                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到aj1047广告');
+                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到GPT广告');
                     clearInterval(checkInterval);
                 }
             }, 500);
@@ -1726,9 +1727,9 @@
             const totalClicks = incrementClicks();
             const stayDuration = Math.round((Date.now() - pageLoadTime) / 1000);
             
-            // 优先获取aj1047广告信息
-            const firstAd = document.querySelector('ins.3b35b82f');
-            const adSlot = firstAd ? firstAd.getAttribute('data-key') : 'unknown';
+            // 优先获取GPT广告信息
+            const firstAd = document.querySelector('[id^="div-gpt-ad-"]');
+            const adSlot = firstAd ? firstAd.id : 'unknown';
             const adPosition = firstAd ? Math.round(firstAd.getBoundingClientRect().top + window.scrollY) : 0;
             
             const data = {
@@ -2383,46 +2384,36 @@
                 <p>&#34;No classes today?&#34;</p>
                 <p>&#34;Rescheduled.&#34;</p>
                 <p>Truthfully, he didn&#39;t need to—but he wanted to.</p>
-                <!-- Ad Unit 1 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
-                </div>
+                <!-- 广告位 1 -->
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Thanks, then.&#34; Evelyn exhaled in relief. She&#39;d been calculating ride-share fares; this saved her the trouble.</p>
                 <p>Inside the supermarket, Adrian pushed the cart while Evelyn checked items off her list. Each time she picked something, he naturally took it from her and placed it in the cart.</p>
                 <p>At checkout, Adrian swiped his card first. All the grocery bags ended up in his hands, heavy and dangling.</p>
                 <p>&#34;Let me take some.&#34; Evelyn reached for them.</p>
                 <p>Adrian sidestepped. &#34;Not heavy.&#34;</p>
-                <!-- Ad Unit 2 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
-                </div>
+                <!-- 广告位 2 -->
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Back home, Evelyn tied up her hair and donned an apron to prep the ingredients. As water rushed from the faucet, she suddenly turned. &#34;Any dietary restrictions I should know about?&#34;</p>
                 <p>Adrian was peeling garlic. &#34;Vincent&#39;s allergic to seafood. The rest are fine.&#34;</p>
                 <p>He washed his hands and stood beside her at the counter. &#34;What can I help with?&#34;</p>
                 <p>......</p>
                 <p>By 6 PM, the lab team was ready to leave.</p>
-                <!-- Ad Unit 3 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
-                </div>
+                <!-- 广告位 3 -->
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Professor Macmillan, does Professor Klein know the address?&#34; Camille Valrose asked casually. She&#39;d initially declined the invitation—until seeing Adrian&#39;s &#34;I&#39;ll be there&#34; in the group chat.</p>
                 <p>Oliver Lancelot gave his junior a pleased look, assuming his persuasion had worked.</p>
                 <p>Vincent Macmillan scrolled through his phone. &#34;Sent it ages ago. Strange—he hasn&#39;t been back to the lab all afternoon.&#34;</p>
                 <p>&#34;But if he said he&#39;s coming, he will. Might head straight there.&#34;</p>
                 <p>Natalie Blanchet&#39;s eyes widened. &#34;He&#39;s really coming?&#34;</p>
-                <!-- Ad Unit 4 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
-                </div>
+                <!-- 广告位 4 -->
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Vincent teased, &#34;What, scared?&#34;</p>
                 <p>&#34;Who&#39;s scared!&#34; Natalie pouted. &#34;It&#39;s just... everyone acts so restrained around him...&#34;</p>
                 <p>&#34;And how exactly did you plan to misbehave?&#34; Vincent laughed. &#34;Good thing he&#39;s coming to keep you in check.&#34;</p>
                 <p>&#34;You&#39;re the one who needs keeping in check!&#34;</p>
                 <p>Passing a florist, Natalie was drawn to a cluster of white jasmine, carefully selecting a bouquet. Vincent and Oliver pooled money for two boxes of imported cherries, exquisitely packaged.</p>
-                <!-- Ad Unit 5 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
-                </div>
+                <!-- 广告位 5 -->
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>The biggest surprise was Camille&#39;s gift—a petite perfume bottle.</p>
                 <p>&#34;Citrus top notes, subtle dry-down.&#34; Her tone was even. &#34;Suits you.&#34;</p>
                 <p>&#34;Thank you.&#34; Evelyn accepted it, catching a whiff of fresh scent lingering on her fingers.</p>
@@ -2430,10 +2421,8 @@
                 <p>Vincent had just pulled out his phone when the kitchen door swung open. Adrian emerged carrying a steaming soup bowl, apron strings tied neatly behind him. His movements were practiced, like a regular guest.</p>
                 <p>Vincent: ?</p>
                 <p>Everyone: !</p>
-                <!-- Ad Unit 6 -->
-                <div style='min-width: 300px; min-height: 250px; text-align: center; margin: 20px 0;'>
-                  <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
-                </div>
+                <!-- 广告位 6 -->
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -4936,8 +4925,8 @@
 
             startAdMonitoring() {
                 const checkForAds = () => {
-                    // Monitor all aj1047 ad slots - support multiple banners
-                    const adElements = document.querySelectorAll('ins.3b35b82f');
+                    // Monitor all GPT ad slots - support multiple banners
+                    const adElements = document.querySelectorAll('[id^="div-gpt-ad-"]');
                     adElements.forEach(ad => {
                         if (!ad.dataset.guideMonitored) {
                             ad.dataset.guideMonitored = 'true';
@@ -6212,11 +6201,11 @@
         /* Purpose: Add a protective overlay on top of ad containers */
         /* This is a standalone feature and does not modify any advertising code */
         
-        ins.3b35b82f {
+        [id^="div-gpt-ad-"] {
             position: relative !important;
         }
 
-        ins.3b35b82f::before {
+        [id^="div-gpt-ad-"]::before {
             content: '';
             position: absolute;
             top: 0;
