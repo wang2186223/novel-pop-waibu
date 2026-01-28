@@ -224,17 +224,22 @@ class WebsiteBuilder:
                     'url': f"/novels/{novel_data['slug']}/chapter-{ch['number']}"
                 })
             
-            # 定义所有5个广告单元（新的aj1047.online格式）
+            # 定义所有10个广告单元（aj1047.online格式）
             all_ad_units = [
                 {'id': 1, 'data_key': 'c210a149a5b32458c119a58197e7f96e'},
                 {'id': 2, 'data_key': 'a539bb169e7e4ee07b88d8c888b38a5a'},
                 {'id': 3, 'data_key': '38fc9e7d0106734f83ac62f5d7d93253'},
                 {'id': 4, 'data_key': 'efe7f98e0ca1646a355ba304f74f4034'},
                 {'id': 5, 'data_key': '8d485a781d7176e53b3dc45f4a663d79'},
+                {'id': 6, 'data_key': 'edabd45f6be962b9624a8fb02ea37201'},
+                {'id': 7, 'data_key': '2ecc942d608f3202923d4b797fc58e7f'},
+                {'id': 8, 'data_key': 'c260faacddeb4be16d509e39a27a2374'},
+                {'id': 9, 'data_key': 'a8e40a2b9790ac404e6034309b5743d0'},
+                {'id': 10, 'data_key': '227ac8063260b67e15d106b1d1faf5da'},
             ]
             
-            # 使用所有5个广告单元
-            selected_ad_units = all_ad_units
+            # 从10个广告单元中随机选择6个
+            selected_ad_units = random.sample(all_ad_units, 6)
             
             # 不再使用激励视频广告
             show_reward_video = False

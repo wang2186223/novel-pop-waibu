@@ -1,7 +1,7 @@
 // Google Apps Script 代码 - 网站访问统计系统(每日独立表格版本)
 // 主控制表格 ID: 1Xc45y6a1j-pRm2NbqmTNcasSYFKMBplJ9OiPneh5Ypg
-// 部署ID: AKfycbxUQ4WaJB1Rv7iJ4qFzGaJZ101ybCmDxaoYWyweUkGYsAiHc8Y2a79Ui31Z7HW16EL3Lw
-// 部署URL: https://script.google.com/macros/s/AKfycbxUQ4WaJB1Rv7iJ4qFzGaJZ101ybCmDxaoYWyweUkGYsAiHc8Y2a79Ui31Z7HW16EL3Lw/exec
+// 部署ID: AKfycby-u3H40iNpvijJc6d7KYhiOkDD0cwRKFmzRI0ryvreTril3hkRusIE2L00IU9f1voz
+// 部署URL: https://script.google.com/macros/s/AKfycby-u3H40iNpvijJc6d7KYhiOkDD0cwRKFmzRI0ryvreTril3hkRusIE2L00IU9f1voz/exec
 // 
 // 架构说明：
 // - 主表格：用于控制台、统计汇总、表格索引
