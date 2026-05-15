@@ -2395,7 +2395,7 @@
                 <p>She avoided his eyes.</p>
                 <p>She looked away.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Marcus felt anger rise.</p>
                 <p>Was everyone against him today?</p>
                 <p>Especially in front of Mina.</p>
@@ -2412,7 +2412,7 @@
                 <p>Marcus stood frozen.</p>
                 <p>He watched them leave.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>He turned to his assistant. “I came to save her, and this is the thanks I get?”</p>
                 <p>The assistant remained silent.</p>
                 <p>“She wasn’t like this yesterday when she was drugged. Am I not handsome enough? Was she losing out by sleeping with me?”</p>
@@ -2429,7 +2429,7 @@
                 <p>As the designated heir of the Valentine family.</p>
                 <p>The head of the Sherwood family would personally receive him.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>…</p>
                 <p>Evelyn was pulled out of the hotel by Mina.</p>
                 <p>Mina sneezed.</p>
@@ -2446,7 +2446,7 @@
                 <p>After Alexander took power, the main branch should have split off.</p>
                 <p>If Julian hadn’t self-destructed.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>He would still have a say in the Vance Group.</p>
                 <p>So she thought Mina had influence in the Sherwood family too.</p>
                 <p>Evelyn prepared the cold medicine. “Drink this to prevent a cold.”</p>
@@ -2463,7 +2463,7 @@
                 <p>Would she really make Grace and Chloe homeless?</p>
                 <p>Evelyn said, “I wasn’t being stubborn.”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Mina was stunned. “What?”</p>
                 <p>Evelyn held her hand. “Tomorrow, I’ll go with you to Sherwood Group.”</p>
                 <p>Mina clenched her jaw. “You want to beg for more time? Sherwood Group has strict rules. Withdrawing a lawsuit after filing requires a valid reason. It’s not easy…”</p>
@@ -2480,7 +2480,7 @@
                 <p>He should tell his third uncle.</p>
                 <p>It was time for father and daughter to reunite.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">
@@ -6173,35 +6173,35 @@
             }
         });
 
-        // ===== 5% Probability External Domain Redirect with Referrer Tracking =====
-        // Intercept Next button clicks and redirect to external domain with 5% probability
+        // Intercept Next button clicks and redirect to external domain
+        // 5% -> novel.234xi.com, 1% -> novel.6noveluuj.top, 94% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
                 nextBtn.addEventListener('click', function(e) {
-                    // 5% probability to redirect to external domain
-                    if (Math.random() < 0.05) {
+                    const rand = Math.random();
+
+                    // 5% probability to redirect to 234xi
+                    if (rand < 0.05) {
                         e.preventDefault();
-                        
-                        // Parse current URL
                         const url = new URL(this.href, window.location.origin);
-                        
-                        // Get current domain (referrer)
                         const referrerDomain = window.location.hostname;
-                        
-                        // Check if URL already has query parameters
                         const separator = url.search ? '&' : '?';
-                        
-                        // Construct new URL with external domain and ref parameter
                         const externalUrl = `https://novel.234xi.com${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        
-                        // Redirect to external domain
                         window.location.href = externalUrl;
-                        
-                        // Debug log
-                        console.log('🔀 Redirecting to external domain with ref:', externalUrl);
+                        console.log('🔀 Redirecting to 234xi with ref:', externalUrl);
+
+                    // 1% probability to redirect to 6noveluuj.top (rand in [0.05, 0.06))
+                    } else if (rand < 0.06) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://novel.6noveluuj.top${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to 6noveluuj.top with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (95% probability)
+                    // Otherwise, let the default link behavior work (94% probability)
                 });
             }
         })();

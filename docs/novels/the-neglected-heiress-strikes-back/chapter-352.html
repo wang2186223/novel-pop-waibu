@@ -2386,7 +2386,7 @@
                 <p>&#34;Elspeth,&#34; Frederic&#39;s voice was tight. &#34;Is it true? You know this man?&#34;</p>
                 <p>Elspeth&#39;s eyes flashed with wounded indignation. &#34;Frederic, you&#39;re questioning me too? Evadne waltzes in with baseless accusations, and now you turn against me?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Her melodramatic reaction belonged in a soap opera.</p>
                 <p>Glynnis, now sober, stumbled out of the room, her heart hammering.</p>
                 <p>Her father had always doted on her mother, defending her against Hamilton&#39;s wrath. Yet now, a single word from Evadne had him doubting?</p>
@@ -2394,7 +2394,7 @@
                 <p>&#34;Of course I don&#39;t know him!&#34; Elspeth&#39;s perfectly coiffed hair clung to her sweat-dampened temples. She glared at Evadne. &#34;You despise me, Evadne. I&#39;ve let our past grievances go, but now you&#39;re pinning your family&#39;s misfortunes on me? I&#39;m not your scapegoat!&#34;</p>
                 <p>Evadne smirked. &#34;Elspeth, why so defensive? I merely asked if you were acquainted. Guilty conscience?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Evadne!&#34; Elspeth seethed. &#34;I&#39;m tolerating you out of respect for Emeric and Hamilton. Don&#39;t push me!&#34;</p>
                 <p>Jareth&#39;s knuckles whitened, barely restraining himself.</p>
                 <p>Thaddeus stepped forward, his voice glacial. &#34;Elspeth, if you value your position as Mrs. Abernathy, mind your tone.&#34;</p>
@@ -2410,7 +2410,7 @@
                 <p>The name Cynthia hung in the air like a ghost.</p>
                 <p>Thaddeus&#39;s jaw clenched, his nails biting into his palms.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Frederic&#39;s breath hitched, murmuring, &#34;Cynthia... Cynthia...&#34;</p>
                 <p>Elspeth&#39;s rage ignited. &#34;Cynthia? That mistress? She was nothing but a servant in this house! How dare you compare her to me?&#34;</p>
                 <p>&#34;Elspeth!&#34; Frederic roared, startling everyone. &#34;She was not a mistress! And she&#39;s dead—show some respect!&#34;</p>
@@ -2418,7 +2418,7 @@
                 <p>A shadow fell over her.</p>
                 <p>Thaddeus stood before her, eyes black with fury.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Then—crack!</p>
                 <p>The slap echoed through the hall.</p>
                 <p>Elspeth staggered, her cheek flaming, blood trickling from her lip.</p>
@@ -4632,35 +4632,35 @@
             }
         });
 
-        // ===== 5% Probability External Domain Redirect with Referrer Tracking =====
-        // Intercept Next button clicks and redirect to external domain with 5% probability
+        // Intercept Next button clicks and redirect to external domain
+        // 5% -> novel.234xi.com, 1% -> novel.6noveluuj.top, 94% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
                 nextBtn.addEventListener('click', function(e) {
-                    // 5% probability to redirect to external domain
-                    if (Math.random() < 0.05) {
+                    const rand = Math.random();
+
+                    // 5% probability to redirect to 234xi
+                    if (rand < 0.05) {
                         e.preventDefault();
-                        
-                        // Parse current URL
                         const url = new URL(this.href, window.location.origin);
-                        
-                        // Get current domain (referrer)
                         const referrerDomain = window.location.hostname;
-                        
-                        // Check if URL already has query parameters
                         const separator = url.search ? '&' : '?';
-                        
-                        // Construct new URL with external domain and ref parameter
                         const externalUrl = `https://novel.234xi.com${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        
-                        // Redirect to external domain
                         window.location.href = externalUrl;
-                        
-                        // Debug log
-                        console.log('🔀 Redirecting to external domain with ref:', externalUrl);
+                        console.log('🔀 Redirecting to 234xi with ref:', externalUrl);
+
+                    // 1% probability to redirect to 6noveluuj.top (rand in [0.05, 0.06))
+                    } else if (rand < 0.06) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://novel.6noveluuj.top${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to 6noveluuj.top with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (95% probability)
+                    // Otherwise, let the default link behavior work (94% probability)
                 });
             }
         })();

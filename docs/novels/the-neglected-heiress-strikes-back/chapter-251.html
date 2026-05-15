@@ -2394,7 +2394,7 @@
                 <p>But no matter how much Margaret fumed, she couldn’t overshadow Evelyn’s radiant triumph.</p>
                 <p>The wedding of the century catapulted Sinclair Group—the leading financial conglomerate in Seattle—into the limelight in New York.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Not only that, Sinclair Group’s stocks soared throughout the day, with analysts predicting an even sharper rise the following morning.</p>
                 <p>And the excitement didn’t stop there.</p>
                 <p>When the wedding venue was unveiled, it ignited a nationwide frenzy!</p>
@@ -2426,7 +2426,7 @@
                 <p>Thanks to Alexander and Harrison Kingsley’s interference, Nathaniel Whitmore’s appointment as head of Vanderbilt Industries’ legal department had fallen through.</p>
                 <p>For the first time, the usually unflappable Nathaniel tasted bitter defeat. He took a week off before returning to the Lockwood residence, only to be ambushed by Adrian Lockwood, who had been waiting for him.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Well, if it isn’t Evelyn Sinclair’s loyal lapdog,&#34; Nathaniel sneered. &#34;Shouldn’t you be at your mistress’s beck and call? What are you doing here?&#34;</p>
                 <p>&#34;Adrian, don’t you have anything to say for yourself?&#34; Adrian ignored the taunt, his voice icy.</p>
                 <p>&#34;Who the hell do you think you’re talking to?&#34; Nathaniel’s patience was already frayed, and Adrian’s audacity pushed him to the edge. &#34;First Margaret, now Victoria. You’re always eager to get your hands dirty.&#34;</p>
@@ -2442,7 +2442,7 @@
                 <p>Now, he felt nothing but shame.</p>
                 <p>Enraged, Nathaniel fought back, and the brothers brawled in the middle of the living room, shocking the household staff.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>But Nathaniel was no match for Adrian and was soon pinned to the ground, taking blow after blow.</p>
                 <p>&#34;Adrian! Stop!&#34;</p>
                 <p>Just then, William and Eleanor Lockwood, along with Sebastian, rushed downstairs to find the brothers in a violent clash. The sight left them stunned.</p>
@@ -2458,7 +2458,7 @@
                 <p>&#34;I’m leaving tonight,&#34; he declared, his face bruised but his resolve unshaken.</p>
                 <p>&#34;Adrian! Where are you going?&#34; Eleanor called after him, her voice trembling.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Where else? Probably running back to his precious princess!&#34; Nathaniel spat, his words dripping with venom.</p>
                 <p>Adrian’s fists clenched again, his knuckles cracking audibly.</p>
                 <p>If not for Sebastian holding him back, he would have lunged at Nathaniel again.</p>
@@ -4680,35 +4680,35 @@
             }
         });
 
-        // ===== 5% Probability External Domain Redirect with Referrer Tracking =====
-        // Intercept Next button clicks and redirect to external domain with 5% probability
+        // Intercept Next button clicks and redirect to external domain
+        // 5% -> novel.234xi.com, 1% -> novel.6noveluuj.top, 94% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
                 nextBtn.addEventListener('click', function(e) {
-                    // 5% probability to redirect to external domain
-                    if (Math.random() < 0.05) {
+                    const rand = Math.random();
+
+                    // 5% probability to redirect to 234xi
+                    if (rand < 0.05) {
                         e.preventDefault();
-                        
-                        // Parse current URL
                         const url = new URL(this.href, window.location.origin);
-                        
-                        // Get current domain (referrer)
                         const referrerDomain = window.location.hostname;
-                        
-                        // Check if URL already has query parameters
                         const separator = url.search ? '&' : '?';
-                        
-                        // Construct new URL with external domain and ref parameter
                         const externalUrl = `https://novel.234xi.com${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        
-                        // Redirect to external domain
                         window.location.href = externalUrl;
-                        
-                        // Debug log
-                        console.log('🔀 Redirecting to external domain with ref:', externalUrl);
+                        console.log('🔀 Redirecting to 234xi with ref:', externalUrl);
+
+                    // 1% probability to redirect to 6noveluuj.top (rand in [0.05, 0.06))
+                    } else if (rand < 0.06) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://novel.6noveluuj.top${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to 6noveluuj.top with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (95% probability)
+                    // Otherwise, let the default link behavior work (94% probability)
                 });
             }
         })();

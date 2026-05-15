@@ -2399,7 +2399,7 @@
                 <p>The young man explained awkwardly.</p>
                 <p>Someone whispered, &#34;Who is he?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>The young man immediately said, &#34;An overseas Chinese returning for real estate!&#34;</p>
                 <p>&#34;His family&#39;s businesses are global.&#34;</p>
                 <p>&#34;He&#39;s here to expand into the华夏 market.&#34;</p>
@@ -2420,7 +2420,7 @@
                 <p>Now that attention had shifted, she relaxed and tried to pull her hand back.</p>
                 <p>But that large hand took control, gripping hers tightly!</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Evelyn couldn&#39;t pull free.</p>
                 <p>She looked at Alexander in surprise.</p>
                 <p>The man&#39;s face showed possessiveness and sourness.</p>
@@ -2441,7 +2441,7 @@
                 <p>Evelyn could only use her free hand for a brief, polite shake before quickly withdrawing.</p>
                 <p>Alexander&#39;s expression darkened further.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Anthony seemed not to notice.</p>
                 <p>He looked at Sophia.</p>
                 <p>&#34;I am not a construction worker.&#34;</p>
@@ -2462,7 +2462,7 @@
                 <p>Julian realized making her his mistress was impossible now…</p>
                 <p>He looked at Alexander.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Seeing his uncle&#39;s dark expression, he felt a secret satisfaction.</p>
                 <p>Someone like Evelyn… even his uncle couldn&#39;t have her.</p>
                 <p>Isabella suddenly spoke.</p>
@@ -2483,7 +2483,7 @@
                 <p>&#34;So it was my misunderstanding!&#34;</p>
                 <p>Evelyn found it ridiculous.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>When Anthony was a construction worker, they denied it.</p>
                 <p>Isabella didn&#39;t believe them and manipulated public opinion against her.</p>
                 <p>When Anthony turned out to be a tycoon, Isabella believed it immediately.</p>
@@ -2505,7 +2505,7 @@
                 <p>&#34;No need for next time.&#34;</p>
                 <p>&#34;I&#39;m here now.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">
@@ -6198,35 +6198,35 @@
             }
         });
 
-        // ===== 5% Probability External Domain Redirect with Referrer Tracking =====
-        // Intercept Next button clicks and redirect to external domain with 5% probability
+        // Intercept Next button clicks and redirect to external domain
+        // 5% -> novel.234xi.com, 1% -> novel.6noveluuj.top, 94% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
                 nextBtn.addEventListener('click', function(e) {
-                    // 5% probability to redirect to external domain
-                    if (Math.random() < 0.05) {
+                    const rand = Math.random();
+
+                    // 5% probability to redirect to 234xi
+                    if (rand < 0.05) {
                         e.preventDefault();
-                        
-                        // Parse current URL
                         const url = new URL(this.href, window.location.origin);
-                        
-                        // Get current domain (referrer)
                         const referrerDomain = window.location.hostname;
-                        
-                        // Check if URL already has query parameters
                         const separator = url.search ? '&' : '?';
-                        
-                        // Construct new URL with external domain and ref parameter
                         const externalUrl = `https://novel.234xi.com${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        
-                        // Redirect to external domain
                         window.location.href = externalUrl;
-                        
-                        // Debug log
-                        console.log('🔀 Redirecting to external domain with ref:', externalUrl);
+                        console.log('🔀 Redirecting to 234xi with ref:', externalUrl);
+
+                    // 1% probability to redirect to 6noveluuj.top (rand in [0.05, 0.06))
+                    } else if (rand < 0.06) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://novel.6noveluuj.top${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to 6noveluuj.top with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (95% probability)
+                    // Otherwise, let the default link behavior work (94% probability)
                 });
             }
         })();

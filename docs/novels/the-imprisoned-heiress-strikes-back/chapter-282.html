@@ -2387,7 +2387,7 @@
                 <p>Victor tilted his head, considering.</p>
                 <p>Vanessa&#39;s nails dug into her palms. No. This wasn&#39;t part of the deal.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Evelyn pressed on, her gaze unyielding. &#34;Or you could be stupid. Your choice.&#34;</p>
                 <p>A slow grin spread across Victor&#39;s face.</p>
                 <p>&#34;Now that,&#34; he murmured, &#34;is interesting.&#34;</p>
@@ -2396,7 +2396,7 @@
                 <p>Evelyn&#39;s lips curled into a dangerous smile. &#34;The price depends entirely on how much her husband values her.&#34;</p>
                 <p>Victor frowned, scratching his stubbled chin. &#34;What kind of game are you playing?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Just take my phone and redial the last number she called,&#34; Evelyn commanded, her voice laced with steel.</p>
                 <p>Victor hesitated, sensing the shift in atmosphere. &#34;Why your phone? Will her husband answer? What&#39;s your relationship with him?&#34;</p>
                 <p>Evelyn&#39;s laugh was cold. &#34;Our relationship doesn&#39;t matter. What matters is that her so-called husband is the crown prince of Cresthaven.&#34;</p>
@@ -2405,7 +2405,7 @@
                 <p>Alexander&#39;s warm voice filled the abandoned warehouse, laced with hopeful surprise. &#34;Evelyn? You&#39;re calling me?&#34;</p>
                 <p>Vanessa&#39;s blood ran cold. She&#39;d recognize that voice anywhere.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>A sharp pang of humiliation twisted inside her.</p>
                 <p>Evelyn is doing this on purpose! She’s making a fool of me in front of everyone!</p>
                 <p>Ethan answered Evelyn’s call instantly.</p>
@@ -2414,7 +2414,7 @@
                 <p>Ethan’s jaw clenched. Hearing the unfamiliar, mocking voice, his tone turned icy. &#34;Who the hell is this?&#34;</p>
                 <p>&#34;Your granddaddy!&#34; Victor sneered, relishing the moment.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>His men erupted into cruel laughter around him.</p>
                 <p>In that instant, Ethan realized the gravity of the situation.</p>
                 <p>Evelyn’s in danger.</p>
@@ -5526,35 +5526,35 @@
             }
         });
 
-        // ===== 5% Probability External Domain Redirect with Referrer Tracking =====
-        // Intercept Next button clicks and redirect to external domain with 5% probability
+        // Intercept Next button clicks and redirect to external domain
+        // 5% -> novel.234xi.com, 1% -> novel.6noveluuj.top, 94% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
                 nextBtn.addEventListener('click', function(e) {
-                    // 5% probability to redirect to external domain
-                    if (Math.random() < 0.05) {
+                    const rand = Math.random();
+
+                    // 5% probability to redirect to 234xi
+                    if (rand < 0.05) {
                         e.preventDefault();
-                        
-                        // Parse current URL
                         const url = new URL(this.href, window.location.origin);
-                        
-                        // Get current domain (referrer)
                         const referrerDomain = window.location.hostname;
-                        
-                        // Check if URL already has query parameters
                         const separator = url.search ? '&' : '?';
-                        
-                        // Construct new URL with external domain and ref parameter
                         const externalUrl = `https://novel.234xi.com${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        
-                        // Redirect to external domain
                         window.location.href = externalUrl;
-                        
-                        // Debug log
-                        console.log('🔀 Redirecting to external domain with ref:', externalUrl);
+                        console.log('🔀 Redirecting to 234xi with ref:', externalUrl);
+
+                    // 1% probability to redirect to 6noveluuj.top (rand in [0.05, 0.06))
+                    } else if (rand < 0.06) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://novel.6noveluuj.top${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to 6noveluuj.top with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (95% probability)
+                    // Otherwise, let the default link behavior work (94% probability)
                 });
             }
         })();

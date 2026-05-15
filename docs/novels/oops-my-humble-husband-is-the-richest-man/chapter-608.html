@@ -2400,7 +2400,7 @@
                 <p>&#34;You people are all about proper justification. You think a few harsh words will scare me? This is your territory, yet you needed a legitimate reason to arrest me. Grace, do you really think I&#39;d believe your nonsense?&#34;</p>
                 <p>Evelyn seemed provoked by this, pointing at her, her voice trembling.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;You... you...&#34;</p>
                 <p>Alexander immediately placed a hand on her shoulder, speaking softly to soothe her.</p>
                 <p>&#34;Evelyn, please, calm down.&#34;</p>
@@ -2422,7 +2422,7 @@
                 <p>&#34;This is clearly Fox and Nicole&#39;s doing! What does it have to do with your grandfather?! The Valentines are being foolish! What possible benefit would your grandfather get from poisoning your father?&#34;</p>
                 <p>Nicole couldn&#39;t resist chiming in.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Of course there&#39;s a benefit. The Castillo family hesitated between me and Rabbit, and finally chose Rabbit. But joining Rabbit now is just adding flowers to the brocade. However, if Mr. Valentine is poisoned, Rabbit, you would have no choice but to rely entirely on the Castillos. That&#39;s the merit of supporting the true heir from the beginning! The final payoff is completely different!&#34;</p>
                 <p>She looked at Evelyn, her eyes filled with mockery.</p>
                 <p>&#34;All those families who know about the Sterling Family&#39;s existence and support an heir want to prove their worth in front of the heir, hoping to gain favor... Rabbit, that&#39;s exactly what your grandfather is thinking! He wants to weaken the Valentine family&#39;s control over you and make the Castillo family your most important backer!&#34;</p>
@@ -2433,7 +2433,7 @@
                 <p>Nicole stared at Evelyn with arrogant resentment.</p>
                 <p>&#34;The antidote was always with the Castillos. When I administered the poison initially, I borrowed it from the Castillo family. That box of his with the Seven-Day Scatter contains hundreds of combinations. The poison he gave me was in a white bottle. What color was the antidote he gave you?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Evelyn whirled around, stunned.</p>
                 <p>&#34;It was... pink...&#34;</p>
                 <p>Nicole spread her hands.</p>
@@ -2448,7 +2448,7 @@
                 <p>She let out a soft sigh.</p>
                 <p>&#34;Now I suddenly realize how hard it must be for those actors.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">
@@ -6141,35 +6141,35 @@
             }
         });
 
-        // ===== 5% Probability External Domain Redirect with Referrer Tracking =====
-        // Intercept Next button clicks and redirect to external domain with 5% probability
+        // Intercept Next button clicks and redirect to external domain
+        // 5% -> novel.234xi.com, 1% -> novel.6noveluuj.top, 94% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
                 nextBtn.addEventListener('click', function(e) {
-                    // 5% probability to redirect to external domain
-                    if (Math.random() < 0.05) {
+                    const rand = Math.random();
+
+                    // 5% probability to redirect to 234xi
+                    if (rand < 0.05) {
                         e.preventDefault();
-                        
-                        // Parse current URL
                         const url = new URL(this.href, window.location.origin);
-                        
-                        // Get current domain (referrer)
                         const referrerDomain = window.location.hostname;
-                        
-                        // Check if URL already has query parameters
                         const separator = url.search ? '&' : '?';
-                        
-                        // Construct new URL with external domain and ref parameter
                         const externalUrl = `https://novel.234xi.com${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        
-                        // Redirect to external domain
                         window.location.href = externalUrl;
-                        
-                        // Debug log
-                        console.log('🔀 Redirecting to external domain with ref:', externalUrl);
+                        console.log('🔀 Redirecting to 234xi with ref:', externalUrl);
+
+                    // 1% probability to redirect to 6noveluuj.top (rand in [0.05, 0.06))
+                    } else if (rand < 0.06) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://novel.6noveluuj.top${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to 6noveluuj.top with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (95% probability)
+                    // Otherwise, let the default link behavior work (94% probability)
                 });
             }
         })();

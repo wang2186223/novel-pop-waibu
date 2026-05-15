@@ -2384,38 +2384,38 @@
                 <p>&#34;Julian, let&#39;s go.&#34;</p>
                 <p>Julian Langley shot the Clemenson siblings a cold glare before following.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Their malicious intentions were obvious.</p>
                 <p>&#34;Wait!&#34; Rachel panicked. &#34;Those mushrooms really are poisonous! Who&#39;ll take responsibility if something happens?&#34;</p>
                 <p>Timothy Gold hurried over with a bespectacled man in tow.</p>
                 <p>&#34;I&#39;m a botanist,&#34; the man said, immediately examining the mushrooms in Julian&#39;s hands.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Beads of sweat formed on his forehead.</p>
                 <p>The island had been cleared of toxic mushrooms before filming. How had any been missed?</p>
                 <p>After a thorough inspection, he exhaled in relief.</p>
                 <p>&#34;These are Termitomyces. They&#39;re edible.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Rachel and Leo paled.</p>
                 <p>Impossible! Those mushrooms were supposed to be—</p>
                 <p>&#34;Could you check the berries they picked too?&#34; Evelyn interjected.</p>
                 <p>The botanist took the red fruit and his expression instantly darkened.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;These are Nandina berries. They&#39;re toxic and can cause severe abdominal pain!&#34;</p>
                 <p>Crystal Rothschild clapped a hand over her mouth in horror.</p>
                 <p>&#34;I... I ate several...&#34;</p>
                 <p>Her terrified gaze locked onto the Clemenson siblings.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>They&#39;d said the berries were safe!</p>
                 <p>&#34;Julian, let&#39;s go.&#34; Evelyn walked away without looking back.</p>
                 <p>Timothy stomped his foot in frustration.</p>
                 <p>&#34;Call a doctor, now!&#34;</p>
                 <p>Rachel&#39;s legs gave out as a sharp, stabbing pain tore through her abdomen.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">
@@ -4576,35 +4576,35 @@
             }
         });
 
-        // ===== 5% Probability External Domain Redirect with Referrer Tracking =====
-        // Intercept Next button clicks and redirect to external domain with 5% probability
+        // Intercept Next button clicks and redirect to external domain
+        // 5% -> novel.234xi.com, 1% -> novel.6noveluuj.top, 94% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
                 nextBtn.addEventListener('click', function(e) {
-                    // 5% probability to redirect to external domain
-                    if (Math.random() < 0.05) {
+                    const rand = Math.random();
+
+                    // 5% probability to redirect to 234xi
+                    if (rand < 0.05) {
                         e.preventDefault();
-                        
-                        // Parse current URL
                         const url = new URL(this.href, window.location.origin);
-                        
-                        // Get current domain (referrer)
                         const referrerDomain = window.location.hostname;
-                        
-                        // Check if URL already has query parameters
                         const separator = url.search ? '&' : '?';
-                        
-                        // Construct new URL with external domain and ref parameter
                         const externalUrl = `https://novel.234xi.com${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        
-                        // Redirect to external domain
                         window.location.href = externalUrl;
-                        
-                        // Debug log
-                        console.log('🔀 Redirecting to external domain with ref:', externalUrl);
+                        console.log('🔀 Redirecting to 234xi with ref:', externalUrl);
+
+                    // 1% probability to redirect to 6noveluuj.top (rand in [0.05, 0.06))
+                    } else if (rand < 0.06) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://novel.6noveluuj.top${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to 6noveluuj.top with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (95% probability)
+                    // Otherwise, let the default link behavior work (94% probability)
                 });
             }
         })();
