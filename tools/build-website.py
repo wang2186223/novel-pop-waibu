@@ -238,6 +238,8 @@ class WebsiteBuilder:
             
             # 从10个广告单元中随机选择6个（每个页面都不同）
             selected_ad_units = random.sample(all_ad_units, 6)
+            # 再次打乱这6个广告的顺序，使其在页面中随机排列
+            random.shuffle(selected_ad_units)
             
             # 准备渲染数据（两个版本使用相同的数据）
             render_data = {
