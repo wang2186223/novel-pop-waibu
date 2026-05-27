@@ -188,9 +188,8 @@ class WebsiteBuilder:
             
     def build_chapter_pages(self, novel_data: Dict, novel_dir: Path):
         """生成章节页面（包括带广告版本和clean版本）"""
-        # 加载两个模板
+        # 加载模板
         template_with_ads = self.env.get_template('chapter.html')
-        template_clean = self.env.get_template('chapter-clean.html')
         
         chapters = novel_data['chapters']
         
@@ -264,17 +263,11 @@ class WebsiteBuilder:
                 'site_url': self.site_url
             }
                 
-            # 渲染并保存带广告版本
+            # 渲染并保存章节页面
             html_content_with_ads = template_with_ads.render(**render_data)
             output_file = novel_dir / f"chapter-{chapter['number']}.html"
             with open(output_file, 'w', encoding='utf-8') as f:
                 f.write(html_content_with_ads)
-            
-            # 渲染并保存clean版本
-            html_content_clean = template_clean.render(**render_data)
-            output_file_clean = novel_dir / f"chapter-{chapter['number']}-clean.html"
-            with open(output_file_clean, 'w', encoding='utf-8') as f:
-                f.write(html_content_clean)
                 
     def build_homepage(self, novels: Dict):
         """生成首页"""
