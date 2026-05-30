@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2319,7 +2399,7 @@
                 <p>This situation couldn&#39;t continue. Perhaps a specialist team could improve Isabella&#39;s condition.</p>
                 <p>Back in the room, Isabella had barely swallowed two bites when something extraordinary happened.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Where darkness had reigned, a sudden flash of light appeared.</p>
                 <p>Then, gradually, her surroundings came into focus...</p>
                 <p>Could she... see again?</p>
@@ -2333,7 +2413,7 @@
                 <p>Why had her vision returned so suddenly?</p>
                 <p>After a moment&#39;s thought, Isabella decided to keep pretending.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Blindness had its advantages - it kept Alexander by her side these past days.</p>
                 <p>Familiarity breeds affection, after all. Given enough time, surely Alexander would develop feelings for her.</p>
                 <p>When Alexander returned, he announced, &#34;I&#39;ve arranged for a specialist team. They&#39;ll examine you in the coming days.&#34;</p>
@@ -2347,7 +2427,7 @@
                 <p>Seeing Alexander&#39;s call, she answered immediately. &#34;Yes?&#34;</p>
                 <p>&#34;You met with Dominic this afternoon?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>A soft &#34;mm-hmm&#34; preceded her curious question. &#34;How did you know?&#34;</p>
                 <p>&#34;Someone sent me photos of you two together.&#34;</p>
                 <p>Evelyn stiffened. &#34;Were we holding hands?&#34;</p>
@@ -2361,7 +2441,7 @@
                 <p>Evelyn dreaded conflict between Alexander and Dominic.</p>
                 <p>Dominic was unpredictable - if he could betray his own brother, what might he do to Alexander?</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>In a battle between rule-follower Alexander and ruthless Dominic, Evelyn feared for her husband&#39;s safety.</p>
                 <p>&#34;It was just a chance meeting outside the hospital,&#34; she explained softly. &#34;The photos must show misleading angles.&#34;</p>
                 <p>&#34;Really?&#34; Alexander&#39;s voice remained deep. &#34;But—&#34;</p>
@@ -2375,7 +2455,7 @@
                 <p>Her silence spoke volumes.</p>
                 <p>Through the phone, Evelyn heard wind rushing past Alexander.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Then his breathing quickened.</p>
                 <p>&#34;What are you doing?&#34; she asked sharply.</p>
                 <p>&#34;Be ready in twenty minutes. Open the door at Hawthorne Estate.&#34;</p>
@@ -2390,7 +2470,7 @@
                 <p>Alexander&#39;s rapid breathing filled the line.</p>
                 <p>His deep voice resonated through the receiver. &#34;Evelyn, nothing else matters. You&#39;re my wife.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

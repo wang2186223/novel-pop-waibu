@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,14 +2392,14 @@
                 <p>Standing before the house, memories flooded her mind. After all, she hadn’t visited the place since moving out.</p>
                 <p>A brief hesitation hung in the air before she pressed the doorbell.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>The heated argument inside was audible even before the door opened.</p>
                 <p>It seemed like her adoptive parents weren’t alone–Sharon’s voice joined the fray.</p>
                 <p>Mia’s heart sank to the pit of her stomach as she wondered why Sharon would be there.</p>
                 <p>Contemplating a quick escape, Holly swung the door open with a smile. “Mrs. Barrett, you’re finally back!</p>
                 <p>Come on in.”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Suppressing her unease, Mia entered and whispered, “What is she doing here?”</p>
                 <p>“I have no idea. Anyways, things are complicated now,” Holly replied.</p>
                 <p>Fully aware of the complexity of the situation, Mia acknowledged that if Holly hadn’t opened the door promptly, she might have turned away.</p>
@@ -2333,21 +2413,21 @@
                 <p>Sharon had initially arrived with plans to redecorate the house for Timothy’s second marriage.</p>
                 <p>Never in her wildest dream did she expect Mary and Bob’s unexpected visit.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Mia sighed inwardly before addressing Mia with a frosty gaze. “There’s something I haven’t disclosed. Timothy and I are divorced.”</p>
                 <p>+15 BONOS</p>
                 <p>“What?” Mary’s expression soured.</p>
                 <p>“Mia Bowen, why keep such huge news from us? Why divorce someone as wealthy as him? Have you lost your mind? Mary lamented.</p>
                 <p>Sharon sneered, “Must I remind you that someone like Mia isn’t fit for my son? Especially with her embarrassing parents. I’m relieved they divorced. It would have been a stain on our family if words got out.”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Mia, who already hard a taste of Sharon’s sharp tongue before, turned away, pretending not to hear those awful remarks.</p>
                 <p>She looked across her shoulder at her adoptive parents.“Did you hear that? I was driven out of the place because I didn’t deserve all this. I have been living elsewhere for a long time now. I hope you’ll stop coming over here. It’ll be a disturbance to others.”</p>
                 <p>Mary voiced her skepticism, “Even if you’re divorced, he must’ve given you a lot of money. Give it to us!”</p>
                 <p>Bob concurred, “This is how it plays out in dramas. You must’ve received assets during your marriage. Hand over the money, and we’ll be on our way.”</p>
                 <p>“I hate to break it to you, but I parted ways with him without receiving a single penny. I was only able to marry him because of how shameless I was back then. We signed a prenuptial agreement–I won’t get anything after the divorce. So, give up,” Mia said.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

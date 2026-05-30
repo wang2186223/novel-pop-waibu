@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,28 +2392,28 @@
                 <p>about Nord City since she lives there.”</p>
                 <p>Dominic looked at the person speaking, revealing, “Maya was adopted by our family. She’s not the true</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Ms. Lane. Everyone in Nord City knows about this. It’s not a secret.”</p>
                 <p>That was why Maya was adamant about getting married and settling down in Bern City, where no one</p>
                 <p>knew her origin.</p>
                 <p>Connor smiled meaningfully at Timothy. “Ms. Barrett, since you’ve invited our family, don’t you think you</p>
                 <p>should introduce us to others?”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Only then did Nina comprehend the situation. Still, she couldn’t fathom how Mia became the true Ms.</p>
                 <p>Lane so suddenly.</p>
                 <p>Timothy glanced at Mia, who was standing nearby in her white gown. The fact that she was surrounded</p>
                 <p>by those six men made her look like a princess.</p>
                 <p>To realize that Mia could be so dazzling was new to Timothy.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>He began, “Let us welcome our important guests, the Lanes from the Nord City, to the party. Mr. Dominic.</p>
                 <p>thank you for preparing a gift for my grandmother.”</p>
                 <p>Next, he shifted his attention to Sharon, who could only bite the bullet by saying, “Right. This is Mr. Dominic Lane, the head of the Lane family from Nord City. This is his wife, Ms. Eva.”</p>
                 <p>After learning that Mia was the true Ms. Lane, Sharon hadn’t gone outdoors. The sheer thought of Mia attending today’s party caused too much anxiety for her to get a good night’s sleep last night.</p>
                 <p>Sharon was fully aware of how badly she had treated Mia in the past, looking down upon Mia for not</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>having any power or influence.</p>
                 <p>Now, karma was here to collect its debt.</p>
                 <p>Maya was the fake princess and Mia was the real one</p>
@@ -2352,7 +2432,7 @@
                 <p>Were the Lanes planning an act of revenge for Mia?</p>
                 <p>Nina, who couldn’t put up with this anymore, looked at Sharon. “Sharon, are you just going to watch me get bullied?”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

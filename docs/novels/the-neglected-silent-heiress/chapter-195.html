@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>When Liam approached, William&#39;s associates immediately tensed, forming a protective circle around the wheelchair-bound patriarch while eyeing Liam with suspicion.</p>
                 <p>Liam merely raised an eyebrow, choosing silence over confrontation.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>William cleared his throat. &#34;It&#39;s alright,&#34; he instructed his men, then gave Liam a meaningful look. &#34;It&#39;s been too long since we last spoke properly, Liam.&#34;</p>
                 <p>Liam responded with a rare, genuine smile. &#34;Indeed. I meant to visit you at Mercy Hospital, but circumstances prevented me.&#34;</p>
                 <p>He then maneuvered William&#39;s wheelchair aside, as if finally making time for their overdue conversation.</p>
@@ -2329,7 +2409,7 @@
                 <p>Evelyn believed she&#39;d done nothing wrong. If anyone was at fault, it was Olivia for overreacting. Why did Olivia insist on staying in the city, constantly crossing paths with Liam when she was still technically married to him?</p>
                 <p>More importantly, Evelyn bitterly realized that with the Whitmore family&#39;s backing, Olivia was no longer the vulnerable orphan she once was.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>What truly unsettled Evelyn was Liam and Olivia&#39;s shared childhood history. Around her, Liam appeared indifferent to Olivia. But what if memories of their past made him fall for Olivia again? The thought was unbearable.</p>
                 <p>Overcome with emotion, Evelyn stormed toward Olivia and grabbed her wrist violently. &#34;Olivia, are you happy now? Look at you, relying on nothing but your pretty face! The Blackwoods rejected you, and soon the Whitmores will too. No one in this world wants you! You&#39;re just a parasite. That bastard child in your womb is just as unwanted as you are!&#34;</p>
                 <p>Initially, Olivia dismissed Evelyn&#39;s baseless accusations, but when the attack turned toward her unborn child, fury overtook her. She raised her hand to strike.</p>
@@ -2337,7 +2417,7 @@
                 <p>Still weakened from being drugged earlier, Olivia lacked the strength to fight back effectively.</p>
                 <p>Evelyn seemed possessed, her attacks deliberately aimed at Olivia&#39;s abdomen.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Realizing Evelyn&#39;s malicious intent, Olivia stopped resisting and curled protectively around her belly.</p>
                 <p>Fortunately, Isabella quickly intervened, pulling Evelyn away while helping Olivia up. She glared at Evelyn with undisguised contempt. &#34;Miss Hartley, you claim to despise Olivia, yet everyone can see it&#39;s you who&#39;s insecure. You mocked her as a voiceless orphan with no one to rely on. Yet this &#39;helpless mute&#39; has outshone you at every turn. Even your so-called friends are abandoning you now.&#34;</p>
                 <p>Evelyn&#39;s thoughts turned to Liam, fueling her rage. She&#39;d worked tirelessly to build connections with the Blackwood family, only to have Olivia destroy everything. Her anger was understandable.</p>
@@ -2345,7 +2425,7 @@
                 <p>She refused to be defeated by someone like Olivia.</p>
                 <p>&#34;Shut up!&#34; Evelyn screamed, having completely lost her composure.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Alexander inhaled sharply before declaring, &#34;I was willing to let you keep some dignity, but that&#39;s no longer possible. We&#39;re calling the police. Your involvement is undeniable.&#34;</p>
                 <p>&#34;You&#39;re lying!&#34; Evelyn snapped, panic creeping into her voice.</p>
                 <p>She desperately hoped someone would defend her. But as she scanned the room, only hostile stares met hers. Those who&#39;d previously hesitated to confront her now looked at her with open disdain.</p>
@@ -2357,7 +2437,7 @@
                 <p>Did Evelyn believe the child was his? Or had someone intentionally misled her?</p>
                 <p>As these thoughts swirled, Liam&#39;s gaze shifted meaningfully back to William.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2332,7 +2412,7 @@
                 <p>During those endless days when Ethan lay motionless in the hospital, Evelyn had drowned in guilt. She believed with absolute certainty that she&#39;d destroyed his life.</p>
                 <p>Back then, she&#39;d been too naive to recognize the signs.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>He had loved her.</p>
                 <p>The evening air was crisp as Evelyn found herself drawn to the hospital garden. Seeking solace, she settled by the flower beds, her fingers trembling as they hovered over the strings of her cello.</p>
                 <p>The melody she played was hauntingly tender, wrapping around her like a shroud of memories she couldn’t shake. Each note carried the weight of her grief, pulling her deeper into the fog of her thoughts.</p>
@@ -2341,7 +2421,7 @@
                 <p>She’s right, she thought numbly. Ethan nearly died because of me. What right do I have to play?</p>
                 <p>From that moment on, she abandoned the cello, locking away that part of herself—until now.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>“Back then, I stopped playing out of guilt for Ethan,” Evelyn said, turning to face Vanessa with a faint, defiant smile. “But he’s dead to me now. Why shouldn’t I play again?”</p>
                 <p>She had sacrificed her passion for Ethan once.</p>
                 <p>But Alexander’s quiet request—his longing to hear her play—had reignited something in her.</p>
@@ -2350,7 +2430,7 @@
                 <p>The room was silent.</p>
                 <p>Alexander returned to the hospital after a late-night business dinner, his tie slightly loosened from the evening&#39;s formalities.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>The sterile white walls of the infusion room greeted him, but his attention was immediately drawn to the lone figure slumped in one of the chairs.</p>
                 <p>Evelyn.</p>
                 <p>An IV needle was taped to the back of her slender hand, her head tilted to the side in restless sleep. The harsh fluorescent light above cast shadows beneath her eyes, making her look even more fragile than usual.</p>
@@ -2362,7 +2442,7 @@
                 <p>He hadn&#39;t planned on seeing her like this—vulnerable, exhausted, and completely unaware of how much it affected him.</p>
                 <p>But here they were.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

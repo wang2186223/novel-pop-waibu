@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>Evelyn Laurent had actually dared to lay hands on Beatrice!</p>
                 <p>The mere thought of it made Reginald’s blood boil.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>This time, he would ensure Beatrice was heavily guarded. Let’s see what tricks Evelyn could pull then!</p>
                 <p>But for now, he had more pressing matters to attend to.</p>
                 <p>A cold smirk curled on Reginald’s lips.</p>
                 <p>He rose slowly.</p>
                 <p>The dimly lit hall was shrouded in heavy curtains that blocked out all natural light. Even with the lamps on, the air remained thick with suffocating tension.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>With measured steps, Reginald walked toward the room at the end of the corridor.</p>
                 <p>&#34;Mr. Sullivan, have you made your decision?&#34;</p>
                 <p>Pushing the door open, he fixed a cold stare on the man inside.</p>
                 <p>The windowless chamber was illuminated only by a single dim wall lamp. At the simple table sat a man with an impassive expression.</p>
                 <p>Hearing the question, the man lifted his gaze, his eyes eerily calm.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;What exactly do you wish for me to consider, Uncle Quincy?&#34;</p>
                 <p>It was Ethan Sullivan, who had been missing for days.</p>
                 <p>Outwardly composed, his mind was a tempest of turmoil.</p>
                 <p>Reginald had ruined his proposal plans.</p>
                 <p>The moment that should have been him kneeling before Evelyn with a ring had been stolen by Reginald’s underhanded tactics.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>It all began with Xander Quincy’s invitation.</p>
                 <p>Ethan had gone without suspicion. After three years apart, catching up seemed natural.</p>
                 <p>But the moment they drank tea, both collapsed unconscious.</p>
                 <p>Reginald had drugged the tea and secretly imprisoned Ethan in this villa’s basement.</p>
                 <p>Xander was locked in the adjacent room.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>The drug’s effects lingered, leaving Ethan weak and powerless.</p>
                 <p>His phone was gone—likely discarded.</p>
                 <p>&#34;Ethan, your composure is truly admirable.&#34; Reginald clapped slowly, his eyes glinting with malice. &#34;Even now, you’re still playing dumb with me?&#34;</p>

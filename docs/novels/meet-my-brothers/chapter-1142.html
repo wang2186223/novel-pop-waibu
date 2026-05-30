@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,7 +2390,7 @@
                 <p>she directed a desperate plea at Mia.</p>
                 <p>&#34;Mia! You know about Asher&#39;s connection to the Barretts.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>please, inform Timothy that the Shelberts pose a threat to Asher. Urge him to take Asher away; leaving him with the Shelbert family could have dire consequences for his future!&#34; Unruffled, Mia firmly replied, &#34;Don&#39;t trouble yourself with these elaborate schemes. I have no intention of being your messenger. It&#39;s time to give up on that idea once and for all.&#34; The source of Luna&#39;s confidence in Mia&#39;s willingness to advocate for someone as deceitful as her remained a mystery.</p>
                 <p>&#34;Even if you remain silent, Timothy will soon uncover the truth. He won&#39;t allow Asher to suffer in the Shelbert</p>
                 <p>family! If Asher is in danger, Timothy will undoubtedly intervene to protect him.</p>
@@ -2320,7 +2400,7 @@
                 <p>&#34;Considering the circumstances, it&#39;s rather audacious of you to mention the Barrett family. But I have some uplifting news— Grandma Laura has regained consciousness.</p>
                 <p>&#34;Despite briefly lapsing back into unconsciousness, the doctors assure us that she will soon awaken permanently.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>nonce she does, all Grandma Laura needs to do is identify her assailant from years ago. That alone would condemn certain individuals to a lifetime in prison.&#34;</p>
                 <p>In an instant, Luna&#39;s face paled, her guilt evident in her expression. &#34;Are you implying Mrs. Barrett Senior has awakened?&#34; If she had truly regained consciousness, wouldn&#39;t Timothy have already taken her away? Believe it or not, the choice is yours,&#34; Mia replied firmly.</p>
                 <p>With that, Luna was escorted off.</p>
@@ -2330,7 +2410,7 @@
                 <p>Indeed, her unwavering admiration and affection for her so-called father had vanished.</p>
                 <p>Moving forward, she would have to prioritize herself and her mother.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>With Luna no longer in the picture, the focus shifted to Asher&#39;s future. Though still young, preparations needed to begin for what lay ahead.</p>
                 <p>It was clear that as Asher grew older, his father would inevitably support him.</p>
                 <p>However, there was still a decade ahead to strategize and plan.</p>
@@ -2338,7 +2418,7 @@
                 <p>With Luna eliminated, she no longer posed a threat in the future.</p>
                 <p>Now, it was Mia&#39;s turn to assert control over the situation. She addressed Jasmine, saying, &#34;Regarding Luna, I have a favor to ask. I would be grateful for your help with this.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

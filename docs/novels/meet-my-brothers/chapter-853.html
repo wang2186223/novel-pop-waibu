@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,31 +2391,31 @@
                 <p>“Really? I didn&#39;t notice.”</p>
                 <p>At that moment, Mia felt extremely anxious. With Liam now aware, it wouldn&#39;t be long before her other brothers found out as well.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Liam couldn&#39;t help but sigh. &#34;Mia, even if he&#39;s just a new bodyguard, your interaction with him seems quite intimate. He even hugged you in front of the reporters! Are you sure there&#39;s nothing more between you two?&#34;</p>
                 <p>“Liam, you have to trust me. During the signing event, I had a slip-up, and the bodyguard acted quickly to save me. Otherwise, I might have ended up in the hospital by now.&#34;</p>
                 <p>Mia swiftly shifted Liam&#39;s focus to her fall, and as expected, Liam became immediately concerned about her well-being.</p>
                 <p>&#34;Mia, I understand now. That&#39;s a relief. I had assumed you kept Timothy around as a bodyguard.”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Mia nervously chuckled and replied, &#34;Come on, Liam, that&#39;s impossible! You&#39;re overthinking things!&#34;</p>
                 <p>&#34;Alright, I was just concerned about you. That&#39;s why I called to inquire about the rumors of you and the bodyguard. But don&#39;t worry, I&#39;ll promptly arrange for the tabloids to be retracted. I don&#39;t want Dominic and the others to get the wrong idea,&#34; Liam assured her.</p>
                 <p>Mia felt a pang of guilt. &#34;Thank you for believing in me, Liam.&#34;</p>
                 <p>&#34;You&#39;re my sister, and I trust you more than anyone else. I believe everything you say,&#34; Liam replied.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>After ending the call, Mia rubbed her temples with a guilty conscience, feeling like she had let Liam down.</p>
                 <p>It seemed like another day of assuming the role of the defiant younger sister.</p>
                 <p>Peyton cautiously inquired, &#34;Did Mr. Liam figure out Mr. Barrett&#39;s identity?&#34;</p>
                 <p>&#34;He had his suspicions initially, but I convinced him it was merely a resemblance, so Liam didn&#39;t delve further.”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Peyton continued, &#34;Ms. Mia, shall we return to the hospital now, or is there another place you would prefer to go?&#34;</p>
                 <p>After all, their earlier visit to the hospital had been interrupted.</p>
                 <p>&#34;Let&#39;s head back to Meadowview Estate.&#34;</p>
                 <p>At this point, whether or not she regained her memories was not Mia&#39;s main concern.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>What she truly desired was to witness the aftermath of Timothy&#39;s altercation. It was too intriguing to pass up!</p>
                 <p>Upon reaching Meadowview Estate, several cars swiftly pulled up nearby.</p>
                 <p>A sudden unease washed over Mia. Could it be that Dominic had arrived?</p>
@@ -2345,7 +2425,7 @@
                 <p>Upon seeing the Bowens, Mia had already deduced that they had come for this specific issue.</p>
                 <p>However, she hadn&#39;t anticipated Lewis siding with Chuck as well. It seemed that birds of a feather did indeed flock together.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,25 +2393,25 @@
                 <p>Amused, Liam chanced a glance at Sharon. Disdain flashed across his eyes as he quipped. “There’s always a way to get in line–provided that you’re qualified enough to do so.”</p>
                 <p>The realization finally dawned on Shelly, rendering her speechless.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Eva chimed in magnanimously. “You are all invited to the banquet as well if you’re free by then. Mia has been staying with Barretts for the past three years, after all. I’m sure she’s on good terms with you all, so of course we’d like you to attend such a significant event.”</p>
                 <p>The socialites nodded. “O–Of course we’re coming.” Not everyone deserved a chance to visit Andrews.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Glancing over at Sharon, Eva continued, “Mrs. Barrett, I hope you’ll kindly grace us with your presence as well. Guests will be accommodated at the hotel. Didn’t you miss the reservation before? Now’s your chance to experience it.”</p>
                 <p>Sharon looked like someone had just punched the living daylights out of her. She forced a smile and replied, “It depends. I might not be free by then.”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>“My schedule is definitely open,” Shelly added instantly, earning a glare from Sharon.</p>
                 <p>Sharon thought Shelly lacked dignity. Couldn’t she tell that Eva was clearly mocking their family? Why was she so eager to be humiliated?</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Sharon’s interest in Andrews dissipated quickly. Infuriated, she was determined to not let Mia remarry Timothy. The last thing she wanted was to let Mia take complete charge of the household, subsequently</p>
                 <p>causing her to lose all her authority.</p>
                 <p>The others began discussing the upcoming banquet that was going to be held at Andrews, which was located in Nord City. The upper crust had heard of it, but their attempts to book a reservation there were usually in vain, let alone hosting a huge banquet at Andrews. Only prominent figures deserved such opportunities despite the rare occasions of Andrews catering to such banquets.</p>
                 <p>Almost all the socialites swooned over Mia and Eva. Sharon was seething, because no one bothered with her except Tabitha and Shelly.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

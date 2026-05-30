@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>&#34;Is this how you treat all your business partners?&#34; she taunted, circling him like a predator. &#34;No wonder Titan Capital&#39;s stocks are plummeting.&#34;</p>
                 <p>The insult hit its mark. Alexander&#39;s nostrils flared as he advanced toward her, his expensive shoes crushing the fallen rose petals beneath them.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Evelyn braced herself, ready for whatever came next. This wasn&#39;t over - not by a long shot.</p>
                 <p>The air crackled with tension as Ryan Fletcher cracked his knuckles. &#34;Still sore from yesterday&#39;s beating? Bring it on, cousin! I&#39;m ready for round two!&#34;</p>
                 <p>Chaos erupted instantly in the office space. Vanessa Hart fluttered around them like a distressed butterfly, her shrill voice cutting through the noise.</p>
@@ -2321,7 +2401,7 @@
                 <p>Vanessa, failing to separate the brawling men, whirled on Evelyn with venom in her eyes. &#34;Satisfied now, Evelyn? Two men destroying the office over you? The tabloids will have a field day with this! How will you show your face at Titan Capital tomorrow?&#34;</p>
                 <p>Evelyn didn&#39;t flinch. With deliberate calm, she strode to the door and slammed it shut with such force that the glass panes rattled. The disappointed audience outside scattered like startled pigeons.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Returning to the scene, she scooped up the ruined bouquet from the floor - its petals now scattered like battlefield casualties. Without hesitation, she swung the battered flowers, smacking both men squarely on their backsides.</p>
                 <p>&#34;If you&#39;re determined to act like animals,&#34; she said icily, &#34;take it to the zoo. Every time you pull this stunt, people assume you&#39;re competing for my attention.&#34; The crushed roses dripped from her grip like bloodied evidence. &#34;And gentlemen? You lost that privilege long ago.&#34;</p>
                 <p>The tension between Ethan Caldwell and Ryan Fletcher dissipated instantly.</p>
@@ -2358,7 +2438,7 @@
                 <p>The car hadn&#39;t even merged into traffic when Ryan&#39;s chuckle filled the space between them. &#34;Didn&#39;t realize you were in such a hurry to be alone with me.&#34;</p>
                 <p>Evelyn&#39;s grip on the steering wheel tightened. This man would be the death of her.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

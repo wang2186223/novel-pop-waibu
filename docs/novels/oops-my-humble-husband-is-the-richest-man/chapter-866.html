@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>&#34;Eloping lovers.&#34; Alexander looked at her. &#34;You caught the eye of a crime boss. I helped you escape. Now he&#39;s chasing us. We have to abandon ship, drift to the Sterling Family&#39;s island, become two homeless drifters.&#34;</p>
                 <p>Evelyn&#39;s lips twitched. &#34;That&#39;s... too far-fetched, isn&#39;t it? A crime boss fancied me?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;With your face, it&#39;s not strange.&#34; Alexander chuckled. &#34;With my face, you&#39;d be willing to elope with me, also not strange. Besides—&#34;</p>
                 <p>He pointed to the distant cruise ship fading into the distance.</p>
                 <p>&#34;The crime boss is on that ship.&#34;</p>
@@ -2332,7 +2412,7 @@
                 <p>The gunshot exploded across the sea.</p>
                 <p>Evelyn&#39;s pupils contracted sharply. &#34;Alexander! What are you doing?!&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>She lunged forward, saw blood gushing out, and her eyes instantly reddened. &#34;Are you insane?!&#34;</p>
                 <p>They were at sea. What if he was injured?!</p>
                 <p>Alexander merely smiled faintly. &#34;Since it&#39;s a crime boss, there must be a gun.&#34;</p>
@@ -2341,7 +2421,7 @@
                 <p>He ruffled Evelyn&#39;s hair.</p>
                 <p>&#34;It&#39;s the perfect excuse. I&#39;m fine.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>He paused, then added, &#34;But I can&#39;t call you Evelyn anymore. The name is too obvious. We need new names.&#34;</p>
                 <p>Evelyn wiped her eyes and snorted. &#34;Then call me Evelyn.&#34;</p>
                 <p>&#34;Call me Alexander?&#34;</p>
@@ -2350,7 +2430,7 @@
                 <p>They looked at each other and suddenly both laughed.</p>
                 <p>Evelyn shook her head. &#34;Sounds awful. Let&#39;s drop the surnames.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Okay.&#34; Alexander said gently. &#34;With your given name, bearing my surname.&#34;</p>
                 <p>Evelyn leaned against his shoulder, pointing at his leg. &#34;Doesn&#39;t it hurt? You still have the mind for this.&#34;</p>
                 <p>&#34;I&#39;m used to it.&#34; Alexander said. &#34;Fought pirates before. A bullet nearly hit my heart. I survived.&#34;</p>
@@ -2364,7 +2444,7 @@
                 <p>Just as the thought formed, a massive wave struck.</p>
                 <p>The boat capsized.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

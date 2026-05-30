@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,21 +2392,21 @@
                 <p>&#34;That&#39;s right. I made arrangements for someone to bring Grandma from our hometown to Kretol.&#34;</p>
                 <p>Ricky clenched his jaw, nearly raising his voice, but. he held back his anger since Lainey was here.&#34;Why didn&#39;t you tell me before you brought her here?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Why do I need to do that? Grandma&#39;s not getting any younger. She deserves to come to Kretol from time to time and enjoy the life here.&#34;</p>
                 <p>Janessa couldn&#39;t hold her tongue anymore and said sarcastically,&#34;SOcaring,are you? Why didn&#39;t you invite her to your own house then?&#34; Amelia stared at her.&#34;Janessa, have you really forgotten this house still belongs to me? There&#39;s nothing wrong with letting my grandmother stay here. It isn&#39;t my place to judge, but shouldn&#39;t you, as her daughter-in-law, show a little more care for her? When my mother was alive, she always invited Grandma over.&#34;</p>
                 <p>&#34;Don&#39;t even try to compare her to your mother! Your mother was born for this lifestyle. She can&#39;t even hold a candle to your mother,&#34; Lainey said.</p>
                 <p>Listening to the exchange, Janessa fought the urge to storm over and hit them both, but Ricky&#39;s presence forced her to grit her teeth and endure.</p>
                 <p>In fact, Lainey never truly liked Janessa, nor did she care much for Katrina.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Still, Katrina&#39;s fortune and generosity meant Lainey never dared cross her, even if she didn&#39;t like her.</p>
                 <p>Now that Katrina was gone, Lainey believed all the Flynn family wealth would eventually fall into Ricky&#39;s lap.</p>
                 <p>And the idea that Amelia would marry into wealth made Lainey soften her attitude toward her slightly.</p>
                 <p>Long ago, Amelia had seen her grandmother&#39;s true colors-her loveof riches always outweighed any family loyalty.</p>
                 <p>She might not hold much affection for her grandmother, but she did not hesitate to use her to get under Janessa&#39;s skin.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Without another word, Ricky decided he had had enough and motioned for Amelia to follow him inside,leaving Janessa behind with Lainey.</p>
                 <p>Stepping into the study, Amelia steadied herself, sure that Ricky was about to scold her.</p>
                 <p>But to her surprise, Ricky asked if she liked the birthday gift he had prepared for her.</p>
@@ -2340,7 +2420,7 @@
                 <p>It had struck Amelia as odd to see Ricky, always tight-fisted, suddenly acting generous. But now,she realized he had an ulterior motive.</p>
                 <p>Fixing him with a cool stare, she responded, &#34;Just a friend. I can&#39;t reveal his identity.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Given Wyatt&#39;s status, she kept things vague.</p>
                 <p>Ricky, however, took her guarded reply as a sign she was unwilling to tell him the truth. His attitude flipped in a heartbeat. &#34;Fine, don&#39;t tell me anything then.&#34;</p>
                 <p>Even though she knew how slippery and self-serving Ricky could be, Amelia couldn&#39;t resist a small, mocking smile at how quickly he had changed his attitude this time.</p>
@@ -2350,7 +2430,7 @@
                 <p>&#34;I&#39;d advise you to forget about that project if you want the Flynn Group to survive in Kretol,&#34; Amelia interjected, unable to keep quiet when she heard Ricky mention her mother.</p>
                 <p>Ricky&#39;s face darkened at her blunt warning. Seeing that, Amelia pushed down her frustration and continued, &#34;You understand the weight the Stewart Group carries around here. Sure, that project looks tempting, but ask yourself-can the Flynn Group actually handle it with its current situation?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2321,7 +2401,7 @@
                 <p>&#34;Wh-What&#39;s wrong?&#34; | didn&#39;t even know who I was asking.</p>
                 <p>&#34;I need the room,&#34; Jaris said to the others. &#34;I&#39;m about to take off my shirt, and I can&#39;t do that with everyone staring at me.&#34; There was a smug grin on his face. For a moment, I wondered if he was really in pain.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Guinevere nodded at me before exiting the room with two doctors. Marta stayed back. &#34;I told you there was no need for this, Jaris. I could&#39;ve had your wound checked already.&#34; The hurt in her voice was unmistakable.</p>
                 <p>When he looked at her, his eyes seemed exhausted.&#34;I know you&#39;ve seen me shirtless, but I think we only need one doctor in the room.&#34;</p>
                 <p>I watched her hands tighten into fists. She glared at me like I was the one who just asked her to leave. But finally, she angrily left.</p>
@@ -2337,7 +2417,7 @@
                 <p>I took a wet swab and started cleaning the blood.I was curious to know who stabbed him. But I&#39;d rather cut my tongue than ask Jaris that.</p>
                 <p>I maintained a serious face as I worked on the wound Right now, I was here as his doctor, not the mate he terribly hated.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;I don&#39;t think you&#39;re of any use here,&#34; he said dismissively to the nurses.</p>
                 <p>I stepped back and furrowed my brows at him.Who did he think he was to dismiss my nurses?</p>
                 <p>&#34;I&#39;m-&#34; But before I could complete my statement,they were already going out the door.</p>
@@ -2356,7 +2436,7 @@
                 <p>&#34;This is a professional space, Alpha Jaris.&#34; I kept my voice as even as I could.</p>
                 <p>&#34;We&#39;re the only ones here, Lyric. Answer me.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

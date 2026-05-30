@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>At first, Richard missed the implication. Then realization struck like lightning. He whirled on Catherine, his face darkening with barely contained fury. &#34;You fool! What have you done?&#34;</p>
                 <p>Catherine&#39;s eyes darted nervously before she lifted her chin in defiance. &#34;How dare you accuse me based on his insinuations? After all these years together, raising your child, caring for your mother - is this how you repay my loyalty? I know nothing about business matters! Why point fingers at me?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Her voice broke as tears streamed down her face. In her distress, she suddenly noticed Olivia standing nearby.</p>
                 <p>A malicious glint entered Catherine&#39;s eyes as she pointed accusingly at Olivia. &#34;Or maybe it&#39;s Olivia who&#39;s meddling! She&#39;s always felt wronged by the Winslows. Lately she&#39;s been cozying up to the Whitmores. She&#39;s clearly trying to stir up trouble where none existed!&#34;</p>
                 <p>Richard&#39;s expression darkened further as his gaze flickered between Olivia and Catherine.</p>
                 <p>Suddenly, Olivia gasped in pain and looked down.</p>
                 <p>Catherine&#39;s daughter had wriggled free and was now stabbing Olivia&#39;s thigh with a sharp hairpin she&#39;d somehow gotten hold of.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Stupid mute! Dirty slut!&#34; the child spat with shocking venom, her sweet face contorted with hatred far beyond her years.</p>
                 <p>Olivia&#39;s hands shook with rage - both at the child&#39;s cruel words and at Catherine for poisoning such a young mind. Gritting her teeth against the pain, she gently pushed the girl away.</p>
                 <p>The child fell dramatically to the floor and immediately began wailing.</p>
                 <p>&#34;You bitch!&#34; Catherine screamed, lunging at Olivia with her hand raised.</p>
                 <p>But Liam moved faster, catching Catherine&#39;s wrist in an iron grip before shoving her away. She stumbled and fell hard, biting back a scream under Liam&#39;s murderous glare.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Seeing the blood staining Olivia&#39;s dress, Liam&#39;s expression turned arctic. He turned to Richard, whose face had gone pale with shock.</p>
                 <p>&#34;If you refuse to believe your precious wife is behind this,&#34; Liam said in a voice like frozen steel, &#34;I can produce the evidence right now.&#34;</p>
                 <p>He took a threatening step forward. &#34;And if you&#39;re still blind to the truth, I&#39;ll be forced to discuss with the Winslow elders whether someone so easily deceived should remain in charge of our international logistics division.&#34;</p>
                 <p>Without waiting for a response, Liam took Olivia&#39;s hand and led her from the room.</p>
                 <p>Left alone with Catherine, Richard backhanded her across the face with enough force to snap her head back. &#34;They have proof and you&#39;re still lying to me? Fine. We&#39;re getting divorced!&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The words hit Catherine like a physical blow. Despite her family&#39;s wealth, they lacked the Winslow name&#39;s prestige. Since marrying Richard, she&#39;d endured endless snubs due to her inferior background.</p>
                 <p>Margaret Winslow had been a constant thorn in her side, forcing Catherine to tread carefully. Only after Olivia married Liam had Catherine gained some standing - at least she could speak, unlike the mute Olivia.</p>
                 <p>Now with a daughter, Catherine had finally secured her position. A divorce would destroy everything she&#39;d worked for.</p>
                 <p>Tears streamed down Catherine&#39;s face as she confessed, &#34;It was my cousin&#39;s fault! I only found out yesterday. There was an issue with that shipment - he took his team drinking, certain nothing could go wrong after years on the job. But the truck nearly overturned and the goods were damaged.&#34;</p>
                 <p>She grasped Richard&#39;s arm desperately. &#34;The Whitmores are longtime clients - they approved the shipment without inspection. No one knows! We just need to blame them and it becomes their problem!&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Richard felt the room spin. He&#39;d once been secretly pleased when Liam married Olivia, believing their children would be mute like her - strengthening his own heir&#39;s position. He&#39;d thought Catherine superior in every way.</p>
                 <p>Now he realized Liam had the true advantage - at least his wife wasn&#39;t a complete fool like Catherine.</p>
                 <p>Richard could barely breathe through his rage. &#34;You idiot! Did you really think this could stay hidden? If Liam knows, how long before everyone knows?&#34;</p>
@@ -2351,7 +2431,7 @@
                 <p>Once in the car, Liam exchanged a meaningful glance with Sebastian.</p>
                 <p>Understanding immediately, Sebastian programmed Mercy Hospital&#39;s address into the navigation system.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2316,7 +2396,7 @@
                 <p>She took a step forward.</p>
                 <p>Isabella blocked her path.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Evelyn, are you going to see Mr. Roland?&#34; Isabella&#39;s voice was soft, but her eyes were nervous. &#34;He might not want to see you right now.&#34;</p>
                 <p>Evelyn gave her a cold look. &#34;Move.&#34;</p>
                 <p>Isabella bit her lip.</p>
@@ -2327,7 +2407,7 @@
                 <p>She took a deep breath. &#34;Evelyn, this is an important event. Don&#39;t make things difficult for Mr. Roland...&#34;</p>
                 <p>Evelyn scoffed. &#34;What gives you the right to stop me?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Isabella immediately put on a hurt expression.</p>
                 <p>Julian finally snapped out of it.</p>
                 <p>He stepped in front of Isabella, shielding her. He glared at Evelyn. &#34;Isabella is my fiancée! She&#39;s the hostess of this banquet! That&#39;s what gives her the right!&#34;</p>
@@ -2338,7 +2418,7 @@
                 <p>Evelyn had no patience for this.</p>
                 <p>She turned to leave.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Isabella suddenly grabbed her hand.</p>
                 <p>&#34;Evelyn, don&#39;t go...&#34;</p>
                 <p>Evelyn shook her off.</p>
@@ -2349,7 +2429,7 @@
                 <p>Isabella tugged at Julian&#39;s sleeve. Her voice was gentle. &#34;Julian, it&#39;s okay... I&#39;m fine. Evelyn didn&#39;t mean it. But Mr. Roland said he didn&#39;t want to see her. For the company&#39;s sake, maybe she should just leave...&#34;</p>
                 <p>Julian snorted. &#34;Isabella, you&#39;re too kind!&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>He looked at Evelyn, his tone harsh. &#34;Did you hear that? Mr. Roland doesn&#39;t want to see you! Get out on your own, before I call security!&#34;</p>
                 <p>The guests began to criticize her.</p>
                 <p>&#34;Just leave! Don&#39;t ruin the important matters!&#34;</p>
@@ -2360,7 +2440,7 @@
                 <p>The crowd murmured in agreement.</p>
                 <p>&#34;Mr. Evans is right!&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;This woman is nothing but trouble. Mr. Vance and Mr. Roland are already at odds. She&#39;s just making it worse.&#34;</p>
                 <p>&#34;Miss Ashcroft is virtuous. She helps Mr. Evans maintain his connections...&#34;</p>
                 <p>The argument grew louder.</p>
@@ -2373,7 +2453,7 @@
                 <p>He finally nodded.</p>
                 <p>All four members of the Roland family moved toward the crowd.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2319,7 +2399,7 @@
                 <p>For the first time, she let herself consider the unthinkable.</p>
                 <p>What if Claire was right?</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>What if Vanessa had always been this cruel?</p>
                 <p>&#34;Perhaps we should leave now,&#34; Evelyn murmured, her voice barely above a whisper.</p>
                 <p>Claire reached out, her fingers gently encircling Evelyn&#39;s wrist. &#34;With your exceptional acupuncture skills, it would be such a waste not to use them,&#34; she encouraged with a warm smile.</p>
@@ -2347,7 +2427,7 @@
                 <p>The three of them sat in uneasy silence, the clinking of silverware against porcelain the only sound in the room. Outside, a bird began its morning song, oblivious to the tension thickening the air inside.</p>
                 <p>Evelyn opened her mouth to speak, but the words died on her lips when Claire suddenly pushed back her chair with a sharp scrape.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;I think I&#39;m going to be sick,&#34; Claire gasped, one hand flying to her mouth as she bolted for the bathroom.</p>
                 <p>The remaining two exchanged a loaded glance. Julian&#39;s eyebrows drew together in concern. &#34;Should I...?&#34;</p>
                 <p>Evelyn was already on her feet. &#34;I&#39;ve got this,&#34; she said, though her voice lacked conviction.</p>
@@ -2361,7 +2441,7 @@
                 <p>Curious, she tilted her head. &#34;Don’t you have classes today?&#34;</p>
                 <p>Julian’s hands stilled for a moment before he lowered his gaze. &#34;I… took a leave of absence,&#34; he admitted softly.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Evelyn didn’t press further, but the pieces clicked into place.</p>
                 <p>With his father’s gambling debts hanging over him, Julian had no choice but to put his education on hold.</p>
                 <p>&#34;What were you studying?&#34; she asked instead.</p>
@@ -2375,7 +2455,7 @@
                 <p>Evelyn gave a slow nod. &#34;I&#39;ll speak to Claire later and arrange for her to send you an advance.&#34; Her tone softened, though her gaze remained firm. &#34;But don&#39;t hand it all over to your father at once.&#34;</p>
                 <p>Money given too easily loses its worth. And for a gambler? It only feeds the addiction, making the future bleeder.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>She knew this truth intimately. She&#39;d witnessed it play out before.</p>
                 <p>Julian dipped his head in agreement. &#34;I won&#39;t.&#34;</p>
                 <p>In a hurry, Evelyn finished the last few bites of her breakfast before snatching up her bag and heading out.</p>
@@ -2390,7 +2470,7 @@
                 <p>Would Claire really be enough to keep Julian from falling into the same trap?</p>
                 <p>Or was this just the beginning of another downward spiral?</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

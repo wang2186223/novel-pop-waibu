@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,38 +2391,38 @@
                 <p>&#34;Evelyn’s back,&#34; Margaret greeted warmly. &#34;Come sit.&#34;</p>
                 <p>She called her &#34;Mom,&#34; then turned to the pregnant woman. &#34;And this is…?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;This is Annabelle,&#34; Margaret introduced. &#34;The Taylors’ daughter from next door. She just returned from abroad. Annabelle, this is Alexander’s wife.&#34;</p>
                 <p>The pregnant woman slowly stood, supporting her rounded belly. &#34;Hello, I’m Annabelle Taylor.&#34;</p>
                 <p>She paused. &#34;Your name is…&#34;</p>
                 <p>&#34;What a coincidence—same pronunciation, different characters.&#34; The woman smiled. &#34;Mine is ‘Annabelle,’ like the flower. Yours is ‘Evelyn,’ like the wood.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Margaret added with a laugh, &#34;Alexander has a connection with that name. One’s his childhood sweetheart, the other his wife.&#34;</p>
                 <p>&#34;Speaking of which,&#34; Annabelle suddenly said, &#34;Dr. Carter was the one who performed my surgery.&#34;</p>
                 <p>Margaret looked at her in surprise. &#34;Really?&#34;</p>
                 <p>&#34;Yes.&#34; Annabelle extended a hand. &#34;Thanks to her, my baby and I are both safe.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>She shook the offered hand firmly. &#34;Just doing my job. Your case wasn’t complicated—just rest well post-op.&#34;</p>
                 <p>At dinner, Margaret and Annabelle reminisced. The two families had been neighbors for decades. Alexander and Annabelle were born the same year and attended the same classes from elementary through high school.</p>
                 <p>&#34;Those two were inseparable,&#34; Margaret said, giving her a meaningful glance. &#34;I even thought they were dating, but it turned out to be a misunderstanding.&#34;</p>
                 <p>Annabelle chimed in playfully, &#34;He was always delivering my love letters to my crushes.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Too familiar to date.&#34; Annabelle’s joke drew laughter around the table.</p>
                 <p>She understood Margaret’s good intentions. This marriage was flawless—her husband attentive, her mother-in-law open-minded, never pressuring them about children. Perfect, except for the lack of love.</p>
                 <p>But the coincidence of &#34;Annabelle&#34; and &#34;Evelyn&#34; stuck in her throat like a fishbone.</p>
                 <p>Late that night, Alexander towel-dried her damp hair. &#34;I didn’t get to explain at the hospital. Annabelle flew back from abroad for my birthday but got into a car accident on the way.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>So the night of her birthday, his abrupt departure had been to pick Annabelle up.</p>
                 <p>&#34;We’re best friends.&#34; He emphasized the last two words.</p>
                 <p>&#34;Flying internationally at six months pregnant,&#34; she murmured. &#34;That’s certainly not an ordinary friendship.&#34;</p>
                 <p>His hands stilled briefly. &#34;...Yeah.&#34;</p>
                 <p>&#34;By the way,&#34; he changed the subject, &#34;you said you had a birthday gift for me?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

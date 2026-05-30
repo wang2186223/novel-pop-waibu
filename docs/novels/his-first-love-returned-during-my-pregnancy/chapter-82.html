@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,33 +2390,33 @@
                 <p>Evelyn knew those cases well. One of them was a pregnant woman with placenta previa—a condition that could lead to severe hemorrhage without warning.</p>
                 <p>Vincent suddenly slammed his palm on the desk. &#34;Five hundred!&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Olivia waved her hands frantically. &#34;No, no, that&#39;s against regulations—&#34;</p>
                 <p>&#34;Deal.&#34; Evelyn cut her off, meeting Vincent&#39;s gaze head-on. &#34;Can you guarantee all donors will be voluntary?&#34;</p>
                 <p>Vincent chuckled, his tone teasing. &#34;What, afraid I&#39;ll drag people here by force?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Ignoring his jest, Evelyn swiftly scribbled something on a sheet of paper and placed it facedown on the desk.</p>
                 <p>&#34;You can read this only after the five hundredth donation.&#34;</p>
                 <p>Vincent pressed a finger against the corner of the paper, intrigued. &#34;How interesting.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Within half an hour, a line of donors stretched all the way to the hospital entrance.</p>
                 <p>Rows of young office workers filled out forms and underwent check-ups in orderly fashion.</p>
                 <p>Olivia gaped. &#34;Are these all your employees?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Paid leave. Double year-end bonuses.&#34; Vincent winked at Evelyn. &#34;What&#39;s the count now?&#34;</p>
                 <p>Evelyn continued writing without pause. &#34;Four hundred ninety-eight.&#34;</p>
                 <p>The nurses&#39; station buzzed with activity. Bags of donated blood quickly piled into a small mountain.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Five hundred!&#34; Olivia jumped up excitedly. &#34;The blood bank is saved!&#34;</p>
                 <p>Vincent triumphantly lifted the note. &#34;Time to fulfill your promise, beautiful.&#34;</p>
                 <p>He eagerly flipped over the paper—only for his smile to freeze.</p>
                 <p>Written clearly on it was the appointment hotline for the downtown blood donation center.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

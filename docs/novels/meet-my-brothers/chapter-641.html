@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>From the footage, she could see her husband entering the store with another lady holding hands to</p>
                 <p>purchase a bracelet.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>It was the exact same design as hers!</p>
                 <p>Mia recounted. “Your husband bought it from Martiana, but he gifted it to the mistress. Since you might smell the rat from his large expenses, he gave you a fake one to cover his deeds.”</p>
                 <p>Realizing the truth, the middle–aged woman began throwing punches at her husband. “Explain to me this</p>
                 <p>instant! Who’s that vixen in the footage!”</p>
                 <p>“Stop hitting me, you feisty bitch! You’re too dominating! That’s why I looked for another person!”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>“I’m gonna send you to hell, jerk!”</p>
                 <p>A scene broke out.</p>
                 <p>Their chubby son said anxiously, “I want the prize!”</p>
                 <p>To his dismay, neither the adults were in the state of mind to bother him, so he confronted Ginger head- on. “Give me that or I’ll punch you in the face!”</p>
                 <p>Frightened, she retreated instinctively. “This is mine!”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>“You only have a mother. You don’t have a father! You don’t deserve to be the first place!”</p>
                 <p>Her eyes reddened at that and the prize slipped through her arms.</p>
                 <p>Timothy picked up the item from the ground, dusting it off. His cold eyes fixed on the chubby boy. “Who says she doesn’t have a father?”</p>
                 <p>Ginger’s eyes lit as she quickly called, “Daddy!”</p>
                 <p>That completely caught him off–guard. His widened eyes looked at her.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>In fact, he didn’t mean it that way since Caleb was there too. He didn’t expect Ginger to call him Daddy!</p>
                 <p>Still stunned by that, he gulped down his saliva. It seemed like he didn’t dislike it either. After collecting</p>
                 <p>himself, he crouched to return the prize to her.</p>
                 <p>Meanwhile, Mia straight–up went to the boy and said in an undertone. “Soon, you’ll become a parentless. child too. Your father will abandon you to have children with his mistress.”</p>
                 <p>He bawled his eyes out almost instantly.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>She didn’t think that she crossed the line. The boy was obviously spoiled.</p>
                 <p>He deserved this for what he had said to Ginger!</p>
                 <p>After teaching the boy a lesson, Mia turned around only to see Timothy crouching in front of a smiling</p>
@@ -2351,7 +2431,7 @@
                 <p>about Ginger’s yearning for paternal love.</p>
                 <p>After all, her friends had a father but not her.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

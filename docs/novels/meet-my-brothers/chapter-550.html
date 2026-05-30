@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,28 +2392,28 @@
                 <p>Yet, the emblem on the car appeared familiar. She recalled Timothy owning a similar car, although the model seemed different!</p>
                 <p>Suddenly, the passenger door swung open, and a man holding a black umbrella approached the back seat, courteously opening the door.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>The large black umbrella opened overhead, shielding them from the heavy downpour.</p>
                 <p>A man in a suit leaned forward to step out of the car. His features were handsome yet stern, and his narrow eyes held a sharp gaze.</p>
                 <p>Upon his arrival, the sound of the rain around him seemed to diminish, as if fading into the background.</p>
                 <p>Taking the umbrella from Heath&#39;s hand, Timothy ascended the steps, his movements commanding and resolute.</p>
                 <p>For a moment, nearly all the women present found themselves captivated by him.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Mia stood in place, observing Timothy&#39;s unexpected arrival. What was he doing here? In this torrential downpour, had he also come for dinner?</p>
                 <p>As Mia contemplated this, Timothy suddenly stood before her, his figure looming over her despite standing a few steps above.</p>
                 <p>He positioned his umbrella over Mia&#39;s head, protecting her from the splashing rain.</p>
                 <p>Instinctively, Mia moved aside. &#34;Are you here for dinner?&#34;</p>
                 <p>Observing her movement, Timothy’s brow furrowed. “Follow me. &#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>With the downpour intensifying, trying to hail a cab seemed impossible.</p>
                 <p>Nevertheless, Mia instinctively refused, &#34;There&#39;s no need to go through all this trouble.&#34;</p>
                 <p>Given Antonio&#39;s likely delay on the road, Mia was confident he would arrive later to pick her up.</p>
                 <p>Noticing her refusal, Timothy&#39;s tone carried a hint of discontent. &#34;Are you planning to get drenched on your way back in this heavy rain?&#34;</p>
                 <p>With that, he extended his hand toward Mia, his knuckles defined and attractive.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Just then, Jeremy stepped forward, positioning himself beside Mia. &#34;Sir, Mia prefers not to accompany you. I&#39;ll ensure she gets home safely.&#34;</p>
                 <p>Seeing another man intervene, Timothy&#39;s gaze turned sharp. &#34;I suggest you refrain from interfering in this matter!&#34;</p>
                 <p>Where did this man come from? How dare he portray himself as a knight in shining armor!</p>
@@ -2350,7 +2430,7 @@
                 <p>Timothy glanced at the business card but chose not to accept it.</p>
                 <p>It seemed Jeremy was projecting an air of arrogance.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

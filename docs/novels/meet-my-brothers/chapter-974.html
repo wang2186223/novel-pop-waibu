@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>She cursed furiously at Mia, &#34;How dare you send me to the police station! Let me go. If my dad catches wind of this, he won&#39;t let you off the hook. You&#39;ll be sorry for crossing me.&#34;</p>
                 <p>Despite her threats, she was eventually taken away.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Mia glanced at the man in the white coat beside her. &#34;Send me the video you just recorded on your phone.&#34;</p>
                 <p>The man appeared somewhat awkward after being caught in the act. &#34;I noticed her acting too arrogantly earlier, so I decided to capture some video footage.</p>
                 <p>&#34;I&#39;ll upload it online later to show everyone the true colors of these Yellow Islanders. That way, if they attempt to spread rumors and defame our research institute, we&#39;ll have evidence.&#34;</p>
                 <p>She replied calmly, &#34;I understand. That&#39;s why I deliberately asked those questions earlier. I wanted to gather evidence against her.&#34;</p>
                 <p>It was surprising how easily Louisa fell into their trap. She answered every question without hesitation.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>If the conversation were to be leaked, not only would Raymond face trouble, but Yellow Island&#39;s reputation would also take a significant hit.</p>
                 <p>It was like being handed a gift while asleep.</p>
                 <p>With this leverage in Mia&#39;s hands, she needed to think about how to use it.</p>
                 <p>After Mia&#39;s secretary copied the video, she turned to Timothy. &#34;Are you okay?&#34;</p>
                 <p>He rolled up his sleeve and replied calmly, &#34;Just a minor scratch.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>At that moment, a nosy staff member chimed in, &#34;Ms. Lane, who is this handsome man?&#34;</p>
                 <p>Mia thought for a moment before answering, &#34;Just someone I know, but not too well.&#34;</p>
                 <p>Upon hearing that, Timothy&#39;s</p>
                 <p>.net</p>
                 <p>expression darkened visibly. He stepped forward and grabbed ker wrist &#34;Are you sure that&#39;s allo are?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>She tried to pull her hand away, but his grip tightened as if he needed her answer to that question right then and there.</p>
                 <p>She laughed nervously. &#34;I believe in</p>
                 <p>treating exes like they&#39;re dead. So</p>
                 <p>do you think we have a close</p>
                 <p>relationship? I don&#39;t see any issue with my description.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>S</p>
                 <p>&#34;Oh my goodness! Ms. Lane, your ex-husband is quite handsome. He looks so dashing, are you worried about being found out?&#34;</p>
                 <p>Mia&#39;s expression stiffened</p>
@@ -2348,7 +2428,7 @@
                 <p>He pulled her toward him and whispered, &#34;Come with me.&#34;</p>
                 <p>Suddenly, a child&#39;s voice filled with anger interrupted him.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

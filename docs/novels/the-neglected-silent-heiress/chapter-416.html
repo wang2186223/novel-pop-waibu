@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2308,19 +2388,19 @@
                 <p>&#34;Wait!&#34; Oliver blocked her path, his expression stormy. &#34;We need to talk.&#34;</p>
                 <p>Olivia recognized that stubborn set to his jaw immediately. Not in the mood for another confrontation, she forced a polite smile. &#34;Another time, Oliver. I have an appointment.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>But Oliver matched her step for step as she tried to walk away. &#34;I don&#39;t care if you&#39;re busy,&#34; he insisted. &#34;I&#39;ll follow you all day if I have to. This can&#39;t wait.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Olivia exhaled sharply. Since when had Liam become so patient with rebellious teenagers? The boy&#39;s determination was impressive, if misguided.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Seeing no escape, Olivia stopped abruptly, her expression turning frosty. &#34;Five minutes. And I have something to say to you too.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Oliver crossed his arms, chin jutting defiantly. &#34;Stay away from Liam. He&#39;s already promised to someone else - someone perfect for him. If you actually care about him, you&#39;ll back off.&#34; His voice took on a lecturing tone. &#34;Our former boss arranged the marriage before he died. She saved Liam&#39;s life. They&#39;re meant to be together. If not for you, Liam would be married to her right now.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Olivia&#39;s eyebrows shot up. She hadn&#39;t realized Liam&#39;s reputation extended so far internationally. Then again, it made sense - women had been drawn to him since childhood. But an arranged marriage? That was new information.</p>
                 <p>An odd tightness formed in her chest as she processed this. Her voice turned arctic. &#34;Listen carefully - I never asked for his attention. If you can convince him to leave me alone and return to this perfect woman, by all means do so. The problem isn&#39;t me clinging to him. I&#39;ve told you before - all I want is peace.&#34;</p>
                 <p>Oliver flushed, momentarily speechless. When he found his voice again, it came out strangled. &#34;Then... then refuse him properly! Your half-hearted rejections just encourage him. Consider this your warning - stay away.&#34;</p>
@@ -2328,7 +2408,7 @@
                 <p>Oliver&#39;s hands clenched into fists. &#34;Just wait until my lady returns! She&#39;ll deal with a homewrecker like you properly!&#34;</p>
                 <p>His words hung in the air between them as Olivia turned on her heel and walked away, her back rigid with suppressed anger. The elevator doors closed on Oliver&#39;s furious expression, leaving Olivia alone with her turbulent thoughts.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

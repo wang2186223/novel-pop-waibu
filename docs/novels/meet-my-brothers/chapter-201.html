@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2321,7 +2401,7 @@
                 <p>Had it not been for Felix, Mia couldn’t imagine what would’ve happened.</p>
                 <p>Mia stepped forward and slapped Wilhelmina with a chilly glare. “I’m sure you’re out of your mind, Wilhelmina</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Jones. Cross me one more time, and you won’t get away with it.”</p>
                 <p>If something happened to her child, Mia would never show mercy.</p>
                 <p>Wilhelmina chuckled, her eyes dark in stark contrast. “I know your secret, Mia Bowen. You’re pregnant, aren’t</p>
@@ -2329,7 +2409,7 @@
                 <p>Mia’s expression stiffened briefly before cracking into a sneer. “A piece of advice, Wilhelmina Jones, why don’t</p>
                 <p>you take an MRI scan for a brain check?”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>“You’re feeling guilty, Mia Bowen. If you’re not pregnant, why were you protecting your belly?”</p>
                 <p>Mia looked down her nose at the erratic woman. “Funny, I thought I should protect the area you were attacking. Was I supposed to hug my head?”</p>
                 <p>There was no way Mia would admit the pregnancy.</p>
@@ -2337,7 +2417,7 @@
                 <p>Yet, she hadn’t expected Wilhelmina to sniff out the truth.</p>
                 <p>Wilhelmina burst into laughter. Her gaze shifted toward Felix. “Did you see that? This woman has been acting this whole time. Mia is actually a rich person’s mistress, and she’s now pregnant. She’s been</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>lying to you and trying to cheat on you.”</p>
                 <p>+15 BONOS</p>
                 <p>Mia snorted coldly, “What’s the point of saying that, Wilhelmina? There’s nothing going on between Felix and I.”</p>
@@ -2345,7 +2425,7 @@
                 <p>Wilhelmina rose from the floor, shooting an angry look at Mia. “Why do you win in everything? Why!” she raised</p>
                 <p>her voice at Mia.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>That plan was so perfect, and Mia could’ve learned her lesson the hard way.</p>
                 <p>Emotions barely showed on Mia’s face. “You’re the mistress, not me.”</p>
                 <p>It was the wrong decision Wilhelmina had made to begin with.</p>
@@ -2358,7 +2438,7 @@
                 <p>Wilhelmina was the reason Shelly’s cards were frozen and she had to tighten up her belt.</p>
                 <p>Shelly had learned her lesson.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

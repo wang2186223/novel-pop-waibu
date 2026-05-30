@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,12 +2390,12 @@
                 <p>Ethan clicked his tongue impatiently. If Vivian Laurent had returned to the country, Finn would surely be with her. The chaotic background noise through the receiver made his brow furrow.</p>
                 <p>He initiated a video call without hesitation.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>The moment the screen lit up, Ethan demanded, &#34;Where&#39;s Vivian?&#34;</p>
                 <p>&#34;Right here.&#34; Finn turned the camera toward the scene behind him.</p>
                 <p>Deafening music flooded through the speakers. Multicolored strobe lights illuminated the crowded dance floor.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Finn focused the phone on the center of the pulsating mass.</p>
                 <p>&#34;See? My mentor&#39;s having the time of her life. She&#39;s perfectly fine—hasn&#39;t even mentioned you. Frankly, since you&#39;ve got a wife and kid now, you should leave her alone. She didn&#39;t even make a scene when you cheated during your marriage.&#34;</p>
                 <p>Ethan&#39;s pupils constricted violently.</p>
@@ -2325,19 +2405,19 @@
                 <p>Hungry male gazes devoured her from every direction.</p>
                 <p>Ethan&#39;s knuckles turned white. He wanted nothing more than to fly there immediately, wrap her in his coat, and carry her home where she belonged.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Finn, give her the phone.&#34;</p>
                 <p>&#34;Say whatever you need to say in person. I&#39;m not your messenger.&#34; Finn scoffed. &#34;My mentor hates half-hearted gestures.&#34;</p>
                 <p>&#34;I&#39;ll explain everything when I return. But I can&#39;t leave now. Just tell her the online rumors are false—ask her to trust me one more time. And that child isn&#39;t my son.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Can&#39;t take responsibility for your own actions?&#34; Finn sneered. &#34;Didn&#39;t you publicly claim Theodore Evans as your son? Changing your story now?&#34;</p>
                 <p>The call ended abruptly.</p>
                 <p>As the screen went black, Ethan slammed his fist against the wall.</p>
                 <p>How desperately he wanted to fly to her side.</p>
                 <p>But Theo was still in the hospital. With Sophia Evans proving unreliable, the boy only had his uncle now.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

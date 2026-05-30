@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,12 +2390,12 @@
                 <p>Ice crystallized in Ethan&#39;s eyes as he spun his phone. Thirty-seven unanswered calls swallowed by silence.</p>
                 <p>Crack!</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The latest smartphone shattered against the wall.</p>
                 <p>&#34;Useless.&#34; He tore open two shirt buttons, veins pulsing along his collarbone. &#34;I wasn&#39;t there when she needed me most. Now I can&#39;t even locate her.&#34;</p>
                 <p>Zachary bent to collect the debris. &#34;Perhaps she&#39;s boarding—&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Failure.&#34; Ethan&#39;s laugh was razor-edged, eyes bloodshot. &#34;I&#39;m a goddamn failure.&#34;</p>
                 <p>Wind hurled dead leaves against the car window.</p>
                 <p>&#34;The Zhuangs.&#34; He yanked the door open, moonlight glinting off the steel frame. &#34;I&#39;ll make them beg for death.&#34;</p>
@@ -2325,12 +2405,12 @@
                 <p>Watching the taillights vanish, Zachary dialed Legal. &#34;Prepare the Zhuang Group&#39;s bankruptcy filings.&#34; He glanced at the churning sky. &#34;Storm&#39;s coming.&#34;</p>
                 <p>Vivian Ashcroft woke to a phone slamming into her face.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>10:07 PM.</p>
                 <p>&#34;Airport pickup!&#34; She bolted upright, knocking over pill bottles. White tablets scattered as her calico cat fled into the closet.</p>
                 <p>Her phone buzzed three times on the vanity before the automated voice announced, &#34;The subscriber is unavailable.&#34; Midway through squeezing foundation, she suddenly opened WeChat.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Viv...&#34; Sophia&#39;s voice trembled in the audio message. &#34;I think... I killed someone...&#34;</p>
                 <p>The sunscreen tube burst in her grip, white cream splattering her silk nightgown.</p>
                 <p>The elevator doors parted to reveal Jason Roscente whistling, breakfast soup leaking through the container in his arms.</p>

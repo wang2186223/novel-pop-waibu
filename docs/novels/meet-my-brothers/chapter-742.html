@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,37 +2391,37 @@
                 <p>Nikki and her mother visibly relaxed upon hearing Sharon’s stance.</p>
                 <p>After all, a woman couldn’t enter a wealthy family without proper acknowledgment by the family.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Shelly persisted, “We’ll find out once Tim arrives.”</p>
                 <p>Ignoring Shelly’s comment, Sharon redirected the conversation. “Let’s not pay attention to childish talk. How about a stroll in the garden? It’s</p>
                 <p>beautiful out there.”</p>
                 <p>Amelia Mapp agreed, “I’ve heard that the private resort has tailored its services for you, Mrs. Barrett. We’re envious. It’s a service exclusive to your family!”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Sharon grinned proudly. “It’s thanks to my son that we get to experience this. Their service is indeed top–notch, not only in design but also in food.</p>
                 <p>The ingredients were freshly flown in this morning. You should consider hosting an event here in the future.”</p>
                 <p>The group of people strolled around. Meanwhile, the other guests couldn’t stop showering praises on the private resort.</p>
                 <p>Mia, trailing behind them, felt elated hearing the positive feedback. “It’s not too shabby,” she remarked with a chuckle. The swelling pride within her was unmistakable.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Nikki suddenly turned her head to look at Mia. “Ms. Monalize, is that your comment on the design? Not too shabby? You sure have high standards.”</p>
                 <p>All eyes immediately shifted to Mia.</p>
                 <p>Sharon scowled. “Since it’s not up to your standard, feel free to leave whenever you please.”</p>
                 <p>Mia calmly replied, “Sorry, I didn’t mean it that way.”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>“You better not have,” Sharon retorted before leading the guests onward. ”</p>
                 <p>dow me, everyone. Behold, a sea of blue roses. It’s said to cost millions to cultivate them. We may encounter blue beauties elsewhere, but genuine blue roses are a rarity.”</p>
                 <p>The guests eagerly began taking pictures of the blue roses.</p>
                 <p>Proudly, Sharon said, “You can buy the seeds and plant blue roses at home yourselves, but there’s no guarantee they will thrive.”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Nikki interjected, “It is not easy to grow blue roses, hence its rarity. It requires precise temperature control at 77°F during cultivation, and once they bloom, they can only be exposed to sunlight for eight hours. Anything lesser or more than that is unacceptable.”</p>
                 <p>Impressed, Sharon nodded. “You know that too? I’m impressed.”</p>
                 <p>Nikki beamed but remained humble. “It’s just a hobby of mine. I dabble in flower arranging and cooking, so I’ve picked up a few things.”</p>
                 <p>Mia couldn’t resist interjecting, “She got it wrong.”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

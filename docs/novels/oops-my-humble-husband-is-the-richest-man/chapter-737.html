@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2320,7 +2400,7 @@
                 <p>She gained no benefits from the Evans family.</p>
                 <p>Her mother was imprisoned, her father passed away from illness, all the Evans family assets fell into Alexander Vance&#39;s hands. She, as a married-off daughter, received nothing.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>She had originally thought that at least Aaron treated her well, ensuring she lacked for nothing.</p>
                 <p>Even if she were imprisoned, Aaron could get her out.</p>
                 <p>But now...</p>
@@ -2335,7 +2415,7 @@
                 <p>Cecilia snapped back to reality and turned to look at the door.</p>
                 <p>Aaron Truman pushed the door open.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>His face was somewhat pale, his eyes unable to hide his weariness.</p>
                 <p>When his gaze fell on Cecilia, he forced a smile.</p>
                 <p>Cecilia&#39;s heart sank.</p>
@@ -2350,7 +2430,7 @@
                 <p>Treatment would cost a lot. Although Aaron was from a branch of the Truman family, he had always been sensible and never easily asked the main family for help.</p>
                 <p>Now he wanted to use her money for treatment.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Once he died, the money spent, what would she do?</p>
                 <p>Cecilia clenched her fists, her nails almost digging into her flesh.</p>
                 <p>Her expression remained gentle. &#34;Yes, why? Do you need money?&#34;</p>
@@ -2365,7 +2445,7 @@
                 <p>Once he died, she wouldn&#39;t even have a place to live.</p>
                 <p>Cecilia lowered her eyes, hiding the coldness in them.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>She said softly, &#34;Okay.&#34;</p>
                 <p>Her voice was gentle and compliant.</p>
                 <p>But her mind was already calculating.</p>
@@ -2380,7 +2460,7 @@
                 <p>But Aaron gently pushed her away, his voice tired. &#34;I&#39;m exhausted today. Let&#39;s sleep early.&#34;</p>
                 <p>Cecilia sneered inwardly.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Of course.</p>
                 <p>He wouldn&#39;t even touch her anymore.</p>
                 <p>He must be seriously ill.</p>
@@ -2398,7 +2478,7 @@
                 <p>After a long moment, he let out a bitter laugh.</p>
                 <p>So she had known all along.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

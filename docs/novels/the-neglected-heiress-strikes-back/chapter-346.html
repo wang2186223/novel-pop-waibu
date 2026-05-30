@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2327,7 +2407,7 @@
                 <p>Harvey paled. &#34;N-never, sir! Forgive me!&#34;</p>
                 <p>&#34;Evadne may have moved on,&#34; Avery mused, watching streetlights blur past the window, &#34;but Thaddeus hasn&#39;t. Stay vigilant.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;About the investigation, sir...&#34; Harvey produced a sealed evidence bag containing a syringe. &#34;The racetrack attack? We found traces of neural stimulants in the horses&#39; bloodwork. Surveillance confirms Byron&#39;s men planted it.&#34;</p>
                 <p>Avery&#39;s chuckle held no warmth. &#34;Byron lacks his brother&#39;s finesse. Sloppy work for such a small mind.&#34;</p>
                 <p>&#34;We can&#39;t let this stand!&#34; Harvey hissed.</p>
@@ -2338,7 +2418,7 @@
                 <p>&#34;Come in!&#34;</p>
                 <p>Debby entered like moonlight incarnate, her blue nightgown shimmering. &#34;Still awake?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Obviously.&#34; Evadne patted her moisturizer-laden cheeks. &#34;Wow, if Helgen&#39;s First Lady looks this radiant at midnight, no wonder their approval ratings are soaring.&#34;</p>
                 <p>&#34;That golden horse outside—it&#39;s blindingly ostentatious.&#34; Debby perched on the edge of the bed. &#34;Avery&#39;s?&#34;</p>
                 <p>&#34;His. He offered it to me. I declined.&#34;</p>
@@ -2349,7 +2429,7 @@
                 <p>&#34;Because Thaddeus broke your heart?&#34; Debby teased.</p>
                 <p>&#34;Broke? More like gnawed on it like a rabid dog!&#34; Evadne winced as she accidentally slapped her own face.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Aviana&#39;s riding that horse right now, by the way.&#34;</p>
                 <p>&#34;What? I haven&#39;t even—!&#34; Evadne shot upright.</p>
                 <p>&#34;Relax. You gift million-dollar jewels like candy, but begrudge your sister a joyride?&#34;</p>
@@ -2360,7 +2440,7 @@
                 <p>Evadne&#39;s stomach dropped. &#34;Sounds like you two have your work cut out.&#34;</p>
                 <p>&#34;Focus.&#34; Debby&#39;s gaze turned razor-sharp. &#34;Avery was investigated—and acquitted—on drug trafficking charges. The prosecutor? Your brother-in-law&#39;s most incorruptible student.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;No smoke without fire,&#34; Evadne whispered.</p>
                 <p>&#34;Exactly. Be friendly, but keep him at arm&#39;s length.&#34;</p>
                 <p>Evadne exhaled slowly. &#34;I&#39;m not that naive girl anymore, Debby. I&#39;ve seen war. I&#39;ll be careful.&#34;</p>
@@ -2373,7 +2453,7 @@
                 <p>&#34;Miss Glynnis!&#34; Her assistant pushed through the throng. &#34;The Fairhavens are at Windermere—Barry himself!&#34;</p>
                 <p>Glynnis froze mid-giggle. &#34;Old Man Fairhaven? Now this I&#39;ve got to see!&#34; She sprang up, eyes gleaming. &#34;Get my car!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

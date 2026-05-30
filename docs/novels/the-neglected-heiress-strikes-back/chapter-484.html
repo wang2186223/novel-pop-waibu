@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2321,7 +2401,7 @@
                 <p>Thaddeus&#39;s voice was ragged, his broad shoulders slumped. &#34;Please. Let me see Evadne one more time.&#34;</p>
                 <p>&#34;In your dreams!&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Bet erupted, fighting against Cassius&#39;s grip. &#34;Thaddeus! Get the hell out of here! Don’t you dare step foot near the Ashbourne estate again! If I see you one more time, I swear I’ll kill you!&#34;</p>
                 <p>&#34;President Ashbourne. I need to see her.&#34;</p>
                 <p>Thaddeus stood firm, agony in his eyes but resolve unshaken. &#34;The past. Our child. So many things—I need to hear it from her. Face to face.&#34;</p>
@@ -2337,7 +2417,7 @@
                 <p>&#34;Dad?!&#34;</p>
                 <p>&#34;Dad!&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>The Ashbourne brothers were stunned.</p>
                 <p>In thirty years, they had never seen their father strike anyone outside the family. Proud, untouchable—Emeric Ashbourne never dirtied his own hands.</p>
                 <p>But today, he was beyond furious.</p>
@@ -2353,7 +2433,7 @@
                 <p>The Ashbourne men left, the door slamming shut behind them.</p>
                 <p>Thaddeus stood in the rain, hollow.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>An uncrossable chasm now lay between him and the Ashbournes.</p>
                 <p>Slowly, his knees buckled.</p>
                 <p>He collapsed into the puddle, shoulders shaking with silent sobs.</p>
@@ -2369,7 +2449,7 @@
                 <p>Perhaps this torment was his penance.</p>
                 <p>Only by destroying himself could he bear the guilt.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;It’s late, Mr. Abernathy. Aren’t you going home? If not, I’ll be heading inside.&#34;</p>
                 <p>Avery’s smile was ice. &#34;I know it’s hard being the man everyone kicks when he’s down. But you brought this on yourself. Had you treated Evadne better, you wouldn’t be here. Kneel as long as you like. Savor the pain.&#34;</p>
                 <p>As they turned toward the gates, Thaddeus spoke, voice raw.</p>
@@ -2385,7 +2465,7 @@
                 <p>Elvis exhaled smoke, his smirk bitter. &#34;Bet, if I wanted to do something reckless, you couldn’t stop me.&#34;</p>
                 <p>His dark eyes flickered. &#34;Take care of Evadne. I’ll see her later.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Elvis hadn’t returned to Skyrim for two reasons.</p>
                 <p>First—he couldn’t face Evadne, not after what he’d learned.</p>
                 <p>Second—before the banquet ended, she’d sent him a message:</p>
@@ -2403,7 +2483,7 @@
                 <p>Elsie’s gaze turned glacial, a slow, dangerous smile curling her lips.</p>
                 <p>&#34;Keep watching him. I’m on my way.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

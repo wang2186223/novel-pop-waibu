@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2323,7 +2403,7 @@
                 <p>He had been holding back for too long, his restraint burning away with each passing second.</p>
                 <p>Isabella&#39;s lashes fluttered shut as she melted into him, her arms winding around his neck, matching his passion with equal fervor.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Their kiss deepened, tongues tangling in a desperate dance, each touch igniting a fire neither could extinguish.</p>
                 <p>When she finally pulled away, breathless, Alexander wasn&#39;t satisfied. He caught her chin, reclaiming her lips with a growl.</p>
                 <p>&#34;Maybe we shouldn&#39;t go public tonight.&#34;</p>
@@ -2341,7 +2421,7 @@
                 <p>Her jaw clenched as she calculated ruthlessly. &#34;Once that happens, the Chambers Group won&#39;t even compare to your Abernathy Group. And I will trample them into the ground.&#34;</p>
                 <p>Alexander understood her intent. Pulling her into a tight embrace, he murmured, &#34;I know you&#39;re doing this for your sister. Everything is to stop her marriage to the Chambers family.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>His insight struck a chord. She buried her face against his chest, her voice muffled. &#34;I hate that I&#39;m not strong enough. This is the only way I can think of. Do you think I&#39;m ridiculous?&#34;</p>
                 <p>His heart ached. &#34;No. I think you&#39;re brilliant. And right now, this is the best approach. William won&#39;t hold a grudge over something so trivial—he&#39;s a businessman. He&#39;ll choose K Corporation. And even if you don&#39;t partner with J Corporation, don&#39;t worry. With me by your side, the Chambers Group won&#39;t have it easy.&#34;</p>
                 <p>Isabella&#39;s eyes shimmered with emotion.</p>
@@ -2359,7 +2439,7 @@
                 <p>The figure stood hunched, breathing heavily—clearly in poor condition.</p>
                 <p>Alexander frowned. The silhouette was eerily familiar.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Who are you?&#34;</p>
                 <p>&#34;Mr. Kingsley.&#34;</p>
                 <p>The man turned slowly.</p>
@@ -2377,7 +2457,7 @@
                 <p>&#34;Jason, at this point, speak,&#34; Alexander demanded firmly. &#34;Do you think hiding this helps her? She&#39;s suffering because of it!&#34;</p>
                 <p>&#34;Please,&#34; Jason choked out, tears streaming down his cheeks. &#34;Don&#39;t let Nydia marry Byron. I&#39;ll do anything.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Isabella&#39;s blood ran cold. &#34;The Chambers Group did this to you, didn&#39;t they?&#34;</p>
                 <p>Alexander&#39;s fists clenched.</p>
                 <p>Only a handful knew about Nydia and Jason&#39;s relationship—and the Chambers Group was one of them.</p>
@@ -2395,7 +2475,7 @@
                 <p>Jason shook his head. &#34;I tried to force my way in, but Bertha and her people stopped me. Byron&#39;s secretary was there too. I don&#39;t know if it was Byron or Bertha who gave the order.&#34;</p>
                 <p>Isabella&#39;s gaze turned glacial. &#34;All Chambers, all the same rotten blood. If we can&#39;t pinpoint the culprit, we&#39;ll bring down the whole family.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Meanwhile, Nydia remained oblivious to Jason&#39;s suffering.</p>
                 <p>Lost in thought, she barely registered Byron&#39;s attempts at conversation.</p>
                 <p>Her mind was filled with only one person—Jason.</p>
@@ -2417,7 +2497,7 @@
                 <p>Trembling, he pulled out his phone and texted his secretary:</p>
                 <p>[Tonight, I will have her.]</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

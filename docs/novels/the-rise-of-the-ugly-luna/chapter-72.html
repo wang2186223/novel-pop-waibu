@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2316,7 +2396,7 @@
                 <p>First, I took note of the wall clock like he said. My time was at fourteen minutes, fifty-five seconds.</p>
                 <p>I found the camera. They were watching me. Seeing my every move.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Yet, in that moment, I didn&#39;t think of the hundreds of people watching me from the hall.</p>
                 <p>I thought of her.</p>
                 <p>Lyric Harper.</p>
@@ -2327,7 +2407,7 @@
                 <p>I opened the drawer and found a small black purse.Opening it, I found a key.</p>
                 <p>I reached for the door and unlocked it. Hm. That was quite easy.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>The door opened to a new room.</p>
                 <p>As soon as I walked in, the door to the old room behind me went shut.</p>
                 <p>The new one was not as messy as the previous one.So,it was easier to see through.</p>
@@ -2338,7 +2418,7 @@
                 <p>RN GUIL I checked every corner but couldn&#39;t find a damn key.The jars on the table were filled with stupid things that didn&#39;t look like a key.</p>
                 <p>Wanting to be extra sure, I emptied all the jars on the table, yet no key fell out with the things that did.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Damm it.&#34; I looked around the room. Where the hell was it?</p>
                 <p>Something clicked in my mind.</p>
                 <p>I turned back to the things I&#39;d emptied on the table and found a yarn. In it was a needle.</p>
@@ -2349,7 +2429,7 @@
                 <p>The table was clean. So were the drawers. There was no place to look.</p>
                 <p>Except for the pile of clothes on the floor.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>I picked the first cloth and realized all of them had a pocket. I&#39;d have to sort through every pocket to find a key. My time would be exhausted by the time l finished.</p>
                 <p>I looked at the door and noticed the knob was slightly bent. Going to it, I tried to turn the knob and it clattered to the ground. The door creaked open. It was never locked.</p>
                 <p>&#34;Smart assholes,&#34; I muttered to myself.</p>
@@ -2360,7 +2440,7 @@
                 <p>I had one minute, twenty seconds left.</p>
                 <p>Shit.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>I found the pin under the pillows and unlocked the chest. In it was the key.</p>
                 <p>I unlocked the door to the final room and came to an abrupt pause.</p>
                 <p>This room was completely clean-not a single piece of furniture in it. But there was a girl on her knees, her hands bound with a rope.</p>
@@ -2375,7 +2455,7 @@
                 <p>This should be the easiest room so far. The key was right there in her palm. All I had to do was take it,open the door and leave.</p>
                 <p>Yet, something felt wrong. It was too easy.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

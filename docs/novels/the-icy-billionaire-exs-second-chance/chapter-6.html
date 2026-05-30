@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,15 +2389,15 @@
                 <p>&#34;Ah!&#34; Her arms flailed wildly as gravity pulled her toward the unforgiving marble.</p>
                 <p>Just as she began her descent, the bathroom door flew open.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Adrian stood framed in the doorway, his tailored suit accentuating his broad shoulders. Their eyes met - his widening in surprise before he sprang into action.</p>
                 <p>Vivian gasped as strong arms scooped her up bridal-style, his grip unexpectedly tight around her waist.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Then came the horrifying realization - she wore nothing but droplets of water from her interrupted shower.</p>
                 <p>Heat flooded her cheeks as she instinctively crossed her arms over her chest. This marked their first intimate contact since their rushed wedding, and the awkwardness made her toes curl in embarrassment.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Adrian&#39;s lips quirked in amusement. &#34;Relax, darling,&#34; he drawled. &#34;There&#39;s hardly anything worth hiding.&#34;</p>
                 <p>Humiliation and irritation warred within her. &#34;How generous of you, Mr. Blackwood,&#34; she snapped. &#34;After your extensive experience, I&#39;m sure my modest curves fail to impress.&#34;</p>
                 <!-- 广告位 4 -->
@@ -2325,12 +2405,12 @@
                 <p>Though Vivian carried her C-cup figure with quiet confidence, she knew all too well that without love, even the most perfect body meant nothing compared to Serena&#39;s willowy frame that Adrian so clearly preferred.</p>
                 <p>With practiced ease, Adrian grabbed the plush robe hanging behind the door and draped it over her shoulders. His brows furrowed at her comment. &#34;What nonsense are you spouting now, Vivian?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>A sudden thought darkened his expression further. &#34;Tell me,&#34; his voice turned dangerously calm, &#34;did you send those divorce papers at midnight just to stage this little scene? To lure me home to find you like this?&#34; His jaw tightened. &#34;I told you I had back-to-back meetings. Was this desperate ploy really necessary?&#34;</p>
                 <p>Vivian&#39;s temper flared at his accusatory tone, reigniting the simmering tension between them.</p>
                 <p>He always assumed the worst of her.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

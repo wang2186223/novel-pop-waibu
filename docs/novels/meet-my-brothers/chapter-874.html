@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,38 +2391,38 @@
                 <p>In the dream, she relived her experiences in the Barrett residence, including her marriage to Timothy and the mistreatment she endured there.</p>
                 <p>Like a flickering strobe light, fragments of memories raced through Mia&#39;s mind, swiftly passing by.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>In the past, Mia had caught glimpses of these fragments in her dreams. However, they had always remained disjointed, lacking any cohesive narrative, and she hadn&#39;t felt personally affected.</p>
                 <p>This time, however, was different. She was overcome with deep distress.</p>
                 <p>Finally awakening from her slumber, Mia opened her eyes and found herself staring at the ceiling of the hospital room.</p>
                 <p>As she sat up to wipe her eyes, she noticed that tears had dampened a small patch of her pillow.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>At that moment, a flood of memories from her time in the Barrett family rushed back to Mia.</p>
                 <p>Her emotions became profoundly complex at that instant. Over the past four years, she had forgotten everything about her time in the Barrett residence.</p>
                 <p>Her family had only alluded to her unhappiness there, yet she remained unaware of the details of her time there.</p>
                 <p>Now, however, everything came rushing back to her.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Mia swiftly wiped away the tears from the corners of her eyes, her demeanor turning somber.</p>
                 <p>Thankfully, Mia emerged unscathed from the accident four years ago, and her children were also unharmed.</p>
                 <p>Otherwise, she wouldn&#39;t have hesitated to hold the Barrett family accountable.</p>
                 <p>As Mia contemplated Timothy&#39;s role as her bodyguard, a cold expression briefly crossed her face. Indeed, men could be pathetic.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>In the past, when Mia had feelings for Timothy, he showed no interest in her, going as far as seeking a divorce and kicking her out.</p>
                 <p>However, everything changed after her reunion with her family.</p>
                 <p>&#34;Mia, you&#39;re awake. Do you feel any discomfort anywhere?&#34; Connor asked as he entered the ward, noticing that Mia had woken up. Without delay, he hurried over to assess her condition. &#34;Mia, are you experiencing any discomfort at the moment, like dizziness, nausea, or blurry vision?&#34;</p>
                 <p>&#34;Just a slight headache,” Mia responded as she gently touched her forehead, noticing a bump. It was undoubtedly from Connie&#39;s assault. For all those years, Mia hadn&#39;t dared to retaliate.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Mia, please don&#39;t touch it. Your injury hasn&#39;t fully healed yet. It will take a few days for the swelling to go down. Are you feeling uncomfortable anywhere else?&#34;</p>
                 <p>Mia pulled back her hand. &#34;No, nothing else.&#34;</p>
                 <p>&#34;Mia, you&#39;ve sustained a minor concussion and need to be monitored in the hospital for a day. Going forward, please exercise more caution and ensure you always have a bodyguard with you. It&#39;s crucial not to rely on unreliable individuals for your safety.”</p>
                 <p>Mia sensed Connor was alluding to Timothy as the unreliable person. With a hint of resignation, Mia responded, &#34;I understand. Connor, could you also keep this incident from Dominic for the time being?&#34;</p>
                 <p>&#34;Are you referring to your injury or the decision to have Timothy as your bodyguard?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

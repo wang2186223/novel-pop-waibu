@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,19 +2389,19 @@
                 <p>Lydia let out a bitter laugh. &#34;With all due respect, how could I report what I didn&#39;t know? Vivian&#39;s personal life was just that - personal. She wasn&#39;t auditioning to be some manufactured pop star, and her contract certainly didn&#39;t prohibit relationships. Since when did management require prying into employees&#39; private affairs?&#34;</p>
                 <p>&#34;This isn&#39;t some factory assembly line,&#34; the CEO snapped. &#34;We&#39;re in the entertainment business. As her manager, you should have exercised better judgment.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Unfazed, Lydia lit a cigarette, exhaling slowly as she weathered the familiar storm of criticism. In this industry, dressing-downs came with the territory.</p>
                 <p>Just when she thought the lecture had concluded, the CEO delivered his final blow. &#34;Lydia, I suggest you consider resigning voluntarily. While you&#39;ve shown dedication, your results simply don&#39;t measure up. A forced termination might... complicate your future prospects.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Lydia&#39;s grip tightened around her cigarette. No achievements? She&#39;d built three artists from obscurity to stardom, each generating millions for the company.</p>
                 <p>&#34;Since you&#39;ll be leaving of your own accord, no severance will be provided,&#34; the CEO continued, avoiding her gaze. &#34;Though given your family&#39;s wealth and your... advancing age, perhaps this is for the best. Maybe it&#39;s time to focus on settling down. After all, what&#39;s more important than family? Look at how many executives sacrifice their personal lives for this cutthroat business.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>The patronizing dismissal stung like salt in a wound. Crushing her cigarette with deliberate force, Lydia replied through clenched teeth, &#34;How very thoughtful of you.&#34;</p>
                 <p>Missing her sarcasm entirely, the CEO added casually, &#34;While you&#39;re still here, would you mind grabbing me a coffee from next door?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>A cold smile curved Lydia&#39;s lips. &#34;Actually, I&#39;ll be rather busy drafting my resignation. After that, I suppose I should rush off to find a husband and start popping out babies. So no, I won&#39;t be fetching your coffee today.&#34;</p>
                 <p>With that, she turned sharply on her heel and strode back into the building, leaving the CEO gaping like a fish out of water.</p>
                 <!-- 广告位 5 -->
@@ -2331,7 +2411,7 @@
                 <p>The change was almost comical - gone was the indifferent receptionist who&#39;d once eyed Vivian with barely concealed disdain. These new hires practically vibrated with eager-to-please energy, their posture straightening to military precision as Vivian approached.</p>
                 <p>Vivian offered them a polite nod before heading toward the private elevators, the click of her heels echoing through the marble-lined space. The transformation in her reception served as yet another reminder - she wasn&#39;t just Vivian Hartley anymore. She was Vivian Blackwood now, and that name carried weight in this building.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

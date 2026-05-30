@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2315,7 +2395,7 @@
                 <p>The university buzzed with activity - students rushing about, last-minute preparations underway everywhere.</p>
                 <p>Surrounded by the youthful energy, Olivia felt a pang of nostalgia for simpler times when her biggest worry was passing exams.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>How quickly life changed. Those carefree days felt like someone else&#39;s memories now.</p>
                 <p>They searched the exhibition area, but Olivia&#39;s designated space was conspicuously absent.</p>
                 <p>Natalie frowned. &#34;Where&#39;s your presentation area? Didn&#39;t they arrange for you to demonstrate restoration techniques?&#34;</p>
@@ -2325,7 +2405,7 @@
                 <p>Unable to locate Nathaniel, Olivia pulled out her phone to contact him.</p>
                 <p>His reply came swiftly via voice message. &#34;Olivia, my deepest apologies. An emergency came up. Vice Principal Harrison Ellington is on site - I&#39;ll send his photo. Again, so sorry for the inconvenience.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The background noise in Nathaniel&#39;s message suggested chaos. Olivia had Isabella text back their understanding.</p>
                 <p>With Nathaniel&#39;s photo, they spotted the vice president in the crowded venue.</p>
                 <p>Harrison appeared harried and visibly irritated when he noticed their approach, deliberately turning away.</p>
@@ -2335,7 +2415,7 @@
                 <p>Natalie remained calm. &#34;Actually, we&#39;re invited guests.&#34;</p>
                 <p>This information softened Harrison&#39;s demeanor slightly. &#34;I see. And you are...?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Isabella stepped in. &#34;This is Olivia Sinclair, invited by Mr. Nathaniel Bradford. Could you direct us to her exhibition space?&#34;</p>
                 <p>Recognition flickered across Harrison&#39;s face, followed by confusion. &#34;Olivia... that name does sound familiar,&#34; he muttered.</p>
                 <p>He vaguely recalled Nathaniel mentioning something about a special guest, but he&#39;d assumed it was just another pretty face to enhance the event&#39;s appeal. The details had slipped his mind.</p>
@@ -2345,7 +2425,7 @@
                 <p>Harrison&#39;s patience wore thin. What more could they possibly want?</p>
                 <p>His gaze then fell on Olivia, who stood out strikingly despite her silence. Yet she seemed oddly out of place amidst the chaos.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Exasperated, Harrison approached Olivia directly. &#34;Tell me what you need. I don&#39;t have all day.&#34;</p>
                 <p>Olivia typed rapidly on her phone before a synthesized voice spoke: &#34;My apologies. Speaking is difficult for me.&#34;</p>
                 <p>Harrison initially thought she was being difficult, then realization dawned. Despite curious onlookers, he blurted, &#34;You can&#39;t speak? Then why would Nathaniel invite you? What&#39;s the point?&#34;</p>
@@ -2367,7 +2447,7 @@
                 <p>Now, Olivia&#39;s meticulous work drew curious crowds, as such delicate procedures were rarely performed publicly.</p>
                 <p>Though seated in a corner, Olivia became completely absorbed in her work, her skilled hands moving with graceful precision under the sunlight. Her long fingers danced across the ancient artifact with surprising delicacy.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

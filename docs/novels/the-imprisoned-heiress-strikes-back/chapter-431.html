@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,7 +2391,7 @@
                 <p>Ethan stiffened. Though Evelyn’s lips curved upward, the sharp mockery in her gaze was unmistakable.</p>
                 <p>He opened his mouth to speak, but Eleanor was desperately shaking her head, urging him to stay quiet.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Ethan Caldwell stood frozen, torn between two impossible choices.</p>
                 <p>Seeing his silence, Evelyn Carter understood his hesitation all too well.</p>
                 <p>He claimed to care for her, to hope she would reconsider—yet every move he made only drove her further away.</p>
@@ -2323,19 +2403,19 @@
                 <p>Her gaze shifted to Harold Aniston, the family patriarch.</p>
                 <p>Harold had always treated her with kindness, but Evelyn wasn’t foolish enough to think he would choose her over his own grandson.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>But this wasn’t just about her—it was about Alexander.</p>
                 <p>Alexander Whitmore was Harold’s youngest son. The real question was, who would Harold side with—his son or his grandson?</p>
                 <p>Since the day she married Alexander, Harold had seemed to care—but now, she would see where his loyalty truly lay.</p>
                 <p>Evelyn couldn’t comprehend why Harold had sent Alexander away to live with a rural family right after his birth, then neglected him for years.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Alexander had never known the privileges of the Whitmore name. They only reclaimed him when he was useful.</p>
                 <p>As Evelyn’s position didn’t permit her to challenge these decisions, she still needed to know—did Harold truly care for his son?</p>
                 <p>When she mentioned Ethan’s threats against Alexander, Harold stayed silent.</p>
                 <p>Evelyn pressed her lips together, a sharp ache blooming in her chest for Alexander.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>She could endure her own suffering, but she refused to let him share that fate.</p>
                 <p>Just as she opened her mouth to speak, Alexander’s icy voice cut through the tension behind her.</p>
                 <p>“Evelyn. Come here.”</p>

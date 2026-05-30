@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>&#34;We are. This is the private atelier of Camille Dubois, the world-renowned designer behind Rozabe.&#34; Victoria Sterling&#39;s eyes sparkled with excitement. &#34;While Rozabe has boutiques worldwide, their ready-to-wear line isn&#39;t for us. Only Camille&#39;s haute couture is worthy of our wedding.&#34;</p>
                 <p>She had gone all out for today—freshly curled and dyed hair, a daring red backless dress, lips painted a bold crimson. But the sight of that red only made Alexander think of Evelyn. That shade belonged to her—on anyone else, it looked garish.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Clothes are just clothes. I don’t need them. Order whatever you want for yourself.&#34; His tone was dismissive.</p>
                 <p>&#34;No! As your wife, I should oversee your wardrobe. From now on, you’ll only wear what I choose. No more accepting gifts from other women!&#34; Victoria clung to his arm, her voice dripping with possessiveness.</p>
                 <p>Alexander stiffened. He thought of the suit Evelyn had tailored for him—damaged, yet carefully preserved. And how had she treated his gift? Letting it be destroyed, discarded like trash. His jaw clenched. &#34;Fine. I won’t.&#34;</p>
@@ -2323,7 +2403,7 @@
                 <p>Inside, the hall buzzed with laughter and clinking glasses, guests mingling with wine in hand.</p>
                 <p>Alexander tensed. He hadn’t expected an event—especially not one Victoria had orchestrated behind his back. No wonder she’d dressed to impress. He hated being paraded around like a trophy.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>The moment they stepped in, whispers erupted.</p>
                 <p>&#34;Is that Alexander Kingsley?&#34;</p>
                 <p>&#34;He’s even more striking in person!&#34;</p>
@@ -2332,7 +2412,7 @@
                 <p>Victoria preened under the attention, relishing the envy. She’d pulled strings to get these invites, and now, she was basking in her victory.</p>
                 <p>&#34;You should’ve told me about this. You know I don’t attend these things.&#34; Alexander’s voice was ice.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Alexander, I don’t have the influence to secure Camille’s designs alone. I needed you here. With your presence, she’ll agree—&#34;</p>
                 <p>Seeing his stormy expression, she backtracked. &#34;I’m sorry. Did I overstep?&#34;</p>
                 <p>&#34;Next time, inform me. I’ll arrange it. You don’t need to drag me along.&#34; His tone softened slightly.</p>
@@ -2341,7 +2421,7 @@
                 <p>Dressed in an elegant blue gown, a matching shawl draped over her shoulders, her hair swept up to expose her delicate neck. She wore minimal makeup, yet her presence commanded attention. Some women didn’t need embellishments to shine.</p>
                 <p>Victoria’s face twisted in jealousy. She’d thought her red dress would dominate—but Evelyn in blue had stolen the spotlight effortlessly.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Alexander’s throat tightened. He tried to look away but couldn’t. And then—she walked right past him as if he were invisible.</p>
                 <p>Heat flared in his chest.</p>
                 <p>&#34;Ms. Prescott,&#34; Victoria sneered, stepping forward. &#34;I’m surprised you managed an invite. Must’ve been difficult.&#34;</p>
@@ -2350,7 +2430,7 @@
                 <p>&#34;Neither you nor Mr. Kingsley belong here. Yet here you are. Quite the accomplishment.&#34;</p>
                 <p>Victoria’s temper snapped. &#34;Everyone knows who Alexander is! You think Camille would refuse the CEO of Sinclair Holdings?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Fair point.&#34; Evelyn nodded.</p>
                 <p>&#34;Then what about you? Some VIP? A fashion icon?&#34;</p>
                 <p>&#34;Neither.&#34;</p>
@@ -2362,7 +2442,7 @@
                 <p>All heads turned as Camille descended the staircase—regal in a pink Rozabe ensemble, her expression haughty—until she spotted Evelyn.</p>
                 <p>Her demeanor transformed instantly. Rushing forward, she beamed. &#34;Master! You didn’t tell me you were coming!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,14 +2392,14 @@
                 <p>Weakness was a woman’s sharpest blade.</p>
                 <p>Her fingers closed around a shard of shattered porcelain from the floor.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Before he could react, the jagged edge pressed against his throat.</p>
                 <p>The tables turned in a heartbeat.</p>
                 <p>Ethan froze.</p>
                 <p>He hadn’t anticipated this—Evelyn, fragile Evelyn, pressing death to his skin with steady hands.</p>
                 <p>The sharp edge pressed deeper into Ethan&#39;s throat.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Ethan, just let me go. I don&#39;t want to hurt you,&#34; Evelyn said, her voice icy and unyielding. &#34;Get me a car.&#34;</p>
                 <p>Ethan hadn&#39;t anticipated this—Evelyn, armed and dangerous, turning against him.</p>
                 <p>A bitter laugh escaped him. &#34;Evelyn, you won&#39;t do it.&#34;</p>
@@ -2333,14 +2413,14 @@
                 <p>Her tone hardened. &#34;I said, get me a car.&#34;</p>
                 <p>The cold sting at his neck sent a jolt of disbelief through him.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>How could she?</p>
                 <p>To escape him, she was willing to draw blood.</p>
                 <p>His jaw clenched, eyes burning with betrayal. &#34;Even if you slit my throat tonight, Evelyn, you&#39;re not leaving.&#34;</p>
                 <p>Evelyn never anticipated that Ethan would remain defiant, even now.</p>
                 <p>Her fingers brushed against the fabric of his coat, slipping into his pocket to retrieve his car keys.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>The sudden clatter of his phone hitting the floor made her freeze.</p>
                 <p>A call came through.</p>
                 <p>The voice on the other end was unmistakable—rough, edged with malice.</p>
@@ -2352,7 +2432,7 @@
                 <p>Something was wrong.</p>
                 <p>Was Zachary planning to hurt Alexander?</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

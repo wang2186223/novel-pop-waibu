@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,11 +2389,11 @@
                 <p>&#34;Copying? Hardly. I just happen to love mangoes,&#34; Dominic countered, leaning back in his chair.</p>
                 <p>Vivian massaged her temples. These two could turn even the simplest conversation into a battlefield.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>The waiter turned to her expectantly. &#34;And for you, Miss?&#34;</p>
                 <p>&#34;Iced Americano,&#34; she replied calmly.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>She caught Adrian giving her an unreadable look before the waiter quietly retreated to place their orders.</p>
                 <p>The vibration of her phone shattered the momentary silence. The screen displayed a message from Ivory Phoenix Productions: &#34;Are you available right now?&#34; The unusually formal tone from her normally direct contact made her pause. Vivian quickly typed back, &#34;I&#39;m on holiday in my hometown. The script will be delivered as soon as I return—it won&#39;t affect the schedule.&#34;</p>
                 <!-- 广告位 3 -->
@@ -2325,7 +2405,7 @@
                 <p>The reply took painfully long to arrive: &#34;We&#39;re still finalizing details with the client. We&#39;ll update you when we know more.&#34;</p>
                 <p>Vivian&#39;s frown deepened. Everything had been progressing smoothly until this sudden roadblock. The promise of easy earnings seemed to be evaporating like morning dew.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Before she could dwell further, Audrey slapped a hand over her phone. &#34;Why are you glued to your screen when we&#39;re supposed to be enjoying ourselves? You&#39;re sucking all the fun out of this gathering!&#34;</p>
                 <p>&#34;Alright, alright,&#34; Vivian surrendered, locking her phone and tucking it away. &#34;The client&#39;s being difficult. Hopefully they won&#39;t demand rewrites. Besides filming, I&#39;ve got several events lined up.&#34; She clasped her hands in mock prayer.</p>
                 <p>Audrey shot Adrian a pointed look. &#34;You&#39;ve got more money than you could spend in three lifetimes, yet you&#39;re letting Vivian struggle after the divorce? She&#39;s working herself to the bone with filming and still needs side gigs to pay bills?&#34;</p>
@@ -2334,7 +2414,7 @@
                 <p>Adrian, who had just retrieved a cigarette, slowly set it back down. His response came measured and cold: &#34;First, I never mentioned divorce, nor did I agree when she brought it up. Second, I&#39;ve never withheld anything from her. If she chooses to earn her own money, she must accept the challenges that come with it. Adults don&#39;t get to make choices without accepting the consequences.&#34;</p>
                 <p>Vivian remained unfazed by his clinical tone. He spoke less like a husband and more like a CEO analyzing a corporate merger—his words precise, logical, and utterly devoid of warmth. Her emotional reserves for him had long since run dry.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

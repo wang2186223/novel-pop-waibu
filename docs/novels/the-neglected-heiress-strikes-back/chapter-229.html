@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2315,7 +2395,7 @@
                 <p>As the spotlight illuminated the jewelry, gasps rippled through the crowd.</p>
                 <p>&#34;Isn&#39;t that the necklace Ada just donated?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;It&#39;s identical!&#34;</p>
                 <p>&#34;Impossible! Alea&#39;s pieces are one-of-a-kind. How can there be duplicates?&#34;</p>
                 <p>&#34;Then one must be fake!&#34;</p>
@@ -2325,7 +2405,7 @@
                 <p>Her gift to Ada was counterfeit.</p>
                 <p>Which meant only one thing—the necklace on stage was genuine.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Ms. Evadne,&#34; Iris asked with genuine concern rather than accusation, &#34;didn&#39;t you authenticate the items beforehand? How could this happen?&#34;</p>
                 <p>&#34;Who&#39;s truly at fault here, Ms. Iris? Me, or Ms. Ada?&#34; Evadne countered with a knowing smile.</p>
                 <p>Iris gasped. &#34;This necklace—could it be—?&#34;</p>
@@ -2335,7 +2415,7 @@
                 <p>The room hushed.</p>
                 <p>&#34;Secondly,&#34; she continued, lips curving, &#34;the &#39;Whispering Waters&#39; necklace was my personal donation.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>The crowd turned as one to Ada, who sat frozen, desperately seeking Glynnis&#39; help.</p>
                 <p>But Glynnis could only stare helplessly at Edith&#39;s empty seat—she&#39;d already fled.</p>
                 <p>Evadne surveyed the ridiculous charade with amusement. &#34;Ms. Ada, I wasn&#39;t aware you&#39;d be donating this piece tonight. Quite the coincidence. I hope there are no misunderstandings.&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>Elspeth maintained her facade, but Glynnis turned ghostly pale.</p>
                 <p>&#34;My necklace was a gift from the Abernathy Group! How dare you accuse me—&#34; Ada protested.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Ms. Evadne,&#34; Elspeth interjected sharply, &#34;you&#39;d better have proof before slandering my daughter&#39;s reputation!&#34;</p>
                 <p>&#34;I wouldn&#39;t make such claims without evidence,&#34; Evadne said calmly, eyes glinting mischievously.</p>
                 <p>Thaddeus straightened, captivated by her fox-like smirk—once irritating, now endearing.</p>
@@ -2355,7 +2435,7 @@
                 <p>The protests died as the grand doors burst open.</p>
                 <p>All heads turned.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>A striking blonde entered, her heels clicking authoritatively.</p>
                 <p>Thaddeus did a double take. Liva? Here?</p>
                 <p>&#34;It&#39;s Liva! Alea Studio&#39;s director!&#34; someone exclaimed.</p>
@@ -2365,7 +2445,7 @@
                 <p>To everyone&#39;s astonishment, Liva took Evadne&#39;s hand and pressed a reverent kiss to it—the highest sign of respect in Aetheria.</p>
                 <p>&#34;Forgive my tardiness, Miss Alea,&#34; Liva murmured.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

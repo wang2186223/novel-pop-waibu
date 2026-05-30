@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,7 +2389,7 @@
                 <p>Evelyn eyed the elaborate spread. &#34;If this is &#39;making do,&#39; Michelin restaurants should close shop.&#34;</p>
                 <p>&#34;You&#39;re pregnant and still working.&#34; His gaze dropped to her barely visible bump. &#34;I won&#39;t let you endure hardships.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>She sipped her congee, steam obscuring her expression. &#34;Eat quickly. You have that morning meeting.&#34;</p>
                 <p>Only at the doorway did Alexander hesitate. &#34;We might need to use the side exit today.&#34;</p>
                 <!-- 广告位 2 -->
@@ -2317,7 +2397,7 @@
                 <p>Her fingers paused on her shoelaces. &#34;Trouble again?&#34;</p>
                 <p>&#34;Got photographed last night.&#34; He frowned at the news alert. &#34;Strange—I haven&#39;t attended any public events recently.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Evelyn skimmed the article. &#34;Maybe they&#39;re targeting me.&#34;</p>
                 <p>She grabbed her bag, but Alexander suddenly loosened his tie. His deft fingers transformed his pristine business attire into disheveled casualwear, even mussing his usually perfect hair into artfully tousled strands.</p>
                 <!-- 广告位 4 -->
@@ -2325,14 +2405,14 @@
                 <p>&#34;You...&#34; Evelyn stifled a laugh at his reflection in the elevator mirror. &#34;Now you look like a celebrity dodging paparazzi.&#34;</p>
                 <p>He froze. She sighed. &#34;Let&#39;s leave separately. Your face is too recognizable—just showing up confirms the rumors.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>At the parking garage, their hands both reached for the buttons. When their fingers brushed, Alexander jerked back as if burned.</p>
                 <p>&#34;Go ahead.&#34; Evelyn calmly pressed for the lobby.</p>
                 <p>Before parting, Alexander seemed to wrestle with unspoken words. She waved her phone. &#34;It&#39;s only three months. No need to panic.&#34;</p>
                 <p>Turning toward the hospital&#39;s side entrance, she paused at the corner. Her palm pressed lightly against her abdomen—though barely showing, her back already ached. At this rate, she&#39;d soon have to step back from surgeries.</p>
                 <p>A shutter click sounded in the distance. Evelyn whirled around just in time to see a shadow vanish behind the trees.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

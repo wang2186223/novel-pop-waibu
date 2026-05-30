@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2325,7 +2405,7 @@
                 <p>Alexander gently reminded her, &#34;Isabella, if I were Cedric, I’d start with Ms. Charlotte. She’s the primary witness against Genevieve.&#34;</p>
                 <p>&#34;Alexander, I understand. But Charlotte isn’t in my hands—she’s under Sebastian’s control.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Isabella took a deep breath, her expression calm. &#34;I’ll handle this. You and Sebastian shouldn’t get involved. Especially Sebastian—he’s a public servant. He can’t break the law for my sake. If someone with ill intentions catches him, it won’t end well.&#34;</p>
                 <p>After hanging up, the weight on her shoulders grew heavier.</p>
                 <p>As for Genevieve, she had never considered her a real threat. Elspeth was the true queen she needed to dethrone.</p>
@@ -2365,7 +2445,7 @@
                 <p>&#34;Isabella!&#34;</p>
                 <p>Sebastian’s anger flared, his chest tight. His starry eyes burned red. &#34;I just wanted to see you.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Well, I don’t want to see you!&#34;</p>
                 <p>Her left hand was trapped in his iron grip. She couldn’t break free—fighting him was futile. She reached for her phone with her free hand, but Sebastian anticipated it, capturing that wrist too.</p>
                 <p>Cornered, Isabella screamed for help—but her cry was cut off as Sebastian’s lips crashed onto hers.</p>
@@ -2385,7 +2465,7 @@
                 <p>But Sebastian dodged effortlessly.</p>
                 <p>&#34;Nathaniel!&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Isabella’s hoarse cry went unheard. Nathaniel’s mind was filled with the image of Isabella being forced into that kiss—Sebastian’s lips smeared with her red lipstick.</p>
                 <p>&#34;Sebastian. I’ll kill you!&#34;</p>
                 <p>Sebastian’s eyes narrowed slightly.</p>
@@ -2405,7 +2485,7 @@
                 <p>&#34;Save your excuses. The more you talk, the more despicable you sound!&#34;</p>
                 <p>The tears in Isabella’s eyes pierced Sebastian’s heart. She wiped her lips roughly with the back of her hand, as if erasing his touch.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Sebastian, admit it. You regret the divorce, don’t you?&#34;</p>
                 <p>His heart clenched. He couldn’t even muster a simple &#34;No.&#34;</p>
                 <p>All he had left was pride.</p>

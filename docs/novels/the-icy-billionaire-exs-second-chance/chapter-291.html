@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,32 +2390,32 @@
                 <p>Adrian’s icy gaze landed on Audrey. &#34;Sit in the front.&#34;</p>
                 <p>Audrey bristled. &#34;Why don’t you sit up front? I want to talk to Vivian.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Vivian opened her mouth to intervene, but before she could speak, Adrian ignored them both and slid into the backseat without another word.</p>
                 <p>With a defeated sigh, Audrey yanked open the passenger door and climbed in.</p>
                 <p>As the car pulled away, Adrian scrolled through his phone, skimming headlines about the Fed cutting interest rates and loosening real estate restrictions in several cities.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>His mind briefly wandered to Vivian. Maybe it was time to buy a few properties under her name.</p>
                 <p>In the front seat, Audrey fidgeted restlessly, turning her head every few seconds like she was dying to spill her thoughts about Dominic. But each time she caught sight of Adrian’s brooding expression in the rearview mirror, she swallowed her words and sank back into her seat.</p>
                 <p>Finally, she gave up and pulled out her phone. Without headphones, the thumping bass of DJ music filled the car.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Vivian leaned forward, curious. &#34;What’s that noise? What are you watching?&#34;</p>
                 <p>Audrey tilted her screen toward her. &#34;Male dancers.&#34;</p>
                 <p>The video displayed a shirtless streamer gyrating under flashing lights, his exaggerated abs and chest flexing dramatically for the camera. The shadows made his physique look even more sculpted than it probably was.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Vivian’s gaze flickered to Adrian’s reflection in the mirror, then back to the screen. She couldn’t help but compare—and found herself slightly disappointed.</p>
                 <p>Just as she was about to look away, Adrian’s cold stare met hers.</p>
                 <p>He scoffed, his voice dripping with disdain. &#34;Your taste is questionable.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The condescension stung. Vivian straightened, lifting her chin defiantly. &#34;You old-school types wouldn’t understand the appeal of younger men. They’re sweet, energetic, and actually know how to have fun—something you might not be familiar with.&#34;</p>
                 <p>Audrey jumped in eagerly. &#34;Exactly! And let’s not forget their stamina. Unlike some older guys, who probably can’t even—&#34;</p>
                 <p>&#34;Enough,&#34; Adrian cut in, his lips curling into a dangerous smirk as his eyes locked onto Vivian. There was a challenge in his gaze, sharp and unyielding. &#34;Are you sure you’re talking about the right person?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

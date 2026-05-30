@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2318,7 +2398,7 @@
                 <p>The unspoken threat hung between them like a guillotine blade.</p>
                 <p>Somewhere beyond these gilded walls, a storm was gathering. And Evelyn intended to be its eye when it finally broke free.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>An invisible barrier had formed between them.</p>
                 <p>Evelyn&#39;s rejection was palpable, and Ethan had no idea how to bridge the distance.</p>
                 <p>The television played softly in the background, broadcasting a segment about an upcoming concert in Cresthaven featuring a world-renowned pianist.</p>
@@ -2331,7 +2411,7 @@
                 <p>&#34;Ethan! Put me down! What are you doing?&#34; Evelyn protested, startled by his sudden movement.</p>
                 <p>&#34;Taking you upstairs. The floors are freezing—you shouldn’t be walking around barefoot.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>In her haste to get away from him, she hadn’t bothered with shoes, giving him the perfect excuse.</p>
                 <p>As she struggled in his hold, he tightened his grip. &#34;Stop squirming. I don’t want to risk hurting the baby.&#34;</p>
                 <p>The moment he mentioned their child, Evelyn went completely still.</p>
@@ -2344,7 +2424,7 @@
                 <p>She tried to yank her leg away, but his grip only tightened.</p>
                 <p>&#34;I&#39;m just trying to warm you up,&#34; he insisted, his voice softer than she expected. &#34;I swear I&#39;m not being creepy. Can you relax for once?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Her frown deepened.</p>
                 <p>Even during the years she had shamelessly pursued him, they had never been this close.</p>
                 <p>The tension between them was unbearable. Acting on instinct, she snatched a pillow and hurled it at his face.</p>
@@ -2357,7 +2437,7 @@
                 <p>&#34;You&#39;re actually letting me leave the house?&#34;</p>
                 <p>Hidden Desires: A Second Chance at Love (Evelyn Carter)</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>The words hung between them, charged with disbelief. Alexander Whitmore—her husband, her captor, the man who had kept her locked away like a fragile bird in a gilded cage—was offering her freedom. Even if just for one night.</p>
                 <p>Evelyn studied his face, searching for the catch. His jaw was set, his storm-gray eyes unreadable. The same eyes that had burned with fury when she’d last defied him.</p>
                 <p>But now?</p>
@@ -2386,7 +2466,7 @@
                 <p>One chance.</p>
                 <p>And maybe, just maybe, one step toward something neither of them dared name.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

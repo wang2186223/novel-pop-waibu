@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2323,7 +2403,7 @@
                 <p>It seemed like this man was quite the charmer.</p>
                 <p>you the one</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Nonetheless, Mia remained unfazed. Her hand delicately grazed Timothy’s face, tracing down to his chin. Timothy reclined in his chair nonchalantly, allowing her to playfully engage with him without protest.</p>
                 <p>Several men nearby gasped, with Caleb’s voice ringing out the loudest.</p>
                 <p>Caleb was utterly astonished. “Wow! Tim is openly being flirted with, and he’s not resisting. Rather, he</p>
@@ -2332,7 +2412,7 @@
                 <p>“No.” Timothy responded, narrowing his eyes in confusion at her unexpected question.</p>
                 <p>It appeared that Mia wasn’t here for him after all.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Timothy couldn’t shake off a sense of disappointment.</p>
                 <p>“Tsk tsk. I’ve encountered many men like you before. Next time you decide to approach, come up with a</p>
                 <p>better excuse, or else you won’t grab my attention!”</p>
@@ -2341,7 +2421,7 @@
                 <p>Timothy swiftly stepped aside, only to find her standing in front of Caleb, her voice dripping with sweetness as she said, “Hello there, handsome!”</p>
                 <p>The air was filled with a chilling tension.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Raising an eyebrow, Timothy turned to look at Caleb behind him, his gaze menacing.</p>
                 <p>Caleb’s back broke out in a cold sweat as he stammered, “S–So, um, what’s up, beautiful? Do you need</p>
                 <p>something?”</p>
@@ -2350,7 +2430,7 @@
                 <p>He was undeniably handsome, but he didn’t quite match her preferences. The man she had met earlier</p>
                 <p>had appealed to her more.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Had her taste been so off in the past?</p>
                 <p>“N-&gt;o, I haven’t forgotten,” Caleb stammered, swallowing nervously. How could he forget this woman? She was a spitting image of Mia.</p>
                 <p>If it weren’t for their vastly different personalities, he would have mistaken them as the same person.</p>
@@ -2361,7 +2441,7 @@
                 <p>pleading glance at Timothy</p>
                 <p>This has nothing to do with me? Caleb thought to himself.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

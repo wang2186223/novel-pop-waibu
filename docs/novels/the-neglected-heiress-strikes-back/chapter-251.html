@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2321,7 +2401,7 @@
                 <p>But no matter how much Margaret fumed, she couldn’t overshadow Evelyn’s radiant triumph.</p>
                 <p>The wedding of the century catapulted Sinclair Group—the leading financial conglomerate in Seattle—into the limelight in New York.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Not only that, Sinclair Group’s stocks soared throughout the day, with analysts predicting an even sharper rise the following morning.</p>
                 <p>And the excitement didn’t stop there.</p>
                 <p>When the wedding venue was unveiled, it ignited a nationwide frenzy!</p>
@@ -2337,7 +2417,7 @@
                 <p>&#34;Why the sudden interest in hiking this year?&#34; Daniel asked curiously.</p>
                 <p>&#34;I go every year,&#34; Alexander replied casually.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>During his teenage years, to cope with stress, he had spent a summer volunteering at Misty Mountain Park.</p>
                 <p>Life had been simple then—just eating, sleeping, and accompanying the park ranger on hikes, assisting lost visitors or inspecting safety hazards.</p>
                 <p>It had been one of the few peaceful periods of his life.</p>
@@ -2353,7 +2433,7 @@
                 <p>Thanks to Alexander and Harrison Kingsley’s interference, Nathaniel Whitmore’s appointment as head of Vanderbilt Industries’ legal department had fallen through.</p>
                 <p>For the first time, the usually unflappable Nathaniel tasted bitter defeat. He took a week off before returning to the Lockwood residence, only to be ambushed by Adrian Lockwood, who had been waiting for him.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Well, if it isn’t Evelyn Sinclair’s loyal lapdog,&#34; Nathaniel sneered. &#34;Shouldn’t you be at your mistress’s beck and call? What are you doing here?&#34;</p>
                 <p>&#34;Adrian, don’t you have anything to say for yourself?&#34; Adrian ignored the taunt, his voice icy.</p>
                 <p>&#34;Who the hell do you think you’re talking to?&#34; Nathaniel’s patience was already frayed, and Adrian’s audacity pushed him to the edge. &#34;First Margaret, now Victoria. You’re always eager to get your hands dirty.&#34;</p>
@@ -2385,7 +2465,7 @@
                 <p>&#34;I’m leaving tonight,&#34; he declared, his face bruised but his resolve unshaken.</p>
                 <p>&#34;Adrian! Where are you going?&#34; Eleanor called after him, her voice trembling.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Where else? Probably running back to his precious princess!&#34; Nathaniel spat, his words dripping with venom.</p>
                 <p>Adrian’s fists clenched again, his knuckles cracking audibly.</p>
                 <p>If not for Sebastian holding him back, he would have lunged at Nathaniel again.</p>
@@ -2406,7 +2486,7 @@
                 <p>&#34;I’m not going,&#34; Nathaniel snapped. &#34;I just got back from abroad. I’m exhausted.&#34;</p>
                 <p>William’s face darkened. &#34;Who do you think you are? You will not snub Reginald Sinclair! Even if you have to crawl there, you will attend!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

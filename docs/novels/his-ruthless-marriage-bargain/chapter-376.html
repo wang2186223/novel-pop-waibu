@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,31 +2391,31 @@
                 <p>&#34;Ah, now I remember. You&#39;re the winner of the recent perfumery competition in Valmont—Evelyn Carter. That was you, wasn’t it?&#34;</p>
                 <p>Evelyn hadn’t expected word to spread so fast, reaching even those in Marseille. His company specialized in Olivella Soap, not perfumery. Yet here he was, recognizing her. She supposed she had gained some recognition.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Yes, that’s me,&#34; she admitted with a nod.</p>
                 <p>Nathaniel’s expression lit up.</p>
                 <p>&#34;It really is you! What an honor to meet you! To be honest, Mr. Kensington, I was skeptical when you mentioned combining perfume with Olivella Soap. But if Ms. Carter is leading the project, I have nothing to worry about. I look forward to collaborating with you!&#34;</p>
                 <p>Evelyn was speechless.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;I—I’ve never done anything like this before. I can only promise to do my best.&#34;</p>
                 <p>Perfume and Olivella Soap? She was hearing about this for the first time. She had no idea where to even begin.</p>
                 <p>How was she supposed to pull this off? She shot Alexander Kensington a glare.</p>
                 <p>&#34;You’re being too modest, Ms. Carter,&#34; Nathaniel continued. &#34;Your victory in Valmont brought us immense pride. You might not realize it, but we’ve faced discrimination in this industry for years. Celestia Group is globally renowned for its cosmetics and fragrances, yet they’ve always looked down on us.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Your win proved them wrong. You’ve done something remarkable for all of us.&#34;</p>
                 <p>Nathaniel gave her an earnest thumbs-up. His praise wasn’t flattery—it was genuine. Evelyn felt a swell of pride, knowing she had made an impact. But she also knew this was just the beginning.</p>
                 <p>There was still so much ahead.</p>
                 <p>After some further discussion, they left with a few samples of Olivella Soap Nathaniel had prepared for them.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Once outside, Alexander reached for her hand, but Evelyn pulled away.</p>
                 <p>&#34;Are you upset with me?&#34; he asked, sensing her mood.</p>
                 <p>&#34;Because I didn’t tell you beforehand?&#34;</p>
                 <p>&#34;So you do know,&#34; she muttered.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Evelyn shot him a sideways glance. &#34;You said we were going out for fun. Instead, I walked into a business meeting completely unprepared. You could’ve at least warned me before making me the project manager!&#34;</p>
                 <p>She had held back earlier, not wanting to argue in front of Nathaniel. Now, she let her frustration show.</p>
                 <p>Alexander chuckled at her puffed cheeks.</p>
@@ -2344,7 +2424,7 @@
                 <p>&#34;I don’t want them!&#34;</p>
                 <p>Evelyn huffed, turning away and storming off.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

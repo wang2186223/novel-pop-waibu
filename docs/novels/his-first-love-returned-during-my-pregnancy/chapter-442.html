@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,31 +2391,31 @@
                 <p>Worse still, she recognized the predatory hunger in his gaze.</p>
                 <p>Her nightgown had slipped during the struggle, the left strap dangling off her shoulder to reveal pale skin.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>His eyes slithered down her body like venomous snakes.</p>
                 <p>&#34;Listen,&#34; Evelyn forced out through chattering teeth, &#34;you can still walk away. I&#39;ll pretend this never happened—even pay you. But if you touch me, rape carries a minimum three-year sentence!&#34;</p>
                 <p>He hesitated briefly.</p>
                 <p>&#34;The building has surveillance. Police will track you down,&#34; she pressed on. &#34;Is one reckless moment worth ruining your life?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Just as she thought she&#39;d gotten through, his lips curled into a grotesque smile.</p>
                 <p>The world spun as he hurled her onto the couch.</p>
                 <p>The sound of tearing fabric echoed in the darkness.</p>
                 <p>Evelyn drove her knee upward with all her strength, breaking free when he recoiled in pain. But before she could take two steps, a vise-like grip yanked her ankle backward.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Help—!&#34;</p>
                 <p>Her cry dissolved into the roaring storm.</p>
                 <p>The attacker smothered her mouth and nose, cutting off her air supply. His clammy fingers crawled along her neck, making her stomach churn.</p>
                 <p>Suddenly, the crushing weight vanished.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Thudding punches followed, punctuated by the sickening crack of breaking bones.</p>
                 <p>Through blurred vision, she saw a towering figure silhouetted against the shattered window. Rainwater glistened on his form under the moonlight.</p>
                 <p>Alexander moved like an enraged lion, each strike delivering lethal force. The burglar crumpled, blood gushing from his nose and mouth.</p>
                 <p>&#34;Mer—&#34; The plea died mid-word.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Another devastating punch rendered the man unconscious.</p>
                 <p>&#34;Alexander!&#34; Evelyn scrambled to grab his arm. &#34;Stop! You&#39;ll kill him!&#34;</p>
                 <p>He seemed deaf to her pleas, fists continuing their brutal descent.</p>
@@ -2346,7 +2426,7 @@
                 <p>&#34;I&#39;m okay,&#34; she soothed softly. &#34;Calm down first.&#34;</p>
                 <p>His gaze swept over her, verifying no injuries before shoving the barely-breathing intruder aside. He shrugged off his rain-soaked coat and wrapped it tightly around her trembling form.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

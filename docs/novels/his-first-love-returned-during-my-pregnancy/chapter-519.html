@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>Alexander suddenly gripped her wrist.</p>
                 <p>&#34;What are you doing?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Knowing you, you&#39;d placate me first, then find a way to terminate later.&#34; His voice tightened. &#34;I won&#39;t make that mistake again.&#34;</p>
                 <p>Evelyn met his gaze. &#34;There&#39;s no pregnancy this time.&#34;</p>
                 <p>&#34;I can&#39;t trust that.&#34;</p>
                 <p>Olivia interjected, &#34;Want another test now? I&#39;ll write the order.&#34;</p>
                 <p>&#34;A different hospital.&#34; Alexander&#39;s tone brooked no argument.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Evelyn yanked her hand free. &#34;Do I look clairvoyant? Could I have faked results in advance?&#34;</p>
                 <p>Alexander lowered his lashes. &#34;That kind of pain... once was enough.&#34;</p>
                 <p>The words stabbed Evelyn&#39;s heart. Memories flooded back—the frigid bathroom, burning pills stuck in her throat.</p>
                 <p>Olivia stamped her foot. &#34;This is OB-GYN! There are expectant mothers next door!&#34;</p>
                 <p>Without warning, Alexander scooped Evelyn into his arms and strode out.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Instinctively, she looped her arms around his neck.</p>
                 <p>&#34;Put me down!&#34;</p>
                 <p>Ignoring her, he carried her to the parking lot and gently deposited her in the passenger seat. He removed his jacket, folded it into a square, and carefully tucked it beneath her abdomen.</p>
                 <p>&#34;Really necessary?&#34; Evelyn scoffed.</p>
                 <p>&#34;Multiple tests.&#34; He fastened her seatbelt. &#34;Too tight?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Eastside Hospital&#39;s results came in thirty minutes. Evelyn leaned against the wall, watching Alexander&#39;s knuckles whiten around the lab sheet.</p>
                 <p>&#34;Accurate?&#34; His voice rasped.</p>
                 <p>The doctor frowned. &#34;Basic bloodwork.&#34;</p>
                 <p>&#34;Let&#39;s go.&#34; Evelyn turned.</p>
                 <p>&#34;One more hospital.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>After five hospitals, the final physician tactfully suggested, &#34;Sir, perhaps you should visit urology?&#34;</p>
                 <p>In the car, Evelyn folded the stack of reports into paper airplanes.</p>
                 <p>&#34;These blood draws were easier than those pills that day.&#34;</p>
@@ -2352,7 +2432,7 @@
                 <p>&#34;The pills stuck in my throat. So bitter I cried.&#34; She released the airplane, watching it nosedive onto the floor mat. &#34;I wondered if it was our baby saying &#39;Don&#39;t leave me, Mommy.&#39;&#34;</p>
                 <p>In the rearview mirror, Alexander&#39;s tears splashed onto the steering wheel.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

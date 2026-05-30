@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,31 +2391,31 @@
                 <p>&#34;Enough!&#34; Daniel&#39;s voice cracked like thunder, his composure shattering. &#34;Olivia has done nothing wrong. Must you vilify her at every turn?&#34;</p>
                 <p>Victoria recoiled as if struck, her eyes shimmering with wounded pride. &#34;There you go again—leaping to her defense without hesitation. I&#39;m your wife. Your loyalty belongs to me, not some pathetic mute!&#34; Her voice broke as tears spilled over, each droplet a calculated performance.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Daniel exhaled sharply, confronting the brutal truth—he felt nothing for Victoria. Their union had been born from deception; a drug-induced haze leading to irreversible vows. Though resolved to honor his commitment, he couldn&#39;t fabricate affection.</p>
                 <p>Victoria&#39;s tears dried abruptly, replaced by cold determination. &#34;Silent treatment? Fine. Let&#39;s see how long you stay quiet when I make Olivia&#39;s life a living hell.&#34;</p>
                 <p>She spun on her stiletto heels, the sharp clicks echoing her fury. Daniel reached out but grasped only air.</p>
                 <p>Fumbling for his phone, Daniel dialed Natalie. She answered instantly, irritation lacing her tone. &#34;Daniel, I understand this marriage isn&#39;t what you wanted, but it&#39;s done. You need to stay away from Olivia—completely.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>A humorless laugh escaped him. &#34;Do you truly believe that&#39;s possible?&#34;</p>
                 <p>Natalie hesitated. The impossibility hung between them, yet no alternatives presented themselves.</p>
                 <p>&#34;I&#39;ll keep Olivia occupied on the opposite side of the venue,&#34; Natalie conceded. &#34;But you need to resolve this. This limbo helps no one.&#34;</p>
                 <p>Daniel massaged his temples. &#34;I know. I&#39;ve made my decision—I&#39;ll let go. If Victoria can find contentment, I&#39;ll dedicate myself to being the husband she deserves.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Natalie&#39;s relieved sigh carried through the receiver.</p>
                 <p>Unbeknownst to them, Olivia had overheard the entire exchange. A frown creased her brow as realization dawned—she&#39;d unwittingly become a wedge in this marriage. Avoidance wasn&#39;t a solution; perhaps a direct conversation with Victoria was necessary.</p>
                 <p>The absurdity struck her. She was married herself, albeit to a crumbling union with Liam. Pregnant with his child, she had zero interest in romantic entanglements. How had she become perceived as a threat?</p>
                 <p>Raucous laughter erupted from an adjacent room, shattering her thoughts.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Seriously? They invited a deaf musician? What&#39;s next—circus freaks?&#34;</p>
                 <p>&#34;Give him credit—he&#39;s talented despite the disability.&#34;</p>
                 <p>&#34;Why would Evelyn invite geriatric performers? Oh wait...&#34; A dramatic pause. &#34;To pair the deaf with the mute! Poetic, isn&#39;t it?&#34;</p>
                 <p>Isabella had heard enough. She surged forward, but Olivia caught her wrist.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The space served as a green room for the evening&#39;s performers. A clique of trust-fund brats lounged like pampered cats, their cruelty unchecked. Though renowned artists mingled nearby, none dared challenge these spoiled elites.</p>
                 <p>When Olivia&#39;s group entered, the laughter died abruptly. Natalie, known for her fiery temper, stepped forward. &#34;Care to share the joke? We&#39;d all love to laugh.&#34;</p>
                 <p>Most shrank under her glare, but one brazen socialite smirked. &#34;Just admiring how the mighty Bennett heir has become a mute&#39;s lapdog. What&#39;s wrong—can&#39;t take a joke about precious Olivia?&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>Natalie&#39;s sudden laughter was razor-sharp. &#34;Oh darling, you flatter them. These parasites couldn&#39;t earn a penny if their lives depended on it.&#34;</p>
                 <p>The tension crackled like live wire, the air thick with unspoken challenges.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

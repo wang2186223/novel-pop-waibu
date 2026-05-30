@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,22 +2390,22 @@
                 <p>&#34;Then there&#39;s nothing more to discuss,&#34; Liam said, his voice laced with quiet resignation.</p>
                 <p>Evelyn shifted uncomfortably. &#34;Excuse me,&#34; she murmured, rising abruptly. &#34;I need to freshen up.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Liam&#39;s gaze followed Evelyn&#39;s retreating form with unmistakable tenderness.</p>
                 <p>Benjamin Hudson chuckled darkly. &#34;Well, this certainly isn&#39;t the drinking game I expected. More like your dramatic confession hour. Your courting tactics grow bolder by the day - even fabricating such elaborate lies.&#34;</p>
                 <p>Liam&#39;s expression turned grave. &#34;Since childhood, I&#39;ve only ever wanted to become a doctor.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>The abrupt declaration left all three listeners stunned. Liam exhaled sharply, tilting his head back to study the starless sky before draining his glass.</p>
                 <p>&#34;Donovan dreamed of military glory,&#34; Liam continued quietly. &#34;He believed higher rank meant greater responsibility - more ways to serve our nation and its people. His ideals were always... noble.&#34;</p>
                 <p>Rosalind Baskins paused mid-bite, grilled meat forgotten as she studied Liam&#39;s profile.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;If both your dreams were equally honorable,&#34; Victoria pressed, &#34;why become Donovan&#39;s idealized soldier instead of pursuing medicine?&#34;</p>
                 <p>Liam&#39;s shoulders slumped slightly. &#34;Cassandra has idolized Donovan since we were children. He&#39;s likely her personal hero.&#34;</p>
                 <p>Rosalind nearly choked on her food. The idea that the ever-confident General Blackwood had spent his life molding himself into someone Cassandra might admire was staggering.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Victoria turned away, discreetly wiping at her eyes. The painful truth settled over her - no matter what she did, she could never compete with Cassandra Wright.</p>
                 <p>Benjamin sighed, lifting his glass. &#34;A toast then, Liam. To you.&#34;</p>
                 <p>After refilling their drinks, Liam clinked his tumbler against Benjamin&#39;s.</p>
@@ -2340,7 +2420,7 @@
                 <p>Rosalind stared at Liam with dawning horror. Had he discovered Evelyn&#39;s true identity? &#34;General Blackwood,&#34; she ventured nervously, &#34;are you drunk?&#34;</p>
                 <p>Liam ignored her, continuing his quiet drinking session with Benjamin, their conversation drifting to safer topics.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

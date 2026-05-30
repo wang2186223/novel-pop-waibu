@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,7 +2391,7 @@
                 <p>With a dignified demeanor, Sharon commented, “Monalize, it seems like you have quite a fiery temper, getting upset over just a few words. That kind of attitude might not be the best fit for Tim.”</p>
                 <p>“Exactly,” Veronica interjected. “Considering my nephew Timothy’s status as the heir to a prominent family, it’s essential for his future wife to embody grace and elegance. Above all, she must show utmost respect for her elders and never underestimate their authority.”</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Mia offered a wry smile in response. “It’s unfortunate, really. I’ve always been indulged by my family and have never been one to tolerate grievances. I’m not even certain what it truly means to be graceful and elegant.”</p>
                 <p>Sharon had intended to put Monalize in her place, but she was taken aback by Monalize’s audacity and arrogance.</p>
                 <p>Sharon’s mood instantly soured. “So, you’re Monalize, huh? I don’t recall hearing about the Langford family</p>
@@ -2323,19 +2403,19 @@
                 <p>Sharon continued, “Nowadays, It’s surprising how many young women pretend to be from wealthy families. It’s quite audacious, don’t you think? Do they honestly believe affluent familles wouldn’t bother to look into their backgrounds?</p>
                 <p>“Aunt Sharon, please, enough. Monalize Isn’t like that,” Shelly interjected with at hint of anxiety, her eyelid twitching involuntarily.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>How else could Monalize have gotten her hands on a VIP membership card if she wasn’t an heiress?</p>
                 <p>After all, such a card wasn’t easily accessible to everyone!</p>
                 <p>Sharon interjected, “Shelly, you’re far too gullible. You’re swayed by just a few favors. Is that all it took to gain your trust?”</p>
                 <p>Mia chuckled in response. “Alright, duly noted. Can I leave now?”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Without saying anything else, she turned and exited the lounge.</p>
                 <p>Visibly upset, Shelly turned to Sharon and exclaimed, “Aunt Sharon, what was</p>
                 <p>that about?”</p>
                 <p>Sharon replied, “Shelly, I just wanted to warn you not to be tricked by this</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>cunning woman. She’s deliberately using her looks to get close to Tim. It’s bad enough that you’re not being cautious, but now it seems you’re being influenced by her as well!”</p>
                 <p>“Exactly; she’s not even willing to share her family background. Clearly, she’s a gold–digger,” Veronica chimed in.</p>
                 <p>“Aunt Sharon, Monalize is not a gold–digger! Have you ever seen someone who’s after money using a VIP membership card from Vior to deceive people?”</p>
@@ -2345,7 +2425,7 @@
                 <p>“I’m completely certain. Take a look at this bag. Isn’t it the same one you tried to snatch from Mrs. Jones last time? This particular leather is exceptionally rare, even more so than Mrs. Jones‘. I simply mentioned it casually, and the store manager promptly brought it out for me.”</p>
                 <p>Sharon’s expression grew uneasy. How could this be true? Could it be that Luna was deceiving her?</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

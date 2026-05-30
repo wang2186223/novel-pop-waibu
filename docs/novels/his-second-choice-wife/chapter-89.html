@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2317,13 +2397,13 @@
                 <p>&#34;You don&#39;t understand!&#34; Victoria wailed. &#34;She&#39;s dangerous! You can&#39;t let your personal feelings cloud your judgment!&#34;</p>
                 <p>Evelyn opened her mouth to explain, but the words caught in her throat. How could she articulate the truth when Victoria&#39;s silver tongue twisted every fact?</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Damian smirked. &#34;Justice must be served impartially, General. That&#39;s why I must take her into custody today.&#34;</p>
                 <p>Liam&#39;s voice cut through the tension like a blade. &#34;Victoria Dawson, drop these charges. Now.&#34;</p>
                 <p>Victoria wiped her tears dramatically. &#34;I can&#39;t! Not when my life was in danger! She belongs behind bars!&#34;</p>
                 <p>&#34;That&#39;s not what happened,&#34; Evelyn finally spoke, her voice barely above a whisper but carrying undeniable conviction.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Liam turned toward her, his stern expression softening slightly at the sight of her tear-filled eyes. The mixture of defiance and vulnerability in her gaze struck him deeply.</p>
                 <p>In the past, Liam would have moved heaven and earth to protect Victoria. She&#39;d been his childhood companion, his responsibility. But now... now his protective instincts had shifted entirely toward Evelyn.</p>
                 <p>&#34;Ryan,&#34; Liam commanded without breaking eye contact with Evelyn, &#34;pull the surveillance footage.&#34;</p>
@@ -2335,7 +2415,7 @@
                 <p>Liam continued sharply, &#34;Ryan, summon the IT team immediately. With full diagnostic equipment.&#34;</p>
                 <p>&#34;On it, sir.&#34; Ryan turned on his heel and disappeared down the corridor.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Adrian,&#34; Liam called next.</p>
                 <p>&#34;At your service, General.&#34; Adrian stepped forward smartly.</p>
                 <p>&#34;Fetch me a chair.&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>When Adrian returned with an ornate chair, Damian attempted to sit, only for Liam to take the seat himself. The police officer&#39;s face flushed with embarrassment.</p>
                 <p>&#34;This isn&#39;t about your comfort,&#34; Liam said coldly, crossing his legs as he settled into the chair like a king holding court. &#34;We&#39;re going to get to the bottom of this. Properly.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,38 +2391,38 @@
                 <p>But he didn&#39;t say anything, simply gathering up the scattered jewelry and offering it to Amelia before leaving.</p>
                 <p>Looking at the items in her hands with a hint of disdain, Wyatt asked, &#34;What are these?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;These are what my stepmother sold off,&#34; Amelia replied.</p>
                 <p>After hearing this, Wyatt asked, &#34;Should I help the Flynn Group find new business deals? Or do you want me to invest in shares under your name?&#34; For a brief moment, surprise flickered across Amelia&#39;s face before she burst out laughing.</p>
                 <p>With a smile, she shared the story behind the jewelry,explaining the situation. Wyatt really hadn&#39;t expected that the Flynn family had been treating her so poorly.</p>
                 <p>After hearing everything, Wyatt said, &#34;If you want,Amelia, I can make the Flynn family disappear from Kretol overnight.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Amelia looked at his earnest expression. There had been moments she had wanted revenge, but thinking of her mother, she gave up on the idea.</p>
                 <p>Not noticing that Wyatt had changed how he addressed her, she gently replied, &#34;Let me handle things with the Flynn family myself. Still, I really appreciate what you&#39;re willing to do, Mr. Stewart, but this is something I have to do on my own-&#34;</p>
                 <p>&#34;Amelia, don&#39;t you think it&#39;s about time you changed the way you address me? We are, after all, about to get married soon,&#34; Wyatt interjected. Though he typically paid little mind to how people addressed him, something about Monroe&#39;s easy manner with Amelia had struck a nerve and made him want to say this.</p>
                 <p>Amelia, unaware of Wyatt&#39;s thoughts, agreed that their relationship warranted a change in how she addressed him.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>She looked at him and asked, &#34;Would you like me to call you Wyatt from now on?&#34;</p>
                 <p>When Amelia said his first name, an unfamiliar sensation stirred inside Wyatt, and he quickly gave his approval.</p>
                 <p>After Wyatt&#39;s car pulled away, Amelia stepped inside her apartment, the box of jewelry clutched securely in her hand.</p>
                 <p>Setting her priorities straight, she decided to first put away the brooch Wyatt had given her.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Fully aware of what it meant, she knew she couldn&#39;t just give it back, but she also knew/it deserved better treatment than the rest of her jewelry. So, she carefully locked it away in her safe.</p>
                 <p>Wyatt, meanwhile, left in high spirits in his car, a hint of a smile on his lips, until he noticed the vehicle parked down the street.</p>
                 <p>Spotting Wyatt&#39;s car, Monroe wasted no time and stepped out of his own car.</p>
                 <p>Wyatt motioned for his driver to stop, then got out of the car to walk over to Monroe.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Neither man spoke right away. The silence between them stretched as they sized each other up.</p>
                 <p>Eventually, Monroe couldn&#39;t keep silent. &#34;Mr. Stewart whatever your reason is for marrying Amelia, if you ever cause her pain, I won&#39;t let you off!&#34;</p>
                 <p>His long friendship with Amelia meant he wouldn&#39;t just stand by if anyone hurt her.</p>
                 <p>Even facing someone as influential as Wyatt, he resolved to look out for Amelia, remembering all the kindness Amelia&#39;s mother had shown him before. He knew his bold words might not sit well with Wyatt,but his eyes held steady, unflinching.</p>
                 <p>&#34;No one&#39;s ever had the nerve to threaten me before.You realize a single word from me could ruin your entire family, right?&#34; Wyatt said.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

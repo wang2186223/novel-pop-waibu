@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2317,7 +2397,7 @@
                 <p>Meanwhile, Arabella had already hiked up her skirt and stepped into the rose bushes, moving with effortless grace.</p>
                 <p>She knelt on the damp earth without hesitation, her delicate fingers sifting through the soil. She examined the rose stems and petals, snapping photos and jotting meticulous notes on her phone.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Other women came for the scenery and photos.</p>
                 <p>Not Arabella. She was here for business.</p>
                 <p>Who would’ve guessed such a stunning woman could be so pragmatic? All she cared about was profit.</p>
@@ -2329,7 +2409,7 @@
                 <p>&#34;Mr. Lockwood, Dominic is here.&#34;</p>
                 <p>His secretary lowered her voice. &#34;Earlier, the Vanderbilt Group reached out about collaborating on the Rose Manor project. I didn’t give them a definitive answer, as you instructed. But they’ve already brought a survey team. They’re serious about this.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Sebastian glanced at Arabella, who was still absorbed in her work. &#34;Who else is with them?&#34;</p>
                 <p>&#34;Dominic’s rumored fiancée. Bringing her to something like this—they must be close.&#34; His secretary’s tone was laced with disdain.</p>
                 <p>And Arabella had no idea.</p>
@@ -2353,7 +2433,7 @@
                 <p>&#34;Sebastian, I can’t accept these.&#34; She smiled but shook her head.</p>
                 <p>Flowers, especially roses, carried implications. It wouldn’t be appropriate.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Anticipating her refusal, he quickly added, &#34;Flowers suit you. But more importantly, I noticed your interest in these roses. Take them home, study them. The soil from this field is at the bottom—transplant them, and they’ll bloom year-round.&#34;</p>
                 <p>She hesitated, then finally took the basket. &#34;Thank you.&#34;</p>
                 <p>Suddenly, Sebastian leaned in, his face inches from hers.</p>
@@ -2365,7 +2445,7 @@
                 <p>By the time she realized what was happening, he was already done. &#34;I could’ve done that myself.&#34;</p>
                 <p>&#34;Too late. You’re clean now.&#34; He stepped back, his gaze lingering before he looked away.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>He always did this—retreating just as things felt too intimate.</p>
                 <p>For a moment, Arabella wondered if he was being too kind.</p>
                 <p>But she dismissed the thought. Maybe he was just naturally considerate. Or maybe it was because they’d known each other since childhood.</p>

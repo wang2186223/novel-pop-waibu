@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>Frustration boiled within him as he gritted his teeth. “Don’t you regret this, Mia Bowen.”</p>
                 <p>He left after saying that.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Bitterness reached the tip of Mia’s tongue as she watched him leave. She caressed her belly. confident that she wouldn’t regret it.</p>
                 <p>After coordinating her emotions, she held the plate of fruits into the room. “Grandma.”</p>
                 <p>“Mia, did you see Timothy? He came by.”</p>
@@ -2323,7 +2403,7 @@
                 <p>Laura grabbed Mia’s hand. “You must’ve missed him. He went downstairs for the meeting about</p>
                 <p>my surgical plan. He should be back later.”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Her</p>
                 <p>r expression slightly shifted at that. Timothy went for the meeting?</p>
                 <p>This was bad! Connor was downstairs too!</p>
@@ -2332,7 +2412,7 @@
                 <p>What should she do? Would a fight break out when Connor saw Timothy?</p>
                 <p>Mia was on edge. Anxiety got the best of her. “Grandma, I want to attend the meeting too.”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Mainly because she wanted to observe the situation. If a fight really broke out, she could at least</p>
                 <p>stop them.</p>
                 <p>Laura asked, “What for? It’s enough for Timothy to go alone. You know how boring a meeting can</p>
@@ -2341,7 +2421,7 @@
                 <p>“Grandma, you don’t know what I’m going through right now,” she sighed inwardly.</p>
                 <p>What should she do? On what excuse could she attend the meeting?</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>At that moment, almost every doctor in the hospital gathered in the meeting room downstairs to</p>
                 <p>finalize the surgical plan.</p>
                 <p>As the main doctor in charge, Connor took the center seat and highlighted the things that required</p>
@@ -2350,7 +2430,7 @@
                 <p>reined his emotions in because Connor was the main doctor in charge of Laura’s surgery.</p>
                 <p>Needless to say, Connor was aware of Timothy’s presence. A cold glint flashed in Connor’s eyes.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The sheer sight of Timothy made Connor want to punch him.</p>
                 <p>How dare this bastard marry Mia in secret! And impregnated her at that!</p>
                 <p>The thought of her almost becoming a widow irritated Connor to the.bones.</p>

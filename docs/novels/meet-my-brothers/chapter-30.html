@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2321,7 +2401,7 @@
                 <p>After ending the call, Maya called the head of the organizing committee and asked sternly, “Didn’t I tell you to close the registrations for the competition yesterday?”</p>
                 <p>“I was going to do as you instructed, Ms. Lane, but Mr. Lane specifically said we’re not allowed to close the</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>registrations a day early.</p>
                 <p>“We’re to follow the deadline that had been set in advance. We had no choice but to comply with the order,” the person explained.</p>
                 <p>After hearing that, Maya ended the call and threw the document she was holding onto the floor.</p>
@@ -2329,7 +2409,7 @@
                 <p>All she could do was seethe in rage at how lucky Mia was.</p>
                 <p>Maya knew that Dominic didn’t like other people messing around at work, so she dared not do anything too</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>She had no choice but to swallow her anger and accept this outcome. She called Shelly and explained the</p>
                 <p>situation.</p>
                 <p>Shelly was furious. “Well, it’s whatever. After all, Mia barely knows anything about interior design anyway. Even if she manages to register for the competition, she won’t make it past the first round!”</p>
@@ -2337,7 +2417,7 @@
                 <p>She wanted Mia to spend the rest of her life in poverty!</p>
                 <p>“Maya, I’ve got something to tell you. A man accompanied Mia to the venue just now. It seemed like they were pretty close. Maybe he’s Mia’s new boyfriend,” Shelly speculated.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Maya’s eyes lit up. “What did he look like?”</p>
                 <p>“I took a photo of them from behind. The man was wearing a mask and a hat. He was being so secretive-just like a celebrity in disguise-but I’m sure it’s because he’s not fit to be seen in public. Do you want to take a</p>
                 <p>look at the photo?”</p>
@@ -2345,7 +2425,7 @@
                 <p>She figured the foolish Shelly would’ve gotten the hint.</p>
                 <p>True enough, Shelly was pondering Maya’s words. If Timothy found out about the photo, he would be</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>infuriated!</p>
                 <p>That would mean hell for Mia, right?</p>
                 <p>Shelly’s eyes flashed viciously. She immediately sent the photo to Timothy. “Timothy, Mia came to register for the competition today, and I saw her being very intimate with a man! I doubt they’re just ordinary friends!”</p>
@@ -2358,7 +2438,7 @@
                 <p>He took another look at the photo. Mia was smiling as she looked at the man beside her.</p>
                 <p>The smile on her face made Timothy feel quite annoyed.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2323,7 +2403,7 @@
                 <p>They really couldn&#39;t wander off.</p>
                 <p>She helped the old lady sit on a nearby stone bench.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Suddenly, a BMW X7 pulled up in front of them.</p>
                 <p>Isabella Ashcroft and Linda Lowell rushed out from the back seat.</p>
                 <p>Linda frowned deeply, her voice sharp. &#34;Evelyn Ross? It is you! What are you doing here?&#34;</p>
@@ -2341,7 +2421,7 @@
                 <p>She turned directly to the old lady. &#34;You old hag, tell me then, what&#39;s your house number?&#34;</p>
                 <p>Evelyn frowned and was about to speak.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>But the old lady stood up. &#34;I remember now! I live right here! Granddaughter-in-law, let&#39;s go home!&#34;</p>
                 <p>She pulled Evelyn toward the grand Vance gate.</p>
                 <p>They were about a hundred yards from the gate.</p>
@@ -2359,7 +2439,7 @@
                 <p>The old lady was frail and couldn&#39;t handle being pushed!</p>
                 <p>Linda stumbled back, steadying herself before screaming, &#34;Ungrateful brat! You hit your own mother for this old hag! I&#39;ll call the police! I&#39;ll report you for filial impiety!&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Evelyn ignored her.</p>
                 <p>But the old lady retorted, &#34;My granddaughter-in-law is not impious! You&#39;re lying!&#34;</p>
                 <p>Linda sneered. &#34;You old thing, how poor are you that you have to pimp out your granddaughter-in-law to other men? Huh? Does she give you a cut? Or is that your family business? You serviced plenty of men in your youth too, didn&#39;t you? You lecherous old—&#34;</p>
@@ -2377,7 +2457,7 @@
                 <p>The old woman&#39;s body was too weak for CPR.</p>
                 <p>Medicine was best.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>She looked sharply at the grand gate.</p>
                 <p>The Vance house must have medicine!</p>
                 <p>Even if the old lady wasn&#39;t a Vance, she was a neighbor.</p>
@@ -2395,7 +2475,7 @@
                 <p>The next moment, her leg was tightly hugged.</p>
                 <p>Linda sat on the ground, clutching her legs without any dignity.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;You think you&#39;re the only ones who can fake an accident? I can do it too! I&#39;m dying! I&#39;m being beaten to death by my own daughter!&#34;</p>
                 <p>&#34;My chest hurts so much! I can&#39;t take it!&#34;</p>
                 <p>&#34;I&#39;d rather die today than let this old hag scam the Vances!&#34;</p>
@@ -2413,7 +2493,7 @@
                 <p>Hearing this, Evelyn slowly turned around.</p>
                 <p>Seeing the grandmother in her arms, Alexander&#39;s pupils constricted violently.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

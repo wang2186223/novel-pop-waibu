@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>the center of</p>
                 <p>f conversation for certain guests. Their tone was laced with envy and desire as they spoke.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>expressing how fortunate Timothy’s future bride would be.</p>
                 <p>One of them showered Sharon with flattery. “You’ll inherit the tiara eventually, and some lucky girl in the</p>
                 <p>future will get it as well!”</p>
                 <p>Sharon’s spirits were lifted. “My daughter–in–law has to be from a prominent family as well! She doesn’t</p>
                 <p>deserve my son if she’s a peasant.” She chanced a glance at Mia again.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>She might be the daughter of the Lane family, but there were plenty of girls coveting Timothy as well.</p>
                 <p>Sharon suddenly detested the idea of letting Timothy remarry Mia. Judging by how arrogant the Lanes. were, she could already picture Mia having full control over her in the future. She wouldn’t let that happen.</p>
                 <p>Another guest chimed in instantly, “Then isn’t Ms. Lane the right match?”</p>
                 <p>Sharon’s expression shifted as she faltered. “Well, she sort of is, but she has to abide by the Barrett</p>
                 <p>family rules once she marries into our family.”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>A hint of scorn flickered across Mia’s features. She was aware that Sharon’s implications were directed</p>
                 <p>at her, but the last thing she’d want right now was to remarry Timothy.</p>
                 <p>Standing next to her. Eval</p>
                 <p>a smile at Sharon. “Mrs. Barrett, we appreciate your hospitality toward</p>
                 <p>Mia in the past three years as well. Our gratitude for you is beyond words!”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Sharon’s expression stiffened as she stammered, “I–I might have been quite strict with Mia back then.</p>
                 <p>but I did it for her sake.”</p>
                 <p>Another guest, Tabitha, chimed in servilely, “Exactly. It’s not easy being the daughter–in–law of a</p>
                 <p>prominent family.”</p>
                 <p>Just then, all the Lane brothers strode up to Mia, fixating their gaze at Sharon and the other socialites. Tabitha immediately rephrased her words amidst the rising tension. “But Mia’s already brilliant to begin with. She didn’t accept the gift earlier–that says a lot about her excellent mannerisms.”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>“Yeah! Ms. Lane, the jewelry you’re wearing is extremely lavish as well.”</p>
                 <p>Sharon’s gaze drifted toward Mia’s necklace, but she couldn’t tell what was so special about it. Another socialite approached Mia, saying. “I’ve noticed it for some time. Ms. Lane, are you wearing the piece of jewelry worn by Queen Elizabeth herself before?”</p>
                 <p>Astonished, Mia threaded her fingers through her necklace. She knew it wasn’t cheap, but she didn’t expect its staggering value.</p>
@@ -2348,7 +2428,7 @@
                 <p>Little did Sharon expect Mia to obtain it with a breeze, easily surpassing the value of the jewelry she</p>
                 <p>wore.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

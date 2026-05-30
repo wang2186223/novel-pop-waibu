@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2319,7 +2399,7 @@
                 <p>Evelyn quickly interjected. &#34;Mr. Vance, please excuse us. Mina and I need to talk.&#34;</p>
                 <p>Alexander&#39;s eyes darkened at the sight of a Sherwood.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>His lips pressed into a thin line. After a moment of silence, he finally spoke. &#34;Evelyn, I don&#39;t know what you&#39;re planning, but I will be back.&#34;</p>
                 <p>With that, he turned and left with his assistant and bodyguards.</p>
                 <p>The moment he was gone, Mina sidled up to her, winking. &#34;Grace, who was that? The way he said your name was so strange…&#34;</p>
@@ -2333,7 +2413,7 @@
                 <p>Little Chloe walked over and tugged Evelyn&#39;s hand. &#34;It&#39;s okay, Mommy. You go have fun with Aunt Mina. Nanny Lopez can stay with me.&#34;</p>
                 <p>Mina bent down and scooped her up. &#34;As if I&#39;d forget you! Tonight&#39;s place is perfect for our little Chloe. Come on, Auntie is taking you both out!&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>She carried Chloe out, leaving Evelyn no choice but to follow.</p>
                 <p>Soon, Evelyn realized Mina had brought them to an indoor amusement park.</p>
                 <p>It had facilities for both children and adults.</p>
@@ -2347,7 +2427,7 @@
                 <p>They expected her to be scared, but the little girl loved it. She wanted to go by herself.</p>
                 <p>Mina and Evelyn shared a smile, letting Chloe slide down on her own.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>There was only one slide. Mina went first.</p>
                 <p>She let out an exaggerated yell as she slid into the balls, burying herself. &#34;Chloe, come find Auntie!&#34;</p>
                 <p>Chloe giggled as she slid down, digging through the balls near Mina.</p>
@@ -2361,7 +2441,7 @@
                 <p>Evelyn sensed trouble and immediately moved to go down. Mina also looked up from the balls.</p>
                 <p>But they were both too late.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>A woman dressed in expensive clothes rushed over. She slapped Chloe across the face, then shoved her hard!</p>
                 <p>The push was vicious. Chloe&#39;s small body was thrown backward, landing heavily in the ball pit!</p>
                 <p>Terrified, Chloe flailed her little hands in the balls, bursting into loud sobs.</p>
@@ -2389,7 +2469,7 @@
                 <p>Mina was taken aback. Before she could process it, she instinctively took the child.</p>
                 <p>Then, her eyes widened in shock!!</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

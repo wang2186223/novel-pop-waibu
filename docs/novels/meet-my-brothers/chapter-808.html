@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,12 +2390,12 @@
                 <p>Peyton nodded. &#34;Yes. It&#39;s on the rooftop. Once they get the bone marrow, they&#39;re good to go. We&#39;ll turn on the surveillance camera the entire time to make sure nothing happens this time.”</p>
                 <p>&#34;Good. Thank you. Keep me updated at all times.”</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>She wouldn&#39;t be able to have peace of mind until the bone marrow was delivered to Nord City.</p>
                 <p>At that moment, Mia received a call from Nicholas. &#34;I heard that you found the bone marrow.” &#34;Yes, fortunately. Crisis averted. The bone marrow was in the hospital the entire time. The doctor over here checked it. He said that it was nicely kept and we can use it.&#34;</p>
                 <p>Mia almost cried when the doctor said that. After all, she had mentally prepared herself for the worst while they were on their way here.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Nicholas suggested, &#34;You should take the chopper back too.&#34;</p>
                 <p>Mia paused momentarily. &#34;Sure. I&#39;ll come back.” She wanted to stay by Sage’s side while he was under treatment.</p>
                 <p>Before that, delivering the bone marrow back to Nord City was all she could think of. She hadn&#39;t thought of returning home. Nicholas reminded her at just the right time.</p>
@@ -2325,7 +2405,7 @@
                 <p>&#34;Leaving already?&#34; Timothy asked.</p>
                 <p>&#34;Yes, I don&#39;t want to be away when my kid&#39;s undergoing the treatment. I have to stay by my baby&#39;s side.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Timothy knew that she would return to Nord City as soon as she found the bone marrow. That was exactly why he wished she could bring Ginger back to Bern City and stay.</p>
                 <p>Mia continued, &#34;The reishi mushrooms. I&#39;ll ask someone to bring it to you when I get back to Nord City. I wish Mrs. Barrett Senior the best.”</p>
                 <p>His lips pursed at the mention of the reishi mushrooms. &#34;Okay. She&#39;ll be happy to know that you&#39;re the one who gave the two clusters of reishi mushrooms.”</p>
@@ -2339,7 +2419,7 @@
                 <p>Mia nodded in acknowledgment before looking at Timothy. &#34;Until then. Bye.&#34;</p>
                 <p>&#34;Hold up!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

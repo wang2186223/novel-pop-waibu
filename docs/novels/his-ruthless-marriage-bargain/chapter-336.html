@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>After a brief hesitation, she relented.</p>
                 <p>“Fine. I’ll go with you.”</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>“Wait!”</p>
                 <p>Adrienne, realizing she couldn’t stop Evelyn, rushed forward.</p>
                 <p>“If you’re going, then so am I.”</p>
                 <p>“Ms. Whitaker only requested Ms. Carter’s presence.”</p>
                 <p>The man clearly didn’t want Adrienne tagging along.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>“I just want to see what’s going on. I’ll call you if anything happens. Be right back.” Evelyn gestured with her fingers, promising to contact Adrienne.</p>
                 <p>But Adrienne stood firm. “No. I won’t let you out of my sight right now, no matter what. If you’re worried about Ms. Whitaker, I’m coming with you.”</p>
                 <p>“Adrienne…”</p>
                 <p>Evelyn started to protest, but the man cut in, “Ms. Carter, time is running out. Your assistant can come if she insists.”</p>
                 <p>Since they allowed Adrienne to join, Evelyn didn’t argue further as they climbed into the car.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The interior was spacious.</p>
                 <p>Aside from the driver, only Evelyn, Adrienne, and the man who had spoken to them earlier were inside. He had fallen silent since they entered, and the atmosphere grew heavy.</p>
                 <p>A faint scent lingered—likely from an air freshener.</p>
                 <p>Evelyn tried calling Serena again, but her phone was now completely turned off.</p>
                 <p>“What’s really going on with Serena?”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>The unanswered call and the switched-off phone only deepened Evelyn’s concern.</p>
                 <p>“Ms. Whitaker is facing some trouble and hopes you can assist her.”</p>
                 <p>“What kind of trouble? Does Mr. Whitaker know about this?” Adrienne pressed.</p>
                 <p>If it was something serious, shouldn’t Serena seek help from her father, who had influence in this city?</p>
                 <p>Evelyn had no connections here. How could she possibly help?</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>“Ms. Whitaker said you’re the only one who can help her, Ms. Carter.”</p>
                 <p>The man’s vague answers frustrated Evelyn. “Where is Serena right now?”</p>
                 <p>He looked at her, his eyes obscured behind dark sunglasses.</p>

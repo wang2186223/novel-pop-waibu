@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2317,7 +2397,7 @@
                 <p>Every action was twisted into an attack on Emily. One pout from their darling, and Sophia became the villain. Explanations meant nothing.</p>
                 <p>Perhaps blood ties couldn&#39;t compete with years of shared history.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>She&#39;d grieved that truth yet still craved their affection.</p>
                 <p>Now she understood how pathetic that hope had been.</p>
                 <p>Richard softened his voice. &#34;The Valdemars are elite aristocracy. Even if Alexander is comatose...&#34; He hesitated. &#34;You&#39;ll always be family. Your position at the company is secure.&#34;</p>
@@ -2329,7 +2409,7 @@
                 <p>Nathan sneered. &#34;She&#39;s been like this from the start. That permanent scowl of hers—&#34;</p>
                 <p>Daniel watched Sophia&#39;s retreating figure, an odd tightness in his chest.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>William sighed. &#34;That attitude is unacceptable.&#34;</p>
                 <p>Richard remained silent.</p>
                 <p>Emily spoke gently. &#34;Father, Mother, perhaps I should—&#34;</p>
@@ -2341,7 +2421,7 @@
                 <p>——</p>
                 <p>Sophia&#39;s room occupied the north-facing corner of the third floor—a former storage space, she&#39;d overheard.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Her original bedroom had adjoined Emily&#39;s, flooded with sunlight. Until Emily complained the music room was too far.</p>
                 <p>She didn&#39;t care.</p>
                 <p>This was still better than the hovel Emily&#39;s birth parents had kept her in.</p>
@@ -2353,7 +2433,7 @@
                 <p>&#34;The engagement was between Alexander and Emily. Did Patriarch Valdemar agree to substitute me?&#34;</p>
                 <p>&#34;Not explicitly.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>The old man had simply demanded the marriage proceed, offering concessions.</p>
                 <p>&#34;Technically, you were Alexander&#39;s intended first. Emily... came later.&#34;</p>
                 <p>Sophia stared before bursting into laughter.</p>
@@ -2365,7 +2445,7 @@
                 <p>Now that he&#39;d fallen, they shoved Sophia forward without pretense.</p>
                 <p>The truth was simple—the Lowells never saw her as human.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>And she&#39;d been foolish enough to call them family, even helping Nathan at his cruelest.</p>
                 <p>Perhaps her derision showed too clearly.</p>
                 <p>William averted his eyes. &#34;Think it over. This marriage benefits everyone.&#34;</p>
@@ -2377,7 +2457,7 @@
                 <p>William sighed. &#34;She has her reasons.&#34;</p>
                 <p>Nathan snorted. &#34;Reasons? More like throwing a tantrum after Ethan dumped her.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>Timothy’s lips tightened. “But she claimed someone was trying to kidnap her.”</p>
                 <p>“Mr. Barrett, that’s simply not the case. Why would our hotel staff have any motive to kidnap a child? She likely became frightened by our staff and mistakenly believed they were attempting to take her away.”</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Timothy shifted his gaze to the tearful Ginger in his arms. “Do you remember who was trying to take you away? Can you describe what they looked like?”</p>
                 <p>Ginger’s crying eventually stopped, and she wiped away the moisture from the corners of her eyes, her eyelashes clumped together with remnants of tears.</p>
                 <p>With red, puffy eyes, Ginger cast a pitiful gaze at Timothy. “I couldn’t see clearly, but they were dressed</p>
@@ -2321,7 +2401,7 @@
                 <p>Upon hearing this, Timothy shot a cold glance at Matthew. “You better provide a plausible explanation.”</p>
                 <p>“Mr. Barrett, this is all just a misunderstanding. Our intention wasn’t to kidnap her; we were simply trying</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>to locate her. After all, children her age can get scared and say things that aren’t true.”</p>
                 <p>“I’m not lying!” Ginger protested, feeling increasingly aggrieved. “Please, mister, you have to believe me.”</p>
                 <p>Timothy gazed at her. “I do believe you.”</p>
@@ -2329,7 +2409,7 @@
                 <p>missing.”</p>
                 <p>Matthew replied respectfully, “Yes, Ms. Kimmel, a child did go missing. However, she claimed that someone from our hotel was trying to abduct her. How could that be possible?”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Lena nodded, casting a glance at Ginger nestled in Timothy’s arms. She smiled and stated, “Mr. Barrett, as Matthew mentioned, there’s no motive for our staff to kidnap a young girl.</p>
                 <p>Timothy realized he wouldn’t get any answers at the moment. He simply walked away, carrying Ginger in</p>
                 <p>his arms.</p>
@@ -2337,7 +2417,7 @@
                 <p>“What a bunch of dingbats! You can’t even kidnap a little child. What good are you all?” she berated.</p>
                 <p>“Ms. Kimmel, none of us anticipated this little girl would be so cunning. She seemed compliant at first. but in the blink of an eye, she disappeared and even managed to hide in a coffin. Who could have predicted that?”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>“How incompetent! Besides, what’s the connection between this girl and Timothy?”</p>
                 <p>“I’m not entirely sure, perhaps they arrived together,”</p>
                 <p>“Where’s Caleb?”</p>
@@ -2345,7 +2425,7 @@
                 <p>Matthew wiped the sweat from his forehead, surprised they’d been outsmarted by a little girl. Despite their tireless search, they couldn’t apprehend her.</p>
                 <p>Nonetheless, he couldn’t understand why they needed to catch that little girl.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Meanwhile, Timothy escorted Ginger back to his room.</p>
                 <p>He settled her on the sofa and gazed down at her. “Were you scared?”</p>
                 <p>Ginger shook her head adamantly. “I wasn’t!”</p>
@@ -2354,7 +2434,7 @@
                 <p>Timothy felt somewhat helpless. “How did you get my phone number?”</p>
                 <p>“Mister, I found your business card in the car.”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,7 +2390,7 @@
                 <p>Evelyn squeezed her eyes shut. Her breathing turned erratic.</p>
                 <p>As Liam&#39;s lips descended, his warm breath fanned across her skin, making her pulse race and limbs weaken. Though terrified, she secretly yearned for his kiss.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>The first brush of his lips was featherlight before he deepened the contact. His teasing movements left Evelyn powerless to resist. Her hands fluttered weakly to his broad shoulders as she surrendered to his embrace.</p>
                 <p>Unlike his previous passionate assaults, this time Liam was tender yet provocative, guiding her through each new sensation with deliberate care.</p>
                 <p>Evelyn drowned in the intoxicating rhythm of his kisses. The study&#39;s atmosphere grew thick with desire.</p>
@@ -2320,17 +2400,17 @@
                 <p>A soft whimper escaped Evelyn&#39;s lips, fueling the growing fire between them.</p>
                 <p>Liam traced kisses along her jaw before finding her sensitive earlobe. When his warm breath ghosted over it, her entire body shuddered.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>She tried squirming away, but Liam&#39;s iron grip held her captive. &#34;Sweetheart,&#34; he murmured against her ear.</p>
                 <p>Evelyn&#39;s response came as a breathless sigh. To her surprise, he made no further advances, simply allowing her to rest her head against his shoulder.</p>
                 <p>Eyes closed, he stroked her hair tenderly, whispering her nickname like a sacred prayer.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Pressed against his solid chest, Evelyn inhaled deeply, savoring the security of his embrace.</p>
                 <p>Each whispered endearment carried profound affection, as if he cherished something precious yet fragile.</p>
                 <p>Gradually, Evelyn surrendered to his devotion, adapting to his passionate gestures. The air between them burned with restrained desire.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>She realized he was deliberately holding back - whether from respect or poor timing, she couldn&#39;t tell.</p>
                 <p>Only later that night did Evelyn understand it was sheer willpower restraining him.</p>
                 <p>For though Liam claimed every opportunity to leave her breathless with searing kisses, he never demanded more. Yet his addiction to her lips became undeniable, stealing her breath and sanity with each intoxicating encounter.</p>

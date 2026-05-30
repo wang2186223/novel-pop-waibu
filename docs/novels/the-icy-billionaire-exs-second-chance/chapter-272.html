@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,16 +2391,16 @@
                 <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>The man beamed. &#34;I&#39;ll prepare your private suite at once!&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Julian&#39;s gaze flickered to the blood still seeping from the man&#39;s temple, his face twisting in revulsion. &#34;Clean yourself up. You&#39;re disgusting.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>The man practically glowed with relief, bowing repeatedly as he backed out of the study.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Alone, Julian retrieved his phone. He opened WhatsApp, thumb hovering over the chat interface for an eternity before exiting without typing a single character.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Vivian wandered through the familiar streets of Willowbrook, noting how many childhood landmarks had vanished—replaced by glossy storefronts or boarded-up windows. She&#39;d always imagined bringing Adrian here someday—walking these same cobblestones, sharing her favorite bakery&#39;s cinnamon rolls, pointing out where she&#39;d scraped her knee learning to ride a bike.</p>
                 <p>Two years of marriage, yet this simple wish remained unfulfilled. Now that they were both in Willowbrook together, she&#39;d hoped to finally bridge that gap, to smooth over the unspoken regrets between them. But everything had changed—especially them. Some fractures never truly healed, leaving only ghosts of what might have been.</p>
                 <p>Her feet carried her to the wrought-iron gates of her old elementary school. The candy shop that once sold licorice ropes for a quarter now boasted organic smoothies. She bought some street vendor&#39;s grilled skewers instead, the aroma transporting her back to after-school snacks. As the setting sun painted the brick buildings gold, memories of Emberglow County surfaced, and she turned toward Eleanor&#39;s apartment.</p>
@@ -2328,7 +2408,7 @@
                 <p>Yet here he stood—not just present, but attempting to cook. The apron should have looked absurd on his six-foot-two frame, but somehow the contrast between the domestic fabric and his sharp jawline worked. Sometimes it wasn&#39;t the garment that mattered, but the man wearing it. Without his usual tailored shirt, the apron&#39;s ties emphasized his narrow waist, the sight unexpectedly intimate amidst the steam and smoke.</p>
                 <p>When Adrian finally stopped choking, he glared at her with watery eyes, voice hoarse. &#34;Water. Now.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

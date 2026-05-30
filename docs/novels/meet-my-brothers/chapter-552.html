@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>What did Mia mean by saying she dropped out of college to marry an older man?</p>
                 <p>Timothy couldn&#39;t help but feel a sharp pang in his heart. &#34;Even though there&#39;s a ten-year age gap between us, I make sure to take care of myself.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>As he looked at Mia&#39;s youthful, almost radiant complexion, Timothy&#39;s throat tightened subtly. Considering their age difference, he couldn&#39;t help but feel a tinge of melancholy.</p>
                 <p>As Timothy stood in front of her, Mia noticed his remarkably handsome features. In truth, Timothy appeared remarkably youthful, handsome, and affluent—almost like a prince charming.</p>
                 <p>In the presence of such a man, age seemed irrelevant.</p>
                 <p>Ramona, standing nearby, felt puzzled by their conversation.</p>
                 <p>She couldn&#39;t resist interjecting, &#34;Sir, you actually look quite youthful. All I&#39;m saying is that Mia has a history of being involved with older men for money—&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Before Ramona could finish, Timothy cut her off abruptly, &#34;That&#39;s enough.&#34;</p>
                 <p>Ramona appeared undeterred. &#34;But, sir, what I said is true! Mia was indeed married, and she&#39;s divorced now!&#34;</p>
                 <p>Timothy maintained a stern expression, his gaze piercing. &#34;I don&#39;t need reminders of that,&#34; he asserted.</p>
                 <p>Why did it feel like everyone was constantly mentioning their divorce? Timothy was certainly not oblivious to it.</p>
                 <p>Upon hearing Ramona’s words, Mia remained unfazed. Instead, she responded with a smile, “Ramona, with your vivid imagination and acting talent, it’s a shame you’re not in the entertainment industry.”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Before Mia could continue. Timothy glanced at her and interjected, “You’re mistaken. She’s not even suitable for a supporting role.”</p>
                 <p>Mia raised an eyebrow. “Well, I think her acting skills are decent.”</p>
                 <p>“Unfortunately, her appearance doesn’t quite match,” he remarked.</p>
                 <p>Ramona stood in shock, struggling to maintain her composure. The handsome man she had been fantasizing about just openly called her ugly–a blow that hit hard.</p>
                 <p>For any woman, hearing such words from someone they admired was devastating.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Mia’s lips curled slightly. She knew all too well that Timothy’s harsh words could cut deep.</p>
                 <p>Turning his gaze to Mia, Timothy asked, “Shall we leave? Do you really want to linger around people like them?”</p>
                 <p>Since Mia couldn’t spot Antonio and had no desire to stay with the group any longer, she decided to accept Timothy’s offer of a ride home.</p>
                 <p>After all, there was no harm in accepting a free ride from her ex–husband.</p>
                 <p>Turning to Gina, Mia remarked, “Our destinations aren’t on the way. Hey, Taylor, could you drop Gigi off on the way? Thanks.”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Taylor nodded earnestly. “Of course.”</p>
                 <p>Gina’s cheeks flushed slightly, but she remained silent, watching as Mia and Timothy departed together in the rain.</p>
                 <p>Ramona stood in place, her envy evident in her bitter words. “Mia truly is something else. She even managed to deceive such a handsome man.”</p>
@@ -2349,7 +2429,7 @@
                 <p>“Yeah, his words just now seemed a bit odd.”</p>
                 <p>Standing nearby, Taylor adjusted his glasses thoughtfully. “Could it be that the gentleman is Mia’s ex- husband?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

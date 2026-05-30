@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2325,7 +2405,7 @@
                 <p>Evelyn&#39;s eyes turned cold.</p>
                 <p>Trying to shift the blame? Not so easy.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Crack!</p>
                 <p>The elderly woman&#39;s teacup smashed into Linda.</p>
                 <p>Scalding tea splashed all over her.</p>
@@ -2345,7 +2425,7 @@
                 <p>&#34;I told you it was Evelyn&#39;s doing!&#34;</p>
                 <p>Evelyn was about to retort.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>The man&#39;s deep voice rang out again.</p>
                 <p>&#34;Grandmother mistook her identity. I asked Miss Ross to help take care of her.&#34;</p>
                 <p>Evelyn fell silent.</p>
@@ -2365,7 +2445,7 @@
                 <p>&#34;Call off the engagement! I do not accept this great-granddaughter-in-law!&#34;</p>
                 <p>Isabella trembled from head to toe.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>She couldn&#39;t lose the marriage she had worked so hard to secure!</p>
                 <p>She looked at Julian.</p>
                 <p>But he was staring blankly at Evelyn, still processing the news of her marriage.</p>
@@ -2385,7 +2465,7 @@
                 <p>&#34;Grandmother, haven&#39;t you forgotten the meeting gift?&#34;</p>
                 <p>Eleanor lowered her eyelids.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;I&#39;ll transfer $2,500 to Julian.&#34;</p>
                 <p>Julian&#39;s mother&#39;s face stiffened.</p>
                 <p>&#34;Didn&#39;t you say before you&#39;d give two percent of the shares? I was worried they might be short on funds...&#34;</p>
@@ -2405,7 +2485,7 @@
                 <p>She took Evelyn&#39;s hand and led Alexander back to her own courtyard.</p>
                 <p>Claiming a urgent need for the restroom, she told Alexander to &#34;properly&#34; entertain his granddaughter-in-law.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Then she hurriedly left with her attendants.</p>
                 <p>In the blink of an eye, only the two of them remained in the courtyard.</p>
                 <p>The night was deep.</p>

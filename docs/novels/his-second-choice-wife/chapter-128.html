@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>She treated his return with the indifference of a stranger.</p>
                 <p>All she had to do was lift her eyes, just slightly, and she would see him. But she refused.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Disappointment coiled in his chest, sharpening his irritation. He pushed Victoria away, but she persisted, standing on her toes to loop her arms around his neck, pressing herself against him.</p>
                 <p>Ryan Sullivan, who had followed Liam inside, yanked her back forcefully. &#34;Ms. Dawson, please keep your distance. General Blackwood is injured!&#34;</p>
                 <p>The room erupted in concern. Voices overlapped as everyone bombarded him with questions—where was he hurt? How serious was it?</p>
@@ -2323,7 +2403,7 @@
                 <p>The sight was too much. Evelyn quickly averted her gaze, her throat tight.</p>
                 <p>But the moment she looked away, Liam’s eyes found her. All he saw was cold detachment.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Was she truly so unaffected, even now?</p>
                 <p>Amid the chaos, Liam barely registered who was speaking to him. &#34;I&#39;m fine,&#34; he said curtly.</p>
                 <p>&#34;Would you like to join us for dinner?&#34; Eleanor asked.</p>
@@ -2332,7 +2412,7 @@
                 <p>&#34;That won’t be necessary.&#34; He brushed her off coldly and strode past them toward the staircase.</p>
                 <p>As he left, Victoria glanced back at Evelyn, still silently stirring her soup, and Liam’s icy dismissal. A smirk curled her lips.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Things between them had reached a breaking point.</p>
                 <p>Her act—the feigned depression, the suicidal threats, the careful manipulation—had worked perfectly.</p>
                 <p>Ryan followed Liam upstairs, stepping into the study first. The moment they entered, both men froze.</p>
@@ -2341,7 +2421,7 @@
                 <p>His frown deepened as he scanned the shelves. Many of these weren’t his. His gaze caught on the titles:</p>
                 <p>Best Ways to Handle Toxic People</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>The Key to Overcoming Nasty People</p>
                 <p>Foundations of Psychology</p>
                 <p>A smirk tugged at his lips.</p>
@@ -2350,7 +2430,7 @@
                 <p>But when they entered his room, they were met with another surprise.</p>
                 <p>The space was immaculate—except for the bed, which was buried under a mountain of unopened books.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Ryan finally understood why Evelyn was so sharp. She studied relentlessly.</p>
                 <p>They retreated to the balcony, where Liam briefed Ryan on their next steps. As they spoke, the bedroom door burst open.</p>
                 <p>Evelyn rushed in, oblivious to their presence.</p>
@@ -2363,7 +2443,7 @@
                 <p>Ryan had called Evelyn adorable.</p>
                 <p>Why did that bother him so much?</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

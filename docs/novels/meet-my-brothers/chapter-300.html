@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2321,7 +2401,7 @@
                 <p>chicken soup. You can share it with Ms. Bowen since she’s here as well.”</p>
                 <p>Mia flashed an uncomfortable smile as she replied, “Mrs. Quilter, have you had lunch yet? If not, why don’t we grab lunch together?”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>“I haven’t. In fact, I planned to go back home for lunch after I sent Felix the chicken soup. Why don’t you guys bring the soup with you while you eat out? It must be quite uncomfortable for you</p>
                 <p>to have me tagging along.”</p>
                 <p>“That’s not true, Mrs. Quilter. It’ll take more time for you to go back as well, so why don’t you just</p>
@@ -2329,7 +2409,7 @@
                 <p>There was no way that Mia was going to let her return home and eat.</p>
                 <p>Feeling helpless, Felix chimed in, “Let’s go then. I know a nice restaurant, but it’s quite far. Since we’re free later in the afternoon, why don’t we walk there instead?”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>His meticulously planned date was ruined by Janice.</p>
                 <p>+15 BONOS</p>
                 <p>When they were about to get in the car, Felix instinctively opened the door of the front passenger seat. Mia paused briefly before glancing over at Janice.</p>
@@ -2337,7 +2417,7 @@
                 <p>“That’s so lovely of you, Mia. I have car sickness, but I’ll feel better if I’m seated in front.”</p>
                 <p>Though Janice tried to explain, she moved swiftly onto the front passenger seat.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Mia took the seat at the back. It wasn’t like she was trying to fight over the seat with Janice either.</p>
                 <p>“Ms. Bowen, I didn’t expect you to work during weekends. It’s really rare for a young lady like your to be this hardworking. Nowadays, most youngsters absolutely hate working overtime. It was tough for Felix to start up his business, and despite him paying them, they’re still unwilling to</p>
                 <p>work overtime.”</p>
@@ -2345,7 +2425,7 @@
                 <p>Though Mia felt extremely awkward, she managed to plaster a polite smile on her face.</p>
                 <p>“Ms. Bowen, the doctor said Felix has to be careful with his head. Since he’s usually very busy. could you help to keep an eye on him after I leave? Don’t let him overwork.”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>“Mrs. Quilter, I’ll make sure he takes care of himself.”</p>
                 <p>“I’m relieved to hear that. Ms. Bowen, can I just call you Mia instead? I wanted to get close to you.”</p>
                 <p>Mia nodded with a smile. The car came to a halt when they arrived at their destination.</p>
@@ -2353,7 +2433,7 @@
                 <p>Mia froze. Just then, she lifted her gaze and met a pair of dark eyes.</p>
                 <p>Her heart raced instantly. It was him.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

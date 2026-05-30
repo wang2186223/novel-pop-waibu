@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,17 +2390,17 @@
                 <p>&#34;You owe me an explanation,&#34; Evelyn said, the words finally spilling out after months of frustration. &#34;You promised to finish the commission, then vanished without a word. No calls. No messages. Nothing.&#34;</p>
                 <p>Julian&#39;s expression darkened further. He didn’t offer excuses, just a quiet, &#34;I had my reasons. The piece was delivered. No charge. Consider us even.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>He stood with his hands tucked into the pockets of his navy-blue coat, the crisp winter air making his breath visible. Against the snow-covered garden, he looked almost ethereal—youthful yet weighed down.</p>
                 <p>Evelyn shook her head. &#34;Even? You never gave me the raw materials. Where’s my wood?&#34; She held out her palm, demanding.</p>
                 <p>They had agreed—she would take home a sample of that rare, fragrant wood she adored. She had planned to return for more.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;I don’t have it,&#34; Julian said flatly.</p>
                 <p>Before Evelyn could argue, footsteps crunched in the snow behind them. A deep voice called, &#34;Julian.&#34;</p>
                 <p>At the sound, Julian stiffened, his jaw tightening almost imperceptibly.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Julian,&#34; the voice repeated, closer now.</p>
                 <p>A man in his late forties approached—tall, broad-shouldered, with an air of authority that demanded attention. His sharp eyes flicked to Evelyn briefly before dismissing her entirely.</p>
                 <p>&#34;Why are you out here?&#34; the man demanded.</p>
@@ -2330,12 +2410,12 @@
                 <p>&#34;Are you done? Get back in there. They’re waiting for you.&#34; The command was absolute, leaving no room for defiance.</p>
                 <p>Julian hesitated for only a second before obeying, stepping past Evelyn without another word. But as he did, his eyes met hers—just for a moment—and she saw something flicker in them. Resignation. Discomfort.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Evelyn didn’t know why she spoke. Maybe it was that look. Maybe it was the way the older man’s tone grated on her nerves.</p>
                 <p>&#34;Wait,&#34; she called, stopping Julian mid-step. &#34;We’re not finished.&#34;</p>
                 <p>The man—clearly someone important—paused. Slowly, he turned, his piercing gaze finally settling on Evelyn with cold scrutiny.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

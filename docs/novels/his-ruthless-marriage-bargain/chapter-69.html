@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>Dominic would always beam with pride at their finished products, spinning dreams of their future together.</p>
                 <p>Empty promises, all of them.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>The address Victoria had provided was remote, yet accessible by cab.</p>
                 <p>What greeted Evelyn wasn&#39;t the expected factory, but an entire office tower.</p>
                 <p>While architecturally unremarkable, its presence in this desolate area surprised her.</p>
                 <p>&#34;Ms. Sterling, I&#39;ve arrived,&#34; Evelyn announced, standing before the secured entrance.</p>
                 <p>The building boasted tight security - guards and electronic access systems.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>This was clearly Phoenix Labs&#39; headquarters.</p>
                 <p>&#34;Five minutes,&#34; came Victoria&#39;s clipped response before the line went dead.</p>
                 <p>Evelyn surveyed the barren surroundings.</p>
                 <p>Few residences dotted the landscape.</p>
                 <p>This was nothing like the makeshift lab she&#39;d worked in with Dominic.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>But backed by the mighty Celestia Group, Phoenix Labs would never settle for such ramshackle quarters.</p>
                 <p>Their old factory could&#39;ve been mistaken for an auto parts workshop.</p>
                 <p>True to her word, Victoria emerged five minutes later.</p>
                 <p>Gone was the polished executive - now she wore a lab coat with hair tucked under a surgical cap.</p>
                 <p>After swiping her access card, Victoria fixed Evelyn with an icy stare.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Follow me. Speak only when spoken to. Understood?&#34;</p>
                 <p>Evelyn nodded. &#34;Understood.&#34;</p>
                 <p>The elevator ascended to the seventh floor.</p>
                 <p>An attendant immediately provided Evelyn with protective gear - coat, cap, and shoe covers.</p>
                 <p>She donned them efficiently, completing the required sanitation protocol.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>The unscented disinfectant soap confirmed this was indeed a perfumery lab.</p>
                 <p>While perfumers didn&#39;t require hospital-level sterility, basic hygiene standards were mandatory.</p>
                 <p>But upon entering, Evelyn realized this was no ordinary laboratory.</p>
@@ -2351,7 +2431,7 @@
                 <p>&#34;Ms. Sterling...is this my second test?&#34; Evelyn guessed between controlled breaths.</p>
                 <p>Victoria&#39;s lips curled slightly. &#34;Does it frighten you?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

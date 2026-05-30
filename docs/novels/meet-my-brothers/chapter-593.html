@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,25 +2391,25 @@
                 <p>He stood right in front of Mia. &#34;Actually, that set of jewelry—&#34;</p>
                 <p>&#34;Excuse me, you&#39;re blocking my way,&#34; she cut him off savagely.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>She didn&#39;t give him the chance to finish as she walked away.</p>
                 <p>She wasn&#39;t in the mood to listen to his explanations. Whoever he gave the jewelry to had nothing to do with her.</p>
                 <p>Timothy watched her back and frowned.</p>
                 <p>The insensible Shelly approached him. &#34;Timothy, look how haughty she is now. She&#39;s just jealous that you bought Vior jewelry for Luna.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>His glare shot daggers at her. &#34;Who told you that it&#39;s for Luna?&#34;</p>
                 <p>&#34;Is it not? Otherwise, who could it be for?&#34; She shrunk her neck at Timothy&#39;s furious expression.</p>
                 <p>However, Timothy was indeed treating Luna well, at least more so than Maya.</p>
                 <p>That was why Shelly jumped to the conclusion that the jewelry was for Luna.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Yet, her guess turned out to be wrong!</p>
                 <p>The agitated Timothy glared at Shelly. &#34;Stop getting ahead of yourself again.&#34;</p>
                 <p>&#34;So who is it for? Grandma?&#34;</p>
                 <p>&#34;Stop asking questions you shouldn&#39;t ask.&#34; He didn&#39;t want to waste his time with her at all, so he left.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Standing right there alone, she stomped her feet out of frustration.</p>
                 <p>Like any other member of the family, she didn&#39;t have the nerve to infuriate Timothy.</p>
                 <p>The question was still hanging in the air. Who was that jewelry for? Could it be Mia?</p>
@@ -2346,7 +2426,7 @@
                 <p>Luna clenched her fist. &#34;I thought they were divorced.&#34;</p>
                 <p>&#34;That&#39;s why I found it strange too. But I heard the maids saying that Grandma hosted this party on purpose for Timothy and Mia. I think she&#39;s trying to get them together again.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

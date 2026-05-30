@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2319,7 +2399,7 @@
                 <p>I held out to my hand to him when we got to the car.&#34;I&#39;m driving.&#34;</p>
                 <p>He looked uncertain but ended up passing the keys to me.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>In less than a mninute, myself, Nerion and Kael were on the road with me driving at a crazy speed.</p>
                 <p>It took us forty-five minutes to reach the location.Some wolf guards had already taken care of the scene with a few of them still lingering around.</p>
                 <p>They looked at me with surprise when they saw me.&#34;Alpha Jaris.&#34;</p>
@@ -2347,7 +2427,7 @@
                 <p>&#34;Take me to her, Rhys. Now.&#34;</p>
                 <p>He led the way, taking me into the house and to the second balcony where I could see the pool area below. They were there, about twenty ladies, drinking,dancing, laughing and having fun. I felt the speakers were a bit too loud, and it grated on my nerves. Or maybe it was just me being easily irritated.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Right in the middle of it, on the center stage they&#39;d created,Lyric stood tall, dancing and shaking her wet hair around.</p>
                 <p>Wet hair. Wet body.</p>
                 <p>No. I pushed the memory back.</p>
@@ -2375,7 +2455,7 @@
                 <p>&#34;Hey, babe. That&#39;s okay.&#34; Rhys held her hand.</p>
                 <p>His woman must be drunk. Because Juan wouldn&#39;t have the guts to talk back at me on a normal day.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>And how was Lyric already spilling things about us to people she just met?</p>
                 <p>&#34;She&#39;s a fine woman, Jaris! If you don&#39;t want he, let her go. I&#39;m sure there are a million men out there who would die to have her!&#34; Juan half-yelleld as I opened the backdoor.</p>
                 <p>Yup.Definitely drunk.</p>
@@ -2393,7 +2473,7 @@
                 <p>When I looked into her face, her eyes were closed.But there was a smile on her face. Was she really unhappy around me? Around Darkspire? She now preferred the company of others?</p>
                 <p>&#39;She&#39;s done worse to you, Jaris,&#39; my subconscious scolded me. &#39;She deserves to be unhappy.&#39;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

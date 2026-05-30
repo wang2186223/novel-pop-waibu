@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,28 +2392,28 @@
                 <p>Mia had been setting him up all this while! She even mentioned that she knew the owner of Aide Castle and could introduce the owner to him.</p>
                 <p>He was deceived.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Mia let out a cough as she felt the weight of his questioning gaze on her. &#34;What are you looking at? Got an opinion about it?&#34;</p>
                 <p>&#34;Why didn&#39;t you tell me sooner?&#34; Timothy sounded aggrieved.</p>
                 <p>Shelly barked, &#34;Oh, stop pretending, Mia Lane. The manager of Aide Castle is here. He&#39;s going to expose you!&#34;</p>
                 <p>Mia raised her head only to see Philip walking over.</p>
                 <p>Her brows creased. She already informed someone to fire him.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>So why was he still here?</p>
                 <p>No one could violate the values of Aide Castle. She didn&#39;t need an employee like him here.</p>
                 <p>Shelly smirked. &#34;This is the newly appointed general manager here,</p>
                 <p>Mr. Philip Landry. Since he&#39;s from the management team, he must</p>
                 <p>vel.net</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>have met the real owner of Aide ne</p>
                 <p>Castle himself. But he didn&#39;t acknowledge Mia&#39;s presence when</p>
                 <p>he welcomed us. With him, we&#39;ll be able to expose her lies.&#34;</p>
                 <p>Every step Philip took felt dreadful. He gingerly glanced at Mia, not knowing how to beg for her mercy.</p>
                 <p>He didn&#39;t expect this woman to be the real owner of Aide Castle!</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>He failed to recognize her and committed a grave sin in front of her. He was given a notice to leave the company completely.</p>
                 <p>He couldn&#39;t afford to lose his job. He had a family to feed. Thus, he thought of coming to beg for forgiveness from Mia to see if he could still stay at Aide Castle.</p>
                 <p>Luna saw him and flashed a smile.</p>
@@ -2352,7 +2432,7 @@
                 <p>&#34;I don&#39;t mind that if it&#39;s her.&#34;</p>
                 <p>&#34;Are you out of your mind? Mia&#39;s a liar!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

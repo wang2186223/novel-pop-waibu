@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,7 +2391,7 @@
                 <p>&#34;You were the one who made the bet with me,&#34; Victor replied, his eyes crinkling with amusement.</p>
                 <p>&#34;That year, there was a gang of thugs extorting students outside the school,&#34; Vivian said, her temper flaring at the memory. &#34;They specifically targeted freshmen. The school sent security patrols, but those cowards hid in alleyways, waiting to ambush kids. Once, they even stole a scholarship from a poor student in our class!&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Her fists clenched. If they weren’t in a restaurant, she would’ve slammed the table.</p>
                 <p>&#34;Looking back, we didn’t hit them hard enough! Who did they think they were, demanding protection money? Too bad the baseball bats we had were cheap junk.&#34;</p>
                 <p>Alexander raised an eyebrow. &#34;I’ve heard a joke about a country where they sold thousands of baseball bats but only a handful of actual baseballs. You weren’t in that situation, were you?&#34;</p>
@@ -2323,7 +2403,7 @@
                 <p>She was practically glowing as she recounted the story, none of her post-work exhaustion visible. Victor stared at her profile, her baby fat long gone, and for a moment, he was lost in thought.</p>
                 <p>&#34;There were two of us against over a dozen. We got banged up, but someone called the police, and they arrested the whole gang.&#34; Vivian grew more animated as she spoke. &#34;We even got the stolen money back!&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Evelyn sighed. &#34;A broken arm is a minor injury? Thank God it was your left one, or you would’ve fallen behind in your studies.&#34;</p>
                 <p>&#34;Mine was my right arm!&#34; Victor immediately protested.</p>
                 <p>Vivian shot back, &#34;You’re left-handed. What’s the problem?&#34;</p>
@@ -2335,14 +2415,14 @@
                 <p>Only then did the two settle down.</p>
                 <p>Alexander had never been to this restaurant before, but since Victor had gone from being a company director to just an old classmate, he relaxed. &#34;You order first. They don’t seem hungry.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Evelyn was hungry. Pregnancy had made her ravenous. She flipped through the menu decisively. &#34;Orange-glazed ribs. Cream of asparagus soup.&#34;</p>
                 <p>&#34;Last time at the French restaurant, you ordered salmon salad,&#34; Alexander remarked offhandedly. &#34;Your tastes change so fast, it’s like you’re carrying twins.&#34;</p>
                 <p>Her fingers twitched, gripping the napkin tighter. &#34;Add a mint salmon salad, then.&#34;</p>
                 <p>The truth about the twins couldn’t stay hidden forever. But lately, she’d been having nightmares—dreams where the little girl she’d lost had taken on a clear form. To ensure this child returned safely, she’d decided to keep the secret until the birth.</p>
                 <p>Some things were better known by fewer people. Especially Alexander—as the father, they should have shared this burden of guilt together.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

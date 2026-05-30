@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2320,7 +2400,7 @@
                 <p>Jason was confused. &#34;Cousin, did your business deal fall through today?&#34;</p>
                 <p>Alexander withdrew his gaze. &#34;So noisy.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Jason fell silent.</p>
                 <p>Evelyn noticed this fearless second-generation heir was only afraid of his cousin.</p>
                 <p>Just then, a bright yellow sports car pulled up in front of them. James Klein whistled. &#34;Old... Evelyn, just got this car. Need a ride?&#34;</p>
@@ -2335,7 +2415,7 @@
                 <p>&#34;Fine.&#34;</p>
                 <p>James&#39;s head drooped, his enthusiasm gone. &#34;I&#39;ll head off then.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>The sports car roared away and disappeared.</p>
                 <p>Alexander&#39;s black Bentley slowly drove up.</p>
                 <p>The extended body was heavy and steady, much safer than that flimsy sports car.</p>
@@ -2380,7 +2460,7 @@
                 <p>Evelyn got out slowly. Watching his dark expression as he left, she couldn&#39;t help but ask Thomas, &#34;Did the negotiation go badly tonight? He seems furious.&#34;</p>
                 <p>Thomas nearly rolled his eyes.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>The acquisition tonight saved a hundred million under budget. The boss was very pleased!</p>
                 <p>But he didn&#39;t say anything, just jogged to catch up with Alexander.</p>
                 <p>Evelyn shook her head and was about to go upstairs when a dark figure suddenly darted in front of her, grinning slyly. &#34;My dear niece!&#34;</p>
@@ -2397,7 +2477,7 @@
                 <p>Evelyn said, &#34;This is a deposit. I have another two hundred thousand. Tell me the truth, and it&#39;s all yours. But I need to judge if it&#39;s worth that much first.&#34;</p>
                 <p>&#34;It is! Absolutely! This concerns you!&#34; Leo, afraid the money would vanish, said urgently, &#34;I&#39;ll tell you right now!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

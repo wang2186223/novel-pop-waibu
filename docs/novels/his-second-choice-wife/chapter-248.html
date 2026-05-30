@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,27 +2390,27 @@
                 <p>&#34;I don&#39;t know how to say this,&#34; she whispered, her warm breath fanning across his face. &#34;I had DNA tests done with Dorothy. I&#39;m not her biological daughter.&#34;</p>
                 <p>She swallowed hard before continuing. &#34;You might have guessed Evelyn was adopted. But I&#39;m not even her. The medical report confirmed... I&#39;m still untouched.&#34; Her cheeks burned scarlet as the words tumbled out.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Perched atop him, her fingers fumbled with the buttons of his dress shirt. Each shaky exhale made her chest rise and fall rapidly.</p>
                 <p>&#34;Let me show you—&#34;</p>
                 <p>Liam&#39;s hand shot up to stop hers, his grip firm. His throat constricted as he struggled to maintain control.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;I believe you, sweetheart,&#34; he said, voice strained. &#34;You don&#39;t need to prove anything like this.&#34;</p>
                 <p>Evelyn blinked in surprise, her lips parting slightly.</p>
                 <p>In one fluid motion, Liam reversed their positions, caging her beneath him. Even the slightest movement from her sent fire racing through his veins.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>His normally steady voice dropped an octave. &#34;When we come together, it should be about love—not some test of purity.&#34;</p>
                 <p>She turned her face away, embarrassed. &#34;I destroyed the evidence. I was afraid you wouldn&#39;t believe me.&#34;</p>
                 <p>He pressed a tender kiss to her forehead. &#34;I trust you implicitly. But this stays between us. You must keep playing Evelyn for now.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>She nodded against his chest. &#34;I understand. Until I uncover who I really am—who&#39;s pulling the strings—&#34;</p>
                 <p>&#34;You&#39;re exposed while they hide in shadows,&#34; Liam finished. &#34;Smart girl.&#34;</p>
                 <p>&#34;What about the backlash from the Carter family?&#34; she asked.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Leave that to me,&#34; he said firmly.</p>
                 <p>After a beat of silence, Evelyn whispered, &#34;Liam... if I&#39;m not Evelyn, then our marriage—&#34;</p>
                 <p>His entire body tensed. &#34;What are you suggesting?&#34; The words came out sharper than intended.</p>
@@ -2339,7 +2419,7 @@
                 <p>Evelyn gasped, grabbing his wrist. &#34;What are you—&#34;</p>
                 <p>His expression darkened. &#34;Making this marriage indisputable. Once I&#39;ve put my babies in you, you won&#39;t question this bond again.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

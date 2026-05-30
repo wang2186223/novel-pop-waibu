@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,27 +2390,27 @@
                 <p>Timothy watched as Mia stood up from her seat in the second row. Her</p>
                 <p>champagne–colored dress accentuated her smooth skin, and her face was alight with happiness. Even her eyes were shining.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>In this instant, she looked like she was glowing. She was nothing like the timid, lowly woman in his memories.</p>
                 <p>But what surprised Timothy the most was the fact that Mia was Zoe. Did this mean that Mia had deliberately rejected his olive branches?</p>
                 <p>Timothy stared hard at her. It was almost as if he wanted to burn holes in her with his gaze.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Suddenly, he found he couldn’t really understand Mia despite being married to her for three years.</p>
                 <p>Mia walked out of the second row with her head held high. There was a faint smile playing on her lips. As she walked toward the stage, she saw Maya remaining rooted to the spot. She stopped and smiled meaningfully. “Did you mean to surprise me with this, Ms. Lane?”</p>
                 <p>Maya clenched her fists and forced out a smile. “Congratulations on your victory.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>“Instead of congratulating me, I think it’s only right for you to apologize, Ms. Lane. After all, the Fleur International Design Competition is such an important competition. If mistakes like this were to happen all the time, would anyone have faith in its authenticity and fairness?”</p>
                 <p>Maya’s eyes darkened. The bitch was mocking her! Still, she knew this wasn’t the right place for her to throw a tantrum. She suppressed her anger. “Indeed, this is a mistake on our part. We’ll do our best to make it up to you.”</p>
                 <p>“If that’s the case, how about you present the award to me, Ms. Lane?” Mia didn’t budge. She stared right into Maya’s eyes and calmly waited for an answer.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Maya noticed people staring at them. There was no way in hell she would willingly present the award to Mia. She turned to look at Timothy, hoping that he would speak up for her. Mia would definitely go along with him.</p>
                 <p>To her dismay, Timothy sat there, looking emotionless. But his eyes were fixed on Mia, and his gaze was unfathomable.</p>
                 <p>Mia noticed his gaze on her. She met it, refusing to back down.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Timothy narrowed his eyes slightly and said, “As the organizer’s representative, it’s only right for you to present the award, Ms. Lane.”</p>
                 <p>Hearing this, Maya had no choice but to nod in agreement despite her extreme reluctance. She was incredibly pissed.</p>
                 <p>Mia smiled. She turned away from Timothy and lifted her gown as she walked on stage. It had been three years. Finally, she could stand on this stage again.</p>
@@ -2339,7 +2419,7 @@
                 <p>“Then why did you choose to suddenly disappear three years ago?”</p>
                 <p>Mia felt a piercing gaze land on her at this question. She looked off–stage to meet Timothy’s gaze.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

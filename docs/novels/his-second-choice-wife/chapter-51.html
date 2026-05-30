@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,27 +2390,27 @@
                 <p>It was also the first time Liam had heard Evelyn cry. Her whimpers sounded eerily similar to Victoria&#39;s when she was a child.</p>
                 <p>A long-buried protective instinct, dormant for ten years, suddenly awakened within him.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>When Victoria had returned earlier this year, her frequent crying fits and tantrums had only irritated Liam. He&#39;d assumed his childhood affection had simply faded with time.</p>
                 <p>Yet now, with Evelyn in his arms, those forgotten feelings came rushing back.</p>
                 <p>The room remained pitch black. Outside, the storm showed no signs of abating.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>The warm air between them grew thick with their synchronized rapid breathing and pounding heartbeats.</p>
                 <p>Gradually, Evelyn&#39;s trembling subsided. She rested her head against Liam&#39;s chest, listening to his steady heartbeat.</p>
                 <p>Then realization struck - she stiffened abruptly. She&#39;d been clinging to his waist like a lifeline, even curling into his embrace.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Liam hadn&#39;t pushed her away, even helping cover her ears. Surely it was just gentlemanly courtesy.</p>
                 <p>Evelyn slowly withdrew her arms.</p>
                 <p>An unexpected emptiness filled Liam&#39;s chest when her warmth disappeared. Lowering his hands, he asked hoarsely, &#34;Better now?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Though she couldn&#39;t see his expression, his voice held no anger.</p>
                 <p>&#34;I need my noise-canceling earbuds. The thunder will return.&#34;</p>
                 <p>&#34;Why are you afraid of thunderstorms?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Evelyn&#39;s voice quivered. &#34;I... I keep having this nightmare where someone holds my head underwater during a storm, trying to drown me. It terrifies me.&#34;</p>
                 <p>Liam activated his phone&#39;s flashlight. They searched the bed area until he spotted high-end noise-canceling earbuds peeking from beneath a pillow.</p>
                 <p>Kneeling on the mattress, he carefully placed them in Evelyn&#39;s ears.</p>
@@ -2340,7 +2420,7 @@
                 <p>With the earbuds blocking sound, Evelyn didn&#39;t respond.</p>
                 <p>As Liam moved toward the door, Evelyn suddenly lunged forward, grabbing his shirt. Her voice came out louder than intended, &#34;Don&#39;t leave, Liam!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2317,25 +2397,25 @@
                 <p>&#34;The Dempseys have been informed. This won’t spread further.&#34; He paused. &#34;But this time, a simple &#39;thank you&#39; won’t cut it.&#34;</p>
                 <p>He rolled up his sleeve, revealing the bandaged wound.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>[Ask Vivian to stay with me.]</p>
                 <p>Alexander arched a brow. &#34;Kicking me out again?&#34;</p>
                 <p>[Your injury needs treatment.]</p>
                 <p>After a brief silence, he stood. &#34;Fine. I’ll call her.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>When Vivian Dempsey burst in, she was still ranting into her phone.</p>
                 <p>&#34;My dad caught that maid!&#34; She plopped down angrily. &#34;For just five thousand bucks, she helped Simon hurt you!&#34;</p>
                 <p>Evelyn patted the space beside her.</p>
                 <p>Vivian shook her head. &#34;I’ll stay here—don’t want to bump your wounds.&#34; She leaned closer, lowering her voice. &#34;What were you whispering about with Alexander? Don’t tell me you’re rekindling old flames?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Evelyn gave a resigned smile.</p>
                 <p>She decided to keep Peter’s involvement from Vivian for now. Knowing her friend’s temper, she’d sabotage Peter’s project without hesitation if she learned the truth.</p>
                 <p>[Thank Uncle Dempsey for me.]</p>
                 <p>&#34;This is all my fault.&#34; Vivian tugged at her hair in frustration. &#34;If I hadn’t asked you to come, none of this would’ve—&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Evelyn squeezed her hand and shook her head.</p>
                 <p>&#34;That bastard Simon!&#34; Vivian seethed. &#34;Too cowardly to confront Alexander, too weak to bully Natalie, so he targets you instead!&#34;</p>
                 <p>[Don’t act rashly.]</p>
@@ -2344,7 +2424,7 @@
                 <p>&#34;But what about you?&#34; Vivian frowned. &#34;Your plans to study abroad...&#34;</p>
                 <p>[I’m going.] Evelyn typed firmly.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

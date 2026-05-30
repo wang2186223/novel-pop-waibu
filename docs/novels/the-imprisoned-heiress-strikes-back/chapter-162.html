@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2316,7 +2396,7 @@
                 <p>But she wouldn’t look back.</p>
                 <p>Not this time.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Because some battles weren’t worth fighting.</p>
                 <p>And some people weren’t worth saving.</p>
                 <p>The baby was gone.</p>
@@ -2338,7 +2418,7 @@
                 <p>With that, Claire wrenched her arm free from Lucas&#39;s grip and turned away. She walked off without hesitation, her steps firm and resolute.</p>
                 <p>This time, there was no hesitation, no lingering affection.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Lucas stood frozen, his body rigid, his mind numb.</p>
                 <p>The crowd that had gathered to watch the spectacle began to disperse. Whispers faded, footsteps retreated, but Lucas remained motionless, his tall frame stark against the emptying space.</p>
                 <p>He looked like a man severed from the world—a statue of desolation, directionless and hollow.</p>
@@ -2349,7 +2429,7 @@
                 <p>&#34;Lucas, I&#39;ve loved you for so long. It doesn&#39;t matter that Claire ended the pregnancy. I can give you children. Let me be the one who stays with you.&#34;</p>
                 <p>Her voice was soft, pleading, but Lucas didn&#39;t move. His hands remained limp at his sides, his gaze fixed on the spot where Claire had disappeared.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>The air around them felt heavy, suffocating.</p>
                 <p>Isabella tightened her hold, desperate for a reaction. But Lucas was lost—somewhere far beyond her reach.</p>
                 <p>And for the first time, she wondered if she had already lost him too.</p>
@@ -2360,7 +2440,7 @@
                 <p>Isabella, mistaking Lucas&#39; silence for hesitation, reached for his hand.</p>
                 <p>The moment her fingers brushed his, he recoiled violently. The force sent her wheelchair careening backward, wheels spinning wildly.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Isabella gasped as the world tilted around her. Lucas was already walking away, his broad shoulders rigid with disgust.</p>
                 <p>&#34;Lucas! Wait—!&#34;</p>
                 <p>Panicked, she fumbled with the wheelchair’s controls. But in her haste, she misjudged the turn.</p>
@@ -2372,7 +2452,7 @@
                 <p>The deafening sound of her body hitting the ground didn&#39;t even make Lucas Bennett pause. He kept walking away without a backward glance.</p>
                 <p>Isabella Rhodes lay sprawled on the icy marble floor, the shock of betrayal freezing her more than the cold surface beneath her. Her wide, disbelieving eyes stared at Lucas&#39;s retreating figure as the pain of her shattered illusions radiated through her entire being.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

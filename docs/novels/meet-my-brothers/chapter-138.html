@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>“But judging from how Shelly acted back there, I can tell that she didn’t treat you–nicely. Don’t worry, Mia. I’m going to make her pay for it!”</p>
                 <p>“It’s a misunderstanding, Liam. It’s not what you think it is.” She didn’t want him to get on the Barretts‘ bad side because of her.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>That was exactly why she didn’t speak with her brothers about her marriage with Timothy.</p>
                 <p>How could Mia watch him teach Shelly a lesson and let it be? No matter how spiteful Shelly was, she was still Ms. Barrett!</p>
                 <p>Right when she was going to talk Liam out of it, she noticed Timothy approaching them. And she zipped her lips.</p>
                 <p>Liam followed her gaze, and there happened to be two empty seats next to them.</p>
                 <p>He clicked his tongue, doubting the possibility of such a coincidence.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Some things transpired by chance as if it were fate.</p>
                 <p>Mia realized that Timothy had taken the empty seat next to her, with Maya sitting beside him.</p>
                 <p>Straightening her posture, she could faintly smell his perfume. It was so faint that she could scarcely catch it without paying heed to it.</p>
                 <p>It was the perfume she picked for him on the notion that it would suit him.</p>
                 <p>However, he never used these things once, just like the suits. Never once had he worn those clothes or used the perfume.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Her eyes slightly widened when she sniffed the familiar perfume.</p>
                 <p>Timothy was acting out of character that day.</p>
                 <p>Not only was he clad in the light–colored suit Mia chose, but he also wore the perfume she picked for him.</p>
                 <p>+15 BONOS</p>
                 <p>Mixed feelings stirred in her as she couldn’t see through him.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Maya noticed Mia and thought of something to talk about. “Timothy, you’re quite different today. You wore light shades and perfume, didn’t you?”</p>
                 <p>His tone gave off a hint of awkwardness. “No.”</p>
                 <p>“Don’t be shy, Timothy. Men can use perfume, too. Besides, the perfume you’re wearing smells nice. Which brand is it?”</p>
                 <p>“I don’t know.” He was deadpan.</p>
                 <p>Mia sneaked a peek at him, figuring that the answer was reasonable. He really didn’t know the brand.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>After all, she made it by mixing a few perfumes of different brands. It took a few experimental attempts before getting the final product.</p>
                 <p>There was only one bottle of it in the world.</p>
                 <p>Soon, a pungent perfume wafted their noses. It didn’t take a genius to know who the incoming guest was.</p>
@@ -2351,7 +2431,7 @@
                 <p>Mia’s fingers gripped the bidding number tightly.</p>
                 <p>Rage exploded in Liam as soon as he heard that.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

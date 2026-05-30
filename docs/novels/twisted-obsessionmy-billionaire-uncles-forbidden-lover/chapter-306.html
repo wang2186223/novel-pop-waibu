@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,31 +2391,31 @@
                 <p>&#34;If you&#39;re going to say it like that, then I won&#39;t pretend to be the good girl anymore.&#34; Her lips curled in disdain. &#34;Instead of pointing fingers at me, why don&#39;t you go talk some sense into your clingy uncle?&#34;</p>
                 <p>&#34;Isabella Valentine might treasure him, but to me, he&#39;s just a nuisance. If she can take him away, I&#39;d be grateful.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Tiffany&#39;s face paled, but her eyes suddenly shifted past Sophia, locking onto something behind her.</p>
                 <p>&#34;U-Uncle...&#34;</p>
                 <p>Sophia&#39;s pulse stuttered. Slowly, she turned.</p>
                 <p>Ethan Roscente stood at the doorway, a paper bag in hand, his handsome face carved from ice. His gaze flickered over Sebastian&#39;s grip on Sophia&#39;s wrist, a dangerous glint flashing in his eyes.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Seems I&#39;m interrupting.&#34; His voice was frigid. &#34;I had no idea my personal life was such fascinating gossip.&#34;</p>
                 <p>Tiffany trembled, unable to meet his eyes.</p>
                 <p>Sophia held his stare, her lips pressed into a stubborn line. The explanation on her tongue dissolved before she could voice it.</p>
                 <p>&#34;Was I wrong?&#34; Her voice was eerily calm as she met his gaze head-on.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Ethan&#39;s eyes darkened, the air around him turning glacial. He stepped forward, each footfall like a hammer against her nerves.</p>
                 <p>&#34;Dead wrong.&#34; His laugh was devoid of warmth. &#34;Clearly, I&#39;ve been too lenient with you.&#34;</p>
                 <p>The paper bag hit the table with a heavy thud.</p>
                 <p>Sebastian instinctively moved to shield Sophia. &#34;Mr. Roscente, let&#39;s discuss this rationally.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Ethan&#39;s gaze was a blade. &#34;Professor Valdemar, this is a family matter.&#34;</p>
                 <p>The atmosphere froze, thick with tension. Everyone nearby held their breath.</p>
                 <p>Sophia suddenly laughed, the sound brittle. &#34;Family? Don&#39;t make me laugh.&#34; She pushed Sebastian&#39;s hand away. &#34;What family do we have?&#34;</p>
                 <p>The words struck Ethan like a dagger. His pupils constricted, the cold in his expression deepening.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Fine.&#34; The words were ground out between his teeth. &#34;Sophia, you&#39;re really something.&#34;</p>
                 <p>Tiffany took two cautious steps back. She&#39;d never seen her uncle look so terrifying.</p>
                 <p>But Sophia seemed oblivious to the danger, fanning the flames. &#34;If you&#39;re feeling wronged, Mr. Roscente, why don&#39;t you go complain to your fiancée?&#34;</p>

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>Timothy continued tinkering with the bottle in his hand. “Cut to the chase, Mom.”</p>
                 <p>“I saw Mia meeting with a gynecologist. I think she wants to get pregnant. And with Laura’s support on her side, she plans to stay in our family. You should be careful now. Don’t get her pregnant or you can’t divorce her.”</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>“What makes you think that I’m divorcing her?” Timothy’s response surprised Sharon.</p>
                 <p>“Didn’t you say you were divorcing her and that she’d agreed to the divorce too? Don’t tell me you’re in love with Mia.”</p>
                 <p>“What makes you think I’m in love with her?” Timothy rubbed his temples. “Mom, stay out of my relationship. I’ll handle it myself.</p>
                 <p>“Timothy, don’t be fooled by Mia’s coy tactics. She’s trying to get herself pregnant, and nothing good can come from it.”</p>
                 <p>Timothy was no longer paying attention to what Sharon said. He looked at the folic acid bottle and grinned.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>“I knew she was playing hard to get.”</p>
                 <p>She signed the divorce agreement yet she took prenatal vitamins too.</p>
                 <p>That explained why she said that she would do anything to convince Laura to get her surgery done.</p>
                 <p>That was a hint! Timothy hung up, his mood visibly brighter.</p>
                 <p>He slipped the bottle into his pocket and said, “Let’s go.”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Heath was confused. “Are we visiting Ms. Mia now?” He thought that Timothy did not want a child. Why was Timothy so calm then, despite knowing that Mia was taking prenatal vitamins?</p>
                 <p>Timothy answered plainly, “I’m waiting for her to come to me.”</p>
                 <p>So, Mia was playing hard to get. But it didn’t matter. Timothy was in for the long game.</p>
                 <p>+15 BONOS</p>
                 <p>Mia most definitely needed his help if she wanted to get pregnant. He could wait and see what Mia would do.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Heath kept quiet. He had a feeling that this was a misunderstanding, but he was too afraid to bring it up.</p>
                 <p>When Mia returned to her office, she noticed that the folic acid bottle was not in her pocket.</p>
                 <p>She’d bought two supplements from the pharmacy-folic acid and common vitamins. She swapped their</p>
                 <p>contents.</p>
                 <p>Now, the vitamin bottle was here. But the folic acid bottle was missing.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Was it back in her marital home?</p>
                 <p>Mia</p>
                 <p>tried to trace back but it was to no avail. She could only hope that she lost it somewhere on her way to</p>
@@ -2352,7 +2432,7 @@
                 <p>Wilhelmina approached Mia suddenly. “I envy you, Mia. You got an order from a rich client right owner a guy? Is he handsome?”</p>
                 <p>Mia smiled. “He’s quite handsome, and quite rich too. Oh. I need to rush back home later. I won’t be able to be there to supervise the whole project. Do you know anyone free enough to help me?”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

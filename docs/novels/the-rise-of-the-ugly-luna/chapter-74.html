@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2320,7 +2400,7 @@
                 <p>He looked away as quickly as I did, but not before heat radiated through my core.</p>
                 <p>Gods, I needed to find a way to stop this. I couldn&#39;t keep doing this to myself.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Kael&#39;s eyes roamed over Jace&#39;s body. &#34;Why don&#39;t you try to get a bigger size of this next time? I don&#39;t even understand if you lack the common knowledge of your measurement.&#34; He was referring to Jace&#39;s suit.</p>
                 <p>Jace glanced down at his suit and scoffed. &#34;Dude,get out of my face before I smash yours against the wall.&#34;</p>
                 <p>Kael looked at me. &#34;How do you cope being his friend, Lyric? I&#39;d rather be alone than have to spend a second with someone like him who hates correction as much as he hates having a brain.&#34;</p>
@@ -2350,7 +2430,7 @@
                 <p>A while later, I went out to look for Jace. He had been gone for about fifteen minutes, making me worried.</p>
                 <p>Fortunately, I found him by the pool side, smoking.I froze. Jace doesn&#39;t smoke unless he&#39;s really pissed.Like,very very pissed.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>At this point,I wanted to believe he was overreacting over what Kael did.</p>
                 <p>&#34;Hey. Give me that.&#34; I gently took the cigarette from me.</p>
                 <p>Putting it on the floor, I extinguished it with my heels.</p>
@@ -2365,7 +2445,7 @@
                 <p>&#34;Forget it.&#34; He shook his head. &#34;Sorry I took you out of the party. We should head back.&#34;</p>
                 <p>Hm. Jace being polite to me. He was definitely not himself.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>I knew him well enough to know if he didn&#39;t want to talk about something, he wouldn&#39;t. So, I let it be for now.</p>
                 <p>Grabbing him by the jacket, we started walking back to the party. But we stopped when we bumped into Marta.</p>
                 <p>She was making a phone call and appeared shocked when she saw us.</p>
@@ -2380,7 +2460,7 @@
                 <p>&#34;What&#39;re you saying? Don&#39;t you remember me?&#34;Jace chuckled. &#34;It&#39;s me, Jace. I know it&#39;s been years but we met in-&#34;</p>
                 <p>&#34;I said I don&#39;t know you!&#34; Her voice was near a shout,her eyes blazing fire.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Her mask slipped. She wasn&#39;t just furious. She was scared.</p>
                 <p>Time seemed to stretch between the two. Marta glared at me, then at Jace, and walked away. &#34;What was that about?&#34; | turned to Jace as soon as we were alone. &#34;How&#39;s she Karen to you? That&#39;s Marta Monroe. Jaris&#39; baby mama.&#34;</p>
                 <p>Jace&#39;s eyes rounded, disbelief glintingin them.</p>
@@ -2396,7 +2476,7 @@
                 <p>&#34;That means..&#34; he shook his head.not possible.&#34;</p>
                 <p>&#34;What isn&#39;t possible?&#34; &#34;She being their mother, Lyric!&#34; He darted his gaze at me. &#34;I met Karen...or Marta in 2020, just around this time. And when I did meet her, she wasn&#39;t pregnant.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

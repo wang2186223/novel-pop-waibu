@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2317,7 +2397,7 @@
                 <p>They took pride in him.</p>
                 <p>Who could have imagined that this pillar of stability would have such a flaw?</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Once, the department had held an internal vote on who was least likely to be a spy.</p>
                 <p>Benjamin Wright had come in first by a landslide.</p>
                 <p>Yet reality was so bitterly ironic.</p>
@@ -2329,7 +2409,7 @@
                 <p>Who could have imagined that such an idol-like figure would do such a thing?</p>
                 <p>The scene fell into silence.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Grace Lorenz rushed forward and supported Benjamin Wright.</p>
                 <p>She cried out, &#34;Grandpa!&#34;</p>
                 <p>Benjamin Wright sighed. &#34;I&#39;ve dragged you into this.&#34;</p>
@@ -2341,7 +2421,7 @@
                 <p>But her living, breathing grandfather was right here.</p>
                 <p>She choked back a sob. &#34;Grandpa! How could you do something like that...&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Benjamin Wright sighed again. &#34;I was wrong.&#34;</p>
                 <p>Grace looked at him, feeling utterly powerless.</p>
                 <p>Benjamin Wright turned to Marcus Wright. &#34;Follow the rules. Do what must be done.&#34;</p>
@@ -2353,7 +2433,7 @@
                 <p>But suddenly, it all felt meaningless.</p>
                 <p>Marcus Wright lowered his gaze. &#34;Old man, don&#39;t blame me for being harsh. For you, our rules must be even stricter. I can spare Grace, but I cannot spare you. So, accept our punishment and scorn.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>He pointed ahead. &#34;Everyone, line up!&#34;</p>
                 <p>The people from the Special Operations Division immediately moved into action.</p>
                 <p>They formed a long line.</p>
@@ -2365,7 +2445,7 @@
                 <p>Evelyn frowned.</p>
                 <p>She saw it was from Natalie Castillo.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>She answered the call.</p>
                 <p>Natalie Castillo&#39;s smiling face appeared on the screen. &#34;Evelyn, I&#39;m calling because I suddenly remembered something I didn&#39;t tell you...&#34;</p>
                 <p>Evelyn frowned. &#34;What is it?&#34;</p>
@@ -2378,7 +2458,7 @@
                 <p>She tilted her head and smiled. &#34;Since you know the truth, then Evelyn, you must be facing the most difficult choice right now, aren&#39;t you? I called to remind you. Those of us competing for the heir position went through this kind of training in the Sterling Family long ago. We know when to make what kind of sacrifice. So today, I&#39;m giving you this lesson.&#34;</p>
                 <p>Evelyn was stunned.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

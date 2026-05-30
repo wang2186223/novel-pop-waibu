@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,25 +2391,25 @@
                 <p>lose this job.”</p>
                 <p>“Never mind. I’m fine, after all. Only the dress is stained.” Her gaze dipped, and she sighed when she saw the wine stains on the hem of her dress. “Is it very difficult to get rid of these?*</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Eva took her hand. “It doesn’t matter if the dress is dirtied. You can just wear it once. Wear something</p>
                 <p>new at the next banquet.”</p>
                 <p>Connor was alarmed. “Mia, you should rest at the lounge.”</p>
                 <p>“Alright. The urge to clean the stains off her dress overwhelmed her. The red stains stood out like a sore thumb on her white dress.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>As the Lane brothers huddled her away, the server, who had been crouching on the ground, glanced up at Mia’s direction. A cold glint flickered in her eyes.</p>
                 <p>Mia suddenly turned around after a few steps. She realized that the server was moving toward the other end of the hall after clearing away the glass.</p>
                 <p>A hint of suspicion gleamed in her eyes. She realized that the server looked familiar–she resembled Dana. She couldn’t make out her features clearly since the server had her head hung low the entire time.</p>
                 <p>Perhaps she was mistaken. The server sounded nothing like Dana, after all.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Mia simply shrugged it off. As her brothers and her approached the hall’s exit, Timothy went up to them.”</p>
                 <p>I’ll get the maid to prepare your clothes.”</p>
                 <p>Dominic turned around. “No need. I’ll get someone to buy her a new set of clothes for her to change into.” The other brothers stood in front of Timothy as well, shielding Mia from him.</p>
                 <p>Mia stared at him. “No need. My brothers will take care of that for me.”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Timothy swallowed, and continued in a strained voice, “Your old clothes are still here. I actually meant for you to change back into your old clothes. Grandma didn’t tamper with your room, so your things are still there.”</p>
                 <p>She was suddenly at a loss for words.</p>
                 <p>Just then, Laura strode over to them from the hall. “Mia, what happened to your dress? Why don’t you go upstairs and change into something else? Your clothes are still in your room.”</p>

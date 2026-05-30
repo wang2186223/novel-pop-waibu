@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>Evelyn rubbed her temples. &#34;Didn&#39;t I ask you to talk her out of it?&#34;</p>
                 <p>&#34;I tried! But Mom and Dad don’t want to burden you. They said they’d figure out a way to raise the money first...&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;...I see.&#34; Evelyn paused. &#34;Has Peter contacted you?&#34;</p>
                 <p>&#34;How did you know? He just called to invite me to the new ski resort.&#34;</p>
                 <p>Evelyn&#39;s chest tightened. &#34;What did you say?&#34;</p>
@@ -2323,7 +2403,7 @@
                 <p>&#34;Huh? When?&#34;</p>
                 <p>&#34;That time when Vivian’s dad treated us.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Oh...&#34; Emily&#39;s voice softened. &#34;I just wanted to try something new. Mom and Dad have never had Western food before.&#34;</p>
                 <p>&#34;Give me twenty minutes. I’ll take you all out.&#34;</p>
                 <p>&#34;But we need to save money...&#34;</p>
@@ -2332,7 +2412,7 @@
                 <p>&#34;Evelyn,&#34; Andrew said as he got into the car, frowning slightly, &#34;Western food is so expensive. Aunt Lucy just invited us over...&#34;</p>
                 <p>&#34;Let Peter spend more time with Aunt Lucy,&#34; Evelyn said gently. &#34;He’s been busy with work lately and rarely gets to see her.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>The excuse seemed to satisfy her father.</p>
                 <p>Emily sat quietly in the back seat. Ever since that night at Celestial Club, she had become unusually obedient.</p>
                 <p>&#34;Sis, where are we going?&#34;</p>
@@ -2341,7 +2421,7 @@
                 <p>&#34;Evelyn, I&#39;m back.&#34;</p>
                 <p>The exhaustion in her voice made Evelyn’s heart clench. &#34;Grandma Dempsey—&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Grandma’s condition is stable. It’s my own problem.&#34; Vivian gave a bitter laugh. &#34;I might need your help from now on.&#34;</p>
                 <p>&#34;What happened?&#34;</p>
                 <p>&#34;The factory... the bank is foreclosing on it.&#34;</p>
@@ -2350,7 +2430,7 @@
                 <p>&#34;Is there no way to stop it?&#34;</p>
                 <p>&#34;There is,&#34; Vivian said hoarsely. &#34;If Alexander withdraws and Banyan Group continues the partnership, we can save the factory.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Silence stretched between them.</p>
                 <p>&#34;I just found out,&#34; Vivian whispered, her voice breaking, &#34;that for the past five years, it was only because of you that Alexander let my family barely scrape by...&#34;</p>
                 <p>Evelyn tightened her grip on her phone. &#34;Let me think about this.&#34;</p>
@@ -2362,7 +2442,7 @@
                 <p>Though puzzled, Andrew was too preoccupied with their financial troubles to press further.</p>
                 <p>The next morning, Evelyn stood face-to-face with Vivian.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

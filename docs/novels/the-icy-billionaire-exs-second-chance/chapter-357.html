@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2308,19 +2388,19 @@
                 <p>&#34;You&#39;re both dead!&#34; Maxwell snarled, raising the knife again. But Adrian was faster this time. A well-placed kick sent Maxwell sprawling across the concrete, the knife skittering out of reach. Ethan sprang into action, pinning Maxwell face-down with expert precision.</p>
                 <p>&#34;I&#39;m calling an ambulance,&#34; Vivian said urgently, peeling back Adrian&#39;s blood-soaked sleeve. Her breath caught - the wound was deep enough to glimpse bone. For a terrifying moment, her vision swam, but she forced herself to focus. Panic wouldn&#39;t help now.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>With steady hands, she fashioned a tourniquet from Adrian&#39;s spare tie, the silk quickly soaking through with warm, sticky blood. The metallic scent triggered flashbacks of smoke and screaming, of lives draining away before her eyes. She shook her head violently to dispel the images.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Stay with me,&#34; she whispered, tightening the makeshift bandage. Whether the words were for Adrian or herself, she couldn&#39;t tell.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Adrian gave her a weak smile. &#34;Just a scratch, darling. Call the police first.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Her fingers trembled as she dialed 911. After hanging up, she immediately called their private physician at Harbor Grand Hospital. Only when both calls were completed did she turn her attention to Maxwell.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Ethan had him immobilized, face pressed against the cold concrete. Maxwell&#39;s sunken eyes burned with hatred as Vivian approached. &#34;This is all your doing, you bitch,&#34; he spat.</p>
                 <p>Ethan delivered two sharp blows to Maxwell&#39;s ribs. &#34;Mrs. Blackwood, please step back.&#34;</p>
                 <p>Vivian wasn&#39;t worried. She knew Ethan&#39;s capabilities - he&#39;d trained alongside Adrian in special forces techniques.</p>
@@ -2328,7 +2408,7 @@
                 <p>Maxwell began laughing hysterically, the sound echoing off the concrete pillars. &#34;You think this is over? You have no idea what&#39;s coming.&#34;</p>
                 <p>Adrian&#39;s grip on Vivian&#39;s free hand tightened, his face pale but determined. The standoff continued, three lives hanging in the balance beneath the flickering lights of Opal Galleria&#39;s underground parking.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

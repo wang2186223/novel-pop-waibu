@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,28 +2389,28 @@
                 <p>&#34;I agree the formula should be flawless,&#34; Dominic ran a hand through his hair, &#34;but we&#39;ve replicated the process multiple times. Perhaps we should—&#34; He hesitated, struggling with his next words.</p>
                 <p>Just days ago, he&#39;d forbidden her from entering Phoenix Labs. Now he needed her expertise there. The irony tasted bitter, especially making this request to his fiancée. The words stuck in his throat.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;You want me to inspect the lab?&#34; Vanessa finished for him. After years together, she could read his silences perfectly.</p>
                 <p>Dominic exhaled sharply, shaking his head. &#34;No, forget it. We have top chemists who can troubleshoot. I only wanted to verify the formula. We&#39;ll break through this obstacle.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Dom, stop pretending.&#34; She captured his restless hands. &#34;You said it yourself—this is the crucial phase. As the formula&#39;s creator, I should oversee its execution. Even without your request, I&#39;d insist on going.&#34;</p>
                 <p>&#34;It&#39;s the chemical exposure I&#39;m worried about.&#34; His gaze dropped to her abdomen. &#34;Given your... condition.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Vanessa had been avoiding intimacy lately, citing the baby&#39;s delicate state. She needed space to focus on the pregnancy, she&#39;d claimed. Dominic had respected her wishes, channeling his frustration into preparing for fatherhood. Every precaution mattered now.</p>
                 <p>She laughed, pulling a surgical mask from her pocket. &#34;Relax, I&#39;ll wear full protection.&#34; Her eyes twinkled as she teased, &#34;Should I borrow a hazmat suit from the fire department?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;I&#39;ll have one specially tailored,&#34; he deadpanned.</p>
                 <p>Vanessa collapsed onto the bed laughing. &#34;You&#39;re ridiculous! I&#39;m joking! A quick inspection won&#39;t harm the baby. Our child isn&#39;t made of glass, you know.&#34; She patted her stomach playfully.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;But—&#34;</p>
                 <p>&#34;No more arguments,&#34; she cut him off, feigning annoyance. &#34;Unless you want to deal with a very cranky pregnant woman?&#34;</p>
                 <p>&#34;...Fine.&#34; Dominic surrendered reluctantly.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

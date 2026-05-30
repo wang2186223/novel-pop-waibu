@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2315,7 +2395,7 @@
                 <p>A shrug. &#34;Better she’s far away when that happens.&#34;</p>
                 <p>Alexander said nothing, just watched as she devoured the rest of her meal with unapologetic relish. It had been months since she’d eaten something this decadent, and she wasn’t about to let etiquette ruin it.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>His lips curved slightly.</p>
                 <p>&#34;You seem confident,&#34; he remarked.</p>
                 <p>Evelyn dabbed her mouth with a napkin. &#34;I’ve thought this through.&#34; Then, hesitating: &#34;There’s one more thing I need from you.&#34;</p>
@@ -2325,19 +2405,19 @@
                 <p>&#34;I want Bella at Phoenix Labs with me.&#34; The words tumbled out before she could second-guess them. &#34;She’s brilliant. And I work better with her. Give us six months, and I swear we’ll deliver a perfume that’ll make Celestia Group profit. If not—&#34;</p>
                 <p>&#34;What?&#34; His voice was dangerously soft.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;I’ll walk away.&#34;</p>
                 <p>Alexander laughed—a low, rich sound that sent a shiver down her spine. &#34;Eternal Bloom took you three months. Why six now?&#34;</p>
                 <p>Evelyn’s fingers tightened around her glass. &#34;Because Eternal Bloom was a fluke.&#34; The admission burned. &#34;A real perfume takes time—inspiration, trials, failures. We rushed it because Dominic needed a competition entry. That’s why one tweaked ingredient ruined the base notes.&#34; She pinched her thumb and forefinger together. &#34;That’s how fragile it was.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Alexander’s gaze darkened. Then, without warning, he reached across the table.</p>
                 <p>Evelyn barely had time to blink before his thumb brushed the corner of her lip.</p>
                 <p>&#34;You had a stain,&#34; he said casually, as if he hadn’t just short-circuited her brain.</p>
                 <p>The napkin in his hand was proof.</p>
                 <p>Evelyn’s cheeks flamed.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,7 +2390,7 @@
                 <p>Isabelle studied their menacing expressions meant to cow her. Instead of defiance, she adopted a submissive posture, feigning meekness as she shuffled toward the kitchen.</p>
                 <p>The front door swung open abruptly, revealing a disheveled man entering the house.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>The woman and child rushed to greet him with theatrical enthusiasm.</p>
                 <p>&#34;Father!&#34; the boy cried. &#34;Darling!&#34; the woman cooed.</p>
                 <p>Curious, Isabelle turned to observe this supposedly important man. He bore no resemblance to the powerful figure they&#39;d described - his beard was scraggly, his eyes dull and lifeless. But when his gaze landed on Isabelle, they widened in stunned recognition.</p>
@@ -2320,7 +2400,7 @@
                 <p>&#34;Richard&#39;s voice came out strangled. &#34;Who is this child? Explain this immediately!&#34;</p>
                 <p>The woman stepped forward with a saccharine smile. &#34;She&#39;s a classmate of our son&#39;s from kindergarten. Though she offended him, our generous boy wished to give her a better life, so I brought her home.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>The truth behind Richard&#39;s contempt ran deeper than appearances suggested. Isabelle&#39;s features bore an uncanny resemblance to Olivia Sinclair in her youth, resurrecting memories Richard had spent decades burying.</p>
                 <p>Now middle-aged and washed-up, Richard&#39;s life had become a grotesque parody of his ambitions. He&#39;d murdered his own mother and framed Liam.</p>
                 <p>Rather than confront his failures, Richard had convinced himself Liam was responsible for everything. In his twisted reasoning, had Liam simply surrendered control of Blackwood Enterprises, none of this would have occurred. It was easier for Richard to direct his rage at Liam, and by extension, despise Olivia.</p>
@@ -2335,7 +2415,7 @@
                 <p>Silence followed.</p>
                 <p>Then Richard&#39;s breathing grew ragged as his fingers twitched toward Isabelle&#39;s throat.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

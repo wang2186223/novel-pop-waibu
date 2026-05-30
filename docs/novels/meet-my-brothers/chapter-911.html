@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2315,22 +2395,22 @@
                 <p>As for Sharon, she was undeniably a sinister woman.</p>
                 <p>Given Timothy&#39;s principles, he would probably have taken legal action against Ralph long ago for his involvement in bribery within the company.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Yet, Sharon resorted to emotional manipulation, unleashing a series of dramatic outbursts, and even threatening self-harm.</p>
                 <p>She wept in front of Laura for days until Timothy eventually relented on pursuing legal action against Ralph.</p>
                 <p>Ultimately, Sharon reached into her own pocket to cover the substantial amount lost due to Ralph&#39;s embezzlement and mismanagement of funds.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Reflecting on Ralph&#39;s questionable character, Mia couldn&#39;t help but empathize with Timothy.</p>
                 <p>She stole a glance at him and remarked, &#34;Handling this situation could be rather challenging, don&#39;t you think? If you move forward with terminating the partnership, Ralph is likely to create quite a commotion. He&#39;s not one to back down easily.”</p>
                 <p>Indeed, stirring up trouble seemed to be Ralph&#39;s forte.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Timothy&#39;s response was cold and resolute. &#34;Our company&#39;s policies and standards will not be compromised for anyone.”</p>
                 <p>Inwardly, Mia couldn&#39;t help but scoff. It was evident that the collaboration with the Bowen family hadn&#39;t followed the standard procedures and approvals within the company.</p>
                 <p>If it were merely a minor agreement, the Bowens wouldn&#39;t be making such a public spectacle of it.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>And if it were a significant collaboration, it surely wouldn&#39;t have bypassed the company&#39;s rigorous review process.</p>
                 <p>Hence, the only plausible explanation was that Ralph had been involved in dubious transactions with the Bowen Group.</p>
                 <p>It was no surprise that when Heath visited the subsidiary earlier to end the partnership with the Bowen family, Ralph had been dodging meetings with him.</p>
@@ -2338,7 +2418,7 @@
                 <p>Mia regarded Timothy seriously and advised, &#34;I believe your priority now should be to address the partnership issue with the Bowen family at the office.</p>
                 <p>&#34;Ginger is progressing well in her recovery and is ready to be discharged from the hospital. With a family doctor available at home to monitor her condition, there&#39;s no need for her to remain hospitalized.” Timothy furrowed his brow in response. &#34;Are you sure there are no concerns regarding Ginger&#39;s ongoing treatment?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

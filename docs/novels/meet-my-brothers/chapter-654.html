@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>Upon hearing that, Timothy turned his head to look at her.</p>
                 <p>Mia commanded attention in her striking black dress, her lips a vivid red, evoking an air of captivating enigma.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>He had never seen Mia dressing this way, so he didn’t know she could be this ladylike.</p>
                 <p>“What are you looking at, Mr. Barrett?” Something was weird about the way he stared at her. It seemed as though he was observing traces of another person’s presence within her.</p>
                 <p>Timothy circled to her back to pull out the chair for her. “Please, have a seat.”</p>
                 <p>“Thank you.” Mia gladly accepted the offer.</p>
                 <p>Sitting gracefully, she gazed at the handsome man. “I didn’t expect you to invite me here. A candlelight dinner doesn’t sound bad.”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>He calmly cut the steak into pieces. “It would be inconvenient to talk with the kid around.”</p>
                 <p>“Did you really think that I invited you to the room I’m staying in? I may be an irresponsible mother, but I have my boundaries to keep.”</p>
                 <p>“Sorry. I was overthinking.” Timothy then switched their plates. He gave her the steak he had cut.</p>
                 <p>She took a bite of it. “It’s delicious.”</p>
                 <p>From the delectable flavor of the steak, it seemed evident that he had splurged on its quality.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>That fell well within her expectations. After all, he must be someone of considerable stature</p>
                 <p>to be able to offer 10 million dollars.</p>
                 <p>Mia glanced at him. “Are you from Bern City, like Caleb?”</p>
                 <p>“Yes.”</p>
                 <p>“What do you do for a living?”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>“I’m a businessman. I run my family’s business.”</p>
                 <p>Her brows arched. “That must be a huge business.”</p>
                 <p>It finally dawned upon her that Timothy hailed from a well–off family.</p>
                 <p>“It’s our family’s legacy. What about you, Ms. Monalize? Are you from Chesterfield?”</p>
                 <p>Her hands froze momentarily. “Did Ginger tell you that?”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>“Yes.” Timothy nodded.</p>
                 <p>Mia felt a sense of disbelief at Ginger’s betrayal. Nevertheless, she smiled and said, “You know so much about me. Are you trying to flirt with me?”</p>
                 <p>He stared at her deeply when he heard that.</p>
@@ -2350,7 +2430,7 @@
                 <p>Mia couldn’t help but feel let down. As she had expected, all men were the same.</p>
                 <p>Timothy apologized, “Sorry. Have you always had that mole beneath your eye?” “Yes.” She found that question weird. She wondered why he asked that.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>Dayna gave a small shake of her head. &#34;Mom, didn&#39;t you always tell me to be thoughtful and gentle around Jaxton? If I don&#39;t pay this time,what will he think of me? Please figure out a way to solve this for me.&#34;</p>
                 <p>Dayna&#39;s response nearly made Janessa scream.She snapped, &#34;You make it sound so simple! This is twenty million we&#39;re talking about, not a measly twenty thousand!&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Money was a sore subject for Janessa. Even with her title as Ricky&#39;s wife,real control of the Flynn fortune was Ricky&#39;s, Besides the occasional spending money, everything else was locked away from her reach.</p>
                 <p>Saving up that five mnillion had taken her more than a year.</p>
                 <p>Yet, Janessa could never bring herself to confess such humiliating truths to Dayna.</p>
@@ -2323,7 +2403,7 @@
                 <p>She stared at her collection of jewelry and trinkets,feeling a wave of reluctance to part with them. Still,for the sake of a better future, she gritted her teeth and dialed the jewelry pawn shop&#39;s number.</p>
                 <p>At the Morrison family&#39;s house.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Jaxton had hoped to settle his twenty million quietly.Since he was the heir of the Morrison family, Laura didn&#39;t restrict him much regarding money.</p>
                 <p>Yet,because the coveted invitation had cost Laura so much effort, she took a keen interest in every detail of the auction.</p>
                 <p>She pressed Jaxton relentlessly for answers until he finally caved and shared what had happened.</p>
@@ -2341,7 +2421,7 @@
                 <p>In Kretol&#39;s bustling city center, Amelia frowned as she read the email on her phone.</p>
                 <p>Another job offer had just slipped through her fingers, the latest in a string of disappointments.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>For days now, she had sent out one resume after another, only to be met with rejection.</p>
                 <p>At first, she had blamed her two-year employment gap for this.</p>
                 <p>But even when she managed to land an interview and passed, the companies still withdrew their offers at the last moment.</p>
@@ -2350,7 +2430,7 @@
                 <p>The line barely rang before Monroe picked up the call.</p>
                 <p>After explaining her situation in a few short sentences, Amelia said, &#34;Monroe, I know this is a bother, but could you look into what&#39;s happening?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Amelia, you don&#39;t need to be so formal with me. 1have answers for you in two hours, tops. Just leave it to me.&#34;</p>
                 <p>&#34;Thanks, Monroe. I will treat you to a meal sometime,&#34; Amelia replied.</p>
                 <p>The call ended, but instead of heading home, Amelia made her way to a café nearby. With lunchtime approaching, she found she wasn&#39;t hungry, so she ordered just a cup of coffee.</p>

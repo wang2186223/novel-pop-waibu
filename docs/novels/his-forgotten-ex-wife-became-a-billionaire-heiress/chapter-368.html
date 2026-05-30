@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,25 +2391,25 @@
                 <p>Under the desk lamp late at night, Vivian scribbled furiously. Treatment plans were revised repeatedly until dawn broke.</p>
                 <p>The next evening, she knocked on the hotel room door with homemade cookies. Fiona Grandelle timidly took a bite, her eyes lighting up.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;The night markets in our country are quite lively,&#34; Vivian described vividly. &#34;Candied fruits, sugar paintings, and glowing balloons.&#34;</p>
                 <p>Fiona twisted her fingers together but couldn&#39;t resist asking, &#34;Really?&#34;</p>
                 <p>On the third day, Vivian appeared wearing meticulously applied scar makeup. The princess gasped upon opening the door.</p>
                 <p>&#34;It&#39;s me,&#34; Vivian smiled.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Fiona&#39;s pupils contracted violently. The scars from photographs now appeared shockingly real before her eyes.</p>
                 <p>&#34;Want to go out with me?&#34; Vivian extended her hand. &#34;Let those gossips go to hell.&#34;</p>
                 <p>In the mall, lecherous eyes lingered on them.</p>
                 <p>&#34;Ugly freaks shouldn&#39;t be out scaring people,&#34; a man deliberately raised his voice.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Vivian pointed her phone at him. &#34;Smile for the camera. Let the internet admire your handsome face.&#34;</p>
                 <p>The man&#39;s expression changed instantly. &#34;Just joking!&#34;</p>
                 <p>&#34;Oh?&#34; Vivian arched an eyebrow. &#34;Shall I educate everyone about male reproductive health issues then?&#34;</p>
                 <p>Snickers erupted around them. The man fled after being forced to apologize.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Fiona tugged at Vivian&#39;s sleeve, eyes shining.</p>
                 <p>&#34;Remember,&#34; Vivian crouched to meet her gaze, &#34;your worth isn&#39;t written on your face.&#34;</p>
                 <p>Three consecutive days of companionship gradually relaxed Fiona. On their last evening, the girl even initiated a hug.</p>
@@ -2342,7 +2422,7 @@
                 <p>&#34;Need help?&#34; He maintained a safe distance while crouching.</p>
                 <p>A trembling voice came from behind the mask. &#34;I&#39;m looking...for Dr. Laurent.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

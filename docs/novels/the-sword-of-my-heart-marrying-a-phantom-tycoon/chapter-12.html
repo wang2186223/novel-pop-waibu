@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2315,7 +2395,7 @@
                 <p>Wyatt settled on the sofa close by, while Amelia, pressed against the headboard, picked up a trace of that clean, familiar scent she&#39;d noticed before.</p>
                 <p>&#34;You...&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Both Amelia and Wyatt spoke at the same time. Wyatt stopped short and gave her a small nod, signaling her to speak first.</p>
                 <p>Remembering every foolish detail from earlier, Amelia shrank under his gaze and stared down at the covers. &#34;I&#39;m sorry for everything tonight. If you&#39;re having second thoughts about marrying me, l-&#34;</p>
                 <p>&#34;Mr. Stewart, the soup&#39;s done. Should I come in?&#34;</p>
@@ -2325,7 +2405,7 @@
                 <p>Kurt&#39;s sudden appearance left Amelia at a loss, her words drying up as Wyatt&#39;s face grew serious. She couldn&#39;t find the courage to speak again.</p>
                 <p>Without warning,Wyatt lifted the bowl and gently brought a spoonful of soup close to her lips.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Caught off guard by his gesture, Amelia instinctively tried to take the bowl herself, but he smoothly moved it away from her grasp. &#34;You&#39;re still not feeling well. Let me feed you.&#34;</p>
                 <p>Hlis voice was as gentle as ever, yet his tone was firm.</p>
                 <p>Even as he spoke, he held the spoon steady, waiting for her to comply.</p>
@@ -2335,7 +2415,7 @@
                 <p>Whatever calm Amelia had regained vanished, replaced by a rush of anxiety.</p>
                 <p>There would have been some comfort if he had sounded angry or upset. But the gentleness in his voice rattled her more than a sharp accusation ever could.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>If Jaxton had witnessed her in such a state tonight, he would undoubtedly have humiliated her. So, Amelia&#39;s first instinct with Wyatt was that he would despise her for this. After all, in high society, people cared about appearances above all else.</p>
                 <p>However, Wyatt hadn&#39;t criticized her once. He simply took care of her, every action careful and considerate.</p>
                 <p>As the silence stretched between them, Wyatt waited, not rushing her for a response.</p>
@@ -2345,7 +2425,7 @@
                 <p>He paused briefly. &#34;Even if you do make mistakeslater on, there&#39;s no need to apologize. No matter what happens, I&#39;ll be there for you.&#34;</p>
                 <p>Though his promise could have sounded too sweet, Wyatt delivered it with the quiet seriousness of a news report.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>It was this sincerity that assured Amelia he meant every word.</p>
                 <p>His words only made her firmer about marrying him.</p>
                 <p>She believed this man was indeed different from Jaxton.</p>
@@ -2355,7 +2435,7 @@
                 <p>This was the basic principle she held for marrying Wyatt, one she believed she should uphold. Still, something in Wyatt&#39;s eyes-those drawn brows and that subtle frown-hinted that he wasn&#39;t pleased with her words.</p>
                 <p>Pausing for a breath, Amelia tried again.&#34;And if there&#39;s anything else you want from me, just tell me. I&#39;ll do everything I can to-&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;There&#39;s only one thing I&#39;ll ever ask from you,&#34; Wyatt said in a low voice before she could finish. &#34;I just want you to be yourself. That&#39;s all I ask. Even after we marry, I want you to live the way you want and do whatever makes you happy.&#34;</p>
                 <p>Hearing Wyatt&#39;s words, Amelia was taken aback.</p>
                 <p>From the moment she was engaged to Jaxton, everyone had told her to remember her place, to do nothing that would tarnish the Morrison family name, and never to embarrass Jaxton.</p>
@@ -2366,7 +2446,7 @@
                 <p>When Wyatt saw the smile on her face,his expression softened.</p>
                 <p>This, he thought, was the Amelia he knew.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

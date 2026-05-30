@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2308,19 +2388,19 @@
                 <p>Liam&#39;s lips twisted into a humorless smile. &#34;Perhaps you should be the one to tell her when she wakes. I&#39;m... not the right person to deliver that news.&#34;</p>
                 <p>The doctor frowned. &#34;I assumed you were her—&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Liam cut him off with a shake of his head. &#34;No. And don&#39;t mention my presence. She wouldn&#39;t welcome it.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>After Liam&#39;s departure, the nurses exchanged hushed whispers.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Even with that mask, you could tell he&#39;s devastatingly handsome. The way he looked at her—like she was his entire world.&#34;</p>
                 <!-- 广告位 4 -->
                 <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Did you see how his hands shook? When he first rushed in, his shirt was soaked through with sweat. And when the doctor mentioned risks to the baby? I thought he might collapse.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Unbeknownst to them, Olivia caught fragments of their conversation through the fog of sedation. A desperate curiosity about this mysterious man tugged at her, but exhaustion dragged her back under before she could speak.</p>
                 <p>Time blurred. When consciousness next claimed Olivia, darkness still cloaked the hospital room. Medical staff moved in quiet efficiency, and Sebastian stood vigil at her bedside.</p>
                 <p>Panic surged through Olivia the moment coherence returned. &#34;Where&#39;s Isabelle?&#34; Her voice cracked as she fought to throw off the sheets, her body weak but determined to search for her daughter. Sebastian hurried to reassure her. &#34;Miss Kensington, there&#39;s no need for alarm. Your daughter is not only safe—she&#39;s thriving. She&#39;s awake, full of energy, and the doctors even recommended she have some broth.&#34;</p>
@@ -2328,7 +2408,7 @@
                 <p>Noticing her distress, Sebastian cleared his throat. &#34;Mr. Blackwood believes the decision rests entirely with you as the mother. He&#39;s... overjoyed, but he hasn&#39;t forgotten Mr. Kensington&#39;s warnings about Isabelle&#39;s traumatic birth. He doesn&#39;t want you to endure that agony again.&#34;</p>
                 <p>Olivia&#39;s lashes lifted in surprise. She had expected Liam to demand the child be kept at all costs. A flicker of something unreadable passed through her eyes before she changed the subject. &#34;Where is Liam now? Have we uncovered who&#39;s responsible?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

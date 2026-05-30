@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,32 +2390,32 @@
                 <p>&#34;After three sentences, you&#39;d start checking your watch when she talked to you,&#34; Archibald pointed out. &#34;Yet you could discuss particle physics with me for hours without blinking. She noticed, Evelyn. It broke her heart.&#34;</p>
                 <p>He sighed, thinking of Margaret&#39;s sacrifices. &#34;She didn&#39;t have your education. Gossip and small talk are her world. It&#39;s not that she didn&#39;t try to understand you.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Evelyn&#39;s shoulders slumped. She&#39;d never considered how her behavior affected her grandmother.</p>
                 <p>&#34;Despite everything, she adores you,&#34; Archibald said softly. &#34;That imposter Victoria is everything you&#39;re not. She doesn&#39;t bury herself in research papers or speak in equations Margaret can&#39;t comprehend.&#34;</p>
                 <p>His voice grew firmer. &#34;She devours the cookies Margaret bakes. She gushes over every gift. She listens raptly to all the neighborhood gossip. She even enjoys those tedious afternoon teas you always avoided.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Evelyn&#39;s hands trembled. &#34;She&#39;s the granddaughter Margaret always wanted.&#34;</p>
                 <p>&#34;Exactly.&#34; Archibald&#39;s eyes were sad. &#34;Margaret isn&#39;t rejecting you, Evelyn. She just can&#39;t accept that the granddaughter who returned still seems to dislike her as much as before.&#34;</p>
                 <p>Tears spilled down Evelyn&#39;s cheeks. &#34;I never hated her,&#34; she whispered hoarsely. &#34;Even as a child... I was just... preoccupied.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Archibald patted her hand. &#34;I understand. But Margaret needs simpler expressions. More obvious affection.&#34;</p>
                 <p>Through her tears, Evelyn managed a small smile. &#34;So it&#39;s not that she prefers Victoria. She just thinks I don&#39;t love her.&#34;</p>
                 <p>Archibald nodded grimly. &#34;And now she&#39;s convinced she&#39;s lost you forever, especially after how cruelly she treated you while defending that imposter.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Evelyn glanced toward Margaret&#39;s closed door. &#34;I never blamed her. She&#39;s being too hard on herself.&#34;</p>
                 <p>&#34;Frankly, you&#39;d be justified in resenting her,&#34; Archibald muttered around a mouthful of food. &#34;The woman couldn&#39;t recognize her own flesh and blood.&#34;</p>
                 <p>&#34;Liam didn&#39;t recognize me either,&#34; Evelyn said bitterly.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;That&#39;s different,&#34; Archibald countered. &#34;Ten years is a long time, and young people trust science over intuition. But Margaret? You video-called her every year until you disappeared. Three years shouldn&#39;t have erased your face from her memory.&#34;</p>
                 <p>Evelyn&#39;s thoughts darkened again. She remembered Liam&#39;s words at the gala, his promise to wait five more years for even a single message from her.</p>
                 <p>The memory was both comforting and devastating.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

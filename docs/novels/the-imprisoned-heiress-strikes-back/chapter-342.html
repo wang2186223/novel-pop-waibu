@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2316,7 +2396,7 @@
                 <p>It was a warning.</p>
                 <p>&#34;The weight.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;The weight?&#34; Alexander&#39;s brow furrowed. &#34;What do you mean?&#34;</p>
                 <p>It hit him then—how often had Evelyn been pulled into danger because of him? The realization darkened his features.</p>
                 <p>They knew exactly where to strike.</p>
@@ -2327,7 +2407,7 @@
                 <p>Too much? She barely touched her plate.</p>
                 <p>The moment the car stopped, Margaret pushed the door open—but as she stepped onto the curb, her ankle gave a sharp wobble.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Evelyn caught the stumble in the rearview mirror, her gaze snapping to Margaret&#39;s feet.</p>
                 <p>&#34;Did you hurt yourself back there?&#34;</p>
                 <p>Earlier, when the ice shattered, Margaret had acted on pure instinct—shoving Evelyn to safety without a second thought for herself.</p>
@@ -2338,7 +2418,7 @@
                 <p>Just as she turned away, the tinted window descended with a quiet hum.</p>
                 <p>Evelyn leaned out, resting her chin on folded arms. &#34;Why are you still standing there like a statue? Get in already!&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Margaret&#39;s eyes widened in shock as she turned to meet her daughter&#39;s gaze. Her voice quivered, &#34;Evelyn...&#34;</p>
                 <p>With a thoughtful tilt of her head, Evelyn addressed Alexander. &#34;Mr. Whitmore, would you mind taking my mother to the medical center? She needs proper examination.&#34;</p>
                 <p>Alexander gave an immediate nod of agreement.</p>
@@ -2349,7 +2429,7 @@
                 <p>The biting winter air couldn&#39;t penetrate the cocoon of warmth inside the car.</p>
                 <p>Hot air whispered against Margaret&#39;s face from the vents, stirring emotions she&#39;d long suppressed.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>When she reached up to brush away an imaginary speck, her fingers came away wet.</p>
                 <p>The tears had come without warning, tracing silent paths down her weathered cheeks.</p>
                 <p>The dashboard lights cast a soft glow, illuminating the quiet intimacy of this unexpected moment between mother and daughter.</p>
@@ -2360,7 +2440,7 @@
                 <p>Margaret discreetly wiped her palms against her coat, surprised by the intensity of her emotions.</p>
                 <p>She&#39;d built walls around her heart for so long, she&#39;d forgotten what it felt like when they crumbled.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>The scent of Evelyn&#39;s vanilla perfume mixed with the leather seats, creating a strangely comforting aroma.</p>
                 <p>Outside, snow began to fall - delicate flakes that melted instantly against the warm windshield.</p>
                 <p>Like her tears, Margaret thought. Brief but undeniable evidence of feelings she could no longer suppress.</p>
@@ -2372,7 +2452,7 @@
                 <p>The weight of her daughter&#39;s forgiveness settled around her shoulders - heavy, but not unbearable.</p>
                 <p>Not when carried together.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

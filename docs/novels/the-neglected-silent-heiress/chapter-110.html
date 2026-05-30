@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,12 +2390,12 @@
                 <p>&#34;You forget your place,&#34; Beatrice said evenly, cradling her injured face. &#34;This is the Blackwood estate, not your family&#39;s property.&#34;</p>
                 <p>Liam might be distant, but he treated staff with basic respect. They were well-compensated professionals, not punching bags for spoiled heiresses.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Evelyn laughed mockingly. &#34;Soon enough, this will be my household to command. Cross me now, and you&#39;ll be the first one I fire when I&#39;m lady of the house.&#34; Her voice dripped venom. &#34;Run crying to that pathetic mute if you like. She can&#39;t even speak for herself, let alone defend you.&#34;</p>
                 <p>Beatrice stood her ground. &#34;My employment terms require Mr. or Mrs. Blackwood&#39;s approval for termination. Unless you have that, these items stay.&#34;</p>
                 <p>Each &#34;Mrs. Blackwood&#34; struck Evelyn like a physical blow. Enraged, she grabbed Beatrice&#39;s arm and dragged her toward the grand staircase. &#34;Consider yourself fired! Get out!&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>At that moment, Olivia appeared at the top of the stairs, having heard the commotion. Beatrice teetered dangerously at the landing&#39;s edge.</p>
                 <p>Seeing the opportunity, Evelyn didn&#39;t just release her grip—she gave a calculated shove.</p>
                 <p>The housekeeper tumbled down the marble steps with a cry that turned Olivia&#39;s blood to ice.</p>
@@ -2325,12 +2405,12 @@
                 <p>Olivia ignored the performance, rushing to Beatrice&#39;s side. Her skilled fingers flew in urgent signs: Are you hurt? Can you stand?</p>
                 <p>Though bruised and shaken, Beatrice managed a weak smile. &#34;Just my pride, ma&#39;am.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;What&#39;s happening here?&#34; Liam&#39;s voice cut through the tension like a blade.</p>
                 <p>Evelyn transformed instantly, throwing herself against Liam&#39;s chest with practiced sobs. &#34;That maid fell right in front of me! After what Olivia did to me on these stairs... it triggered my trauma!&#34; Her entire body trembled with manufactured panic.</p>
                 <p>Liam gently disentangled himself, his stormy gaze shifting between the women. &#34;Explain.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Olivia moved first, signing rapidly with fierce precision. Evelyn pushed her. I saw everything.</p>
                 <p>&#34;You lying bitch!&#34; Evelyn abandoned her fragile act, rounding on Olivia. &#34;She slipped! You&#39;re just trying to turn Liam against me!&#34;</p>
                 <p>Liam&#39;s expression darkened as he studied Beatrice&#39;s injuries. &#34;You have one chance to tell me exactly what happened.&#34;</p>
@@ -2338,7 +2418,7 @@
                 <p>Evelyn&#39;s eyes welled with crocodile tears. &#34;Liam, you know me! I may be spoiled, but I&#39;d never resort to violence. Olivia&#39;s been trying to destroy me since day one—first my face, now my reputation!&#34;</p>
                 <p>The air thickened with tension as Liam&#39;s jaw tightened. He turned to Beatrice. &#34;Security cameras cover every inch of this hallway. Shall we review the footage, or will someone start telling the truth?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

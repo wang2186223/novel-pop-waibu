@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>She could already feel discomfort when bending or squatting down.</p>
                 <p>Gently touching her abdomen, Mia realized she needed to start making arrangements to depart as soon</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>as possible.</p>
                 <p>The following day, Mia headed to campus for her scheduled classes.</p>
                 <p>After her lectures, Riley approached Mia. “Mia, Mr. Shaw asked to see you in his office. He said he has</p>
@@ -2323,7 +2403,7 @@
                 <p>why Kennedy wanted to see her.</p>
                 <p>Perhaps he wanted to caution her against spreading news of her divorce.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>It dawned on Mia that Kennedy’s kindness toward her might be due to knowing about her relationship with Timothy.</p>
                 <p>Confused, Mia entered Kennedy’s office. As she pushed the door open, Mia was greeted by Kennedy’s enthusiastic voice, “Mia, you’re here! Please, take a seat.</p>
                 <p>“I’ve asked you to come because I have some exciting news. Following your plano performance yesterday, the professors at our Music School were deeply impressed.</p>
@@ -2332,7 +2412,7 @@
                 <p>“Yes, that’s correct. You won’t need to worry about the logistics. The professors will handle everything for you.</p>
                 <p>“After all, the university is dedicated to nurturing talented students like yourself. How do you feel about this opportunity?”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Mia was surprised by the news. While she was genuinely interested in plano, she didn’t think her talent was substantial enough to merit such special treatment from the college.</p>
                 <p>The whole situation felt a bit strange to her.</p>
                 <p>For some reason, Mia’s thoughts drifted to Timothy.</p>
@@ -2341,7 +2421,7 @@
                 <p>“I’ve made up my mind.”</p>
                 <p>After Mia declined, Kennedy didn’t press the matter further. Mia stood up and walked out of the office.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>However, as soon as she was out of sight, Kennedy promptly dialed Heath’s number.</p>
                 <p>“Hey, I just wanted to let you know that I suggested to Mia that she consider pursuing a music major, but she declined because she wasn’t interested. Could you please pass this on to Mr. Barrett?”</p>
                 <p>Upon hearing this, Heath’s expression darkened.</p>
@@ -2350,7 +2430,7 @@
                 <p>Heath glanced at his phone, then took a deep breath before knocking on Timothy’s office door. “Mr. Barrett, can I talk to you for a moment? There’s something I need to report,” he said cautiously.</p>
                 <p>Without lifting his gaze, Timothy responded in a subdued tone, “It better be important.”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>“It’s about Mr. Shaw’s call just now. Maybe I should fill you in on it later.”</p>
                 <p>“Wait.” Timothy suddenly raised his head, meeting Heath’s gaze. “What did Mr. Shaw say?”</p>
                 <p>“Well, he said Ms. Bowen decided not to pick up another major because she’s just not interested,” Heath explained.</p>
@@ -2359,7 +2439,7 @@
                 <p>“Why do you think she refused?” Timothy asked, sounding puzzled.</p>
                 <p>Suddenly, the office door swung open as a woman briskly walked in.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

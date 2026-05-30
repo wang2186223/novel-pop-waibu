@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2318,7 +2398,7 @@
                 <p>&#34;Is this your first time?&#34;</p>
                 <p>Shame burned hot in my chest, I wanted the ground to open up and swallow me. I must&#39;ve made it that obvious, didn&#39;tl?</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>My eyes dropped to the floor, unable to provide him with my shameful answer.</p>
                 <p>&#34;Lyric Harper,&#34; his voice danced with a trace of laughter. &#34;You haven&#39;t done this with anyone else but me?&#34;</p>
                 <p>I nodded slowly.</p>
@@ -2331,7 +2411,7 @@
                 <p>A profound sense of letdown wrapped around me like a shroud.</p>
                 <p>I checked my phone to find an email from the HR of TCH, informing me that my appeal to skip work for today had been approved.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>This shouldn&#39;t be normal. I hadn&#39;t reported to work for a week now, yet nobody seemed to have an issue with it. Jaris&#39; handwriting was written all over this.</p>
                 <p>I called the kitchen to order something to eat.We actually showered and ate before we slept off, yet here I was, still feeling as hungry as a lion.</p>
                 <p>While my food was getting ready, I went ahead to check on Jace.</p>
@@ -2344,7 +2424,7 @@
                 <p>&#34;| checked on Penelope this morning. Still no luck from that side.&#34; Almost enough to ruin my mood.</p>
                 <p>A brief silence settled between us. This was so not Jace. He was trying so hard to act normal, but someone like me could easily tell it was a facade.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Why did you do it, Jace?&#34; I took a seat, my voice caring enough to get him to take a break from his laptop.</p>
                 <p>&#34;Kael is a nice man. Why did you have to hurt him that way?&#34;</p>
                 <p>He buried his face in his palms, exhaling deeply.</p>
@@ -2357,7 +2437,7 @@
                 <p>&#34;Oh, don&#39;t be ridiculous. There&#39;s no way Kael would move on that easily. We both know he loves you.&#34;</p>
                 <p>He gave a slight shrug, his face still tinged with sorrow.&#34;I don&#39;t know. I&#39;m honestly scared of the guy rightnow.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>I opened my mouth to say more but stopped when l felt nauseated. My stomach twisted painfully, and before I knew it, I was running toward the bathroom.</p>
                 <p>I barely registered Jace coming after me before I was bent over the toilet, throwing all up.</p>
                 <p>&#34;Hey! Lyric!&#34; Jace put his arms around my shoulders.</p>
@@ -2370,7 +2450,7 @@
                 <p>JARIS</p>
                 <p>Being away for one week left a lot of workload on my desk. There were so many files I had to go through from the company, so many reports from the Pack,and many others.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>I had to force myself to be away from Lyric so I could work in my home office.</p>
                 <p>Lyric. My time with her still felt surreal.</p>
                 <p>Over the past week, she&#39;s made me feel things I&#39;d never felt before. And last night, she gave me the best part of her. The conscious and willing her. It was more than I could&#39;ve asked for.</p>
@@ -2385,7 +2465,7 @@
                 <p>My guts groaned the truth at me.</p>
                 <p>Caden. He&#39;d made good of his threats. He&#39;d taken my blood issue to the Council already.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

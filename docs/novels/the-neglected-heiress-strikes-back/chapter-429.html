@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2325,7 +2405,7 @@
                 <p>&#34;Expose us? What did I do?&#34; Glynnis sniffed, a cold glint in her eyes. &#34;Wasn&#39;t it all your doing? Don&#39;t drag me into this.&#34;</p>
                 <p>&#34;You ungrateful brat!&#34; Elspeth&#39;s voice turned venomous. &#34;You&#39;re trying to wash your hands of this now? Your own mother is in trouble, and instead of helping, you just want to hide? If I go down, you won&#39;t have a peaceful life either!&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>They were far from mother and daughter—they were accomplices in crime.</p>
                 <p>&#34;What do you want me to do?&#34; Glynnis gritted her teeth, her voice laced with irritation.</p>
                 <p>Elspeth&#39;s expression darkened. &#34;I want Ward dead.&#34;</p>
@@ -2335,7 +2415,7 @@
                 <p>&#34;I&#39;ll do it,&#34; she said slowly. &#34;But I have one condition.&#34;</p>
                 <p>&#34;You dare bargain with your own mother? Have you no conscience left?&#34; Elspeth sneered, her finger jabbing at Glynnis&#39; face.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Mom, let&#39;s be honest—Dad&#39;s tired of you. Isabella is always with Alexander, cozying up to Evadne. She&#39;s unreliable. You only have me now.&#34; Glynnis smirked.</p>
                 <p>Elspeth&#39;s brows furrowed. Her daughter was too much like her—and that resemblance sent a chill down her spine. &#34;What do you want?&#34;</p>
                 <p>&#34;I know Alexander despises me. There&#39;s no chance for us. But if I can&#39;t have him, then Isabella won&#39;t either!&#34; Glynnis&#39; voice dripped with venom. &#34;Tonight, Alexander brought her to see Dad. They were all so happy together. It&#39;s clear Dad approves of their relationship. You have to find a way to stop her from marrying into the Fairhaven family!&#34;</p>
@@ -2355,7 +2435,7 @@
                 <p>Frederic and Alexander chatted idly. As the elder, Frederic inquired about his business ventures. Alexander, having prepared extensively for this meeting, answered smoothly.</p>
                 <p>He had grown up with Sebastian and knew the Windermere Estate better than his own home. But facing his future father-in-law, even the usually composed Alexander felt a flicker of nerves.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Mr. Fairhaven, your tea. Miss Isabella, your favorite orange juice.&#34; Dennis approached with a tray.</p>
                 <p>&#34;Thank you, Dennis.&#34; Isabella took the glass, her smile as innocent and radiant as spring flowers—unchanged from her childhood.</p>
                 <p>A warmth spread through Dennis&#39; chest.</p>
@@ -2368,7 +2448,7 @@
                 <p>&#34;I apologize, Mr. Abernathy.&#34; Alexander grinned cheekily. &#34;But with Isabella at my place, I can&#39;t let her go out at night. The world is full of dangerous men. How could I rest easy?&#34;</p>
                 <p>Frederic shook his head. &#34;I&#39;m not talking about her safety. I&#39;m talking about propriety. You&#39;re not married yet. If word spreads that you&#39;re living together, it won&#39;t affect you—but my daughter&#39;s reputation will suffer.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

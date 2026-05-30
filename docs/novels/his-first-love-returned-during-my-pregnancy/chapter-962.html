@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,17 +2390,17 @@
                 <p>——</p>
                 <p>The whiskey bottle was more than half empty in the restaurant.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Vivian swirled the ice ball in her glass, challenging the man across the table. &#34;What, scared? Who was it that claimed they could drink anyone under the table?&#34;</p>
                 <p>Victor stared at the overflowing glass before him, his Adam&#39;s apple bobbing. &#34;Are you trying to kill me?&#34;</p>
                 <p>His knife made a precise cut through the sea bass, sending parsley flakes trembling.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Stop whining!&#34; Vivian downed her drink in one gulp and slammed the empty glass on the table. &#34;You disappeared without a word back then, and now you won&#39;t even drink with me?&#34;</p>
                 <p>Victor took a deep breath, lifted the glass, and drained it. The alcohol burned his throat as he thumped the glass down. &#34;I was wrong to leave. I&#39;ll take my punishment.&#34;</p>
                 <p>A memory flashed—a summer night on the rooftop. Two high schoolers secretly sharing a can of beer. He&#39;d blacked out, only to wake up covered by a school jacket, Vivian curled beside him clutching the half-finished can.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;I remember that night,&#34; Victor&#39;s voice turned hoarse. &#34;You stayed with me the whole time so I wouldn&#39;t be alone.&#34;</p>
                 <p>Vivian scoffed. &#34;You were such a lightweight—one beer and you were out. What if some stray cat dragged you away?&#34;</p>
                 <p>As the alcohol took effect, Victor&#39;s gaze grew hazy. &#34;Things were simpler then. Our biggest worry was midterm rankings.&#34;</p>
@@ -2330,7 +2410,7 @@
                 <p>Vivian swirled her glass, ice cubes clinking. &#34;Like how I loved sweet milk as a kid, then got hooked on coffee, and now prefer whiskey. People grow up.&#34;</p>
                 <p>Victor studied her for a long moment before breaking into a grin. &#34;Is this your way of comforting me?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>The smile hadn&#39;t fully formed before he pitched forward.</p>
                 <p>&#34;Hey!&#34; Vivian grabbed at him but only caught his sleeve.</p>
                 <p>With a dull thud, Victor&#39;s forehead hit the table.</p>
@@ -2338,7 +2418,7 @@
                 <p>Only steady snores answered.</p>
                 <p>Sighing, she massaged her temples while surveying the drunken mess before her. Outside, the setting sun stretched their shadows long across the floor.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

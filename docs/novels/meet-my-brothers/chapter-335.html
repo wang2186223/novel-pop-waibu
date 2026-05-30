@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>Feeling anxious, Mia exited the vehicle and spotted a sleek sports car behind them.</p>
                 <p>Suddenly, a woman emerged from the driver’s side, emitting an air of sophistication that instantly caught Mia’s attention..</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Mia couldn’t shake the sense of familiarity upon seeing the woman.</p>
                 <p>Finding that the driver wasn’t a burly man, Mia’s tension eased slightly.</p>
                 <p>She stood patiently on the roadside, observing as Connor and the woman conversed. Their striking appearances made them a sight to behold.</p>
@@ -2323,7 +2403,7 @@
                 <p>As she wasn’t an A–list celebrity, Mia hadn’t immediately recognized her.</p>
                 <p>Filled with excitement, Mia deliberated whether she should approach Georgia and request an</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>autograph.</p>
                 <p>+15 BONOS</p>
                 <p>Shortly after, Connor exchanged contact details with Georgia, and she drove off in her sports car.</p>
@@ -2332,7 +2412,7 @@
                 <p>As Mia settled back into her seat, her excitement bubbled over. “Connor, did you swap contact</p>
                 <p>details with that woman?”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>“Yeah, I got her WhatsApp so we can easily stay in touch. Even though she rear–ended us, it was my fault for stopping suddenly in the middle of the road,” Connor clarified.</p>
                 <p>“Connor, did you find her attractive?” Mia inquired.</p>
                 <p>Connor arched an eyebrow, taking a moment before turning to Mia. “She’s okay, but in my opinion,</p>
@@ -2341,7 +2421,7 @@
                 <p>It seemed as though Connor excessively doted on Mia.</p>
                 <p>Mia pressed her lips together and confessed, “Connor, I was really tempted to ask her for an</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>autograph just now, but I couldn’t muster the courage to approach her.”</p>
                 <p>“An autograph? Is she a celebrity?” Connor inquired.</p>
                 <p>“Yeah, sort of. She’s a fairly renowned singer, but she prefers to stay out of the spotlight. Still, I</p>
@@ -2350,7 +2430,7 @@
                 <p>Connor hadn’t anticipated that the woman earlier was a celebrity. It was indeed surprising.</p>
                 <p>Observing Mia’s admiring glance made Connor slightly uneasy. It felt as if she was being</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>captivated by Georgia.</p>
                 <p>Not long after they got home, Connor parked the car and cleared his throat before addressing Mia.</p>
                 <p>“Mia, I’d like to discuss something with you,” he said.</p>
@@ -2362,7 +2442,7 @@
                 <p>Feeling exasperated, Connor playfully tousled Mia’s hair. “Dominic is only gentle with you. Nathan and I received plenty of scoldings from him when we were younger,”</p>
                 <p>“Well, that’s probably because you guys weren’t very obedient.”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>&#34;| didn&#39;t ask anyone to wait,&#34; I answered without looking at her as I unstrapped my watch.</p>
                 <p>&#34;Oh, come on! We&#39;ve discussed this already. It is important you have a Luna at this time.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Well, pardon me, mother, if I&#39;m not too eager to bond with someone I feel nothing for and never will.&#34;</p>
                 <p>&#34;And nobody&#39;s asking you to feel anything for her. As a matter of fact, it&#39;s only going to be for a year!Bennett&#39;s daughter is the only necessity that you are well aware of. In a year, we&#39;ll be through wvith her-that is, if she survives-and truthfully, you know I don&#39;t care.</p>
                 <p>But you only have to put up with her for a year,Jaris.Hopefully, before then, we&#39;d have found your mate,and she would become the true Luna of the people.&#34;I did not miss the smile that crossed her face.&#34;Everything would be perfect. Just do this, please.Besides, the elders are beginning to talk. We have to get them off our backs. It&#39;s like killing two birds with one stone.&#34;</p>
@@ -2323,7 +2403,7 @@
                 <p>I knew my mother had a point. I urgently needed a Luna for two reasons, but the thought of being with someone | felt absolutely nothing for irritated me.I didn&#39;t want to be with anyone. &#34;Let her go. I do not want to see her. Not now, at least.&#34;</p>
                 <p>&#34;Jaris...&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;I&#39;m done with this conversation. And trust me,mother, my ability to stay polite is slipping fast.&#34; My tone had no room for further argument, and my gaze when I looked at her was icy.</p>
                 <p>I couldn&#39;t exactly be faulted. Growing up, I&#39;ve always hated to be controlled. And when I finally became Alpha, it grew worse. I didn&#39;t like anyone telling me what to do. I also didn&#39;t like to be disobeyed. If it wasn&#39;t for the fact that she was my mother, there would have been repercussions.</p>
                 <p>Finally, she did leave, giving me some space.</p>
@@ -2332,7 +2412,7 @@
                 <p>After five years, I couldn&#39;t believe | was yet to get over her. Who was she and what did she do to make me so addicted? Why did she have to hurt me the way she did?</p>
                 <p>I traced my fingers along the outline of her face. It was a faint image of her leaving the hotel that morning. It wasn&#39;t clear, but it was better than having nothing.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>It was just an image, yet it meant the world to me.Whatever happened to her? Was she dead? Because for five years, I&#39;d been searching for her but to no avail.</p>
                 <p>If only my mother could understand that I felt nothing for Bennett&#39;s daughter or my fated mate she&#39;s been desperately searching for.</p>
                 <p>In our world, seeing your fated mate was rare. Most times, we had to choose a person we were attracted to. I&#39;d found my fated mate nine years ago, but lost her before we could even bond. And since then,mother had been keen on finding her. But I didn&#39;t care even about her.</p>
@@ -2350,7 +2430,7 @@
                 <p>For the next one minute, we had a light conversation on how both our days went.</p>
                 <p>&#34;Daddy, Xylon had one of his crises today,&#34; Xyla said,shattering the tiny peace I felt.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Did you?&#34; I looked at him, running my fingers through his hair.</p>
                 <p>His gaze dropped to the floor, indicating his sadness.</p>
                 <p>It was always a torment for him, and it broke me each time he suffered it without remedy.</p>
@@ -2359,7 +2439,7 @@
                 <p>My brows furrowed. &#34;Okay. What happened?&#34;</p>
                 <p>&#34;Someone treated him.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

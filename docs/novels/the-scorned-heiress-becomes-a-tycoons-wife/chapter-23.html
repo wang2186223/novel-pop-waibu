@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>Ethan chuckled darkly, his voice dripping with lazy amusement. &#34;Just say you want to see me.&#34;</p>
                 <p>Leather creaked as he shifted in his chair, fingers tapping the desk. &#34;Dinner at our usual spot tonight?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Sophia: &#34;?&#34;</p>
                 <p>She drew a sharp breath, her voice turning arctic. &#34;Go to hell!&#34;</p>
                 <p>She only wanted to discuss the child.</p>
@@ -2321,7 +2401,7 @@
                 <p>Ethan stared at the disconnected call, his expression stormy.</p>
                 <p>The dial tone mocked him when he tried calling back—straight to voicemail.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Ethan: &#34;...&#34;</p>
                 <p>A low laugh escaped him.</p>
                 <p>Was this her way of demanding he grovel?</p>
@@ -2329,7 +2409,7 @@
                 <p>Richard Lowell marched straight to his office to prepare for the new film.</p>
                 <p>Victoria Lowell sought out Emily instead.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Emily had been inseparable from Nathan Lowell lately while preparing for their music variety show.</p>
                 <p>Victoria knew her way around the building well.</p>
                 <p>She often dropped by with homemade treats for her children.</p>
@@ -2337,7 +2417,7 @@
                 <p>Victoria pushed it open.</p>
                 <p>&#34;Who&#39;s there?&#34; Nathan snapped, looking up.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>His expression shifted upon recognizing her. &#34;Mom?&#34;</p>
                 <p>Victoria paused in the doorway, an odd feeling creeping over her.</p>
                 <p>For a split second when she entered, they&#39;d seemed... too close.</p>
@@ -2345,7 +2425,7 @@
                 <p>Her sugary voice dispelled Victoria&#39;s unease.</p>
                 <p>Siblings working closely together was perfectly normal.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Victoria smiled. &#34;How&#39;s the preparation going?&#34;</p>
                 <p>Emily beamed. &#34;Nathan wrote a new song. It&#39;ll blow everyone away.&#34;</p>
                 <p>Victoria patted her daughter&#39;s hand. &#34;Your brother is talented, but don&#39;t overwork yourselves.&#34;</p>
@@ -2354,7 +2434,7 @@
                 <p>Something felt missing from his new composition.</p>
                 <p>He just couldn&#39;t pinpoint what.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

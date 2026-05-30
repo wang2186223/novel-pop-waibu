@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>Even Westfield University&#39;s media team redirected their cameras toward Olivia, captivated by her quiet presence.</p>
                 <p>Harrison observed from the shadows, his face unreadable. His carefully orchestrated opening ceremony was being overshadowed by a mute woman he&#39;d deemed unworthy. If this event failed, the blame would land squarely on him.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Steeling himself, Harrison approached. As cameras turned his way, his stern expression melted into practiced charm. &#34;Ladies and gentlemen,&#34; he announced, &#34;I encourage you to explore our students&#39; other exhibits. Your appreciation for their efforts would be most welcome.&#34;</p>
                 <p>A voice from the crowd challenged, &#34;Wasn&#39;t this woman invited by Westfield University?&#34;</p>
                 <p>Harrison responded smoothly, &#34;At Westfield, we believe in inclusive participation. Anyone inspired to share their passion is welcome to do so.&#34;</p>
@@ -2323,7 +2403,7 @@
                 <p>&#34;I nearly made her the focus of my article. That would&#39;ve been embarrassing.&#34;</p>
                 <p>&#34;She&#39;s clearly an influencer here for clout.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Natalie bristled at the accusations, ready to defend their invitation.</p>
                 <p>Olivia caught her wrist, shaking her head in warning.</p>
                 <p>After Harrison&#39;s departure, no one remained interested in their side of the story.</p>
@@ -2332,7 +2412,7 @@
                 <p>Her calm gestures soothed Isabella&#39;s anger. &#34;You&#39;re right. If this escalates, we have the contracts to prove our position.&#34;</p>
                 <p>Natalie nodded. &#34;The paperwork protects us.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Observers watched Olivia&#39;s composure with mixed reactions, though none could deny her restoration skills.</p>
                 <p>Emboldened by her tranquility, a man approached about repairing his heirloom.</p>
                 <p>Olivia declined payment, signing she was here to connect with fellow enthusiasts.</p>
@@ -2341,7 +2421,7 @@
                 <p>Harrison&#39;s attempts to redirect attention failed repeatedly.</p>
                 <p>Then a sharp voice cut through the murmur. &#34;Can you fix this?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>The crowd parted for the newcomer.</p>
                 <p>Evelyn removed her sunglasses, revealing striking features.</p>
                 <p>Olivia&#39;s breath hitched. Dread coiled in her stomach.</p>
@@ -2350,7 +2430,7 @@
                 <p>Natalie&#39;s face flushed. &#34;Better than being a homew—&#34;</p>
                 <p>Isabella yanked her back before she could finish. Calling Evelyn out publicly would only complicate Olivia and Liam&#39;s situation.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>The crowd eyed Evelyn&#39;s designer ensemble. Though resentful of her cutting in, no one protested as they made way.</p>
                 <p>Olivia, appearing exhausted, signed that the instigator would only embarrass themselves before witnesses.</p>
                 <p>To everyone&#39;s surprise, Evelyn understood. She smirked. &#34;Making a scene? I just want something fixed. Do you have a problem with me? Won&#39;t help me? What exactly did I do to deserve this?&#34;</p>
@@ -2361,7 +2441,7 @@
                 <p>Inside lay the first gift she&#39;d ever made for Liam - now deliberately shattered, dirt ground into the cracks.</p>
                 <p>As Olivia&#39;s face contorted in pain, Evelyn&#39;s satisfaction grew. &#34;Honestly, it was nothing special. Just some trash my boyfriend got from his ex. He said if I hated it, he&#39;d destroy it. I thought it was hideous. Didn&#39;t expect him to actually stomp on it repeatedly. Asked if that made me happy.&#34; She licked her lips. &#34;Later I thought... maybe it was a sincere gift after all. Pity he crushed it so thoroughly.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

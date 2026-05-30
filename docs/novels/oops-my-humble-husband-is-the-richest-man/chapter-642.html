@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2315,7 +2395,7 @@
                 <p>The Lorenz family wasn&#39;t among the top-tier elites, but they were a century-old established family with deep roots.</p>
                 <p>Only such an astronomical sum could tempt Elder Lorenz.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Grace wiped her tears, her voice full of confusion. &#34;What did he need so much money for? My father and I have never seen this money. There haven&#39;t been any major expenditures at home... Yet the money is just sitting there, untouched.&#34;</p>
                 <p>She looked at Evelyn, her eyes bewildered. &#34;Evelyn, do you really think Grandfather is a spy?&#34;</p>
                 <p>Evelyn patted her shoulder. &#34;Let&#39;s see the old gentleman first.&#34;</p>
@@ -2325,7 +2405,7 @@
                 <p>Evelyn was taken aback. &#34;What?&#34;</p>
                 <p>Alexander leaned close to her ear and whispered a few sentences.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Evelyn&#39;s face changed slightly, and she looked sharply at him.</p>
                 <p>Alexander nodded at her.</p>
                 <p>Evelyn took a deep breath. &#34;I understand.&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>&#34;First Senior Sister, a confessed spy is being held here. Unauthorized personnel are not permitted to enter.&#34;</p>
                 <p>As he spoke, his cold gaze swept over Grace.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Grace immediately said, &#34;There must be some misunderstanding here!&#34;</p>
                 <p>&#34;Misunderstanding?&#34;</p>
                 <p>The guard sneered. &#34;The evidence is conclusive. The transfer records go back more than a decade. Miss Lorenz, who would have started framing the old gentleman from that long ago? Besides, if the old gentleman had proactively reported and clarified the matter when the first sum entered his account, today&#39;s situation wouldn&#39;t have happened.&#34;</p>
@@ -2355,7 +2435,7 @@
                 <p>&#34;I did not!&#34;</p>
                 <p>Grace trembled with anger.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Whether you did or not will be determined after investigation.&#34;</p>
                 <p>The guard&#39;s tone was indifferent. &#34;But even after it&#39;s cleared up, as the daughter of a spy, Miss Lorenz will no longer enjoy our trust in the future. Please understand.&#34;</p>
                 <p>Grace&#39;s eyes reddened, but she couldn&#39;t muster a rebuttal.</p>
@@ -2370,7 +2450,7 @@
                 <p>The guard seemed to want to stop her, but Ethan shot him a look. &#34;If Deputy Director Wright brought someone, would you dare to stop them?&#34;</p>
                 <p>The guard immediately fell silent, watching helplessly as the two entered the office.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

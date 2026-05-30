@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>Wyatt wasted no time. He set a laptop before Amelia and showed her a document.the Prevda proposal. Take your time with it.&#34;</p>
                 <p>Switching to work mode, Amelia focused on the document.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Reading through the details, she realized Wyatt&#39;s objective was to determine whether he should invest in a new resort in Prevda.</p>
                 <p>After scanning line after line, Amelia felt her eyes begin to ache. A quick glance up revealed Wyatt and Davin both still absorbed in work.</p>
                 <p>She pushed through her fatigue, unwilling to look idle next to her boss. It wasn&#39;t until the plane was preparing to land that they turned off their laptops.</p>
                 <p>Wyatt turned to Amelia, asking for her take on the resort project.</p>
                 <p>&#34; think the project has real promise, but we need to visit the site before making any decisions. Factors like the landscape, how easy it is to get there, and the local culture all matter,&#34; she replied</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Once this assessment is over, if you find it feasible, you will be in charge of the project,&#34; Wyatt said.</p>
                 <p>&#34;Wait, me?&#34; Amelia was shocked.</p>
                 <p>Wyatt&#39;s nod was all the confirmation she needed, and a ripple of nerves ran through her. Handling something so big, especially as a newcomer in the company, seemed overwhelming.</p>
                 <p>As they exited the airport through the VIP channel, Amelia spotted a tall man striding towards them from a distance.</p>
                 <p>Jordy Green came into view. He was Holley&#39;s son and two years older than Wyatt. He always looked up to Wyatt, admiring his sharp mind and ambition.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Catching sight of Jordy, Wyatt paused and frowned. &#34;What brings you here?&#34;</p>
                 <p>Although Wyatt&#39;s words carried his usual composure, Amelia could sense an unfamiliar warmth threading through his voice.</p>
                 <p>&#34;If your mother hadn&#39;t told me you were coming to Prevda, were you planning on keeping it a secret from me?&#34; Jordy said.</p>
                 <p>&#34;I just didn&#39;t want to trouble you,&#34; Wyatt said.</p>
                 <p>&#34;It&#39;s no trouble at all.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Jordy knew Wyatt&#39;s personality well and chose not to press further when Wyatt fell silent.</p>
                 <p>Davin approached with a nod, greeting him politely,. Green.&#34; He then accepted the car keys Jordy handed over.</p>
                 <p>Following Davin&#39;s example, Amelia greeted Jordy also as&#34;Mr. Green,&#34; catching Jordy off guard.&#34;No need for that! If you&#39;re going to marry Wyatt, you&#39;re practically family. You can call me by my first name,&#34; he said.</p>
                 <p>His words left Amelia a little flustered. Before she could respond, a lighthearted voice chimed in.</p>
                 <p>&#34;Alright, enough teasing. You&#39;ll have her turning red.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Wyatt&#39;s words only seemed to heighten Amelia&#39;s embarrassment.</p>
                 <p>&#34;Okay, I get it, I&#39;ll behave,&#34; Jordy said, breaking into a laugh.</p>
                 <p>Holley had already told Jordy about Amelia when she returned to Prevda after meeting Amelia.</p>

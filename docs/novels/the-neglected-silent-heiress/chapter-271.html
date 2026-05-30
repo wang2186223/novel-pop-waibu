@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,23 +2389,23 @@
                 <p>Alistair nodded slowly, his gaze thoughtful and kind.</p>
                 <p>Their conversation flowed easily for the next hour.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Olivia&#39;s initial apprehension faded completely. The once-intimidating family patriarch now seemed nothing more than a gentle grandfather figure.</p>
                 <p>Though doubts about her true parentage lingered, Olivia had resolved that if DNA confirmed Alistair as her grandfather, she&#39;d let go of past Kensington family grievances. For now, she chose to embrace whatever joy this temporary home could offer.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>A frantic knocking shattered the peaceful moment.</p>
                 <p>Alistair&#39;s demeanor hardened instantly. With a subtle gesture, he summoned the housekeeper to answer.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Celeste Dumont stood trembling in the doorway, tears streaking her flushed cheeks. &#34;Mr. Kensington, you must intervene! Mr. Donovan insists on sending Miss Seraphina away, and she&#39;s just suffered her third relapse today. You know how fragile her constitution is - continued episodes could prove fatal. Mr. Donovan refuses to listen to reason. He&#39;s completely misjudged Miss Seraphina&#39;s intentions. Only your intervention can prevent disaster!&#34;</p>
                 <p>Alistair&#39;s silver brows knitted together. &#34;Seraphina had an episode? Why wasn&#39;t I informed?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Celeste averted her eyes. &#34;Miss Kensington didn&#39;t wish to disturb your rest. She merely took her emergency cardiac medication and endured the suffering alone.&#34;</p>
                 <p>Displeasure colored Alistair&#39;s voice. &#34;If she&#39;s ill, she should see a physician. What good does coming to me do? I&#39;m no doctor capable of healing her.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Hope flashed across Celeste&#39;s face. &#34;Then you&#39;ll permit Miss Kensington to stay?&#34;</p>
                 <p>Alistair shook his head firmly. &#34;You misunderstand. Donovan makes his own decisions, and never without careful consideration. He&#39;s undoubtedly arranged everything for Seraphina&#39;s comfort. Trust his judgment and follow his instructions. Why must you and Seraphina make such unnecessary fuss?&#34;</p>
                 <!-- 广告位 6 -->

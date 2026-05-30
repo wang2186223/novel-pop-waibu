@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,31 +2391,31 @@
                 <p>&#34;I don&#39;t have time for your games.&#34; She shook off his hand and turned to leave. &#34;Find someone else.&#34;</p>
                 <p>At the doorway, she paused and glanced back, a mocking smile on her lips. &#34;By the way, you seem to have recovered just fine. My humble abode can&#39;t accommodate someone of your stature. Get the hell back to Bayview Residences.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Ethan&#39;s brow furrowed.</p>
                 <p>Just as she stepped out, his deep voice stopped her. &#34;Accompany me on this trip, and I&#39;ll waive the interest on those 45 million.&#34;</p>
                 <p>Sophia whirled around. &#34;You were planning to charge interest?&#34;</p>
                 <p>&#34;Why wouldn&#39;t I?&#34; Ethan smirked. &#34;Are you better at serving me than others? Or better at keeping me entertained?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;I thought we—&#34;</p>
                 <p>&#34;What exactly are we?&#34; He cut her off, his gaze intense. &#34;Weren&#39;t you the one who drew the line? My money is only for my woman. Are you her?&#34;</p>
                 <p>Sophia was speechless.</p>
                 <p>When it came to shamelessness, Ethan Roscente had no equal.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;It&#39;s just a business trip,&#34; he said, his voice softening unexpectedly. &#34;Do you really think I&#39;d sell you off?&#34;</p>
                 <p>&#34;Wouldn&#39;t put it past you,&#34; she sneered.</p>
                 <p>&#34;With your scrawny frame, how much could you even fetch?&#34;</p>
                 <p>&#34;Oh, so I&#39;m too thin now? Who was it that couldn&#39;t keep his hands off me before?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Did that happen?&#34; Ethan suddenly closed the distance, his large hand covering her chest. &#34;Let me verify.&#34;</p>
                 <p>&#34;Get lost!&#34; She slapped his hand away, but he seized her waist instead.</p>
                 <p>Pulling her flush against him, their noses almost touching, he murmured, &#34;Come with me, and the interest is waived. Of course, you could always refuse...&#34; His eyes turned icy. &#34;I wouldn&#39;t mind bundling you onto the plane by force.&#34;</p>
                 <p>&#34;Are you a damn bandit?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Care to find out?&#34;</p>
                 <p>&#34;...&#34;</p>
                 <p>When she remained silent, he dangled another carrot. &#34;One more million when the job&#39;s done.&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>But she&#39;d already promised Vivian she&#39;d appear on that show tomorrow.</p>
                 <p>&#34;No,&#34; Sophia shook her head. &#34;I promised Vivian I&#39;d film the show with her. I won&#39;t bail on her.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

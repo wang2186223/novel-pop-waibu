@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>However, Timothy&#39;s expression remained impassive as he moved to the other side and held the door open for Mia. With grace, she elegantly bent down to step out of the car.</p>
                 <p>As soon as she emerged, the reporters swarmed around her, thrusting their microphones in her face and asking, “Ms. Lane, is it true that you and Mr. Bowen have set a date for your engagement?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Ms. Lane, were you aware of the reports about Mr. Bowen kissing a female internet celebrity at a bar some time ago?&#34;</p>
                 <p>Gathering around Mia, the reporters eagerly seized every opportunity to interrogate her.</p>
                 <p>Mia&#39;s eyes betrayed a hint of impatience upon hearing these questions. The rumors being spread by the Bowens were starting to grate on her nerves.</p>
                 <p>When had she ever planned to marry into their family? It was utterly ridiculous.</p>
                 <p>At that moment, a man stepped forward, positioning himself in front of Mia and forcefully pushing aside the reporters’ microphones.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>It was Timothy. His commanding presence radiated an air of authority, making it clear he was not someone to be trifled with.</p>
                 <p>Mia stood quietly behind him, her eyes focused on his back, lost in thought.</p>
                 <p>She found herself pleasantly surprised by Timothy&#39;s reliability. Although he didn&#39;t utter a word, the reporters instinctively backed off and refrained from advancing any further.</p>
                 <p>Mia couldn&#39;t help but give him a subtle thumbs-up. Timothy&#39;s authoritative presence was undeniably effective.</p>
                 <p>Leading the way, Timothy effortlessly cleared the path as he walked ahead of her.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>The other bodyguards followed suit, positioning themselves on either side of Mia to ward off the approaching reporters.</p>
                 <p>The short walk went surprisingly smoothly!</p>
                 <p>Before long, Mia safely reached the check-in area.</p>
                 <p>Accepting the pen offered by the hostess, she gracefully signed her name, striking a pose for the eager media cameras.</p>
                 <p>Despite her past efforts to avoid Timothy&#39;s attention by staying in the background, she now felt no need to conceal herself any longer.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Upon returning the pen and stepping away from the check-in counter, Mia&#39;s high heels slipped, causing her to stumble.</p>
                 <p>Just as she was about to fall, a man caught her, preventing her from hitting the ground.</p>
                 <p>The reporters nearby gasped in astonishment, and cameras instantly swiveled toward them, capturing the moment with rapid clicks and flashes.</p>
                 <p>Mia cast a glance at Timothy, whose eyes were shielded by sunglasses. Fortunately, his disguise would likely prevent him from being recognized.</p>
                 <p>Swiftly moving away from Timothy&#39;s embrace, Mia calmly adjusted her dress and proceeded toward the banquet hall.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Maintaining his stoic expression, Timothy walked beside her. However, as his eyes fell on the back of her dress, a furrow appeared on his brow.</p>
                 <p>Together, they entered the hall.</p>
                 <p>Glancing back, Mia realized they were now out of the reporters’ sight. She turned to Timothy and expressed her gratitude, saying, &#34;Thank you for your help earlier. Without you, I would have definitely been embarrassed in front of the media!&#34;</p>
@@ -2352,7 +2432,7 @@
                 <p>After stealing a glance at him, Mia eventually decided to wear the jacket as she entered the hall. She didn&#39;t want to risk any further embarrassment.</p>
                 <p>As she entered the hall and reached for a glass of champagne, someone approached her.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

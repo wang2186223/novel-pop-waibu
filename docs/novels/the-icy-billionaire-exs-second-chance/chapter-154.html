@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,29 +2389,29 @@
                 <p>Undeterred by her polite refusal, Maxwell gave a faint smile. &#34;My security team got drenched tonight and seem to be coming down with colds. They&#39;ll need IVs too.&#34;</p>
                 <p>&#34;Might as well stay together.&#34; Nearby, a female officer who&#39;d been observing their exchange chimed in cheerfully, &#34;It&#39;s always better to have company in situations like these. A familiar face makes everything easier.&#34; Cornered, Vivian forced a small smile. &#34;Very well then. Thank you, Mr. Sterling.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>At the hospital, Vivian felt completely disconnected from her own body. Her legs shook with every step, and she barely made it to the hospital bed with support from two officers. The medication made her drowsy, but fear kept her alert.</p>
                 <p>Fumbling for a solution, she borrowed a phone from one officer. Lydia wasn&#39;t in Emberglow County, and aside from Sebastian, the only person in the crew she somewhat trusted was Isabella Thornton, the makeup artist. Isabella was notorious for her late nights, often scrolling through social media until sunrise.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>The phone barely rang once before Isabella&#39;s voice came through. &#34;Hello?&#34;</p>
                 <p>&#34;Isabella, it&#39;s Vivian,&#34; she whispered. &#34;Could you come to the hospital? I... I could really use some company.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Isabella&#39;s tone shifted immediately, laced with concern. &#34;What happened? Are you hurt? Should I call Sebastian—&#34;</p>
                 <p>&#34;No!&#34; Vivian interrupted, panic rising. &#34;Please don&#39;t tell anyone. It&#39;s nothing serious. I just... don&#39;t want to be alone right now.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Alright,&#34; Isabella said softly but firmly. &#34;Send me the address. I&#39;ll be there as fast as I can.&#34;</p>
                 <p>Vivian quickly texted the location before returning the phone. She leaned back as the nurse prepped her arm for the IV. Her skin was translucent, blue veins clearly visible beneath. Just as the nurse was about to insert the needle, the door opened, revealing Maxwell holding a plastic bag.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;I noticed you were still in wet clothes,&#34; Maxwell said gently. &#34;Didn&#39;t want you catching a chill, so I found something for you to change into.&#34;</p>
                 <p>&#34;Most shops were closed, so hospital pajamas will have to do.&#34; His tailored navy suit accentuated his refined features, every movement exuding quiet confidence.</p>
                 <p>The simple gesture earned Maxwell admiring glances from nurses and officers alike. Soft whispers circulated among them.</p>
                 <p>Maxwell&#39;s lips curved into a subtle, self-satisfied smile. He clearly enjoyed their reactions, but his attention remained fixed on Vivian.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

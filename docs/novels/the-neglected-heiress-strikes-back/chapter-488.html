@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2321,7 +2401,7 @@
                 <p>Tears of rage welled in her eyes, her breath coming in sharp gasps. &#34;Why are you interfering? Is this really for my sake? Or are you just punishing Thaddeus to ease your own guilt?!&#34;</p>
                 <p>The words struck Cassius and Arnold like knives. Seizing the moment of distraction, Evadne broke free and bolted toward the gates of Silveke Harbor.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Kicking off her sandals, she sprinted barefoot down the endless, ornate corridor.</p>
                 <p>She hadn’t even laid eyes on the man she loved, yet her heart had already burst from her chest, fleeing the gilded cage of the mansion without a backward glance.</p>
                 <p>Then—she skidded to a halt.</p>
@@ -2337,7 +2417,7 @@
                 <p>&#34;Bet! Listen to yourself—are those even human words?!&#34;</p>
                 <p>Her heart twisted, her vision blurring with tears. &#34;The child we lost was an accident! I didn’t even know I was pregnant—how could he? The miscarriage was my choice to keep secret! It had nothing to do with him! How many times do I have to say it?!&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>But Bet’s expression remained cold, unmoved.</p>
                 <p>&#34;Evadne, you’re young. There are better men out there. Whatever he gave you, they can give you too. And if they can’t, we will.&#34;</p>
                 <p>&#34;I’d rather have one drop from the ocean than all the rivers in the world! Bet, I’m warning you—don’t block me. Don’t make me hate you!&#34;</p>
@@ -2385,7 +2465,7 @@
                 <p>Her silver hairpin—it was gone.</p>
                 <p>Panic surged as she frantically searched the room, tossing aside pillows, checking drawers. Nothing.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Harvey, oblivious to her distress, kept ranting. &#34;I’m not questioning your loyalty, but Mr. Chambers already knows you disappeared with Elvis last night. You think I found you on my own? He tracked you down!&#34;</p>
                 <p>The image of Avery’s cold, bloodthirsty gaze flashed in her mind. Her stomach dropped.</p>
                 <p>&#34;You failed to kill him, and you spent the night with him. How can you be sure nothing happened if you blacked out?!&#34;</p>

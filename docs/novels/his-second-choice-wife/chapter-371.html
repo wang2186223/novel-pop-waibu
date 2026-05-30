@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,7 +2390,7 @@
                 <p>Taking a shuddering breath, she whispered through her raw throat, &#34;Liam&#39;s gone. You&#39;ll never get hydronium now. You&#39;ll never find Cassandra either. Just kill me and be done with it.&#34;</p>
                 <p>&#34;Where is Cassandra?&#34; Julian demanded, his voice sharp with anger.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Evelyn tightened her embrace around Liam. For the first time, she understood the soul-crushing pain of losing someone irreplaceable.</p>
                 <p>The agony ran so deep that living seemed impossible. The world had lost all meaning.</p>
                 <p>&#34;Kill me,&#34; she repeated, her voice breaking with desperation.</p>
@@ -2325,12 +2405,12 @@
                 <p>&#34;I&#39;m sorry, Liam,&#34; she whispered through fresh tears. &#34;Wait for me, please.&#34;</p>
                 <p>She braced for the gunshot, her heart aching with unbearable pain yet yearning for the release it would bring.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;No!&#34; A frantic shout shattered the moment.</p>
                 <p>Evelyn felt the gun being knocked away from her head. A familiar voice, laced with panic, pleaded, &#34;Don&#39;t do this!&#34;</p>
                 <p>Blinking through tears, Evelyn saw Julian standing before her.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>He wrestled Julian&#39;s gun away, shoving Evelyn aside with surprising force. &#34;Mr. Prescott, I beg you, spare her life.&#34;</p>
                 <p>Julian sneered at Evelyn. &#34;No one insults me and lives to tell about it. She&#39;s made her choice.&#34;</p>
                 <p>Julian&#39;s gaze darted between Liam&#39;s motionless form and Evelyn&#39;s broken expression. He understood - if Liam died, Evelyn wouldn&#39;t survive either.</p>
@@ -2339,7 +2419,7 @@
                 <p>Holding her breath, Evelyn watched Liam&#39;s ashen face, her shimmering tears reflecting in the dim light.</p>
                 <p>In her heart, she made a silent vow: &#34;Liam, if you survive this, I&#39;ll do anything. Anything at all.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

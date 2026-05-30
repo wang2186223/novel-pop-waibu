@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2333,7 +2413,7 @@
                 <p>But the moment she heard he was in trouble, the panic that gripped her heart was terrifyingly real.</p>
                 <p>It turned out the word &#34;father&#34; had already taken root deep within her.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Evelyn turned her face to look out the window.</p>
                 <p>The night was heavy.</p>
                 <p>The glow of streetlights flashed past the car window.</p>
@@ -2361,7 +2441,7 @@
                 <p>Ethan, standing beside him, grew impatient.</p>
                 <p>&#34;Speak plainly! If you know what poison it is, save him!&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Evelyn spoke slowly.</p>
                 <p>&#34;What the doctor means is, we know the seven poisons used in Seven-Day Scatter. We have reserves of them at home. But the exact formula and proportions used to poison my father are completely unknown. They can&#39;t even be detected from a blood test...&#34;</p>
                 <p>The doctor nodded.</p>
@@ -2389,7 +2469,7 @@
                 <p>Evelyn closed her eyes.</p>
                 <p>When she opened them again, her gaze was sharp.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;I&#39;ll go see my father first.&#34;</p>
                 <p>She turned and went upstairs.</p>
                 <p>In the bedroom, Joanna and the butler were keeping vigil by the bed.</p>
@@ -2417,7 +2497,7 @@
                 <p>A synthesized electronic voice came from the other end—it was the Fox.</p>
                 <p>&#34;Rabbit, you don&#39;t want your father to die, do you?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Evelyn&#39;s voice was cold.</p>
                 <p>&#34;Nicole, what do you want?&#34;</p>
                 <p>&#34;I want you to suffer the consequences of your own actions! Hahaha, do you know where the antidote is?&#34;</p>
@@ -2445,7 +2525,7 @@
                 <p>They only had seven days.</p>
                 <p>&#34;We investigate first.&#34; Evelyn said calmly. &#34;Find out how Nicole got the poison. Find out who at the Castillo estate is helping her. And at the same time... prepare to go to the Castillo estate.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>She looked at Alexander.</p>
                 <p>&#34;This time, we&#39;ll probably have to force our way in.&#34;</p>
                 <p>Alexander took her hand.</p>
@@ -2476,7 +2556,7 @@
                 <p>Fox. Nicole.</p>
                 <p>This game was just beginning.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

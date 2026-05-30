@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,7 +2391,7 @@
                 <p>&#34;First, explain your reasoning.&#34; Evelyn steered the conversation back on track, glancing toward the distant bleachers.</p>
                 <p>The original trio had become four, yet the divide was stark. Simon stood close to Victor, while Vivian leaned toward Jasmine Valentine. Though their expressions were unclear, their animated conversation was obvious.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Simon and Vivian are talking.&#34; Alexander narrowed his eyes.</p>
                 <p>The distance would challenge most, but his vision missed nothing.</p>
                 <p>&#34;He&#39;s asking Vivian about financial planning...&#34; Alexander narrated as if standing beside them.</p>
@@ -2329,20 +2409,20 @@
                 <p>&#34;Visit my office on a weekday,&#34; Vivian&#39;s voice held hopeful notes. &#34;We&#39;re trying to relist, but the roadblocks...&#34;</p>
                 <p>Her first application had been rejected outright, and few managers would touch the case since. She hadn&#39;t burdened Evelyn with these worries, not wanting to stress the pregnant woman. Instead, she&#39;d opened up to this near-stranger, a former classmate.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Victor&#39;s alarm bells rang. He interrupted, heedless of abruptness. &#34;Perfect timing—I want to invest! Take this future shareholder along!&#34;</p>
                 <p>The excuse was hastily fabricated but plausible.</p>
                 <p>Vivian laughed. &#34;This is a business meeting, not a field trip.&#34;</p>
                 <p>&#34;It is business!&#34; Victor protested like a petulant child. &#34;I want to see how building materials are produced!&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Unable to dissuade him, Vivian relented. &#34;Fine.&#34;</p>
                 <p>Simon adjusted his glasses, observing coldly. Their dynamic resembled bickering friends, which oddly boosted his confidence.</p>
                 <p>Noticing Simon&#39;s gaze, Victor immediately puffed up like a preening rooster.</p>
                 <p>From afar, Evelyn and Alexander simultaneously facepalmed.</p>
                 <p>&#34;Young and energetic? More like juvenile.&#34; Evelyn sighed. &#34;Vivian did say she liked younger men, but this is excessive.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

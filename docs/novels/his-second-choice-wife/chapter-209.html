@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,42 +2392,42 @@
                 <p>There was no mistaking it - Victoria Dawson was wrapped around Liam&#39;s neck.</p>
                 <p>How had she gotten here so quickly? Had Liam summoned her the moment he was injured?</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Victoria&#39;s saccharine voice carried through the doorway.</p>
                 <p>&#34;I came the instant you called, darling Liam. When you asked me to visit yesterday, I never imagined you&#39;d be hurt. I&#39;ve been sick with worry.&#34;</p>
                 <p>&#34;It&#39;s nothing serious,&#34; Liam replied.</p>
                 <p>&#34;But you&#39;re in pain!&#34; Victoria whimpered. &#34;Does it hurt terribly?&#34;</p>
                 <p>Evelyn squeezed her eyes shut as twin tears traced down her cheeks, dripping onto her collar.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>An icy numbness spread through her body while her heart felt cleaved in two. The agony was unbearable.</p>
                 <p>This marriage had brought her nothing but endless heartache.</p>
                 <p>Her arms went slack. The book hit the floor with a resounding thud.</p>
                 <p>She gasped for air, her chest constricting painfully.</p>
                 <p>Feeling hollowed out, Evelyn turned away blindly, tears distorting her vision as she fought back sobs.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Inside the elevator, she scrubbed at her face furiously, but the tears kept coming in relentless waves.</p>
                 <p>Back in the hospital room, Liam disentangled himself from Victoria&#39;s grasp. He started to speak when a faint noise at the door caught his attention.</p>
                 <p>&#34;Let me check,&#34; Victoria offered sweetly.</p>
                 <p>She stepped outside just in time to see Evelyn&#39;s retreating figure disappear around the corner. Spotting the abandoned book, a triumphant smirk curled her lips.</p>
                 <p>Returning, she said airily, &#34;Just a nurse passing by.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Liam gave a distracted nod.</p>
                 <p>Victoria fluttered her lashes coquettishly. &#34;Did you summon me so urgently because of your injury, darling? Do you need me to care for you?&#34;</p>
                 <p>He averted his gaze. &#34;Don&#39;t throw yourself at me like that. I&#39;m married now. It&#39;s inappropriate.&#34;</p>
                 <p>Victoria pouted dramatically. &#34;You&#39;ll always be the love of my life, Liam. I don&#39;t care about wives or families - my feelings will never change.&#34;</p>
                 <p>Keeping his tone gentle but firm, Liam suggested, &#34;You must be exhausted from traveling. Why don&#39;t you rest at the guest quarters?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>He was still waiting for Evelyn.</p>
                 <p>&#34;Fine,&#34; Victoria sighed. &#34;I&#39;ll bring you lunch later.&#34;</p>
                 <p>Liam nodded absently, his expression unreadable.</p>
                 <p>Victoria collected her things, pausing to scoop up the discarded book on her way out.</p>
                 <p>Alone again, Liam checked his watch impatiently, sitting on the edge of the bed.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

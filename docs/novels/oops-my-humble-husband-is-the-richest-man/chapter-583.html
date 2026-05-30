@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2325,7 +2405,7 @@
                 <p>Was that really something the kind, innocent Susan he thought he knew would say?</p>
                 <p>Joanna said coldly.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Perhaps if I had died, no one would have called the police for me. But precisely because I&#39;m alive, I must seek justice for myself!&#34;</p>
                 <p>Seeing she couldn&#39;t persuade Joanna, Susan immediately turned to Preston.</p>
                 <p>&#34;Preston, save me! I can&#39;t go to jail... I really didn&#39;t mean to kill anyone, I just wanted to scare her... I didn&#39;t...&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>&#34;I owe her my life, Joanna. I can&#39;t just stand by and do nothing...&#34;</p>
                 <p>Susan instantly grew excited.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Yes, yes! Preston, I&#39;m still your fiancée, you can&#39;t abandon me...&#34;</p>
                 <p>She looked at Joanna.</p>
                 <p>&#34;I advise you not to call the police. The Valentine family&#39;s surveillance footage might already be corrupted. As long as Preston helps me delete the footage, this whole matter is over. I have the Sterlingny as a witness that I was just joking with you earlier!&#34;</p>
@@ -2365,7 +2445,7 @@
                 <p>The next moment, she heard Preston&#39;s voice.</p>
                 <p>&#34;I won&#39;t watch her go to jail. I owe her my life. Joanna, I won&#39;t give you the footage.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Joanna gave a bitter laugh.</p>
                 <p>Preston must truly love Susan after all.</p>
                 <p>That&#39;s why he was acting this way.</p>
@@ -2385,7 +2465,7 @@
                 <p>&#34;I know you&#39;ve always sought true fairness in this world. Even when working as a Sterlingny at home, you never bent your spine. This time, I won&#39;t let you compromise for reality. But you&#39;re right. I&#39;m the one who owes Susan, not you. So, I&#39;ll take her place in jail. That can be considered repaying her for saving my life!&#34;</p>
                 <p>These words left Joanna bewildered.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Beside them, Susan cried out in shock.</p>
                 <p>&#34;Preston! There&#39;s no need for that! Really, no need! As long as you don&#39;t produce the video, or if we go to the Valentine family&#39;s surveillance room right now and delete it, this can all be covered up! Preston, why go to such lengths? Besides, if you go to jail, how can we get married!&#34;</p>
                 <p>As soon as Susan said this, a flicker of relief passed through Preston&#39;s eyes.</p>

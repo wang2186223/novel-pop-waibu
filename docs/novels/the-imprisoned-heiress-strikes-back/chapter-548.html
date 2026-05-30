@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,19 +2391,19 @@
                 <p>What possible motive could she have?</p>
                 <p>Evelyn studied Alexander&#39;s reaction like a hawk, knowing his response would determine whether she signed those divorce papers tomorrow.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Are you absolutely certain?&#34; Alexander&#39;s voice carried an edge as sharp as broken glass.</p>
                 <p>Lucas gave a single, solemn nod.</p>
                 <p>On the other end of the line, Isabella&#39;s breath hitched at Alexander&#39;s glacial tone.</p>
                 <p>The accident had left her paralyzed with shock.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>It had been a simple Saturday errand - test driving a luxury sedan at Willow Mall.</p>
                 <p>Then a pregnant woman materialized in the crosswalk.</p>
                 <p>Though Isabella held a valid license, years abroad had eroded her driving skills.</p>
                 <p>Panic made her stomp the accelerator instead of the brake. The sickening thud still echoed in her bones. The salesman beside her had turned sheet-white.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>The $800,000 prototype now bore bloodstains. That poor salesman would certainly lose his job.</p>
                 <p>Isabella had considered fleeing, but the terrified salesman warned that hit-and-run carried prison time. They&#39;d called the authorities, and she&#39;d just finished giving her statement when Alexander called.</p>
                 <p>&#34;Alexander,&#34; she sobbed into the phone, &#34;I&#39;m in terrible trouble. I&#39;m at the 12th precinct.&#34;</p>
@@ -2335,7 +2415,7 @@
                 <p>Simon nodded once before striding toward the elevators.</p>
                 <p>Meanwhile, Evelyn perched on a plastic chair outside OR-3, counting each agonizing second.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Time had become molasses - thick, sluggish, unbearable.</p>
                 <p>Alexander and Lucas had disappeared into the stairwell for a hushed conference.</p>
                 <p>Evelyn checked her watch for the twentieth time. A cesarean shouldn&#39;t take this long. Dread coiled in her stomach like a venomous snake.</p>
@@ -2346,7 +2426,7 @@
                 <p>A nurse quietly sealed the doors behind him.</p>
                 <p>&#34;Still in surgery,&#34; Julian rasped. &#34;She&#39;s lost... so much blood. You know how she hates pain...&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

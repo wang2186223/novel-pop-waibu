@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,30 +2389,30 @@
                 <p>Vivian merely smirked. &#34;Do send me an invitation to the wedding. I do love a good comedy.&#34; With that, she turned on her heel, the click of her Louboutins echoing louder than any insult.</p>
                 <p>Clarissa&#39;s jaw clenched so tight her veneers threatened to crack. The dismissal stung more than any direct attack ever could. Frustration bubbled up until she stomped her Jimmy Choo-clad foot like a petulant child.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>At the curb, Ethan stood waiting beside the matte black Bentley, casually sipping from a water bottle. Spotting Vivian&#39;s approach, he immediately set it down on the leather seat and straightened his tie. &#34;Mrs. Blackwood, may I offer you a ride?&#34;</p>
                 <p>Vivian waved him off with a graceful flick of her wrist. &#34;Don&#39;t trouble yourself, Ethan. The café is just around the corner.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Ethan hesitated, then reached into the car&#39;s mini-fridge. &#34;At least take some water. The street vendors&#39; bottles are questionable at best.&#34; He extended a crystal-clear bottle of Voss toward her.</p>
                 <p>Vivian&#39;s gaze flickered between the artesian water in Ethan&#39;s hand and the generic plastic bottle he&#39;d been drinking from moments before. A knowing smile played on her lips. &#34;Actually, I&#39;ll take the San Pellegrino. The citrus notes pair better with my mood.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Without missing a beat, Ethan swapped bottles. Vivian accepted it with perfectly manicured fingers, twisting the cap with effortless elegance before taking a slow, deliberate sip.</p>
                 <p>Just then, Clarissa burst through the building&#39;s doors - and froze. Her Botoxed forehead actually managed to crease in shock as she took in the scene: Vivian chatting casually with a devastatingly handsome man in a tailored Tom Ford suit, standing beside a car that cost more than her parents&#39; house.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Her mind reeled. Was this...? Could this possibly be Vivian&#39;s husband? The man behind the mysterious luxury car she&#39;d been fantasizing about all morning?</p>
                 <p>Acid-green jealousy surged through Clarissa&#39;s veins. Her grip tightened around her knockoff Birkin until the cheap leather squeaked in protest. How? How did Vivian Hartley - the scholarship case with the dead mother and absentee father - end up with someone like this? While she, Clarissa Thornton, with her perfect upbringing and socialite training, was still swiping right on mediocre trust fund babies?</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>She&#39;d had everything - private schools, debutante balls, a nose job at sixteen. Sure, Vivian had those ridiculous natural cheekbones, but Clarissa had worked hard for her looks. Weekly facials, monthly fillers, annual laser treatments. She&#39;d invested in her appearance like it was a stock portfolio.</p>
                 <p>Yet here stood Vivian, looking effortlessly chic in off-the-rack Zara, being handed designer water by what appeared to be her personal driver-slash-bodyguard. The injustice burned like cheap tequila.</p>
                 <p>Then Clarissa noticed something peculiar. Vivian wasn&#39;t getting into the car.</p>
                 <p>The realization hit her like a champagne cork to the forehead. This wasn&#39;t Vivian&#39;s husband. This was... help. Hired help.</p>
                 <p>A slow, vindictive smile spread across Clarissa&#39;s face as she adjusted her posture, preparing to strike. The game wasn&#39;t over yet. Not by a long shot.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

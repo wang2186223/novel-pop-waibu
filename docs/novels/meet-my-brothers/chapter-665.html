@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,37 +2391,37 @@
                 <p>Mia had scoured the internet earlier, desperate to find a picture of Timothy’s ex–wife. However, her endeavor yielded nothing but a frustrating gallery of non–matches–the lack of a visual confirmation gnawed at her.</p>
                 <p>The lack of an online trace of Timothy’s ex–wife, a woman who once held a prominent position as part of the Barrett family, set alarm bells ringing in Mia’s head. This complete digital wipeout was eerily strange.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>“Wait. I’ll show you the photos.”</p>
                 <p>Caleb whisked his phone out, attempting to find a picture of Mia. However, despite scrolling through the end of the gallery, he couldn’t find even a single picture of Mia.</p>
                 <p>Well, this was awkward.</p>
                 <p>Mia’s marriage to Timothy four years ago was meant to turn his fate around. Unfortunately, his family never fully embraced her as his wife. As such, Caleb had never been close to Mia, so he had none of her photos.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>She chanced a glance at him. “Can’t find the photos?”</p>
                 <p>Caleb sheepishly explained, “I changed my phone, so I lost all the previous photos.”</p>
                 <p>“You must’ve posted on social media before, right? Don’t you even have a group photo?” He was rendered speechless. She got him right there.</p>
                 <p>+1B BONUS</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Mia and Timothy tied the knot clandestinely, so they had never been publicly seen together, let alone taken a group photo.</p>
                 <p>Mia raised an eyebrow. “How about the wedding photos? You gotta at least have those, don’t you?”</p>
                 <p>Caleb was at a loss for words. “N–No, I don’t.”</p>
                 <p>“What? They don’t even have a wedding photo? Did they even get married at all?” Mia thought the situation was snowballing fast.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Sweating profusely, Caleb replied, “They were married, but they didn’t take a wedding photo for certain reasons.”</p>
                 <p>“Was it because the Barretts were upset with Mrs. Barrett’s status? Being a commoner, perhaps they didn’t consider a wedding photo necessary. Rather than embracing her, it’s more like they’re ashamed of her. That’s why there are no records of photos taken in public, right?”</p>
                 <p>Mia’s brusque manner rendered Caleb speechless. After a moment of hesitation, he warily said, “If you’re still mad because of what happened, actually-”</p>
                 <p>“Wait!” The way Caleb stared at Mia, as if she were truly Timothy’s ex–wife, was unsettling. She continued disdainfully, “Are you seriously assuming that I’m Mr. Barrett’s ex–wife, and you think I’m just pretending not to recognize all of you?”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Caleb nodded solemnly.</p>
                 <p>Mia was dumbfounded. “Look, doppelgangers exist, you know! I’m not that poor Mrs. Barrett! My temperament wouldn’t tolerate that kind of treatment for a second! If I were treated as such, I swear to God, he’ll regret it deeply!”</p>
                 <p>Caleb faltered. When he recalled her fiery temper, he knew she was more than capable of following through on her threat.</p>
                 <p>Caleb had to admit that apart from their looks, she was very different from Mia.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

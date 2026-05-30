@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>Elspeth and Glynnis exchanged glances before stepping inside.</p>
                 <p>&#34;Who sent it?&#34; Glynnis demanded.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;The secretary of the general manager of K World Hotel—Mr. Dempsey.&#34;</p>
                 <p>From Evadne?</p>
                 <p>&#34;Understood. You may leave.&#34; Elspeth took the envelope and shut the door.</p>
@@ -2323,7 +2403,7 @@
                 <p>&#34;Pfft, what&#39;s there to fear?&#34; Elspeth scoffed. &#34;Ada&#39;s already signed the contract. Even if Evadne tries to interfere, it&#39;s too late.&#34;</p>
                 <p>Coincidentally, the evening news flashed on the TV, featuring the charity auction.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Mother!&#34; Glynnis gasped, pointing at the screen. &#34;The event is sponsored by Ethereal Vogue!&#34;</p>
                 <p>Her nails dug into her palms as envy flared. Ethereal Vogue—the world-renowned fashion bible, the holy grail for celebrities. And Evadne was hosting an event for them? The news even mentioned Ada and other A-listers attending.</p>
                 <p>&#34;No matter how grand she makes this, she&#39;s already lost,&#34; Elspeth muttered. &#34;But since she invited us, we&#39;ll go. Keep an eye on her—make sure she doesn&#39;t sabotage our plans with Ada.&#34;</p>
@@ -2332,7 +2412,7 @@
                 <p>&#34;Cassius!&#34;</p>
                 <p>She dashed downstairs and threw herself into his arms.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Seeing her snug attire accentuating her curves, Cassius frowned. &#34;You&#39;re exercising now? It&#39;s freezing.&#34;</p>
                 <p>&#34;Yes! I&#39;m in a great mood—perfect for kayaking.&#34; She tilted her head back, grinning.</p>
                 <p>&#34;It&#39;s pitch black. What if you capsize? You&#39;re not exactly a strong swimmer.&#34; He pinched her waist lightly. &#34;And you&#39;re not dressed warmly enough. You&#39;ll catch a cold.&#34;</p>
@@ -2341,7 +2421,7 @@
                 <p>&#34;Cassius, don&#39;t blame him,&#34; Evadne interjected. &#34;He did warn me, but he can&#39;t change my mind.&#34;</p>
                 <p>The siblings settled onto the couch, Evadne resting her head against Cassius&#39;s shoulder. &#34;Cassius, Ethereal Vogue&#39;s editor-in-chief just finalized the event details. Thank you for securing such a high-profile connection! I&#39;ve adored Ethereal Vogue since I was a child.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Iris, the editor-in-chief, was a titan in fashion—her disapproval could ruin brands. That she&#39;d personally called Evadne spoke volumes.</p>
                 <p>&#34;I&#39;m glad you&#39;re happy,&#34; Cassius said warmly, brushing her nose. &#34;I know you&#39;ve been down since Ada went to Abernathy. You always need a distraction, so I thought this might help.&#34;</p>
                 <p>&#34;Psh, I&#39;m fine,&#34; Evadne pouted. &#34;I&#39;ve been eating well, sleeping soundly—I haven&#39;t given it a second thought.&#34;</p>
@@ -2350,7 +2430,7 @@
                 <p>&#34;Oh, that&#39;s not why. Wait—Cassius, how do you even know Iris? You two seem close. She&#39;s trusting me with this massive event! Ethereal Vogue has never hosted anything in Elmsworth before!&#34;</p>
                 <p>Cassius shrugged. &#34;We&#39;re not close.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Then why—?&#34;</p>
                 <p>&#34;She&#39;s had a crush on me for about a decade.&#34;</p>
                 <p>Evadne and Jason gasped. &#34;What?&#34;</p>
@@ -2362,7 +2442,7 @@
                 <p>&#34;No, no—I meant Iris is pathetic!&#34; Evadne huffed, defensive of her idol. &#34;Age isn&#39;t the issue. The issue is she picked the wrong man! The fashion queen falling for a confirmed bachelor? It&#39;s a miracle you haven&#39;t scared her off yet, let alone dated her!&#34;</p>
                 <p>Cassius and Jason exchanged glances, speechless.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

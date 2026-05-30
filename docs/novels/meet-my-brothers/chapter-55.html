@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>Heath nodded. “Yes.”</p>
                 <p>“I’ll accept it, but I have a condition. I want to be paid tenfold,” Mia said.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>“I’ll have to check with Mr. Barrett on this, Mrs. Barrett.” Heath hurried into Timothy’s office after hanging up. Mr. Barrett, Mrs. Barrett just contacted me on the order. She said that she’ll only accept the deal if she’s paid tenfold.”</p>
                 <p>Timothy stopped writing. “Tenfold? She wants a million dollars?”</p>
                 <p>She hadn’t changed one bit. She had the nerve to demand a fee of one million dollars!</p>
                 <p>He leaned back. “Do you think she’s worth that price?”</p>
                 <p>“We’ve already gone through five designers, Mr. Barrett. All of them asked for more than 100 thousand dollars, so we’ve already spent more than 500 thousand dollars on them. It’d actually be worth it if we could spend a little more to hire a designer who can get the job done,” Heath said.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Timothy raised an eyebrow at him. “How are you so sure that I’ll be happy with her designs?”</p>
                 <p>Heath fell silent. Hadn’t Timothy switched designers so many times because he hadn’t been happy with any of their designs?</p>
                 <p>After a while, Timothy asked, “So, what do you think?”</p>
                 <p>Heath said tentatively, “It is a little expensive. Maybe we should forget it.”</p>
                 <p>Timothy frowned. “Have her accept the order. I won’t pay her the remainder of the fees if I’m not happy with her work.”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>It wouldn’t be that easy to earn his money!</p>
                 <p>Heath nodded and left the office. He wiped the sweat from his brow. It was getting harder and harder to guess</p>
                 <p>Soon, Mia received a call from Heath. She smirked and happily accepted the deposit. Cha-ching-that was 200 thousand dollars in her pocket!</p>
                 <p>She got ready to head to the marital home to scope out the place. Before leaving, she realized she’d run out of folic acid. As she passed by a pharmacy, she dropped by to get a bottle each of folic acid</p>
                 <p>and vitamins. Then, she switched the contents. She had to be careful before the divorce was finalized.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Mia took a cab to her marital home. One of the maids, Holly Stow, was pleasantly surprised to see her. “What are you doing here, Mrs. Barrett?”</p>
                 <p>“To work, of course.” Mia smiled and entered the hall. It was familiar to her, but many of the decorations had been changed. Somehow, they just didn’t go well together. She looked at the new curtains. “Who switched these?”</p>
                 <p>Holly said cautiously, “Kaleb did. I heard he did it on Ms. Lane’s orders.”</p>
                 <p>Mia wasn’t surprised to hear this. After all, on the day that she’d been kicked out of this place, Maya had mentioned that she would change everything in the villa.</p>
                 <p>A hint of mockery flashed past her eyes. “It’s good that things have been changed. Out with the old and in with the new, right?”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>“Don’t be mad, Mrs. Barrett. Mr. Barrett was furious when he learned about Kaleb changing the furnishings. He even had Kaleb fired,” Holly said.</p>
                 <p>“Really?” Mia was surprised. Kaleb had been sent here by Sharon, yet Timothy hadn’t hesitated to have him fired. She supposed he’d genuinely been angry. It made sense, though. Timothy was a clean freak and had a compulsive streak. He was hard to deal with.</p>
                 <p>“Could you help me record the things that have been changed, Holly? I’ll deal with the renovations, but you’ll have to help me coordinate things a little,” Mia said.</p>
@@ -2348,7 +2428,7 @@
                 <p>Mia lowered her gaze. “No. That won’t be necessary.”</p>
                 <p>She didn’t want to head upstairs to see traces of Timothy and Maya’s life together-not even in the slightest.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

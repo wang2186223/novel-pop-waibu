@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2316,7 +2396,7 @@
                 <p>I walked behind Jaris as we reached the elevator and waited for it to open up. When it did open, there were two occupants inside, people I recognized-Alpha Zarek and his Luna, Chloe. I had met them at the funeral last night.</p>
                 <p>I noticed their eyes dim the moment they saw Jaris. Well, I wasn&#39;t surprised Jaris had a lot of enemies.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>After a slight hesitation, he stepped into the elevator, and I did the same.</p>
                 <p>Alpha Zarek and his Luna were behind us, the air in the small space tense.</p>
                 <p>&#34;I didn&#39;t know you had a woman now,&#34; Zarek said.&#34;Congratulations.&#34;</p>
@@ -2327,7 +2407,7 @@
                 <p>I didn&#39;t say anything, but he smiled at me.</p>
                 <p>&#34;It was nice meeting you,&#34; he uttered the words with a certain menace. Then, he smirked at Jaris and left with his Luna, whose face seemed to be covered in shame.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Jaris didn&#39;t utter a word, but I could tell he was pissed. We left the reception and headed for his car.</p>
                 <p>······</p>
                 <p>JARIS</p>
@@ -2338,7 +2418,7 @@
                 <p>The second row was occupied by the Sovereign Alphas-which was my Pack and nine others.</p>
                 <p>The Alphas of the major Packs followed, and then the minor Packs were last. Those ones hardly had a say in public matters.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The Lycan Chairman gave the opening speech, talking about the late King and how good of a leader he had been. He hinted at the fact that investigations into his death were still ongoing.</p>
                 <p>After that, he brought up some pressing issues like hanging taxes and...</p>
                 <p>Then, we arrived at the main reason for the gathering-the throne of the Alpha King.</p>
@@ -2349,7 +2429,7 @@
                 <p>Seconds passed. The Chairman was yet to move on to the next phase. I noticed all eyes were shifting to me.Then,I suddenly realized what the problem was.</p>
                 <p>&#34;Jaris?&#34; The Chairman called. &#34;Are you not...participating?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;If I was, my hand would be up. I&#39;ve been attentive, Luca.&#34; My reply stunned everyone.</p>
                 <p>&#34;Are you trying to say... you are not interested in taking the throne?&#34; One of the representatives asked. He was among those who hadvisited my Pack.</p>
                 <p>I shrugged, nonchalant. &#34;I honestly have no interest.&#34;</p>
@@ -2360,7 +2440,7 @@
                 <p>When the meeting finally came to an end, I went over to the Citadel&#39;s bar to pour myself a glass of Bourbon.</p>
                 <p>&#34;I&#39;m curious, Jaris. Why aren&#39;t you participating in the Alpha challenge?&#34; Zarek asked as he joined me at the counter.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>I forced composure into my bones. Could anyone get him away from me?</p>
                 <p>&#34;Tell me, is it because you do not have a Luna yet?&#34; He leaned against the counter, staring into my face with that smirk I&#39;d very much love to get rid of.</p>
                 <p>One of the requirements for participating in the Alpha challenge was to have a Luna. Funny how they thought I couldn&#39;t easily get a Luna if I wanted.</p>
@@ -2375,7 +2455,7 @@
                 <p>&#34;She&#39;s not loose.&#34; My voice came out clipped.</p>
                 <p>&#34;Then, you have nothing to be afraid of, Jaris. Give me seven days, and I&#39;ll show you how loose your woman can be. Believe me, she&#39;ll be begging to return to my arms.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

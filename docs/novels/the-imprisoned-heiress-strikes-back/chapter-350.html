@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2315,7 +2395,7 @@
                 <p>Audrey Mills nearly dropped her teacup, while Sophia Ellis pressed her lips together, fighting a smile.</p>
                 <p>Evelyn felt heat rise to her cheeks as Alexander smirked, clearly unbothered by their audience.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>The air thickened with unspoken amusement—no one had ever seen this playful side of Alexander Whitmore before.</p>
                 <p>Gasps rippled through the crowd as Alexander swept Evelyn into his arms without warning.</p>
                 <p>His lips curved into a wicked smirk. &#34;Even if you refuse to kiss me, darling, I’m still carrying you to our room.&#34;</p>
@@ -2325,7 +2405,7 @@
                 <p>Her face burned. The Whitmore Manor was overflowing today—grandparents, cousins, even a ten-year-old gaping at them from the buffet table. This was mortifying.</p>
                 <p>Alexander’s eyes gleamed with unrepentant amusement. &#34;Guilty as charged. But I’m your menace.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>And just like that, he strode past the stunned onlookers, cradling Evelyn as though the rest of the world had dissolved into static.</p>
                 <p>Ryan Fletcher elbowed Ethan Caldwell. &#34;Since when does Uncle Alex have rizz?&#34;</p>
                 <p>Ethan’s jaw tightened. &#34;Ryan, for God’s sake—&#34;</p>
@@ -2335,7 +2415,7 @@
                 <p>The air between them crackled with unspoken tension.</p>
                 <p>Ethan Caldwell&#39;s resentment toward Eleanor was palpable. She had pressured Vanessa Hart to keep the baby—a child he never wanted.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>When Ethan had once begged to marry Vanessa, Eleanor had refused. Now that he wanted nothing to do with her, Eleanor was forcing Vanessa to stay.</p>
                 <p>&#34;Ethan,&#34; Eleanor said, her voice laced with desperation, &#34;everything I do is for your father. As the eldest son of Harold Aniston, he was exiled overseas, unable to even visit for holidays. But if you have a child, it gives him a reason to return. We could finally be a family again.&#34;</p>
                 <p>Ethan&#39;s icy gaze cut through her. &#34;So you&#39;re asking me to sacrifice my life for your fantasy?&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>Her voice rose in horror. &#34;Ethan, have you lost your mind? She&#39;s your Aunt Evelyn! What are you thinking? You&#39;d abandon your own child for a woman you can never have?&#34;</p>
                 <p>Ethan let out a bitter laugh, unwilling to waste another breath arguing.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>There&#39;s no point explaining myself to someone who refuses to understand.</p>
                 <p>&#34;I&#39;ll reclaim my woman when the time comes.&#34;</p>
                 <p>His words were final—Ethan wanted nothing more to do with Vanessa.</p>
@@ -2355,7 +2435,7 @@
                 <p>She was certain Ethan just needed time. Once that baby is born, she thought, who could resist those tiny fingers and that innocent smile calling them Daddy?</p>
                 <p>Ethan had just lit a cigarette, the smoke curling around him as he reached his car. Then—</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Vanessa burst through the front door, sprinting after him.</p>
                 <p>&#34;Ethan! We need to talk!&#34;</p>
                 <p>Her voice cracked with desperation, but he didn’t even glance back.</p>
@@ -2366,7 +2446,7 @@
                 <p>And lost.</p>
                 <p>Secret Longing: A Love Reborn from Shadows (Evelyn Carter) novel</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

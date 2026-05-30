@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>Thaddeus exhaled roughly, his voice gravelly with regret. &#34;Evadne means everything to me. I hurt her—I know that. Everything I do now is to atone.&#34;</p>
                 <p>&#34;You can’t!&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Bet’s interruption was sharp as a blade. &#34;You should’ve thought of that before! Look at her—she’s a shadow of who she was because of you. Your life isn’t enough to repay that debt!&#34;</p>
                 <p>Thaddeus stiffened, the words striking like a physical blow.</p>
                 <p>A weak murmur broke the tension.</p>
@@ -2321,7 +2401,7 @@
                 <p>Evadne stirred in Thaddeus’ arms, her fingers curling weakly into his shirt.</p>
                 <p>&#34;Evadne, I’m here!&#34; Bet’s anger dissolved into desperation as he reached for her.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>But as he lifted her, her grip on Thaddeus tightened.</p>
                 <p>&#34;Don’t leave…&#34; Her whisper was fragile, barely audible.</p>
                 <p>&#34;I won’t.&#34; Thaddeus’ voice softened, his usual coldness melting. &#34;You’re burning up. I’m not going anywhere.&#34;</p>
@@ -2329,7 +2409,7 @@
                 <p>&#34;Absolutely not!&#34;</p>
                 <p>&#34;Bet.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Cassius stepped forward, his tone firm. &#34;Let him come. We’ll all go together.&#34;</p>
                 <p>Bet’s jaw clenched.</p>
                 <p>&#34;Mr. Thaddeus,&#34; Cassius continued calmly, &#34;regardless of the past, you saved her tonight. That deserves acknowledgment.&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>Thaddeus’ gaze darkened. &#34;She nearly died today. She almost went over a cliff.&#34;</p>
                 <p>Both brothers paled.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;I helped, but she saved herself.&#34;</p>
                 <p>Bet’s lips curled. &#34;You deserve hell, Thaddeus.&#34;</p>
                 <p>Every word dripped venom. &#34;Every ounce of pain she’s endured—it’s because of you.&#34;</p>
@@ -2354,7 +2434,7 @@
                 <p>&#34;Then why?&#34; Bet’s voice broke. &#34;Why marry her if you didn’t love her? Why give her hope just to destroy it?&#34;</p>
                 <p>His tear-filled eyes burned with accusation. &#34;She built her world around you. What did you ever give her but misery?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

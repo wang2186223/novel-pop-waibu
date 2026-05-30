@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2317,13 +2397,13 @@
                 <p>Turning to glance out the window, Timothy was startled by the sudden resurgence of Mia&#39;s memories.</p>
                 <p>He had been quietly strategizing how to win her over before her memories returned, thinking it might improve his odds.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Meanwhile, Mia couldn&#39;t resist stealing a glance at Timothy&#39;s silhouette as she leaned against the headboard. His tall, slender frame remained just as upright and commanding as ever.</p>
                 <p>Indeed, Timothy had always been the of desire for many women. However, Mia was never fully accepted into the Barrett family even after marrying Timothy. She endured mockery from them, and was constantly reminded that she wasn&#39;t good enough for him.</p>
                 <p>Her youthful infatuation had left her deeply wounded, nearly costing her life.</p>
                 <p>As Mia reminisced about the past, her heart ached with pain, but she quickly regained her composure. With her brothers by her side, she felt invincible.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>As long as Timothy couldn&#39;t separate her from Ginger and Sage, Mia remained unfazed.</p>
                 <p>Breaking the silence, Mia spoke up, &#34;Connor will be back soon. You should leave.”</p>
                 <p>However, deep down, Timothy was still unwilling to surrender. Addressing Mia, he softly uttered, &#34;Take care.&#34;</p>
@@ -2335,7 +2415,7 @@
                 <p>Timothy had just confirmed downstairs that this was indeed the Lane family&#39;s private hospital.</p>
                 <p>How could Ginger be anywhere else?</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>At this juncture, Timothy couldn&#39;t shake the nagging feeling that something wasn&#39;t right, though he couldn&#39;t pinpoint exactly what it was. Mia regarded him calmly. &#34;Regardless, Ginger is receiving treatment, and thus far, everything is progressing smoothly. Once Ginger&#39;s treatment concludes, I will make arrangements for you to see her.&#34; &#34;Mia, that&#39;s not what you said yesterday.&#34;</p>
                 <p>Mia paused, her mind wandering back to the shopping trip she had gone on with Timothy. &#34;Back then, I hadn&#39;t fully regained my memory, so...&#34;</p>
                 <p>&#34;So, your previous words didn&#39;t count?&#34;</p>
@@ -2343,7 +2423,7 @@
                 <p>Mia was momentarily taken aback by the sight of the toy in his palm. “The only reason I agreed earlier was because my brothers hadn&#39;t discovered you yet. But now that they know you&#39;re here, do you honestly think I can still take you to see Ginger?&#34;</p>
                 <p>&#34;Mia, you&#39;re just finding excuses. Are you worried about me seeing Ginger because you&#39;ve been deceiving me all along? Was my bone marrow donation even meant for Ginger? Is she really ill?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

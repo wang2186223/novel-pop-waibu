@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2316,7 +2396,7 @@
                 <p>Jareth grinned. &#34;Don&#39;t stop there. Make him massage your feet too.&#34;</p>
                 <p>Evadne wheeled Thaddeus over, eyeing them suspiciously. &#34;What are you plotting?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Nothing,&#34; Elvis grumbled. &#34;Just discussing your beloved&#39;s future chores.&#34;</p>
                 <p>Cassius sighed. &#34;Elvis, enough.&#34;</p>
                 <p>Evadne shook her head. &#34;If your future wife even glances at another man, will you sulk for days?&#34;</p>
@@ -2327,7 +2407,7 @@
                 <p>&#34;Glad to see everyone safe,&#34; Debby smiled, relieved at Thaddeus&#39; recovery. &#34;How are you feeling?&#34;</p>
                 <p>&#34;Better,&#34; Thaddeus replied. &#34;I plan to leave tomorrow.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Absolutely not!&#34; Evadne squeezed his shoulder. &#34;You need at least another week.&#34;</p>
                 <p>Thaddeus covered her hand gently. &#34;Eden&#39;s hiding in Elmsworth. Ward needs interrogating. Every second counts.&#34;</p>
                 <p>His urgency was palpable. Their connection, though subtle, was undeniable.</p>
@@ -2338,7 +2418,7 @@
                 <p>Evadne blushed. Elvis rolled his eyes. &#34;Smooth, Abernathy.&#34;</p>
                 <p>Cassius intervened. &#34;We&#39;ve arranged for you to stay at Ashbourne Medical. It&#39;s discreet, fully equipped. The jet has emergency facilities. You&#39;ll be safe.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Chasel puffed his chest. &#34;And you&#39;ve got me, a world-class doctor.&#34;</p>
                 <p>Jareth smirked. &#34;More renowned than Evadne?&#34;</p>
                 <p>Chasel froze. &#34;Wait—Evadne is Dr. Eve?&#34;</p>
@@ -2349,7 +2429,7 @@
                 <p>&#34;Thaddeus,&#34; Evadne finally asked, &#34;who&#39;s backing Eden?&#34;</p>
                 <p>He hesitated. &#34;Will you believe me?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Avery?&#34;</p>
                 <p>Thaddeus stiffened. &#34;How did you know?&#34;</p>
                 <p>&#34;Debby and Darcy suspect him too. He&#39;s had shady ties to Country T.&#34;</p>
@@ -2360,7 +2440,7 @@
                 <p>Cassius nodded. &#34;I couldn’t risk your happiness with someone like that.&#34;</p>
                 <p>Evadne’s eyes welled. &#34;Cassius...&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Why didn’t you tell me sooner?&#34; Cassius asked Thaddeus.</p>
                 <p>&#34;Without proof, it was just suspicion. And...&#34; Thaddeus glanced at Evadne. &#34;He was your friend.&#34;</p>
                 <p>Her heart ached. All their past fights over Avery—now so foolish.</p>
@@ -2374,7 +2454,7 @@
                 <p>That she was the girl from Zenithia?</p>
                 <p>The one who dragged him to safety—and lost her finger in the process?</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2317,7 +2397,7 @@
                 <p>Three days had passed since Jaris and I last saw.Two days ago, news of the Alpha King&#39;s death circulated like wildfire.</p>
                 <p>King Thaddeus had been a fierce but nice ruler. The news of his demise was a hard pill to swallow.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Every other activity was put on hold as a result of his upcoming funeral. The mating ceremony between Jaris and I also had to be shifted to a week time, and to be honest, it was the best news I&#39;d heard in a while. If it could, I&#39;d want it to be shifted to a year!</p>
                 <p>Today had been fixed to be the King&#39;s funeral. Only the families of Alphas could attend-it was only a measure to control the crowd since there would be a lot of important people in attendance.</p>
                 <p>I didn&#39;t want to go, but father insisted. And well,l figured it wouldn&#39;t be a bad time to get some fresh air. I was trying to source for what to wear when a call came in from a strange number.</p>
@@ -2329,7 +2409,7 @@
                 <p>Brystara. That was the home of the Alpha King.</p>
                 <p>Okay,he had to be joking.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Thanks, but I don&#39;t wanna go with him.&#34;</p>
                 <p>There was a slight pause. &#34;I&#39;m afraid it isn&#39;t up for debate, Ms. Harper. He wants you to get ready before the car arrives.&#34;</p>
                 <p>The call went dead on me. Seriously!? I glared at the screen like I could send a punch to Jaris through it. Well, there was no part of the contract that said I was obligated to go everywhere with him.</p>
@@ -2341,7 +2421,7 @@
                 <p>Goodness. &#34;Why wouldn&#39;t he break up with you? Why wouldn&#39;t he see me anymore?&#34;</p>
                 <p>I rolled my eyes. &#34;Please, Nora. We&#39;re running late.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>I tried to leave, but she stood in my way. &#34;I&#39;m talking to you!&#34;</p>
                 <p>&#34;Well, I don&#39;t know. Maybe it&#39;s because I look really beautiful now.&#34;</p>
                 <p>&#34;Oh, please! Do you think you&#39;re more beautiful than lam?&#34;</p>
@@ -2353,7 +2433,7 @@
                 <p>Surprisingly, or maybe not too surprisingly, there was an extra one out there.</p>
                 <p>The driver was beside it but approached me when l stepped out of the house.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Good day, ma&#39;am. I was sent to pick you up.&#34; He said with a bow.</p>
                 <p>The sight of it only pissed me off. Jaris was a control freak!</p>
                 <p>&#34;I already told him I won&#39;t be going with him,&#34; I replied to the man.</p>
@@ -2365,7 +2445,7 @@
                 <p>The bartender refilled the woman&#39;s cup for the umpteenth time.</p>
                 <p>He watched as she emptied it in seconds, her eyes fixed on the screen ahead.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>The bartender couldn&#39;t tell if she was interested in the sport being aired on the TV. She didn&#39;t strike him like the type that would be interested in such programmes.</p>
                 <p>She looked fierce, with a deep scar running down the left side of her cheek.</p>
                 <p>The young woman, though pretty, had the looks of someone that cared little for people.</p>
@@ -2381,7 +2461,7 @@
                 <p>&#34;Who&#39;s she?&#34; The bartender was curious.</p>
                 <p>The woman was already on her feet, dragging her weapon sheath. &#34;She&#39;s someone that shouldn&#39;t live amongst us. Someone dangerous.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

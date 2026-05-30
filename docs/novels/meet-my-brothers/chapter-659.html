@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,31 +2391,31 @@
                 <p>She then made her way to Ginger. “Finish everything.”</p>
                 <p>“Mommy, is the bad woman here to cause trouble again?” Ginger was anxious.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>“Relax. I know how to deal with people like her,” assured Mia as she placed the plate down. Then, she returned to the buffet section, to Luna’s side. “Ms. Maynard, there are better ways to show your feelings. You shouldn’t stoop that low. Besides, it doesn’t work that way.” Luna’s eyes dimmed, and she retorted, “Am I supposed to be like you? Throwing myself to a man shamelessly?”</p>
                 <p>Mia chuckled. “Your acting is so good. Have you considered a debut in showbiz?”</p>
                 <p>“Don’t get ahead of yourself. Tim will never accept you. There’s someone he cherished in his heart. He hadn’t forgotten about her for years.”</p>
                 <p>Mia arched a brow. “Enlighten me. What kind of woman is she?”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>There was something off about Timothy yesterday. No man should be able to resist her offer yesterday.</p>
                 <p>Timothy, it seemed, had someone else.</p>
                 <p>Every muscle in Luna’s body screamed to rip Monalize’s face off. Monalize resembled Mia so</p>
                 <p>much!</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>“Why should I? If you want to know, you can ask him yourself.” Luna sounded malicious.</p>
                 <p>Mia couldn’t tear her eyes away as Luna, with a pathetic pout, approached Timothy. The</p>
                 <p>pitiful fa?ade on Luna’s face tugged at an unfamiliar irritation within her. It shouldn’t have bothered her. Yet, a niggling unease wouldn’t be quelled.</p>
                 <p>Mia simply placed a bowl of soup on her tray before her strides carried her to Luna. A pristine smile was on Mia’s face. “Mr. Barrett.”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>A jolt of annoyance shot through Luna at Mia’s voice. Her smile faltered, hardening into a grimace.</p>
                 <p>As Mia approached Luna and Timothy, her ankle appeared to give way, causing the bowl of soup to topple and spill.</p>
                 <p>“Be careful!” Timothy exclaimed, surging forward to catch Mia.</p>
                 <p>Mia caught his arm, shrieking, “The floor is slippery. I would’ve fallen if it wasn’t for you, Mr. Barrett.”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>“Tim!” Luna cried, a shrill squeak escaping her lips as she gripped the table’s edge, narrowly avoiding another fall.</p>
                 <p>Luna reeked of chicken soup, and her dress clung to her, hot to the touch.</p>
                 <p>Her reddened eyes stared at the duo hugging. Grievance was written all over her face.</p>
@@ -2344,7 +2424,7 @@
                 <p>Luna’s eyes were downcast to hide her delight. “The soup’s burning! I think I got scalded. Ms. Monalize, did I upset you somehow? You shoved me down the stairs yesterday, and now you spilled soup on me!”</p>
                 <p>“Ms. Maynard, I’m sorry. But the floor is too slippery! I twisted my ankle, too! I would have fallen like you if it hadn’t been for Mr. Barrett catching me. It was a complete accident.”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

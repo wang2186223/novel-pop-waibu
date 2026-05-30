@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>suddenly deteriorated, Shelly wouldn’t have been summoned to the hospital by Harriette to</p>
                 <p>attend to Laura.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>After all, Harriette had made it clear that she needed to behave well in front of Timothy to continue receiving her monthly allowance.</p>
                 <p>Were it not for financial considerations, Shelly wouldn’t have found herself at the hospital in the dead of night, pretending to be dutiful.</p>
                 <p>Moments later, Timothy and Caleb emerged from the consultation room.</p>
@@ -2321,7 +2401,7 @@
                 <p>Luna displayed apparent concern for Laura, yet deep down, she dreaded the prospect of Laura waking up.</p>
                 <p>Four years had passed, and Laura’s condition had deteriorated to the brink of death. Yet, to Luna’s dismay, Timothy had somehow obtained a stalk of reishi mushroom.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Timothy’s expression turned somber as he responded, “We still have to await the results of</p>
                 <p>the treatment.”</p>
                 <p>Caleb explained, “Considering Mrs. Barrett Senior’s prolonged illness and weakened state, a single stalk of reishi mushroom can only offer limited relief.</p>
@@ -2329,7 +2409,7 @@
                 <p>Upon hearing this, Luna discreetly exhaled a sigh of relief. It seemed the odds of Laura waking up were slim.</p>
                 <p>Finding a second stalk of reishi mushroom in such a short time was virtually impossible, especially considering the four years it took to locate the first one.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>With this realization, Luna could finally ease her worries.</p>
                 <p>As long as Laura remained in her comatose state, the secrets of that fateful year would</p>
                 <p>remain buried.</p>
@@ -2337,7 +2417,7 @@
                 <p>It appeared that Timothy needed another stalk of reishi mushroom, and coincidentally, she</p>
                 <p>had an extra one.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Even though Mia didn’t have any sick relatives, her memory loss persisted, and Sage’s delicate health remained a concern.</p>
                 <p>This compelled Mia and her brothers to keep collecting rare herbs, such as reishi</p>
                 <p>mushrooms.</p>
@@ -2354,7 +2434,7 @@
                 <p>Upon hearing the word “irrelevant,” Luna’s eyes betrayed a mix of shock and embarrassment.</p>
                 <p>She nervously bit her lip, looking somewhat hurt as she spoke, “Tim, I’m just trying to look out for you. What if she makes unreasonable requests?” #</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,19 +2391,19 @@
                 <p>Rosalind&#39;s eyes burned with unanswered questions. &#34;I still don&#39;t understand why you&#39;d abandon hydronium research, leave Solterra, and return to Aldenria. You always said science transcends borders - that knowledge belongs to humanity.&#34;</p>
                 <p>She leaned forward urgently. &#34;If you stay in Aldenria, you&#39;ll lose everything - Solterra&#39;s unlimited resources, your research team, years of groundbreaking work. The Genesis Award was within your grasp! This could have been your life&#39;s crowning achievement.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Evelyn&#39;s shoulders slumped slightly as she stared at her hands.</p>
                 <p>&#34;Perhaps you should reconsider,&#34; Rosalind pressed gently.</p>
                 <p>Evelyn lifted her chin with quiet determination. &#34;My mind is made up. Continue negotiations with Solterra. I&#39;ll accept any reasonable terms they propose - as long as it guarantees my permanent return.&#34;</p>
                 <p>&#34;But Evelyn—&#34; Rosalind began urgently.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Evelyn raised a hand, cutting her off. &#34;Please, no more.&#34;</p>
                 <p>Rosalind&#39;s voice turned grave. &#34;Is this about Liam? Are you letting emotions cloud your judgment?&#34;</p>
                 <p>Evelyn shook her head. &#34;It&#39;s not just him.&#34;</p>
                 <p>&#34;Then what?&#34; Rosalind demanded.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Taking Rosalind&#39;s hand, Evelyn spoke with quiet intensity. &#34;The truth is, science does have borders.&#34;</p>
                 <p>Rosalind frowned in confusion.</p>
                 <p>&#34;Solterra and Aldenria may be allies now, but politics shift like sand. If conflict ever arises, the weapons I developed could be turned against my homeland.&#34;</p>
@@ -2335,7 +2415,7 @@
                 <p>Seeing she couldn&#39;t sway Evelyn, Rosalind exhaled in resignation.</p>
                 <p>&#34;If I must choose between happiness and honor, I choose happiness,&#34; Evelyn said softly. &#34;The Genesis Award seems distant now, and there&#39;s no guarantee of happiness even if I stayed.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Both paths are uncertain,&#34; she continued. &#34;But right now, I can&#39;t risk losing him.&#34;</p>
                 <p>Rosalind stood abruptly, smoothing her skirt. &#34;Very well, Evelyn. I&#39;ll monitor the situation. Though it would be best if you handled negotiations personally.&#34;</p>
                 <p>&#34;If I set foot in Solterra again,&#34; Evelyn said quietly, &#34;I&#39;ll never make it back to Aldenria.&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>Evelyn saw her out, then went to dine alone before carrying her clothes to Liam&#39;s chambers.</p>
                 <p>She found him already finished with dinner, propped against the headboard, his attention wholly absorbed by the laptop balanced on his knees.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

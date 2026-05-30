@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,7 +2392,7 @@
                 <p>Fine. He’d failed.</p>
                 <p>But her presence tonight was enough. He wouldn’t push.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Thaddeus, you should thank Evadne,&#34; Hamilton said pointedly, winking. &#34;If she hadn’t told me about Frederic’s punishment, I wouldn’t have gotten here in time. She saved you.&#34;</p>
                 <p>&#34;Evadne,&#34; Thaddeus murmured, voice soft, eyes tender. &#34;Thank you.&#34;</p>
                 <p>His gaze sent a shiver down her spine. She scoffed. &#34;Thank Mari, not me.&#34;</p>
@@ -2326,21 +2406,21 @@
                 <p>&#34;Mari was always kind to me,&#34; Evadne said, voice steady despite the ache in her chest. &#34;Without her, I wouldn’t have lasted three years in that house.&#34;</p>
                 <p>Hamilton caught the unspoken pain. He shot Thaddeus a reproachful look.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Thaddeus’ chest tightened with regret.</p>
                 <p>&#34;Grandpa,&#34; Evadne hesitated. &#34;There’s something I’d like to ask.&#34;</p>
                 <p>&#34;Go ahead.&#34;</p>
                 <p>&#34;I want you to take Mari in.&#34;</p>
                 <p>&#34;I agree,&#34; Thaddeus cut in.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;I wasn’t asking you!&#34;</p>
                 <p>He smirked. &#34;Doesn’t matter. I support you either way.&#34;</p>
                 <p>Evadne gritted her teeth. She wanted to leap out of the car.</p>
                 <p>&#34;Did something happen to Mari?&#34; Hamilton asked, concerned.</p>
                 <p>&#34;She has autism. Frederic and Elspeth are too busy to care for her properly. It’s not good for her condition.&#34; Evadne kept her tone neutral, avoiding mention of Glynnis’ cruelty. &#34;With you, she’ll have family. And you won’t be alone.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Hamilton’s eyes misted. &#34;You’re too thoughtful. I’ve neglected her.&#34; He patted her hand. &#34;Tomorrow, I’ll send for her.&#34;</p>
                 <p>Meanwhile, Windermere Estate simmered with tension.</p>
                 <p>Frederic’s attempt at discipline had backfired spectacularly. Humiliated, he’d stormed out.</p>
@@ -2348,7 +2428,7 @@
                 <p>A timid knock interrupted her seething.</p>
                 <p>&#34;Ma’am? Miss Glynnis is hitting Miss Mari again. Should we intervene?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

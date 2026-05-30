@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,32 +2390,32 @@
                 <p>Evelyn laughed, the sound like wind chimes. &#34;I&#39;m terribly busy, you know.&#34;</p>
                 <p>Liam caught her chin, his expression turning serious. &#34;Cassandra,&#34; he began, using the name only he knew her by, &#34;there&#39;s one promise I need from you.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>The sudden shift in tone made Evelyn still. &#34;Anything.&#34;</p>
                 <p>His storm-gray eyes held hers captive. &#34;Swear you&#39;ll never betray me.&#34;</p>
                 <p>Evelyn didn&#39;t hesitate. &#34;On my life, Liam. If I ever—&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>His mouth crashed down on hers, swallowing the rest of her vow. Evelyn&#39;s hands flew to his shoulders as his tongue claimed hers with possessive intensity. When they broke apart, her lips tingled.</p>
                 <p>&#34;Liam!&#34; she gasped, glancing around the crowded street. &#34;We&#39;re in public!&#34;</p>
                 <p>The general merely smirked, guiding her toward the waiting car. He leaned across to buckle her seatbelt, his nose brushing her temple. Evelyn opened her mouth to protest when he stole another kiss.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Really?&#34; she huffed, though her traitorous pulse raced. &#34;What if someone sees?&#34;</p>
                 <p>&#34;I&#39;m only keeping secrets from those who matter,&#34; Liam countered, tucking a stray lock behind her ear. &#34;Not my family.&#34;</p>
                 <p>Evelyn rolled her eyes as he shut her door. Watching him circle the car, she realized she&#39;d never seen him so carefree. The way sunlight caught in his dark hair, the unguarded smile—this was a Liam few ever witnessed.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>The drive didn&#39;t take them to Blackwood Manor as expected, but to the ancestral Blackwood estate. Richard and Eleanor sat in the parlor, the marriage certificate spread between them like a treasured map.</p>
                 <p>&#34;Cassandra!&#34; Eleanor sprang up, clasping Evelyn&#39;s hands. &#34;When Liam told us you&#39;d remarried, I nearly fainted with joy! After you left Aldenria, I feared my son would become a permanent bachelor.&#34;</p>
                 <p>Richard nodded solemnly. &#34;She&#39;s been pacing the halls at all hours. Even the staff started placing bets on when you&#39;d return.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Evelyn&#39;s cheeks warmed under their scrutiny. She glanced at Liam, who wore the smug expression of a man who&#39;d won life&#39;s greatest prize.</p>
                 <p>&#34;Now I can finally sleep,&#34; Eleanor sighed, patting the sofa between them. &#34;Though grandchildren would make my dreams even sweeter.&#34;</p>
                 <p>Liam&#39;s chuckle rumbled through the room as he pulled Evelyn against his side. &#34;Give us time, Mother. We&#39;ve only just begun.&#34; His fingers laced with Evelyn&#39;s, a silent promise passing between them—one that needed no witnesses, no vows, just the quiet certainty of two hearts beating as one.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2316,7 +2396,7 @@
                 <p>&#34;Thaddeus! That hurts!&#34;</p>
                 <p>&#34;I&#39;ve made mistakes.&#34; His voice was rough, eyes shadowed with pain. &#34;I regret them. I&#39;m trying to make amends. I know forgiveness won&#39;t come easy. So I&#39;ll chase you forever—until my heart stops.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>A bitter laugh escaped her. &#34;Forever? How many women have heard that from you? You must&#39;ve whispered the same sweet nothings to Acacia. Made the same grand vows. Didn&#39;t you swear to my face that she was the only woman you&#39;d ever marry? And yet—&#34;</p>
                 <p>Her voice cracked. Tears welled but didn&#39;t fall.</p>
                 <p>Thaddeus had carved wounds too deep to heal.</p>
@@ -2327,7 +2407,7 @@
                 <p>&#34;Alright.&#34; He swallowed hard. &#34;I won&#39;t say another word.&#34;</p>
                 <p>Then he did something unimaginable.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>He knelt before her. Took her hand. Pressed a searing kiss to her knuckles.</p>
                 <p>Evadne&#39;s pulse skyrocketed. Heat flooded her cheeks.</p>
                 <p>&#34;Forgive me, Ms. Evadne.&#34; His voice was velvet, eyes pleading. &#34;I talk too much. I&#39;m too nosy. Just...forgive me this once?&#34;</p>
@@ -2349,7 +2429,7 @@
                 <p>Lily trailed behind, watching the usually unflappable man unravel.</p>
                 <p>Mari was special. She&#39;d thawed his icy heart.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Mr. Jareth,&#34; a nurse stammered, &#34;our top specialists are off-duty—&#34;</p>
                 <p>&#34;Get me a doctor. Now.&#34; His voice was lethal. &#34;Or I&#39;ll turn this place into my next nightclub.&#34;</p>
                 <p>The nurse fled.</p>
@@ -2360,7 +2440,7 @@
                 <p>&#34;Mr. Jareth,&#34; Lily murmured, &#34;her hearing was damaged by Glynnis&#39;s slap. She can&#39;t hear you.&#34;</p>
                 <p>Rage ignited in his veins. He wanted to rip Glynnis apart.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;If Mari loses her hearing,&#34; he growled, &#34;I&#39;ll gouge out Glynnis&#39;s eyes and shove them into her ears.&#34;</p>
                 <p>Then he pressed a kiss to Mari&#39;s damp forehead.</p>
                 <p>Ten minutes later, a terrified medical team examined Mari.</p>

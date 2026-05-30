@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2319,28 +2399,28 @@
                 <p>She checked her phone only after calming herself down. Turned out it wasn’t a reply from Timothy, but a message from Felix.</p>
                 <p>‘Mia, I recorded what you confessed to me in the room that day. About how your brother was actually the offender.”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Mia recollected her memories. Indeed, she actually admitted it.</p>
                 <p>Frowning, she contacted Felix. “What do you want?”</p>
                 <p>“Come to the hospital. Let’s talk.”</p>
                 <p>“I don’t think there’s anything to talk about between us.”</p>
                 <p>“If you don’t come, I’ll send the voice recording to the police. You don’t want your brother to be</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>taken to prison for this, do you?”</p>
                 <p>She furrowed her brows. In the end, she gave in and agreed to drop by the hospital.</p>
                 <p>She packed up and took a cab to the hospital.</p>
                 <p>It was obvious what Felix was up to. He was going to leverage the voice recording to achieve</p>
                 <p>Regardless, she was mentally prepared for it. Worst–case scenario, the police would obtain the voice recording anyway.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Mia entered the room, where Felix and Janice were present. Mia’s expression was cold. “What do you want to talk about?”</p>
                 <p>Janice chastised, “What’s with that attitude? If it hadn’t been for your brother, would Felix have ended up like this? If Felix hadn’t liked you, I would’ve stopped him from going out with a divorced</p>
                 <p>woman.</p>
                 <p>Mia mocked, “Mrs. Quilter, I’ve never liked your son. Not even for a brief moment. And I’ve never accepted his feelings. I think you’re getting ahead of yourself, seeing me as your future daughter-</p>
                 <p>in–law.”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Why beat around the bush when things had gotten this ugly? From the way Mia saw it, there was no need for that.</p>
                 <p>Janice’s fingers were trembling with anger. “Since you know your place, why are you still working at my son’s place? How shameless of you!”</p>
                 <p>“I don’t think that’s the right choice of words, Mrs. Quilter. First, Felix was the one who offered me to work for him. When I wanted to quit, he was the one asking me to stay. You can ask him to verify that.” Mia shifted her gaze to Felix, not wanting to speak to Janice.</p>
@@ -2351,7 +2431,7 @@
                 <p>“Where’s the voice recording? What do you plan to do with it?” She dived into the main topic right</p>
                 <p>away.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

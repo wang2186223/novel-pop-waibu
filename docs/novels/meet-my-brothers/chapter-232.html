@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>Maya couldn’t grasp the potential ramifications of losing this social standing. Therefore.</p>
                 <p>regardless of the situation, she couldn’t afford to forfeit it!</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>In a composed tone, Dominic spoke, “Yes, once you get married, you won’t have to confine yourself at home to care for Grandma, and you won’t have to constantly please everyone in the</p>
                 <p>family.</p>
                 <p>“It’s time for your life to start anew.”</p>
@@ -2321,7 +2401,7 @@
                 <p>“I understand that accepting this situation may be difficult for you at the moment. So, I’ll give you</p>
                 <p>some time to process it.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>“Take a careful look at the conditions in the contract and let me know if there’s anything else you</p>
                 <p>need. I’ll do my best to accommodate your requests. That’s all for now.”</p>
                 <p>As the call concluded, Mia shot a disdainful glance at the document before her.</p>
@@ -2329,7 +2409,7 @@
                 <p>After years of dealing with Laura, Maya couldn’t fathom being told to leave so abruptly. There was no way she was going to accept that!</p>
                 <p>At the moment, she was only engaged to Timothy, and it was a fake engagement at that.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Losing her position as the Lane family heiress was something Maya couldn’t afford. She certainly</p>
                 <p>couldn’t consent to these terms.</p>
                 <p>Without hesitation, Maya called Blake, urging. “Investigate whether Dominic has discovered information about my past actions. Find out where the mistake might have occurred!”</p>
@@ -2337,7 +2417,7 @@
                 <p>Throughout her life, Maya had adeptly concealed her secrets.</p>
                 <p>Connor had stumbled upon Maya’s true identity by accident, and since that revelation, his demeanor toward her had undergone a significant shift, almost treating her like a stranger.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>However, even with that incident, the most severe consequence she faced was a scolding from Dominic.</p>
                 <p>How could Dominic contemplate severing Maya’s adoptive ties over such an occurrence?</p>
                 <p>There must be an aspect of this situation that Maya was unaware of.</p>
@@ -2345,7 +2425,7 @@
                 <p>At this moment, a memory flashed through Maya’s mind–that afternoon at the engagement venue. She vividly remembered chasing after Mia and witnessing her slipping into Connor’s car</p>
                 <p>However, Connor had consistently been unresponsive to her calls, a reluctance that seemed even more pronounced now, making it unlikely that she would receive any answers.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>If Maya were to upset Connor, there was a chance he might not attend her engagement ceremony tomorrow, potentially jeopardizing Laura’s upcoming surgery.</p>
                 <p>After a moment of consideration, Maya sent a WhatsApp message to Felix: “To ensure the seamless flow of my upcoming wedding. I hope that the designer, Mia, can also be present at my engagement ceremony tomorrow.”</p>
                 <p>Maya was determined to uncover the relationship between Mia and Connor.</p>
@@ -2355,7 +2435,7 @@
                 <p>Observing this scene, Mia couldn’t help but smile. This was her new life–a home brimming with a lively atmosphere.</p>
                 <p>Suddenly, Connor approached her. “You came back even later than I did. Where did you go?”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

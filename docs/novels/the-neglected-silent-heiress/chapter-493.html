@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2308,19 +2388,19 @@
                 <p>Yet Olivia couldn&#39;t shake an uneasy feeling as she observed Margaret&#39;s unnatural silence. She sensed Margaret wouldn&#39;t surrender so easily. Olivia&#39;s instincts proved correct. When she spotted Margaret disguised as a nurse beside Isabelle, her heart stopped. Her mind went blank, limbs turning to jelly.</p>
                 <p>Margaret had lost all traces of her former vibrancy. Her once-youthful, charming face now appeared haggard and aged, bearing clear marks of hardship.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>She looked like someone who&#39;d been suffering in isolation. Despite everything, when Margaret saw Olivia, she actually smiled. But that smile, plastered across her pale face, twisted into something almost demonic.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Olivia quickly regained her composure, locking eyes with Margaret. &#34;Take whatever you want—even my life—but spare my child.&#34; Little Isabelle seemed to grasp the gravity of the situation. Though so young, fear flickered in her wide eyes as she bit her lip hard, fighting back tears.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Margaret clutched a syringe in one hand and Isabelle&#39;s IV tube in the other, her gaze icy. &#34;Olivia, no matter how powerful you are, your vulnerabilities ensure you&#39;ll never be truly invincible.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;What do you want?&#34; Olivia barely dared to breathe in that tense moment.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Money? Or perhaps I can give you a new identity, help you disappear somewhere no one knows you—let you live out your days in peace. You know what I&#39;m capable of. Name your price, and I&#39;ll deliver,&#34; Olivia attempted to negotiate.</p>
                 <p>Margaret wavered momentarily before snapping back to reality. Olivia had humiliated her so thoroughly by exposing everything to the public. How could she possibly forgive her? Following Eleanor&#39;s plan offered her best shot at revenge.</p>
                 <p>With that thought, Margaret sneered, &#34;Fine, I&#39;ll tell you what I want. Let&#39;s see if you can actually deliver.&#34; Without hesitation, Olivia nodded. &#34;I want Liam,&#34; Margaret demanded. &#34;Get him here. Now.&#34;</p>
@@ -2328,7 +2408,7 @@
                 <p>That simple, steady reassurance nearly brought Olivia to tears. Liam had been watching over them this entire time.</p>
                 <p>The moment she&#39;d spotted Margaret, Liam&#39;s men must have alerted him immediately. And he&#39;d clearly dropped everything to race to the hospital. Olivia had to admit—sometimes, Liam could be surprisingly dependable.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>&#34;Completely,&#34; Evelyn confirmed.</p>
                 <p>Victoria pressed further, &#34;Then why did he agree to marry me, only to change his mind? If not because of you, then what?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Rosalind muttered under her breath while eating, &#34;Aside from your family&#39;s money, you have nothing to offer. General Blackwood isn&#39;t blind. Why would he want you?&#34;</p>
                 <p>Victoria&#39;s face flushed crimson. She grabbed a spoon and hurled it at Rosalind.</p>
                 <p>With astonishing reflexes, Rosalind dodged the flying utensil, leaving everyone stunned. She slammed the table and rose aggressively, catching Victoria off guard.</p>
@@ -2321,7 +2401,7 @@
                 <p>Throughout dinner, Julian remained silent but watchful, his piercing gaze fixed on Evelyn. She sensed his growing suspicion.</p>
                 <p>Liam&#39;s sharp command cut through the tension. &#34;Enough. Everyone focus on eating.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>The meal, more like a battlefield, finally concluded.</p>
                 <p>As night fell, Rosalind crept onto the balcony outside Victoria&#39;s room to eavesdrop. What she discovered shocked her.</p>
                 <p>Julian entered Victoria&#39;s room and locked the door. Without warning, he delivered a stinging slap.</p>
@@ -2329,7 +2409,7 @@
                 <p>Victoria retorted, &#34;How dare you hit me? Is this because of Evelyn?&#34;</p>
                 <p>Julian warned coldly, &#34;Listen carefully. Your primary mission is to find Evelyn, not Liam.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;I was sent here to get close to Liam and steal Aldenria&#39;s secrets.&#34;</p>
                 <p>&#34;You? You&#39;ll never get near Liam in this lifetime.&#34;</p>
                 <p>Victoria smirked. &#34;Just wait. In two months, I&#39;ll not only marry Liam but carry his child.&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>Evelyn&#39;s expression darkened. Though she&#39;d suspected, hearing it confirmed still shocked her.</p>
                 <p>Rosalind added, &#34;I couldn&#39;t catch the organization&#39;s name.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Evelyn spoke slowly, recalling Liam&#39;s investigation. &#34;It&#39;s the Obsidian Circle.&#34;</p>
                 <p>Rosalind&#39;s eyes widened. &#34;The Obsidian Circle?&#34;</p>
                 <p>Evelyn nodded.</p>
@@ -2354,7 +2434,7 @@
                 <p>&#34;How do we find their hideout?&#34;</p>
                 <p>Evelyn&#39;s eyes hardened. &#34;We capture their intermediary. Then we&#39;ll locate their headquarters.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

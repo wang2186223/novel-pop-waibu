@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>Mia thought that no one doubted it, but he had noticed that something was amiss as well.</p>
                 <p>He reasoned, &#34;There were many loopholes. The culprit was caught so suddenly. Everything seemed so smooth, but Grandma has yet to regain consciousness. Your brothers were hiding your identity at that time too. We couldn&#39;t pry anything out of Dana because she lost her sanity in prison.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Dana lost her sanity?&#34; That was a surprise. &#34;That can&#39;t be.&#34;</p>
                 <p>Dana was also an orphan. They became friends because of their similar backgrounds.</p>
                 <p>However, Mia didn&#39;t expect Dana to be bought off by Maya. Dana betrayed Mia and joined hands with Maya in order to become Ms. Lane.</p>
                 <p>Unfortunately for Dana, Mia&#39;s brothers saw through her plan.</p>
                 <p>In the end, karma came for Dana and she was forced to quit college.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Mia pointed out, &#34;But Dana was able to work at Barrett residence. That&#39;s not something an ordinary person can do. Reality is different from movies. It&#39;s not that easy to do it. Who helped her get into Barrett residence? That person must be involved in this.&#34;</p>
                 <p>She looked at him, hoping to get an answer from him.</p>
                 <p>Timothy should be investigating the matter.</p>
                 <p>e</p>
                 <p>&#34;I investigated how she got into our place. Grandma hired some people to help out with the banquet. Dana got the job after getting</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>han ovan</p>
                 <p>recommended by the orphanage.&#34;</p>
                 <p>&#34;That was it?&#34;</p>
                 <p>&#34;Yes. Nothing was out of the ordinary. Grandma often donated to old folks homes and orphanages. Some of the maids at home are orphans too.&#34;</p>
                 <p>Mia recalled the past when she was still an orphan. Laura was indeed a nice person.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Laura didn&#39;t look down on Mia because of her background. She even let her and Tomothy get married!</p>
                 <p>Mia furrowed her brows. &#34;So Dana was taking advantage of Laura&#39;s kindness?&#34;</p>
                 <p>In actuality, no average person could work as a maid for a rich family.</p>
                 <p>But Laura was different. She loved charity, and Dana had taken this opportunity to get into Barrett residence.</p>
                 <p>If it wasn&#39;t for Laura&#39;s kindness, Dana wouldn&#39;t have had the chance to approach the Barrett family. Let alone hurt Laura.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Timothy huffed, &#34;I don&#39;t want to admit that, but it seems like that was the case.&#34;</p>
                 <p>&#34;Nice people tend to be in trouble</p>
                 <p>more than bad people do. I can&#39;t et</p>
@@ -2352,7 +2432,7 @@
                 <p>&#34;Yes. She also had a butterfly tattoo on her ankle.&#34;</p>
                 <p>After her memories recovered, Mia had looked into how Luna got that tattoo on her ankle, thinking that it could be a breakthrough.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2315,7 +2395,7 @@
                 <p>Let them keep believing I’m single. A secret thrill ran through her. When Alexander and I reveal the truth, it’ll be so much sweeter.</p>
                 <p>&#34;I’m focusing on my career,&#34; Evelyn stated.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Margaret’s expression froze. &#34;Career?&#34;</p>
                 <p>Originally, the Hayes family had planned for Evelyn to train at Horizon Enterprises after graduation.</p>
                 <p>But after that incident three years ago, Vanessa had climbed the corporate ladder effortlessly—now on the verge of becoming deputy manager of the project division.</p>
@@ -2325,7 +2405,7 @@
                 <p>Evelyn met her gaze evenly. &#34;Titan Capital Group.&#34;</p>
                 <p>Silence.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Then, a disbelieving laugh. &#34;You? At Titan?&#34; Margaret scoffed. &#34;Do you even know who runs that company?&#34;</p>
                 <p>Evelyn smiled faintly. &#34;Oh, I know.&#34;</p>
                 <p>Very, very well.</p>
@@ -2345,7 +2425,7 @@
                 <p>Richard frowned. &#34;Titan Capital? That’s—&#34;</p>
                 <p>&#34;Alexander Whitmore’s company,&#34; Vanessa finished, her voice icy.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Evelyn set her cup down with deliberate calm. &#34;Exactly.&#34;</p>
                 <p>Vanessa’s lips pressed into a thin line. Richard exhaled heavily, his expression unreadable.</p>
                 <p>The tension was palpable.</p>
@@ -2355,7 +2435,7 @@
                 <p>This wasn’t over.</p>
                 <p>The sun cast long shadows across the hardwood floors of Hawthorne Estate as Evelyn Carter stood by the window, her fingers tracing the edge of the admission letter she had received three years ago. A master’s degree—her dream, shattered by one cruel twist of fate.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Vanessa Hart blinked, her perfectly manicured nails tapping against her teacup. &#34;I don’t understand,&#34; she murmured, tilting her head. &#34;Why would you refuse Horizon Enterprises? It’s the best opportunity you’ll ever get.&#34;</p>
                 <p>Margaret Hayes let out an exasperated sigh, her sharp gaze cutting through the tension in the room. &#34;Is the assistant position beneath you?&#34; she snapped. &#34;You have no experience, Evelyn. You can’t afford to be this picky.&#34;</p>
                 <p>Vanessa pressed her lips together, then added in a saccharine whisper, &#34;I had a master’s degree when I started at Horizon, and I still had to work my way up. Maybe Evelyn expects to waltz in as CEO.&#34;</p>
@@ -2366,7 +2446,7 @@
                 <p>Titan Capital Group—Alexander Whitmore’s empire.</p>
                 <p>And just like that, the game had changed.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

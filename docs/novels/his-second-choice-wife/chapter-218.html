@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,7 +2390,7 @@
                 <p>&#34;Thanks,&#34; Evelyn murmured before ending the call.</p>
                 <p>She slumped against the seat, exhaling heavily as the subway carried her back to Blackwood Manor.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Upon arrival, she froze at the entrance. Sebastian and Isabella had returned, chatting animatedly with Richard and Eleanor in the living room.</p>
                 <p>Evelyn hesitated. Sebastian and Isabella had always despised her. Would her presence drive them away again?</p>
                 <p>Cassandra approached silently, leaning against Evelyn&#39;s shoulder. &#34;Hello, Evelyn.&#34;</p>
@@ -2320,22 +2400,22 @@
                 <p>Evelyn bit her lip before whispering, &#34;Why do they hate me so much?&#34;</p>
                 <p>Cassandra smirked. &#34;Sebastian&#39;s a spineless man who mirrors his wife&#39;s opinions. As for Isabella...&#34; She lowered her voice. &#34;She was obsessed with Liam. Went through great lengths to marry him, but got rejected.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Out of spite, she married Sebastian instead. Notice how she barely tolerates him? Of course she resents you.&#34;</p>
                 <p>Evelyn absorbed this shocking revelation as they walked toward the stairs.</p>
                 <p>Suddenly, Cassandra stiffened. &#34;Liam! When did you return?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Evelyn looked up to find Liam emerging from a room, his intense gaze locking onto her. Surprise flickered in his eyes.</p>
                 <p>Cassandra disentangled herself awkwardly. &#34;What a reunion! Sebastian and Isabella are back, and now you. The manor hasn&#39;t been this lively in ages.&#34;</p>
                 <p>Under Liam&#39;s burning stare, Evelyn blurted, &#34;Alexander isn&#39;t home yet.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Liam&#39;s expression darkened.</p>
                 <p>Cassandra coughed. &#34;Why bring up Alexander? I&#39;ll leave you two alone.&#34; As she retreated, she noted their tense body language - outwardly indifferent, yet their eyes betrayed deeper emotions.</p>
                 <p>Now alone in the hallway, the contrast was stark - cheerful voices downstairs, but multiple pairs of eyes watching their every move from below.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

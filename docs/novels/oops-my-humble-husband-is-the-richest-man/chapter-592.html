@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2316,7 +2396,7 @@
                 <p>&#34;Grace. As in royal grace.&#34;</p>
                 <p>Grace paused, then recorded it truthfully. Next, the two officers conducted a routine interview with Evelyn. After reviewing the Valentine family&#39;s surveillance footage, they confirmed Susan Langley&#39;s evidence of attempted murder.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Susan had nothing to say in her defense.</p>
                 <p>Grace looked at Evelyn. &#34;What was her motive?&#34;</p>
                 <p>Evelyn frowned slightly. &#34;She was acting under orders.&#34;</p>
@@ -2327,7 +2407,7 @@
                 <p>Susan sneered. &#34;What evidence could you possibly have?&#34;</p>
                 <p>Evelyn looked at her. &#34;I don&#39;t have any. But you do.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Susan scoffed. &#34;Even if I did, why would I give it to you?&#34;</p>
                 <p>Evelyn replied calmly, &#34;Because only by giving it to me can you survive.&#34;</p>
                 <p>Susan froze.</p>
@@ -2338,7 +2418,7 @@
                 <p>Unless Fox had leverage over her, or held her very life in her hands!</p>
                 <p>Considering Marcus Valentine&#39;s altered medical report at the hospital, Fox&#39;s apparent influence in the medical system, and the undetectable poisoning of Mr. Valentine...</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>This Fox was a master of poisons.</p>
                 <p>Therefore, Evelyn directly deduced that Susan had also been poisoned.</p>
                 <p>If Fox wanted to control Susan, she wouldn&#39;t just administer poison without an antidote. To ensure Susan&#39;s obedience at every stage...</p>
@@ -2349,7 +2429,7 @@
                 <p>&#34;Wrong. Only by telling us who Fox is can you be saved.&#34;</p>
                 <p>Susan was stunned. &#34;What do you mean?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Evelyn crouched down in front of her. &#34;Let&#39;s make a deal. You provide evidence against Fox, and I&#39;ll make sure Fox is placed in the same cell as you. That way, you&#39;ll have a chance to get close to her.&#34;</p>
                 <p>Only by getting close to Fox could she obtain the antidote!</p>
                 <p>Susan&#39;s pupils contracted. &#34;Really?&#34;</p>
@@ -2360,7 +2440,7 @@
                 <p>She stared fixedly at Evelyn.</p>
                 <p>Tomorrow was the day the poison would flare up. Her coming here today was also to complete her mission!</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Now that she was caught, if she didn&#39;t get the antidote tomorrow, she would die!</p>
                 <p>Panicked, Susan looked directly at Evelyn. &#34;Fine, I&#39;ll talk. I have evidence!&#34;</p>
                 <p>She took out her phone. &#34;I have Fox&#39;s contact information! Even though Fox automatically deletes all records from my phone after each contact, I recorded all our chat logs long ago! They&#39;re saved in my cloud storage!&#34;</p>

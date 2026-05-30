@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,38 +2391,38 @@
                 <p>She had anticipated Ethan would prioritize Isabella, which was why she&#39;d sent that final message directly to Zachary.</p>
                 <p>Jessica sighed. &#34;Miss Valentine is so fortunate, born into such a prominent family.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;What do you mean?&#34;</p>
                 <p>&#34;With her looks, she&#39;d never become the future Mrs. Roscente without that pedigree.&#34; Jessica gave Sophia an appraising look. &#34;But you—standing next to Mr. Roscente, you two look like a match made in heaven.&#34;</p>
                 <p>Lowering her voice, she added, &#34;I&#39;ve always shipped you two.&#34;</p>
                 <p>Sophia&#39;s eye twitched. &#34;Some ships can be niche, but this one is just wrong.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;No, no,&#34; Jessica said mysteriously. &#34;Shipping everyone keeps my life balanced.&#34;</p>
                 <p>Sophia: &#34;...&#34;</p>
                 <p>As the workday neared its end, Ethan strode into the office, his presence icy.</p>
                 <p>He stopped abruptly at Sophia&#39;s workstation, his gaze sharp as a blade. &#34;Secretary Lowell. Inside. Now.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>From his stormy expression, Sophia knew trouble was coming.</p>
                 <p>But she was prepared. Calmly, she followed him into the office.</p>
                 <p>Ethan was flipping through a document, his face dark with fury.</p>
                 <p>Sophia recognized it as the project proposal Isabella had taken.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Mr. Roscente.&#34; She stood composed before his desk.</p>
                 <p>He looked up, his piercing stare cutting into her. &#34;Did you prepare this tender proposal?&#34;</p>
                 <p>&#34;Yes,&#34; she admitted without hesitation.</p>
                 <p>Ethan let out a cold laugh and slammed the file down in front of her. &#34;Leaking company secrets—do you understand the consequences?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Sophia paled. &#34;I don&#39;t know what you&#39;re talking about.&#34;</p>
                 <p>To her, his accusation was utterly baffling.</p>
                 <p>He seized her chin, his grip painfully tight. &#34;Still pretending?&#34;</p>
                 <p>Sophia tried to pull away, but he only tightened his hold.</p>
                 <p>&#34;I truly don&#39;t understand,&#34; she said through gritted teeth.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

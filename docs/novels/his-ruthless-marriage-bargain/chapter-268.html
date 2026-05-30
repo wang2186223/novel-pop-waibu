@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,32 +2390,32 @@
                 <p>&#34;None at all.&#34; Dominic grinned, his satisfaction evident. &#34;In fact, I’m proud you have such a husband.&#34;</p>
                 <p>Evelyn huffed and turned away, stepping onto the floor. &#34;I’m going!&#34; She took a few steps before pausing abruptly. &#34;Oh, right!&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Yes?&#34;</p>
                 <p>&#34;Do you know Lucien Dubois?&#34; She wondered if Dominic might recognize the name—his network was vast, after all.</p>
                 <p>&#34;No, never heard of him. Who is he?&#34; Dominic frowned slightly, shaking his head after a moment of thought.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Evelyn hadn’t expected that. &#34;Just someone in the industry. A perfumer. I didn’t think you’d know him since you’re not from that world.&#34;</p>
                 <p>Dominic watched her disappear into the bathroom, her words lingering in his mind. Not from that world? It felt like a subtle dismissal, and it irked him.</p>
                 <p>His gaze drifted to the two new wooden figurines on the shelf—delicate, hand-carved, their expressions joyful. He picked one up, inhaling the faint, earthy scent of the wood.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>When Evelyn returned, she caught him examining them and beamed. &#34;Do you like them? I have good taste, don’t I?&#34;</p>
                 <p>&#34;They’re well-made. A boy and a girl.&#34; Dominic nodded, his tone thoughtful.</p>
                 <p>&#34;Exactly! The craftsmanship is incredible—every detail, even their expressions. And the wood itself is unusual. I found them in a little shop today. The scent was unique, nothing like ordinary wood. I was thinking… maybe there’s potential for a new fragrance line.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>She spoke excitedly, oblivious to the shift in Dominic’s focus.</p>
                 <p>&#34;Perfect,&#34; he murmured, turning the figurines in his hands before glancing back at her. &#34;Why didn’t you tell me you were thinking about this?&#34;</p>
                 <p>&#34;About what?&#34; She blinked, assuming he meant the fragrance idea. &#34;Oh, it just came to me this afternoon. It’s only a rough concept—I haven’t figured out how to execute it yet.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Before she could finish, Dominic grabbed her wrist and yanked her close. &#34;Execution is simple,&#34; he said, his voice dropping. &#34;We can start now.&#34;</p>
                 <p>He bent to kiss her, but Evelyn pressed her hands against his chest. &#34;What are you doing?!&#34;</p>
                 <p>&#34;Putting it into action.&#34; His grin was wicked. &#34;If you’ve thought about it, we should try. Maybe not two at once, but we can take our time. Either way, effort is required.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

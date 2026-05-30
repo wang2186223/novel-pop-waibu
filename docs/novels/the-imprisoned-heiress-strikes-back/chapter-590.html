@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>Suddenly, she remembered Alexander. They&#39;d planned to have dinner together tonight.</p>
                 <p>&#34;Will he realize something&#39;s wrong when I don&#39;t show up?&#34; she thought.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Alexander arrived at the symphony hall precisely on time, waiting for Evelyn.</p>
                 <p>But as minutes turned to hours, there was still no sign of her.</p>
                 <p>Assuming she might be running late, he waited an additional twenty minutes.</p>
                 <p>Just then, Isabella emerged from the building. Spotting his car, she hurried over, her face lighting up with delight.</p>
                 <p>&#34;Alexander! What a surprise to see you here!&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;I&#39;m waiting for Evelyn. We have dinner plans.&#34;</p>
                 <p>Isabella&#39;s smile faltered. &#34;Oh... I thought maybe you&#39;d come to see me.&#34;</p>
                 <p>Alexander didn&#39;t respond, his gaze fixed on the building&#39;s entrance. Undeterred, Isabella opened the passenger door and slid in without invitation.</p>
                 <p>&#34;Then I&#39;ll keep you company while you wait.&#34;</p>
                 <p>Alexander&#39;s expression flickered briefly, but he remained silent. After ten minutes, Isabella sighed dramatically.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;I&#39;m starving. Why is she always so inconsiderate with other people&#39;s time?&#34;</p>
                 <p>Alexander frowned. &#34;I&#39;m taking Evelyn out tonight. If you&#39;re hungry, you should go eat.&#34;</p>
                 <p>&#34;But I hate dining alone. What&#39;s the harm in joining you?&#34; Isabella pouted, her voice dripping with petulance.</p>
                 <p>&#34;Isabella,&#34; he said firmly, &#34;I&#39;ve told you before. I don&#39;t want Evelyn getting the wrong idea. I&#39;m a married man, and your presence would only create unnecessary tension. Surely you understand that?&#34; Isabella fell silent. After a long pause, she lowered her head, tears welling in her eyes. &#34;Alexander,&#34; she whispered, her voice trembling. &#34;Do you know what today is?&#34;</p>
                 <p>He turned to look at her, confused.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;It&#39;s my twenty-third birthday. Did you forget?&#34;</p>
                 <p>She bit her lip, her fingers twisting together as if trying to hold herself together.</p>
                 <p>&#34;Back home, birthdays were special. My parents would each give me presents, and I was the center of attention all day.&#34;</p>
                 <p>Her gaze drifted to the window, lost in nostalgic memories.</p>
                 <p>&#34;But now... my family is gone. The only person who still celebrated with me was my brother Andrew.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Her voice broke with emotion. &#34;And now... Andrew&#39;s gone too.&#34;</p>
                 <p>Tears streamed down her cheeks, splashing onto her tightly clasped hands.</p>
                 <p>She wiped them away gently, her movements as delicate as her fragile state.</p>
@@ -2352,7 +2432,7 @@
                 <p>Isabella&#39;s tears transformed into a radiant smile. Without thinking, she reached for his hand.</p>
                 <p>From a short distance away, a man stood observing the entire exchange through the open car window.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

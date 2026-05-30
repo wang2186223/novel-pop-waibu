@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>&#34;Does the Chinese matchmaker have jurisdiction overseas?&#34;</p>
                 <p>Alexander chuckled. &#34;Perhaps even matchmakers keep up with the times. Globalization and all.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Just then, the ICU door opened.</p>
                 <p>&#34;Dr. Carter.&#34;</p>
                 <p>Evelyn hurried forward. &#34;Dr. Zhang, how&#39;s my mother?&#34;</p>
@@ -2321,7 +2401,7 @@
                 <p>&#34;Thank goodness. Thank you.&#34;</p>
                 <p>&#34;Don&#39;t mention it.&#34; Dr. Zhang glanced at Alexander and teased, &#34;Though your husband here deserves some credit. He was your human pillow all night. My back ached just watching.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Evelyn&#39;s smile froze.</p>
                 <p>Alexander smoothly interjected, &#34;Spouses should support each other. When my grandmother was hospitalized, Evelyn took excellent care of her too.&#34;</p>
                 <p>Dr. Zhang sighed. &#34;Dr. Carter, you&#39;re truly blessed.&#34;</p>
@@ -2329,7 +2409,7 @@
                 <p>&#34;Goodness, how sweet.&#34; Dr. Zhang waved a hand, laughing. &#34;I&#39;ll get back to work.&#34;</p>
                 <p>Once the doctor was out of earshot, Alexander mused, &#34;Why does it seem like everyone here knows me?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Evelyn shot him a glare. This man used to park his luxury SUV outside the hospital daily to pick her up. Of course he stood out.</p>
                 <p>That reminded her of something.</p>
                 <p>&#34;With your credentials, how did Annabelle ever overlook you?&#34;</p>
@@ -2337,7 +2417,7 @@
                 <p>&#34;Linda&#39;s new husband?&#34;</p>
                 <p>&#34;He was also Annabelle&#39;s &#39;close friend.&#39;&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Evelyn let out a knowing &#34;Ah.&#34;</p>
                 <p>&#34;Whatever their relationship was,&#34; Alexander shrugged, &#34;she never admitted to anything.&#34;</p>
                 <p>&#34;Did Paul&#39;s divorce involve her?&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>Evelyn scoffed. &#34;Weren&#39;t you supposedly in love with her? Couldn&#39;t even handle the men around her?&#34;</p>
                 <p>Alexander sighed. &#34;You think I didn&#39;t try?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Failed?&#34;</p>
                 <p>&#34;Like a math problem where the tank never fills,&#34; he rubbed his temples, &#34;because someone keeps draining it.&#34;</p>
                 <p>Evelyn&#39;s eyes widened in realization. &#34;She added new &#39;friends&#39; faster than you could remove the old ones?&#34;</p>
@@ -2357,7 +2437,7 @@
                 <p>&#34;Give it here. I&#39;ll call him back.&#34;</p>
                 <p>&#34;No need.&#34; He slipped the phone back into his jacket. &#34;I already answered.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

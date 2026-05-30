@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>willing to back down, Shelly voiced her frustration, “Monalize, let me enlighten you about something. That dress Luna is wearing might even be borrowed. I mean, how could she possibly afford a limited edition Vior dress?”</p>
                 <p>“That doesn’t seem likely. Hasn’t the Barrett family provided Luna with any financial support?”</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>“They’ve only allocated funds for Asher’s care. How much could that</p>
                 <p>possibly be? If it weren’t for him, Luna would never have stepped foot in the</p>
                 <p>Barrett residence.”</p>
@@ -2321,7 +2401,7 @@
                 <p>The two of them proceeded to the fashion show together.</p>
                 <p>The venue was already bustling with attendees, many eagerly anticipating the show.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Luna and Sharon had already taken their seats in the center of the front row.</p>
                 <p>Mia strode over to the two women, positioning herself directly in front of</p>
                 <p>them.</p>
@@ -2329,7 +2409,7 @@
                 <p>Shelly’s expression soured; she didn’t want to be assigned to a corner seat.</p>
                 <p>Turning to Mia, she voiced her concern, “Monalize, do you think the organizers might have made a mistake with this seating arrangement? Given your status, it seems odd that they would place you so far to the side.”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>After all, Monalize held a VIP membership card!</p>
                 <p>Observing the vacant seats at the end, Sharon sneered, “Well, it seems that people claim to be heiresses of prestigious families, yet they can’t</p>
                 <p>even secure a decent seat.”</p>
@@ -2337,7 +2417,7 @@
                 <p>Sharon raised an eyebrow. “What do you mean?”</p>
                 <p>“Quite literally, Mrs. Barrett, you and Luna are in the wrong seats. These are</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>mine.”</p>
                 <p>With that, Mia presented two invitations, clearly indicating that she had reserved two seats.</p>
                 <p>Sharon’s voice suddenly grew louder, exclaiming, “That’s impossible. Whenever I attend these shows, I’m always seated in the middle!”</p>
@@ -2345,7 +2425,7 @@
                 <p>with the protocols here. Bern City’s arrangements may differ from those in Nord City.”</p>
                 <p>Mia chuckled, rétorting, “Luna, I’ve attended more shows than you’ve had rainy days in April.”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Just then, a nearby staff member named Tina Johnson noticed the</p>
                 <p>commotion. She hurried over and asked politely, “Is there anything I can help you with?”</p>
                 <p>Sharon raised her voice, demanding, “Please remove this woman from here.</p>
@@ -2355,7 +2435,7 @@
                 <p>Luna’s tone carried a hint of mockery, evident in the arch of her eyebrows.</p>
                 <p>Mia remained composed, while Shelly beside her appeared uneasy. Monalize, have you made arrangements with the organizers?”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

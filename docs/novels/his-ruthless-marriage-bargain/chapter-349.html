@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2321,7 +2401,7 @@
                 <p>She tapped her chin thoughtfully. &#34;Come on, Viktor. Where’s my phone? And my assistant’s?&#34;</p>
                 <p>Viktor’s lips twisted into a grotesque grin. &#34;It’s broken.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Broken?&#34;</p>
                 <p>Evelyn smiled back at him—sweet, innocent, chilling.</p>
                 <p>Then, in a flash of movement, the knife in her hand plunged straight through his palm, pinning it to the floor.</p>
@@ -2329,7 +2409,7 @@
                 <p>Viktor howled.</p>
                 <p>&#34;Was this the hand that broke my phone?&#34; she asked, her voice light, as if discussing the weather.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>She twisted the dagger slightly.</p>
                 <p>&#34;Or did I get it wrong? Should I try the other one?&#34;</p>
                 <p>With a swift yank, she pulled the blade free.</p>
@@ -2337,7 +2417,7 @@
                 <p>Evelyn laughed. &#34;You’d have to move first.&#34;</p>
                 <p>She leaned closer, her breath ghosting over his ear. &#34;One last chance. Where. Is. My. Phone?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;It really is broken,&#34; Ivan blurted out, his single eye wide with fear.</p>
                 <p>Evelyn turned her head slowly, fixing him with a stare that made his blood run cold.</p>
                 <p>&#34;I—I was worried about tracking,&#34; he stammered. &#34;So I smashed it on the road. Threw it away. It’s gone.&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>Evelyn exhaled slowly, twirling the bloodied dagger between her fingers. Then, with deliberate steps, she approached Ivan.</p>
                 <p>&#34;You smashed it?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Her voice was eerily calm.</p>
                 <p>She tilted her head, studying him like a predator examining prey. Her face was angelic, but her eyes—those were the eyes of a demon.</p>
                 <p>&#34;I—I can get you a new one,&#34; Ivan offered weakly.</p>
@@ -2357,7 +2437,7 @@
                 <p>&#34;Looks like you’re about to have company.&#34;</p>
                 <p>None of them dared to speak.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

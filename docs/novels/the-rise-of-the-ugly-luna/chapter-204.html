@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>&#34;You jerk.&#34; I hit him lightly in the chest. &#34;Why would you plan all of these and not even tell me? I didn&#39;t-|didn&#39;t even say a word.&#34;</p>
                 <p>He cocked a brow at me. &#34;Well, I didn&#39;t mention anything about you giving a speech, did I? I only asked if you were strong enough to stand before the Council.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>I laughed then hugged him, burying my tear-soaked face in the dip of his shoulder.</p>
                 <p>&#34;Thank you. So so much. I don&#39;t deserve it.&#34;</p>
                 <p>He spanked my ass. &#34;Say that again and I&#39;ll have you locked up. You&#39;re special and deserve every bit of it.&#34;He pulled my hair back so he could look into my face.&#34;I promised you I wouldn&#39;t let anyone hurt you. And no matter what the result turns out to be, I still won&#39;t let you get hurt, Lyric. They&#39;ll have to come through me first.&#34;</p>
@@ -2321,7 +2401,7 @@
                 <p>&#34;I love you, Jaris Dreadmoor. Today, tomorrow, and forever.&#34; I&#39;d never said anything with more conviction in my life.</p>
                 <p>I knew from the bottom of my heart that it was true.There was not a single soul I could ever love more than the man in front of me.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>His hand wrapped possessively around my waist.</p>
                 <p>&#34;I love you too, Lyric.More than you think.&#34;</p>
                 <p>Hugging him again, I rested my head on his shoulder.This time, I caught Marta staring at us from the start of the hallway.</p>
@@ -2329,7 +2409,7 @@
                 <p>She looked vicious in her long red dress, hands on her waist, mouth twisted in fury. She looked like she could murder someone.</p>
                 <p>Although the speech my friends and acquaintances had given seemed to have some effect on the crowd,I was still damn scared on what the result would be.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>The voting took some hours as more people came from outside to cast theirs when they heard what was happening.. When each member voted, a silver pin was pierced into their thumb to mark them for the day and prevent them from returning to cast another vote.</p>
                 <p>I was so nervous I couldn&#39;t eat despite how hungry l was. Not even when Jaris offered me something l was craving and tried to force me to eat it.</p>
                 <p>When the vote finally ended and it was time for the results, my anxiety got even higher than I thought possible.</p>
@@ -2337,7 +2417,7 @@
                 <p>&#34;You got this, Ly. Everything will be fine,&#34; my best friend said reassuringly.</p>
                 <p>But it did little to calm my nerves.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;A-Are you sure? I mean, what if the people weren&#39;t that moved and still went ahead to vote against it?Does that mean I&#39;ll be handed to the Executioners?&#34;</p>
                 <p>&#34;If you don&#39;t stop saying shit right now, I might actually spank you.&#34; For effect, he hit me lightly on the shoulder.</p>
                 <p>He finally let go of my hand. I nervously rubbed them together,reciting a silent prayer on my lips.</p>
@@ -2345,7 +2425,7 @@
                 <p>&#34;We want to thank everyone of you for voting. This shows how much you value the matters of our community. The result will be called now, and if your opinion didn&#39;t win, please note that it was wvell received and appreciated. Over here, we work with the highest vote.&#34; He looked down at a sheet of a paper.</p>
                 <p>&#34;For those in support of maintaining the law concerning Siphons, we have a hundred and fifty-nine votes.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>I&#39;d stopped breathing, waiting for the second shoe to drop.</p>
                 <p>&#34;For those in support of repealing the law...&#34; he paused for effect, staring down at the paper. &#34;We have four hundred and thirty-three votes!&#34;</p>
                 <p>I didn&#39;t know which was faster-the explosion of noise from the crowd or my heart spiraling down from the maximum elevation.</p>
@@ -2354,7 +2434,7 @@
                 <p>He came to stand in front of me and shook me roughly. &#34;I fucking told you! | fucking told you!&#34; Oh,gods.It happened.</p>
                 <p>It.Happened.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

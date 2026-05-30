@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,14 +2392,14 @@
                 <p>&#34;What are you implying?&#34;</p>
                 <p>Nathan&#39;s expression remained impassive. &#34;Exactly what I said.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Ever since discovering Emily&#39;s years of bullying Sophia, he could no longer tolerate this impostor sister.</p>
                 <p>Let alone after learning Sophia had been deliberately taken by that butcher&#39;s family.</p>
                 <p>&#34;Have you lost your mind?&#34; William&#39;s voice rose sharply. &#34;How is Emily supposed to survive outside this family?&#34;</p>
                 <p>Nathan&#39;s icy stare cut through him. &#34;Was Sophia not a girl too?&#34;</p>
                 <p>The question plunged the room into dead silence.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>When they&#39;d brought Sophia home, they&#39;d abandoned her at the old estate just because Emily threw a tantrum.</p>
                 <p>And how had Sophia repaid them?</p>
                 <p>Victoria Lowell&#39;s tears streamed freely. &#34;Sophia, I was wrong. Please come home.&#34;</p>
@@ -2333,14 +2413,14 @@
                 <p>&#34;Stop right there!&#34; Richard Lowell finally spoke.</p>
                 <p>His question came bluntly: &#34;Sophia, how long do you think the Valdemars will keep you around?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>He ignored Henry Chamberlain&#39;s presence. &#34;A pawn&#39;s glory never lasts.&#34;</p>
                 <p>&#34;No concern of yours.&#34; Sophia&#39;s smile deepened. &#34;My fortunes—good or ill—are no longer tied to this family.&#34;</p>
                 <p>Suddenly she countered, &#34;Do you know why I refuse to help you?&#34;</p>
                 <p>&#34;Why?&#34; Richard indeed couldn&#39;t comprehend it.</p>
                 <p>Sophia had sacrificed so much for the Lowells before.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>By his calculations, her marriage into the Valdemars should have made her their perfect puppet.</p>
                 <p>With her capabilities, she could have elevated Lowell Entertainment to new heights.</p>
                 <p>Her abrupt betrayal had blindsided him.</p>
@@ -2352,7 +2432,7 @@
                 <p>For the first time, genuine terror gripped her.</p>
                 <p>Somehow she knew—Sophia would never look back again.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

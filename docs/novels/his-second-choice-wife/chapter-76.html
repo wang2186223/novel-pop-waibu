@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,12 +2390,12 @@
                 <p>Liam seized her wrist, marching toward the field hospital exit. &#34;I&#39;m arranging your immediate return home. Don&#39;t come back.&#34;</p>
                 <p>Victoria dug in her heels. &#34;Liam, I just arrived! I want to stay with you.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Your presence isn&#39;t required.&#34;</p>
                 <p>&#34;Let go of me!&#34; Victoria&#39;s struggles proved useless against his iron grip.</p>
                 <p>When tears suddenly spilled down her cheeks, nearby soldiers paused mid-patrol. Wrenching free, she demanded, &#34;Tell me truthfully - are you falling for Evelyn?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>The question struck Liam like a physical blow. His pulse stuttered with unexpected panic.</p>
                 <p>In his momentary distraction, Victoria twisted away. Backing up several paces, she wiped her face with dramatic flair. &#34;How could you betray me like this?&#34;</p>
                 <p>Liam&#39;s patience snapped. &#34;What nonsense are you spouting now?&#34;</p>
@@ -2325,12 +2405,12 @@
                 <p>She continued bitterly, &#34;And you? You married that scheming socialite just to please your grandmother. Now you&#39;re actually developing feelings for her? That innocent act is just another one of her manipulations!&#34;</p>
                 <p>&#34;Liam, don&#39;t you see? She ensnared every ex-lover the same way - including my uncle! He only escaped when her true nature emerged!&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>The accusations sent white-hot anger coursing through Liam&#39;s veins. &#34;Have you finished?&#34;</p>
                 <p>Victoria&#39;s tears flowed freely now. &#34;Why do you think I&#39;m so harsh with Evelyn? I&#39;m trying to protect you from her web of lies before it&#39;s too late!&#34;</p>
                 <p>Her voice dropped to a whisper. &#34;I can&#39;t bear to watch her destroy you financially, emotionally, romantically...&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>An unfamiliar ache spread through Liam&#39;s chest at her words, leaving him strangely unsettled.</p>
                 <p>&#34;I&#39;m not in love with Evelyn. Nor will I ever be. Now go home before you cause more damage.&#34;</p>
                 <p>Before he could stop her, Victoria darted toward the barracks.</p>
@@ -2338,7 +2418,7 @@
                 <p>Watching her retreating figure, Liam massaged his temples as a migraine began pulsing behind his eyes.</p>
                 <p>What had happened to the sweet girl he&#39;d known before her decade abroad? Had that person completely vanished?</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

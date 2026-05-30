@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2325,7 +2405,7 @@
                 <p>I was already out of Darkspire territory when a call came in from a strange number. I picked the call and the voice that reached me made my heart skip a beat.</p>
                 <p>&#34;Lyric! It&#39;s me... It&#39;s Penelope!&#34; She sounded like she was being chased.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>I quickly moved to the side of the road, bringing the car to a stop. &#34;Penelope? What&#39;s the problem? Where are you?&#34;</p>
                 <p>&#34;I don&#39;t-I can&#39;t-&#34; She grunted, as if she just tripped and fell on something.</p>
                 <p>I heard a gunshot, followed by her shriek.</p>
@@ -2335,7 +2415,7 @@
                 <p>&#34;Your kids... they&#39;re alive. They are-&#34; another gunshot and the line went dead.</p>
                 <p>So did my heart.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>I couldn&#39;t blink. Despite knowing the call had ended,I held the phone in my hand, staring at the blank screen.</p>
                 <p>&#39;Your kids. They are alive.&#39; My heart pulsed with an uneven tempo, climbing up to my throat as if trying to escape.</p>
                 <p>Oh,gods.</p>
@@ -2345,7 +2425,7 @@
                 <p>I heard a raucous breath echoing within the car.lt took me some time to realize it was coming from me.I was hyperventilating.</p>
                 <p>Then,it got worse.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>I saw the headlights coming from behind. But l thought it must be a normal vehicle and didn&#39;t give any thought to it.</p>
                 <p>But then, it kept getting closer and closer to me.</p>
                 <p>With how clogged my mind was, I realized a little too late what the intention was. The scream escaped me before the van crashed into me.</p>
@@ -2355,7 +2435,7 @@
                 <p>My ears were ringing painfully, my head constantly banging.</p>
                 <p>I couldn&#39;t hear a thing or tell what was happening around me. I didn&#39;t even realize when my door was pulled open until I felt a pair of hands dragging me roughly.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>I groaned and whimpered from how sore my body was. I knew I was bleeding. I just couldn&#39;t tell where.</p>
                 <p>I heard someone sobbing beside me. No. It was me.</p>
                 <p>I was sobbing so hard, my shoulders quaked. But for what exactly, I couldn&#39;t tell.</p>
@@ -2370,7 +2450,7 @@
                 <p>His voice...there was something familiar about it.</p>
                 <p>It all became clear when he added, &#34;My brother&#39;s mate.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

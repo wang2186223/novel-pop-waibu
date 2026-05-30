@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2321,7 +2401,7 @@
                 <p>As the university’s graduation ceremony banquet approached, there were</p>
                 <p>discussions about distinguished guests attending as well as plans for a charity auction.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>The next day, Eva took Mia shopping for clothes at the mall.</p>
                 <p>“Now that your brothers‘ businesses are thriving, don’t hesitate to purchase whatever you like,” Eva encouraged Mia as she handed her a VIP membership card.</p>
                 <p>“Here, take this. With this card, you won’t need to wait in line or make appointments when shopping at this store in the future.”</p>
@@ -2329,7 +2409,7 @@
                 <p>stunning on you. Why don’t you try it on? ” she proposed.</p>
                 <p>Eva couldn’t resist Mia’s suggestion and headed to the fitting room with the dress in hand.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Meanwhile, Mia tried on her chosen</p>
                 <p>dress and examined herself in the mirror. Though the dress was undeniably</p>
                 <p>attractive, its snug fit accentuated her stomach a bit.</p>
@@ -2337,7 +2417,7 @@
                 <p>“Wow, Mia, is that really you? Can you even afford to shop in this store?” Shelly and Sharon entered unexpectedly, clearly surprised to see Mia there.</p>
                 <p>Sharon’s demeanor turned cold. “Mia, this isn’t a place where you belong. Just like how you’re not a suitable match for our family.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>“Even if you happen to acquire things through luck, they won’t be yours forever, ” she remarked sharply.</p>
                 <p>Mia folded her arms defiantly. “Who said I can’t afford it?”</p>
                 <p>Upon uttering those words, she passed the card to the store clerk, Penny Marsh, and instructed, “Please wrap it up.”</p>
@@ -2345,7 +2425,7 @@
                 <p>Equally taken aback, Sharon chimed in, It must be stolen.”</p>
                 <p>Shelly nodded in accord. “I believe so too. After all, Aunt Sharon, even you couldn’t get your hands on this card.”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Sharon’s pride suffered a blow. She had once coveted the card herself, but Laura had advised against extravagance, causing Sharon to miss out on the opportunity.</p>
                 <p>However, to her surprise, Mia had managed to acquire that card!</p>
                 <p>Sharon shot Penny an indignant glare. ” She’s nothing but a pauper. How could she possibly own that card? You’d better verify her identity to avoid any complications,” she insisted.</p>
@@ -2355,7 +2435,7 @@
                 <p>dollars, and it also demands celebrity authentication for approval.</p>
                 <p>“Anyone in possession of this card is far from ordinary. You may have just landed yourself in trouble!”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

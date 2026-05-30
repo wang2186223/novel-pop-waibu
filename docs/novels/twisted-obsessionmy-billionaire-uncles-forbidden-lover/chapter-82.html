@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,27 +2390,27 @@
                 <p>Slap.</p>
                 <p>Sophia swatted his hand away. Adjusting her disheveled collar, her voice turned glacial. &#34;Do this again, Mr. Roscente, and I&#39;ll call the police.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Ethan took half a step back. Moonlight carved his sharp features into something predatory. &#34;Throw me away after using me?&#34; His lips curled. &#34;You really do change moods faster than flipping a page.&#34;</p>
                 <p>Sophia lifted her gaze, frost crystallizing in her eyes. &#34;What do you think would happen if your grandfather saw us like this?&#34;</p>
                 <p>&#34;I can—&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;You can what?&#34; she cut in sharply. &#34;Like when you made me take the fall for Isabella Valentine? Toss me out as the scapegoat again?&#34;</p>
                 <p>A sudden gust of wind scattered the loose strands of hair across her forehead.</p>
                 <p>&#34;To you, I&#39;m just a plaything. Something to amuse yourself with when you&#39;re bored, then discard when you&#39;re done.&#34; Her voice trembled. &#34;Why drag me into this? Because I&#39;m an easy target?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Ethan&#39;s eyes darkened.</p>
                 <p>&#34;You heard?&#34; His tone dropped dangerously.</p>
                 <p>Sophia laughed bitterly. &#34;Should I keep pretending? Who is Isabella Valentine? Not even the Valentine family&#39;s illegitimate children could dethrone her. Do you really think she&#39;d be stupid enough to leak confidential information?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Proof?&#34; Ethan&#39;s expression remained unreadable.</p>
                 <p>&#34;Proof?&#34; Her laugh was hollow. &#34;The evidence you demand only ever applies to me.&#34;</p>
                 <p>She retreated two steps. The moonlight washed her face pale.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;But this time is different.&#34; Each word fell like a blade. &#34;If Isabella ever falls into my hands, I won&#39;t show mercy.&#34;</p>
                 <p>As she turned, her tears finally hit the pavement.</p>
                 <p>Ethan reached out—but caught nothing but the night wind.</p>
@@ -2340,7 +2420,7 @@
                 <p>&#34;Miss Lowell.&#34; A black Maybach pulled up. Zachary Evans rolled down the window. &#34;Mr. Roscente asked me to take you home.&#34;</p>
                 <p>Sophia kept scrolling through her phone, as if she hadn&#39;t heard.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

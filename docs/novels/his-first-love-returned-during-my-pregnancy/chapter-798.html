@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>Locals found this arrangement perfectly normal, but some Chinese guests felt uncomfortable arriving empty-handed. Some left red envelopes, others small presents.</p>
                 <p>Among them, one plush toy stood out conspicuously.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Bianca&#39;s expression darkened the moment she picked it up. Finding a loose thread near its ear, she gave a gentle tug—the toy immediately fell apart.</p>
                 <p>A diamond ring the size of a pigeon&#39;s egg rolled out from the stuffing, along with a note that read: &#34;Waiting for you.&#34;</p>
                 <p>The gift sent chills down everyone&#39;s spine. Bianca could almost hear Vincent Croix&#39;s icy voice whispering in her ear—You&#39;re not going anywhere!</p>
                 <p>Without hesitation, Adrian threw both the toy and ring into the trash, gripping her cold hands. &#34;Don&#39;t be afraid. It&#39;s over between you two. He can&#39;t hurt you anymore.&#34;</p>
                 <p>&#34;I know,&#34; Bianca replied weakly, unable to muster even a forced smile.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Evelyn and Alexander exchanged glances. Though there was no proof, they were certain this was Vincent&#39;s doing. Unfortunately, whoever delivered the gift had long since disappeared.</p>
                 <p>&#34;Hiring professionals like this means Vincent is truly desperate,&#34; Alexander said darkly. &#34;Someone must have tipped him off from back home.&#34;</p>
                 <p>Just as he suspected, Bianca&#39;s sudden exposure in Hudson City wasn&#39;t accidental. This place was no longer safe.</p>
                 <p>Adrian squeezed Bianca&#39;s hand tighter. &#34;We&#39;ll face this together. Now that we&#39;re engaged, he has no right to harass you.&#34;</p>
                 <p>Bianca gave a strained smile. His naivety was both touching and frustrating.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Evelyn and Alexander had already warned her about Vincent&#39;s frantic search back home. She wasn&#39;t afraid—just disgusted at the thought of him.</p>
                 <p>How could she have been so blind?</p>
                 <p>Seeing her distress, Adrian suggested, &#34;Should we return to Hudson City first? Even if he tracks us here, he&#39;ll find nothing.&#34;</p>
                 <p>As a student yet to graduate, his thinking was inevitably simplistic.</p>
                 <p>Bianca sighed. &#34;He&#39;s scum, but not stupid. If we all leave, he&#39;ll immediately guess we&#39;ve returned. It might buy some time, but not much.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Leave it to me,&#34; Alexander said, his voice laced with frost.</p>
                 <p>He&#39;d stayed up all night baking those cookies in the hotel kitchen just to avoid disappointing Evelyn. Now Vincent not only sent that ominous gift but also took the cookies Alexander personally made—this was unforgivable.</p>
                 <p>Alexander made a call under the tree. When he returned, his expression had subtly shifted.</p>
                 <p>Noon sunlight filtered through maple leaves, casting dappled shadows on him. The hesitation in his eyes told Evelyn everything—this was about Vincent.</p>
                 <p>&#34;Hold my bag for me,&#34; Evelyn suddenly said.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>For Bianca&#39;s casual engagement, she&#39;d brought a large backpack for convenience—the kind that could easily be hung in a restroom.</p>
                 <p>Understanding immediately, Alexander took the bag and followed her toward the academic building.</p>
                 <p>Coincidentally, Bianca&#39;s professor arrived for a reunion, keeping her and Adrian occupied long enough not to notice their departure.</p>
@@ -2350,7 +2430,7 @@
                 <p>Vincent traveling wasn&#39;t unusual, but his employees&#39; evasiveness about his whereabouts raised alarms. At least he hadn&#39;t appeared at the engagement—there was still room to maneuver.</p>
                 <p>Remembering that eerie plush toy, Evelyn felt a shadow cross her heart. &#34;Who else would do such a thing? If it was really his doing, he&#39;s probably almost here.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

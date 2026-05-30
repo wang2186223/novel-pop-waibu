@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>Olivia&#39;s pulse roared in her ears. She had no regrets about leaving Liam, but this? A child—his child—again? After the last time, when the doctor told her she might never conceive again?</p>
                 <p>&#34;Olivia?&#34; Natalie pressed gently. &#34;Do you want to tell Liam? Or... we could have the hospital contact him discreetly.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Olivia shook her head violently.</p>
                 <p>The doctor nodded. &#34;Take your time. If you decide to keep it, I can guide you through the precautions.&#34; With that, she left, the door clicking shut behind her.</p>
                 <p>Silence settled—until the door swung open again.</p>
@@ -2323,7 +2403,7 @@
                 <p>Natalie exhaled. &#34;Olivia&#39;s pregnant.&#34;</p>
                 <p>Daniel&#39;s jaw slackened. &#34;Damn.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Another heavy silence. Olivia gestured sharply—keep this secret.</p>
                 <p>&#34;Of course,&#34; Natalie said instantly.</p>
                 <p>Daniel nodded. &#34;Not a word.&#34;</p>
@@ -2332,7 +2412,7 @@
                 <p>His reaction had crushed her.</p>
                 <p>His face had darkened as he stared at the image. &#34;Why now?&#34; he&#39;d muttered, voice thick with frustration—not joy.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>After that, he&#39;d sent doctors to monitor her, but his indifference never wavered.</p>
                 <p>He hadn’t wanted that baby.</p>
                 <p>And Margaret Winslow? She&#39;d whispered fears about Olivia&#39;s &#34;condition&#34; being passed down. Liam never contradicted her.</p>
@@ -2341,7 +2421,7 @@
                 <p>Yet here she was. Pregnant. Against all odds.</p>
                 <p>This child was a miracle. And she would protect it.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Olivia signed fiercely to Natalie and Daniel—No one tells Liam. She&#39;d beg Marcus for the same.</p>
                 <p>Natalie sighed. &#34;Alright, but...&#34; Being a single mother wouldn’t be easy, especially with the Blackwoods as enemies.</p>
                 <p>Still, she squeezed Olivia&#39;s shoulder. &#34;Don’t worry. I’ll be the best godmother this kid could ask for.&#34;</p>
@@ -2350,7 +2430,7 @@
                 <p>Natalie frowned. &#34;What?&#34;</p>
                 <p>&#34;Nothing. I—I need to call the doctor about something.&#34; He scrambled for an excuse.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>But Natalie&#39;s phone buzzed too.</p>
                 <p>Olivia leaned over—and her blood turned to ice.</p>
                 <p>Blackwood Enterprises Announces Press Conference: CEO Liam Blackwood Appears with Evelyn Hartley!</p>
@@ -2359,7 +2439,7 @@
                 <p>No.</p>
                 <p>Not again.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

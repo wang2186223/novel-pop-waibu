@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>&#34;Even if you&#39;re sincere now, who can predict the future?&#34;</p>
                 <p>Alexander clenched his fists.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;I swear on my life. I&#39;ll only love Evelyn Carter forever, without wavering.&#34;</p>
                 <p>His voice carried the unwavering certainty of words carved in stone.</p>
                 <p>Margaret interjected gently, &#34;He&#39;s even considered adoption arrangements.&#34;</p>
@@ -2321,7 +2401,7 @@
                 <p>She kept her head down, her lashes casting delicate shadows across her face.</p>
                 <p>&#34;Pretty words mean nothing unless Evelyn agrees.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Alexander responded without hesitation, &#34;My love for her requires no reciprocation.&#34;</p>
                 <p>The dining room fell so silent the ticking of the clock became audible.</p>
                 <p>Andrew nodded slowly. &#34;I&#39;ll judge by actions.&#34;</p>
@@ -2329,7 +2409,7 @@
                 <p>Alexander&#39;s declaration resonated with absolute conviction.</p>
                 <p>Andrew&#39;s expression finally relaxed. &#34;Now that&#39;s more like it.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Evelyn&#39;s soup spoon froze mid-air.</p>
                 <p>&#34;Dad?&#34;</p>
                 <p>She forced a faint smile. &#34;Didn&#39;t you say you wanted me home for a few more years?&#34;</p>
@@ -2337,7 +2417,7 @@
                 <p>Evelyn avoided Alexander&#39;s intense gaze.</p>
                 <p>&#34;My focus is on managing the company now.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;If you won&#39;t consider your future, we must.&#34; Andrew looked pointedly at Alexander. &#34;After observing him these days... he&#39;s not entirely unsuitable.&#34;</p>
                 <p>A subtle smile touched Alexander&#39;s lips.</p>
                 <p>Margaret watched this exchange with mixed relief and concern.</p>
@@ -2356,7 +2436,7 @@
                 <p>Evelyn volunteered, &#34;I&#39;ll help Emily upstairs.&#34;</p>
                 <p>Watching her father ascend the staircase, she suddenly noticed how his shoulders seemed less broad than she remembered.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>Evelyn hesitated three seconds before opening it.</p>
                 <p>Images showed a toddler&#39;s first steps, a pigtailed preschooler, finally freezing at a first-grade orientation photo. Blank pages dominated the remainder.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;This is...&#34;</p>
                 <p>Her throat tightened as she recognized her childhood self.</p>
                 <p>Alexander wordlessly offered a tissue. &#34;Your eyes are red.&#34;</p>
                 <p>She ignored it, gripping his wrist instead. &#34;When did you prepare these?&#34;</p>
                 <p>&#34;Started collecting the day we learned the truth.&#34; His warm hand closed over her chilled fingers. &#34;Some came from the old estate. Others were recovered negatives from local photo studios.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Teresa&#39;s hands trembled violently as she accepted the album.</p>
                 <p>Twenty-plus years of absence cut like blades, each photograph reopening old wounds. Only when Evelyn embraced her did the long-suppressed word escape: &#34;Mom.&#34;</p>
                 <p>&#34;I&#39;m so sorry...&#34; Teresa&#39;s voice shattered. &#34;I missed so much of your life...&#34;</p>
                 <p>Anthony pulled his weeping wife close, his own eyes glistening.</p>
                 <p>Nearby, Grace chuckled while tracing a childhood photo. &#34;Your father nearly dismantled our closet hiding this album.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Emily pointed at one image. &#34;See? You cried even more than I did.&#34;</p>
                 <p>&#34;Liar.&#34; Evelyn reached for her sister&#39;s ear, but Emily dodged with a laugh.</p>
                 <p>Alexander discreetly captured the moment.</p>
                 <p>A minor debate arose during the family portrait.</p>
                 <p>&#34;Evelyn should stand center,&#34; both mothers insisted simultaneously.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>As she began protesting, the baby in her arms grabbed her collar with a delighted coo. Laughter erupted, and she naturally assumed the central position.</p>
                 <p>&#34;Three, two, one—&#34;</p>
                 <p>The shutter clicked just as Evelyn turned her head.</p>
                 <p>Grace and Teresa flanked her with linked arms while Emily flashed her signature peace sign behind them. Alexander stood at the periphery, his gaze never leaving her.</p>
                 <p>Like spring reviving withered branches, every lost year had been tenderly reclaimed.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Anthony gasped while reviewing the shots. &#34;This candid one&#39;s perfect! Look how naturally Evelyn&#39;s smiling.&#34;</p>
                 <p>The image showed her gently wiping the baby&#39;s drool, her entire expression softened with affection. Behind her, Alexander&#39;s adoring gaze could have melted glaciers.</p>
                 <p>&#34;I&#39;m enlarging this for our living room,&#34; Teresa declared, unable to put the photo down.</p>

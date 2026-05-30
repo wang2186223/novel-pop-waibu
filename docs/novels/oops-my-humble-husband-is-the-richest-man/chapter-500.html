@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2321,7 +2401,7 @@
                 <p>Penelope Valentine was pointing at him and shouting angrily. &#34;You boy toy, get out of here now!&#34;</p>
                 <p>&#34;Don&#39;t you dare ruin Mr. Vance&#39;s birthday gala!&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Guests around them whispered among themselves.</p>
                 <p>&#34;The Valentines are going too far. How could they bring a boy toy to Mr. Vance&#39;s birthday gala?&#34;</p>
                 <p>&#34;They&#39;re completely disregarding the Vances!&#34;</p>
@@ -2337,7 +2417,7 @@
                 <p>Alexander glanced coldly at Penelope. &#34;I was waiting for you to come get me.&#34;</p>
                 <p>Evelyn almost laughed.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Penelope immediately shrieked. &#34;Grace, have you no shame? You&#39;ve disgraced the entire Valentine family!&#34;</p>
                 <p>&#34;If you dare let him in, the Vances will not let this go!&#34;</p>
                 <p>Evelyn extended her hand to Alexander. &#34;Then step through this door. Let&#39;s see what the Vances dare to do.&#34;</p>
@@ -2353,7 +2433,7 @@
                 <p>Evelyn didn&#39;t know whether to laugh or cry.</p>
                 <p>Alexander struggled to suppress a smile.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Penelope said angrily, &#34;You&#39;re still laughing? You think this is funny?&#34;</p>
                 <p>Charles Valentine suddenly had an epiphany. &#34;I get it now!&#34;</p>
                 <p>Ethan asked urgently, &#34;Get what?&#34;</p>
@@ -2369,7 +2449,7 @@
                 <p>&#34;Since both children have someone else in their hearts, there&#39;s no need to force them together...&#34;</p>
                 <p>Robert Vance nodded repeatedly. &#34;Yes, there&#39;s no need.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Mr. Valentine scoffed. &#34;The Valentines are not calling off the engagement.&#34;</p>
                 <p>Their expressions immediately darkened.</p>
                 <p>Robert said angrily, &#34;Mr. Valentine, if you&#39;re not calling off the engagement, why did you let your daughter bring a boy toy to provoke us?&#34;</p>
@@ -2385,7 +2465,7 @@
                 <p>Penelope&#39;s face instantly turned deathly pale.</p>
                 <p>Being kicked out of the Valentine family hadn&#39;t been this humiliating.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Mr. Valentine&#39;s single sentence made her want to crawl into a hole.</p>
                 <p>She pointed angrily at Evelyn. &#34;Then is she worthy? Old Mr. Vance, Mr. Richard Evans, look at her!&#34;</p>
                 <p>&#34;Bringing a boy toy to provoke you like this. Can the Vances really tolerate this?&#34;</p>
@@ -2405,7 +2485,7 @@
                 <p>Alexander&#39;s gaze swept over Ethan Valentine and Charles Valentine.</p>
                 <p>Finally, it landed on Mr. Valentine. &#34;Uncle, thank you for taking the time to attend my birthday gala.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

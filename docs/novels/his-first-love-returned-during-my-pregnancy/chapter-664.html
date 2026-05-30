@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,7 +2390,7 @@
                 <p>&#34;No!&#34; The stubborn girl shook her head. &#34;I need to warn my parents and neighbors.&#34; Like a swift deer, she vanished into the night.</p>
                 <p>Lotus bit his lip nervously, his small hands trembling.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Grabbing only two phones, Alexander followed the boy with Evelyn in his arms. His dress shoes sank into the muddy path with each step, the squelching sound echoing in the quiet night.</p>
                 <p>Cradled securely against his chest, Evelyn could feel the steady warmth of his body. The night breeze carried the faint scent of reeds as it brushed her cheeks.</p>
                 <p>&#34;Put me down,&#34; she whispered, her ears burning.</p>
@@ -2320,17 +2400,17 @@
                 <p>Under the moonlight, Lotus navigated the rugged trail with goat-like agility. That boy could&#39;ve been an athlete if he ever left these mountains.</p>
                 <p>As they rounded a reed thicket, the distant headlights faded into pinpricks of light. Evelyn exhaled in relief. &#34;Lotus, who exactly are these developers?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The boy didn&#39;t slow his pace. &#34;Dad said they&#39;re from... the Liang Corporation.&#34;</p>
                 <p>Alexander froze.</p>
                 <p>&#34;What&#39;s wrong?&#34; Evelyn felt his muscles tense instantly.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;The Liangs...&#34; His voice turned icy. &#34;That&#39;s my uncle&#39;s company.&#34;</p>
                 <p>Evelyn gasped. The conspiracy had hit shockingly close to home.</p>
                 <p>Lotus glanced back in confusion. &#34;You know them, Mr. Hamilton?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;More than know them.&#34; Alexander&#39;s laugh held no warmth. &#34;We&#39;re family.&#34;</p>
                 <p>His sharp gaze glittered like honed steel in the darkness. Suddenly Evelyn understood why Alexander had been exiled to this remote village—it was all part of the game.</p>
                 <p>&#34;Back to the clinic first,&#34; she said decisively. &#34;We need to strategize.&#34;</p>
@@ -2339,7 +2419,7 @@
                 <p>The direction of Lily&#39;s home.</p>
                 <p>Lotus&#39;s bloodcurdling scream pierced the air. &#34;Sister—!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

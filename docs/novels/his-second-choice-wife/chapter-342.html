@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,7 +2390,7 @@
                 <p>&#34;I lost track of Dorothy. She was right here a moment ago,&#34; Rosalind said, scanning the crowd.</p>
                 <p>&#34;After tonight,&#34; Evelyn murmured, leaning closer, &#34;Dorothy Simmons is no longer my mother. And I&#39;m no longer Evelyn Carter.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Rosalind&#39;s brows knitted together. &#34;Then who are you?&#34;</p>
                 <p>&#34;Cassandra Wright,&#34; Evelyn whispered the name like a sacred vow.</p>
                 <p>Rosalind&#39;s face lit up. &#34;What a perfect name. Cassandra... it suits you.&#34;</p>
@@ -2320,17 +2400,17 @@
                 <p>Before Rosalind could process this revelation, the orchestra&#39;s tempo shifted dramatically. The chandeliers dimmed as spotlights illuminated the central stage.</p>
                 <p>All conversation ceased as every guest turned toward the dramatic reveal. Victoria Dawson emerged in a blood-red couture gown, her arm linked with Donovan&#39;s. Her smile was blindingly bright.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Donovan delivered a predictably dull speech thanking family, friends, and his &#34;beloved&#34; fiancée. The crowd applauded politely while Evelyn&#39;s sharp eyes cataloged every important attendee - media moguls, legal experts, government officials, and most importantly, Defense General Liam Blackwood.</p>
                 <p>Rosalind Baskins pressed close to Evelyn&#39;s ear. &#34;When do we make our move?&#34;</p>
                 <p>&#34;Are my grandparents in position?&#34; Evelyn asked without turning.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Rosalind gestured discreetly toward the stage&#39;s left wing. &#34;Seated in the front row. They&#39;re scheduled to speak next.&#34;</p>
                 <p>Evelyn&#39;s lips curved into a predatory smile. &#34;No more waiting. Begin.&#34;</p>
                 <p>Rosalind&#39;s fingers closed around the remote in her clutch. With deliberate slowness, she pressed the button.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>The romantic montage on the massive LED screens dissolved into stark black text: &#34;SHE&#39;S NOT VICTORIA DAWSON. SHE&#39;S A FRAUD.&#34;</p>
                 <p>Gasps rippled through the ballroom like wildfire. Donovan and Victoria whirled around, their expressions frozen in shock.</p>
                 <p>Victoria&#39;s porcelain complexion drained of color. &#34;Who did this?&#34; she shrieked, her voice cracking. &#34;Turn it off immediately!&#34;</p>
@@ -2340,7 +2420,7 @@
                 <p>Five uniformed guards rushed the stage. Rosalind dispatched them with brutal efficiency - a spinning kick here, a precise elbow strike there. Within seconds, they lay groaning on the polished floor.</p>
                 <p>Victoria&#39;s composure shattered completely. &#34;You incompetent fools!&#34; she spat at the guards before turning desperately to Donovan. &#34;Your father&#39;s the mayor! Call the police! Arrest her!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

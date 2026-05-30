@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2319,7 +2399,7 @@
                 <p>His gentle tap woke me when we reached our destination.</p>
                 <p>&#34;I told you to stay back &#39;cause this might be stressful. You just don&#39;t listen,&#34; he scolded lightly.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Someone needed to be here to stop you from ripping some heads off,&#34; I yawned sleepily.</p>
                 <p>Alighting the plane, I perceived the smell of something strong-like chicken soup. It was so hard to resist.</p>
                 <p>&#34;I think we need to check out the restaurant,&#34; I turned to Jaris with puppy eyes.</p>
@@ -2333,7 +2413,7 @@
                 <p>I showed Lyric a place to sit and wait for me while myself and my men went in to see the body. Bodies, actually.</p>
                 <p>Miguel and nine other of his men had been killed.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>The sight filled me with fresh rage and the need to rip someone&#39;s head off. Miguel hadn&#39;t just been killed; he&#39;d been brutalized. Same with his men.</p>
                 <p>From the report I got, after returning from the meeting last night, he stopped by his favorite bar to get some drinks. It was on his way home the attack occurred.</p>
                 <p>Miguel was a strong man from a strong Pack. For them to have been overpowered, their attackers must&#39;ve come in large numbers. Unfortunately,there were no survivors or witnesses. So, we didn&#39;t even know who was responsible.</p>
@@ -2347,7 +2427,7 @@
                 <p>&#34;Easy for you to say when there are no witnesses.However,with him gone, there&#39;s no one to drag the company with you. How very convenient.&#34;</p>
                 <p>&#34;King Ja-&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Enough talking!&#34; A defeaning silence filled the room.</p>
                 <p>Damn it, I needed someone to pay for this. I wished there was enough evidence so I could hold someone accountable.</p>
                 <p>I hated people getting away with murder.</p>
@@ -2361,7 +2441,7 @@
                 <p>LYRIC</p>
                 <p>Jaris and I had to spend some time with the bereaved family and left in the evening. But his mood was still a mess.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;I become King and suddenly, a lot of bad things are happening,&#34; he grumped on the way home.</p>
                 <p>I really hoped my secret being exposed wasn&#39;t one of the &#39;bad things.</p>
                 <p>When we reached home, I followed him to his room,helped him take off his shirt and led him to sit on the bed.</p>
@@ -2375,7 +2455,7 @@
                 <p>Excitement fluttered through me like a thousand tiny wings.</p>
                 <p>We showered together, and had sex too-of course.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>I had to go to my room to get a sleeping outfit, then return to his for a sleepover.</p>
                 <p>I was opening my door when I heard footsteps behind me. Just as I turned, something hard connected with my face. A stick.</p>
                 <p>My vision turned dark as a pained grunt escaped me, followed by an explosion in my head. The hit came again-twice-until I was forced to my knees.</p>
@@ -2391,7 +2471,7 @@
                 <p>&#34;Please,&#34; I whimpered.&#34;My baby...&#34;</p>
                 <p>But she didn&#39;t listen. She hit me on the tummy with the stick, repeatedly, ignoring my cry of pain. Until the whole thing was too much and I passed out.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

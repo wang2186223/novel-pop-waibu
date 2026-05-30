@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>So, I turned around and left, leaving the parents on stage to celebrate their win.</p>
                 <p>****+</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>JARIS</p>
                 <p>If it wasn&#39;t mandatory for me to stay here until the end, the sky knew I&#39;d have been out of here.</p>
                 <p>Lyric was gone.</p>
@@ -2341,7 +2421,7 @@
                 <p>I was typing a text when Marta&#39;s strong perfume hit me in the nostrils.</p>
                 <p>&#34;Jaris!&#34; She beamed. &#34;Why are you out here?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>I spared her a glance before returning my attention to my phone. I&#39;d never really liked this perfume on her.It was an agarwood fragrance and always smelt too strongly.</p>
                 <p>&#34;Well, I&#39;ve been looking for you. I just wanted you to know how happy I am that you chose me. I mean,I wasn&#39;t expecting it.&#34; She laughed nervously. &#34;This means we&#39;ll have to get married, right?!” I looked at her again and scoffed-at myself. It wasn&#39;t until she mentioned it that I realized I truly hadn&#39;t told her about it. Didn&#39;t even consider her opinion at all.</p>
                 <p>Marta Monroe being my Grand Luna. Who would&#39;ve thought?</p>
@@ -2350,7 +2430,7 @@
                 <p>&#34;Not now, Marta,&#34; I grumped before l walked away.</p>
                 <p>It took thirty more minutes for me to finally locate Lyric. That was after I&#39;d sent multiple texts and tried calling severally. Her line finally went through.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Where the hell are you, Lyric? We&#39;ve been worried!&#34;It was hard to keep the anger from my voice</p>
                 <p>I&#39;d actually been worried when she became unreachable for too long &#34;I&#39;m fine.&#34; Her reply was simple. She sounded tired too.</p>
                 <p>&#34;Where are you?&#34;</p>
@@ -2362,7 +2442,7 @@
                 <p>&#34;Text me the address, Lyric. Now.&#34;</p>
                 <p>I cut the call, not wanting to give her an option to disagree.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

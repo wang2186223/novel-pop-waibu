@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2316,7 +2396,7 @@
                 <p>I’ll go touch up my makeup.”</p>
                 <p>Maya devised a reason to excuse herself and briskly directed Blake, “Where’s Timothy? Assign</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>someone to track him down. After all, it’s not a large space.”</p>
                 <p>“Understood. I’ll proceed immediately.”</p>
                 <p>Maya remained in place, her eyelid twitching continuously.</p>
@@ -2338,7 +2418,7 @@
                 <p>Mustering a smile, Maya addressed Shelly and Sharon. “Alright, everyone, please take your seats. I’ll go touch up my makeup.”</p>
                 <p>Maya devised a reason to excuse herself and briskly directed Blake, “Where’s Timothy? Assign</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>someone to track him down. After all, it’s not a large space.”</p>
                 <p>“Understood. I’ll proceed immediately.”</p>
                 <p>Maya remained in place, her eyelid twitching continuously.</p>
@@ -2349,7 +2429,7 @@
                 <p>“But it’s your engagement day today. Regardless of how occupied Timothy may be, he shouldn’t vanish without a trace, especially when he’s unreachable. His behavior is truly unacceptable,” he</p>
                 <p>retorted.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>“Dominic, Tim has a demanding job. I can empathize with his situation.” Maya chimed in.</p>
                 <p>Dominic sighed. “Do as you wish. Since this is your decision, I won’t press further.”</p>
                 <p>He couldn’t comprehend what made Timothy so indispensable to Maya.</p>
@@ -2360,7 +2440,7 @@
                 <p>Standing up, Connor walked over to Felix. “Felix, do you mind if we have a quick chat?”</p>
                 <p>“Not at all. lid love to.”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>In reality, Felix was also perplexed. Wasn’t Connor Mia’s brother? Why was he here today, attending Maya’s engagement ceremony and even seated in the family section?</p>
                 <p>Connor glanced around. “Is Mia not attending today?”</p>
                 <p>“She was supposed to be here, but there’s been no sign of her.</p>
@@ -2374,7 +2454,7 @@
                 <p>+15 BONOS</p>
                 <p>Frowning, Connor inquired, “Did Mia explain the reason for her delay earlier this morning?“</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

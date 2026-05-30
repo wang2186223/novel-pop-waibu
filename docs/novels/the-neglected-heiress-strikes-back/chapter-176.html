@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2317,7 +2397,7 @@
                 <p>Would there even be a next time?</p>
                 <p>The thought turned the food to ash in his mouth.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Alex,&#34; Isabella chirped, propping her chin on her hand, &#34;Genevieve told me you&#39;re handling Ada&#39;s wedding and competing with The Regal Palace for the venue. Is that true?&#34;</p>
                 <p>Her lashes fluttered. &#34;Ada&#39;s arriving in Elmsworth soon. Are you throwing her a welcome party? It&#39;s perfect publicity—she&#39;s a global icon!&#34;</p>
                 <p>Alexander&#39;s gaze frosted over, though his expression remained neutral.</p>
@@ -2329,7 +2409,7 @@
                 <p>She was desperate to impress him.</p>
                 <p>&#34;No.&#34; His tone was final. &#34;You&#39;re a Sinclair. It&#39;s inappropriate. We&#39;ll hire professionals.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Her cheeks burned. &#34;Are you saying I&#39;m not good enough?&#34;</p>
                 <p>Alexander&#39;s appetite vanished. He&#39;d only come tonight out of respect for Mrs. Sinclair and Daniel. Now, irritation prickled under his skin.</p>
                 <p>&#34;Alexander, Isabella&#39;s a virtuoso. Let her perform at your party,&#34; Daniel said between bites.</p>
@@ -2353,7 +2433,7 @@
                 <p>But since their divorce, he&#39;d never once bested her.</p>
                 <p>She was always ahead—outmaneuvering him at every turn.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>The realization struck him: Evelyn wasn&#39;t the gentle woman he&#39;d married. She was brilliant, regal, unmatched. And with each passing day, she felt further out of reach.</p>
                 <p>Maybe if he could just win once, the gap between them wouldn&#39;t feel so vast.</p>
                 <p>——</p>
@@ -2380,7 +2460,7 @@
                 <p>&#34;Still—&#34;</p>
                 <p>&#34;No more &#39;buts,&#39; Mother. It&#39;s Alexander or no one.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

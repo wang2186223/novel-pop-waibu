@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2323,7 +2403,7 @@
                 <p>Olivia Sinclair, already weakened from earlier shocks, grew paler with each stumbling step.</p>
                 <p>Seeing her fragility only fueled Olivia&#39;s resentment.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Who are you performing for?&#34; Olivia sneered. &#34;Always playing the victim. Pathetic!&#34;</p>
                 <p>Olivia Sinclair ignored the venom in her voice. She pulled free from Olivia&#39;s grip and found a moss-covered rock to sit on.</p>
                 <p>She knew Victor had no intention of killing her. As his subordinate, Olivia wouldn&#39;t dare disobey.</p>
@@ -2341,7 +2421,7 @@
                 <p>Setting aside these thoughts, Olivia Sinclair felt a flicker of relief. Her provocation had worked.</p>
                 <p>She stole a glance at the shattered phone in the undergrowth. Even if Liam seemed indifferent, his pride wouldn&#39;t tolerate someone stealing his wife.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>She was certain Liam would notice her absence soon. That broken phone might lead him here.</p>
                 <p>Olivia, now visibly agitated, yanked her upright. &#34;Move! Now!&#34; she barked, shoving her forward.</p>
                 <p>Olivia Sinclair bit her lip and complied, wary of Olivia&#39;s unstable temper.</p>
@@ -2350,7 +2430,7 @@
                 <p>&#34;Unnecessary.&#34; Liam exhaled sharply. &#34;If I&#39;ve shown no concern for Olivia, sudden action would raise suspicion. Besides, if they wanted her dead, they&#39;d have killed her already. This is a game. She&#39;s safe for now.&#34;</p>
                 <p>Sebastian saw the logic but hesitated. &#34;Then why are you still heading up the mountain?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Liam had reached the coordinates from Olivia&#39;s call. He stared at the unassuming cabin, his gaze turning lethal. &#34;The puppet master wants an audience. How could I refuse?&#34;</p>
                 <p>He kicked open the door to find a man murmuring prayers over a photograph of Henry Winslow, head bowed in apparent reverence.</p>
                 <p>Liam&#39;s voice cut like ice. &#34;Drop the act. Who are you?&#34;</p>
@@ -2362,7 +2442,7 @@
                 <p>Seeing the madness in his eyes, Liam reacted instantly—his fist connecting with Victor&#39;s jaw.</p>
                 <p>Victor staggered back, panting like a cornered beast, his gaze burning with primal hatred.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

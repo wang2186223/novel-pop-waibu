@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>I laughed happily as I looked at the window. Outside,Marta had joined the doctors watching me.</p>
                 <p>Guinevere looked pleased.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Yes! I did it!</p>
                 <p>The patient would definitely take longer to heal compared to if I&#39;d touched him, but he&#39;d be fine.Even without me siphoning his sickness.</p>
                 <p>&#34;Congratulations, Lyric. That was awesome,&#34;Guinevere said when I walked out of the ward.</p>
@@ -2329,7 +2409,7 @@
                 <p>&#34;It makes sense. It&#39;d explain why he was so late even to his own mating ceremony.&#34;</p>
                 <p>&#34;Gosh. She&#39;s so shameless. How does she feel now that she&#39;s with a man who might never love her?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>My mind spun, overwhelmed by the relentless barrage of assumptions crashing around me. I couldn&#39;t believe this was what I&#39;d been reduced to-someone who forced herself on Jaris?</p>
                 <p>The words cut through me, hurting as much as it did when I&#39;d been called ugly all those years.</p>
                 <p>I stepped into the corner, letting them see me. The conversation stopped abruptly. There was an initial The three of them were fellow doctors like me.I couldn&#39;t believe they could hang around and gossip about someone who had been nice to them.</p>
@@ -2337,7 +2417,7 @@
                 <p>&#34;Aren&#39;t there better things to do instead of hanging around and saying things that are of no concern to you?&#34;</p>
                 <p>&#34;Excuse me?&#34; One of them scoffed. Kayla. She was the one I&#39;d admired most among the trio. &#34;We were only having a conversation. Don&#39;t you think it was wrong to have eavesdropped, Mrs. Dreadmoor?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>I didn&#39;t miss the way she called the second name with mockery. I put my hands into the pockets of my lab coat so I could fist them without them seeing. I didn&#39;t want them to see the effect they had on me.</p>
                 <p>The other two-Margot and Celine-simply gawked at me without any ounce of remorse.</p>
                 <p>&#34;You think I&#39;m the one at fault?&#34; I huffed. &#34;This is a professional space, doctor Kayla. You of all people should know more about work ethics.&#34; &#34;Please,&#34; she rolled her eyes. &#34;We were merely passing time. Besides, it isn&#39;t like a single lie was told,was it?&#34;</p>

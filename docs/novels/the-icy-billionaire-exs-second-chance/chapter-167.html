@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,19 +2389,19 @@
                 <p>Serena shot Vivian a lingering, victorious glance, her satisfaction as obvious as a peacock displaying its feathers.</p>
                 <p>Even Ethan couldn&#39;t suppress his indignation on Vivian&#39;s behalf.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>He turned toward her, voice hushed with concern. &#34;Mrs. Blackwood—&#34; But when he looked, Vivian had already drifted away. He found her across the room, calmly examining the collection of gowns with the serenity of undisturbed waters. For a moment, Ethan wasn&#39;t sure whether to feel reassured or troubled. It appeared she&#39;d truly moved beyond caring about Mr. Blackwood&#39;s opinions.</p>
                 <p>Vivian ultimately chose two dresses: an emerald-hued modern Victorian design and a sleek silver number adorned with tiny pearls. With Serena gone to her private dressing room and only the director and Ethan remaining, Vivian held up her selections. &#34;Which do you think suits me better?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;The left one,&#34; they answered in unison, pointing to the silver gown. The director elaborated, &#34;This one radiates sophistication and grace, perfect for Mrs. Beatrice Blackwood&#39;s birthday gala.&#34;</p>
                 <p>Vivian&#39;s slight frown hinted at disagreement. She understood the older generation&#39;s conservative tastes, but since she liked both options, the choice mattered little. &#34;Very well,&#34; she nodded, handing the silver dress to the director.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Two hours later, Vivian emerged transformed. The silver gown clung to her curves like liquid moonlight. Her natural beauty, enhanced by subtle makeup, made her complexion glow like morning dew on rose petals. Soft curls framed her face, lending an ethereal quality that contrasted with her usual composed demeanor. The pearls scattered across the dress caught the light with every movement, creating a mesmerizing dance of reflections.</p>
                 <p>Serena appeared around the same time, but the comparison proved unflattering. Despite her towering heels, the dress still pooled awkwardly at her feet like melted wax. The strapless design emphasized her slender frame unflatteringly, while her heavy makeup only accentuated her sharp features. Her eyes darted around the room, catching every subtle reaction - each one a silent verdict.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>The makeup artist attempted damage control with forced enthusiasm. &#34;This gown costs over a million! Ms. Whitmore will undoubtedly be the belle of tonight&#39;s ball.&#34; Serena forced a thin smile. &#34;Naturally,&#34; she said airily, dismissing the tension. &#34;Though it&#39;s not exactly my preferred style.&#34;</p>
                 <p>Her gaze locked onto Vivian, her smile turning predatory. &#34;But when I want something, I take it. Wouldn&#39;t you agree, Ms. Hartley?&#34;</p>
                 <!-- 广告位 5 -->

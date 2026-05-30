@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>His expression darkened. His fist flew before they could react.</p>
                 <p>A sharp crack echoed as his punch landed on the first thug&#39;s skull, knocking him out cold.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>The second man scrambled for his knife, but Liam was faster. A brutal strike sent him crumpling to the ground, writhing in agony.</p>
                 <p>Liam pulled out a handkerchief, wiping his hands as he stepped inside.</p>
                 <p>The dimly lit corridor led to a crowded underground casino. The air was thick with smoke and the murmur of gamblers.</p>
                 <p>A commotion in the corner caught his attention.</p>
                 <p>He pushed through the crowd—and froze.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Evelyn had pulled a burlap sack over a man&#39;s head. She swung the baseball bat with terrifying force, striking him again and again.</p>
                 <p>The man screamed, clawing at the sack, but she didn&#39;t stop. Her jaw was clenched, her movements ruthless. She looked ready to break every bone in his body.</p>
                 <p>No one intervened. The spectators only whispered among themselves.</p>
                 <p>&#34;Damn, Dominic&#39;s sister doesn&#39;t hold back.&#34;</p>
                 <p>&#34;If your brother sold you to traffickers and you survived, you&#39;d do worse.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Should&#39;ve stabbed him instead!&#34;</p>
                 <p>The casino manager finally spoke up. &#34;Hey, Dominic&#39;s sister, he still owes me a fortune. You kill him, who&#39;s paying his debts?&#34;</p>
                 <p>Evelyn ignored him. She only paused when her arms grew tired, breathing heavily, sweat glistening on her skin.</p>
                 <p>The moment the beating stopped, the man yanked off the sack. &#34;Who the hell—&#34;</p>
                 <p>His voice died when he saw her.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>His face paled.</p>
                 <p>How was she alive?</p>
                 <p>&#34;E-Evelyn? You&#39;re back?&#34; He scrambled to his feet despite his injuries.</p>
                 <p>Evelyn took a slow breath, her voice icy. &#34;Don&#39;t say my name. You lost that right.&#34; She tightened her grip on the bat. &#34;Yes, I survived. And now, you&#39;re not my brother—you&#39;re my enemy. Pray you kill me first, because I won&#39;t stop until you&#39;re broken.&#34;</p>
                 <p>Dominic staggered back, forcing a weak smile. &#34;Evelyn, come on. We&#39;re family.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>She raised the bat again. &#34;I swear on Dad&#39;s grave, I&#39;m leaving you crippled today.&#34;</p>
                 <p>Dominic panicked. &#34;He was my father too!&#34; He bolted into the crowd, dragging his injured leg behind him.</p>
                 <p>Evelyn moved to chase him—then froze.</p>
@@ -2350,7 +2430,7 @@
                 <p>Her stomach twisted.</p>
                 <p>When had he come in?</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

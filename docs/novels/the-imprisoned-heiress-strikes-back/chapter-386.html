@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,42 +2392,42 @@
                 <p>Gritting his teeth, Alexander grabbed his phone and dialed her number.</p>
                 <p>Two sharp beeps. Then—nothing.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Blocked. Again.</p>
                 <p>His jaw clenched. He slammed his fist into the mattress, a frustrated growl tearing from his throat.</p>
                 <p>She had vanished without hesitation—erased herself from his life completely. No calls. No messages. Not even showing up at Titan Capital Group.</p>
                 <p>Was this the difference between love and indifference? When passion faded, did it leave only this—cold, calculated silence?</p>
                 <p>The emptiness of the room mocked him.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Alexander exhaled sharply, staring at the ceiling.</p>
                 <p>Somewhere out there, Evelyn was moving on.</p>
                 <p>And he was left here, drowning in the remnants of what they once had.</p>
                 <p>Evelyn Carter felt nothing for him, so walking away came without a second thought.</p>
                 <p>But her heart still belonged to Ethan Caldwell. Even after all this time apart, she couldn’t erase him from her mind. She would go back to him—no matter the cost.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Alexander Whitmore pressed the back of his hand against his eyes.</p>
                 <p>He was convinced he was unlovable.</p>
                 <p>At Titan Capital Group, Natalie Brooks propped her chin on her palm, staring at Evelyn’s vacant desk with a distant expression.</p>
                 <p>Cassandra Reed approached, arms laden with files, and murmured, “With over twenty years of experience, I can confidently say Mr. Whitmore and Evelyn had a major fight.”</p>
                 <p>Alexander had been working like a man possessed these past two days.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Titan Capital didn’t encourage overtime, yet his office lights burned bright well past nine, sometimes ten at night.</p>
                 <p>Last night was even stranger—he didn’t go home at all. He slept in his office.</p>
                 <p>And Evelyn? She hadn’t shown up for work in two days.</p>
                 <p>Something was definitely wrong.</p>
                 <p>Cassandra tilted her head curiously. &#34;Do you really think Evelyn would forbid Alexander from returning home? She&#39;s always been so kind-hearted. That doesn&#39;t sound like her at all.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Victoria strode over just then, arms crossed. &#34;Honestly, should we really be speculating about Mr. Whitmore&#39;s personal life? Don&#39;t we all have enough work to do?&#34; She dropped a thick stack of files onto Cassandra&#39;s desk with a thud. &#34;Here, make yourself useful. These contracts need reviewing by end of day.&#34;</p>
                 <p>The office hummed with quiet activity around them. Cassandra sighed dramatically as she pulled the first file toward her. Through the glass walls, she could see Evelyn&#39;s empty office - the CEO had left early again today.</p>
                 <p>Victoria lingered by Cassandra&#39;s desk, lowering her voice. &#34;Between us? I heard Mr. Whitmore hasn&#39;t been seen at headquarters all week either.&#34; She tapped the files meaningfully. &#34;Maybe focus on these instead of office gossip, hmm?&#34;</p>
                 <p>Outside, rain began pattering against the windows of Titan Capital Group&#39;s high-rise. The weather mirrored the strange tension that had settled over the company recently. Even the usually unflappable Victoria seemed unsettled as she glanced toward Evelyn&#39;s darkened office once more before returning to her own workstation.</p>
                 <p>Cassandra chewed her lip thoughtfully as she opened the first file. Something unusual was definitely happening between their CEO and her enigmatic husband. But as Victoria said - perhaps some mysteries weren&#39;t theirs to solve.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

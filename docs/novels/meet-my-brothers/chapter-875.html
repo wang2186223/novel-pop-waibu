@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,38 +2391,38 @@
                 <p>“I understand, Connor. By the way, where&#39;s Timothy now? Is he alive?&#34; Connor&#39;s response was sharp and direct. &#34;Why are you so worried about someone insignificant? Whether he&#39;s dead or alive, it&#39;s none of your concern.&#34;</p>
                 <p>Mia let out a sigh and replied, &#34;Connor, it&#39;s not like I care deeply about him. But he is the biological father of my twins. We can&#39;t just wish for his death, can we?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>“If Timothy wasn&#39;t the father of your children, he&#39;d be long gone by now.&#34;</p>
                 <p>Mia felt a sense of relief upon hearing Connor&#39;s words. It seemed that Timothy was still alive.</p>
                 <p>&#34;Mia, listen to me carefully. Please don&#39;t let Timothy near you anymore. He brings nothing but trouble. Every time he&#39;s around, something bad happens to you. Try to avoid him as much as possible, do you understand?&#34; Connor reminded her again.</p>
                 <p>Mia raised her hand and swore earnestly, &#34;Okay, Connor, I promise. I&#39;ll make sure to keep my distance from him in the future.”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Connor&#39;s demeanor softened as he saw her adorable gesture of commitment. &#34;Mia, are you feeling hungry? I can go grab some dinner for you.&#34;</p>
                 <p>“I&#39;m really craving those street tacos. Thanks, Connor!&#34;</p>
                 <p>Shortly after Connor left, Peyton entered the room, pushing the door open gently. &#34;Ms. Mia, is there anything you need?&#34;</p>
                 <p>Lowering her voice, Mia inquired, &#34;How&#39;s Timothy doing?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Peyton hesitated briefly before responding, &#34;Honestly, the situation isn&#39;t great.&#34;</p>
                 <p>Upon hearing this, Mia tensed. &#34;My brothers didn&#39;t leave him crippled, did they? Or did they turn him into some sort of freak?&#34;</p>
                 <p>“It&#39;s not that severe. Referring to him as a freak is a bit harsh, but he did come close to being crippled.”</p>
                 <p>Peyton proceeded to recount the events outside the operating room. As Mia listened to Peyton&#39;s account of Connor nearly stabbing Timothy with a surgical knife, her emotions became entangled. She spoke slowly, &#34;He didn&#39;t even try to dodge?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Was Timothy truly unafraid of death?</p>
                 <p>After all, given Mia&#39;s brothers’ genuine animosity toward him, they would undoubtedly act upon it without hesitation.</p>
                 <p>“Yes, Mr. Barrett&#39;s skills are quite impressive. However, at that moment, he didn&#39;t budge an inch, showing no signs of backing down. He was adamant about seeing you, Ms. Mia. Isn&#39;t that commendable?&#34;</p>
                 <p>Mia&#39;s eyes betrayed a hint of sarcasm upon hearing this. &#34;Do you seriously find his actions admirable?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Peyton paused for a moment before replying, “I mean, considering Mr. Barrett&#39;s status and position, it&#39;s indeed remarkable for him to go to such lengths.”</p>
                 <p>Besides, wealthy and powerful men like Timothy typically had no shortage of romantic options.</p>
                 <p>Hence, it was highly unusual for someone of his stature to take such perilous risks, especially when their life was at stake.</p>
                 <p>Just then, Mia voiced her thoughts, &#34;Love that arrives late is like delayed rain; it doesn&#39;t offer much. It reminds me of all the experiences I had with the Barrett family.</p>
                 <p>“Timothy never really cared about me back then; he was distant and neglectful. He even handed me divorce papers and kicked me out. It&#39;s hard to shake off that bitterness.”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

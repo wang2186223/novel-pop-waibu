@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2318,7 +2398,7 @@
                 <p>Confused but obedient, Alexander complied.</p>
                 <p>Their eyes locked as he faced her.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Isabella’s pulse stuttered at the sight of his chiseled torso. The man was infuriating, but his physique was undeniably breathtaking.</p>
                 <p>Steeling herself, she began examining his legs, arms, and abdomen.</p>
                 <p>Alexander watched her, his heartbeat erratic as he studied the determination in her gaze.</p>
@@ -2331,7 +2411,7 @@
                 <p>But Alexander was stronger, yanking her against him. Their bodies collided, heat radiating between them.</p>
                 <p>His uninjured arm banded around her waist, pulling her flush against him.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Alexander—&#34;</p>
                 <p>His lips crashed onto hers, swallowing her protest. The kiss was relentless, stealing her breath. A soft whimper escaped her, her nails digging into his skin, leaving faint marks.</p>
                 <p>Flustered, Isabella bit his lip in retaliation.</p>
@@ -2344,7 +2424,7 @@
                 <p>&#34;Isn’t this too much?&#34; Her voice cracked. &#34;When will you let me go? We’re divorced. You were the one who ended it!&#34;</p>
                 <p>&#34;Then I regret it.&#34; His voice was raw, his eyes damp. &#34;I regret all of it.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Unlike Isabella, who could laugh freely, cry openly, live unapologetically—Alexander had spent over twenty years suppressing every emotion, every impulse. He’d forgotten how to feel.</p>
                 <p>&#34;What did you say?&#34; She stared at him, stunned.</p>
                 <p>&#34;Isabella, I regret it,&#34; he repeated, his voice firm yet soft. &#34;I regret divorcing you. I regret letting you go. Give me another chance. Let’s start over.&#34;</p>
@@ -2357,7 +2437,7 @@
                 <p>Alexander wasn’t ready to lose her. He reached for her again.</p>
                 <p>This time, she evaded him effortlessly, leaving his hand grasping at air.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;I swear, I won’t—&#34;</p>
                 <p>He took a shuddering breath, his voice hoarse. &#34;I won’t repeat my mistakes, Isabella. This time, you don’t have to do a thing. Just stand there. Let me pursue you.&#34;</p>
                 <p>Her heart lurched violently, like a rollercoaster gone rogue.</p>
@@ -2370,7 +2450,7 @@
                 <p>The door slammed shut behind her.</p>
                 <p>Alexander’s eyes burned crimson, his outstretched hand trembling mid-air before dropping limply to his side.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;I’ve truly fallen for you,&#34; he whispered.</p>
                 <p>Isabella didn’t return to Alexander. Instead, she sought out Gordon for his medical reports, intending to study them thoroughly at home.</p>
                 <p>Her preliminary examination had revealed the severity of his injuries. If not treated properly, they could lead to serious complications.</p>
@@ -2387,7 +2467,7 @@
                 <p>&#34;Well, that’s good,&#34; Sebastian replied, puzzled. &#34;Then why are you still upset?&#34;</p>
                 <p>Isabella hesitated. &#34;It’s nothing major. It’s just... Alexander said he wants to pursue me.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,7 +2391,7 @@
                 <p>that low.”</p>
                 <p>She put a hand on her belly. After all, she’d always intended to leave the Barrett family with her baby.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Sharon’s tone was condescending as she said, “I hope so. After all, Maya comes from the Lane family and grew up in an affluent environment. She’s beautiful, rich, and classy. Only someone like her is worthy of being with Timothy.</p>
                 <p>“Only her child would be worthy of being the Barrett family’s heir. Women who lived in squalor shouldn’t even dream about using their child to climb the social ladder.”</p>
                 <p>With that, Sharon turned and flounced away in her heels.</p>
@@ -2323,19 +2403,19 @@
                 <p>She wasn’t alone anymore.</p>
                 <p>On her way home, she transferred the folic acid pills to the bottle with the vitamins. That way, no one would realize what she was taking.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>When Mia returned to her room to get some rest that night, she received a WhatsApp message from Gina. “Do you remember the Instagram story I posted the other day? A prestigious company just contacted me-they want to hire you, and they’re willing to pay. Are you interested?” (1)</p>
                 <p>“Which company is it?” Mia asked. She had to admit she was tempted. She needed</p>
                 <p>the money.</p>
                 <p>“Barrett Group. You know how they normally open up mass recruitment for students in the second half of the year? Many students have sent in their applications. Barrett Group pays well and has lots of benefits, but they’re also strict.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>“Everyone wants to go there. Things are different for you, though. They’re the ones who want you to join them.”</p>
                 <p>Barrett Group? That was Timothy’s company. This made Mia hesitate. “I’ll think</p>
                 <p>about it.”</p>
                 <p>She didn’t want to have anything to do with Timothy. Besides, she would soon be returning to college to continue her education. Getting a job would only delay that. She wanted to get her degree more than anything.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Mia never would’ve expected that Timothy would one day offer her an olive branch. In the past, he wouldn’t even have spared her a glance. It truly was ludicrous for a woman to give up her career for a man.</p>
                 <p>After Mia submitted her designs for the final round of the competition, she started waiting for the results to be announced. But there was no news even when it was</p>
                 <p>time for the winner to be announced.</p>
@@ -2345,7 +2425,7 @@
                 <p>Eva said, “The award ceremony is fine, but you can’t announce Mia’s identity. She looks casual and breezy but is actually very sensitive. We have to keep a lid on things now that she’s accepted us.”</p>
                 <p>+</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

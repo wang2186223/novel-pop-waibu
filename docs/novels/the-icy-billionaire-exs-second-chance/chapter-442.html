@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,19 +2389,19 @@
                 <p>Vivian squared her shoulders. &#34;Haggling? How crude. I&#39;ve simply realized something—you&#39;re being deliberately difficult. Earning money is challenging, but managing it? That&#39;s an art. This isn&#39;t just your money anymore—it&#39;s ours. While I may not contribute equally financially, I&#39;m investing my effort in managing it. Doesn&#39;t that count for something?&#34;</p>
                 <p>Without missing a beat, Adrian whipped out his phone. His fingers flew across the screen as he transferred the funds. &#34;Twenty million. Buy whatever pen your heart desires. Now hand it over.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Vivian rose gracefully, retrieving the sleek pen box from the nightstand. She placed it in his palm with deliberate care.</p>
                 <p>Adrian examined the pen, testing its weight. He struck several poses—fingers curled around the barrel, pretending to write—snapping photos until satisfied. Opening WhatsApp, he frowned at the missing chat. Right—he&#39;d blocked Dominic earlier.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>After unblocking him, Adrian sent the chosen photo with a caption: &#34;My wife&#39;s latest gift.&#34;</p>
                 <p>&#34;Received so many presents I&#39;ve grown numb to showing off. This one&#39;s worth a hundred grand—could buy several of your pathetic flower arrangements, no?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Dominic&#39;s screen flooded with previously undelivered messages marked by angry red exclamation points. Just as irritation spiked, Adrian&#39;s latest message popped up.</p>
                 <p>His eyebrows shot up. Was this some childish competition?</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Fingers flying, he responded: &#34;Gifts aren&#39;t about price tags but thoughtfulness. Mine clearly held deeper meaning.&#34;</p>
                 <p>Adrian smirked, recalling an internet meme. He typed: &#34;No money, no honey.&#34;</p>
                 <!-- 广告位 5 -->
@@ -2332,7 +2412,7 @@
                 <p>After dinner, Adrian departed for his office while Vivian headed to the studio set.</p>
                 <p>Upon arrival, she spotted a crowd gathered around Damien Vaughn, engaged in animated discussion. Noticing her, Damien broke away with a welcoming smile.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

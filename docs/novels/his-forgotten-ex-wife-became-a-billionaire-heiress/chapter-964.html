@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,31 +2391,31 @@
                 <p>&#34;It is.&#34; Ethan confirmed without hesitation.</p>
                 <p>Felix exhaled in relief. &#34;Good.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Then it hit him. &#34;Wait—you&#39;re going to be a dad and didn&#39;t tell me? That&#39;s not cool, Boss Ethan!&#34;</p>
                 <p>&#34;I just found out myself.&#34; Ethan lied smoothly.</p>
                 <p>Felix sounded skeptical. &#34;Alright... But damn, you work fast!&#34;</p>
                 <p>&#34;Didn&#39;t I get married faster than you too?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Yeah, you&#39;re always one step ahead.&#34; Felix quipped without thinking, &#34;Even divorced faster than most.&#34;</p>
                 <p>Ethan&#39;s expression darkened. &#34;Screw you.&#34;</p>
                 <p>&#34;Okay, okay. As long as you know.&#34; Felix quickly changed the subject. &#34;I was worried you might be in the dark.&#34;</p>
                 <p>&#34;I&#39;m tied up with work. Since you&#39;re with Vivian, keep an eye on her.&#34; Ethan paused. &#34;Notify me immediately if anything happens.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Felix suddenly hesitated. &#34;Uh... Sure...&#34;</p>
                 <p>&#34;Problem?&#34; Ethan&#39;s tone turned dangerous.</p>
                 <p>&#34;No!&#34; Felix backpedaled. &#34;Dr. Laurent is more than capable. She doesn&#39;t need me babysitting her.&#34;</p>
                 <p>He glanced furtively at Vivian, who had explicitly forbidden him from telling Ethan.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Even the smartest people slip up. Just watch over her.&#34;</p>
                 <p>&#34;Got it.&#34; Felix agreed, stealing another look at Vivian.</p>
                 <p>She was speaking quietly with Isabella.</p>
                 <p>&#34;Are you really going? I still don&#39;t like this.&#34; Isabella frowned.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Then come with me.&#34; Vivian reassured her. &#34;We&#39;ll leave Ethan out of it. Happy now?&#34;</p>
                 <p>Isabella finally nodded. &#34;Much better. It&#39;s been ages since we worked a mission together. Let&#39;s see what Annika Heilbronn and her organization are really after.&#34;</p>
                 <p>Her expression darkened. &#34;And that bastard Zero! You saved his life—he&#39;d be dead without you!&#34;</p>
@@ -2343,7 +2423,7 @@
                 <p>&#34;You mean... he took that mission deliberately, got captured on purpose, just to draw you out?&#34;</p>
                 <p>&#34;Before revealing my identity, I crossed paths with Zero a few times.&#34; Vivian analyzed. &#34;He probably suspected me but wasn&#39;t certain. So he played along... knowing I&#39;d intervene.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

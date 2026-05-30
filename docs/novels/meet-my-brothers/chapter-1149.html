@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>However, Laura&#39;s unexpected awakening and subsequent health complications disrupted her plans.</p>
                 <p>&#34;There&#39;s a difference,&#34; Patricia emphasized. &#34;Those are toys you bought for the kids. Gifts from me would hold a different sentiment.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>With her sweet, childlike voice, Ginger added, &#34;Grand-Aunt Patricia, I&#39;m a good girl, you know. I love you, whether there&#39;s a gift or not.&#34;</p>
                 <p>Patricia couldn&#39;t help but be charmed by Ginger&#39;s sincerity. &#34;You&#39;re such a clever child, speaking as sweetly as honey,&#34; she remarked with a warm smile.</p>
                 <p>As Sage and Ginger continued to spend time with Patricia, Mia couldn&#39;t help but notice the unwavering smile on Patricia&#39;s face. It brought a slight uplift to Mia&#39;s mood.</p>
                 <p>However, amid the warmth of the moment, a fleeting image of Timothy&#39;s solitary figure standing outside the operating room flashed in Mia&#39;s mind, momentarily overshadowing her emotions.</p>
                 <p>As Mia lowered her gaze, she silently wished for Laura&#39;s quick recovery.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Indeed, she couldn&#39;t bear the thought of anything unfortunate happening to her.</p>
                 <p>After their meal, Patricia took Sage and Ginger for a stroll around the neighborhood.</p>
                 <p>As Patricia proudly introduced Sage and Ginger, Mia followed closely behind. &#34;These two are my beloved grandchildren,&#34; Patricia beamed. &#34;Aren&#39;t they just adorable?&#34;</p>
                 <p>&#34;They&#39;re twins, right? What a blessing! Has your niece from Nord City come to visit you?&#34; the neighbor inquired.</p>
                 <p>Patricia nodded affirmatively. &#34;Yes, she&#39;s been quite busy with work, but she&#39;s finally found the time to come back.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Stepping forward, Mia expressed her gratitude to the neighbor, saying, &#34;Thank you for looking after Aunt Patricia all this time. It means a lot to me.&#34;</p>
                 <p>The neighbor casually waved off the thanks, remarking, &#34;It&#39;s no big deal. Aunt Patricia is cherished around here, and everyone is happy to help.</p>
                 <p>&#34;Plus, you&#39;ve gone above and beyond by arranging a caregiver and a family doctor for her regular care. That&#39;s truly considerate of you.&#34; Patricia quickly interjected, &#34;I&#39;ve already told her not to bother with hiring a caregiver or a doctor. It&#39;s too costly, but this kid just won&#39;t listen.&#34; Despite her words, Patricia&#39;s face lit up with a smile.</p>
                 <p>Mia couldn&#39;t help but find the situation somewhat amusing. Was this the adults&#39; subtle way of boasting?</p>
                 <p>Previously Dominic had arranged</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Go have a 24-hour</p>
                 <p>for</p>
                 <p>and a home doctor, taking</p>
                 <p>into account her solitary living</p>
                 <p>situation and need for constant care.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>However, Patricia staunchly refused. Eventually, they reached a compromise, settling for a</p>
                 <p>scheduled housekeeper who came for regular cleaning and a family doctor who visited once a month.</p>
                 <p>&#34;I must say, Patricia, this is how Mia is showing her gratitude for your kindness. Just look at that contented expression of yours! If you keep this up, I might start feeling jealous,&#34; the neighbor teased</p>
@@ -2348,7 +2428,7 @@
                 <p>Later, Patricia took Sage and Ginger to the neighborhood playground, where several other kids were already playing. Although Ginger was eager to join in the fun, Sage, while not as enthusiastic about such activities, followed along.</p>
                 <p>After all, he felt responsible for keeping an eye on Ginger in case she got into any trouble.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

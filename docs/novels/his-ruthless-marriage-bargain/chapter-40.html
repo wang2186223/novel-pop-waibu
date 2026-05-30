@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,28 +2389,28 @@
                 <p>Crunch.</p>
                 <p>His polished Oxfords crushed broken porcelain beneath them. Vanessa sat amidst the wreckage of their living room, clutching a throw pillow like a lifeline. Spotting Dominic, she hurled it at him with surprising force. &#34;I thought you&#39;d abandoned me too!&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Dominic sidestepped, watching the pillow collide with the doorframe before tumbling to the marble floor.</p>
                 <p>&#34;What&#39;s all this?&#34; He retrieved the cushion, navigating the debris carefully before sinking onto the ruined sofa beside her. Even expecting this meltdown, the destruction still unsettled him.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;What does it look like?&#34; Vanessa straightened, turning her tear-streaked face toward him. &#34;Tell me, Dominic, what&#39;s our next move? You heard Evelyn at the press conference! I warned you she couldn&#39;t be trusted, but you wouldn&#39;t listen. Now she&#39;s declared war! I can&#39;t even check social media without seeing my name trending!&#34;</p>
                 <p>&#34;Since when do you care about online trolls?&#34; Dominic countered. &#34;You&#39;ve done nothing wrong.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Stop placating me!&#34; Vanessa gripped his arm desperately. &#34;I need solutions, not empty reassurances!&#34; Her dramatic exit from the press conference had been unavoidable - staying would have only given Evelyn more ammunition.</p>
                 <p>&#34;And storming out helped how exactly?&#34; Dominic&#39;s glare could have frozen lava. &#34;Do you realize how guilty that makes you look? The media will crucify us!&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Staying would have been worse!&#34; Vanessa&#39;s delicate features contorted. &#34;She practically accused us of adultery to the entire world! Nate, what did I ever do to deserve this? I only ever loved you! Yes, I benefited from her formulas, but she had you!&#34;</p>
                 <p>Her words struck a chord. The memory of cold steel against his throat sent shivers down Dominic&#39;s spine. If Evelyn still cared, she wouldn&#39;t have been so ruthless.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;If she wants war, she&#39;ll get war,&#34; Dominic said through clenched teeth. &#34;So she knows the formula? Big deal. Without concrete evidence, it&#39;s just her word against ours. And we control all the evidence.&#34;</p>
                 <p>&#34;You can&#39;t mean... a lawsuit?&#34; Vanessa paled. She&#39;d assumed they&#39;d settle this with threats and intimidation.</p>
                 <p>&#34;Oh, we&#39;re suing alright.&#34; Dominic&#39;s smile held no warmth. &#34;And we&#39;re making sure the whole world watches.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

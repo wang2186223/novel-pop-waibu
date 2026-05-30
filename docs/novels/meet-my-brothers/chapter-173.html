@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2321,7 +2401,7 @@
                 <p>extending invitations to my brothers for the engagement ceremony.</p>
                 <p>“It would be wise for you to maintain a low profile. If my brothers catch wind of your actions, they won’t be lenient when confronting you,” Maya retorted.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>With her arms crossed, Mia said sternly. “If I manage to uncover evidence implicating you in this matter, rest</p>
                 <p>assured, I won’t let you off lightly.”</p>
                 <p>“Sure, go ahead, as long as you can produce the evidence! Just so you know, my brother happens to own the renowned law firm in Nord City.</p>
@@ -2329,7 +2409,7 @@
                 <p>As Maya shifted her gaze toward the restaurant entrance, she quickly changed the subject, saying, “Mia, I</p>
                 <p>never expected you to have such a good rapport with men.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>“Going out to dinner with someone else behind Linden’s back–if he were to find out, do you think he would abandon you?” Maya snickered.</p>
                 <p>Realizing Maya had misunderstood, Mia chose not to explain herself. “My personal life is none of your concern. Whether I choose to date one or several men is entirely my business,” she shot back.</p>
                 <p>As her words lingered in the air, Mia couldn’t help but notice an odd gleam in Maya’s eyes, tinged with a hint of excitement.</p>
@@ -2337,7 +2417,7 @@
                 <p>+15 BONOS</p>
                 <p>The intensity of his narrow, deep–set eyes caused Mia’s expression to stiffen abruptly.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>No wonder Maya, that mischievous troublemaker, suddenly shifted the conversation. It became apparent that she had been patiently awaiting Timothy’s arrival all along.</p>
                 <p>Mia swiftly composed herself. Given her ongoing divorce proceedings with Timothy, Mia wasn’t in the mood for any additional complications.</p>
                 <p>With determinatioh she turned and headed toward Felix, “Let’s go.”</p>
@@ -2345,7 +2425,7 @@
                 <p>Mia’s expression briefly froze upon hearing this. “Felix, you know who they are?”</p>
                 <p>Timothy usually kept a low profile, so not many people were acquainted with him.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>“I happened to spot them at an event once, and someone mentioned that he was Timothy,” Felix explained.</p>
                 <p>Lowering her gaze, Mia elaborated, “I used to work as a caregiver for Grandma Laura, so that’s how I became acquainted with the Barretts.”</p>
                 <p>“Oh, I see.”</p>
@@ -2353,7 +2433,7 @@
                 <p>The formidable aura radiating from Timothy made maintaining eye contact difficult. Felix couldn’t shake the sense of hostility emanating from him.</p>
                 <p>He shifted his gaze to Mia beside him–was this perhaps just a product of his imagination?</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

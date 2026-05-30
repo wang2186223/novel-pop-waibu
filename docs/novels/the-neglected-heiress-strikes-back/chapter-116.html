@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2316,7 +2396,7 @@
                 <p>The usually composed Emeric now resembled a warlord on the verge of explosion.</p>
                 <p>&#34;Wait—you two knew as well?!&#34; He whirled toward Cassius and Arnold.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>The brothers exchanged glances, clearing their throats.</p>
                 <p>This family was full of liars.</p>
                 <p>He had been played. The only one left in the dark.</p>
@@ -2327,7 +2407,7 @@
                 <p>&#34;I don&#39;t dare.&#34; Myra wrung her hands. &#34;I&#39;ll make his favorite dishes and send them up later.&#34;</p>
                 <p>Aviana gasped. &#34;When Emeric&#39;s upset, he always goes to his treasure room. Oh no—&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>A scream echoed from upstairs.</p>
                 <p>&#34;Call the police! My ten-million-dollar Dante Chair is gone!&#34;</p>
                 <p>Dinner ended in chaos.</p>
@@ -2338,7 +2418,7 @@
                 <p>&#34;Did you like the birthday gift I gave you?&#34; Nydia propped her chin on her hands.</p>
                 <p>&#34;I adore it. It&#39;s hanging in my Elmsworth study. When Jason saw it, he thought it was a 3D-printed photo of me! He never compliments anyone, but he couldn&#39;t stop praising it.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Evadne took Nydia&#39;s delicate hands in hers. &#34;Your talent should be declared a world heritage. Or at least insured for millions. You&#39;re our family&#39;s pride!&#34;</p>
                 <p>&#34;Sis, stop flattering me. I&#39;m nowhere near Mom&#39;s level.&#34; Nydia bit her lip, dimples appearing as she blushed.</p>
                 <p>Evadne&#39;s praise thrilled her, but Jason&#39;s approval made her heart race. She doubted she&#39;d sleep tonight.</p>
@@ -2349,7 +2429,7 @@
                 <p>&#34;A dream is worth fighting for. I&#39;ll support you all the way.&#34; Evadne squeezed her shoulder. &#34;But the industry is ruthless. Without connections, no one will give you a second glance. So when you audition, just write one line on your résumé: &#39;My father is Emeric.&#39; I guarantee you&#39;ll soar.&#34;</p>
                 <p>Nydia laughed weakly. &#34;Dad already hates this path. If I use his name, he&#39;ll disown me faster. Besides, shortcuts don&#39;t feel rewarding. I want to earn this myself.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Birds are cherished for their wings, people for their ambitions. You truly are our family&#39;s pride.&#34; Evadne pinched her cheek gently. &#34;I just worry you&#39;ll be taken advantage of.&#34;</p>
                 <p>Nydia was exceptional, but her gentle nature mirrored Myra&#39;s. In the cutthroat entertainment world, Evadne feared she&#39;d be devoured.</p>
                 <p>&#34;Sis, can I ask you something?&#34; Nydia hesitated.</p>
@@ -2360,7 +2440,7 @@
                 <p>Evadne arched a brow. &#34;Why not assume he cheated?&#34;</p>
                 <p>&#34;Impossible.&#34; Nydia waved a hand.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Why?&#34;</p>
                 <p>&#34;He&#39;s filthy rich. Why risk dying before spending it all?&#34;</p>
                 <p>Evadne burst out laughing.</p>
@@ -2375,7 +2455,7 @@
                 <p>&#34;No.&#34; Her refusal was instant. &#34;I&#39;m busy, and I won&#39;t set foot there again. Don&#39;t contact me. Goodbye.&#34;</p>
                 <p>A pause. Then, quietly: &#34;You left belongings here. Don&#39;t you want them back?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

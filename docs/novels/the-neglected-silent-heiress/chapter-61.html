@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,7 +2391,7 @@
                 <p>Liam sauntered in, his usual brooding demeanor replaced by rare lightness. The change stabbed at Olivia&#39;s heart. Evelyn&#39;s visit had clearly lifted his spirits - a stark contrast to his usual indifference toward her.</p>
                 <p>&#34;Not hungry?&#34; Liam asked casually as he retrieved a robe from the walk-in closet.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Olivia shook her head silently. Food was the last thing on her mind.</p>
                 <p>&#34;You should eat anyway,&#34; he suggested, his tone bordering on concern.</p>
                 <p>She ignored him, returning to her documents. Without warning, Liam snatched her phone and tossed it onto the nightstand.</p>
@@ -2323,25 +2403,25 @@
                 <p>Olivia exhaled shakily. She gathered her devices and slipped out, retreating to the adjacent guest room. The mansion had no designated workspace for her, and she certainly couldn&#39;t use Liam&#39;s study again - not after being accused of stealing documents.</p>
                 <p>At the vanity table, Olivia booted up her laptop and began outlining ideas. It had been years since she&#39;d engaged in proper financial work. Since marrying Liam, her days had revolved around domestic drudgery. Yet at university, she&#39;d not only won prestigious competitions but had hands-on experience with multimillion-dollar projects.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Soon, she fell into the familiar rhythm. Hours slipped by unnoticed until fatigue dragged at her eyelids. She leaned back on the chaise lounge to organize her thoughts, but sleep claimed her.</p>
                 <p>Morning light revealed Liam standing in the doorway. Thankfully, her laptop screen had timed out. His glacial stare pinned her in place. &#34;Avoiding me? Is this some new game?&#34;</p>
                 <p>Rubbing sleep from her eyes, Olivia stood, still wrapped in exhaustion. Perhaps it was the lingering drowsiness that emboldened her. She gestured pointedly toward the master suite, questioning where Evelyn had spent the night.</p>
                 <p>&#34;You&#39;ve grown bold,&#34; Liam snarled, irritation lacing every syllable. He advanced, pressing an ice-cold thumb against her pulse point. Olivia&#39;s breath hitched. His imposing presence should have cowed her, but something had shifted.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Lifting her chin, Olivia met his gaze with uncharacteristic steel - a defiance she hadn&#39;t shown in five years of marriage. She refused to sacrifice her dignity any longer. Their silent battle lasted several heartbeats before Liam unexpectedly retreated.</p>
                 <p>&#34;Bring my lunch at noon,&#34; he commanded before striding away.</p>
                 <p>This time, Olivia had no intention of complying.</p>
                 <p>After freshening up, she texted Alexander: &#34;Would it be possible to work a half-day today?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>His understanding reply came instantly. Dressed professionally, Olivia descended the stairs with her laptop bag. The butler, Theodore, blinked in surprise at her departure. &#34;Madam, will you be returning? Mr. Blackwood requested his lunch delivery.&#34;</p>
                 <p>Olivia paused, considering. With deliberate indifference, she gestured for the kitchen staff to handle the meal delivery to Blackwood Enterprises. She specified it should be left at reception - she&#39;d take it upstairs herself if necessary.</p>
                 <p>Theodore watched her go, astonished. The old Olivia would have insisted on preparing everything personally. This new version barely seemed to care. The change was undeniable.</p>
                 <p>The transformation had begun.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

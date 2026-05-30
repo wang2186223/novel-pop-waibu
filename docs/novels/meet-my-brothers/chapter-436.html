@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,31 +2391,31 @@
                 <p>“After we go to Nord City. I fear Dominic might confront Timothy for me. I’m going to leave anyway, so there’s no need to cause another unnecessary trouble. I hope Dominic won’t be mad at me for lying.”</p>
                 <p>“He won’t. When the day comes, I have something to tell you too.”</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>After a discussion, the Lane brothers decided to reveal the truth to Mia on the day she returned to Nord City.</p>
                 <p>That Mia was the true Ms. Lane, not Maya.</p>
                 <p>“Okay.” Mia merely nodded without asking much. She believed her brothers wouldn’t do anything that would hurt her.</p>
                 <p>Nothing at home was out of the ordinary bar one–the concerned expression on Claude’s face when he came to visit.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>When Patricia went to the kitchen, he asked in an undertone. “Mia, are you alright? No one bullied you. right?”</p>
                 <p>“No. I fainted in the cafeteria because of low blood sugar. He drove me to the hospital.”</p>
                 <p>He snorted. “That’s his duty.”</p>
                 <p>Something was off about Claude and Mia sensed it. She pulled his arm. “Claude, I didn’t keep you in the dark on purpose.”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>“I’m not blaming you, just angry. That bastard doesn’t deserve you! And yet, how dare he ask for a divorce instead of taking care of you? I can never stomach this, ever!”</p>
                 <p>Jason chimed in. “I stood up for her about this.”</p>
                 <p>The discussion on strategizing a way to confront Timothy between Jason and Claude worried Mia.</p>
                 <p>Quietly, she headed back to her room to reach out to Connor. Because the only person who knew the entirety of the situation was him.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Claude and Jason knew of her divorce with Timothy, but not her pregnancy.</p>
                 <p>Unfortunately, no one picked up the call. Perhaps, Connor was in an operation.</p>
                 <p>She texted him what happened today so that he could dissuade Claude and Jason.</p>
                 <p>The next day, she read a headline after waking up.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>“Renowned Singer Aubrey March with New Beau! Secret Restaurant Rendezvous Revealed.”</p>
                 <p>The mention of the renowned singer pushed the pause button on Mia.</p>
                 <p>Because the last person who was involved in a scandal with Aubrey was Timothy.</p>
@@ -2343,7 +2423,7 @@
                 <p>Mia clicked the headline only to see a picture of a couple’s back. One of them appeared familiar to her</p>
                 <p>for some reason.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

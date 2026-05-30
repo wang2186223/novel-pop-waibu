@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,22 +2390,22 @@
                 <p>&#34;Are you ready to tell us what happened?&#34; Liam&#39;s deep voice resonated with barely restrained concern. &#34;How did you vanish from our secured estate? Where were you taken?&#34;</p>
                 <p>Evelyn&#39;s fingers tightened around the teacup before she gestured toward the French windows.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;There&#39;s an ancient oak in the south garden,&#34; she began. &#34;I was sitting beneath it when a rope ladder descended from the branches above.&#34;</p>
                 <p>&#34;What?&#34; Liam&#39;s brows furrowed.</p>
                 <p>&#34;Before I could react, a woman rappelled down,&#34; Evelyn continued, avoiding eye contact. &#34;I never saw her face—everything went black. I woke up alone in an abandoned amusement park on the city outskirts.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Ryan immediately pulled out his tablet, fingers flying across the screen as he accessed security feeds.</p>
                 <p>&#34;Did she hurt you?&#34; Liam&#39;s voice dropped dangerously low.</p>
                 <p>Evelyn shook her head, her fingers twisting the fabric of her skirt. &#34;No... she was gone when I came to.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>A heavy silence blanketed the room.</p>
                 <p>Victoria snorted derisively. &#34;That&#39;s the most ridiculous story I&#39;ve ever heard.&#34;</p>
                 <p>Evelyn lowered her gaze, knowing her weak acting betrayed her. The truth was Rosalind had extracted her using a sophisticated pulley system, then transported her in a nondescript van. But she couldn&#39;t reveal that.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Evelyn,&#34; Benjamin leaned forward, his diplomatic training evident in his measured tone. &#34;If someone&#39;s threatening you, we can help. Your husband commands Norvania&#39;s entire military force. No one can touch you here.&#34;</p>
                 <p>She forced wide-eyed innocence. &#34;I&#39;ve told you everything.&#34;</p>
                 <p>Victoria stood abruptly, her designer heels clicking sharply against the hardwood. &#34;Enough of these childish lies! You clearly staged this whole drama for attention.&#34;</p>
@@ -2339,7 +2419,7 @@
                 <p>&#34;Just need rest,&#34; she said softly, placing a hand over his. The unspoken understanding passed between them.</p>
                 <p>Though concern still darkened his features, Liam reluctantly released her. As she ascended the staircase, she could feel his protective gaze following her every step.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

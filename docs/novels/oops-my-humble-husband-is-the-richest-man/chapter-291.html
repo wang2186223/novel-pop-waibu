@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2324,7 +2404,7 @@
                 <p>He covered his head and begged for mercy.</p>
                 <p>&#34;Big brother, hit me, curse me, but let Mina go. She&#39;s still a child... She doesn&#39;t owe the Sherwood family anything!&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Dad!&#34;</p>
                 <p>Mina&#39;s eyes widened with rage.</p>
                 <p>She tried to rush forward but was held back firmly by the bodyguards.</p>
@@ -2343,7 +2423,7 @@
                 <p>She couldn&#39;t blame Marcus for this.</p>
                 <p>If he hadn&#39;t intervened at the restaurant, Mr. Locsitant would have assaulted her.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>She only had herself to blame.</p>
                 <p>She was too weak.</p>
                 <p>She had achieved nothing at the company, earning no respect from the main family branch.</p>
@@ -2362,7 +2442,7 @@
                 <p>He pinched her chin. &#34;Six o&#39;clock tomorrow night. You&#39;re coming with me to the hotel. Make things right with Mr. Locsitant first.&#34;</p>
                 <p>He left with his bodyguards without another glance.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>The news quickly reached Marcus.</p>
                 <p>In his study, he listened to his assistant&#39;s report, his expression unreadable.</p>
                 <p>He hadn&#39;t realized Mina&#39;s situation was so dire.</p>
@@ -2381,7 +2461,7 @@
                 <p>He dreamed of Mina&#39;s pale skin, crying and begging for mercy on the couch. He softened, wanting to end it quickly, but the scene suddenly shifted.</p>
                 <p>Mina lay beneath an obese man.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Her eyes were seductive, glancing sideways at him. &#34;It&#39;s not the first time, Marcus. Why do you care?&#34;</p>
                 <p>Marcus jolted awake.</p>
                 <p>He rubbed his temples, feeling inexplicably disturbed.</p>
@@ -2400,7 +2480,7 @@
                 <p>But the property and company were under Grace&#39;s name. A quick transfer was impossible. To completely separate assets, he had to give everything to her.</p>
                 <p>Seeing his hesitation, Grace pretended to be distraught. &#34;Zack, don&#39;t abandon me… Property prices are low right now. The villa can fetch one point five million at most. The company still has two million in debt. I&#39;ll be saddled with millions in debt. You can&#39;t do this to me…&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Zack panicked.</p>
                 <p>If they didn&#39;t divorce, he&#39;d be jointly responsible for millions in debt as her husband.</p>
                 <p>Third Master Valentine had made it clear he wouldn&#39;t help.</p>
@@ -2419,7 +2499,7 @@
                 <p>Just then, outside the Nan family villa, a black luxury car screeched to a halt.</p>
                 <p>Marcus, followed by his assistant, stormed through the front door of the Nan residence.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

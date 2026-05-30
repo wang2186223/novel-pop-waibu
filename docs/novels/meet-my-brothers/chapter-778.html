@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>Mia turned back with a smile. “Um, is there something else?”</p>
                 <p>“Could you do me a favor?” Timothy asked as he lay on the bed, the needle still lingering in</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>the back of his hand.</p>
                 <p>Seeing Timothy struggle to sit up, Mia hurried over to assist him. “What do</p>
                 <p>you</p>
@@ -2323,7 +2403,7 @@
                 <p>Timothy pursed his lips. “I need to use the restroom.”</p>
                 <p>Mia coughed nervously as she helped Timothy, taking his arm over her shoulder. His weight pressed down heavily on her, nearly causing her to stumble.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Timothy was much heavier than she expected!</p>
                 <p>Summoning her strength, Mia walked Timothy to the restroom, feeling exhausted quickly.” Can you manage on your own from here, or should I fetch Heath or call a nurse?”</p>
                 <p>“Please don’t! I can handle going to the restroom by myself,” Timothy quickly declined.</p>
@@ -2332,7 +2412,7 @@
                 <p>“No, no, not at all!”</p>
                 <p>Mia immediately straightened up, but in the next moment, Timothy pressed down on her shoulder.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>“If that’s the case, maybe you could assist me all the way.”</p>
                 <p>Mia was puzzled by his request. What did he mean by that?</p>
                 <p>However, she soon noticed Timothy reaching for his pants out of the corner of her eye. Reacting quickly, she exclaimed, “What are you doing?”</p>
@@ -2341,7 +2421,7 @@
                 <p>“I can’t stand steadily. I need someone to support me.”</p>
                 <p>“Then let me go find someone to help you.”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>“No, it’s too late for that.”</p>
                 <p>Mia could only avert her gaze, feeling embarrassed. Timothy’s firm grip on her shoulder prevented her from moving away, leaving her with no choice but to stay put.</p>
                 <p>If it weren’t for the fact that Timothy was going to donate his bone marrow for Ginger, she would have pushed him away long ago..</p>
@@ -2350,7 +2430,7 @@
                 <p>Soon, the sound of splashing reached Mia’s ears, intensifying her awkwardness.</p>
                 <p>It was the first time she had ever heard sounds of Timothy using the restroom, making it a</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>truly unique experience.</p>
                 <p>Shortly after, the sound stopped, replaced by the rustling of clothes.</p>
                 <p>Mia’s ears gradually turned red. “Are you finished?”</p>
@@ -2359,7 +2439,7 @@
                 <p>Timothy hesitated before admitting, “Well, I didn’t wash this one!”</p>
                 <p>Just then, the restroom door swung open.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

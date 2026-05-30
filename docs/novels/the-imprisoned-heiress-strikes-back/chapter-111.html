@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2317,7 +2397,7 @@
                 <p>This wasn’t the Evelyn he knew.</p>
                 <p>The Evelyn who used to hang on Ethan’s every word, who never dared to defy him, was gone.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>In her place stood a woman with fire in her eyes and steel in her voice.</p>
                 <p>Ethan reached for her again. &#34;I said we’re leaving.&#34;</p>
                 <p>Evelyn dodged his grasp. &#34;Touch me again, and I’ll make sure Vanessa hears all about how hands-on you’ve been tonight.&#34;</p>
@@ -2329,7 +2409,7 @@
                 <p>The tension crackled between them, thick enough to cut.</p>
                 <p>Then, from the shadows, a smooth voice cut in.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Problem here?&#34;</p>
                 <p>Alexander Whitmore stepped into the light, his gaze flicking between them.</p>
                 <p>Evelyn’s breath caught.</p>
@@ -2341,7 +2421,7 @@
                 <p>Evelyn shoved him away, putting deliberate distance between them.</p>
                 <p>A sharp shriek pierced the air—Claire’s voice.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Evelyn’s head snapped toward the sound. When she turned, her eyes widened. Lucas had somehow managed to grab Claire and hoist her effortlessly onto his shoulders.</p>
                 <p>Claire hadn’t even noticed him approaching. One second, she was standing, the next, her feet left the ground in a dizzying lurch.</p>
                 <p>With practiced ease, Lucas adjusted his grip, carrying her as if she weighed nothing more than a sack of flour.</p>
@@ -2353,7 +2433,7 @@
                 <p>The dim lights of Eclipse Lounge pulsed with energy as Lucas Bennett tightened his grip around Claire Dawson&#39;s waist.</p>
                 <p>&#34;You&#39;re seriously choosing them over me?&#34; His voice dripped with mock offense, lips curling into that infuriating smirk she knew too well.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Claire rolled her eyes, but the heat creeping up her neck betrayed her.</p>
                 <p>&#34;Lucas, don&#39;t be ridiculous. They&#39;re just—&#34;</p>
                 <p>&#34;Just what?&#34; He leaned in, his breath warm against her ear. &#34;If you have needs, sweetheart, all you had to do was ask. As your husband, it&#39;s my privilege to satisfy you.&#34; His fingers traced the curve of her hip. &#34;But since you initiated this, don’t come crying to me later when you can’t walk straight.&#34;</p>
@@ -2365,7 +2445,7 @@
                 <p>The other gigolo snorted. &#34;Dude, her man’s right there.&#34;</p>
                 <p>&#34;He is not my man!&#34; Evelyn snapped, dropping back onto the velvet couch with enough force to make the ice in her glass clink.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The blond, undeterred, leaned closer—until Ethan’s knuckles cracked audibly.</p>
                 <p>Evelyn bolted upright, nearly knocking over her drink. &#34;Touch me again, and I’ll break your fingers.&#34;</p>
                 <p>The gigolos exchanged another look.</p>
@@ -2381,7 +2461,7 @@
                 <p>Her fingers trembled as she reached for her phone.</p>
                 <p>This couldn’t be happening.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

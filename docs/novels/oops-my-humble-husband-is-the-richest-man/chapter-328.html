@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>When they looked back, Marcus Valentine was already gone.</p>
                 <p>…</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Mina&#39;s sudden morning sickness caught both Evelyn Ross and Mina completely off guard.</p>
                 <p>There had been no prior symptoms at all.</p>
                 <p>It wasn&#39;t until a server brought out a plate of fried fish, its strong, pungent odor wafting through the air.</p>
@@ -2321,7 +2401,7 @@
                 <p>Evelyn quickly supported her as they hurried into the restroom.</p>
                 <p>Mina retched over the sink for a long time before weakly pushing Evelyn away. &#34;Grace, I&#39;m fine. You go out first. I want to be alone for a moment.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Evelyn hesitated for a second before nodding in agreement.</p>
                 <p>Alexander was still outside. The Sherwood family was also present today.</p>
                 <p>Earlier, Kevin Sherwood, the head of the Sherwood family, seemed to have noticed Alexander and was walking toward him.</p>
@@ -2329,7 +2409,7 @@
                 <p>Sure enough, she saw Kevin standing before Alexander.</p>
                 <p>Evelyn tensed up and quickened her pace.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>She heard Kevin ask, &#34;Haven&#39;t we met before? You look very familiar.&#34;</p>
                 <p>Alexander held a deep resentment toward the Sherwood family and had no desire to engage. He simply averted his gaze.</p>
                 <p>Kevin&#39;s son, Miles Sherwood, immediately snapped in displeasure, &#34;Hey, my father is talking to you. What&#39;s with the attitude?&#34;</p>
@@ -2337,7 +2417,7 @@
                 <p>His imposing aura forced Miles to take a step back.</p>
                 <p>He looked directly at Kevin, his gaze icy.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Kevin frowned.</p>
                 <p>He could sense the other&#39;s clear hostility but didn&#39;t understand why. He continued with a smile, &#34;Young man, is there some misunderstanding between us?&#34;</p>
                 <p>&#34;Don&#39;t know you.&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>Miles, seeing this, grew even more displeased. &#34;You don&#39;t know him? Then why the attitude? Didn&#39;t your mother teach you to respect your elders?&#34;</p>
                 <p>Alexander&#39;s steps halted abruptly.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>A murderous glare shot directly toward Miles.</p>
                 <p>Evelyn, hearing this, was instantly furious.</p>
                 <p>These Sherwoods were utterly detestable!</p>
@@ -2358,7 +2438,7 @@
                 <p>Miles was momentarily speechless.</p>
                 <p>Kevin was also a bit stunned. He hurriedly tried to smooth things over. &#34;President Nan, it&#39;s just a few cross words.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

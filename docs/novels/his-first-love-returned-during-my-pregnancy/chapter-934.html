@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,28 +2392,28 @@
                 <p>He wasn’t surprised. Despite his stubborn front, he knew the truth—losing 800 milliliters of blood would send an average person into shock. If not for his strong constitution, he wouldn’t have lasted this long.</p>
                 <p>&#34;Dizzy. Heavy eyelids. No strength...&#34; He answered honestly, attempting to sit up before a wave of darkness forced him back down.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Evelyn sighed. &#34;Losing 800 milliliters is nearly a fifth of your total blood volume. Any more, and you’d have gone into hemorrhagic shock—possibly even suffered brain damage.&#34;</p>
                 <p>She deliberately emphasized the worst-case scenario, watching as guilt flickered in his eyes before softening her tone. &#34;But you were lucky. You collapsed right at the hospital, so we could start IV fluids immediately.&#34;</p>
                 <p>If he’d needed a blood transfusion with the current shortages… The thought alone was unbearable.</p>
                 <p>A shadow of worry crossed Alexander’s expression. &#34;Did I cause you trouble? I couldn’t control it...&#34;</p>
                 <p>The image of Evelyn, pregnant and exhausted, juggling his care alongside Vivian Dempsey’s grandmother made him wish he could turn back time—just to hold on a little longer.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Evelyn froze. She hadn’t expected his first words upon waking to be self-reproach. A pang of emotion tightened her throat. &#34;No. You helped immensely. Grandma Dempsey is out of danger now—she wants to thank you in person.&#34;</p>
                 <p>In fact, the elderly woman had woken even earlier than Alexander.</p>
                 <p>Yet his first question was still about others. &#34;Did Mom and the baby get frightened?&#34;</p>
                 <p>&#34;I called Margaret beforehand. She was relieved when she heard you’d acted to save someone. The baby thought you were just sleeping—she’s been very calm.&#34; Evelyn studied him as relief smoothed the tension from his face, then couldn’t help adding, &#34;Why can’t you ever worry about yourself first?&#34;</p>
                 <p>All his concerns had been for everyone else.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Alexander paused. &#34;Because I trust that if anything were seriously wrong, you’d tell me.&#34;</p>
                 <p>&#34;That much faith in me?&#34;</p>
                 <p>&#34;If I can’t trust you, who else is there?&#34; His answer came effortlessly, his fingers grazing the ends of her hair as he spoke.</p>
                 <p>Evelyn’s dark locks now cascaded to her waist, silken and smooth. Even seated beside the bed, her hair spilled within easy reach.</p>
                 <p>Sunlight slipped through the curtains, scattering flecks of gold between them.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>The scene was so tender it made Evelyn’s pulse quicken. She inhaled sharply, forcing herself to break the moment. &#34;Do you need water?&#34;</p>
                 <p>Alexander nodded. &#34;A little thirsty.&#34;</p>
                 <p>After significant blood loss, drinking too much too soon was dangerous. He’d been sustained by IV fluids while unconscious, leaving his throat parched and aching.</p>

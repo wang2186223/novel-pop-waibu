@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,11 +2389,11 @@
                 <p>At the time, she&#39;d felt rejected. Now, she thanked her lucky stars nothing physical had happened between them.</p>
                 <p>Her phone vibrated violently. Beatrice was calling.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>The moment Evelyn answered, her mother&#39;s excited voice spilled out. &#34;Darling! I&#39;ve found the perfect match for you. Harvard-educated, from old money - exactly your type!&#34;</p>
                 <p>&#34;Mother,&#34; Evelyn snapped impatiently, &#34;I&#39;m still technically with Liam. How would it look if he found out about this?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Oh, my naive child,&#34; Beatrice sighed dramatically. &#34;Are you still holding out hope for Liam? He&#39;s finished this time. Do you know why I&#39;m pushing this? I just learned Liam met with Olivia yesterday to finalize their divorce. It&#39;s over. Don&#39;t you understand what this means?&#34;</p>
                 <p>Evelyn&#39;s breath caught. &#34;Does this mean... he&#39;s going to propose?&#34;</p>
                 <!-- 广告位 3 -->
@@ -2321,18 +2401,18 @@
                 <p>Beatrice&#39;s silence was deafening.</p>
                 <p>Rumors about Olivia being the long-lost Kensington heir had spread like wildfire.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Evelyn had heard them all. Claiming she wasn&#39;t jealous would be a lie. But she&#39;d dismissed them - with the Kensingtons backing Olivia, she knew better than to make a move.</p>
                 <p>One thing puzzled her though. If Olivia was now a Kensington, why was Liam so desperate to divorce her?</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>The more she thought about it, the more her stomach twisted. Was Liam actually planning to marry her?</p>
                 <p>No sooner had she ended the call with Beatrice than Sebastian rang. &#34;Miss Hartley, Mr. Blackwood requests your company this evening. Are you available?&#34;</p>
                 <p>&#34;I&#39;m afraid not,&#34; Evelyn cut him off sharply. &#34;My schedule is packed for the foreseeable future. Kindly inform Liam not to contact me unless it&#39;s a matter of life and death.&#34;</p>
                 <p>Sebastian was stunned speechless. Since when had Evelyn, who&#39;d always jumped at Liam&#39;s every summons, become so dismissive?</p>
                 <p>As he relayed the message, he could already picture Liam&#39;s bewildered expression.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

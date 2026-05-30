@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,27 +2390,27 @@
                 <p>Evelyn raised an eyebrow. &#34;After knowing you for so long, this is the first time I&#39;ve seen you laugh this much.&#34;</p>
                 <p>Olivia buried her face in her arms on the desk, her shoulders still trembling. She thought to herself—how could Alexander not know about these things? The man had practically memorized every medical journal, short of actually getting a medical license.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Whatever.&#34; Evelyn found herself smiling too. Once Olivia calmed down, she turned to business. &#34;How&#39;s that lung transplant patient from yesterday?&#34;</p>
                 <p>Olivia&#39;s expression turned serious. &#34;Still critical.&#34; She lowered her voice. &#34;Dr. Carter, you don’t keep up with hospital gossip, do you?&#34;</p>
                 <p>Evelyn shook her head. She barely had time to breathe between patients, let alone listen to rumors.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;This patient...&#34; Olivia hesitated. &#34;She got the transplant after only a year on the waiting list.&#34;</p>
                 <p>Evelyn frowned. &#34;Extremely severe case?&#34;</p>
                 <p>&#34;Rumor has it pregnancy worsened her condition.&#34; Olivia whispered. &#34;Internal Medicine advised termination, but she refused.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Evelyn&#39;s chest tightened. As a doctor, she understood the patient’s choice. But as a mother, she couldn’t help but worry.</p>
                 <p>Two days later, the patient was finally transferred out of the ICU. Coincidentally, it was the weekend, and a group of young residents suggested celebrating with dinner.</p>
                 <p>&#34;Terrible timing!&#34; Olivia groaned. &#34;I’m on call tomorrow—I can only stay for the meal.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Evelyn was about to decline when the rotating interns surrounded her.</p>
                 <p>&#34;Dr. Carter, our attending is your classmate!&#34;</p>
                 <p>&#34;Tell us about your research!&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Can we take a photo with you?&#34;</p>
                 <p>Faced with their enthusiasm, Evelyn had no choice but to agree. She texted Alexander: &#34;Department dinner tonight. No need to pick me up.&#34;</p>
                 <p>Alexander was organizing documents in his office when the message arrived. His fingers stilled. Silently, he canceled the restaurant reservation and concert tickets, replying: &#34;Have fun. Call me when you’re done.&#34;</p>
@@ -2340,7 +2420,7 @@
                 <p>&#34;Yes.&#34; He didn’t look up. &#34;Last-minute arrangements.&#34;</p>
                 <p>Emily quietly retreated, thinking her boss’s mood was gloomier than a typhoon.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

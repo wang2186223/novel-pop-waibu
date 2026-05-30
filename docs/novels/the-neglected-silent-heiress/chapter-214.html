@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>A rosy blush spread across Miranda&#39;s cheeks, her lashes fluttering.</p>
                 <p>&#34;Every kindness I show her is calculated,&#34; Victor murmured. &#34;What I give you is genuine. Can&#39;t you tell the difference?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Miranda&#39;s heart swelled—Victor always knew how to soothe her with just a few words.</p>
                 <p>&#34;My apologies.&#34; Shame colored her voice. &#34;My feelings for you overwhelm my judgment sometimes. Victor, don&#39;t worry. I&#39;ll watch over her properly.&#34;</p>
                 <p>Victor stroked her hair gently. &#34;Rest now,&#34; he whispered.</p>
@@ -2323,7 +2403,7 @@
                 <p>Victor&#39;s smile held no warmth. &#34;I never intended for her to succeed. When Liam discovers the truth, whatever befalls Olivia will be Miranda&#39;s doing. The blame will rest solely on her shoulders.&#34;</p>
                 <p>The man suppressed a shudder, though Victor&#39;s ruthlessness came as no surprise. He&#39;d always been a master of emotional detachment.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Sir,&#34; the man ventured carefully, &#34;He&#39;s returning soon. You should prepare.&#34;</p>
                 <p>For the first time, genuine fear flickered across Victor&#39;s normally impassive face.</p>
                 <p>This was their shared secret—Victor&#39;s empire wasn&#39;t truly his. Everything belonged to the true monster lurking in the shadows.</p>
@@ -2341,7 +2421,7 @@
                 <p>Liam stood slowly, shadows darkening his features.</p>
                 <p>At the door, Sebastian exchanged worried glances with the alarmed secretaries.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Leave us,&#34; Liam commanded. &#34;I&#39;ll call if needed.&#34;</p>
                 <p>With a quiet sigh, Sebastian ushered everyone out, closing the door firmly.</p>
                 <p>&#34;Liam,&#34; Alexander spat, voice trembling with rage. &#34;First you demanded Olivia&#39;s return, holding Whitmore Holdings hostage. I tolerated that because of my own failures, and Olivia&#39;s misguided guilt. You promised to protect her. Now she&#39;s vanished, and you refuse to explain. If anything happens to her, her blood is on your hands. Do her accusing eyes haunt your dreams?&#34;</p>
@@ -2350,7 +2430,7 @@
                 <p>Alexander recoiled. &#34;You wouldn&#39;t pay to save her? How can you be so heartless?&#34;</p>
                 <p>Liam almost laughed at the irony. &#34;Why should I? As her husband? Or the father of her child?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Alexander missed the self-mockery, seeing only cruelty.</p>
                 <p>With a roar, Alexander grabbed Liam&#39;s collar. &#34;When Olivia returns safely, I&#39;ll make sure she sees you for what you are! You&#39;re unworthy of her love!&#34;</p>
                 <p>&#34;Her love...&#34; Liam repeated the words like foreign currency.</p>
@@ -2359,7 +2439,7 @@
                 <p>&#34;What does she even see in you?&#34; Alexander muttered.</p>
                 <p>Blind with fury, Alexander drew back his fist—</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

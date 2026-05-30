@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>Her fingers flew across her phone screen. &#34;If I&#39;m such a burden, make your choice. Either finish me or set me free.&#34;</p>
                 <p>As a physician, Miranda knew precisely how to torment Olivia without endangering the unborn child.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>This knowledge made Olivia&#39;s existence increasingly unbearable.</p>
                 <p>Moreover, Olivia understood escape was impossible without Liam&#39;s intervention. Though the Sinclair and Bennett families continued searching for her, their efforts proved futile.</p>
                 <p>This was fundamentally a Blackwood family conflict. As Liam&#39;s wife, if the Blackwoods claimed no outside interference was needed, rescue became improbable. Olivia realized she was merely a pawn in their vicious power struggle.</p>
@@ -2341,7 +2421,7 @@
                 <p>Recalling her hospitalization when Liam discovered her pregnancy, Olivia remembered Catherine&#39;s constant presence.</p>
                 <p>Suddenly, everything clicked with devastating clarity. Liam&#39;s apparent disdain for their child stemmed from believing it wasn&#39;t his. What monstrous lies had these people fed him?</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Olivia clapped a hand over her mouth as silent sobs wracked her body.</p>
                 <p>Richard&#39;s face briefly registered regret before hardening again. &#34;I considered sparing you,&#34; he said icily. &#34;Now I see no reason to.&#34;</p>
                 <p>Olivia collapsed into a nearby chair, feeling like prey surrounded by wolves.</p>
@@ -2350,7 +2430,7 @@
                 <p>Catherine added, &#34;We still have Evelyn, and others if needed. As long as we control Liam&#39;s circle, manipulating him is easy. Olivia&#39;s an unpredictable liability we can&#39;t afford.&#34;</p>
                 <p>Victor&#39;s gaze shifted to Olivia as he suddenly proposed, &#34;Shouldn&#39;t we hear Olivia&#39;s opinion?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>The atmosphere shifted palpably.</p>
                 <p>Richard scoffed. &#34;Of course she&#39;ll beg to live. Who wouldn&#39;t?&#34;</p>
                 <p>Olivia lifted tear-filled eyes to meet Victor&#39;s gaze, a shudder running through her.</p>
@@ -2359,7 +2439,7 @@
                 <p>Miranda&#39;s smile widened. &#34;See? She&#39;s given up. Whatever happens won&#39;t be on our conscience.&#34;</p>
                 <p>Richard declared, &#34;This is your final chance. Eliminate Olivia, or our partnership ends.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

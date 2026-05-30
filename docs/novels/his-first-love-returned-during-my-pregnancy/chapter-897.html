@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,13 +2391,13 @@
                 <p>The bedroom had been outfitted with fresh summer bedding, the crisp green color a refreshing sight.</p>
                 <p>After washing up, Evelyn sat on the edge of the bed. A cool breeze drifted through the open window, carrying just the right chill. The villa was naturally warm in winter and cool in summer, and this bedroom had the best natural light and ventilation in the entire house—even surpassing the master suite where Anthony Taylor and his wife slept.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>They were truly making an effort to make up for lost time with their daughter.</p>
                 <p>Noticing Evelyn’s distant expression, Alexander, who had planned to sleep in the guest room, paused and sat in the chair across from the bed. &#34;If I did anything wrong tonight, just tell me.&#34;</p>
                 <p>&#34;It’s not about you,&#34; Evelyn replied calmly.</p>
                 <p>Her attitude toward him remained detached.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>A flicker of disappointment crossed Alexander’s eyes, but he quickly adjusted. &#34;I can keep a secret. If something’s bothering you, you can talk to me.&#34;</p>
                 <p>Evelyn sighed. &#34;I know they genuinely care about me, but I just can’t bring myself to call them &#39;Mom&#39; and &#39;Dad.&#39; Especially when my mother is right there... Though I’ve noticed she doesn’t mind.&#34;</p>
                 <p>&#34;Aunt Grace just wants more people to love you. Uncle Anthony and Aunt Lillian won’t force you,&#34; Alexander reasoned objectively.</p>
@@ -2335,7 +2415,7 @@
                 <p>He knew Evelyn was the key, but the older generation’s relationship needed progress too. This time, he would handle it personally—no delegating.</p>
                 <p>While Alexander buried himself in planning, Evelyn was swamped at the hospital.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>A colleague’s joke at last week’s gathering had turned out to be prophetic—this week, patient numbers surged, and emergencies kept cropping up. The most challenging issue was the post-op complications of a lung transplant patient who had given birth.</p>
                 <p>The premature baby, weakened by the mother’s lung transplant during pregnancy, was still in the incubator—expected. But the mother’s paranoia was escalating.</p>
                 <p>First, she accused the doctors of inadequate treatment, blaming them for her slow recovery and repeatedly harassing the attending physician. After multiple interruptions, the doctor finally lost patience.</p>

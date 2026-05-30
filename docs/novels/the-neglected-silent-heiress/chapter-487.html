@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,23 +2389,23 @@
                 <p>Yet Liam smirked. &#34;You clearly don’t know Olivia well enough.&#34;</p>
                 <p>His amusement faded as quickly as it had come. &#34;I barely got five minutes with her before she kicked me out. Who am I to judge?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Sebastian nearly responded but held his tongue, sensing Liam’s bitter tone. Then, a notification chimed—Olivia’s text. The stormy expression on Liam’s face vanished instantly. The message was brief: &#34;Pick up Isabelle.&#34;</p>
                 <p>Liam snapped into action, urging Sebastian to drive faster. It wasn’t just an order—it felt like a lifeline.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>During their stay in Westhaven, Olivia had enrolled Isabelle in a specialized class to keep her engaged, knowing the girl would grow restless at home. Winston usually arrived an hour early to collect her. But today, Olivia had summoned Liam instead, sparing Winston the need to mobilize security.</p>
                 <p>Despite Liam’s past failures, Olivia had always believed he was a good father. But that belief was about to shatter.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Within half an hour of receiving Olivia’s message, Liam stood outside the building, scanning the area. No sign of Isabelle.</p>
                 <p>Unease prickled at his skin as he stepped inside. Then, a faint sob reached his ears—Isabelle’s. His pulse spiked as he rushed toward the sound.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Pushing through the door, his stomach dropped at the sight before him.</p>
                 <p>Isabelle sat hunched over, tears streaking her cheeks, while Eleanor Blackwood loomed above her. Though Eleanor’s smile was gentle, her eyes were ice.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Come now, darling,&#34; Eleanor cooed, her voice honeyed but sharp. &#34;You broke my things. Surely you know how to apologize?&#34;</p>
                 <p>Isabelle lifted her chin, defiance burning through her tears. &#34;That’s a lie! I didn’t break anything! You hit me first! You should be sorry!&#34;</p>
                 <p>Eleanor’s smile flickered, replaced by something darker. Oliver Hart stepped in hesitantly. &#34;Miss, she’s just a child. She doesn’t understand—&#34;</p>
@@ -2333,7 +2413,7 @@
                 <p>Liam surged forward, scooping Isabelle into his arms. He leveled a glare at Eleanor. &#34;What the hell are you doing here?&#34;</p>
                 <p>Eleanor’s expression melted into sweetness, but her words were venom. &#34;I couldn’t find you, so I had to take matters into my own hands. Liam, why did you lie to me? You and Olivia were married. You even have a child. Did you think I wouldn’t find out?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

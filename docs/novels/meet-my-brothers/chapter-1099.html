@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,25 +2391,25 @@
                 <p>&#34;You can&#39;t understand what I&#39;ve just said?&#34;</p>
                 <p>The man gulped. &#34;How can I understand it when you&#39;ve put it so vaguely?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Timothy remarked, &#34;That&#39;s true. How could you possibly understand me when you&#39;ve learned how to do business from beggars?&#34;</p>
                 <p>&#34;It&#39;s unreasonable of you to say that, Mr. Barrett. I founded a big company all by myself, and I&#39;m the one running it now. I&#39;m different from people like you. You&#39;re just an elite who was born with a silver spoon in your mouth. Everything was handed to you. If you were in my position, you wouldn&#39;t even be able to achieve what I have now.&#34;</p>
                 <p>Heath whispered to Timothy, informing him of the man&#39;s background.</p>
                 <p>Timothy smirked. &#34;You founded the company, you said? You leeched off your girlfriend and dumped her after your company became successful. Is this how you achieved your success?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>The man&#39;s face fell as he didn&#39;t expect Timothy to discover the truth of his background that quickly.</p>
                 <p>The man thought that he had taken care of things well. Not many people in his circle were aware of it.</p>
                 <p>Mia narrowed her eyes. &#34;I despise this kind of man the most.&#34;</p>
                 <p>The man tried his best to remain calm. &#34;It&#39;s not a big issue. Successful people shouldn&#39;t dwell on such trivial matters. Besides, fm proposing a business collaboration with you here. My personal matters shouldn&#39;t concern you.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;I agree that the business proposal is indeed unrelated to your personal matters, but I remain skeptical about your capability. I would never work with you,&#34; Mia rejected him without hesitation.</p>
                 <p>Her prompt response put him in an</p>
                 <p>awkward position and his anger got</p>
                 <p>the best of him. &#34;Who do you el</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>you are? You&#39;re just a divorced woman and a single mother! I proposed a collaboration with you out of courtesy. You should be grateful I was giving you a chance!&#34;</p>
                 <p>As soon as the man finished, Timothy punched him in the face.</p>
                 <p>The man staggered and knelt on the ground. The corners of his lips were bleeding.</p>
@@ -2346,7 +2426,7 @@
                 <p>&#34;I agree. This is a civilized city, unlike Yellow Island.&#34; Timothy held the man&#39;s pointing finger before bending it in the opposite direction.</p>
                 <p>The man screamed in pain, but Timothy remained unfazed.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

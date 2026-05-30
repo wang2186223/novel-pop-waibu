@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>Ethan had been buried in work lately, but tonight&#39;s dinner meeting happened to be just five minutes away. Eleanor had been adamant about Vanessa skipping the event, worried about the baby&#39;s health. It was only Vanessa&#39;s promise of Ethan&#39;s escort that finally eased her concerns.</p>
                 <p>True to form, Eleanor had called Ethan personally to remind him of his duty.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>No matter how much he might resent Vanessa, he wouldn&#39;t dare disobey his mother.</p>
                 <p>Within minutes, Ethan arrived at the venue, his tailored suit accentuating his commanding presence.</p>
                 <p>Being a year senior to most attendees, Ethan had been something of a campus legend during their university days.</p>
@@ -2323,7 +2403,7 @@
                 <p>But Vanessa felt a surge of triumph. Finally, she was reclaiming the spotlight Evelyn had stolen!</p>
                 <p>She made sure to loop her arm possessively through Ethan&#39;s. &#34;It&#39;s getting late, and I need to rest. The baby, you know.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>All eyes immediately dropped to Vanessa&#39;s midsection. So that explained her fuller figure!</p>
                 <p>As Ethan allowed himself to be led away, someone called out, &#34;Leaving so soon?&#34;</p>
                 <p>&#34;My husband has important matters to attend to,&#34; Vanessa replied sweetly.</p>
@@ -2332,7 +2412,7 @@
                 <p>She stood out like a spring blossom in her caramel coat and white knit dress, her hair pulled back in a simple ponytail. There was an effortless grace about her that made everyone else fade into the background.</p>
                 <p>&#34;Ethan?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Vanessa tugged at his arm, but he remained rooted to the spot.</p>
                 <p>When she followed his stare, her blood boiled. He was completely transfixed by Evelyn.</p>
                 <p>Biting her lip hard enough to draw blood, Vanessa whispered, &#34;Ethan, we&#39;re leaving.&#34;</p>
@@ -2341,7 +2421,7 @@
                 <p>Truthfully, no one wanted Ethan to leave. These elite gatherings were rare opportunities to network with Cresthaven&#39;s upper echelons.</p>
                 <p>Ethan seized the moment to take a seat - conveniently facing Evelyn. The way he looked at her could melt glaciers.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Vanessa&#39;s face burned with humiliation beside him.</p>
                 <p>Claire was the first to notice Ethan&#39;s intense stare. She nudged Evelyn sharply. &#34;Ethan Caldwell&#39;s here!&#34;</p>
                 <p>Evelyn glanced up, and when their eyes met, Ethan raised his glass in a silent toast, one eyebrow quirking playfully.</p>
@@ -2363,7 +2443,7 @@
                 <p>&#34;Damn it,&#34; he muttered. &#34;Always one step behind.&#34;</p>
                 <p>Nathaniel sighed. &#34;Mr. Powell... are we still making our move?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

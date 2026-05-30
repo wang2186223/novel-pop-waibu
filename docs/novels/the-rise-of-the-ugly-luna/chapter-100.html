@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,31 +2391,31 @@
                 <p>I was completely numb. I couldn&#39;t utter a word and could only watch as he reached for his phone in his back pocket. Tapping the screen a few times, he turned it to me to display the video on the screen.</p>
                 <p>&#34;This is the original clip. Unmuted,&#34; he said as the video played on the phone.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>I could hear her now. All she moaned the entire time while holding and kissing Zarek was my name.</p>
                 <p>My brows drew together in confusion.</p>
                 <p>&#34;Why do you think the video was muted in the first place?&#34; He pulled the phone away, tucking it back into his pocket.</p>
                 <p>&#34;It was because I didn&#39;t want to hear that, Jaris. I don&#39;t know how she happened to fall for you so quickly, but she&#39;s loved you since then. And if it came down to choosing, she&#39;d have never let me anywhere near her.And the worst part, she thinks it was all a dream. She doesn&#39;t know anything of it.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>The shock I felt was like nothing I&#39;d felt in years. Not even when Jace accused Marta of cheating.</p>
                 <p>I lowered my gaze to the floor and the ground seemed to spin.</p>
                 <p>&#34;And about tonight,&#34; Zarek&#39;s voice grew angrier.&#34;Didn&#39;t you stop to think about the fact that she didn&#39;t return in her car? She was attacked on her way home,man! By some bloodsucking wolves! They turned her car over and she&#39;d have died had I not been there to save her. She was so damn scared and only wanted to get home. From the look of things, she was eager to share them with you. But what did you do? You publicly accused her of cheating with the one man that had saved her life. You didn&#39;t even give her the chance to explain herself.&#34;</p>
                 <p>He stepped back and tsked, shaking his head as if in disappointment. &#34;You&#39;re terrible, man.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Then,he was gone.</p>
                 <p>I barely even registered it. All I could focus on was the fact that I&#39;d been wrong to Lyric the whole time.</p>
                 <p>A foreign feeling settled deep in my chest. It took me a moment to realize it was regret.</p>
                 <p>What have I done? How did this happen?</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Everything came crashing down-how I humiliated her at the temple because I thoughnt she slept with Zarek.How rude and cold I was to her. And just now, I&#39;d hurt her in the worst way possible. She cried so hard! &#34;Fuck!&#34; I snapped, pulling at my roots.</p>
                 <p>Kael and the others came to me.</p>
                 <p>&#34;What&#39;s going on?&#34; Kael asked like a friend concerned</p>
                 <p>I rubbed my hand over my face, a sudden ache developing in my head.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Lyric never slept with Zarek. She only kissed him because she thought it was me. She&#39;d never cheated on me. She loved me this whole time.</p>
                 <p>I reached for my phone and tried to call her,but this time,her line was switched off.</p>
                 <p>Damn it.</p>
@@ -2345,7 +2425,7 @@
                 <p>Where could she possibly go? There was no way she&#39;d go back to the hospital. So, that narrowed the search down to hotels.</p>
                 <p>&#34;Check every hotel in the city, starting from the ones closest to the Pack,&#34; I instructed. &#34;She&#39;s got to be around somewhere. No one is sleeping tonight until we&#39;ve found her.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2323,7 +2403,7 @@
                 <p>Heavy breathing came from the other end.</p>
                 <p>&#34;Miss Langley?&#34; Evelyn kept her voice low. &#34;Where are you?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Dr. Carter...&#34; Bianca’s voice was hoarse. &#34;No matter what happens next, please believe me.&#34;</p>
                 <p>&#34;What do you mean?&#34;</p>
                 <p>&#34;I would never hurt you.&#34;</p>
@@ -2332,7 +2412,7 @@
                 <p>Alexander noticed immediately. &#34;What’s wrong?&#34;</p>
                 <p>&#34;Miss Langley...&#34; She gripped her phone tightly. &#34;She said something unexpected is about to happen.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Alexander’s expression hardened. He pulled Evelyn close and murmured, &#34;Let’s go. Now.&#34;</p>
                 <p>Vincent blocked their path. &#34;What’s going on?&#34;</p>
                 <p>&#34;Move.&#34; Alexander’s tone was icy.</p>
@@ -2341,7 +2421,7 @@
                 <p>A spotlight suddenly illuminated the center of the stage. Bianca stood at the podium, a remote control in her hand.</p>
                 <p>&#34;Tonight, I’m auctioning off 32% of Croix Group’s shares.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Gasps filled the room.</p>
                 <p>Vincent’s face turned ashen. &#34;Have you lost your mind?!&#34;</p>
                 <p>Bianca smirked. &#34;These shares are enough to make any of you the second-largest shareholder of Croix Group.&#34; Her gaze swept over the crowd before landing on Vincent. &#34;Starting bid—one dollar.&#34;</p>
@@ -2350,7 +2430,7 @@
                 <p>On stage, Bianca pressed the remote. The screen behind her lit up, displaying a series of stock transfer documents.</p>
                 <p>&#34;These shares were all bought with Mr. Croix’s money.&#34; She chuckled. &#34;Thank you for the generous &#39;dowry&#39; you’ve given the Langley family over the years.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Vincent lunged toward the stage but was stopped by security.</p>
                 <p>&#34;Bianca Langley!&#34; he roared. &#34;Do you have any idea what you’re doing?&#34;</p>
                 <p>Bianca looked down at him coolly. &#34;Of course I do.&#34; She turned back to the stunned guests. &#34;Let the auction begin.&#34;</p>
@@ -2362,7 +2442,7 @@
                 <p>&#34;I don’t know.&#34; He jabbed the elevator button. &#34;But Vincent is going to snap tonight.&#34;</p>
                 <p>As the elevator doors closed, the sound of shattering glass erupted from the banquet hall.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

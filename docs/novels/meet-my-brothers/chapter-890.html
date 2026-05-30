@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,7 +2391,7 @@
                 <p>&#34;Mr. Barrett, I think we should pick you up first. Where are you? The Lanes are looking for us everywhere. If they discover you, they might kill you!&#34;</p>
                 <p>“I&#39;ve met them,&#34; Timothy said nonchalantly.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;What? You&#39;ve met them? Are you hurt anywhere? Is everything alright? Should I dispatch a team from Bern City right away?&#34; Assuming that the Lane family had hurt Timothy as soon as they met, Heath thought that they were being absolutely ridiculous.</p>
                 <p>Heath had been worried about Timothy, who shouldn&#39;t get caught by the Lanes. He didn&#39;t expect his boss to have actually met them already! “I&#39;m fine. Your job now is to go to the subsidiary and find out why they are going to collaborate with the Bowens. Whose decision was it? Which fool is it?&#34; Timothy questioned.</p>
                 <p>“I still think that we should come to you first, Mr. Barrett. Then, we can go to the subsidiary together and solve the issue,” Heath suggested. “I&#39;ll go to the subsidiary. You go to the subsidiary now and solve the issue.” Timothy hung up the call after saying that.</p>
@@ -2323,7 +2403,7 @@
                 <p>This wasn&#39;t the kind of conversation a small fry would have. This man was obviously not just an average bodyguard!</p>
                 <p>Timothy glanced at the entrance. “I&#39;m just an ordinary person.”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>At least, he was an ordinary man to Mia.</p>
                 <p>After he left, the woman suddenly recalled the rumor regarding the Bowen family.</p>
                 <p>Rumors had it that they were going to collaborate with the Barrett Group.</p>
@@ -2335,14 +2415,14 @@
                 <p>“Your brother said that Timothy is staying by your side to meet Ginger. What are you going to do about it?&#34;</p>
                 <p>“I&#39;m going to arrange a time for him to visit her at the hospital. She has to play along with me again.”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>That should be the best possible solution for now.</p>
                 <p>At that moment, she received a call from an unknown number.</p>
                 <p>She answered it. &#34;Hello? Who is this?&#34;</p>
                 <p>&#34;Mia, is Tim with you?&#34;</p>
                 <p>Please bookmark the website to access chapters of novels early and in the highest quality.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,17 +2390,17 @@
                 <p>A wave of unease washed over Olivia. Unsure of Seraphina&#39;s next move, she resolved to keep her distance.</p>
                 <p>With Winston&#39;s assistance, Alistair settled into the grand chair at the head of the hall.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Frederick Kensington approached eagerly, his voice laced with cautious hope. &#34;Father, you still recognize me, don&#39;t you?&#34;</p>
                 <p>Alistair gave him a sidelong glance. &#34;My mind is perfectly clear today.&#34;</p>
                 <p>Frederick&#39;s shoulders relaxed with visible relief. &#34;Thank heavens! I knew it was wise of Donovan to bring you here for treatment. That boy is truly dependable, unlike Julian who&#39;s always off chasing frivolities instead of tending to family matters.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>He threw a pointed glare over his shoulder at Julian as he spoke.</p>
                 <p>Olivia&#39;s initial impression of Frederick&#39;s family wasn&#39;t favorable, yet she found herself studying him. Was his concern genuine, or was he simply skilled at playing the crowd? Either way, he knew how to work a room.</p>
                 <p>She knew perfectly well that Alistair had been brought to this country during a crisis, with Donovan having to search tirelessly for him.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Yet Frederick painted a picture of the dutiful grandson Donovan, bringing Alistair here solely for medical treatment.</p>
                 <p>Julian stepped forward, his smile mirroring his father&#39;s—sly as a fox with a dangerous glint in his eyes. But his attention was fixed elsewhere.</p>
                 <p>His smile widened as he turned to Olivia. &#34;Grandfather, this must be our cousin? Olivia Sinclair, if I&#39;m not mistaken? May I call you Olivia? You&#39;re absolutely breathtaking. You have your mother&#39;s eyes. I remember seeing a portrait of my aunt when I was a boy.&#34;</p>
@@ -2330,7 +2410,7 @@
                 <p>Frederick nodded and beckoned her closer. &#34;Come here, my dear. Let me have a proper look at you. My word, you&#39;re the very image of your mother.&#34;</p>
                 <p>He hastily brushed away a tear, seemingly overcome by painful memories.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Seeing Frederick&#39;s distress, Olivia stepped forward, offering a polite smile to the others.</p>
                 <p>Gwendolyn Kensington cut in with a sneer. &#34;Look at you all, acting so sentimental. She doesn&#39;t seem particularly thrilled to see us. We&#39;ve been standing here like decorations, and she hasn&#39;t even offered a proper greeting.&#34;</p>
                 <p>Seraphina let out a loud, mocking laugh.</p>

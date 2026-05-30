@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,37 +2391,37 @@
                 <p>Olivia’s expression darkened, the warmth in her eyes replaced by a chilling resolve. She had tolerated their insults, willing to let their initial hostility slide.</p>
                 <p>But their relentless arrogance had crossed a line. Enough was enough.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Seraphina faltered slightly under Olivia’s icy glare. The once-submissive woman from the Kensington household had changed—especially after the birth of her daughter. Confidence radiated from her now, an aura of quiet power that unsettled Seraphina.</p>
                 <p>There was something unnervingly familiar about Olivia in that moment, though Seraphina couldn’t place it.</p>
                 <p>Without another word, Olivia pulled out her phone and dialed reception. &#34;Send security up immediately,&#34; she commanded, her voice cold. &#34;There are two troublemakers causing a disturbance. Escort them out. They’re upsetting me.&#34;</p>
                 <p>She hung up, turning her back on them with deliberate indifference.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Margaret’s face twisted in fury. &#34;Who do you think you are, ordering us around? Just because you bullied people in the Kensington family doesn’t mean you can command everyone here!&#34; she shrieked, her voice rising with every word.</p>
                 <p>She plopped onto the sofa, arms crossed defiantly, her posture radiating arrogance. &#34;I’d like to see you try to make me leave!&#34;</p>
                 <p>Then her gaze flicked to Isabelle, Olivia’s quiet daughter. A cruel smirk twisted her lips as she aimed her next barb. &#34;Your daughter must be just as shameless and arrogant as you are.&#34;</p>
                 <p>The words struck like a blade.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Olivia’s eyes turned glacial, a dangerous glint flashing within them—something darker, sharper than before.</p>
                 <p>Margaret barely had time to register the change before security arrived. Without hesitation, they seized both women by the arms, preparing to drag them out.</p>
                 <p>Seraphina’s bravado shattered into panic.</p>
                 <p>&#34;What are you doing? Do you know who we are?&#34; she shrieked, struggling against their grip. &#34;We’re Kensingtons! How dare you listen to her? Release us now, or you’ll regret it!&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Her protests fell on deaf ears.</p>
                 <p>The guards remained unmoved, their grip unyielding.</p>
                 <p>Olivia didn’t spare them another glance.</p>
                 <p>The door slammed shut behind them, sealing their humiliation.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Silence settled over the room.</p>
                 <p>Olivia exhaled slowly, her fingers brushing Isabelle’s hair gently.</p>
                 <p>No one insulted her daughter and walked away unscathed.</p>
                 <p>No one.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

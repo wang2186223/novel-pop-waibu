@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,38 +2391,38 @@
                 <p>Victoria was mildly impressed by Evelyn’s composure but kept her tone sharp. &#34;Don’t get too confident. Do you think simply eliminating the smell is enough? That’s basic knowledge any novice perfumer should have.&#34;</p>
                 <p>She crossed her arms. &#34;Your task is to document the data of forty-eight distinct odors and analyze their characteristics. You have three days. Can you handle it?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Evelyn met her gaze steadily. &#34;I don’t need that long.&#34;</p>
                 <p>She paused, then added, &#34;One day. That’s all I need.&#34;</p>
                 <p>A flicker of surprise crossed Victoria’s face before she masked it. &#34;Fine. You asked for it. Don’t blame me if you fail. You’ll take full responsibility for your promise.&#34;</p>
                 <p>&#34;Of course.&#34; Evelyn was already eager to begin.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Seeing the excitement in Evelyn’s eyes, Victoria found herself inexplicably curious about the outcome.</p>
                 <p>Truthfully, Victoria hadn’t liked Evelyn from the start. She had been skeptical when Gregory Whitmore insisted on hiring her, suspecting there was more to the story.</p>
                 <p>But Evelyn’s performance in the meeting had shifted Victoria’s perspective slightly. At the very least, the woman had real skill.</p>
                 <p>Why had she never heard of Evelyn before? If she was truly the one behind DR Holdings’ bestselling fragrances, why were they always credited to others?</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Victoria narrowed her eyes. Something didn’t add up.</p>
                 <p>&#34;Some of these forty-eight odors are very similar,&#34; she warned. &#34;And I should remind you—protect yourself. You could damage your nose before you even finish.&#34;</p>
                 <p>Her tone was harsh, but Evelyn caught the underlying concern.</p>
                 <p>She smiled. &#34;Don’t worry. I’ll complete the task and pass your assessment.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Victoria’s lips twitched, but she quickly schooled her expression. &#34;Words mean nothing. Results are what matter here.&#34;</p>
                 <p>&#34;Understood.&#34;</p>
                 <p>Just as Evelyn turned to begin, Victoria hesitated, then called out, &#34;Hey—&#34;</p>
                 <p>Evelyn glanced back. &#34;Yes?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Victoria exhaled sharply, feigning irritation. &#34;Is that lawsuit of yours over yet? It’s dragging on like some never-ending drama.&#34;</p>
                 <p>Despite her tone, there was a hint of genuine concern.</p>
                 <p>Evelyn chuckled. &#34;Thank you for your concern, Ms. Sterling. It’ll be resolved soon.&#34;</p>
                 <p>Victoria scoffed. &#34;I’m not concerned about you. I just don’t want your personal mess affecting the company’s reputation.&#34;</p>
                 <p>Evelyn nodded. &#34;I’ll handle it as quickly as possible.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

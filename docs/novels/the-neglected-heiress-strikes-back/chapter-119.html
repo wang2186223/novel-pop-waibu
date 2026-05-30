@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2318,7 +2398,7 @@
                 <p>But before she could react, he had already clicked the release. &#34;No need to thank me.&#34;</p>
                 <p>Her breath hitched. How had he moved so fast? She hadn&#39;t even seen his hands move!</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Rumors said he could assemble a handgun in eight seconds during his military academy days. His reflexes were terrifying.</p>
                 <p>Outsmarting her was child&#39;s play.</p>
                 <p>The moment Nathaniel and Isabella stepped inside, whispers erupted among the staff.</p>
@@ -2331,7 +2411,7 @@
                 <p>She must have heard too, but her face remained impassive—unreadable. It unsettled him.</p>
                 <p>&#34;Where are my things?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Still in your room. Exactly where you left them.&#34;</p>
                 <p>&#34;You knew I was coming today. Yet you didn’t prepare in advance. Getting lazy?&#34; She arched a brow.</p>
                 <p>&#34;Those are your belongings. I didn’t dare touch them.&#34; His eyes lingered on her.</p>
@@ -2344,7 +2424,7 @@
                 <p>The moment he left, she exhaled, tension draining from her shoulders.</p>
                 <p>This entire trip was suffocating.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>When she was his wife, she had schemed for every second alone with him, only to be met with indifference. Now, he personally drove her, bought her shoes, even buckled her seatbelt—acting like some doting newlywed.</p>
                 <p>It felt unnatural. Like ants crawling up her spine.</p>
                 <p>His sudden tenderness was like expired candy—no sweetness, just bitterness.</p>
@@ -2357,7 +2437,7 @@
                 <p>But as she reached the door, she heard Victoria Kingsley’s shrill voice.</p>
                 <p>&#34;You little slut! What exactly happened between you and Mr. Adrian at Grandfather’s party? Speak!&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;I didn’t do anything! I swear!&#34; Evelyn’s sobs were heart-wrenching.</p>
                 <p>&#34;Liar!&#34; Victoria’s rage spiked. &#34;After drinking that, how could nothing happen? Then explain the hickey on his neck!&#34;</p>
                 <p>&#34;I don’t know! I can’t remember—Ah!&#34;</p>
@@ -2370,7 +2450,7 @@
                 <p>Clutching her face, she pointed at Isabella, too furious to form words.</p>
                 <p>&#34;Calling others sluts so freely—did you forget to wash your mouth after using the toilet?&#34; Isabella crossed her arms, tilting her head with a chilling smile.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Sister-in-law!&#34; Evelyn huddled in the corner, trembling.</p>
                 <p>Tears spilled down her cheeks at the sight of Isabella.</p>
                 <p>&#34;Isabella! You lunatic!&#34; Victoria seethed, her face throbbing. The slippers had left her skin stinging worse than a slap. &#34;Don’t think you can bully me just because you’re a Sinclair! I’m a Kingsley—I won’t let this slide!&#34;</p>
@@ -2388,7 +2468,7 @@
                 <p>Trust a ghost before trusting a man.</p>
                 <p>&#34;Did she hurt you?&#34; His voice was low, laced with something unfamiliar—worry.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

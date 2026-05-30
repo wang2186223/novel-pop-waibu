@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>Davin spoke first, offering his heartfelt wishes. The sound of her new title made Amelia feel like she was in a daze.</p>
                 <p>Reality finally settled in for her when court staff came forward with their own congratulations.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>She realized it was true-she and Wyatt were really husband and wife now.</p>
                 <p>Following Wyatt&#39;s request, Davin had gifts for everyone who helped that day.</p>
                 <p>Everyone who received a gift beamed with gratitude and showered Amelia and Wyatt with warm wishes.</p>
@@ -2329,7 +2409,7 @@
                 <p>&#34;Mrs. Stewart, is it all right if I get my present first?Maybe your happiness will rub off on me and help me find someone special,&#34; Davin said.</p>
                 <p>With a lighthearted laugh,Amelia agreed but reminded him to call her by her first name.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Only then did Amelia realize their car wasn&#39;t taking the usual route toward the Stewart Group. Instinctively,she glanced at the man beside her for answers.</p>
                 <p>Catching the sparkle in her gaze, Wyatt couldn&#39;t resist reaching over to touch her cheek. The softness delighted him, and he playfully gave it a gentle pinch before letting go. That unexpected touch made Amelia stunned, her body going completely still.</p>
                 <p>She quickly turned her head and shot Wyatt a warning look, earning a low, amused chuckle from him.</p>
@@ -2337,7 +2417,7 @@
                 <p>Joy seemed to radiate from Wyatt, and it wasn&#39;t long before Amelia felt happiness rise in her chest.</p>
                 <p>Although she hoped to keep their marriage a secret from Wyatt&#39;s company, she couldn&#39;t help but spill the news to Carlee and Monroe in their group chat.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;I got married!&#34; She sent a message.</p>
                 <p>Barely a second passed before Carlee&#39;s call appeared on Amelia&#39;s phone screen.</p>
                 <p>&#34;Amelia, this is amazing! You and Wyatt together-no one will dare mess with you now! My best friend,married to the powerful Wyatt Stewart...I could shout it from the rooftops. Just imagine how jealous Dayna will be.I-&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>Tempting as it was to share the news with the Flynn and Morrison families, Carlee respected Amelia&#39;s wishes and promised not to reveal a thing to them.</p>
                 <p>Amelia didn&#39;t have a large friend circle-Carlee and Monroe were her closest friends.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Once the call ended, Amelia looked for Monroe&#39;s reply but saw her message had gone unanswered by him.</p>
                 <p>Just as she began to wonder if Monroe had missed the news,Wyatt handed her his phone.</p>
                 <p>On the screen was a message from Monroe, and reading it brought tears to her eyes.</p>
@@ -2353,7 +2433,7 @@
                 <p>Wyatt hadn&#39;t typed a reply yet, so Amelia took his phone and placed a video call.</p>
                 <p>On Monroe&#39;s end, he had been looking at his phone,waiting for Wyatt&#39;s answer. He immediately picked up when the video call appeared. Seeing Amelia on the screen instead of Wyatt, he blinked in surprise. &#34;Why are you the one calling?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

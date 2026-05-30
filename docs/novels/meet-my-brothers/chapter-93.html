@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2319,28 +2399,28 @@
                 <p>The client for this project was a little demanding. The design she drew during the day needed some modification, and her client needed the new design immediately as they were in a hurry to begin the renovation process. Hence, she had to work overtime to finalize the design and send it to them.</p>
                 <p>The office was empty, and she was the only one still working.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>“Mia, you’re working overtime?”</p>
                 <p>Mia heard the voice and turned to see Felix walking in from outside. “Felix, why are you here?”</p>
                 <p>“I came to pick up something. I didn’t expect to find you still here. You’re working quite hard.”</p>
                 <p>“I’m very dedicated to my work. After school starts, I probably won’t have this much time to continue working</p>
                 <p>anymore.”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Felix smiled and said, “I’m here to take care of some things, too. We can leave together later.”</p>
                 <p>Mia was very focused on her drawing and did not notice Felix’s gaze.</p>
                 <p>An hour later, Mia finally finished the design and sent it to her client. She rubbed her sore neck.</p>
                 <p>Her stomach made a sound as the baby inside her belly was hungry.</p>
                 <p>+15 BONOS</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Mia touched her abdomen and said in a soft voice. “I’m sorry, baby. Mommy will go eat now.”</p>
                 <p>Felix approached her and rested one hand on her chair. “Are you done yet?”</p>
                 <p>“Yes, let’s go.”</p>
                 <p>Mia stood up to leave while maintaining a distance from Felix.</p>
                 <p>Felix withdrew his hand without a word, and the two took the elevator downstairs.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>“Mia, congratulations on being able to go back to school. If you encounter any difficulties in life or at school in the future, you can come to me for help anytime.”</p>
                 <p>Mia smiled and said. “Thank you for the offer. I’m doing fine as of now.”</p>
                 <p>“I mean, you don’t always have to do things on your own. I’m your senior and two years older than you. You know you can come to me for help.”</p>
@@ -2352,7 +2432,7 @@
                 <p>At this point, Mia had no choice but to give in. She stood at the roadside and saw a Maybach approaching. The sleek black car reminded Mia of Timothy’s car. But Timothy wouldn’t be here so late at night, would he?</p>
                 <p>At this moment, Felix’s car drove out of the underground garage and stopped on her left. “Mia, get in.”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

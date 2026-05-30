@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2315,7 +2395,7 @@
                 <p>She gently grasped Alexander&#39;s hand.</p>
                 <p>It was icy and tense, but at her touch, its grip loosened slightly.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>The murderous intent surrounding Alexander visibly receded a few degrees.</p>
                 <p>It was as if he was being pulled back from the brink of losing control.</p>
                 <p>Evelyn had long sensed that Alexander was far from simple.</p>
@@ -2335,7 +2415,7 @@
                 <p>Thinking of his nightly cross-border meetings, speaking languages she didn&#39;t understand, his expression focused and profound...</p>
                 <p>She suddenly realized she might never have truly seen Alexander clearly.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Evelyn&#39;s fingertips trembled slightly.</p>
                 <p>She instinctively wanted to let go of his hand.</p>
                 <p>The next second, the man&#39;s grip tightened even more forcefully.</p>
@@ -2345,7 +2425,7 @@
                 <p>He paused, his gaze sharp as a blade. &#34;I will handle it personally.&#34;</p>
                 <p>This was already a concession.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Richard Evans secretly sighed in relief and hurriedly agreed. &#34;Yes, yes.&#34;</p>
                 <p>He turned and walked away quickly.</p>
                 <p>Only when he was far off did he realize his back was soaked with cold sweat.</p>
@@ -2355,7 +2435,7 @@
                 <p>He sighed and took Lillian&#39;s hand. &#34;The Dowager has never favored our branch. When you go... you&#39;ll probably face some humiliation.&#34;</p>
                 <p>Lillian gave a soft smile, but her eyes glistened with unshed tears. &#34;For you, what&#39;s a little humiliation? I&#39;ve been without status all these years outside. What kind of scorn haven&#39;t I endured? I&#39;m used to it.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Richard&#39;s heart softened, filled with guilt. &#34;Lillian, these years... you&#39;ve suffered.&#34;</p>
                 <p>&#34;It&#39;s nothing.&#34;</p>
                 <p>Cecilia Evans walked over at the right moment and interjected softly. &#34;Mom, why have you never told Dad about the grievances you faced outside?&#34;</p>
@@ -2369,7 +2449,7 @@
                 <p>Lillian&#39;s tears finally fell.</p>
                 <p>She raised a hand to wipe them away, her voice choked. &#34;You silly child... Do they... give you a hard time in the Truman family because of this too?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

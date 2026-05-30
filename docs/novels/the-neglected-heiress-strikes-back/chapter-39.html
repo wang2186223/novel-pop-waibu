@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2315,7 +2395,7 @@
                 <p>&#34;Acacia,&#34; Evadne&#39;s voice dropped to a dangerous whisper, &#34;gossip requires only a mouth. But have you considered the consequences?&#34;</p>
                 <p>Acacia&#39;s pulse spiked.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>She&#39;d dismissed this woman as some naive country girl easily intimidated.</p>
                 <p>Now, facing those piercing eyes, fear coiled in her stomach. The more she interacted with Evadne, the more unpredictable she became.</p>
                 <p>&#34;Ms. Sinclair, we&#39;re merely concerned for your reputation.&#34; Una&#39;s tone dripped with false concern. &#34;After all, you did... interfere with Acacia and Alexander&#39;s relationship. Though we don&#39;t blame you - it was clearly unintentional. But now that Acacia and Alexander are engaged, your presence as his ex-wife is rather... inappropriate.&#34;</p>
@@ -2325,7 +2405,7 @@
                 <p>How disgraceful!</p>
                 <p>&#34;I interfered?&#34; Evadne&#39;s laugh rang out sharp and clear. &#34;Mrs. Vanderbilt, has your mind become as shoddy as your company&#39;s furniture?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Una&#39;s face purpled with rage.</p>
                 <p>&#34;When I married Mr. Kingsley, he was single. Your daughter ended things because she couldn&#39;t handle the pressure. How is that my fault?&#34; Evadne&#39;s smile turned lethal. &#34;Shall I list every time your daughter harassed my husband during our three-year marriage? Would that satisfy your... curiosity?&#34;</p>
                 <p>Acacia paled.</p>
@@ -2335,7 +2415,7 @@
                 <p>&#34;As you can see, Mr. Kingsley and I haven&#39;t finalized our divorce.&#34; Evadne&#39;s smile could have frozen hell. &#34;Yet some can&#39;t wait to steal what&#39;s still mine.&#34;</p>
                 <p>Acacia&#39;s face burned hotter than molten lava.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Who carried their marriage certificate around?</p>
                 <p>But Evadne always prepared for every contingency. This document was her mirror, reflecting their lies back at them.</p>
                 <p>Isabella and Una found themselves speechless. Legally, Evadne still held the upper hand. Any further argument would only deepen their humiliation.</p>
@@ -2345,7 +2425,7 @@
                 <p>&#34;He&#39;s breathtaking,&#34; Glynnis sighed.</p>
                 <p>&#34;This Jareth Foundation gala is impossibly exclusive,&#34; Isabella muttered. &#34;I couldn&#39;t even secure front row seats.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Mother, Alexander and Jareth are close. Couldn&#39;t you ask Alexander to introduce me?&#34; Glynnis pleaded.</p>
                 <p>Isabella&#39;s expression darkened at the mention of her stepson. &#34;Absolutely not.&#34;</p>
                 <p>&#34;Where&#39;s Mari?&#34;</p>
@@ -2355,7 +2435,7 @@
                 <p>&#34;Mother! Alexander&#39;s in the front! I want to sit with him!&#34; Acacia made to storm forward but was blocked by security.</p>
                 <p>&#34;Seating is assigned, Ms. Vanderbilt. No exceptions.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Do you know who I am?&#34; Acacia hissed.</p>
                 <p>&#34;Mr. Kingsley&#39;s girlfriend,&#34; the guard said flatly. &#34;But these arrangements were made by the Jareth Group chairman himself. Not even his wife could change them.&#34;</p>
                 <p>Una yanked her daughter back. &#34;Enough! It&#39;s just a seat!&#34;</p>

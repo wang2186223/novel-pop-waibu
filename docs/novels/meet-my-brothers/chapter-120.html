@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>The speed of their actions caught Mia off guard.</p>
                 <p>Choosing to divert her thoughts, Mia turned off her phone and immersed herself in learning about pregnancy.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>With no afternoon classes, she headed to her studio to work, given her current financial constraints.</p>
                 <p>After all, Timothy wasn’t exactly bringing in a significant income.</p>
                 <p>Several days passed without Timothy returning to their marital home, but Mia didn’t dwell on it.</p>
@@ -2323,7 +2403,7 @@
                 <p>With Laura’s condition now stable, she had been moved from the intensive care unit to a standard ward.</p>
                 <p>Holding a pot of homemade soup, Mia decided to go to the hospital to pay Laura a visit.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>When she entered the ward, she noticed Maya and Sharon already present, and standing alongside them was</p>
                 <p>none other than Timothy.</p>
                 <p>Mia paused briefly before saying, “I’ll come back later.”</p>
@@ -2341,7 +2421,7 @@
                 <p>Standing nearby, Sharon appeared somewhat content, adding. “Absolutely! Back then, I could eat anything without a worry…”</p>
                 <p>However, when Sharon’s attention shifted to Mia’s belly, a sudden hush fell over her.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>The reality of her son’s growing independence became apparent. He wasn’t as compliant and well– mannered as he used to be, certainly not as comforting as when he was in her womb.</p>
                 <p>Struggling to keep a smile in place, Mia couldn’t help but wonder if her baby’s serene demeanor was truly a reflection of inherited traits.</p>
                 <p>At that moment, Timothy interjected, “Grandma needs some rest. We should head out.”</p>
@@ -2350,7 +2430,7 @@
                 <p>Laura subtly guided Mia’s hand toward Timothy. Mia hesitated for a moment, contemplating pulling away.</p>
                 <p>However, Timothy instinctively took hold of Mia’s hand. His strong grip heightened her discomfort, especially under the watchful gaze of Maya.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Laura expressed contentment, saying, “Alright, you two take care of each other.”</p>
                 <p>Hearing Laura’s words, Mia avoided meeting her eyes.</p>
                 <p>They exited the hospital room, leaving Mia feeling incredibly awkward. She hadn’t intended to hold Timothy’s hand.</p>
@@ -2359,7 +2439,7 @@
                 <p>Out of the blue, Maya approached, linking her arm with Mia’s. “Ms. Bowen, would you mind having a chat with</p>
                 <p>me?”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

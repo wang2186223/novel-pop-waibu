@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,13 +2391,13 @@
                 <p>&#34;A gift for you.&#34;</p>
                 <p>Linda eagerly unwrapped the velvet box and gasped. &#34;This is Tiffany’s limited edition—&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Annabelle gracefully tucked a strand of hair behind her ear. &#34;Do you like it?&#34;</p>
                 <p>&#34;It’s too extravagant...&#34;</p>
                 <p>&#34;Did you forget who my fiancé is?&#34; Annabelle chuckled meaningfully.</p>
                 <p>Linda immediately caught on. &#34;Alexander bought this? Then I won’t hold back!&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Him?&#34; Annabelle cooed. &#34;If I asked for the stars, he’d build me a ladder.&#34;</p>
                 <p>Evelyn retreated two steps without a word, melting into the shadows of the crowd.</p>
                 <p>At the banquet hall entrance, Alexander Hamilton ended a call with a furrowed brow. His silver-gray suit accentuated his tall frame, but couldn’t mask the exhaustion in his eyes.</p>
@@ -2329,20 +2409,20 @@
                 <p>His gaze sharpened, but he didn’t push her away again.</p>
                 <p>Annabelle triumphantly led him toward the group. &#34;Everyone, this is my fiancé, Alexander Hamilton.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Linda eagerly showed off the necklace. &#34;Mr. Hamilton, you’re too generous.&#34;</p>
                 <p>Alexander glanced at the jewelry, his expression instantly frosty. &#34;You bought this?&#34;</p>
                 <p>Annabelle’s smile faltered. &#34;The designer insisted you had to—&#34;</p>
                 <p>&#34;Using my name?&#34; His voice was soft, yet the temperature around them plummeted.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Annabelle rushed to explain. &#34;I thought since Linda’s getting married—&#34;</p>
                 <p>&#34;Never again.&#34; He turned to leave, but Annabelle clung to him desperately.</p>
                 <p>&#34;Just ten minutes,&#34; she pleaded, eyes glistening. &#34;Please.&#34;</p>
                 <p>Alexander’s gaze swept the room—then paused at a corner. Evelyn stood there, sipping champagne, her hair obscuring half her face.</p>
                 <p>&#34;Five minutes,&#34; he said coldly.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

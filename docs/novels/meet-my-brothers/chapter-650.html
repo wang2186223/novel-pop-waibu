@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,7 +2392,7 @@
                 <p>Furious, Caleb sprang to his feet. “What’s going on? I thought the bidders have to bid a price and three chances are given to others before the bid ends, no? You knocked down the hammer way too fast. This is not fair!”</p>
                 <p>People are joining in the protest. “It is indeed unfair.”</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Timothy looked at the second floor, his eyes met Mia’s. She was propping her chin while smirking triumphantly.</p>
                 <p>His expression was gloomy as he began to think about what was she up to.</p>
                 <p>Luna stood up too. “Can the guest on the second floor pay ten million dollars?” She didn’t believe that Monalize had that much money.</p>
@@ -2326,21 +2406,21 @@
                 <p>The reishi mushrooms could treat Laura and wake her up. When that happened, Luna</p>
                 <p>wouldn’t be able to cover the things she did anymore!</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>The protest was in vain. Caleb looked at Timothy, “What should we do?”</p>
                 <p>They thought that things were going smoothly, yet Ginger got in their way. How unlucky!</p>
                 <p>Timothy reciprocated solemnly, “Think of something else.”</p>
                 <p>“Tim, that woman must be targeting me. I’ll explain to her later. I will help you get the reishi mushrooms back no matter what it takes,” promised Caleb.</p>
                 <p>He figured that that was the reason behind Monalize’s intervention. Otherwise, why would she suddenly cause them trouble?</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Except for the necklace and the reishi mushrooms, she didn’t purchase anything from the auction today.</p>
                 <p>It was obvious that she was picking on them.</p>
                 <p>“Let’s go.” Timothy rose from his seat.</p>
                 <p>Since someone else had purchased the reishi mushrooms, there was no need to stay here</p>
                 <p>anymore.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Caleb quickly said, “Let’s head to the second floor and talk to them.”</p>
                 <p>Timothy shared the same notion.</p>
                 <p>Nevertheless, it was fortunate that the winning bidder was Monalize and Ginger. The men still had a chance to get the reishi mushrooms.</p>
@@ -2352,7 +2432,7 @@
                 <p>Soon enough, the sound of high heels clicking could be heard from the end of the corridor.</p>
                 <p>Mia, holding Ginger’s hand, came up to them. Mia arched her eyebrow at them. “What a coincidence.”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

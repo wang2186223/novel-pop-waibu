@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,26 +2393,26 @@
                 <p>Morning light filtered through the curtains when Evelyn stirred. Refreshed from deep sleep, she attempted to stretch but found herself pinned. Blinking awake, she met the smoldering gaze of her husband.</p>
                 <p>&#34;Alex?&#34; Her voice held genuine surprise. &#34;When did you get back?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Alexander&#39;s dark eyes locked onto hers, finally allowing him to voice last night&#39;s concerns. &#34;You cuddled up to me without even verifying my identity. What kind of self-preservation instincts are those?&#34; His reprimand came with a gentle tap to her forehead - just enough to make his point without causing pain.</p>
                 <p>Evelyn rubbed the spot with a pout. &#34;Who else would be in our bed besides you?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;A burglar, perhaps?&#34;</p>
                 <p>She scoffed, rolling her eyes. &#34;The security at Crestview Heights isn&#39;t just for show. And even if someone breached the gates, this house has a Veridian-grade protection system installed.&#34; Her tone dripped with amusement at what she deemed a ridiculous hypothetical.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>His eyebrows shot up. &#34;How did you know about the security system?&#34;</p>
                 <p>Evelyn nearly facepalmed. After months living here, she&#39;d recognized the subtle signs - while not as sophisticated as the Hawthorne estate&#39;s defenses, the Kensington home&#39;s security far exceeded standard residential protections.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;I guessed!&#34; She recovered quickly, flashing an impish smile. &#34;Haven&#39;t you seen those billionaire dramas? People of your status always have fortress-level security. It&#39;s practically a trope.&#34; She punctuated her explanation with a self-satisfied eyebrow wiggle.</p>
                 <p>&#34;Should I take this to mean you feel safest with me?&#34; Noticing her attempt to rise, Alexander caught her wrist and reeled her back against his chest.</p>
                 <p>&#34;Alex, stop playing around. Phoenix Labs needs me today.&#34; She squirmed in his grasp, her mind already racing with research parameters. Until those formulas stabilized, she wouldn&#39;t rest easy.</p>
                 <p>&#34;You&#39;ve been married to that lab more than to me lately.&#34; His murmur vibrated against her neck as he nuzzled the sensitive skin there. &#34;Maybe I should revoke your lab access privileges.&#34;</p>
                 <p>Evelyn&#39;s eyes widened in mock horror. &#39;Note to self: never let personal disputes bleed into professional consequences with this man.&#39;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2318,7 +2398,7 @@
                 <p>Evelyn’s grip tightened on her phone.</p>
                 <p>Something was very wrong.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Lucas Bennett was a complete bastard.</p>
                 <p>He&#39;d slept with Claire and vanished without a trace, leaving her unable to reach him ever since.</p>
                 <p>Evelyn Carter frowned, sensing Claire&#39;s dark mood, and immediately arranged to meet her.</p>
@@ -2331,7 +2411,7 @@
                 <p>If she truly understood men, she wouldn’t have wasted seven years of her life on Ethan Caldwell.</p>
                 <p>Looking back now, those years felt like—</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Evelyn wanted to slap herself.</p>
                 <p>&#34;I&#39;ve decided,&#34; Claire said, swirling the ice in her glass. &#34;I&#39;ll give him one more month. If I still can&#39;t reach Lucas by then, I&#39;ll book the appointment.&#34;</p>
                 <p>A month-old pregnancy was still early enough. The procedure wouldn’t take much of a toll on her body.</p>
@@ -2344,7 +2424,7 @@
                 <p>The door was slightly ajar. A waiter slipped in with a tray, the smoky haze inside parting just enough for Vanessa to catch a glimpse of a familiar figure lounging on the sofa.</p>
                 <p>She hesitated, then leaned closer for a better look.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Her lips pressed into a thin line. Without another thought, she pushed the door open and strode inside.</p>
                 <p>The door burst open with a sharp crack, drawing every eye in the room toward her.</p>
                 <p>Lucas Bennett lounged on the plush sofa, a deck of cards fanned carelessly in one hand, a cigarette perched between his lips. His eyebrows shot up when Evelyn Carter stormed in, her presence like a sudden storm disrupting the calm.</p>
@@ -2357,7 +2437,7 @@
                 <p>So this is her?</p>
                 <p>That’s why he agreed to marry Claire so easily—because she was just a stand-in?</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>What a bastard.</p>
                 <p>The realization settled like ice in her chest.</p>
                 <p>The moment Evelyn stepped into the private lounge, whispers erupted.</p>
@@ -2387,7 +2467,7 @@
                 <p>Evelyn turned on her heel, frustration burning in her chest. If Lucas wanted to play games, fine. But Claire deserved better.</p>
                 <p>And she would make sure her best friend got it—no matter what.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>&#34;A second chance?&#34; Andrew shot to his feet. &#34;Did he ever give Evelyn a second chance?!&#34;</p>
                 <p>Evelyn instinctively reached for her father&#39;s sleeve.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Anthony&#39;s expression shifted. &#34;Andrew, listen to me—&#34;</p>
                 <p>&#34;There&#39;s nothing to say!&#34; Andrew slapped away Anthony&#39;s outstretched hand. &#34;Three conditions—take them or leave them.&#34;</p>
                 <p>&#34;The first two are fine, but the third...&#34; Anthony glanced helplessly at Alexander. &#34;Hamilton Group genuinely needs Alexander&#39;s help right now...&#34;</p>
@@ -2321,7 +2401,7 @@
                 <p>Alexander finally looked up. &#34;Uncle Andrew, I—&#34;</p>
                 <p>&#34;Shut up!&#34; Andrew jabbed a finger at him. &#34;At the mall today, you were all over that Laurent girl—did you think I wouldn&#39;t see?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Anthony turned to Alexander in shock.</p>
                 <p>&#34;It was a misunderstanding,&#34; Alexander said with a bitter smile. &#34;I&#39;ve already had PR release a statement.&#34;</p>
                 <p>Andrew sneered. &#34;Fine. Take your time discussing. Evelyn, we&#39;re leaving.&#34;</p>
@@ -2329,7 +2409,7 @@
                 <p>In the hospital corridor, Evelyn studied her father&#39;s rigid profile, her heart twisting into knots.</p>
                 <p>&#34;Dad...&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Andrew&#39;s steps faltered, his posture suddenly seeming more stooped.</p>
                 <p>&#34;Evelyn,&#34; he said hoarsely, &#34;it&#39;s not that I&#39;m against you reconnecting with your birth parents. It&#39;s just...&#34; He rubbed his face roughly. &#34;I&#39;m afraid you&#39;ll get hurt.&#34;</p>
                 <p>Tears welled up in Evelyn&#39;s eyes instantly.</p>
@@ -2337,7 +2417,7 @@
                 <p>&#34;Dad, I remember when I had a fever as a child—you carried me two blocks to the hospital...&#34;</p>
                 <p>Andrew&#39;s body trembled slightly.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;And how you always gave the meat to Emily and me while you ate plain buns...&#34;</p>
                 <p>Something warm dripped onto the top of her head.</p>
                 <p>&#34;Without you and Mom, I would have died in that orphanage.&#34; She looked up through her tears. &#34;You&#39;ll always be my father.&#34;</p>
@@ -2354,7 +2434,7 @@
                 <p>Evelyn laughed through her tears, linking her arm through his.</p>
                 <p>The setting sun stretched their shadows long across the ground, intertwined as one.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

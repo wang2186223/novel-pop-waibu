@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>Only then did Luna notice the kind of look people were giving her. Almost instantly, she wore her typical fragile expression.</p>
                 <p>A man couldn’t take it anymore. “Jeez, this pretty lady is on the verge of crying. It’s not like it’s a huge sum of money. Just give her the money.”</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>“Well, it’s not like I cannot pay for it,” Mia finally spoke up.</p>
                 <p>“Monalize, you don’t have to entertain her.”</p>
                 <p>Ignoring Shelly, Mia stared at Luna. “If I pay for your dress, you have to pay for my outfit too because you dirtied mine as well. Only this would be fair.”</p>
                 <p>Luna’s head snapped upward, and she nodded. “Sure.”</p>
                 <p>A white T–shirt and a pair of jeans? One could easily tell that those were cheap clothes. No matter how expensive those were, the price wouldn’t be as exorbitant as Luna’s dress, would they? Hence, she figured that it was a</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>win for her.</p>
                 <p>Mia gazed at the manager. “How much is Ms. Maynard’s dress?”</p>
                 <p>TA</p>
                 <p>The manager answered, “38,000 dollars.”</p>
                 <p>“Okay. I’m wearing Vior too. Please estimate its worth.”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>The manager inspected Mia’s clothes before exclaiming, “Is this Mr. Vafayette White’s 10th– anniversary collection?”</p>
                 <p>Shelly’s jaw almost fell onto the ground when she heard that. That was a limited edition collection.</p>
                 <p>Her eyes turned to Mia in disbelief. “Don’t people usually keep it as a personal collection? Why did you wear it, Monalize? What a waste!”</p>
                 <p>It was a classic set. It might appear simple, but the story behind it says otherwise.</p>
                 <p>The spectators were surprised. All eyes were on Mia because they didn’t expect her outfit to be from that collection.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>“Ms. Monalize, its worth is too much for me to estimate a price.” The manager sounded more respectful.</p>
                 <p>Shelly quickly said, “I remember it was sold at a million dollars at an</p>
                 <p>auction last month.”</p>
                 <p>The figure shocked Luna. “This simple outfit costs one million dollars? Aren’t they just a simple cotton tee and a pair of jeans?”</p>
                 <p>The people surrounding chuckled.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>“How did she manage to enter the fashion show? She doesn’t know fashion at all.”</p>
                 <p>“She doesn’t even know Mr. White’s classic design. How dare she attend this personal show?”</p>
                 <p>Sharon failed to manage her expression when she heard that. She didn’t know Luna could be such a disgrace!</p>

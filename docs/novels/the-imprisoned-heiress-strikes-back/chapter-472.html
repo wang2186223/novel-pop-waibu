@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>What is he implying? Is this a warning?</p>
                 <p>After breakfast, Evelyn changed into a sleek business outfit, deciding to head to Titan Capital Group first to finalize her resignation paperwork.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Evelyn Carter couldn&#39;t shake the strange feeling creeping up on her.</p>
                 <p>She studied Natalie Brooks with growing suspicion.</p>
                 <p>When Natalie headed to the pantry to rinse her mug, Evelyn followed closely behind.</p>
                 <p>Natalie hesitated before speaking. &#34;This morning, Mr. Whitmore brought a stunning woman into his office. They&#39;ve been in there all morning—haven&#39;t come out once.&#34;</p>
                 <p>Evelyn blinked. &#34;She must be a client.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Alexander Whitmore frequently met with female business associates. Back when Evelyn had worked in his office, she&#39;d witnessed similar situations countless times.</p>
                 <p>It meant nothing. He was a CEO, after all. High-profile negotiations often took hours—sometimes entire days—to finalize.</p>
                 <p>Natalie bit her lip. &#34;Honestly? I don’t think this is just business. Just… keep an eye out.&#34;</p>
                 <p>Alexander had never been one for scandals, which made today’s incident all the more unusual.</p>
                 <p>What unsettled Natalie most was how comfortable they seemed together. When she’d delivered files earlier, she’d caught Alexander—normally composed and unreadable—smiling at the woman like a lovestruck fool.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>The woman.</p>
                 <p>Even after Evelyn had finished her documentation procedures, the door to Alexander&#39;s office remained closed.</p>
                 <p>Recalling Natalie&#39;s words, she hesitated briefly before deciding to investigate. Having come all this way to Titan Capital Group, she felt obligated to greet Alexander properly.</p>
                 <p>Her knuckles never touched the wood.</p>
                 <p>The door swung open before she could knock, revealing a disheveled woman with sleep-mussed hair and a faint crease marking her cheek. Dark circles shadowed her eyes, her entire posture radiating exhaustion as though freshly roused from slumber.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Alexander&#39;s office concealed a private sanctuary behind its polished doors—a compact resting area complete with washing facilities and a walk-in wardrobe, designed for his occasional overnight stays.</p>
                 <p>Evelyn knew it intimately. She&#39;d napped there herself during late-night work sessions.</p>
                 <p>The implication struck like a physical blow.</p>
                 <p>That space was Alexander&#39;s personal retreat.</p>
                 <p>Her stomach twisted. &#34;How could he let another woman sleep there? What exactly happened behind that closed door...&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>She was the girl in the photograph Alexander had tucked away in his wallet.</p>
                 <p>The image captured her at sixteen or seventeen, cheeks still soft with youthful roundness.</p>
                 <p>It must have been taken years ago.</p>

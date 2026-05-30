@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2316,7 +2396,7 @@
                 <p>&#34;I missed your baking,&#34; he admitted quietly. &#34;You used to make them for me all the time.&#34;</p>
                 <p>Nathaniel wasn&#39;t one to indulge in sweets. He often skipped meals when busy.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>But seeing Isabella&#39;s effort, something primal had taken over. He&#39;d devoured them without thinking.</p>
                 <p>As if afraid he&#39;d never get another chance.</p>
                 <p>&#34;Those days are over,&#34; she scoffed. &#34;Back then, you were my husband. Cooking for you was my duty. But now? I&#39;d rather feed them to stray dogs than waste them on you.&#34;</p>
@@ -2327,7 +2407,7 @@
                 <p>No more stealing.</p>
                 <p>&#34;I overstepped earlier,&#34; Nathaniel murmured. &#34;I didn&#39;t realize those pastries meant so much to you. I apologize.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Her lashes flickered. She turned away, scrubbing her hands under the faucet. &#34;Why are you here? Spit it out. I have work to do, and you&#39;re wasting my time.&#34;</p>
                 <p>Nathaniel swallowed hard. &#34;I came to tell you—I&#39;m no longer handling Ada&#39;s wedding arrangements.&#34;</p>
                 <p>The water ran over Isabella&#39;s fingers. She laughed coldly. &#34;Obviously. Ada signed with Kingsley World Hotel. All you&#39;re left with is damage control for Abernathy&#39;s reputation.&#34;</p>
@@ -2338,7 +2418,7 @@
                 <p>Nathaniel&#39;s lips twitched.</p>
                 <p>Oddly, he found her sharp tongue amusing—when it wasn&#39;t aimed at him.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Victoria isn&#39;t the real threat,&#34; he said. &#34;Elspeth is. She&#39;s cunning, unpredictable. I don&#39;t want them blindsiding you.&#34;</p>
                 <p>Isabella&#39;s gaze hardened. She turned back to the sink.</p>
                 <p>&#34;I&#39;ve said what I needed to. I&#39;ll leave you to your work.&#34;</p>
@@ -2349,7 +2429,7 @@
                 <p>&#34;Because I want you to win.&#34;</p>
                 <p>Each word was deliberate. His gaze, for once, held no guile.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Why?&#34;</p>
                 <p>&#34;I was your husband once.&#34;</p>
                 <p>She barked a laugh. &#34;Three years of marriage, and you never gave an inch. Now that we&#39;re divorced, you&#39;re suddenly playing knight in shining armor? Get out.&#34;</p>
@@ -2360,7 +2440,7 @@
                 <p>&#34;Why the urgency?&#34; Victoria asked, irritated.</p>
                 <p>&#34;It&#39;s been five days since Kingsley World announced their deal with Ada,&#34; Edith said coolly. &#34;Have you made progress?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Victoria bristled. &#34;I&#39;m not a miracle worker. These things take time.&#34;</p>
                 <p>&#34;Luckily for you, I am.&#34;</p>
                 <p>Edith smirked, savoring her superiority. She walked to the piano, lifted the lid, and tossed a file at Victoria&#39;s feet.</p>
@@ -2374,7 +2454,7 @@
                 <p>&#34;Caroline&#39;s family was ruined because of Isabella. Use that.&#34;</p>
                 <p>Victoria&#39;s smile turned vicious. &#34;Looks like I need to pay Ms. Porter a visit.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

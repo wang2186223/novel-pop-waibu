@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,21 +2392,21 @@
                 <p>Evelyn softened her voice, pressing her palm against the cool wood. &#34;Liam...please.&#34;</p>
                 <p>His response came sharp and unexpected. &#34;Cassandra, are you really this naive?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>The words stung. In all their time together, Liam had never spoken to her so harshly, let alone called her naive.</p>
                 <p>&#34;Why are you snapping at me?&#34; Her fingers curled into fists. &#34;I&#39;m just worried about you. I care about you. How can you accuse me of being naive?&#34;</p>
                 <p>The more she thought about it, the more her frustration mounted. &#34;If you&#39;re perfectly fine and capable of handling Victoria&#39;s schemes alone, then clearly you don&#39;t need me here. I&#39;ll take my leave!&#34;</p>
                 <p>As she turned to go, the door suddenly swung open.</p>
                 <p>Before she could react, strong hands pulled her inside.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The door clicked shut behind her.</p>
                 <p>In one fluid motion, Evelyn found herself pressed against the wall, Liam&#39;s imposing frame caging her in.</p>
                 <p>Her breath hitched as she took in his appearance.</p>
                 <p>His bare torso glistened with droplets of water, the defined muscles of his abdomen contracting with each breath. The subtle scent of sandalwood soap clung to his damp skin.</p>
                 <p>His usually neat hair was tousled, damp strands falling across his forehead. A faint flush colored his chiseled features, spreading down his neck and across his chest.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>But it was his eyes that held her captive - dark, intense, burning with an emotion that made her knees weak.</p>
                 <p>Evelyn swallowed hard, her lips pressing together as her pulse raced. Heat crept up her neck, matching the blush on Liam&#39;s skin.</p>
                 <p>In a rough whisper that sent shivers down her spine, he murmured, &#34;See? I&#39;m perfectly fine.&#34;</p>
@@ -2340,7 +2420,7 @@
                 <p>Evelyn studied his strained expression. &#34;You were drugged, weren&#39;t you?&#34;</p>
                 <p>A curt nod. &#34;Yes.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>She frowned. &#34;Are you in pain? Why did you take your shirt off?&#34;</p>
                 <p>His smoldering gaze never wavered. &#34;It&#39;s hot. I took a cold shower.&#34;</p>
                 <p>Fingers twisting in the fabric of her blouse, Evelyn looked away. &#34;Why did you call me naive earlier?&#34;</p>
@@ -2351,7 +2431,7 @@
                 <p>Liam closed the remaining distance between them slowly, until his warm breath fanned across her lips. Every nerve in her body came alive, yet she remained frozen against the wall, afraid to move.</p>
                 <p>His deep voice dropped to a seductive murmur. &#34;Angry? Did you insist on seeing me because you wanted to...comfort me?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

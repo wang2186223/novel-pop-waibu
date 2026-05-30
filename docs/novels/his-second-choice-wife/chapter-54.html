@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>His eyebrows lifted slightly. &#34;Does he return your affections?&#34;</p>
                 <p>&#34;No.&#34; Evelyn&#39;s voice grew quiet. &#34;His heart belongs elsewhere. We could never be together.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;So that&#39;s why you agreed to marry me?&#34; Liam deduced.</p>
                 <p>Evelyn gave a weak laugh. &#34;What kind of reasoning is that?&#34;</p>
                 <p>&#34;Marriage isn&#39;t a game, Evelyn.&#34; Liam&#39;s tone softened. &#34;Perhaps we should try making this work.&#34;</p>
                 <p>Her breath caught. Blood roared in her ears as her heart threatened to pound through her chest.</p>
                 <p>Had she imagined those words?</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;W-what did you say?&#34; Her voice trembled.</p>
                 <p>&#34;Grandma wants us to stay married,&#34; Liam explained calmly. &#34;We could attempt a real relationship. If it fails, we&#39;ll part ways amicably.&#34;</p>
                 <p>&#34;You&#39;d...accept my past?&#34; The words tumbled out unevenly.</p>
                 <p>&#34;Everyone has history they&#39;d rather forget. You&#39;ve grown beyond yours.&#34; His gaze remained steady. &#34;You&#39;re not objectionable now.&#34;</p>
                 <p>Evelyn swallowed hard. &#34;And Victoria?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Silence stretched between them. Sweat dampened her palms as Liam&#39;s expression became unreadable.</p>
                 <p>After an eternity, he spoke slowly. &#34;If my feelings for Victoria remain unchanged, I&#39;ll tell you.&#34;</p>
                 <p>Evelyn knew the truth - Liam only proposed this arrangement to honor Margaret&#39;s wishes. His heart still belonged to Victoria.</p>
                 <p>Yet hope blossomed in her chest. She turned away to hide the tears welling in her eyes.</p>
                 <p>Liam might never love her, but he was offering a chance. That was more than she&#39;d dared hope for.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>She knew the danger - every moment with him would deepen her affection. But like a moth drawn to flame, she couldn&#39;t resist.</p>
                 <p>Even if this ended in heartbreak, at least she&#39;d have tried.</p>
                 <p>&#34;Are you alright?&#34; Liam&#39;s voice was gentle.</p>
                 <p>Evelyn couldn&#39;t trust herself to speak. &#34;I need to sleep now,&#34; she managed. &#34;Please...don&#39;t say anything more.&#34;</p>
                 <p>&#34;Very well.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>The room settled into heavy silence. Strangely, the storm outside no longer frightened her.</p>
                 <p>Evelyn didn&#39;t recall falling asleep. Morning sunlight streamed through the windows when she awoke to find Liam gone.</p>
                 <p>She hugged her knees to her chest, replaying last night&#39;s conversation. Had she actually agreed to his proposal?</p>
@@ -2351,7 +2431,7 @@
                 <p>After several joyful revolutions, she reread the message.</p>
                 <p>Though devoid of romantic declarations, the words tasted sweeter than any confection.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

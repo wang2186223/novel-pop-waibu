@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,21 +2392,21 @@
                 <p>It had been a reckless gamble—hurting the enemy by hurting herself. She had wounded Ethan, but not without paying the price.</p>
                 <p>Her voice dropped to a whisper. &#34;I overheard Zachary calling Ethan, saying they&#39;d set a trap for you. I was terrified something might happen, so I had to act fast—I attacked Ethan and stole his car keys.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Lifting her gaze, Evelyn met Alexander&#39;s eyes, her own filled with unspoken fear and determination.</p>
                 <p>She understood exactly why Alexander was furious.</p>
                 <p>This wasn&#39;t just about possessiveness.</p>
                 <p>The more enraged he became, the clearer it was—he cared deeply for her. Evelyn refused to let this incident drive a wedge between them.</p>
                 <p>Her words managed to ease some of the storm brewing in Alexander&#39;s heart.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Yet his expression remained unyielding.</p>
                 <p>&#34;How can you be certain Ethan&#39;s little performance wasn&#39;t staged?&#34; His voice was sharp. &#34;A calculated move to manipulate your emotions? You embraced him—defended him—even told me not to lay a finger on him! You&#39;re shielding him!&#34;</p>
                 <p>Evelyn hesitated before responding. &#34;If Ethan hadn&#39;t stepped in front of that blade, it would&#39;ve been me bleeding out. Given that, I can&#39;t let you retaliate against him.&#34;</p>
                 <p>The attack had been too sudden, too precise. Zachary&#39;s strike had been ruthless, leaving no room for hesitation.</p>
                 <p>In her mind, there was no way Ethan could have conspired with Zachary.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>She had seen the dagger sink into Ethan&#39;s chest, mere inches from his heart. One wrong move, and he could&#39;ve died right then.</p>
                 <p>Evelyn refused to believe he would gamble his life just to win her sympathy.</p>
                 <p>She had known Ethan since childhood. She understood him—or at least, she thought she did.</p>
@@ -2340,7 +2420,7 @@
                 <p>His expression darkened instantly.</p>
                 <p>No man wanted his wife to have such a long-standing childhood friend—especially one who still held her trust so completely, even in moments of crisis.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Evelyn sighed.</p>
                 <p>She recognized that look on Alexander&#39;s face—he was jumping to conclusions again.</p>
                 <p>She met his gaze, her eyes a mix of exasperation and patience.</p>
@@ -2348,7 +2428,7 @@
                 <p>Evelyn meant every single word with complete sincerity.</p>
                 <p>To her, Ethan Caldwell was nothing more than a closed</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

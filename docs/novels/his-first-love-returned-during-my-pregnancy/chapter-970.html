@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,19 +2391,19 @@
                 <p>Victor chuckled dismissively. &#34;I&#39;ve improved. Let me show you.&#34; He patted his chest confidently. &#34;Back then, it was the tools&#39; fault. Now I have a proper stove.&#34;</p>
                 <p>&#34;And you&#39;re sure it wasn&#39;t your skills?&#34; Vivian eyed him skeptically. This guy didn&#39;t even have a permanent address abroad—how good could his cooking be?</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Just watch.&#34; Victor was eager for her to stay and witness his skills.</p>
                 <p>Thirty minutes later, a bowl of golden, silky egg custard emerged, garnished with green scallions and wafting an enticing aroma.</p>
                 <p>Vivian&#39;s eyes widened. &#34;You actually made this?&#34; The baby in her arms curiously reached out a tiny hand.</p>
                 <p>Victor beamed. &#34;Piece of cake. Want me to whip up some spaghetti? That&#39;s my specialty.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Another half hour passed.</p>
                 <p>They stared in stunned silence at the pot of flaming spaghetti. Victor frantically turned off the burner and covered the pot, but the noodles were already charred to a crisp.</p>
                 <p>&#34;So...&#34; Vivian massaged her temples. &#34;You didn&#39;t know to break the noodles before boiling them?&#34; She took a bite of the egg custard. &#34;The skill gap is unreal.&#34;</p>
                 <p>Victor sheepishly cleaned up the mess. &#34;Well... I only know how to make egg custard.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Vivian sighed deeply. &#34;Let&#39;s order takeout. Is this pot salvageable? If not, I&#39;ll buy a new one.&#34;</p>
                 <p>After thirty minutes of scrubbing, the stubborn black stains remained. Victor emerged from the kitchen, disheveled. &#34;I&#39;ll head out. What do you want to eat?&#34;</p>
                 <p>His carefully planned meal had gone up in flames. Resigned, he decided to fall back on the simplest way to prove himself—actions.</p>
@@ -2341,7 +2421,7 @@
                 <p>Victor grinned ear to ear. &#34;Of course. How many years did I bring you meals? Before I transferred, wasn&#39;t I the one delivering your lunches and midnight snacks?&#34; He barely stopped himself from adding, &#34;Before Simon Stapleton showed up.&#34;</p>
                 <p>Vivian laughed at his eager-for-praise expression. &#34;Fine, good memory. My treat today.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

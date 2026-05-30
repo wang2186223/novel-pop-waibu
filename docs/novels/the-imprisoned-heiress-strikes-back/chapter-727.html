@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,37 +2391,37 @@
                 <p>His gaze drifted to the locked door. In different circumstances, he would&#39;ve followed immediately with apologies. But exhaustion and intoxication weighted his limbs. After a heavy pause, he turned toward his study instead.</p>
                 <p>Meanwhile, Evelyn pressed her ear against the door, anticipating his pursuit. She expected his usual coaxing, his tender reassurances. But minutes passed with only retreating footsteps and silence.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Frowning, she cracked the door open. The study light glowed, but the hallway stood empty.</p>
                 <p>A pang of disappointment struck her chest. Just as moisture gathered in her eyes, her phone buzzed urgently.</p>
                 <p>Overseas, it was daytime - the scheduled hour for her Brookstone College of Music interview.</p>
                 <p>She changed into professional attire and booted up her laptop. When the video call connected, several distinguished faces appeared - all renowned musicians she recognized instantly. Nervous excitement replaced her earlier melancholy.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>The intensive interview lasted over an hour. Thanks to her international schooling at Hawthorne Estate, Evelyn conversed fluently. By 3 AM, exhausted, she collapsed into dreamless sleep.</p>
                 <p>Morning sunlight streamed through the curtains when she awoke. Alexander&#39;s absence was palpable - no breakfast tray, just Giselle&#39;s simple meal preparation. A dull ache settled in Evelyn&#39;s chest as she dressed.</p>
                 <p>Last night&#39;s interview had gone well, with results due in a week - perfect timing as her recovery period ended.</p>
                 <p>Concern for Dominic Powell nagged at her. She hadn&#39;t performed his medical acupuncture in days. Worse, yesterday&#39;s attempts to contact her son&#39;s doctor had failed until midnight, when a terse message finally arrived claiming the baby was stable. But instinct told her something was wrong.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Her plans to visit the hospital were interrupted by Oliver Hayes&#39;s arrival. &#34;What are you doing outside during confinement?&#34; her brother demanded. &#34;Where&#39;s Alexander? Shouldn&#39;t he be with you?&#34;</p>
                 <p>&#34;He left early,&#34; Evelyn murmured.</p>
                 <p>Oliver&#39;s scowl deepened. &#34;Again? First he wasn&#39;t there during your accident, now he&#39;s abandoning you postpartum? What kind of husband does that?&#34;</p>
                 <p>Though Alexander had won Oliver over months ago with extravagant gifts, family loyalty came first. Evelyn simply lowered her eyes.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>She&#39;d noticed Alexander&#39;s strange behavior last night but hadn&#39;t pressed. &#34;Titan Capital must be keeping him busy,&#34; she offered weakly.</p>
                 <p>Oliver huffed but dropped the subject. &#34;Where are you headed? I&#39;ll drive you.&#34;</p>
                 <p>At the hospital, Evelyn went straight to her son&#39;s physician, demanding to see him. But unlike previous visits, the doctor refused point-blank.</p>
                 <p>&#34;Why the change?&#34; Evelyn pressed. &#34;I visited just days ago!&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>The truth was complicated - the infant had undergone emergency cardiac surgery yesterday and remained under intensive monitoring. Bound by Alexander&#39;s orders, the doctor merely said, &#34;He&#39;s undergoing treatment. Come back in a few days.&#34;</p>
                 <p>Evelyn&#39;s stomach twisted. &#34;What treatment? Is there a problem?&#34;</p>
                 <p>&#34;Just routine checks,&#34; the doctor assured too quickly. &#34;His recovery progresses well.&#34;</p>
                 <p>The hollow reassurance did nothing to ease Evelyn&#39;s growing dread. Something was terribly wrong - she could feel it in her bones.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

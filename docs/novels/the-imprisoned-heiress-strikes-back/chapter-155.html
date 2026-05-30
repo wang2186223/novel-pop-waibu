@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>Evelyn’s cheeks burned crimson, the heat of her embarrassment impossible to hide.</p>
                 <p>Alexander didn’t miss the opportunity. He leaned in, his lips grazing the delicate shell of her ear, his warm breath sending shivers down her spine.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Hold on, darling,&#34; he murmured, voice thick with promise. &#34;We’ll save this for home. If I kiss you now, I won’t stop… and I’d hate to have you moaning my name in the backseat before we even get there.&#34;</p>
                 <p>Her pulse skyrocketed, her skin tingling at the sinful suggestion in his words.</p>
                 <p>Seriously? Again?</p>
@@ -2323,7 +2403,7 @@
                 <p>Later, as Alexander drove, Evelyn stole glances at him from the passenger seat.</p>
                 <p>His fingers curled lazily around the steering wheel as the car took a smooth turn. The golden glow of the setting sun painted his sharp jawline, making his already devastating features even more striking.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>When his gaze flicked to hers, there was a slow, knowing smirk playing on his lips—a look so effortlessly seductive it made her breath catch.</p>
                 <p>She couldn’t look away.</p>
                 <p>Not when he looked at her like that.</p>
@@ -2332,7 +2412,7 @@
                 <p>Then he saw them.</p>
                 <p>Alexander Whitmore guided Evelyn Carter into the back seat with a possessive hand at her waist. Ethan stiffened, his breath hitching.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>But he didn’t move.</p>
                 <p>He watched, jaw clenched, as Alexander settled Evelyn onto his lap. Their bodies pressed close, fingers tangling, a quiet murmur passing between them.</p>
                 <p>Ethan’s pulse spiked when Alexander leaned in, tilting Evelyn’s chin up—only for her to duck away, her cheeks flushing.</p>
@@ -2341,7 +2421,7 @@
                 <p>Evelyn was just clinging to Alexander for security. Otherwise, why would she shy from his kiss?</p>
                 <p>It made perfect sense. Alexander was nearly thirty—practically ancient compared to Evelyn’s youth.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>And she had always preferred him.</p>
                 <p>The tension in Ethan’s chest unraveled.</p>
                 <p>The tension in Evelyn&#39;s shoulders melted away like morning mist.</p>
@@ -2350,7 +2430,7 @@
                 <p>The sleek black sedan pulled up outside a 24-hour pharmacy near Memorial Hospital.</p>
                 <p>Alexander stepped out, his polished shoes clicking against the pavement. &#34;Wait here,&#34; he murmured before disappearing behind the automatic doors.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Evelyn leaned back against the buttery leather seats, watching pedestrians hurry past.</p>
                 <p>A sudden screech of tires shattered the afternoon calm.</p>
                 <p>Her head snapped toward the commotion three blocks down. Flashing lights painted the buildings red and blue, but the distance obscured details.</p>
@@ -2364,7 +2444,7 @@
                 <p>Evelyn closed her eyes.</p>
                 <p>For the first time since the gala, she allowed herself to hope.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

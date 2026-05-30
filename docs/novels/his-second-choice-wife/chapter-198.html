@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,31 +2391,31 @@
                 <p>The men flinched, bracing for an explosion that never came.</p>
                 <p>Alexander&#39;s eyes widened in disbelief.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Donovan Sharpe let out a booming laugh, clapping his hands. &#34;No wonder you&#39;re from Solterra! You fixed it in minutes!&#34;</p>
                 <p>Evelyn shot Alexander a nervous glance. He gave an almost imperceptible shake of his head, his expression unreadable.</p>
                 <p>Swallowing hard, she forced a cautious tone. &#34;I&#39;ve neutralized the water reaction, but this substance is still lethally toxic. One breath could kill you.&#34;</p>
                 <p>The bald drug lord sauntered toward her, and she instinctively stepped back. He smirked, patting her cheek with rough fingers. &#34;Pretty thing, if you can purify all two tons of this, I&#39;ll not only let you go—I&#39;ll pay you handsomely. Or, if you&#39;d rather stay…&#34; His grin turned predatory.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Evelyn forced a stiff nod. &#34;Thank you.&#34;</p>
                 <p>Then—gunfire erupted outside.</p>
                 <p>Her pulse skyrocketed. The men scrambled for their weapons, shouting orders.</p>
                 <p>Alexander shoved a pistol into her hands, his voice low and urgent. &#34;If anyone threatens you, shoot. No hesitation.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Her fingers trembled around the grip. &#34;Is Liam here? Did Aldenria send forces?&#34;</p>
                 <p>He pulled her toward the exit. &#34;It might be him—but it&#39;s definitely not Aldenrian military.&#34;</p>
                 <p>Her stomach dropped. Had Liam come alone? Had he walked into a death trap?</p>
                 <p>Outside, smoke choked the air. Bullets whizzed past, the relentless gunfire deafening.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Donovan and his men charged into the fray.</p>
                 <p>One of them barked at Alexander, &#34;Where&#39;s your weapon?&#34;</p>
                 <p>&#34;Who&#39;s attacking?&#34; Alexander demanded.</p>
                 <p>&#34;Mercenaries.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>A smirk tugged at his lips. So, Liam had hired outside forces.</p>
                 <p>Alexander was almost impressed by the lengths his brother would go for Evelyn.</p>
                 <p>He dragged her to a nearby shack, shoving her into a cramped closet. &#34;Stay alive, Cassandra,&#34; he ordered, his voice grim.</p>
@@ -2346,7 +2426,7 @@
                 <p>Her mind raced—was Alexander safe? Was Liam?</p>
                 <p>The battle raged on, stretching into the night.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

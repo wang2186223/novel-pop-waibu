@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>another plate of fruits?”</p>
                 <p>Kaleb promptly returned with a fresh plate of fruits, placing it in front of Dahlia and Dixle with a thud.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>With grace, he then served Mia a glass of freshly squeezed juice.</p>
                 <p>“Thank you.” Mia acknowledged, accepting the drink and sipping it. She observed as Dahlia and Dixie took selfies with their juice, meticulously adjusting their angles for the perfect shot.</p>
                 <p>Feeling somewhat amused, Mia remarked, “If you keep squeezing in like that, you might just burst the implants in your fake breasts.”</p>
@@ -2321,7 +2401,7 @@
                 <p>Dahlia stood confidently, stating, “Absolutely! My daughter’s figure is naturally stunning. Some people can only envy and resent her because of their meager physique.”</p>
                 <p>“Yeah, genetically inherited implants!”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>It seemed that Dahlia’s bust size changed every year, and this time, Dixie’s had too. Despite this, Dahlia and Dixie appeared unwilling to concede.</p>
                 <p>Turning to Mia, Dixie remarked, “Your outfit looks like it’s from a high–end brand’s latest collection. Where did you find such a convincing knockoff?”</p>
                 <p>“I got it from the mall.”</p>
@@ -2329,7 +2409,7 @@
                 <p>“Haha, how did you manage to find such a convincing knockoff in a regular mall? Did you stumble upon it. in the flea market?”</p>
                 <p>Mia smiled knowingly. “Why don’t you take a quess?”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>At that moment, the faint sound of a vehicle could be heard from outside the courtyard.</p>
                 <p>Dahlia and Disle exchanged a glance. “Dixle, could that be Tim returning?”</p>
                 <p>“I think so too, especially since Mrs. Barrett Senior has been discharged from the hospital. Tim is likely coming by for a visit, Mom, how do you like my makeup today? Do you think it’s striking enough?”</p>
@@ -2337,7 +2417,7 @@
                 <p>Some people can only envy you.”</p>
                 <p>Dahlia’s words stunned Mia, but she maintained her composure and continued to sip her juice.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>In the distance, Dixie’s coquettish volce could be heard, “Oh, Tim I’ve missed you so much–Ouch!”</p>
                 <p>Just then, the courtyard echoed with Dixie’s anguished cries.</p>
                 <p>Glancing over, Mia caught sight of Dixie sprawled on the grass, her legs flailing awkwardly and</p>
@@ -2345,7 +2425,7 @@
                 <p>A subtle smirk played on Mia’s lips as she observed Timothy walk in without acknowledging them.</p>
                 <p>“Can’t you be a bit more considerate toward Dixie?”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>“Yeah, Dixie is your cousin, for goodness‘ sake! Why didn’t you catch her just now? Look at her condition!</p>
                 <p>Dahlia scolded, helping Dixie inside as she limped, her expression filled with disapproval.</p>
                 <p>Looking at Dahlia and Dixie, Timothy furrowed his brow. “Who are you two, anyway?”</p>
@@ -2357,7 +2437,7 @@
                 <p>Growing increasingly impatient, Timothy instructed Kaleb, “Escort them out.”</p>
                 <p>Kaleb, who had long grown tired of Dahlia and Dixie, promptly intervened, stating, “Please follow me. The</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

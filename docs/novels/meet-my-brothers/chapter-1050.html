@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,19 +2389,19 @@
                 <p>Luna couldn&#39;t hide her satisfaction upon hearing this. Her efforts to set up the ploy and receive a slap from Jasmine weren&#39;t futile after all. Trading a slap for an opportunity to inherit the family fortune wasn&#39;t a bad deal at all.</p>
                 <p>Luna immediately grabbed Raymond&#39;s arm with a look of concern. &#34;Dad, please don&#39;t be angry. Don&#39;t let me disrupt the family&#39;s harmony.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Next, Luna shifted her gaze to Jasmine. &#34;Since I was young, my only wish has been to find my father. I&#39;ve always envied others who had dads. Why didn&#39;t I have one? Returning to the Shelbert family is just so that I could be with my family. I&#39;m not after the family fortune. You don&#39;t need to worry that I&#39;ll compete with you on that.&#34;</p>
                 <p>&#34;Are you hearing yourself, Luna? Do you even believe what you&#39;re saying?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Jasmine, what do you need me to do for you to believe me? I don&#39;t want to ruin your relationship with dad because of my return to the Shelbert family. I just want to be with my family. After spending all these years as an orphan, all I&#39;ve wanted is a happy family.&#34;</p>
                 <p>Jasmine&#39;s expression turned to disgust. &#34;Cut the act. Don&#39;t think I can&#39;t see through your intentions for returning to the Shelbert family. I assure you that you won&#39;t succeed.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Luna&#39;s eyes flickered with a hint of hatred as she quickly cast her gaze downward. She then turned to Raymond, saying, &#34;Dad, I came to find you because I genuinely want to be with my family. It&#39;s not for money.&#34;</p>
                 <p>Raymond looked at Jasmine and said, &#34;Look at the difference between you and Luna. She&#39;s more filial, responsible, and caring than you are.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Dad, are you praising Luna for her so-called virtues, or is it because she&#39;s agreed to take in that illegitimate child as your grandson? Is having a grandson really that important?&#34;</p>
                 <p>Jasmine never realized how much her father favored boys over girls. After her mother&#39;s health deteriorated following Jasmine&#39;s birth, she never bore any more children. Raymond had always maintained that he didn&#39;t want more children, let alone a son.</p>
                 <!-- 广告位 5 -->
@@ -2330,7 +2410,7 @@
                 <p>Luna decided to feign sympathy. &#34;Dad, please don&#39;t be upset with Jasmine. She&#39;s just speaking out of frustration. She didn&#39;t mean what she said.&#34;</p>
                 <p>Once Raymond had left, Luna turned to Jasmine with a sly grin. &#34;How do you like the little performance I orchestrated for you?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

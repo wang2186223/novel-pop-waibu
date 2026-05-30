@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2317,7 +2397,7 @@
                 <p>But here we both were, at each other&#39;s necks.</p>
                 <p>&#34;I don&#39;t ever wanna hear your voice, Caden.Especially not with Lyric&#39;s name. I mean it,&#34; I tried to keep my voice as calm as possible.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>His voice was still icy when he spoke. &#34;I&#39;m trying to be the reasonable one here you know? For the first time, I&#39;m promising to leave you alone. Are you willing to jeopardize your Kingdom for a woman you could get elsewhere?&#34;</p>
                 <p>I laughed-a dark humourless sound. Gods, I wished he was here now so my claws could do some talking.</p>
                 <p>&#34;If only you know just how far I&#39;m working to go for Lyric, you wouldn&#39;t mention such nonsense.&#34;</p>
@@ -2329,7 +2409,7 @@
                 <p>Knocking on her door, a weak voice answered.&#34;Who&#39;s there?&#34;</p>
                 <p>Normally, she&#39;d have come to get the door.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>I opened the door and found her lying on the bed,covered with a duvet up to the chin. She was shivering, her face pale. An alarm went off in my head.</p>
                 <p>&#34;Hey, what&#39;s wrong?&#34; | hurried forward to sit on the bed. I touched her skin and frowned at how hot it was.</p>
                 <p>&#34;Why didn&#39;t you tell me you were sick?&#34; My tone was slightly scolding.</p>
@@ -2341,7 +2421,7 @@
                 <p>But even asleep, she was still shivering, making me damn worried. Did it have to do with the baby? Was she going to be fine?</p>
                 <p>My phone started ringing beside me. Marta. That was when I remembered the outing l&#39;d been getting ready for her.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>I cursed under my breath as I looked at Lyric&#39;s shivering form. There was no way I could leave her like this.</p>
                 <p>I ended the call and texted Marta, telling her we&#39;d go out together some other time as I needed to take care of something. I told her to take a friend and go with the kids for now.</p>
                 <p>Not long after I sent the text, someone knocked rapidly on the door.</p>
@@ -2365,7 +2445,7 @@
                 <p>Walking there, Jace and I exchanged texts about Penelope. He&#39;d gone to check on her this morning and told me the good news about her memories returning. She said she remembered meeting me when  I was pregnant and taking me in. But that was as far as the memory went. Sadly. At least, it gave me hope. Soon, there will be fully back and I&#39;ll know where my kids are.</p>
                 <p>I was close to the theater room when I spotted Xylon and Xyla approaching. I came to a halt, not liking the upset look on their faces. Who got them mad?</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>As they got close, I imagined how much I&#39;d missed them. I missed playing with them, watching them argue and getting to settle them. I missed when they came to me for opinions and all. I didn&#39;t replace how important these kids have become to me until now.</p>
                 <p>&#34;Hey!&#34; I beamed. &#34;How&#39;re you d-&#34;</p>
                 <p>&#34;Why did you stop daddy from coming with us yesterday?&#34; Xyla threw at me, folding her arms.</p>
@@ -2381,7 +2461,7 @@
                 <p>&#34;You used to be nice to us,&#34; Xyla continued. &#34;But mummy is right. You just want daddy for yourself.And you used us to get close to him.&#34;</p>
                 <p>&#34;When you took care of me,&#34; Xylon&#39;s voice was calmer but hurt, his eyes dropping to the floor. &#34;Was it to make daddy like you?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

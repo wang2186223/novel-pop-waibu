@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>&#34;You can&#39;t even express yourself properly, making Mr. Kingsley misunderstand!&#34; Dominic attempted damage control. &#34;Arabella, apologize properly. And Mr. Kingsley, please forgive her youthful indiscretion for Isabella&#39;s sake?&#34;</p>
                 <p>His obsequious manner was painfully obvious.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>But Dominic had no choice. Without groveling, Nathaniel might walk away without hesitation.</p>
                 <p>Deep down, Nathaniel respected Reginald. As Isabella&#39;s uncle, Dominic deserved some courtesy for the family connection.</p>
                 <p>Just then, a waiter arrived with champagne flutes.</p>
@@ -2321,7 +2401,7 @@
                 <p>&#34;Mr. Kingsley, let me toast to you. I&#39;ll choose my words more carefully in future.&#34;</p>
                 <p>Nathaniel&#39;s glass happened to be empty. When Arabella offered the champagne, he accepted and drained it in one go.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Arabella smiled behind her own glass as she drank.</p>
                 <p>&#34;Mr. Grant,&#34; Dominic turned to Lucas with sudden enthusiasm, &#34;some K Group partners are very interested in your Grant Enterprises. Why not join us? There might be lucrative opportunities.&#34;</p>
                 <p>Lucas&#39; eyes lit up at the prospect.</p>
@@ -2329,7 +2409,7 @@
                 <p>&#34;Nathaniel, I&#39;m heading over!&#34;</p>
                 <p>With that, Lucas followed Dominic, leaving Nathaniel alone with Arabella. His expression remained stormy.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Mr. Kingsley,&#34; Arabella fluttered her lashes hesitantly, &#34;there&#39;s a dance later. Would you—&#34;</p>
                 <p>Before she could finish, Nathaniel&#39;s glacial stare silenced her.</p>
                 <p>&#34;You&#39;re aware I&#39;m your cousin&#39;s ex-husband.&#34; His profile was sharp, intimidating. This was the first time he&#39;d addressed her directly, yet the topic always circled back to Isabella.</p>
@@ -2337,7 +2417,7 @@
                 <p>&#34;Then you should know better than to behave inappropriately, especially in your cousin&#39;s presence. You shouldn&#39;t even approach me.&#34;</p>
                 <p>Arabella misinterpreted his words, cheeks flushing as she whispered, &#34;Does that mean when Isabella isn&#39;t here, I can see you?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Under normal circumstances, we have no reason to meet. Don&#39;t delude yourself.&#34; Nathaniel finished his drink, gaze never warming.</p>
                 <p>Humiliation burned through Arabella. Her advances toward this unfeeling man were met with nothing but disdain.</p>
                 <p>She&#39;d always been pursued, never the pursuer. This was the first time she&#39;d lowered herself to chase a man.</p>
@@ -2345,7 +2425,7 @@
                 <p>If she could become his woman, she&#39;d never need her father or uncle&#39;s approval again.</p>
                 <p>As Nathaniel drank more, his condition deteriorated rapidly. Though known for his alcohol tolerance, tonight was different. After just a few glasses, his head swam, breath shortened, eyelids grew leaden. The ball had begun, but no one noticed the tension between him and Arabella.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Gasping, Nathaniel tugged at his Windsor knot, throat parched, cheeks flushed. Heat radiated from his core, teasing his nerves like phantom fingers.</p>
                 <p>&#34;Mr. Kingsley, are you unwell?&#34; Arabella feigned concern, though her lips curved secretly.</p>
                 <p>She knew the drug was taking effect.</p>
@@ -2358,7 +2438,7 @@
                 <p>&#34;Ah!&#34; Nathaniel slapped her hand away violently, leaving an angry red mark.</p>
                 <p>&#34;Don&#39;t touch me!&#34; he roared through gritted teeth, eyes bloodshot. &#34;Get out!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2317,7 +2397,7 @@
                 <p>She never shuts up about our brother. I can&#39;t deal with her.</p>
                 <p>&#34;But she&#39;s been away for so long. I&#39;ve missed her, Jaris.I want her home.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;You can visit her anytime you want. There&#39;s no restriction.&#34;</p>
                 <p>&#34;I know. But it&#39;s not like having her here at home.&#34;</p>
                 <p>I closed my eyes as I held onto the table for support.I couldn&#39;t do this. I was so close to losing my mind.</p>
@@ -2329,7 +2409,7 @@
                 <p>Mother spent a little more time in the room, silent.Then she huffed and left.</p>
                 <p>I took a shower and had a few more things to cover before retiring to bed. I was in the middle of work when Kael showed up, bringing more work to my table.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;She&#39;s at the bar. Drunk.&#34;</p>
                 <p>I didn&#39;t even need to ask to know who he was referring to. And it was exhausting that I was already so accustomed to the one person that was a pain in the ass.</p>
                 <p>&#34;For how long now?&#34; I stared down at the table as I asked.</p>
@@ -2341,7 +2421,7 @@
                 <p>The light chatters of the people died down the moment they saw me. They stood up immediately,some going on their knees.</p>
                 <p>I strode up to Lyric, getting a clearer view of her face.She was sleeping with her lips slightly open and drooling. She looked like a fucking child.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>I huffed. This girl has been a pest from the moment l saw her.</p>
                 <p>Kael stepped beside me. &#34;Do you want me to carry her? Or should I simply wake her up?&#34;</p>
                 <p>Huh? Wake a drink Lyric to walk on her own in front of all these people? It&#39;d be beyond embarrassing.</p>
@@ -2365,7 +2445,7 @@
                 <p>I pulled back so her face was free of my chest as l didn&#39;t want her to suffocate herself or something However, she only moaned from the loss. She squirmed on the bed, tilting her head up. She murmured more incoherent words under her breath.It was tiring.</p>
                 <p>I tried to pull away but her hand found my shirt again,pulling me back to her.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Damn it,&#34; I cursed.</p>
                 <p>And I knew she wasn&#39;t the problem. She was drunk and defenseless. I could easily escape her grip if I wanted.Yet,here I was, allowing myself to be dragged by her.</p>
                 <p>&#39;This isn&#39;t you, Jaris&#39;, my subconscious told me, trying to warn me that I was doing something stupid.</p>
@@ -2380,7 +2460,7 @@
                 <p>&#39;It&#39;s just a taste.&#39;</p>
                 <p>I crashed my lips on hers.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2321,7 +2401,7 @@
                 <p>After a while, he returned carrying a plate of food, only to find Amelia curled up and fast asleep on the sofa.</p>
                 <p>Seeing this, he gently carried her to the bedroom and covered her with a blanket. Subconsciously, Amelia reached out to hold his arm, nestling her face against it.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>The tender way she held onto him left Wyatt quietly astonished.</p>
                 <p>Even through the fabric, he could feel the softness of her face, and he tenderly stroked her hair with his free hand.</p>
                 <p>Settling onto the sofa near the bed, he allowed his gaze to linger on her face.</p>
@@ -2329,7 +2409,7 @@
                 <p>Not long after, his phone buzzed. Not wanting to disturb Amelia, Wyatt quickly slipped out of the room before answering the call.</p>
                 <p>Davin&#39;s voice spilled through the line, filled with nerves and regret. &#34;Boss, I have to admit, this was on me.I&#39;m sorry.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Wyatt didn&#39;t answer for a while, leaving Davin anxious, cursing Sally inwardly.</p>
                 <p>Wyatt&#39;s mind drifted to what Amelia had said earlier. Then, he finally replied, &#34;Let&#39;s not intervene for now.</p>
                 <p>You can help Amelia tomorrow, but only if she asks.&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>The next morning, Amelia stirred, heat prickling her skin. Panic set in when she realized she was in someone&#39;s arms.</p>
                 <p>But the moment she saw that Carlee was the one who was holding her, she let out a relieved sigh.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Embarrassment crept in as she shook her head. What a wild idea-to think for a second Wyatt had been the one holding her. That was absurd!</p>
                 <p>Easing herself out of Carlee&#39;s embrace, she reached for her phone on the bedside table.</p>
                 <p>Panic returned when she checked the time-it was already past eight.</p>
@@ -2353,7 +2433,7 @@
                 <p>&#34;I really have to go. If I don&#39;t show up at work today, everyone will think I&#39;m at home crying about my mistake at work,&#34; Amelia replied.</p>
                 <p>After she had taken so much effort to get Patton to sign, she wanted to take the contract to Sally herself.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

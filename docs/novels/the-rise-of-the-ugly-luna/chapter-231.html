@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2315,7 +2395,7 @@
                 <p>The men led me into the house, right to the place where Caden was. My eyes rounded when I found him washing blood off his hands.</p>
                 <p>He glanced at me with a smile before returning his eyes to the sink where he washed his hands.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Lyric. You probably won&#39;t understand how happy I am to see you again.&#34;</p>
                 <p>But I didn&#39;t take my gaze off his hands. &#34;Whose blood is that?&#34; He cocked a brow at me, rounded up with the washing and started drying his hands with a towel.</p>
                 <p>&#34;Where is Jaris?&#34; I looked around, starting to grow uncomfortable.</p>
@@ -2325,7 +2405,7 @@
                 <p>&#34;I didn&#39;t come here to talk. Where&#39;s the contract? Let&#39;s get it over with so you can let Jaris go.&#34;</p>
                 <p>&#34;Well, if you&#39;ll be signing the contract and get to live with me, we&#39;ll be doing a lot of talking. So maybe you should get used to it.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>I kept quiet but pinned my serious gaze on him.</p>
                 <p>Getting the memo, he chuckled and dashed out to a room where he returned briefly with the scroll in his hand.</p>
                 <p>&#34;You know you can&#39;t sign it now. It needs to be at night. There would be a full moon tonight, fortunately.&#34;</p>
@@ -2335,7 +2415,7 @@
                 <p>&#34;And what would that be?&#34;</p>
                 <p>&#34;I&#39;ll only sign this if you include a promise never to touch me against my will.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>The light vanished from his eyes, like it was an intention be already had in mind. Suddenly, I felt.grateful |brought it up.</p>
                 <p>i went on. &#34;I can serve you and do your bidding, but that will, in no way, include sexual bidding. Add to this to the contract and I&#39;ll sign it with my blood when the Moon is out.&#34;</p>
                 <p>For a long time, he kept his cold eyes on me. Suddenly, he chuckled and moved away, going to the wine counter just by the side.</p>
@@ -2345,7 +2425,7 @@
                 <p>Lowering the glass from his lips, he dragged his eyes through my body in a way that made me feel uncomfortable.</p>
                 <p>His lips lifted in a smirk. &#34;You&#39;ll be with me for a long time, Lyric. You sure you want to rule intimacy out if it?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>I held his gaze even as anxiety washed over me and took a step toward him. &#34;Your brother is the only man that&#39;s ever touched me, and I intend to keep it that way.&#34;</p>
                 <p>I didn&#39;t miss the dark glint that replaced the smirk in his eyes. Good. He needed to understand there were certain things Jaris had that he could never own no matter how hard he tried.</p>
                 <p>&#34;You see, Caden,&#34; I crossed my arms. &#34;You could force me to be here, force me to use my powers, but my body and heart will never be yours. There are certain things you can never take from Jaris.&#34;</p>
@@ -2355,7 +2435,7 @@
                 <p>A small blade was presented to us. We intoned a series of sacred phrases, then I went first by making a cut on my hand, dipped the feather into my blood and signed on the page that required my signature.The blood dried up immediately.</p>
                 <p>Caden did the same with his blood, the both of us officially binding ourselves to this contract with the Moon being our witness.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>I felt disgusted at the end of it. But not Caden. He looked victorious.</p>
                 <p>&#34;Now take me to him.&#34; I gritted at him.</p>
                 <p>&#34;Don&#39;t be in such a hurry, Lyric. Remember you&#39;re about to say a painful goodbye to him. Or are you excited for that?&#34;</p>
@@ -2366,7 +2446,7 @@
                 <p>I cradled his face, a tear slipping through as I thought of turning away from him. It was crazy how a person&#39;s plan could change so drastically. Only two weeks ago, we&#39;d been planning to elope. And today, I was about to say goodbye to what we shared.</p>
                 <p>&#34;I&#39;ll give him the antidote now, Lyric. I&#39;m sure you know what to do. Remember, we have a signed contract.You can&#39;t mess this up,&#34; Caden warned from behind me.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

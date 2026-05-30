@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>She stopped before him, unflinching. She was a Sinclair, raised by four formidable brothers, daughter to the wealthiest man in New York. She was accustomed to controlling destinies. Since when did she let a man dictate her emotions?</p>
                 <p>&#34;Nathaniel, have you lost your mind? Do you have a death wish, standing under a tree in this storm?&#34; The angrier she got, the more she wanted to strangle him.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>His eyes narrowed slightly. &#34;Do you care about me?&#34;</p>
                 <p>Care?</p>
                 <p>Isabella scoffed. &#34;Don&#39;t flatter yourself. I only came out because I don’t want you causing a scene at my doorstep. I refuse to let you dirty my property.&#34;</p>
@@ -2323,7 +2403,7 @@
                 <p>&#34;Get in the car. We&#39;ll talk there.&#34; His gaze flickered to her rain-soaked clothes.</p>
                 <p>&#34;No.&#34; She crossed her arms. &#34;Say whatever you need to say right here, right now.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Get. In. The. Car.&#34; His tone brooked no argument.</p>
                 <p>Just then—</p>
                 <p>A blinding streak of purple lightning tore through the sky.</p>
@@ -2332,7 +2412,7 @@
                 <p>&#34;Look out!&#34;</p>
                 <p>Before she could react, a wave of heat rushed toward her. Nathaniel moved faster, his strong arms wrapping around her, shielding her completely as the branch crashed onto his back.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>A pained groan escaped his lips, but his grip on her didn’t loosen. Isabella’s heart hammered violently. &#34;Nathaniel! Are you okay?&#34;</p>
                 <p>&#34;I&#39;m fine. Get in the car.&#34; His jaw clenched as he dragged her toward the vehicle, ignoring the searing pain.</p>
                 <p>The rain poured relentlessly, but Isabella was too stunned to resist as he practically shoved her inside.</p>
@@ -2341,7 +2421,7 @@
                 <p>Three years of marriage, and he’d never held her like that. Was this how Victoria felt every day?</p>
                 <p>The thought twisted her lips into a bitter smile. No matter how safe his arms felt, they weren’t hers.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Did Alexander buy this villa for you?&#34; Nathaniel’s voice cut through her thoughts, cold.</p>
                 <p>&#34;Why do you care?&#34; She turned away, staring out the rain-streaked window. &#34;Do I look like I can afford a place like this? Of course it was President Sinclair’s generous gift.&#34;</p>
                 <p>&#34;If you needed a place to stay, why didn’t you take the one I offered after the divorce?&#34; Anger seeped into his tone, overriding the pain in his back.</p>
@@ -2350,7 +2430,7 @@
                 <p>He’d given her the money thinking she, coming from a modest background, might struggle in the city alone. It was the only thing he could offer.</p>
                 <p>&#34;Enough. If you came here to dredge up the past, I’m not interested. I’m leaving.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>She reached for the door handle.</p>
                 <p>Nathaniel’s hand shot out, gripping her wrist and yanking her back.</p>
                 <p>Isabella gasped as she collided with his chest—hard.</p>
@@ -2362,7 +2442,7 @@
                 <p>Instantly, her blood turned to ice.</p>
                 <p>&#34;So you stood in the rain just to apologize for your fiancée?&#34; Her laugh was hollow. &#34;How noble. But I don’t accept it.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

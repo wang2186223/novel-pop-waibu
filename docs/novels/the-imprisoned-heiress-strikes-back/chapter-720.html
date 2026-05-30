@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2323,7 +2403,7 @@
                 <p>Isabella remained in critical care.</p>
                 <p>The doctors said she&#39;d briefly regained consciousness before slipping back into coma. The back-alley kidney removal had caused severe infection. Even if she recovered, her health would never be the same.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Alexander couldn&#39;t let his marriage end over this. He felt nothing for Isabella.</p>
                 <p>He knew Evelyn&#39;s ultimatum stemmed from jealousy. But he&#39;d fix this. Make it up to her somehow.</p>
                 <p>The steady thud of Alexander&#39;s heartbeat beneath her ear felt like betrayal.</p>
@@ -2332,7 +2412,7 @@
                 <p>The barb hit its mark.</p>
                 <p>Alexander flinched but tightened his hold. &#34;Don&#39;t say that. It kills me when you compare me to him.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Then what would you have me do?&#34; Evelyn&#39;s hand trailed up to caress his cheek.</p>
                 <p>Her touch was tender, but her eyes held winter.</p>
                 <p>Fingertips brushed his Adam&#39;s apple. &#34;Should I pretend nothing happened? Play the doting wife?&#34; Her voice dropped to a whisper. &#34;I can&#39;t, Alexander.&#34;</p>
@@ -2341,7 +2421,7 @@
                 <p>Though her tone remained sweet, the ice in her gaze froze him solid. Tears streaked her face, yet her expression remained resolute.</p>
                 <p>The contradiction shattered him.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Beneath the brave facade, he saw the wounded woman he&#39;d failed.</p>
                 <p>Evelyn shoved him back with surprising strength, slamming the door between them.</p>
                 <p>She slid down against the wood, knees drawn to chest.</p>
@@ -2350,7 +2430,7 @@
                 <p>The door swung open abruptly. Alexander&#39;s hopeful expression crumpled when she thrust a thick envelope into his hands.</p>
                 <p>&#34;What&#39;s this?&#34; He frowned, flipping through the contents.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>The words &#34;Divorce Agreement&#34; leaped off the page.</p>
                 <p>Three days. That&#39;s all it had taken her to have papers drawn up. Every clause meticulously detailed.</p>
                 <p>The world tilted. Alexander swayed on his feet.</p>
@@ -2359,7 +2439,7 @@
                 <p>&#34;Consider this a moment of anger,&#34; he rasped, crushing the papers against his chest.</p>
                 <p>He leaned in, lips brushing her ear. &#34;You still love me. I know you do.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

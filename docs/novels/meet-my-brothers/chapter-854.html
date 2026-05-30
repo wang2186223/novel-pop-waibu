@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,31 +2391,31 @@
                 <p>Lewis softened his tone as he stepped forward, fixing his gaze on Mia. &#34;It&#39;s been quite some time. Are you still upset? Is that why you&#39;re intentionally causing these issues to catch my attention?&#34;</p>
                 <p>Mia&#39;s expression twisted in a mix of shock and disbelief upon hearing Lewis’ accusations. &#34;Who gave you the audacity to say such things?&#34; How could she possibly be angry with Lewis and resort to such lengths just to get his attention? He wasn&#39;t foolish, after all!</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Mia, there&#39;s no need for pretense. Since our families proposed our marriage alliance, I&#39;ve had no involvement with that woman from the bar. She was the one pursuing me, but nothing happened between us.” Mia wore a look of innocence as she shrugged and responded, &#34;So what?&#34;</p>
                 <p>&#34;So, let me get this straight. You vanished from Nord City out of nowhere, spent ages gallivanting around Xanier Island and Bern City, and then returned with a penniless bodyguard in tow, all just to spread these rumors and get a rise out of me?</p>
                 <p>&#34;Is that your idea of grabbing my attention, trying to provoke me? Honestly, I&#39;ve seen through that tactic far too many times.&#34;</p>
                 <p>Mia found herself momentarily caught off guard, unsure of how to respond.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>It was clear to her that the Bowen family held rather peculiar mentalities.</p>
                 <p>Mia couldn&#39;t help but ponder if the families of the women who had married into the Bowen family lacked sound judgment. How else could they willingly become involved with such an eccentric household? Prior to Mia&#39;s journey to Xanier Island, the Bowens had indeed presented an outlandish marital arrangement.</p>
                 <p>Despite this, Mia&#39;s brothers brushed off the Bowen family&#39;s proposal as mere frivolity.</p>
                 <p>However, to the Bowens, Mia&#39;s subsequent travels to Xanier Island and Bern City held a different significance altogether.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Initially, Mia had little interest in the Bowen family&#39;s marriage proposal or Lewis’ escapades in the bar. She never anticipated the extent of the Bowens’ self-absorption, orchestrating such drama themselves.</p>
                 <p>After giving Lewis a once-over, Mia clicked her tongue twice before remarking, “Today, I&#39;ve truly encountered the breadth of human diversity.&#34;</p>
                 <p>Furrowing his brow, Lewis inquired, &#34;Mia, what exactly do you mean by that?&#34;</p>
                 <p>“I mean it quite literally. Take a good look at yourself—your appearance is so astonishingly unattractive that one might question if you barely pass for human.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>“I can&#39;t decide if the world is trying to test me or if I&#39;m simply too blind to see any appeal in you.</p>
                 <p>“I&#39;m genuinely curious—where did you get such audacity? Did you not bother to glance in the mirror before leaving home?</p>
                 <p>&#34;Just imagine how many people you must have inadvertently terrified with that grotesque face of yours.&#34;</p>
                 <p>Mia&#39;s words pierced Lewis like a dagger, leaving him stripped of his dignity.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Accustomed to a life of privilege and praise, Lewis had never faced such harsh criticism before.</p>
                 <p>Mia&#39;s cutting remarks sparked a surge of humiliation within him, stoking the flames of his anger as he moved forward with the intention of retaliating.</p>
                 <p>But just as he was about to act, a strong hand intervened, halting Lewis in his tracks.</p>

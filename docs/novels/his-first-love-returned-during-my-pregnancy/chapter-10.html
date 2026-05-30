@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,19 +2391,19 @@
                 <p>Sunlight streamed through the window, illuminating Evelyn&#39;s pale face. Vivian&#39;s eyes reddened as she noticed her best friend&#39;s trembling fingers.</p>
                 <p>&#34;Give him a chance. For the baby&#39;s sake.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>The hospital corridor was eerily quiet at dawn.</p>
                 <p>Evelyn finished her rounds alone, scribbling notes in a chart. Olivia Lightfoot trailed behind with a clipboard, hesitating before speaking.</p>
                 <p>&#34;Dr. Carter, Mr. Hamilton isn&#39;t escorting you today?&#34;</p>
                 <p>Her fountain pen paused mid-sentence.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;He&#39;s busy at work.&#34;</p>
                 <p>As she pushed open her office door, her phone screen lit up.</p>
                 <p>Alexander&#39;s voice came through the receiver. &#34;Evelyn, I—&#34;</p>
                 <p>&#34;I&#39;m working.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;I&#39;ll pick you up at five.&#34;</p>
                 <p>After hanging up, Evelyn stared blankly out the window. Her reflection showed fingers absently tracing her stomach.</p>
                 <p>Olivia suddenly appeared beside her, whispering conspiratorially. &#34;Dr. Carter, there&#39;s a surprise downstairs!&#34;</p>
@@ -2335,7 +2415,7 @@
                 <p>&#34;Thank you.&#34;</p>
                 <p>Alexander smiled as he took back the flowers and opened the car door. Evelyn&#39;s eyes darted to the empty backseat.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Looking for something?&#34;</p>
                 <p>&#34;Nothing.&#34;</p>
                 <p>As they merged into traffic, Evelyn secretly photographed the roses in her lap. Her social media exploded with notifications—Vivian&#39;s profile picture stood out among the likes.</p>
@@ -2346,7 +2426,7 @@
                 <p>Watching traffic blur past, Evelyn murmured, &#34;Let&#39;s eat at home.&#34;</p>
                 <p>She missed how his fingers froze on the wheel. She didn&#39;t notice the new notification flashing on his locked screen—where &#34;Annabelle&#34; burned like a brand.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

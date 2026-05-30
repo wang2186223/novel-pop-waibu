@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>Timothy intervened. “Provide me with the contact details.”</p>
                 <p>“Mr. Barrett, it’s important for you to understand our policy here at Xanier Island. We are unable to disclose client information,” Tanner replied.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Timothy fixed his gaze on Tanner. “How do you plan to explain to me the fact that your sister tried to abduct a little girl today?”</p>
                 <p>Tanner immediately grew uneasy. “Mr. Barrett, this is all a misunderstanding. We would never abduct a little girl, especially not your child.”</p>
                 <p>“She’s not my daughter. To be exact, she belongs to Caleb,” Timothy clarified. “Your hotel needs to offer us an explanation for this incident.” Though he remained composed, his tone carried an undertone of</p>
                 <p>urgency.</p>
                 <p>Caleb’s surprise was evident as he responded, “Someone from the hotel kidnapped Ginger? Tim, are you</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>serious?”</p>
                 <p>“I wouldn’t joke about something like this.” Timothy asserted.</p>
                 <p>Caleb swiftly turned to Tanner, demanding. “How dare your hotel staff abduct my child? Is there some</p>
                 <p>issue between us?”</p>
                 <p>Regardless of whether Ginger was his daughter, the series of events–where she mentioned Caleb’s</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>name only to be later abducted by the hotel staff seemed to indicate a personal grudge against Cate</p>
                 <p>Tanner nervously took a sip of water and attempted to clarify. “Mr. Gomez, this is all a misunderstanda We have no conflicts, and there’s no motive for us to abduct a child, right?</p>
                 <p>Timothy responded nonchalantly. “It appears your sister has taken an interest in Caleb There’s a turner that there isn’t a man she can’t win over</p>
                 <p>“My assumption is that she overheard Ginger mentioning Calety’s name, leading the hotel staff to hide</p>
                 <p>her.5</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Caleb couldn’t help but frown. “Targeting a child is unacceptable. It’s rather unfortunate that your sister has her eyes on me.”</p>
                 <p>Realizing there was no way out, Tanner forced a smile and proposed, “I sincerely apologize for this. My sister has a rather forceful personality.</p>
                 <p>“How about this, Mr. Barrett? When it’s time for the reishi mushroom auction, I’ll make sure my tearn helps you secure the bid. Does that sound good to you?”</p>
                 <p>Caleb responded casually, “Can’t you just sell it to us now?”</p>
                 <p>“I’m afraid I can’t do that. It’s the private seller’s goods, and I don’t have the authority to interfere, Tanner responded.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Timothy’s tone grew cold, “Give me the seller’s contact details.”</p>
                 <p>In the end, Tanner relented and passed over the contact information, adding, “Please don’t mention that! gave this to you.”</p>
                 <p>With the contact details in hand, Timothy exited the room and instructed Heath to reach out to the seller</p>
@@ -2352,7 +2432,7 @@
                 <p>The reishi mushroom was the sole medicine with the potential to awaken Laura,</p>
                 <p>Timothy’s expression turned grim, and he spoke with determination, “I refuse to give up.”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

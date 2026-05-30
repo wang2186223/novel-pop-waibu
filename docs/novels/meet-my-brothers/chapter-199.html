@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>The dinner ended.</p>
                 <p>Dominic, Eva and Mia delved into a discussion about the demolition, strategizing for a solution.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>For Dominic, the discussion felt like an overkill to him because he could easily delegate the task to his</p>
                 <p>subordinates to solve the problem.</p>
                 <p>Unbeknownst to others, Eva had stepped on his feet a few times to keep him composed.</p>
                 <p>They couldn’t let the facade slip. They could settle it behind Mia’s back, but putting up a show in front of her was still needed.</p>
                 <p>Fatigue struck Mia as she yawned.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Sleepiness frequently found its way to her all the time. Although she didn’t vomit, her sleeping hours were long.</p>
                 <p>Connor could tell that she was sleepy. “Dominic, Eva, it’s getting late. Let’s get some rest. It’s not urgent to settle the demolition anyways.”</p>
                 <p>The trio left without saying much.</p>
                 <p>Once they entered the elevator, Dominic spoke up, “I’ve asked someone to look into the demolition company. I will never let Mia’s adoptive parents take advantage of this. I won’t let Mia suffer from this.”</p>
                 <p>Eva gave it a thought before voicing out her opinion, “Mia’s house only comes with two rooms. It’s kinda small. Why don’t we take this chance to give her a new place?”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>His eyes brightened. “Yes, why don’t we give her a villa? I had one in mind, and it’s near her college.”</p>
                 <p>Connor rubbed his chin. “Isn’t a villa kinda over the top? There are a lot of people involved in the demolition. If she’s the only one getting a huge house, they’ll suspect something.”</p>
                 <p>Dominic sighed, “Why can’t we just reveal our identities? I think Mia has accepted us.”</p>
                 <p>Numerous villas and seaside houses were under his name, and he yearned to give them all to Mia.</p>
                 <p>Connor thought about it. “Let’s straighten things out with Maya first. We’ll take action afterward.”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>12:05</p>
                 <p>They couldn’t possibly welcome Mia back to the Lane family with Maya still in the picture.</p>
                 <p>+15 BONOS</p>
                 <p>Besides, Connor believed that someone as calculating as Maya wasn’t fit to stay in the family for long.</p>
                 <p>Meanwhile, Mia skipped work, opting for lectures or secluding herself in the study hall to avoid her adoptive</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>parents.</p>
                 <p>With Dominic by her side, Bob and Mary might think twice before coming up to the doorstep.</p>
                 <p>All Mia had to do was endure until Patricia signed the demolition contract. Once that happened, her adoptive parents would be powerless.</p>

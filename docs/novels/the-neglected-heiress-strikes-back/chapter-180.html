@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2329,7 +2409,7 @@
                 <p>His grip tightened.</p>
                 <p>A memory flashed—Evadne vomiting on him outside a bar, then nearly getting him arrested for harassment. When he’d gotten home, he’d found claw marks raked across his chest, stinging and raw.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Now, her hands were on him again, and his pulse roared in response.</p>
                 <p>&#34;I’ve said my piece. If you send anyone to follow me again, the police station will be the least of your worries.&#34; She pushed harder, her eyes glinting with warning. &#34;Let. Me. Go.&#34;</p>
                 <p>&#34;No.&#34; His voice was rough, unyielding.</p>
@@ -2341,7 +2421,7 @@
                 <p>Just then, Thaddeus’s body tensed. He spun, blocking a strike aimed at his back with lightning reflexes.</p>
                 <p>Evadne barely had time to gasp before Thaddeus and Aaron were locked in combat, fists flying.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>The air crackled with violence.</p>
                 <p>Thaddeus moved like a storm, every motion precise and lethal. Aaron, though skilled, was outmatched.</p>
                 <p>Only Elvis and Cassius could rival Thaddeus in combat.</p>
@@ -2353,7 +2433,7 @@
                 <p>Aaron pulled her close, glaring at Thaddeus. &#34;Touch my sister again, and I’ll make sure even your mother won’t recognize you.&#34;</p>
                 <p>But Evadne knew the truth—Thaddeus had held back.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>In the end, she didn’t press charges. She knew Gordon wasn’t malicious—just blindly loyal.</p>
                 <p>Back in the car, Gordon slumped like a scolded puppy. &#34;I’m sorry, Mr. Thaddeus. I messed up.&#34;</p>
                 <p>&#34;Forget it,&#34; Thaddeus muttered, dabbing his split lip.</p>
@@ -2365,7 +2445,7 @@
                 <p>His phone rang.</p>
                 <p>Edith’s name flashed on the screen.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Edith,&#34; he answered coldly.</p>
                 <p>&#34;Thad!&#34; Her sugary voice grated on his nerves.</p>
                 <p>Then it hit him—Evadne’s words: &#34;You have so many sweetheart sisters. Can’t I have a few good brothers?&#34;</p>
@@ -2378,7 +2458,7 @@
                 <p>Evadne was jealous.</p>
                 <p>And he loved it.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

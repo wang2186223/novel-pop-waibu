@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,19 +2391,19 @@
                 <p>Considering Nord City belonged to the Lane family, Mia&#39;s anxiety about his presence there seemed unwarranted.</p>
                 <p>Indeed, something felt amiss about the entire situation.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Caleb was caught off guard by Timothy&#39;s statement. &#34;Tim, why do you think it&#39;s not Ginger who&#39;s sick? Do you have any basis for that speculation?&#34;</p>
                 <p>&#34;If I had solid evidence to support my suspicion, I would have already investigated and resolved the matter. Right now, I don&#39;t have any proof to back up my theory. It&#39;s just that Mia&#39;s behavior in this situation strikes me as odd,&#34; Timothy explained.</p>
                 <p>“Tim, are you perhaps overanalyzing this? I highly doubt Mia would joke about something as serious as Ginger&#39;s health. Besides, I don&#39;t see any reason for her to deceive you.</p>
                 <p>&#34;Even if she did, there must be a deeper motive behind it, don&#39;t you think? Could it be possible that she&#39;s after the bone marrow you donated?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>After all, human bone marrow was considered a rarity, not readily accessible to everyone.</p>
                 <p>Timothy remained silent. In reality, he hadn&#39;t fully grasped the situation either; it was mere speculation on his part.</p>
                 <p>&#34;But Tim, it&#39;s hard to believe Mia would fabricate such a massive lie just to obtain your bone marrow. Remember the incident with Mrs. Barrett swapping the bone marrow? Mia was furious.</p>
                 <p>&#34;She even restrained Mrs. Barrett and Luna. You saw it all happen, didn&#39;t you? If Mia wasn&#39;t motivated by Ginger&#39;s health, why would she go to such extremes?&#34; Caleb suggested.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;I understand. Honestly, it&#39;s just speculation on my part.&#34;</p>
                 <p>“Tim, I get that it&#39;s only a theory. But if Mia isn&#39;t doing this for her daughter, then who else could it be for? Her family? But that doesn&#39;t make sense either.</p>
                 <p>&#34;With so many siblings in the Lane family, the probability of finding a bone marrow match among them is higher. It wouldn&#39;t be logical for Mia to turn to someone like you, who isn&#39;t directly related.”</p>
@@ -2335,7 +2415,7 @@
                 <p>“I&#39;m here willingly. If it becomes too overwhelming, I can always return to Bern City,&#34; Timothy refused flatly.</p>
                 <p>&#34;So, despite enduring so much, you still haven&#39;t managed to win her back.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>“You&#39;re not making this any easier. Please, shut up.&#34;</p>
                 <p>Timothy picked up on the playful tone in Caleb&#39;s words and responded casually, “Let&#39;s just head to the branch office.”</p>
                 <p>Now, Timothy had to address the issue with the Bowens. He certainly hadn&#39;t anticipated Ralph being the mastermind behind this collaboration.</p>

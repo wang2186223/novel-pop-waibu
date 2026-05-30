@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,28 +2389,28 @@
                 <p>&#34;I brought honey milk for Adrian,&#34; Beatrice announced with forced cheer, &#34;and fish maw milk for you, Vivian. It&#39;ll help you sleep.&#34; Her smile didn&#39;t reach her eyes.</p>
                 <p>&#34;Thank you, Beatrice.&#34; Vivian accepted the tray with stiff politeness.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>The older woman didn&#39;t linger, closing the door with an audible click of the lock. The sound echoed through the room like a prison gate slamming shut.</p>
                 <p>Shaking her head, Vivian placed Adrian&#39;s drink on his nightstand. &#34;Your grandmother&#39;s special recipe,&#34; she said dryly before retreating to her makeshift bed on the sofa.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The rich aroma of her own drink made her mouth water. The luxurious fish maw, simmered to perfection in fresh milk with just a hint of rock sugar, was worlds away from the instant noodles that usually stocked her pantry. Each velvety sip reminded her of the privileges money could buy - and how desperately she wanted to reclaim that independence.</p>
                 <p>Adrian watched her with unusual interest, his fingers twitching toward her bowl. &#34;That good? Let me taste.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Get your own,&#34; Vivian shot back, protectively cradling the bowl as she devoured the last precious bites.</p>
                 <p>His lips thinned as he drained his honey milk in one long swallow, slamming the empty cup down with more force than necessary. &#34;People would think the Blackwoods starve you,&#34; he remarked, barely stopping himself from comparing her to a rabid dog guarding its meal.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Despite the satisfying meal, an odd restlessness prickled under Vivian&#39;s skin. She longed for a cool shower and the oblivion of sleep, but Adrian&#39;s brooding presence made both impossible.</p>
                 <p>Scrolling through her phone provided little distraction. A strange heat was building inside her, spreading through her limbs like liquid fire. She tugged at the hem of her skirt, hoping the night air would soothe her flushed skin, but the discomfort only intensified.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>The room seemed to shrink around them, the walls pressing closer with each passing minute. Vivian&#39;s breath came faster now, her fingers trembling against her phone screen. Something was very wrong.</p>
                 <p>Adrian&#39;s sharp inhale told her he felt it too. His usually composed features had taken on a dangerous edge, his knuckles white where they gripped the sheets. Their eyes met across the shadowed room - and in that charged moment, they both understood.</p>
                 <p>The drinks had been spiked.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

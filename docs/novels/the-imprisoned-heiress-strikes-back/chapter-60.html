@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>Evelyn Carter let out a bitter laugh. &#34;You keep insisting I owe Vanessa, but tell me—what exactly do I owe her? Three years ago, she set me up. I made the truth clear at the birthday gala. You chose not to believe me. Three years of my life, wasted behind bars. You, Mother, Vanessa—you all owe me!&#34; Her voice sharpened. &#34;Even if I had been guilty of what happened back then, Vanessa walked away without a scratch. Not a single hair harmed. What compensation does she deserve?&#34;</p>
                 <p>Richard fell silent, caught off guard by her words. His tone turned icy. &#34;Vanessa has dedicated herself to this company. She&#39;s earned those dividends. You? You&#39;ve contributed nothing. Yet you have the audacity to demand them.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Evelyn&#39;s lips curled in disdain. &#34;You&#39;re right. I haven&#39;t contributed—but those shares are mine. Vanessa holds none. If she&#39;s so deserving, why don&#39;t you hand over your own profits to her?&#34; Her eyes flashed with accusation. &#34;Instead, you want to take from me. How hypocritical.&#34;</p>
                 <p>Richard&#39;s jaw tightened. &#34;Vanessa needs the funds. She&#39;s about to be promoted to Vice President of the project division. There are social obligations—networking, events—all requiring financial backing. You barely spend a dime. And we&#39;re family. Why must you be so petty about this?&#34;</p>
                 <p>Evelyn threw her head back and laughed, the sound hollow. &#34;Family? You call this family?&#34; Her voice dropped to a venomous whisper. &#34;When have any of you ever treated me as such?&#34;</p>
@@ -2329,7 +2409,7 @@
                 <p>Vanessa&#39;s shadow loomed large in this conversation, as always. My so-called father would sooner bankrupt himself than see his precious stepdaughter go without her monthly allowances.</p>
                 <p>&#34;As a principal shareholder,&#34; I continued, &#34;I&#39;ll be auditing the company books personally. If I discover even a dollar missing...&#34; My smile didn&#39;t reach my eyes. &#34;Well, let&#39;s just say the business journals will have a field day with &#39;Haynes vs. Horizon Enterprises.&#39;&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Richard&#39;s nostrils flared. &#34;How dare you threaten me? I&#39;m your father!&#34;</p>
                 <p>The word tasted like ash in my mouth.</p>
                 <p>&#34;Tell me, Richard,&#34; I challenged, &#34;when have you ever acted like one?&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>As the waves swallowed me whole, I felt nature&#39;s raw power coursing through my veins. The salt burned my throat, the current dragged me under, and in that moment, I understood—I was insignificant.</p>
                 <p>After that, I never stepped foot on a beach again.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Even swimming pools made my breath hitch.</p>
                 <p>When danger strikes, people reveal their true selves.</p>
                 <p>And that day, I learned the truth.</p>
@@ -2355,7 +2435,7 @@
                 <p>The kind that held no warmth.</p>
                 <p>Only resignation.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

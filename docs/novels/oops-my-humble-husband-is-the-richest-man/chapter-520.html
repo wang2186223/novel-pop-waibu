@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2326,7 +2406,7 @@
                 <p>&#34;Shut up! You scumbag, stop trying to stir up trouble here!&#34;</p>
                 <p>But Nathan had nothing left to lose. He shouted with all his might.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;What are you?! Who are you to judge me?! Call me a scumbag?!&#34;</p>
                 <p>He glared fiercely at Justin.</p>
                 <p>&#34;Everyone in New York knows your reputation since childhood! Who doesn&#39;t know you&#39;re a vile, wicked bastard! Someone like you can be forgiven, but I was just momentarily confused! Why can&#39;t I be forgiven?! Jane, why?! Just because my family background isn&#39;t as good as the Evans family?!&#34;</p>
@@ -2347,7 +2427,7 @@
                 <p>Mrs. White immediately grabbed her son&#39;s arm.</p>
                 <p>&#34;Let&#39;s go quickly...&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Nathan&#39;s words had completely offended the Evans family!</p>
                 <p>Mrs. White knew how obsessed Mrs. Evans and Justin were with Miss Evans, especially Justin...</p>
                 <p>By forcing Jane to say such things, Justin would never let Nathan off...</p>
@@ -2368,7 +2448,7 @@
                 <p>She turned to leave.</p>
                 <p>After just two steps, Justin suddenly grabbed her arm.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Jane looked back.</p>
                 <p>Justin stared at her intensely.</p>
                 <p>&#34;Belle, Jane, you can&#39;t leave. I&#39;m your brother. You can&#39;t refuse to forgive me!&#34;</p>
@@ -2389,7 +2469,7 @@
                 <p>Since childhood, she thought she was an orphan, yearning for family, always wanting many children... It was Justin who crushed that dream.</p>
                 <p>How could she forgive?</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Jane reached up, wiped the tear from the corner of her eye, took a step back, wrote on a piece of paper, handed it to Justin, then turned and walked away.</p>
                 <p>Justin took the note.</p>
                 <p>It read:</p>
@@ -2410,7 +2490,7 @@
                 <p>He suddenly thought of something.</p>
                 <p>&#34;And Grace, Evelyn Ross. She saved our sister&#39;s life. If she speaks, our sister will definitely come home.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Mrs. Evans said,</p>
                 <p>&#34;Don&#39;t trouble Miss Ross.&#34;</p>
                 <p>Justin shouted,</p>
@@ -2432,7 +2512,7 @@
                 <p>Jane clenched her fists, slowly walked up to Evelyn, took out paper and pen, and wrote:</p>
                 <p>[Do you want me to return to the Evans family? If you need me to, I will listen to you.]</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

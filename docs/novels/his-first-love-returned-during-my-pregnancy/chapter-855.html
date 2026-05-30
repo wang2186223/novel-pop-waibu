@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2321,7 +2401,7 @@
                 <p>Vivian opened her mouth to praise him, then pursed her lips. &#34;Planning to open a toy store?&#34;</p>
                 <p>Alexander shrugged. &#34;Evelyn suggested we share them.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Vivian cheered and began picking through the haul, but Evelyn noticed Vincent&#39;s icy glare. Even through the crowd, the hostility was palpable.</p>
                 <p>&#34;Miss Langley is provoking him on purpose,&#34; Evelyn murmured.</p>
                 <p>Sure enough, as the game ended and the curly-haired guy pulled out his phone to ask for Bianca&#39;s number, Vincent shoved him aside. &#34;Move.&#34;</p>
@@ -2353,7 +2433,7 @@
                 <p>Alexander listened silently, hearing echoes of his younger self.</p>
                 <p>Evelyn suddenly gagged, fighting back nausea.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Bianca&#39;s question floated like a dagger wrapped in silk: &#34;And what about you? What&#39;s your true motive?&#34;</p>
                 <p>Vincent choked on his words again.</p>
                 <p>&#34;Bar patrons might covet my body,&#34; Bianca enunciated each syllable like a death sentence, &#34;but you? You wanted my fortune. Used me as your stepping stone. Even framed me for murder!&#34;</p>
@@ -2369,7 +2449,7 @@
                 <p>Meanwhile, Vincent kept retreating under Vivian and Bianca&#39;s combined assault. They still managed to wave Evelyn goodbye between verbal strikes.</p>
                 <p>The night breeze cooled Evelyn&#39;s face, yet her vertigo worsened.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Margaret Hamilton gasped at her pallid arrival. &#34;What happened? Why didn&#39;t Alexander escort you?&#34;</p>
                 <p>Baby Chloe toddled into Evelyn&#39;s arms.</p>
                 <p>&#34;It&#39;s nothing,&#34; Evelyn hugged the child. &#34;I told him to stay. Miss Langley&#39;s ex came causing trouble again.&#34;</p>
@@ -2385,7 +2465,7 @@
                 <p>Late that night, Evelyn cradled the sleeping baby, gazing absently at the moonlight through the window.</p>
                 <p>Alexander Hamilton entered quietly and found her sitting motionless by the bed.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Still awake?&#34;</p>
                 <p>Evelyn pressed a finger to her lips. &#34;Just got her to sleep.&#34;</p>
                 <p>Alexander slipped into bed on the opposite side, their hushed conversation spanning the sleeping child between them.</p>
@@ -2401,7 +2481,7 @@
                 <p>&#34;She said we should choose.&#34; Alexander&#39;s voice roughened. &#34;We&#39;ll process the paperwork tomorrow.&#34;</p>
                 <p>Moonlight filtered through the curtains, casting dappled shadows across the baby&#39;s face. Evelyn suddenly realized this tiny life was about to become her greatest responsibility.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

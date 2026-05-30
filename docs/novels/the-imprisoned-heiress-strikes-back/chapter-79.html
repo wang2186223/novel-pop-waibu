@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2329,7 +2409,7 @@
                 <p>It wasn&#39;t until she married Alexander that she learned what it meant to kiss a man.</p>
                 <p>But she was still inexperienced—her lips brushed against his clumsily, retreating and returning without finesse.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>That clumsy, inexperienced kiss ignited something primal in Alexander, awakening a dangerous hunger that coiled low in his gut.</p>
                 <p>Evelyn&#39;s pulse spiked in alarm.</p>
                 <p>After being discarded once and finally tasting stability, the mere thought of someone else laying claim to Alexander sent her spiraling into possessive calculations.</p>
@@ -2341,7 +2421,7 @@
                 <p>Alexander&#39;s gaze turned molten. In one swift motion, he seized the back of her neck, slanting his mouth over hers in a searing, possessive kiss that left her breathless.</p>
                 <p>When he finally pulled away, his lips brushed the shell of her ear as he murmured, &#34;Unfaithful, Mrs. Whitmore? Where the hell did you get that idea?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Evelyn fisted his collar—then tore his shirt open with a single, decisive yank.</p>
                 <p>Buttons scattered across the floor as his shirt ripped open, revealing sculpted abs and a chest that could make any woman weak in the knees.</p>
                 <p>From his collarbone down, an intricate map of love bites—some rosy pink, others deep violet—told a story of passion unrestrained.</p>
@@ -2353,7 +2433,7 @@
                 <p>But now, seeing the genuine confusion in her eyes, realization struck—she truly didn’t recall a single second of it.</p>
                 <p>And worse, she thought another woman had marked him.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>His lips curved into a devilish smirk. &#34;You really don’t remember?&#34;</p>
                 <p>Leaning in, his voice dropped to a husky whisper. &#34;These are your handiwork, Evelyn. Every last one of them.&#34;</p>
                 <p>Her eyes widened in horror.</p>
@@ -2365,7 +2445,7 @@
                 <p>Alexander&#39;s fingers tightened around Evelyn&#39;s chin, tilting her face upward until their eyes locked.</p>
                 <p>The intensity in his gaze sent a shiver down her spine.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Perhaps I should refresh your memory,&#34; he murmured, his voice dangerously low.</p>
                 <p>The air between them crackled with unspoken tension.</p>
                 <p>Evelyn&#39;s breath hitched as his thumb brushed lightly over her bottom lip.</p>
@@ -2379,7 +2459,7 @@
                 <p>A slow, predatory smile curved his lips.</p>
                 <p>&#34;Let&#39;s begin.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

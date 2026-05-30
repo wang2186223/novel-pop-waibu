@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,23 +2389,23 @@
                 <p>His mocking laughter crackled through the receiver. &#34;So eager to storm out empty-handed, yet clinging to those trivial gifts now?&#34;</p>
                 <p>&#34;They&#39;re none of your business,&#34; she hissed. &#34;Beatrice gave them to me personally. Return them immediately.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Not my priority,&#34; Adrian dismissed before the line went dead.</p>
                 <p>Vivian exhaled sharply, kicking a stray pebble with unnecessary force. That infuriating man would be the death of her!</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>A smooth, amused voice interrupted her fuming. &#34;Who dares trouble such a vision of beauty?&#34;</p>
                 <p>She whirled to find Maxwell Sterling leaning against a lamppost, casually swirling a bottle of sparkling water. The neon glow of the 24-hour convenience store painted his sharp features in artificial light.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Mr. Sterling,&#34; she greeted, smoothing her expression into practiced serenity. &#34;Just an inconsiderate driver with terrible manners. Nearly ran me over without a second glance.&#34;</p>
                 <p>Her smile bloomed like a hothouse rose—perfectly cultivated yet devoid of genuine warmth. The icy glint in her eyes betrayed none of her inner turmoil.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Maxwell played along with theatrical concern. &#34;Road manners have certainly deteriorated these days.&#34;</p>
                 <p>&#34;Indeed.&#34; Vivian&#39;s response was clipped. &#34;What brings you to this neighborhood, Mr. Sterling?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Two coincidental meetings in as many days? Her instincts screamed warning. Was this deliberate?</p>
                 <p>&#34;Pure serendipity,&#34; he lied effortlessly, shaking his water bottle. &#34;Craving a late supper but can&#39;t decide where. Thought I&#39;d hydrate while contemplating my options.&#34;</p>
                 <p>Though he maintained the charade of chance, Maxwell had lingered long enough to catch Vivian&#39;s heated exchange with Adrian. The puzzle pieces clicked into place—their picture-perfect marriage displayed during the Emberglow County gala had been pure theater.</p>
@@ -2334,7 +2414,7 @@
                 <p>Vivian took a subtle step back, widening the space between them. &#34;I&#39;ve just come from dinner at Blackwood Estate,&#34; she declined, emphasizing the location like armor.</p>
                 <p>&#34;Blackwood Estate?&#34; Maxwell&#39;s gaze swept the urban surroundings with exaggerated confusion. &#34;This is at least twelve miles from the estate grounds. Did you walk here alone? Where is your devoted husband?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

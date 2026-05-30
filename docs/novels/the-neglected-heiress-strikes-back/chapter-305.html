@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2350,7 +2430,7 @@
                 <p>&#34;What did you just say?&#34; Amelia’s eyes widened in shock.</p>
                 <p>&#34;And I hate that crew cut. I hate it. Stop making me wear it, okay?&#34; Cassandra gritted her teeth, each word dripping with resentment.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Amelia, what is your sister talking about?&#34; Nathaniel’s voice was stern.</p>
                 <p>&#34;Oh, Dad, she’s not normal. You know she says nonsense all the time. I have no idea why she’s saying this—I’m so confused!&#34; Amelia batted her lashes, her voice sickly sweet.</p>
                 <p>&#34;Nathaniel, is Adrian really going to the Ashbournes’ tonight? He’s not coming here?&#34; Seraphina changed the subject, gripping her husband’s arm.</p>
@@ -2365,7 +2445,7 @@
                 <p>Nathaniel stared ahead, his tone clipped. &#34;Tonight’s event isn’t just about Vivienne. You’re overlooking Reginald’s presence. If they want to go, let them. I’m too tired for these games.&#34;</p>
                 <p>What just happened? Why the sudden shift?</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Seraphina choked back her anger, forcing a laugh.</p>
                 <p>Meanwhile, Cassandra curled up, drifting off.</p>
                 <p>Those nights with Harrison had left her exhausted—he was either kissing her or clinging to her, leaving her no time to sleep.</p>
@@ -2380,7 +2460,7 @@
                 <p>&#34;Mr. Kingsley, your wife’s birthday is tonight, and the whole family is here—where’s Mr. Adrian?&#34;</p>
                 <p>A journalist’s job was to ask the uncomfortable questions.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Adrian is occupied. He couldn’t make it.&#34; Nathaniel brushed it off with a polite smile.</p>
                 <p>&#34;Today is also Vivienne Ashbourne’s birthday. Mrs. Kingsley, your birthday was supposed to be Wednesday, but you moved it to Sunday. Was that intentional? You two were rivals back in your acting days. Rumor has it there was bad blood. Has that never been resolved?&#34;</p>
                 <p>Seraphina gasped theatrically, her diamond-ringed hand covering her mouth. &#34;Oh my! I had no idea today was Vivienne’s birthday. What a coincidence!&#34;</p>
@@ -2399,7 +2479,7 @@
                 <p>Not a single guest in sight.</p>
                 <p>Where had they all gone?</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

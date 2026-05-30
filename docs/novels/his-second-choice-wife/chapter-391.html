@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,37 +2391,37 @@
                 <p>Both turned at the intrusion.</p>
                 <p>Heat rose to Evelyn&#39;s cheeks, but she forced a smile. &#34;I came to see if Liam needed any help.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Liam&#39;s expression shifted from surprise to quiet delight, his gaze warming as it settled on her.</p>
                 <p>He&#39;d thought she&#39;d left. Her unexpected presence brought a rare smile to his usually stern face.</p>
                 <p>Victoria&#39;s lips thinned. &#34;That won&#39;t be necessary, Ms. Wright. Haven&#39;t you had dinner? Perhaps Oliver could prepare something before you leave.&#34;</p>
                 <p>Evelyn&#39;s smile turned sweet. &#34;I&#39;m not hungry. Besides, I wasn&#39;t planning to leave.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Liam&#39;s eyebrows shot up at her bold declaration.</p>
                 <p>Victoria&#39;s forced smile looked painful. &#34;It&#39;s hardly proper for an unmarried couple to be alone together.&#34;</p>
                 <p>&#34;I don&#39;t mind.&#34; Evelyn turned her most radiant smile on Liam. &#34;Do you, Liam?&#34;</p>
                 <p>&#34;Blackwood Manor&#39;s doors are always open for you,&#34; Liam replied evenly, lifting the blanket.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>As he moved to rise, Victoria&#39;s expression darkened. She grabbed his arm. &#34;Where are you going?&#34;</p>
                 <p>When she realized his destination, she insisted, &#34;Let me help you to the bathroom.&#34;</p>
                 <p>Liam shook his head. &#34;I can manage.&#34;</p>
                 <p>Evelyn stepped forward. &#34;I&#39;ll assist him.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Victoria&#39;s voice turned sharp. &#34;Ms. Wright, didn&#39;t you hear? He needs privacy.&#34;</p>
                 <p>Evelyn met her glare unflinchingly. &#34;We were married for six months. We shared meals, a bed, and I&#39;ve seen every inch of him.&#34;</p>
                 <p>Victoria&#39;s face went slack with shock.</p>
                 <p>Liam&#39;s brows knitted together in bewilderment.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Victoria&#39;s mind raced—what exactly had Evelyn seen?</p>
                 <p>&#34;Come, Liam.&#34; Evelyn&#39;s cheeks burned as she told this brazen lie, too embarrassed to meet his eyes.</p>
                 <p>A slow smile spread across Liam&#39;s face as he allowed her to guide him into the bathroom.</p>
                 <p>Inside, Evelyn lifted the toilet seat with trembling hands. Her face flamed as her gaze flickered downward before darting back up to his face.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

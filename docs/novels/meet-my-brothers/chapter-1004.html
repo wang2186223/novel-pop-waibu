@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,11 +2389,11 @@
                 <p>Jasmine seized the chance to chime in, &#34;Premium VIPs are ranked according to their spending. If both VIPS desire the same bag, the higher-ranked VIP is prioritized to purchase the bag. It hasn&#39;t been long since you owned this card, has it? Have you spent anywhere close to one million dollars yet?&#34;</p>
                 <p>Jasmine&#39;s taunts rendered Luna speechless. Based on her recent spending, she probably spent only around a few hundred thousand dollars. She didn&#39;t have much allowance, after all.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Seeing Luna&#39;s change in expression, Jasmine continued to add insult to the injury. &#34;Mia is different though. She&#39;s one of the highest ranking VIPS on their list, as she spends nearly a few million dollars each time. Having spent only a few hundred thousand dollars, you guys are nowhere near her level.&#34;</p>
                 <p>Luna ground her jaw in rage. Meanwhile, Avril blurted out, &#34;Why can&#39;t Luna buy it when she&#39;s also a premium VIP? So what if Mia spends a lot? Luna couldn&#39;t spend that much because she has just acquired the card lately. She won&#39;t have an issue splurging on these goods in the future though.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>In an instant, Luna&#39;s features softened. &#34;Exactly. Whether Mia will remain as a high-ranking VIP in the future remains unknown.&#34;</p>
                 <p>Jasmine sneered. &#34;Oh, such ignorance! Stop embarrassing yourself by pretending you&#39;re loaded if you don&#39;t even know this. A child of a mistress is truly just as disgraceful as the mistress herself.&#34;</p>
                 <!-- 广告位 3 -->
@@ -2321,16 +2401,16 @@
                 <p>Infuriated, Luna snapped, &#34;You&#39;re still being kept in the dark, aren&#39;t you? Dad plans to groom my son into the heir of the Shelbert family. Everything in this household will eventually belong to my son one day. What is there to brag about a VIP membership card? All of this will be mine anyway.&#34;</p>
                 <p>She pivoted and took her leave angrily. She was determined to get back at Jasmine for being humiliated today.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Mia was also taken aback when Luna claimed that Raymond was going to groom Asher into his successor. Apparently, she had underestimated Raymond&#39;s obsession with having a son. It would take years for such a young child to grow up, though.</p>
                 <p>It was all thanks to the family of Raymond&#39;s wife, Alison, that allowed him to come this far. Yet, it only took a boy for him to change his mind.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Collapsing onto the couch in despair, Jasmine cried out, &#34;What do I do, Mia? My mom hasn&#39;t been in good health for the past few years. She&#39;d be devastated if she finds out about this. After all, she loves my dad and she&#39;s never doubted him.&#34;</p>
                 <p>No one could ever expect the unpredictability of the human heart.</p>
                 <p>Mia also felt at a loss, unsure of how to comfort her. She paused and said, &#34;Actually, I knew about this already. In fact, I arranged for you and Luna to bump into each other here.&#34; She told Jasmine the truth. Gaping at her, Jasmine questioned, &#34;Why did you do that?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,31 +2391,31 @@
                 <p>“Shut up!” He halted in his tracks. He was so upset that a man was carrying Mia to the emergency room. Where’s your brother?”</p>
                 <p>“He’s on the third floor. I can take you to him.” Hints of his bad mood seemed to amuse Maya.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Maya knew that framing it that way would put him in a bad mood. He wouldn’t be bothered to care about Mia then, Maya believed.</p>
                 <p>Judging from how the man carried Mia to the emergency room, Maya sensed that something was going on between them.</p>
                 <p>As a man himself, how could Timothy possibly stomach it?</p>
                 <p>The duo entered the elevator, the door closing just as Connor skipped down the stairs.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Connor headed straight to the emergency room.</p>
                 <p>A man standing beside Mia explained the situation to the nurse and doctor anxiously, “She suddenly fainted. It could be low sugar or too much shock.”</p>
                 <p>Connor narrowed his eyes, taking big strides toward them. “I know what’s going on with the patient. The outsiders may step out of here.”</p>
                 <p>Mia’s heart finally eased when she heard his voice. There wouldn’t be any problem as long as he was there.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Still, Felix couldn’t shake off his concerns. He eyed Mia. “Mia, I’ll be waiting for you outside. Don’t be afraid.”</p>
                 <p>That earned a deep look from Connor, who wondered, “Is this her admirer? Not bad–looking and he cares for her, but he has not passed the test yet. Not just anyone can be my brother–in–law.”</p>
                 <p>Connor examined Mia in the emergency room. Since he was aware of her pregnancy, he had an inkling of what happened.</p>
                 <p>Mia finally regained consciousness half an hour later.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Her eyes fluttered open. Knowing that Connor was guarding her, she heaved a sigh of relief. “Connor.”</p>
                 <p>“Mia, you’re up. Do you feel uncomfortable anywhere?”</p>
                 <p>+15 BONOS</p>
                 <p>“Just kinda dizzy. Everything went black and I felt cold before I fainted. Am I sick? Is the baby alright?” She</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>placed her hand over her belly.</p>
                 <p>The baby’s well–being worried her the most.</p>
                 <p>Connor was momentarily silent. “Don’t worry about the baby. That little one is very healthy. As for you, so many things are plaguing your mind and stressing you out, and you’re malnourished. That’s why you fainted.</p>
@@ -2344,7 +2424,7 @@
                 <p>As her brother, he figured that he should at least know who the father of the baby was.</p>
                 <p>His position as her brother might be able to get him an answer from Mia.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

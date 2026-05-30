@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,27 +2390,27 @@
                 <p>However, Jasmine&#39;s unexpected gesture left him pondering-could this be a sign of a potential reconciliation?</p>
                 <p>Meanwhile, Luna&#39;s apprehension only grew deeper as she laid eyes on the cake.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Moments ago, she had been nervous about what the box might contain, fearing it could hold something harmful. However, to her surprise, it was just a cake.</p>
                 <p>But what had prompted Jasmine to suddenly act so kindly, sending over a cake and addressing Asher as her &#34;nephew&#34; so casually?</p>
                 <p>With Asher beside her, Jasmine lit the candles and spoke to him, &#34;Asher, you&#39;re now a part of the Shelbert family. Everything in our home is now yours. Your life will be different from this day forward. Please, make a wish.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>A smile appeared on Raymond&#39;s face as he stood next to Jasmine, visibly relieved.</p>
                 <p>In a hushed tone, he said to her, &#34;If you can find it in yourself to accept everything, it would be the best possible outcome.&#34;</p>
                 <p>Jasmine sliced a piece of cake and</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>handed it to Raymond. &#34;Dad, I&#39;ve come to realize that my past actions were impulsive and immature. But now, I&#39;ve had a genuine change of heart.</p>
                 <p>&#34;Asher is a part of our family, and there&#39;s no reason for me to react so strongly. I&#39;ve also spoken with Grandpa Ernest and Grandma Irene, and they&#39;re supportive.&#34;</p>
                 <p>Raymond&#39;s expression shifted to one of surprise. &#34;Really? So, your grandparents are on board, but what about your mother?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Mom hasn&#39;t outright agreed yet, but she&#39;s not as opposed as before. Dad, trust me, I&#39;ll win her over. After all, both of you have built so many years of love together. &#34;We can&#39;t let something as insignificant as this drive us apart. Plus, I&#39;ve been longing for a kid in our home, someone to bring warmth and joy to our family.&#34;</p>
                 <p>Raymond let out a sigh of relief after hearing Jasmine&#39;s words, his face reflecting contentment as he gently patted her shoulder. &#34;Jazzy, I&#39;m truly glad to hear you say this. It seems all my efforts in raising you weren&#39;t for nothing.&#34;</p>
                 <p>&#34;Dad, you can count on me. I&#39;ve had a genuine change of heart. I won&#39;t react the same way I did in the past. Asher is now part of our family, and I&#39;ll treat him accordingly.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;I&#39;ll work on persuading my</p>
                 <p>grandparents to provide him with all the resources and support he needs. As a family, we&#39;ll stand together and move forward, rather than holding each other back.</p>
                 <p>&#34;This is a lesson you&#39;ve taught me, and though I didn&#39;t fully grasp it before, I understand it now.&#34;</p>
@@ -2340,7 +2420,7 @@
                 <p>&#34;</p>
                 <p>She never anticipated Jasmine could be so adaptable, embracing Asher&#39;s presence and even convincing her maternal grandparents, Ernest Moore, and Irene Calahan, to do the same. This new development was indeed a troubling twist for Luna.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

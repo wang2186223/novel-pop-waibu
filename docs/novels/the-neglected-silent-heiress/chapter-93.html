@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>Natalie&#39;s audacious claim effectively shut down any further questioning.</p>
                 <p>Behind her protective stance, Olivia released the breath she&#39;d been holding.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;I assumed Olivia was ill.&#34; Liam&#39;s expression remained unreadable, though his voice carried an edge.</p>
                 <p>&#34;Can&#39;t I ask my best friend for support when I&#39;m unwell?&#34; Natalie countered sharply.</p>
                 <p>&#34;She can&#39;t even speak. What kind of support is that?&#34; Evelyn&#39;s mocking voice carried across the hallway.</p>
@@ -2323,7 +2403,7 @@
                 <p>While Evelyn looked bewildered, Liam&#39;s frown deepened as he deciphered Olivia&#39;s gestures.</p>
                 <p>Natalie translated aloud. &#34;Olivia may have lost her voice, but she was your wife first.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>She couldn&#39;t resist adding, &#34;If you&#39;re so special, why are you still just the mistress, looking so pleased with your second-rate position?&#34;</p>
                 <p>&#34;You—!&#34; Evelyn&#39;s face flushed crimson, her chest heaving as she shot Liam an imploring glance.</p>
                 <p>But Liam&#39;s attention remained fixed on Olivia, his dark gaze burning with unreadable intensity.</p>
@@ -2332,7 +2412,7 @@
                 <p>Even as they walked away, Olivia could feel the weight of his stare. Only when safely inside Natalie&#39;s car did she realize her blouse clung to her back with cold sweat.</p>
                 <p>Deceiving Liam and standing up to him were things Olivia never imagined herself capable of. Yet here she was, doing both repeatedly. Though fear still gripped her physically, the emotional chains had loosened.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Why should she continue obeying Liam&#39;s every whim?</p>
                 <p>&#34;You alright?&#34; Natalie&#39;s concerned voice pulled Olivia from her thoughts.</p>
                 <p>Olivia nodded silently.</p>
@@ -2341,7 +2421,7 @@
                 <p>&#34;That bastard!&#34; Natalie&#39;s grip tightened on the steering wheel. &#34;Why&#39;s he stringing you along? He&#39;s practically glued to Evelyn&#39;s side but won&#39;t let you move on?&#34;</p>
                 <p>A bitter smile touched Olivia&#39;s lips as she signed that this was typical Liam behavior.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;True.&#34; Natalie sighed. &#34;He&#39;s been cheating since your wedding day. Why expect anything different now?&#34;</p>
                 <p>&#34;I&#39;ve got an idea!&#34; Natalie suddenly grabbed Olivia&#39;s arm, eyes lighting up.</p>
                 <p>Olivia tilted her head in question.</p>
@@ -2350,7 +2430,7 @@
                 <p>&#34;The woman? She poured boiling water on her husband while he slept. Scared him so badly he signed the papers immediately, terrified she might actually kill him next time!&#34;</p>
                 <p>Olivia&#39;s eyes widened in horror.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>But Natalie looked thrilled. &#34;Isn&#39;t it perfect? Imagine standing over Liam&#39;s bed with a knife! If you frighten him enough, he&#39;ll sign anything! Men like him value their lives above all else.&#34;</p>
                 <p>Olivia shook her head vehemently.</p>
                 <p>&#34;Why not?&#34; Natalie pressed. &#34;Don&#39;t tell me you still have feelings for him?&#34;</p>
@@ -2360,7 +2440,7 @@
                 <p>Olivia shook her head. She hadn&#39;t formulated a plan yet, only hoping that day would never come.</p>
                 <p>For now, she needed Natalie&#39;s help with something else. She gestured urgently, asking for a favor.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

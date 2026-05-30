@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,31 +2391,31 @@
                 <p>She handed it to Wade. &#34;Fix it.&#34;</p>
                 <p>Ginger&#39;s eyes didn&#39;t leave her watch for one second. She stood on her toes, requesting, &#34;Grandpa Wade, could you make it quick?&#34; &#34;Don&#39;t worry, Ms. Ginger. I&#39;ll return it to you as soon as I have it fixed.&#34; He walked away with it.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Are you in a rush to use it? I never see you cherish it so much.&#34; Mia sat behind Ginger to tie her messy hair into pigtails.</p>
                 <p>Ginger was happy with her new hairstyle. &#34;B-Because I want to call that nice uncle.&#34; &#34;You like him that much?&#34;</p>
                 <p>Ginger beamed. &#34;He&#39;s nice! Mommy, can I change my father?&#34;</p>
                 <p>Ginger&#39;s secret trip to Xanier Island was actually a search to look for Caleb, and Mia knew that.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The glint in Mia&#39;s eyes dimmed. &#34;Didn&#39;t I say that it&#39;s the same as having six uncles? Do you regret it?&#34;</p>
                 <p>Ginger pouted, &#34;B-Because I&#39;m curious. I don&#39;t want that guy to become my father. I want that nice uncle to become my father.&#34;</p>
                 <p>Mia was amused. This was the first time Ginger took a liking to a man.</p>
                 <p>Smiling, Mia promised, &#34;Okay. I&#39;ll win his heart and make him your father.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>As long as it was her daughter&#39;s wish, she would do anything in her power to grant it because she owed too much.</p>
                 <p>At night, Timothy and Caleb entered the auction with a mask. All the guests were wearing masks because this was an illicit event.</p>
                 <p>There were a lot of underhanded items on the auction, so the masks could save them from trouble.</p>
                 <p>Timothy had a nice spot in the middle of the front row.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>When he seated himself, a scrutinizing gaze caught his radar. He scanned the area but failed to notice anyone suspicious.</p>
                 <p>Everyone was wearing a mask, so it wasn&#39;t easy to recognize the people there.</p>
                 <p>Suddenly, a woman in a white strap dress showed up in the crowd. Her sexy attire drew the attention of many.</p>
                 <p>Soon, she walked up to the men with a smile. &#34;Can&#39;t recognize me already?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Caleb recognized the voice. &#34;Luna?&#34; &#34;Yeah, it&#39;s me.&#34; &#34;You look good today,&#34; Caleb complimented.</p>
                 <p>Despite that, he found it strange because she normally dressed conservatively.</p>
                 <p>Why the sudden revealing outfit?</p>
@@ -2346,7 +2426,7 @@
                 <p>Timothy&#39;s eyes narrowed.</p>
                 <p>It was her.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

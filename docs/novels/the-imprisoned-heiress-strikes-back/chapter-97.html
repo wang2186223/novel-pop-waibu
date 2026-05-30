@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2316,7 +2396,7 @@
                 <p>She could still feel Ethan&#39;s gaze boring into her back, but for now, the charade had worked.</p>
                 <p>Alexander didn&#39;t spare Ethan another glance as he strode toward the study, his posture rigid with barely contained fury.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Evelyn hurried after him, clutching the file like a lifeline.</p>
                 <p>The tension in the air was suffocating.</p>
                 <p>She had no idea how long this act could hold.</p>
@@ -2327,7 +2407,7 @@
                 <p>The apartment complex was far from luxurious—certainly not the kind of place suited for a man of Alexander&#39;s standing.</p>
                 <p>Alexander pulled a cigarette from his pocket, lighting it with deliberate slowness. Smoke curled around him as he leveled Ethan with an indifferent stare.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Because I want to.&#34;</p>
                 <p>Ethan’s eyes flickered, catching sight of the faint marks trailing along Alexander’s neck—love bites, unmistakable in their origin.</p>
                 <p>His gaze swept over the apartment, noting the subtle feminine touches scattered throughout.</p>
@@ -2338,7 +2418,7 @@
                 <p>But that was enough.</p>
                 <p>Ethan’s mind raced.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Alexander Whitmore—untouchable, ruthless, and famously detached—was seeing someone.</p>
                 <p>What an unexpected twist!</p>
                 <p>Ethan&#39;s curiosity was piqued. &#34;Uncle Alexander, who is this woman that&#39;s stolen your heart? Why not bring her home and introduce her to the family?&#34;</p>
@@ -2349,7 +2429,7 @@
                 <p>Ethan tilted his head, trying to peer past him into the apartment.</p>
                 <p>Evelyn hadn&#39;t emerged yet.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>After a brief hesitation, he lowered his voice. &#34;Uncle Alexander, I want Evelyn transferred to the Marketing Department.&#34;</p>
                 <p>Instantly, Alexander&#39;s expression turned icy.</p>
                 <p>A mocking smirk played on his lips.</p>
@@ -2360,7 +2440,7 @@
                 <p>The abruptness of his action spoke volumes—his temper was barely restrained.</p>
                 <p>The message was clear: crossing him would be a grave mistake.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Ethan Caldwell stood frozen outside the door, his knuckles still stinging from the unanswered knock.</p>
                 <p>The heavy oak door remained firmly shut, sealing Evelyn Carter&#39;s silent rejection.</p>
                 <p>He counted exactly 237 seconds before accepting she wouldn&#39;t emerge. The realization tasted like burnt coffee—bitter and unnecessary.</p>
@@ -2374,7 +2454,7 @@
                 <p>And that couldn&#39;t happen. Not yet. The society pages weren&#39;t ready for this bombshell.</p>
                 <p>Her gold-plated pen snapped in half. Ink bled across the contract like a warning.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>As Timothy stepped into the room, he found Mia seated on the sofa.</p>
                 <p>She wore a black camisole, her long damp hair flowing over her shoulders; it seemed that she had just stepped out of the shower.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>At the sight of her, Timothy clenched his jaw and demanded, “Have you arranged to meet other men besides me?”</p>
                 <p>His anger was palpable.</p>
                 <p>Before Mia could respond, Keith cried out and hurried to Mia’s side, “Babe, did you see that? He deliberately shoved me! Look, my arm is scraped!”</p>
                 <p>Spotting the scrape on Keith’s arm, Mia exclaimed sympathetically, “Oh dear, how careless of you! You should have the doctor examine it later to ensure it doesn’t leave a scar.”</p>
                 <p>“I want you to apply medicine to it,” Keith insisted, clinging to her arm.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Mia appeared somewhat helpless as she glanced up at Timothy and explained, “Please don’t misunderstand. Keith is a friend of mine who came specifically to see me when he heard I was here.”</p>
                 <p>Timothy thought to himself, “What a lame excuse. Does she really expect me to believe that?</p>
                 <p>An awkward silence settled over the room momentarily.</p>
                 <p>Mia turned to Keith and suggested, “You should go see the doctor first. I need to discuss something with this gentleman. We can meet again tomorrow.”</p>
                 <p>“No way! I think I sprained my ankle just now. I can’t walk properly. I need to rest here for a while,” Keith insisted, refusing to budge from the couch.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Timothy snorted disdainfully, “If he won’t leave, then I will.</p>
                 <p>He couldn’t bear to stay in the same room as them any longer.</p>
                 <p>“Don’t leave just yet, Mr. Barrett. Please, have a seat for a moment,” Mia interjected.</p>
                 <p>Timothy hesitated at her request but eventually obliged, settling onto the nearby sofa. He couldn’t help but glance at Keith nearby, finding him annoying.</p>
                 <p>Mia turned to Keith beside her and suggested, “Why don’t you ask your friend to come pick you up?”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Reluctantly, Keith took out his phone and sent a message.</p>
                 <p>Casting a taunting glance at Timothy, he remarked, “Babe, it seems your preferences have shifted this time. I can’t believe you’d be into someone so much older.”</p>
                 <p>Timothy’s gaze turned cold in an instant, exuding a menacing aura.</p>
                 <p>Keith immediately fell silent, not daring to speak another word.</p>
                 <p>Mia quickly intervened, advising, “Mr. Barrett, let’s not get involved in childish disputes.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Timothy’s anger surged even more at that moment!</p>
                 <p>Before long, several more young men entered the room, all clamoring around Mia.</p>
                 <p>One of them exclaimed, “Hey babe, why did you take so long to come?”</p>
@@ -2351,7 +2431,7 @@
                 <p>Meanwhile, Keith found himself pushed aside. He shot Timothy a slightly annoyed glance and remarked, “Mate, with your passive approach, you won’t get anywhere. Don’t bother</p>
                 <p>trying to play hard to get. It’s useless.”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

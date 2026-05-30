@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,12 +2390,12 @@
                 <p>&#34;Who am I? What&#39;s my real identity?&#34; she cried internally, drowning in sorrow and fury.</p>
                 <p>As twilight descended, Liam disembarked from his private jet with two aides and rushed back to Blackwood Manor.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Entering the darkened house, he flicked on the lights. His polished shoes crunched over shattered phone glass near the entrance.</p>
                 <p>His warm gaze fell upon Evelyn, asleep on the couch with tear tracks staining her cheeks.</p>
                 <p>Liam knelt slowly, his tender expression fixed on Evelyn&#39;s peaceful face. Seeing her tears made his heart constrict.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>She was supposed to be the cherished jewel of the Wright family. Yet she&#39;d endured so much suffering.</p>
                 <p>Gently, Liam brushed away her tears. The moment he&#39;d seen the online reports, he&#39;d rushed back. He hadn&#39;t expected her to find out.</p>
                 <p>As he reached to lift her, Evelyn&#39;s tear-filled eyes fluttered open.</p>
@@ -2325,18 +2405,18 @@
                 <p>&#34;Liam, you&#39;re back?&#34;</p>
                 <p>Her choked sobs made his chest tighten.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;The Carters are despicable!&#34; Evelyn gasped between cries. &#34;I don&#39;t care what they do to me! But they&#39;re destroying your reputation, making you a global laughingstock!&#34;</p>
                 <p>With each word, her anger grew until she couldn&#39;t contain it. &#34;What do we do? The entire internet is attacking me, mocking you and the Blackwoods!&#34;</p>
                 <p>Liam sat on the couch, pulling Evelyn onto his lap. &#34;Don&#39;t worry,&#34; he murmured into her hair. &#34;Leave this to me.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Evelyn rested her cheek against his chest, taking shaky breaths. After a long pause, she whispered, &#34;Liam...if I told you I&#39;m not Evelyn Carter...would you believe me?&#34;</p>
                 <p>Liam stiffened in surprise.</p>
                 <p>Evelyn pulled back to meet his gaze. &#34;I thought I was Evelyn, but now...I don&#39;t know who I am. Those DNA reports are fake. Do you believe me?&#34;</p>
                 <p>Liam&#39;s brow furrowed, his expression darkening. He&#39;d thought only he knew the truth - but apparently Evelyn had discovered it too.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

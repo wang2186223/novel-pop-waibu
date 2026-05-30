@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2318,7 +2398,7 @@
                 <p>Their relationship had long surpassed casual conversations or shared rides.</p>
                 <p>Nearby, Vanessa stood frozen in the baby boutique, watching the entire exchange through the glass storefront.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Her expression twisted with bitter resentment.</p>
                 <p>Ethan could barely tolerate being in the same room with her, his lawful wife, yet here he was engaging in prolonged conversation with Evelyn. The injustice burned like acid in her veins.</p>
                 <p>Everything she&#39;d clawed and fought for, Evelyn obtained effortlessly.</p>
@@ -2331,7 +2411,7 @@
                 <p>With no other options, he&#39;d turned to Vanessa for help.</p>
                 <p>After all, they&#39;d shared intimate history, so Vanessa secretly funneled him money behind everyone&#39;s backs.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>But Vanessa never made poor investments.</p>
                 <p>She&#39;d always suspected trash like Damian might prove useful someday.</p>
                 <p>Especially since he remained Evelyn&#39;s adoptive brother.</p>
@@ -2357,7 +2437,7 @@
                 <p>Then the lights flickered ominously before plunging them into complete darkness.</p>
                 <p>Vanessa shrieked, frantically mashing the control panel buttons.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Evelyn remained remarkably composed.</p>
                 <p>This was a high-end mall - management would prioritize their rescue.</p>
                 <p>Vanessa slammed the emergency button. &#34;What&#39;s wrong with your damn elevator? I&#39;m heavily pregnant! If anything happens to my baby, I&#39;ll sue this entire mall into bankruptcy!&#34;</p>
@@ -2370,7 +2450,7 @@
                 <p>The sudden illumination eased her panic slightly.</p>
                 <p>Turning, she saw Evelyn standing calmly, showing no fear. &#34;It&#39;s pitch black! Aren&#39;t you scared?&#34; Vanessa demanded.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Evelyn&#39;s voice dripped ice. &#34;I&#39;ve nothing to hide. Why would I be afraid?&#34;</p>
                 <p>The barb struck home.</p>
                 <p>Never one to waste drama, Vanessa immediately called Ethan.</p>
@@ -2388,7 +2468,7 @@
                 <p>&#34;Oh right, I forgot. He&#39;s not in town. Even if you called, he couldn&#39;t come. Rumor says Isabella ran away. He&#39;s probably searching for her, isn&#39;t he? Doesn&#39;t that make you jealous, Evelyn?&#34;</p>
                 <p>Evelyn&#39;s reply came frosty and measured. &#34;Jealousy isn&#39;t in my nature.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

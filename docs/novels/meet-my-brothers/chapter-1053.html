@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,27 +2389,27 @@
                 <p>Defiance flashed across Luna&#39;s eyes. &#34;Go ahead and expose me then. See whether Dad takes your side or mine.&#34;</p>
                 <p>Luna knew what Raymond was like. She had sought him out in the past, but he merely dismissed her with some money. He even had men threaten and monitor her, warning her not to run her mouth freely. Otherwise, she&#39;d have to deal with severe consequences.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>But now things were different. She&#39;d agreed to let Raymond adopt Asher because he had always wanted an heir. Surely, his attitude would&#39;ve been different.</p>
                 <p>Luna made the right move, and she would continue down this path. Although her identity couldn&#39;t be revealed just yet, she was already leading a very different life. She just had to be patient enough to wait for Asher to grow up. What would she have to fear once he inherited everything from the Shelberts?</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>In an instant, Jasmine screamed, &#34;Just you wait!&#34;</p>
                 <p>As Luna pranced off, Mia&#39;s gaze fell on her ankle. How coincidental was it that Luna happened to remove the tattoo on her ankle?</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>She initially thought the tattoo might be a coincidence, but Luna&#39;s deliberate actions said otherwise. Luna must&#39;ve been the one who attacked her back then.</p>
                 <p>Due to her amnesia, Mia hadn&#39;t been able to remember anything for the past five years. Luna was able to roam free for five years as well. Now that she had regained her memories from the past, Luna&#39;s good days were numbered.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Brushing off her tears, Jasmine muttered, &#34;Mia, I think what you said back then was right. The only leverage that bitch, Luna, has is to let my dad adopt her child. Only then can they gain his support. But if I agree to have only Asher return to my family and convince my grandparents to accept him, Luna doesn&#39;t stand a chance of returning back to our family.&#34;</p>
                 <p>Mia patted Jasmine&#39;s shoulder. &#34;It&#39;s best if you can come to terms with this. In fact, this isn&#39;t necessarily the best solution out there. I&#39;m merely giving you a suggestion. Whether to do it or not is up to you.&#34; Jasmine&#39;s expression turned sullen. &#34;Do I even have a choice? Luna is cunning, and she has my dad wrapped around her little finger. He&#39;s still oblivious to her true colors, and he&#39;s turning a blind eye because of that so-called grandson. Now that I&#39;m aware of the truth, I don&#39;t think I should hesitate any longer.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Noting Jasmine&#39;s expression, Mia knew she had matured and grown more resilient. She had refused when Mia first suggested that the Shelberts accept the child to impose on Luna. But now, she was willing to go along with the idea again. She must&#39;ve been very disappointed in Raymond.</p>
                 <p>Jasmine clenched her teeth. &#34;My dad will be thrilled as long as our family accepts the child. Severing ties with my grandparents won&#39;t do him any good after all, and divorcing my mom won&#39;t benefit him for his re-election either. I must make that bitch Luna pay a heavy price. Dealing with a four-year-old once she&#39;s gone will be a piece of cake.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

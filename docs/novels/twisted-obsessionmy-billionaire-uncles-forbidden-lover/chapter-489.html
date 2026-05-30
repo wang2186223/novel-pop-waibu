@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>Sophia glanced down at her loose sundress. &#34;Problem?&#34;</p>
                 <p>&#34;It&#39;s practically a nightgown!&#34; Flames of anger flickered in his eyes. &#34;Any woman would dress up for someone she cares about. But you? You deliberately wore this to provoke me?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Sophia scoffed. &#34;Only if that someone is worth dressing up for.&#34;</p>
                 <p>Ethan&#39;s face changed. &#34;Then who is worth it for you?&#34;</p>
                 <p>She leisurely cut into her steak. &#34;That&#39;s not a question your surveillance team has the right to ask.&#34;</p>
@@ -2321,7 +2401,7 @@
                 <p>&#34;I don&#39;t need them.&#34;</p>
                 <p>&#34;Forgotten about last time you got hurt already?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Sophia&#39;s face remained impassive. &#34;Turns out I&#39;m safer when you&#39;re not around.&#34;</p>
                 <p>&#34;Are you saying I&#39;m the danger?&#34;</p>
                 <p>&#34;Aren&#39;t you?&#34;</p>
@@ -2329,7 +2409,7 @@
                 <p>Ethan&#39;s expression turned stormy.</p>
                 <p>Watching him seethe, Sophia cheerfully polished off her steak.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>The restaurant really was excellent.</p>
                 <p>She continued devouring her meal, utterly ignoring the man across from her.</p>
                 <p>Ethan slammed his cutlery down with a sharp clang. &#34;Keep eating like that and you&#39;ll balloon into a whale.&#34;</p>
@@ -2337,7 +2417,7 @@
                 <p>&#34;...&#34;</p>
                 <p>He swallowed back the word &#34;no&#34; and gritted out, &#34;Too rare.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Medium-well is perfect.&#34;</p>
                 <p>&#34;I prefer well-done.&#34;</p>
                 <p>&#34;Well-done is like chewing leather.&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>Sophia muttered under her breath, &#34;Like a dog with a bone.&#34;</p>
                 <p>&#34;What did you say?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>She dabbed her lips primly. &#34;So you&#39;re not calling off the bodyguards?&#34;</p>
                 <p>&#34;No.&#34;</p>
                 <p>&#34;Fine.&#34;</p>
@@ -2356,7 +2436,7 @@
                 <p>He grabbed her wrist abruptly. &#34;Where are you going?&#34;</p>
                 <p>&#34;Restroom.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

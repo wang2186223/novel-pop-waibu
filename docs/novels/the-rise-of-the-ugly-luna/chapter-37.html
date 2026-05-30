@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2323,7 +2403,7 @@
                 <p>&#34;Lyric.&#34; His tone was abrupt. &#34;I got the tea last night. But I didn&#39;t feel a thing when I took it. None of the reactions you said I&#39;d get actually happened.&#34;</p>
                 <p>I bit my lip, still avoiding his gaze. &#34;I um... I&#39;m sorry.I thought it&#39;d-&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Are you sure it was your best you gave?&#34; He asked me with those accessing eyes.</p>
                 <p>Uh...nope.Not even close to my best. It was just a random remedy that I was hoping would work.</p>
                 <p>&#34;I&#39;ll come up with something else,&#34; I muttered.</p>
@@ -2332,7 +2412,7 @@
                 <p>&#34;What&#39;re you hiding from me?&#34; He asked suspiciously. &#34;It seems you know something else that can help but don&#39;t want to share.&#34;</p>
                 <p>I was tongue-tied. He finally suspected.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Lyric Harper. Tell me the truth. You know I hate disobedience.&#34;</p>
                 <p>Ugh. But if I did, he&#39;d want me to carry out the process on him!</p>
                 <p>Fine. I was fucked. I didn&#39;t have a choice.</p>
@@ -2341,7 +2421,7 @@
                 <p>&#34;How did this happen? Yes, I&#39;ll be there soon.&#34; He grabbed his jacket.</p>
                 <p>Oh,thank goodness.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>I watched with relief as he started toward the door. Well, if it wasn&#39;t the most relieving moment of my life.</p>
                 <p>He ended the call and glanced at me. &#34;We&#39;ll finish this when I get back.&#34; Then,he was out the door.</p>
                 <p>At least, we had hours until evening. It was enough time to prepare myself for what was to come.</p>
@@ -2350,7 +2430,7 @@
                 <p>Oh,cute things. As much as I loved them, my heart ached each time I saw them, because they reminded me of the ones I&#39;d lost.</p>
                 <p>My own babies.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>If only they were alive, they&#39;d have been around the same age as Xylon and Xyla. I was sure they&#39;d have been pretty too.</p>
                 <p>&#34;Aunty, are you okay?&#34; Xyla asked. It wasn&#39;t until that moment that I realized I&#39;d been crying.</p>
                 <p>&#34;I&#39;m fine,&#34; I smiled, sniffed and wiped the lone tear.</p>
@@ -2364,7 +2444,7 @@
                 <p>Because right there, standing in the doorway, brows drawn, was Jaris Dreadmoor.</p>
                 <p>No!</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

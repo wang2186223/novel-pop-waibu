@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>Just then, Ginger picked up a piece of meat with her fork and placed it on Mia’s plate. “Mommy, have some.”</p>
                 <p>Mia smiled warmly and replied, “Thank you, sweetie.”</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Without hesitation, Ginger then picked up another piece and placed it on Timothy’s plate. “Tim, here you go,” she offered.</p>
                 <p>As Timothy looked at the meat Ginger had given him, a hint of surprise flashed in his eyes.</p>
                 <p>Observing the situation, Luna quickly interjected, “Mr. Barrett is a bit of a germaphobe. He typically doesn’t share his food with others, especially if it has been touched by someone else.”</p>
@@ -2321,7 +2401,7 @@
                 <p>set of cutlery.”</p>
                 <p>Ginger appeared flustered, her gaze shifting toward Timothy. The smile that had lit up her face moments ago now faded slightly.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>However, Timothy gazed at the meat on his plate and proceeded to eat it without a trace of hesitation.</p>
                 <p>Ginger beamed with a bright smile. “Is it tasty?” she asked eagerly.</p>
                 <p>Timothy’s lips curled slightly as he replied, “Yes, it’s good. Just focus on your meal and don’t worry about the adults, okay?”</p>
@@ -2329,7 +2409,7 @@
                 <p>Mia’s eyes betrayed a hint of surprise. She hadn’t expected Timothy to eat the food Ginger had cut for him.</p>
                 <p>After all, individuals with germaphobia typically disliked others handling</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>their food.</p>
                 <p>Luna was equally shocked by the scene. The fact that Timothy had eaten the food Ginger had offered was simply unbelievable.</p>
                 <p>After all, everyone in the Barrett family knew about Timothy’s</p>
@@ -2337,7 +2417,7 @@
                 <p>While Ginger was picking out Timothy’s food earlier, Luna initially thought her moment had come.</p>
                 <p>Much to her surprise, Timothy went ahead and ate the food Ginger had</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>offered him.</p>
                 <p>With a firm grip, Luna held onto the plate and cutlery. Stepping forward, she offered, “Tim, I’ll fetch you another set of utensils.”</p>
                 <p>Holding his plate, Timothy frowned as he glanced at Luna. “Instead of focusing on others, why don’t you spend more time helping Asher?</p>
@@ -2345,7 +2425,7 @@
                 <p>needs to be fed! What kind of teaching methods are you using?”</p>
                 <p>Luna’s dignity crumbled under Timothy’s stern reprimand.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Watching the unfolding scene, Mia intervened, saying, “Mr. Barrett, let’s not be too harsh. It’s natural for mothers to spoil their children. As a single mom, Ms. Maynard is bound to indulge Asher a bit.”</p>
                 <p>Timothy couldn’t help but let out a disdainful snort. Nonetheless, he decided not to say anything more in front of the children.</p>
                 <p>Flushed with embarrassment, Luna returned to her seat, shooting Asher a glare and feeling utterly humiliated.</p>
@@ -2354,7 +2434,7 @@
                 <p>Turning to Asher, Luna remarked, “Asher, it seems like you’re not interested in eating either. Why don’t you join her and play with the toys?</p>
                 <p>Luna was determined to prevent Asher from misbehaving further and leaving a negative impression on Timothy.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

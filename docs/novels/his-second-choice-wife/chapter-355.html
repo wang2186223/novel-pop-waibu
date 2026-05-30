@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,38 +2391,38 @@
                 <p>Victoria&#39;s expression soured instantly. Benjamin looked stunned, realizing too late he&#39;d squandered his chance to ask something more revealing. Everyone already knew Liam&#39;s feelings for Cassandra. A warm sensation spread through Evelyn&#39;s chest, her heartbeat accelerating as she took an awkward sip of her juice.</p>
                 <p>&#34;Forget it,&#34; Benjamin said shamelessly. &#34;We all know you&#39;re smitten with her. Let me ask something else.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Go ahead,&#34; Liam unexpectedly agreed.</p>
                 <p>Just as Benjamin opened his mouth, Victoria interjected sharply. &#34;If you had to choose between love and your military career, which would you pick?&#34;</p>
                 <p>Liam&#39;s face grew serious. Rosalind and Benjamin exchanged shocked looks before turning back to Liam. The question was clearly designed to trap him.</p>
                 <p>&#34;What kind of question is that?&#34; Rosalind demanded.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Victoria shot her a glare. &#34;There are no restrictions on questions in this game.&#34;</p>
                 <p>&#34;You—&#34; Rosalind sputtered with frustration. She glanced at Evelyn and noticed her grim expression.</p>
                 <p>Liam took a deep breath before downing his drink in one gulp, his chest tightening visibly.</p>
                 <p>Benjamin quickly tried to diffuse the tension. &#34;Let&#39;s change the—&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;No changes,&#34; Victoria insisted firmly. &#34;Answer the question, Liam. Career or love?&#34;</p>
                 <p>Evelyn&#39;s gaze turned icy as she stared at Victoria. &#34;Career,&#34; she stated decisively.</p>
                 <p>Victoria scoffed. &#34;I was asking Liam, not you.&#34;</p>
                 <p>&#34;That&#39;s his answer,&#34; Evelyn countered stubbornly.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;How would you know?&#34; Victoria challenged. &#34;You&#39;re not him.&#34;</p>
                 <p>Evelyn clenched her teeth, recognizing Victoria&#39;s ploy to force Liam to verbally prioritize his career. She took a large gulp of juice to quell the fire burning in her chest.</p>
                 <p>After composing herself, Evelyn continued, &#34;He&#39;s the General of Aldenria&#39;s military - the cornerstone of our nation&#39;s defense and weapons development. National duty outweighs personal feelings. What&#39;s there to question?&#34;</p>
                 <p>Liam gave a bitter smile. &#34;Is that what you truly believe?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Victoria looked astonished. Everyone turned to Liam simultaneously. His eyes darkened with sorrow as he absentmindedly sipped his drink and sighed.</p>
                 <p>When his gaze met Evelyn&#39;s, unshed tears glistened in his eyes. &#34;Any capable soldier could become General of Aldenria. Our nation has no shortage of heroes like Donovan. But there&#39;s only one Cassandra Wright in this world.&#34;</p>
                 <p>Evelyn stood frozen, completely stunned. She&#39;d assumed Liam would naturally choose his career, just as she would have. Rosalind and Benjamin appeared deeply moved by his words.</p>
                 <p>Victoria&#39;s face flushed with anger. &#34;Liam, do you even realize what you&#39;re saying?&#34;</p>
                 <p>Liam remained composed. &#34;I want both my career and love. But if forced to choose, I choose Cassandra.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

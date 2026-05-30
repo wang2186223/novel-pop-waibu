@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,30 +2389,30 @@
                 <p>&#34;Those ridiculous Twitter rumors,&#34; he clarified, glancing over his shoulder.</p>
                 <p>After a brief pause, Evelyn nodded. &#34;Absolutely.&#34; Though the accusations were baseless, they still tarnished her reputation. Worse, they reflected on Alexander. She refused to let him be dragged into this mess.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;How do you plan to handle it? A public statement?&#34;</p>
                 <p>She shook her head. &#34;Denying it outright will only fuel the fire. They want me to engage—to give them more ammunition.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>The public would assume her silence meant guilt. A few might believe her, but what did that matter? Time, reputation—both would be casualties. How could she face her colleagues at Celestia Group after this?</p>
                 <p>As for Dominic and Vanessa, they didn’t need to lift a finger. They could simply pay others to do their dirty work while staying clean. Evelyn had no intention of playing their game.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Then… do you need my help?&#34; Alexander finished washing up, drying his hands meticulously before turning to face her.</p>
                 <p>Evelyn stepped forward as he opened his arms, meeting his embrace willingly. She tilted her head up, meeting his gaze. &#34;If I can’t handle this, what kind of wife would I be for Mr. Kensington?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>A slow smile curved Alexander’s lips. He dipped his head, pressing a soft kiss to her forehead. &#34;You’re the only woman in the world qualified to be my wife.&#34; Whether it was flattery or truth, Evelyn accepted it with a pleased hum.</p>
                 <p>In return, she rose onto her toes, brushing her lips against his. What was meant to be a quick peck quickly escalated—Alexander’s hand cradled the back of her head, his kiss deepening, demanding more.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Meanwhile, Dominic had just wrapped up a meeting in DR Holdings’ executive office. He was adjusting his tie smugly when he spotted Sebastian waiting outside. &#34;Well?&#34; he asked, unable to suppress his triumphant grin.</p>
                 <p>&#34;Ms. Carter declined the settlement offer,&#34; Sebastian reported. &#34;She intends to take you to court.&#34;</p>
                 <p>Dominic froze mid-reach for his coffee. His fingers twitched as if stung. &#34;What did you just say?&#34;</p>
                 <p>&#34;She refused to negotiate privately. She’s prepared for litigation.&#34;</p>
                 <p>Dominic’s smirk faltered. His eyes narrowed. &#34;Does she really think she can win? What new evidence could she possibly have?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

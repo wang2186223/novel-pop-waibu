@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>Despite this, Sharon&#39;s marriage had always been a cold, calculated business arrangement, devoid of any genuine affection or emotional connection.</p>
                 <p>Her sole aspiration had been to bear a son to secure the Barrett family fortune, envisioning a future where she could thrive independently.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>However, she hadn&#39;t foreseen the obstacles her body would pose in conceiving a child.</p>
                 <p>After enduring the arduous process of childbirth and devoting herself to raising her son, she eventually uncovered the devastating truth-her husband had switched him with his mistress&#39;s child. Yet, even upon discovering the truth, Sharon hesitated to speak out.</p>
                 <p>After all, revealing Timothy&#39;s true identity would jeopardize everything she had worked tirelessly to achieve.</p>
                 <p>Consequently, Sharon&#39;s feelings toward Timothy remained entangled in a complex web of emotions.</p>
                 <p>Nonetheless, what truly caught her off guard was the revelation that Timothy had been aware of his background all along.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Reflecting on Timothy&#39;s calm demeanor just moments earlier, Sharon was able to piece together the puzzle.</p>
                 <p>With disdain evident in her voice, she accused, &#34;It was Mia who spilled the beans, wasn&#39;t it?&#34;</p>
                 <p>Standing nearby, Mia was utterly bewildered. What did Sharon mean by implicating her in Timothy&#39;s revelation?</p>
                 <p>After all, she had no inkling of such matters. It was only recently that Timothy had disclosed the truth while explaining Sage&#39;s lineage.</p>
                 <p>Timothy remained composed as he responded, &#34;I only found out about it five years ago.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Does that mean Luna&#39;s husband is your biological brother?&#34; Sharon demanded.</p>
                 <p>Timothy nodded in confirmation. &#34;Yes.&#34;</p>
                 <p>Sharon appeared to buckle under the weight of it all. &#34;This is sheer cruelty. Not only did you rob me of my child&#39;s life, but you also subjected me to the humiliation of raising another woman&#39;s child!&#34; Timothy remained silent, allowing Sharon to release her pent-up anger before calmly stating, &#34;I&#39;ve conducted an investigation. Your child did indeed pass away due to health complications.&#34; &#34;That&#39;s not true! It&#39;s because of all of you that he died!&#34; Sharon accused, her voice tinged with bitterness.</p>
                 <p>&#34;I&#39;ll arrange for someone to escort you to the hospital now,&#34; Timothy intervened calmly.</p>
                 <p>&#34;I refuse to go to the hospital! Why bother? It&#39;s better off dead than living like this. You must be feeling quite pleased with yourself, aren&#39;t you? Sneering at me from within!</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;For all these years, you&#39;ve looked</p>
                 <p>down on me You believed your</p>
                 <p>uncle and the others held me back regarding me as nothing but vain and incompetent, and that I was only capable of flaunting the title of Mrs. Barrett, isn&#39;t that correct?&#34;</p>
                 <p>Timothy&#39;s Adam&#39;s Apple bobbed as he replied, &#34;That&#39;s not true.&#34;</p>
                 <p>&#34;Not true? Do you have the nerve to assert otherwise? Would you treat me in this manner if I were indeed your birth mother?&#34; Sharon challenged.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Unable to restrain her emotions, Sharon&#39;s hand lashed out, delivering a stinging slap to Timothy&#39;s face. &#34;You&#39;re just like your heartless father-a cold-blooded man with no compassion!&#34;</p>
                 <p>Timothy stood unmoving, absorbing the blow without a hint of retaliation, his silence speaking volumes.</p>
                 <p>On the contrary, Mia could no longer</p>
@@ -2348,7 +2428,7 @@
                 <p>&#34;What do you mean he hasn&#39;t mistreated me? If he truly felt remorseful, why didn&#39;t he intervene when his uncle faced trouble? Why did he refuse to comply when asked him to fight for custody of his children? Why did he resist when I urged him to divorce and marry another woman?&#34;</p>
                 <p>&#34;Do you want a biological son, or do you prefer a dog that obeys your every command?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

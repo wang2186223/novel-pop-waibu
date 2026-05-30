@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2316,7 +2396,7 @@
                 <p>The first lesson her master taught her, besides the horse stance, was how to release and retract power at will.</p>
                 <p>If you can&#39;t even control your own strength, wouldn&#39;t you easily injure ordinary people when fighting them?</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Leo narrowed his eyes. &#34;But it&#39;s easy to get carried away in a fight. If Miss Ross is afraid, you can just admit defeat directly.&#34;</p>
                 <p>Evelyn gave a light laugh and didn&#39;t respond.</p>
                 <p>Grace said urgently, &#34;Maybe just admit defeat first! The important matter comes first! Afterwards, we can say you didn&#39;t want to bully the younger...&#34;</p>
@@ -2338,7 +2418,7 @@
                 <p>The two arrived at the door of Deputy Director Wright&#39;s office.</p>
                 <p>Grace knocked on the door and walked in with Evelyn.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Deputy Director Wright looked up and saw Evelyn, his brow furrowing. &#34;Why are you here?&#34;</p>
                 <p>Grace spoke first. &#34;She&#39;s an inner disciple of the Cortez Sect and also a registered member of the department. I don&#39;t know martial arts, so I brought her to assist with the case.&#34;</p>
                 <p>Deputy Director Wright was about to say something else, but Grace cut straight to the point. &#34;You called me here about Nicole Sterling&#39;s case? What&#39;s the specific situation?&#34;</p>
@@ -2349,7 +2429,7 @@
                 <p>Deputy Director Wright continued. &#34;The case involves international crime. We&#39;ve already contacted Interpol. They&#39;re requesting to take her away and handle the domestic and international cases together.&#34;</p>
                 <p>Evelyn and Grace exchanged a look.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>They understood instantly.</p>
                 <p>This was Fox&#39;s &#34;rescue&#34; method.</p>
                 <p>Nicole Sterling actively took on major international crimes, drawing in the intervention of international departments.</p>
@@ -2360,7 +2440,7 @@
                 <p>Otherwise, the case couldn&#39;t have been reported so quickly.</p>
                 <p>If they had just held it back a little, Nicole Sterling wouldn&#39;t have been able to escape.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>She had suspected Deputy Director Wright and Leo were the moles, but upon further thought, it seemed impossible.</p>
                 <p>For these two to hold their positions, their backgrounds must have withstood scrutiny.</p>
                 <p>That was precisely why she had hidden her identity as the First Senior Sister, keeping it as a backup plan.</p>
@@ -2375,7 +2455,7 @@
                 <p>Evelyn lowered her gaze, a cold curve lifting the corner of her lips.</p>
                 <p>&#34;Then let&#39;s see if they can really take her away.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

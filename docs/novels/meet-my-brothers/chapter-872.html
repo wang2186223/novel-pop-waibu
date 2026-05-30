@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,12 +2390,12 @@
                 <p>Given his experience as a lawyer, Jason had encountered many divorce cases before, giving him a good understanding of men&#39;s thoughts in such situations.</p>
                 <p>Throughout this time, Timothy brazenly lingered in Nord City, adamantly refusing to depart from Mia&#39;s side. He even insisted that he wouldn&#39;t leave until Ginger had fully recovered.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Nonetheless, his true intentions remained hidden. Behind the scenes, he could be scheming to secure custody of Ginger.</p>
                 <p>Despite this, Ginger and Sage rightfully belonged to the Lane family, and their custody was not up for grabs.</p>
                 <p>As Timothy steadied himself against the wall, he met the gaze of the Lane family with a steely resolve. “I have no intention of contesting custody of Ginger,&#34; he asserted firmly. &#34;You have my word on that.”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Yet, beneath his outwardly reassuring words, there was a dual implication. Timothy&#39;s desire for custody of Ginger was intertwined with his longing for Mia to return to him.</p>
                 <p>In his heart, he yearned for the restoration of his family—his wife and his child.</p>
                 <p>However, Timothy wisely kept those thoughts to himself, knowing that expressing them aloud could lead to dire consequences.</p>
@@ -2325,7 +2405,7 @@
                 <p>“If I allow you to take custody of Ginger, then what was the point of being a lawyer all these years?&#34;</p>
                 <p>To preempt any potential custody battles from Timothy in the future, Jason had already made thorough preparations since Ginger and Sage were born.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Therefore, Timothy didn&#39;t stand a chance, not even the slightest opportunity.</p>
                 <p>Observing Timothy&#39;s attire, Connor felt puzzled. He turned to Peyton and asked, &#34;Wasn&#39;t there a recent scandal involving a bodyguard and Mia? Could it be him?&#34;</p>
                 <p>Peyton reluctantly nodded in response.</p>
@@ -2340,7 +2420,7 @@
                 <p>&#34;Seriously, do you want to end up dead? Don&#39;t assume I won&#39;t take action. Keep in mind, this is Nord City, and I have plenty of ways to make you disappear without a trace.&#34;</p>
                 <p>In a burst of anger, Connor abruptly grabbed a surgical knife and swung it toward Timothy...</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

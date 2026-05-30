@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2315,7 +2395,7 @@
                 <p>After completing their meal, Mia couldn’t help but feel a sense of contentment and happiness.</p>
                 <p>She genuinely cherished the opportunity to be with her family.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>With a baby on the way, she envisioned their home becoming even more vibrant.</p>
                 <p>Upon resolving affairs here, Mia planned to return to Nord City to give birth and subsequently</p>
                 <p>settle down there.</p>
@@ -2325,7 +2405,7 @@
                 <p>it a night.”</p>
                 <p>His primary concern was ensuring that his pregnant sister could rest undisturbed.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>The six brothers discuss later in the evening.</p>
                 <p>departed together, as they still had matters related to Maya to</p>
                 <p>Once they left, the living room swiftly resumed its quiet ambiance.</p>
@@ -2335,7 +2415,7 @@
                 <p>+15 BONOS</p>
                 <p>“Your brothers covered Uncle James’s medical expenses for ten years, didn’t they? Take this money and manage your finances wisely, you can use it to start a business or save it in a fixed</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>deposit.</p>
                 <p>“I’m afraid I might get confused dealing with such a sum. Even my maternal family is aware of the compensation money now, and they’ve been calling, urging me to return for a reunion,” Patricial explained.</p>
                 <p>Mia was well aware of Patricia’s maternal family’s character.</p>
@@ -2345,7 +2425,7 @@
                 <p>Despite accepting the money on Patricia’s behalf, Mia had plans to utilize it for Patricia’s</p>
                 <p>retirement.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>After washing up in the evening. Mia lay in bed, gently touching her lower abdomen. It seemed that her belly had started to show a slight bump.</p>
                 <p>Just then, her phone rang–it was a call from Felix.</p>
                 <p>Recalling her evasive departure in the afternoon, Mia felt a pang of guilt as she answered the</p>
@@ -2355,7 +2435,7 @@
                 <p>Upon hearing this, Mia felt an even deeper sense of remorse. “I’m sorry. I was supposed to work overtime with you guys today.”</p>
                 <p>“No worries. You had family matters to attend to, and we completely understand.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>“By the way, news has spread among our colleagues that the demolition compensation from your old neighborhood is turning you into a wealthy woman.</p>
                 <p>“Don’t forget to treat everyone to a meal!” Felix teased.</p>
                 <p>Mia chuckled with a hint of helplessness. “Sure thing.”</p>
@@ -2368,7 +2448,7 @@
                 <p>“Mia, don’t you want to come?” Felix inquired.</p>
                 <p>Upon hearing Felix’s voice, Mia hesitated briefly before responding. “Felix, I believe you’ve all done a fantastic job with the arrangements. Tomorrow, I’ll just be on duty at the studio.”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

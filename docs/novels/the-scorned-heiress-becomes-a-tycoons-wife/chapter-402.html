@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>What a shame to lose such a lucrative client like Emily.</p>
                 <p>She had always been generous—whether funding smear campaigns against rivals or promoting herself.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Just as netizens were speculating about the culprit, Summit News released an official statement.</p>
                 <p>#Summit News: We sincerely apologize to Ms. Sophia Laurent for publishing falsified footage.#</p>
                 <p>The announcement stunned the internet.</p>
@@ -2321,7 +2401,7 @@
                 <p>This outlet had a notorious reputation but had never issued retractions before.</p>
                 <p>Alexander Valdemar must have intervened! That&#39;s the Valdemar power!</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Amid the chatter, Summit News dropped another bombshell.</p>
                 <p>#Summit News: We were misled and hope for your understanding!#</p>
                 <p>Attached were screenshots of conversations with Emily&#39;s assistant, Chloe Preston.</p>
@@ -2329,7 +2409,7 @@
                 <p>Isn&#39;t this Emily Lowell&#39;s assistant?</p>
                 <p>I recognize that profile picture! She once posted photos with Emily!</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>So Emily orchestrated the smear campaign against Sophia?</p>
                 <p>The speculation exploded across social media.</p>
                 <p>Don&#39;t jump to conclusions! Plenty of people share names and profile pictures! Even if the assistant was involved, it doesn&#39;t prove Emily&#39;s involvement...</p>
@@ -2337,7 +2417,7 @@
                 <p>Netizens who had previously attacked Sophia now flooded Emily&#39;s social media accounts demanding answers.</p>
                 <p>At the Lowell estate...</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Emily had just finished comforting Victoria Lowell and retreated to her room.</p>
                 <p>She had intended to relish Sophia&#39;s online humiliation.</p>
                 <p>But the moment she unlocked her phone, her inbox exploded.</p>
@@ -2345,7 +2425,7 @@
                 <p>All that innocence and kindness was just an act!</p>
                 <p>Clear your name quickly! This has nothing to do with you!</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>...</p>
                 <p>Emily stared at the messages, momentarily stunned.</p>
                 <p>When she discovered Summit News&#39;s betrayal, her entire body went rigid.</p>
@@ -2354,7 +2434,7 @@
                 <p>Stumbling to her computer, Emily pulled up the surveillance footage copied from the hotel.</p>
                 <p>This time, she watched every second without skipping.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

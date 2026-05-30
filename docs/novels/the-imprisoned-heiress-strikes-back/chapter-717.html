@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2316,7 +2396,7 @@
                 <p>Disgust twisted Ethan’s features. &#34;You’re shameless! How are our families supposed to coexist now? What about Vanessa?&#34;</p>
                 <p>Vanessa’s position in the Hayes family had always been precarious. This scandal would only make things worse.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Ethan had no idea how she would face the Hayes family after this.</p>
                 <p>Evelyn Carter would despise her even more. Shame burned through him.</p>
                 <p>&#34;Get out!&#34; Ethan roared at Evelyn Sinclair. &#34;Don’t ever show your face near us again! This is all your doing!&#34;</p>
@@ -2327,7 +2407,7 @@
                 <p>But her presence only darkened the mood.</p>
                 <p>The sight of her enraged Evelyn Carter. Without waiting for Vanessa to be wheeled out, she stood abruptly.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>When Vincent didn’t move, she shot him a venomous glare. &#34;Why are you still here?&#34;</p>
                 <p>Afraid of provoking her further, Vincent hastily followed her out.</p>
                 <p>It struck him then—he’d been played for years. He’d actually believed Evelyn Sinclair was pure before him.</p>
@@ -2338,7 +2418,7 @@
                 <p>The thought that Vanessa was her daughter made his skin crawl. He couldn’t even look at her without nausea rising in his throat.</p>
                 <p>His expression darkened. With one last scathing look at Evelyn Sinclair, he turned to leave.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>She lunged forward, grabbing his arm. &#34;Ethan, Vanessa is your daughter too! She’s in labor—how can you just—&#34;</p>
                 <p>His voice was glacial. &#34;Daughter? Vanessa isn’t my only child.&#34;</p>
                 <p>&#34;Ethan!&#34;</p>
@@ -2349,7 +2429,7 @@
                 <p>Then this disaster struck.</p>
                 <p>Seeing Alexander still there, Evelyn Sinclair pleaded, &#34;Mr. Whitmore, this is my fault. Please don’t take it out on Vanessa. She’s innocent.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Alexander’s gaze was frigid. &#34;Innocent? How?&#34;</p>
                 <p>Evelyn Sinclair pressed on. &#34;Vanessa has loved only you all these years. That kind of devotion is rare. Shouldn’t you cherish her?&#34;</p>
                 <p>Alexander scoffed. &#34;So?&#34;</p>
@@ -2360,7 +2440,7 @@
                 <p>If not for Eleanor’s objections, he would’ve divorced her long ago. This child wouldn’t exist.</p>
                 <p>Evelyn Sinclair lunged as he turned to leave.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The others could go, but Alexander was Vanessa’s husband!</p>
                 <p>She couldn’t let him abandon her now.</p>
                 <p>But two bodyguards blocked her path.</p>
@@ -2375,7 +2455,7 @@
                 <p>The injustice of it shattered her. Tears spilled over.</p>
                 <p>The silence was deafening.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

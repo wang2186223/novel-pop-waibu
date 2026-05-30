@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,21 +2392,21 @@
                 <p>Eyes scanning every inch of the luxurious house, Lainey Flynn wasted no time assessing her surroundings.No matter how often she visited, each time, the decor left her awestruck, the greed in her eyes evident.</p>
                 <p>A beaming smile stretched across Lainey&#39;s face when she heard movement. The moment she realized it was Janessa, her expression twisted into a sneer, and she snapped, &#34;I should be the one asking that question!Why are you here?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Janessa couldn&#39;t quite shake her fear of Lainey.</p>
                 <p>Years ago, when her affair with Ricky had come to light, Lainey had found her at her home and dragged her to the street to beat her up, humiliating her for Katrina&#39;s sake.</p>
                 <p>Janessa&#39;s heart was filled with resentment towards Lainey when she thought about that. Careful not to disturb Ricky, who was still sleeping upstairs, Janessa said in a gentle tone, &#34;Lainey, please,let&#39;s not argue. Ricky and I have been married for a long time. We&#39;re family now.&#34;</p>
                 <p>Lainey scoffed, &#34;Married or not, you&#39;re nothing but a mistress who clawed her way up. Don&#39;t get comfortable-one day, some younger woman will take your place. My son could have anyone he wants with all his money.&#34;</p>
                 <p>Anger flared behind Janessa&#39;s polite facade, but she held back. She knew she needed to uncover Lainey&#39;s reason for coming here.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Forcing a faint smile, she asked, &#34;So, Lainey, what brings you here so suddenly?&#34;</p>
                 <p>&#34;Oh, it&#39;s simple. My son invited me here and wanted me to enjoy a little luxury.&#34;</p>
                 <p>Seeing Lainey&#39;s smug expression, Janessa didn&#39;t believe a single word she had just said.</p>
                 <p>After more than twenty years being with Ricky, she knew the tangled relationships in the Flynn family better than anyone.</p>
                 <p>Lainey&#39;s favoritism had always been reserved for her younger son; she had barely tolerated Ricky until wealth changed her attitude toward him.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Despite her thoughts, Janessa kept up her hospitalty, signaling the staff to start preparing breakfast for Lainey.</p>
                 <p>Displeasure flickered across Lainey&#39;s face as she eyed the simple breakfast.&#34;Milk and bread won&#39;t do.l want porridge to start my day.&#34;</p>
                 <p>Janessa cursed at Lainey inwardly, but she still turned to the servant and told them to prepare the dish.</p>
@@ -2340,7 +2420,7 @@
                 <p>Lainey&#39;s taunting brought those old wounds to the surface. Not finished yet, she kept digging. &#34;You&#39;ll never be like Katrina-a real lady from a wealthy family, who never needed to cook anything herself. Why put on an act like that?&#34;</p>
                 <p>Mentioning Katrina felt like a stab to Janessa&#39;s heart, but she could only swallow her hurt for Ricky&#39;s sake and quietly head toward the kitchen.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Complaints poured from Lainey the whole meal. Janessa&#39;s frustration eventually boiled over, and she abandoned the table, storming up the stairs.</p>
                 <p>Ricky, still deep in sleep, woke to Janessa&#39;s insistent shaking. He glared at her.&#34;Why are you waking me up at this hour...Wait,what happened?&#34;</p>
                 <p>The sight of Janessa&#39;s tear-filled eyes startled him into sitting up.</p>
@@ -2349,7 +2429,7 @@
                 <p>Seeing his puzzled expression, Janessa filled him in on everything that had happened. After that, she asked, &#34;You were really not the one who asked your mother to come here?&#34;</p>
                 <p>&#34;Absolutely not. Why would I do that?&#34; Ricky replied.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

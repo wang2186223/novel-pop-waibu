@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2317,7 +2397,7 @@
                 <p>&#34;Or you&#39;ll grant my divorce request without conditions next time.&#34; Her voice wavered on the dreaded word, her pulse hammering.</p>
                 <p>Having made her demand, she fled to the dressing room, her hands fumbling with the buttons of her nightgown.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>When Liam emerged from the bathroom, steam curling around his damp frame, he found the dressing room door firmly closed.</p>
                 <p>Without hesitation, he retrieved pen and paper from the nightstand and settled into the wicker chair on the balcony. The scratching of pen against paper filled the morning air.</p>
                 <p>Evelyn emerged later, her hair neatly braided, wearing a simple linen dress. At the same moment, Liam reentered from the balcony, extending a folded sheet toward her.</p>
@@ -2329,13 +2409,13 @@
                 <p>A ghost of amusement touched his lips. &#34;Grandmother calls you that.&#34;</p>
                 <p>He wasn&#39;t wrong. She studied the document again, tracing the bold signature at the bottom.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Yet Liam remained distant, his usual reticence more pronounced than ever. Even his written promise was characteristically blunt and to the point.</p>
                 <p>Folding the paper carefully, she tucked it into her pocket, the weight of her grievances lifting. Once again, she&#39;d surrendered her principles for him.</p>
                 <p>Since he&#39;d complied with her demand, she softened. &#34;Let&#39;s go down for breakfast,&#34; she offered quietly.</p>
                 <p>He stepped closer, studying her face. &#34;You&#39;re not angry anymore?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>She nodded, avoiding his piercing gaze. &#34;We should go before the food gets cold.&#34;</p>
                 <p>As she turned toward the door, his arm shot out, catching her waist. In one fluid motion, he pinned her against the wall, caging her between his arms.</p>
                 <p>Her breath hitched as she stared up at him, wide-eyed. &#34;Liam, what—&#34;</p>
@@ -2343,7 +2423,7 @@
                 <p>Before she could protest, his mouth crashed down on hers in a searing kiss that stole her breath.</p>
                 <p>&#34;Mmph!&#34; The startled sound was swallowed by his demanding lips as he kissed her with barely restrained intensity.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

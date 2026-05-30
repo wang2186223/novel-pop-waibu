@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,7 +2391,7 @@
                 <p>A triumphant smile played on Maya’s lips. Visibly touched, she took Dana’s hand and cried, “Is it really</p>
                 <p>you? You have no idea how delighted I am!</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>“It’s been years since we last met, and we’ve all changed. If it wasn’t for the piano piece, I wouldn’t have recognized you.”</p>
                 <p>Dana forced a smile. “Yeah, we all look different when we grow up, don’t we?”</p>
                 <p>It was about time for Maya to throw in the question. “Oh yeah, how did Mia know that piece as well?”</p>
@@ -2323,19 +2403,19 @@
                 <p>Sweat began to clad Dana’s forehead as guilt overwhelmed her. In a hurry to come up with a shoddy excuse, she blurted, “Maybe. I can’t really remember. But Mia doesn’t remember anything either.</p>
                 <p>“She fell sick when she was.a child, and she couldn’t remember anything from the orphanage.”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>“Did she really forget everything?”</p>
                 <p>Maya finally knew why Connor and the Lane cousins didn’t discover Mia’s identity despite having spent so much time with her. She had lost her memory.</p>
                 <p>Even God was helping Maya. She could barely contain her glee. So, it turned out that Mia had forgotten everything that happened at the orphanage.</p>
                 <p>Dana probed cautiously, “Ms. Lane, if you don’t believe me, you can ask Mia.”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>“No need for that. Of course, I trust you. You’re the friend I trusted most when I was a kid, after all.”</p>
                 <p>Holding Dana’s hand suddenly reminded Maya of the way she used to hold Mia’s hand. She looked like a doll back then, and she remembered telling her that they were best friends.</p>
                 <p>Indeed, her best friend had given her a glamorous life.</p>
                 <p>A weight had been lifted off Maya’s chest. As long as Mia couldn’t remember what happened at the orphanage, the Lane family wouldn’t know she was the real daughter of their family.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>She found Connor to be too nice to Mia, though. Was this because they were cousins?</p>
                 <p>This thought plunged her into a state of unease. Why couldn’t Mia just disappear forever?</p>
                 <p>It was already absurd enough for her to marry Timothy three years ago when he was still in an induced coma. She risked marrying a man who would be dead anytime.</p>
@@ -2344,7 +2424,7 @@
                 <p>from now on, okay?</p>
                 <p>“If you need anything, don’t hesitate to let my assistant know. He’ll sort it out for you.”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

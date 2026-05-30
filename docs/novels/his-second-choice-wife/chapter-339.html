@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>Her heart shattered.</p>
                 <p>If she admitted she loved him but refused anyway, he wouldn&#39;t let it go. He&#39;d dig deeper, unraveling the truth she couldn&#39;t afford to reveal.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Tears spilled freely as she forced her voice steady. &#34;I don&#39;t love you. And we can&#39;t be together.&#34;</p>
                 <p>Liam went rigid, agony ripping through him. A bitter smile twisted his lips, his eyes reddening with unshed tears.</p>
                 <p>The pain in his chest eclipsed everything else—worse than any wound, any battle scar. Slowly, he pulled away.</p>
                 <p>Evelyn reached for him, fingers brushing his jaw as she met his devastated gaze. The sorrow there nearly broke her.</p>
                 <p>Her voice trembled. &#34;Liam... I&#39;m willing.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Bracing a hand on the bed, Liam gently caught her wrist with the other, studying her from above. &#34;Willing to do what?&#34;</p>
                 <p>&#34;To sleep with you.&#34; The admission came without shame. But seeing the fresh wave of hurt in his eyes, her own heart ached in response.</p>
                 <p>Liam exhaled sharply, his smile strained as he brushed a thumb over her cheek. &#34;Don&#39;t be ridiculous,&#34; he murmured before pushing off the bed and striding toward the bathroom.</p>
                 <p>The moment the door clicked shut, the warmth of his presence vanished, leaving only a hollow ache in her chest.</p>
                 <p>She lay there, silent tears slipping down her temples, dampening her hair.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>He had wanted to propose before taking things further.</p>
                 <p>Even now, rejected, he refused to claim her body when he couldn&#39;t have her heart.</p>
                 <p>The thought carved deeper into her soul, stealing her breath. Wiping her face, she sat up, the weight of her decision crushing. She couldn&#39;t bear to see him in pain any longer.</p>
                 <p>Looking back, she regretted not realizing Liam&#39;s feelings for her years ago. When she left Aldenria, she had severed all ties, never considering the scars she left behind.</p>
                 <p>She wouldn&#39;t make that mistake again.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>She wouldn&#39;t give him false hope, only to disappear once more.</p>
                 <p>The next time she left, it might be for years.</p>
                 <p>Or forever.</p>
                 <p>Stepping out of Liam&#39;s room, Evelyn felt the weight of sorrow settle over her like a shroud.</p>
                 <p>She had no idea of the torment Liam endured that night—whether physical or emotional, it consumed him.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Yet the next morning, he was composed.</p>
                 <p>Despite her rejection, Liam treated her with the same quiet gentleness, holding no resentment.</p>
                 <p>He didn&#39;t pursue her with jewels or grand gestures, with lavish gifts or empty promises.</p>
@@ -2352,7 +2432,7 @@
                 <p>While Evelyn remained wary of Victoria&#39;s next move, Rosalind delivered devastating news.</p>
                 <p>&#34;Evelyn... Victoria is getting married.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

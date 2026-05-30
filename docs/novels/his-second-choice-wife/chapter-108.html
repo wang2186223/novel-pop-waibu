@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2315,12 +2395,12 @@
                 <p>Liam&#39;s glacial stare pinned Beatrice in place, though she attempted nonchalance. &#34;I-I&#39;m just speaking truths!&#34;</p>
                 <p>With a frustrated exhale, Liam threaded his fingers through Evelyn&#39;s. &#34;We&#39;re leaving.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Evelyn shook her head minutely. Fleeing would only validate Beatrice&#39;s accusations. She needed to stand her ground.</p>
                 <p>Liam read her hesitation and reluctantly sat, though tension radiated from him like heat waves. The room collectively held its breath - even Richard and Eleanor knew better than to provoke their son further.</p>
                 <p>Beatrice, sensing the shift, adopted a new tactic. &#34;Genevieve graduated from Cambridge with honors in Fine Arts. Her designs have won international acclaim. Tell me, Evelyn, where did you study?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The question hung like a guillotine. Evelyn&#39;s nails bit into her palms. She recognized this game - the subtle undermining disguised as polite inquiry.</p>
                 <p>Before Liam could erupt, rapid footsteps echoed through the grand hall.</p>
                 <p>Cassandra Blake burst in, clutching a rectangular package. &#34;Gregory! Help me with this,&#34; she commanded her husband.</p>
@@ -2330,12 +2410,12 @@
                 <p>Gasps filled the room as the signature &#34;Isabella Grayson&#34; became visible in the corner.</p>
                 <p>&#34;Beatrice,&#34; Cassandra announced triumphantly, &#34;meet Inkwell - the philanthropic artist whose works sell for millions. This piece would&#39;ve fetched seven figures if not for the corner damage.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Beatrice&#39;s jaw dropped. Genevieve&#39;s perfect complexion paled.</p>
                 <p>Isabella shot to her feet. &#34;Cassandra, this is absurd! Another forgery, just like Victoria Dawson gave Vera!&#34;</p>
                 <p>The air crackled with tension as all eyes swung between the disputed masterpiece and its alleged creator. Evelyn stood very still, her pulse hammering - the truth of her identity balanced on a knife&#39;s edge.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

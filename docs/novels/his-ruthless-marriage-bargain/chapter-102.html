@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,15 +2389,15 @@
                 <p>Lucien remained indifferent to their attempts at flattery. &#34;Ms. Sinclair once did me a favor. Now it’s my turn to return it. I’ll do what I promised.&#34;</p>
                 <p>Dominic nodded eagerly. &#34;Of course! This must be nothing for someone of your caliber, Mr. Dubois. Regardless, we truly appreciate your help.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Lucien took a slow sip of wine before lifting his gaze. His eyes lingered on Vanessa’s face, scrutinizing every feature—from the curve of her forehead to the sharpness of her chin.</p>
                 <p>Dominic bristled at the blatant appraisal but held his tongue. He couldn’t afford to offend the man who held their company’s fate in his hands.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;You’re a perfumer as well?&#34; Lucien asked, his tone cool.</p>
                 <p>Vanessa blinked, caught off guard, then nodded quickly. &#34;Yes, I am! Though I’m nowhere near your level, of course. You’re the master—I’m just an amateur in comparison.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>She forced a smile, trying to sound as humble as possible.</p>
                 <p>&#34;Didn’t you win a few awards? Created some popular fragrances?&#34; Lucien swirled his wine, his voice laced with disinterest.</p>
                 <!-- 广告位 4 -->
@@ -2325,13 +2405,13 @@
                 <p>Vanessa hesitated, glancing at Dominic, who looked just as confused as she was. &#34;I suppose I got lucky. There’s still so much I need to learn—especially from someone like you.&#34;</p>
                 <p>&#34;Lucky?&#34; Lucien let out a dry chuckle, his tone edged with mockery. &#34;In this industry, some have talent. Some have relentless drive. Some are given opportunities. But no one gets lucky.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Vanessa’s cheeks burned. &#34;Well…&#34;</p>
                 <p>&#34;You call yourself experienced, yet you can’t even distinguish the nuances in the formula?&#34;</p>
                 <p>His words were sharp, his gaze dissecting her every reaction. Vanessa shifted uncomfortably, her fingers tightening around her glass.</p>
                 <p>Biting her lip, she muttered, &#34;Mr. Dubois, it’s not that I can’t tell the difference—it’s Evelyn Carter. She’s just too cunning!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

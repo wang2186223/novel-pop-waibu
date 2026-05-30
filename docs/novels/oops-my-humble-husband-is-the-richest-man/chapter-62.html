@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2321,7 +2401,7 @@
                 <p>He quickly changed the subject. &#34;Boss, you still have a meeting with President Roland about the project.&#34;</p>
                 <p>&#34;Mm.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Alexander didn&#39;t continue the topic and led Thomas to the top floor.</p>
                 <p>At the elevator entrance, Isabella Ashcroft was clutching Julian Evans&#39;s arm, pleading. &#34;Julian, I really didn&#39;t know what was happening. Evelyn must have hidden her identity on purpose to mock me...&#34;</p>
                 <p>Julian pushed her away, disgusted. &#34;Isabella, she&#39;s not that kind of person. I know her from four years of university. I suspect Dr. Nan never actually agreed to be a technical consultant for the Vance Group, did she?&#34;</p>
@@ -2337,7 +2417,7 @@
                 <p>Ryan nodded slightly, polite yet distant. &#34;So you&#39;re the young Mr. Evans. I have business with your Mr. Vance.&#34;</p>
                 <p>Julian awkwardly stepped aside. &#34;Please go ahead...&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Suddenly, a surprised voice spoke.</p>
                 <p>&#34;You... are Ryan Roland?&#34;</p>
                 <p>They turned to see Isabella looking shocked.</p>
@@ -2353,7 +2433,7 @@
                 <p>But if Julian was the fiancé of his sister&#39;s benefactor... he had to help.</p>
                 <p>After all, the Roland family owed their benefactor a life!</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Julian was flattered.</p>
                 <p>Without Dr. Nan, his position in R&amp;D was awkward.</p>
                 <p>The Rolands were a powerful family from New York. Ryan personally inviting him to participate in the collaboration would significantly boost his standing in the company!</p>
@@ -2369,7 +2449,7 @@
                 <p>After sending it, she realized something was wrong. Since when did she have a fiancé?</p>
                 <p>&#34;Dr. Nan, you graduated from San Francisco University. You understand our teaching philosophy. We sincerely invite you to return as a faculty member...&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>The Vice President was earnest. &#34;Please consider it.&#34;</p>
                 <p>Evelyn looked up, tired of pleasantries. She said directly, &#34;I was planning to accept, as Professor Lowell mentored me. But now he&#39;s suspended, and I heard his graduate students are being treated unfairly.&#34;</p>
                 <p>The Dean&#39;s face stiffened. &#34;Dr. Nan, that&#39;s a misunderstanding... I didn&#39;t know you were Dr. Nan...&#34;</p>
@@ -2405,7 +2485,7 @@
                 <p>Just then, James&#39;s phone rang.</p>
                 <p>He answered. A voice came through: &#34;James, about that secret regarding the boss&#39;s uncle, Leo Lowell, that she wanted investigated... I found something!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,19 +2391,19 @@
                 <p>Enraged, Connor prepared to strike again, but Jason intervened. &#34;Connor, why don&#39;t you go check on Mia&#39;s condition? I&#39;ll handle this.&#34; Even if they wanted to destroy Timothy, now wasn&#39;t the right moment to do so.</p>
                 <p>Upon hearing Mia&#39;s name, Connor reluctantly put away the surgical knife. With one final glare at Timothy, he warned, &#34;Consider yourself lucky today. But don&#39;t think you&#39;ll escape next time.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>After Connor left, Jason fixed a cold stare on the disheveled Timothy standing before him. &#34;Speak up. What are your true intentions?&#34;</p>
                 <p>“I&#39;ve already told you.&#34;</p>
                 <p>&#34;We&#39;re all sensible people here, so I trust you&#39;ll be equally astute in this matter. Mia is now the heiress of the Lane family, and Ginger is invaluable to us. You should understand that Mia is no longer the</p>
                 <p>vulnerable orphan who could be intimidated by your family.”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Jason&#39;s voice dripped with mockery as he reminded Timothy of his family&#39;s mistreatment of Mia in the past.</p>
                 <p>Lowering his eyes, Timothy admitted, &#34;I understand. I just want to make things right now.&#34;</p>
                 <p>&#34;How virtuous of you, Barrett,&#34; Jason retorted sarcastically. &#34;But what can you possibly offer to make amends? Mia has everything she desires now. What makes you think you have anything worthwhile to contribute?</p>
                 <p>&#34;Where were you when she suffered at the hands of your family, or when she almost died giving birth? Could you endure the suffering she went through? Obviously not.”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>It was clear that Timothy couldn&#39;t possibly make it up to Mia.</p>
                 <p>A flicker of guilt crossed Timothy&#39;s face. &#34;I was unaware of all this back then. If you hadn&#39;t staged her death and taken her away, I wouldn&#39;t have been absent for so long.”</p>
                 <p>&#34;Enough with the excuses. Why didn&#39;t you take action sooner? Weren&#39;t you the one who suggested divorce back then? Your interest only sparked when we finally located her. But let me make it clear—it&#39;s too late!&#34;</p>
@@ -2335,7 +2415,7 @@
                 <p>Peyton approached Timothy with a sense of unease and said, &#34;Mr. Barrett, please don&#39;t make this harder for everyone. Your presence here might hinder Ms. Mia&#39;s recovery.&#34;</p>
                 <p>&#34;Fine, I&#39;ll leave. But I&#39;ll wait outside the hospital. Make sure to keep me updated on her progress.”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Alright.&#34;</p>
                 <p>After Peyton agreed, Timothy promptly left the hospital. He understood that lingering there wouldn&#39;t bring him any closer to Mia.</p>
                 <p>But he wasn&#39;t ready to give up.</p>
@@ -2344,7 +2424,7 @@
                 <p>However, rumors circulated that she had gotten married and even had children, only to later divorce her reprehensible ex-husband.</p>
                 <p>Some even alleged that her ex-husband was a lowlife who mistreated Mia, and it was only thanks to her family&#39;s intervention that she was able to escape him.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

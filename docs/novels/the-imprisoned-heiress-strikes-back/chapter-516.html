@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>Panicked she might refuse, Ethan quickly claimed Evelyn was his aunt...</p>
                 <p>The medical staff, assuming family relations, wouldn&#39;t let her leave, whisking them both away.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Before departing, Dominic gave them a loaded look.</p>
                 <p>Cigarette dangling from his lips, he leaned out the window with dangerous nonchalance.</p>
                 <p>&#34;Darling, remember your promise. I&#39;ll be waiting for your visit!&#34;</p>
@@ -2321,7 +2401,7 @@
                 <p>The Rolls-Royce bore a massive dent from the collision, making Dominic appear even more sinister as he called Evelyn &#34;Darling.&#34;</p>
                 <p>The intimate term set off alarm bells in Ethan&#39;s mind.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>As the damaged luxury car disappeared down the street, Ethan frowned.</p>
                 <p>&#34;Evelyn, what exactly did you promise Dominic?&#34;</p>
                 <p>&#34;Did you bargain with him to save me?&#34;</p>
@@ -2329,7 +2409,7 @@
                 <p>During the dragging incident, Ethan had heard Evelyn pleading with Dominic but couldn&#39;t make out specifics.</p>
                 <p>The thought of her making deals with that devil for his sake sickened him.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>He wouldn&#39;t allow Evelyn to suffer on his account.</p>
                 <p>City lights blurred past the ambulance windows as Ethan reached for Evelyn&#39;s hand. She pulled away.</p>
                 <p>&#34;Stop deluding yourself, Ethan. I didn&#39;t negotiate with him for you.&#34;</p>
@@ -2337,7 +2417,7 @@
                 <p>Even without Ethan, she&#39;d have agreed to treat Dominic&#39;s leg - he&#39;d saved her life by intercepting that speeding car. But Ethan refused to believe this.</p>
                 <p>Hope shone in his eyes as he studied her.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>He interpreted Evelyn&#39;s denial as protecting him from guilt!</p>
                 <p>After all, dealing with the infamous Dominic Powell was no small sacrifice.</p>
                 <p>Clearly, she still cared deeply!</p>
@@ -2358,7 +2438,7 @@
                 <p>And in that wheelchair sat a frail, pale woman.</p>
                 <p>Isabella Morgan.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

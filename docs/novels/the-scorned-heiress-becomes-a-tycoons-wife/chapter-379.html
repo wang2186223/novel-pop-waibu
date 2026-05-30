@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,42 +2392,42 @@
                 <p>&#34;That&#39;s unnecessary!&#34; Sophia quickly refused. &#34;I can handle this myself.&#34;</p>
                 <p>She bit her lower lip. &#34;It&#39;s just... the divorce can&#39;t be kept secret anymore...&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Before she could finish, footsteps sounded at the door.</p>
                 <p>Sophia looked up to see Alexander&#39;s tall frame already standing before her.</p>
                 <p>The man wore an impeccably tailored black suit, his slender fingers still holding the phone to his ear.</p>
                 <p>Their eyes met, and Sophia&#39;s breath caught.</p>
                 <p>She hadn&#39;t expected his &#34;coming over&#34; to mean literally this second.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Sophia.&#34; Ethan&#39;s voice broke the silence. &#34;We need to talk.&#34;</p>
                 <p>Sophia averted her gaze, her tone cold. &#34;There&#39;s nothing to discuss.&#34;</p>
                 <p>&#34;What about the child?&#34; Ethan took a deep breath. &#34;Isn&#39;t that worth talking about?&#34;</p>
                 <p>Sophia&#39;s eyes darkened. &#34;No.&#34;</p>
                 <p>&#34;This child belongs only to me. It has nothing to do with you.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>She intended to draw a clear line.</p>
                 <p>But then Ethan&#39;s eyes lit up. &#34;How could it not involve me?&#34;</p>
                 <p>From her words, he became certain something had indeed happened after that Met Gala Afterparty.</p>
                 <p>He&#39;d just been too drunk to remember.</p>
                 <p>The thought made the corners of his mouth lift uncontrollably. &#34;Sophia, the child is mine, isn&#39;t it?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;I promise to treat you both well. I&#39;ll never hurt you again.&#34;</p>
                 <p>Sophia&#39;s expression turned even colder at his joyful demeanor. &#34;No need.&#34;</p>
                 <p>&#34;If you insist on bothering me because of this child, I&#39;d rather not have it.&#34;</p>
                 <p>Ethan&#39;s smile froze.</p>
                 <p>It suddenly occurred to him—the gala had been three months ago.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Even if she were pregnant, it would only be about two months along now.</p>
                 <p>&#34;Don&#39;t be rash.&#34; He softened his tone. &#34;Name any condition you want.&#34;</p>
                 <p>Sophia smirked. &#34;Really?&#34;</p>
                 <p>&#34;Of course.&#34; Hope reignited in Ethan&#39;s eyes.</p>
                 <p>&#34;Then disappear from my life forever.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

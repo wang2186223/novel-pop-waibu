@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2315,7 +2395,7 @@
                 <p>&#34;Absolutely.&#34; Alexander’s eyes darkened. &#34;The only reason he dares to cause trouble for you in Seaview City is because he’s left trusted allies here.&#34;</p>
                 <p>When he said &#34;trouble,&#34; his jaw tightened imperceptibly. Even setting aside Bianca’s situation, he would make Vincent pay.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>A spark of life finally returned to Bianca’s eyes. &#34;His allies are betraying him? But those were his childhood friends and classmates.&#34;</p>
                 <p>She let out a bitter laugh. &#34;My parents initially looked down on him, but they changed their minds when they saw his capabilities. He exploited that trust...&#34;</p>
                 <p>Like a venomous snake, Vincent had slowly devoured the Langley Group. His patience was chilling.</p>
@@ -2325,12 +2405,12 @@
                 <p>Alexander turned to Bianca. She gave a weak nod. &#34;The irony is, when he brought his hometown connections into the company, I actually thought he’d finally found a home here.&#34;</p>
                 <p>&#34;Those who can be bought once will betray again.&#34; Bianca’s voice was hoarse. &#34;He’ll reap what he sows...&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>She listed the few within the Langley Group who could still be trusted. Alexander acted immediately, catching Vincent off guard.</p>
                 <p>Vincent had intended to use the airport spectacle to send Bianca a message, only to be betrayed by those he trusted most.</p>
                 <p>While he was scrambling to contain the fallout, Bianca—accompanied by Alexander and Evelyn—dragged her weakened body to the cemetery.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Alexander had orchestrated everything meticulously, ensuring she could say her farewells in peace. The two of them stopped a hundred meters away, giving her space.</p>
                 <p>The tombstone bore words Bianca had inscribed as Adrian’s widow. With her own hands, she placed his urn into the grave, along with the little porcelain girl.</p>
                 <p>What she buried wasn’t just love—it was the person she used to be.</p>

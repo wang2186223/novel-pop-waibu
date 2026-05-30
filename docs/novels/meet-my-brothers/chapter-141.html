@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>Still, announcing defeat was not in his plans.</p>
                 <p>The host on stage appeared hesitant as well.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Soon, an attendant approached Liam. “Excuse me, sir. Since it involves a huge amount of money, we have to verify your funding to make sure that it’s fair.”</p>
                 <p>Shelly gloated. “Did I hit the bulls–eye?”</p>
                 <p>Liam rose from his seat. “Let’s go. Where to?”</p>
@@ -2321,7 +2401,7 @@
                 <p>Mia tagged along as well, with Timothy’s dark eyes observing her.</p>
                 <p>Jealousy turned Maya into a green–eyed monster.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>She knew Liam’s wealth very well. How could he lack money when the Lane family was backing him?</p>
                 <p>For Liam to spend 12 million dollars on that necklace for her? Mia’s lucky fate elicited envy in Maya.</p>
                 <p>Suppressing her jealousy from erupting, Maya noticed Timothy’s grim expression.</p>
@@ -2329,7 +2409,7 @@
                 <p>Shelly saw eye to eye with that. “I know, right? Her background is laid on the table, and yet she’s daydreaming of being a Cinderella. She should’ve known her place!”</p>
                 <p>“Enough!” He interrupted Shelly and strode away.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>At the same time, Mia accompanied Liam to a VIP room.</p>
                 <p>He suggested, “Wait here, Mia. It’s just a trivial matter. Don’t worry about it.”</p>
                 <p>+15 BONOS</p>
@@ -2337,7 +2417,7 @@
                 <p>It was a staggering 12 million dollars!</p>
                 <p>If he didn’t have enough money, would he be detained?</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Pacing back and forth didn’t help to smoothen the anxiety.</p>
                 <p>“What’s the matter you don’t have the money?” A man’s low voice sounded.</p>
                 <p>Mia’s head snapped to his. There was a pause before she asked, “If that’s the case, would you lend me some money?”</p>
@@ -2345,7 +2425,7 @@
                 <p>A soft chuckle escaped her lips when she heard the word “idiot“. Marching forward, she primped his tie.</p>
                 <p>Stiffness riveted him at that spot. He lowered his gaze onto the crown of her head, and his Adam’s apple bobbed.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Despite his unnatural reaction, his tone remained steely. “Why? Now that you find out that he’s not rich, are you trying to abandon him and-”</p>
                 <p>A cough cut him off.</p>
                 <p>Mia tightened his tie around his neck, and she looked at him with dark eyes. “Then, what are you doing here, Mr. Barrett?</p>
@@ -2353,7 +2433,7 @@
                 <p>He coughed. “Let go of me!”</p>
                 <p>He couldn’t believe that she had the guts to hurt him.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

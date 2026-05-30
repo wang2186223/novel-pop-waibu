@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,28 +2392,28 @@
                 <p>Mia surveyed her surroundings. “With the increasing number of people here, I was contemplating uploading the video to the campus network right before the scholarship opening ceremony.</p>
                 <p>“Imagine unveiling the insider dealings at such a moment–it should add an interesting twist, don’t you think?”</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Maya finally gathered herself and offered an apology, “Mia, I misspoke earlier. I shouldn’t have made such a joke. I sincerely apologize.”</p>
                 <p>“Maya, did you seriously apologize?” Shelly couldn’t fathom Maya conceding so easily.</p>
                 <p>She retorted coldly, “Mia, I won’t apologize to you. If you want to expose the video, go ahead. My reputation has already been tarnished by you, and one more blemish doesn’t intimidate me.”</p>
                 <p>Mia’s smirk deepened. “Really? In that case, I won’t hesitate to upload the video.”</p>
                 <p>Feeling a sense of unease, Maya pleaded, “But Mia, I’ve already apologized to you.”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Mia’s gaze grew cold. “You were both involved. This amounts to collective punishment.”</p>
                 <p>Furious, Maya pulled Shelly aside and spoke in a hushed tone, “Shelly, didn’t you want me to introduce you to Nathan?</p>
                 <p>+15 BONOS</p>
                 <p>“Well, Nathan has a strong aversion to women displaying inappropriate behavior. If he finds out about this, it could jeopardize your chances with him in the future.”</p>
                 <p>“No, please.”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Upon hearing that her prospects with Nathan were at risk, Shelly suddenly became anxious.</p>
                 <p>Nathan was the one she had set her eyes on.</p>
                 <p>Maya appeared somewhat uneasy. “Shelly, I’ve expressed everything I can. It’s up to you whether you choose to listen or not.”</p>
                 <p>“But Maya, do we really need to fear Mia? Won’t your brother back you up?”</p>
                 <p>“Shelly, this is my personal affair. If I constantly depend on my brother to intervene, won’t I end up appearing incompetent? I don’t want to leave that impression on him.”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>In the end, Shelly approached Mia reluctantly and said, “I apologize.”</p>
                 <p>Gina sneered, “What’s with the attitude? Is your apology even sincere?”</p>
                 <p>Despite the strong urge to retaliate, Shelly restrained herself, contemplating her interest in</p>
@@ -2352,7 +2432,7 @@
                 <p>to the matter.”</p>
                 <p>Mia shook her phone dismissively. “What I’m trying to say is, there’s no need to delete the video. I didn’t even record anything just now.”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

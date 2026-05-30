@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,15 +2389,15 @@
                 <p>The line went silent for several heartbeats. The prolonged quiet made Vivian&#39;s fingers tighten around her phone.</p>
                 <p>Changing the subject with forced lightness, she asked, &#34;Any news about Vincent Lockwood?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Not yet,&#34; Julian replied with a quiet chuckle. &#34;But I&#39;m flying to Ravenshore tomorrow. Wanted to see you before I left.&#34;</p>
                 <p>Vivian hesitated, her gaze drifting to Adrian&#39;s bandaged arm resting on the hospital blanket. &#34;I&#39;m sorry, Julian. Things are... complicated right now.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Never apologize to me,&#34; Julian murmured, his voice softening. After a beat, Vivian offered, &#34;When you return, dinner&#39;s on me.&#34;</p>
                 <p>&#34;Deal,&#34; he agreed. &#34;Take care, Vivian. I&#39;ll call when I&#39;m back.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>The call ended. Vivian lowered her phone, turning to find Adrian&#39;s dark eyes wide open, fixed on her with unsettling intensity. &#34;Who was that dinner invitation for?&#34; His voice was rough from sleep but carried unmistakable authority.</p>
                 <p>Startled, Vivian nearly dropped her phone. &#34;You&#39;re awake?&#34; She busied herself pouring water from the bedside carafe, testing the temperature before setting it down. &#34;Here, drink this. It&#39;ll help your throat.&#34;</p>
                 <!-- 广告位 4 -->
@@ -2325,14 +2405,14 @@
                 <p>Without warning, Adrian&#39;s hand shot out, his fingers encircling her wrist with surprising strength despite his injury. &#34;I asked you a question,&#34; he repeated, his grip tightening slightly. &#34;Who are you having dinner with?&#34;</p>
                 <p>Vivian couldn&#39;t suppress a small smile at his obvious jealousy. &#34;Julian wanted to meet before his trip. I said no,&#34; she explained, watching his frown deepen. Tilting her head, she teased, &#34;What&#39;s this? The great Adrian Blackwood feeling possessive?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Adrian released her with a dismissive scoff, settling back against the pillows with deliberate nonchalance. &#34;You&#39;re my wife now,&#34; he declared loftily, ignoring her teasing. &#34;Certain appearances must be maintained.&#34;</p>
                 <p>Vivian&#39;s amusement faded into quiet determination. &#34;First and foremost, I&#39;m Vivian Hartley,&#34; she countered evenly. &#34;Your wife comes second. I&#39;ll keep appropriate boundaries, but I won&#39;t cut people out of my life.&#34;</p>
                 <p>Adrian froze, his hand hovering over the water glass. His piercing gaze searched her face as if measuring her resolve.</p>
                 <p>Vivian met his stare without flinching. &#34;I agreed to try again, Adrian. Not to erase myself. Never again.&#34;</p>
                 <p>The unspoken words hung between them, heavy with the weight of past mistakes and fragile new beginnings.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,42 +2392,42 @@
                 <p>Dorothy launched into a dramatic sigh. &#34;I&#39;m not doing well at all, darling. My blood pressure&#39;s through the roof, sugar levels are crazy high. And this damn rheumatism - I can&#39;t sleep through the night anymore.&#34;</p>
                 <p>&#34;That worthless drunk you call a father keeps beating me when he staggers home. Oh Evelyn, life&#39;s so hard for me here.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Your idiot brother&#39;s disappeared with mountains of debt. Hasn&#39;t given me a single penny to survive.&#34;</p>
                 <p>&#34;I can&#39;t even get out of bed to work with this pain, Evelyn. Your father&#39;s no help either, always drowning in liquor. I don&#39;t know how much longer I can take this!&#34;</p>
                 <p>&#34;Oh, Evelyn—&#34;</p>
                 <p>Evelyn couldn&#39;t stomach another word. &#34;I understand, Mom. I&#39;ll wire you some money.&#34;</p>
                 <p>&#34;Bless you, sweetheart!&#34; Dorothy&#39;s voice turned gleeful.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;There&#39;s something else, Mom.&#34;</p>
                 <p>&#34;No need to be shy. What is it?&#34;</p>
                 <p>&#34;Could you come to the hospital with me?&#34;</p>
                 <p>Dorothy&#39;s voice sharpened. &#34;Are you sick?&#34;</p>
                 <p>&#34;Mom, I—&#34; Evelyn&#39;s throat closed up.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Dorothy had always praised Evelyn for being obedient and kind. She doted on Evelyn precisely because of these qualities.</p>
                 <p>If Evelyn mentioned the DNA test outright, Dorothy would never agree. After all, why would she let go of such a dutiful daughter who funded her lifestyle?</p>
                 <p>Evelyn quickly changed tactics. &#34;Mom, the doctors think I might have a hereditary immune disorder. They need to run genetic tests on us to confirm.&#34;</p>
                 <p>&#34;My poor baby! How did this happen?&#34; Dorothy burst into theatrical sobs.</p>
                 <p>Her distress seemed genuine. Whether she mourned for Evelyn&#39;s health or her potential loss of income remained unclear.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;I&#39;ll text you the hospital address. We can schedule an appointment.&#34;</p>
                 <p>&#34;Of course, darling. Get treated immediately!&#34; Dorothy urged with sudden enthusiasm.</p>
                 <p>&#34;I will, Mom. Goodbye.&#34; Evelyn ended the call.</p>
                 <p>Meanwhile, Dorothy retreated to a shadowy corner of the casino. She perched on a stool, lighting a cigarette with practiced fingers.</p>
                 <p>A memory surfaced - that wealthy man who paid handsomely for information about Evelyn.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Salivating at the thought of another payout, Dorothy scrolled through her contacts.</p>
                 <p>&#34;Dr. Whitmore? Is that you?&#34;</p>
                 <p>&#34;Speaking,&#34; Julian answered.</p>
                 <p>&#34;My daughter Evelyn just called—&#34;</p>
                 <p>Dorothy proceeded to relay every detail of Evelyn&#39;s situation, her voice barely audible over the casino&#39;s din.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

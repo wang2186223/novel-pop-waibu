@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,19 +2391,19 @@
                 <p>&#34;Liam! You&#39;re here!&#34; Victoria scrambled up from the deck, her voice shrill with relief. &#34;Save me!&#34;</p>
                 <p>Evelyn&#39;s brief moment of happiness shattered. She watched as Victoria stumbled toward Liam with desperate hope.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Liam held up a warning hand, his expression stern. &#34;Stay back.&#34;</p>
                 <p>Victoria ignored him, her painted lips trembling. &#34;You came for me!&#34; she sobbed, rushing forward again.</p>
                 <p>As she passed the pirate captain, his arm shot out like a viper. In one fluid motion, he yanked her against his chest and pressed a curved dagger to her throat.</p>
                 <p>The entire deck froze. Even the waves seemed to still at Victoria&#39;s stupidity.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The blade bit into Victoria&#39;s perfect skin. A thin line of crimson appeared. Her face drained of color as terrified whimpers escaped her lips.</p>
                 <p>&#34;L-Liam...help...kill him...&#34; she stammered.</p>
                 <p>The pirate captain snarled in Valtorian, &#34;Let me leave.&#34;</p>
                 <p>Liam took a threatening step forward. &#34;What did he say?&#34; His brow furrowed in frustration.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>He glanced at Ryan, who shook his head. Then at Adrian, who also shrugged.</p>
                 <p>When Liam&#39;s gaze swept the deck, it landed on Evelyn. His eyes widened slightly - surprise, then something darker flickered across his features.</p>
                 <p>She looked different tonight. The moonlight caught the silver embroidery on her gown, making her glow like some ethereal creature.</p>
@@ -2335,7 +2415,7 @@
                 <p>Victoria&#39;s screams pierced the night. &#34;Liam! I&#39;m dying! Shoot him!&#34;</p>
                 <p>Evelyn&#39;s heart twisted as she watched Liam hesitate.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>The pirate stood a full head taller than Victoria. At this range, Liam wouldn&#39;t miss.</p>
                 <p>So why didn&#39;t he shoot? Was he that afraid of hurting Victoria? Did he love her so much he&#39;d risk everything?</p>
                 <p>If Evelyn didn&#39;t translate, the pirate might slit Victoria&#39;s throat right now.</p>
@@ -2343,7 +2423,7 @@
                 <p>Swallowing her bitterness, Evelyn spoke. &#34;He says if you let him leave, he&#39;ll give you all the treasure and release Victoria. He&#39;ll even offer you a gram of—&#34;</p>
                 <p>Her voice cut off abruptly.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

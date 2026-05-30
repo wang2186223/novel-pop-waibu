@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2316,7 +2396,7 @@
                 <p>It seemed wiser to wait until she traveled to Nord City with her brothers before divulging the news to</p>
                 <p>Patricia.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>A gentle smile adorned Mia’s lips as a wave of relief swept over her. Could this be the dawn of her</p>
                 <p>newfound freedom as a carefree heiress?</p>
                 <p>In the morning, Mia swiftly finished her breakfast and made her way to campus, keen to avoid any</p>
@@ -2327,7 +2407,7 @@
                 <p>“It might be wise for you to find another place to stay for now. With Edna and Karen around, I’m</p>
                 <p>concerned about your well–being, especially considering your pregnancy.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>“If anything were to happen to you, I wouldn’t know how to face Dominic,” Connor added earnestly.</p>
                 <p>Mia foll</p>
                 <p>silent for a moment. “I understand. I’ll have a conversation with Aunt Patricia about finding</p>
@@ -2338,7 +2418,7 @@
                 <p>You know how Dominic reacted last time when I kept Timothy’s relationship with you a secret,” Connor</p>
                 <p>suggested.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>“Thank you, Connor, for everything you’ve done for me. I honestly don’t think I’d have made it this far without your support,” Mia expressed her gratitude.</p>
                 <p>“Don’t worry about it. You’re my sister. I’ve got your back,” Connor reassured Mia.</p>
                 <p>As Mia sat in Connor’s car on the way to campus, she suddenly remembered something. “By the way.</p>
@@ -2349,7 +2429,7 @@
                 <p>shift in her newfound identity.</p>
                 <p>“Mia, please don’t sympathize with Maya. She’s lived a comfortable life as the Lane family heiress all</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>these years, which was far more than she deserves.</p>
                 <p>“Despite this, she remains unsatisfied. She even attempted to conceal your identity and have Dana take your place,” Connor explained further.</p>
                 <p>“She wanted Dana to replace me?” Mia exclaimed in disbelief.</p>
@@ -2360,7 +2440,7 @@
                 <p>would lead to this.” Mia confessed.</p>
                 <p>Indeed, the frailty of human hearts became apparent when confronted with temptation.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>As Mia entered the university, a heavy weight settled in her chest. She struggled to comprehend why</p>
                 <p>Dana would want to replace her.</p>
                 <p>Sitting in the study hall, Mia couldn’t help but notice the numerous glances directed her way, which left</p>
@@ -2372,7 +2452,7 @@
                 <p>Mia headed to the corridor and glimpsed at a car parked below. It seemed Timothy had indeed arrived.</p>
                 <p>“Either you come down, or I’ll come up.”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

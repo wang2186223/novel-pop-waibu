@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,15 +2389,15 @@
                 <p>Julian chuckled knowingly. &#34;Ah, so absorbed in the script? Vivian is quite the talented actress—perceptive too. Sebastian, you should mentor her more. She has incredible potential.&#34;</p>
                 <p>A faint smile touched Sebastian&#39;s lips at Julian&#39;s praise. &#34;Julian, let&#39;s arrange a separate dinner soon,&#34; he offered.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>In the entertainment world, respect wasn&#39;t just about seniority. His invitation was a nod to Vivian&#39;s rising status. Julian sighed inwardly, comparing Vivian&#39;s genuine talent to Serena&#39;s reliance on connections.</p>
                 <p>Serena&#39;s irritation flared as she watched Sebastian and Julian side with Vivian. She recalled the humiliation when Sebastian had publicly refused to work with her on Spotlight Night.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>During the show, when Serena had praised Vivian, the host suggested a collaboration between them. Most would decline politely, but Sebastian had bluntly stated that Vivian&#39;s projects required real skill—a thinly veiled insult that left Serena seething.</p>
                 <p>What did it matter if Sebastian was a top star? Next to someone like Adrian Blackwood, he was nothing. Serena scoffed. &#34;Vivian, your luck is astounding. With Mr. Vaughn backing you and Mr. Hartwell clearing his schedule for rehearsals, fame is guaranteed. If everyone had such privileges, Hollywood would be overflowing with stars.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Her words implied Vivian relied on powerful connections while mocking Sebastian&#39;s deference to industry elites. Sebastian&#39;s expression darkened. &#34;It&#39;s rare to find a partner like Vivian. Some can&#39;t tell talent from mediocrity. Honestly, I should thank Blazing Horizon for overlooking her—it gave me the chance to work with her.&#34;</p>
                 <p>His bluntness stung, offending everyone from Blazing Horizon. They could criticize him all they wanted, but they had no right to insult his idol.</p>
                 <!-- 广告位 4 -->
@@ -2325,11 +2405,11 @@
                 <p>Serena, caught off guard by his directness, clenched her fists. Miranda, fearing Serena would lose control, stepped in. &#34;Mr. Hartwell, defending your colleague is admirable, but your words are unnecessarily harsh.&#34;</p>
                 <p>Vivian, unwilling to let Sebastian take the heat alone, countered, &#34;Who started this conversation? Only the privileged get to speak now?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>The room fell silent.</p>
                 <p>The battle lines were drawn.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

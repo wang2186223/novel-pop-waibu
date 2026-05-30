@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2321,7 +2401,7 @@
                 <p>Carlee&#39;s worry for Amelia was obvious. She thought about grabbing the bottle from her grip,but she also didn&#39;t want to mess things up for Amelia. So, she could only watch her anxiously.</p>
                 <p>As soon as Amelia drank, the sharp flavor burned her throat, making her cough.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>But she paused only for a moment before lifting the bottle again.</p>
                 <p>Determined not to back down, she continued drinking. When she reached the halfway mark,Patton stepped up and yanked the bottle away.</p>
                 <p>Despite his lingering anger, Patton was worried that Amelia might get sick after drinking too much wine.</p>
@@ -2329,7 +2409,7 @@
                 <p>&#34;That&#39;s enough. I said I&#39;d let it go, and I will,&#34; Patton interjected, his voice cold but resolute.</p>
                 <p>Despite feeling sick from all the wine, Amelia felt happy at Patton&#39;s words.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>She took a deep breath and stepped toward Patton,eager to discuss the contract. But before she could say anything, Patton added, &#34;I&#39;m willing to let your tardiness slide, but that doesn&#39;t mean we&#39;re moving forward with this deal. The contract&#39;s canceled, and that decision is final.&#34;</p>
                 <p>&#34;Are you just messing with us?&#34; Carlee, who had been by Amelia&#39;s side, was ready to argue, but Amelia stopped her.</p>
                 <p>Patton didn&#39;t stick around. He turned and left the room with Sammy at his side.</p>
@@ -2337,7 +2417,7 @@
                 <p>Frustration turned Carlee&#39;s cheeks red as she watched them go. She turned to Amelia. &#34;You&#39;re really going to let them leave like that? Didn&#39;t that mean you just drank all that wine for nothing?&#34;</p>
                 <p>&#34;Not entirely. At least Patton forgave me for being late today,&#34; Amelia replied with a tired smile. Then,she lowered her voice and asked, &#34;Did you find what I asked for?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;That bracelet is hard to find. But Monroe said he could get his hands on it, so it should be delivered here soon.&#34;</p>
                 <p>Roughly thirty minutes later, a delivery man brought a small parcel to Carlee.</p>
                 <p>Once she&#39;d signed, Carlee opened the parcel, revealing an ordinary-looking bracelet. &#34;You&#39;re really sure this little thing is going to change Patton&#39;s mind?&#34; she asked, brow furrowed.</p>
@@ -2345,7 +2425,7 @@
                 <p>As the car rolled through the city, Amelia filled Carlee in about the bracelet&#39;s backstory.</p>
                 <p>It was the last design by the latedesigner Jackson Avila, with only three similar ones in the world.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>During her background check on Patton, Amelia had found out Jackson was Patton&#39;s favorite designer.That knowledge made her certain Patton would change his mind after seeing the bracelet.</p>
                 <p>Since Amelia&#39;s appearance at the Night Owl Bar cut Patton&#39;s dinner short, hunger caught up to him when he returned to the Kretol Hotel. He soon ordered food. After a while, Amelia pushed the cart piled with food out of the elevator. She leaned close to Carlee and whispered, &#34;Keep watch. If anyone comes, stall them for me.&#34;</p>
                 <p>Carlee nodded and watched Amelia step forward to knock on the door.</p>
@@ -2354,7 +2434,7 @@
                 <p>Patton, just about to question why the delivery person hadn&#39;t left, froze when he recognized her.</p>
                 <p>A sour look crossed his face. &#34;You again? Don&#39;t tell me you&#39;re following me around now.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

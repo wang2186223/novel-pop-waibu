@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,31 +2391,31 @@
                 <p>Mia couldn&#39;t shake the memory of Ralph&#39;s expulsion from the Barrett Group for corruption and bribery.</p>
                 <p>It was Sharon who had to use her own funds to conceal his misconduct, ultimately sparing him from imprisonment.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>After all these years, it was astonishing to see that Ralph hadn&#39;t changed his ways.</p>
                 <p>If Timothy hadn&#39;t coincidentally come across the Bowen family boasting about their partnership with the Barrett Group in Nord City, Ralph might have managed to secure the contract.</p>
                 <p>Even if Timothy were to intervene later, it would likely still lead to some losses.</p>
                 <p>Indeed, having such an uncle felt like inheriting generations of misfortune.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Thankfully, Ginger and Sage had six uncles, each of whom was exceptionally capable, unlike Ralph.</p>
                 <p>Meanwhile, the bodyguards quickly subdued Ralph, leaving him unable to fight back.</p>
                 <p>With visible bruises marking Ralph&#39;s body, Lewis delivered a final blow toward him. &#34;How dare you hold onto my possessions and refuse to let golf you don&#39;t hand them over, you won&#39;t live to see another sunrise!&#34; he threatened.</p>
                 <p>Observing the altercation, Mia stole a glance at Timothy beside her. Shouldn&#39;t he step in and put an end to this situation?</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>At that moment, Ralph reached out toward Timothy, pleading, &#34;Help me! Are you just going to stand by and watch your uncle get beaten to death?&#34;</p>
                 <p>Timothy&#39;s response was cold and unwavering. &#34;I warned you earlier.&#34;</p>
                 <p>&#34;Timothy Barrett, you are a heartless monster!&#34;</p>
                 <p>Mia raised an eyebrow, turning to Ralph. &#34;Why not just return what rightfully belongs to him? Lewis only wants his belongings back. If you hand them over, there won&#39;t be any need for further violence.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Initially, Lewis had feared incurring Timothy&#39;s resentment. However, witnessing Timothy&#39;s evident disdain for his supposed uncle dispelled those</p>
                 <p>concerns.</p>
                 <p>Ralph&#39;s face contorted into a sneer as he glared at Mia. &#34;What right do you have to speak here? You&#39;re just a woman who was ousted from the Barrett family! Are you even worthy?&#34;</p>
                 <p>Mia&#39;s expression turned cold upon hearing his words. &#34;Despite the passage of time, it seems that the Barretts remain unchanged.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>In a flash, Peyton strode forward</p>
                 <p>and delivered a resounding slap to Ralph&#39;s cheek. &#34;Who do you think</p>
                 <p>you are to criticize Ms. Mia? Take a</p>

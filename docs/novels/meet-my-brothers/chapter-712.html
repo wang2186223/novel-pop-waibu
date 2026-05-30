@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>After saying this, Shelly left the room.</p>
                 <p>Though Shelly’s words may not have been intended to cause harm, they carried significant implications.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Nonetheless, Luna refused to give up so easily. She went upstairs to find</p>
                 <p>Sharon.</p>
                 <p>However, Sharon didn’t seem pleased upon seeing her.</p>
@@ -2323,7 +2403,7 @@
                 <p>Luna felt ashamed. “Mrs. Barrett, I didn’t mean it that way.”</p>
                 <p>“Well, I certainly hope so. After all, Tim’s future wife must be from a wealthy family; only then will she be considered worthy of him.”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Luna couldn’t help but clench her teeth in frustration. “But Monalize has a daughter who’s also over three years old, about the same age as Asher,” she</p>
                 <p>remarked.</p>
                 <p>“What? She has a child too? Is she divorced as well?”</p>
@@ -2332,7 +2412,7 @@
                 <p>Timothy.</p>
                 <p>Lowering her gaze, Luna couldn’t help but feel a sense of satisfaction as she observed Sharon’s disapproval.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>That evening, Mia and Ginger arrived at the restaurant together.</p>
                 <p>Glancing at Ginger, Mia inquired, “Are you feeling nervous?”</p>
                 <p>“Not at all! I’m ready to give it my all!”</p>
@@ -2341,7 +2421,7 @@
                 <p>Aside from being</p>
                 <p>about the bone marrow matching results.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>“Tim!” Ginger’s face lit up with joy at the sight of Timothy, With a skáp in her step, she rushed over to him, her tiny legs carrying her swiftly.</p>
                 <p>As Timothy stepped out of the elevator, he couldn’t help but notice a yellow figure approaching him.</p>
                 <p>Ginger met his gaze with puppy–dog eyes, momentarily stumbling in her</p>
@@ -2350,7 +2430,7 @@
                 <p>Timothy tensed for a moment before lifting Ginger up.</p>
                 <p>Glancing down at her, he questioned, “Who gave you permission to address me lik</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>that?”</p>
                 <p>Was this the same Timothy Ginger knew? He certainly seemed to have developed a bold attitude.</p>
                 <p>Clinging to his neck, Ginger replied in a playful, childish tone, “Me, of</p>
@@ -2361,7 +2441,7 @@
                 <p>of his ex–wife. For a moment, he felt a bit dazed.</p>
                 <p>“Tim.”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

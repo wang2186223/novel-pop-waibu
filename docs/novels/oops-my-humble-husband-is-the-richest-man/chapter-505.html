@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2337,7 +2417,7 @@
                 <p>Alexander asked, &#34;How much is twenty?&#34;</p>
                 <p>Evelyn paused, &#34;One chopstick&#39;s worth.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Alexander couldn&#39;t help but say, &#34;Who on earth would eat something like that for no reason?&#34;</p>
                 <p>Eleanor laughed heartily, &#34;Right? Even families like ours today wouldn&#39;t have a dedicated person in the kitchen just to make this dish. But Lady Sterling&#39;s chefs were a team. About twenty people, dedicated to cooking for her. This dish was the job of one of them. This cold dish was refreshing, and Lady Sterling would have it every few days. And this dish was just one item on her daily menu. There was another dish called &#39;Flying Dragon Soup.&#39; That bird is a protected species now, can&#39;t be eaten. But back then, because she liked it, her family could always procure game. Also, because Lady Sterling liked the tiny strip of meat in the center of a duck&#39;s tongue, her menu included a dish called &#39;Hundred-Flavored Duck Tongues&#39; every other day. As the name suggests, it&#39;s the tongues of a hundred ducks... You have to understand, in my youth, living conditions in our country were still quite poor. Whose family could eat like that?&#34;</p>
                 <p>Evelyn listened, somewhat stunned, &#34;Even the empress in ancient palaces wasn&#39;t that extravagant, was she?&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>The corner of Evelyn&#39;s mouth twitched.</p>
                 <p>Eleanor added, &#34;The key point is, these things were only exposed because paparazzi followed and photographed her. She never flaunted her family background in public; it was as if all that was just normal for her. She also never looked down on any of us. That kind of magSterlingimity and bearing is something I, an old woman, have never seen to this day.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Evelyn understood why Eleanor was so impressed.</p>
                 <p>She asked, &#34;And then?&#34;</p>
                 <p>Evelyn suddenly thought of something, &#34;Did you ever meet her husband?&#34;</p>
@@ -2356,7 +2436,7 @@
                 <p>Eleanor looked at her, &#34;Until later, we heard legends about her.&#34;</p>
                 <p>&#34;What legends?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

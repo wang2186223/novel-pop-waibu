@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,31 +2391,31 @@
                 <p>&#34;Quiet. We&#39;re here.&#34;</p>
                 <p>The elevator chimed, cutting off the conversation. Everyone filed out, tension thick in the air. Evelyn exchanged a glance with Rosalind before following the crowd into the expansive conference room.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Inside, the space was packed with military brass, elite engineers, and chemical researchers. Among them stood Ethan Reynolds and Benjamin Hart, faces Evelyn recognized from prior encounters. The atmosphere was grim, discussions laser-focused on disaster relief and reconstruction.</p>
                 <p>With limited seating, junior personnel stood along the walls. Evelyn and Rosalind positioned themselves in a corner, absorbing the heated debate. Liam Blackwood was so consumed by the crisis, he barely registered Evelyn&#39;s presence.</p>
                 <p>Benjamin Hart pulled up a presentation, detailing the experiment&#39;s failure, the devastation, and proposed solutions for airborne contaminants. Evelyn&#39;s expression darkened as she listened.</p>
                 <p>&#34;General Blackwood, based on our analysis, this is the fastest method to mitigate pollution,&#34; Benjamin stated.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;How long?&#34; Liam&#39;s voice was clipped.</p>
                 <p>&#34;One week for air purification. Water decontamination will take sixty days. Nearby residents must evacuate immediately.&#34;</p>
                 <p>Skeptical murmurs erupted.</p>
                 <p>&#34;Ten thousand personnel are stationed here, not counting equipment and armories. Relocating everything is impossible.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Exactly. It&#39;s not feasible.&#34;</p>
                 <p>&#34;Even if civilian numbers are low, we&#39;re still looking at thousands scattered across the region. Evacuation logistics are a nightmare.&#34;</p>
                 <p>Liam scanned the room. &#34;Other options?&#34;</p>
                 <p>The researchers scrambled through data, desperate for alternatives.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Liam,&#34; Victoria Hudson interjected, &#34;what about specialists from Solterra? They might have insights.&#34;</p>
                 <p>A shadow flickered across Liam&#39;s face before he schooled his expression.</p>
                 <p>&#34;Ms. Hudson, we already consulted Solterra,&#34; the secretary-general replied. &#34;Their hydronium explosion data was lost, and the lead researcher is deceased.&#34;</p>
                 <p>&#34;So Dr. Hart&#39;s plan is our only solution?&#34; Victoria pressed.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;For now, yes,&#34; the other scientists confirmed.</p>
                 <p>Rosalind leaned close to Evelyn, voice taut with worry. &#34;Evelyn, surely you have ideas?&#34;</p>
                 <p>Evelyn hesitated. Helping Liam without exposing her true identity was a razor&#39;s edge. The debate raged on, but no breakthroughs emerged.</p>
@@ -2343,7 +2423,7 @@
                 <p>Every head turned. Liam&#39;s tense gaze softened imperceptibly.</p>
                 <p>Victoria scoffed. &#34;Ms. Carter, you shouldn&#39;t even be here. This is no place for amateurs.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

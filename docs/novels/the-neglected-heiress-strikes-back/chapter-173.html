@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>Alexander&#39;s sharp gaze cut through the chatter. &#34;This is a boardroom, not a gossip circle. Speak up if you have solutions. Otherwise, stay silent.&#34;</p>
                 <p>The room fell quiet.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>The Head of Design quickly listed renowned jewelry designers, presenting detailed portfolios of their work.</p>
                 <p>Alexander scanned the names. &#34;Why isn&#39;t Henri Delacroix on this list?&#34;</p>
                 <p>The mention of Henri silenced the room.</p>
@@ -2323,7 +2403,7 @@
                 <p>&#34;Henri is untouchable. His pieces are museum-worthy. Convincing him to design for a celebrity like Isabella? Impossible.&#34;</p>
                 <p>Alexander leaned forward. &#34;No one is untouchable. Everyone has a price.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>His voice left no room for argument. &#34;Henri Delacroix will design Isabella&#39;s wedding jewelry.&#34;</p>
                 <p>The executives exchanged stunned glances.</p>
                 <p>The Head of Design wiped her brow. &#34;Sir, the designers I suggested are award-winning. They can deliver.&#34;</p>
@@ -2332,7 +2412,7 @@
                 <p>His eyes gleamed with rare admiration. &#34;Evelyn won&#39;t cut corners. She&#39;ll go straight for the best. So we have to secure Henri before she does.&#34;</p>
                 <p>Doubt lingered in the room.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Could Evelyn really pull that off?</p>
                 <p>&#34;Find me everything on Henri. Not his work—his personal details. Within 24 hours.&#34;</p>
                 <p>As Alexander stood to leave, the Head of Design spoke up. &#34;Sir, about Henri... there&#39;s only one thing I can tell you for certain.&#34;</p>
@@ -2341,7 +2421,7 @@
                 <p>The next day.</p>
                 <p>Evelyn wrapped up her meeting and returned to her office.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Daniel, I&#39;m starving. Order me fried chicken and beer. Fast.&#34; She didn&#39;t look up from her game.</p>
                 <p>Daniel sighed. &#34;You&#39;re worry-free while I&#39;m losing my mind. Isabella&#39;s team wants a top designer, and The Regal Palace is already moving. How are you so calm? You rejected every designer the team suggested—insisted on Henri. Do you even realize how impossible that is?&#34;</p>
                 <p>Evelyn smirked. &#34;If we can&#39;t get Henri, neither can they. No rush.&#34;</p>
@@ -2364,7 +2444,7 @@
                 <p>Daniel&#39;s jaw dropped.</p>
                 <p>Evelyn... was Henri Delacroix?!</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

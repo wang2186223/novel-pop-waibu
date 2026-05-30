@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,27 +2390,27 @@
                 <p>Pursing her lips, Lily recounted every detail. She and Lotus often visited the city on weekends. That day at Wetland Park—dubbed &#34;Lovers&#39; Sanctuary&#34;—she&#39;d instantly recognized Bianca by that unforgettable red dress.</p>
                 <p>&#34;The same one Miss Langley wore when we first met,&#34; the girl affirmed.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Evelyn&#39;s chest tightened. Bianca hadn&#39;t touched that dress since Adrian&#39;s passing. She hastily noted the park&#39;s address. &#34;Sweetheart, I do trust you—&#34;</p>
                 <p>Lily just giggled and skipped away.</p>
                 <p>Under cover of darkness, the couple entrusted Baby Chloe to Margaret Hamilton and Auntie Wu.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;We have some research,&#34; Evelyn explained.</p>
                 <p>Margaret&#39;s knowing smile prompted Alexander to hastily excuse himself, citing the baby&#39;s feeding schedule.</p>
                 <p>In their bedroom, a tablet played Vincent&#39;s televised interview. The man on screen—immaculate suit, gold-rimmed glasses radiating warmth—bore no resemblance to the venomous creature from their memories.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Monster in a three-piece suit,&#34; Evelyn spat.</p>
                 <p>Alexander frowned as Vincent smoothly declared, &#34;My journey from a backwater town proves all critics are merely jealous.&#34;</p>
                 <p>The host pressed: &#34;Your relationship with the Langley family—&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;I&#39;ll forever be grateful for their mentorship.&#34; Vincent&#39;s smile didn&#39;t reach his arctic eyes. &#34;Without them, I wouldn&#39;t exist.&#34;</p>
                 <p>Evelyn&#39;s fists clenched. These polished lies were salt rubbed into the Langleys&#39; wounds.</p>
                 <p>&#34;He&#39;s making his move,&#34; Alexander realized abruptly.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Onscreen, Vincent gazed into the camera with theatrical tenderness: &#34;My door always stands open if Bianca chooses to return.&#34;</p>
                 <p>Evelyn shot upright. &#34;He knows!&#34;</p>
                 <p>Outside, lightning split the night sky. The storm had arrived.</p>

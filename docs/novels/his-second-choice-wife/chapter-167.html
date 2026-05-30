@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2319,35 +2399,35 @@
                 <p>Three jaws dropped simultaneously. Dorothy Simmons clutched her chest as if having a heart attack.</p>
                 <p>Vincent licked his suddenly dry lips, his tone turning wheedling. &#34;Traditionally, the bride&#39;s parents receive the gifts. Why give them to my daughter?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Liam rested his chin on one hand, his expression bored. &#34;Evelyn owns half my estate. What she chooses to share with you is her decision. I won&#39;t interfere.&#34;</p>
                 <p>His voice turned dangerous. &#34;And if she decides to give you nothing, you&#39;ll accept that.&#34;</p>
                 <p>Vincent scoffed loudly. &#34;That ungrateful brat wouldn&#39;t dare! I&#39;ll make her regret it if she tries—&#34;</p>
                 <p>Before he could finish, Liam&#39;s fist slammed onto the table, making everyone jump. &#34;Touch one hair on her head, and you&#39;ll be breathing your last by sunrise.&#34;</p>
                 <p>The threat hung heavy in the air. Even Dominic stopped fidgeting, frozen in place.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>After an awkward silence, Dominic forced a shaky smile. &#34;So... what was your name again?&#34;</p>
                 <p>&#34;General Liam Blackwood.&#34; The name had an immediate effect - all color drained from their faces as they exchanged panicked glances.</p>
                 <p>They desperately tried to convince themselves it was just a coincidence. There was no way their Evelyn could have married the most feared military leader in Aldenria.</p>
                 <p>Dominic&#39;s voice cracked as he asked, &#34;And... where do you work, exactly?&#34;</p>
                 <p>&#34;Royal Heights Military Base.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Dominic shot to his feet so fast he nearly knocked over his chair. &#34;General Blackwood! Our deepest apologies for disturbing you!&#34;</p>
                 <p>He grabbed his parents&#39; arms urgently. &#34;Mom, Dad, we should leave immediately.&#34;</p>
                 <p>Vincent shook him off angrily. &#34;Leave? We haven&#39;t gotten our money yet!&#34;</p>
                 <p>&#34;Are you insane?&#34; Dominic hissed, sweat pouring down his face. &#34;That&#39;s the Supreme Commander of Aldenria&#39;s armed forces!&#34;</p>
                 <p>Dorothy gasped as realization struck. &#34;The same General Blackwood who shut down Vince&#39;s casino?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Dominic nodded frantically, practically dragging them toward the door. &#34;We need to get out of here before—&#34;</p>
                 <p>Vincent suddenly roared, shaking off his son&#39;s grip. &#34;I don&#39;t care if he&#39;s the damn president! He married my daughter, which makes him family!&#34;</p>
                 <p>&#34;You have no idea who you&#39;re dealing with!&#34; Dominic shouted, his hands balling into fists.</p>
                 <p>Vincent scoffed loudly. &#34;What&#39;s he going to do? Shoot me with one of his fancy military toys? Let him try! I&#39;m not afraid of some weapons dealer!&#34;</p>
                 <p>Dominic looked ready to strangle his own father as he whispered harshly, &#34;That &#39;weapons dealer&#39; commands the deadliest special forces in three nations. He could have us disappeared before we reach the parking lot!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

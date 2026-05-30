@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,31 +2391,31 @@
                 <p>Emily pressed her lips together.</p>
                 <p>Ryan seemed oblivious to her reaction as he continued, &#34;With the medical industry booming, we launched a surgical automaton project years ago. Unfortunately, we&#39;ve been unable to recruit the renowned expert Dr. Preston Quincy...&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>The name made Emily&#39;s breath catch.</p>
                 <p>Wasn&#39;t that the very Dr. Quincy Sophia Laurent had hired at great expense?</p>
                 <p>His research specialty aligned perfectly with surgical automatons.</p>
                 <p>This was supposed to be Pearl Group&#39;s classified information.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>But William Lowell trusted her completely, granting unrestricted access to his office.</p>
                 <p>Sometimes even letting her sit on his lap while handling official business.</p>
                 <p>That&#39;s how she&#39;d learned the secret.</p>
                 <p>&#34;Is finding Dr. Quincy crucial for you?&#34; Emily probed.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Ryan&#39;s frown deepened. &#34;Absolutely vital.&#34;</p>
                 <p>He paused, his voice lowering. &#34;With the project stalled, I&#39;m afraid our engagement may need postponing.&#34;</p>
                 <p>Emily panicked.</p>
                 <p>Postpone the engagement?</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Pushing him now would backfire.</p>
                 <p>Imagining the glory of becoming Mrs. Cunningham, she clenched her fists. &#34;I might be able to contact Dr. Quincy.&#34;</p>
                 <p>Ryan&#39;s eyes flashed with calculation before lighting up with feigned delight. &#34;Really? You know Dr. Quincy, Emily?&#34;</p>
                 <p>His gaze brimmed with admiration. &#34;You never cease to amaze me. Meeting you was the greatest fortune of my life.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>The flattery dispelled Emily&#39;s gloom.</p>
                 <p>&#34;Just a passing acquaintance,&#34; she demurred.</p>
                 <p>&#34;Nonsense!&#34; Ryan exclaimed. &#34;You&#39;re the most perfect woman I&#39;ve ever met. Marrying you would be my greatest blessing.&#34;</p>
@@ -2343,7 +2423,7 @@
                 <p>&#34;Let me consult Dr. Quincy first,&#34; she promised.</p>
                 <p>Though disappointment flickered in Ryan&#39;s eyes, he gently pulled her into an embrace. &#34;If you can make this happen, you&#39;ll be the Cunningham family&#39;s savior.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

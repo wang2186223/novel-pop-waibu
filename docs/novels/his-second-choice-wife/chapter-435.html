@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,7 +2390,7 @@
                 <p>Donovan remained stone-faced.</p>
                 <p>&#34;And what perfect company you&#39;ll have for the journey,&#34; Rosalind added sweetly.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Donovan&#39;s fists clenched. Even facing death, she couldn&#39;t resist tormenting him. He didn&#39;t need her running commentary to understand the gravity of their situation.</p>
                 <p>Julian&#39;s expression darkened when he noticed Donovan. He approached the wheelchair, his voice uncharacteristically serious. &#34;What happened to Donovan?&#34;</p>
                 <p>They&#39;d been childhood friends. Now Donovan sat broken before him - blind, paralyzed, a shadow of the man he once was.</p>
@@ -2320,24 +2400,24 @@
                 <p>Julian ignored her, repeating, &#34;What happened to him?&#34;</p>
                 <p>&#34;He was an undercover narcotics agent. They discovered his identity.&#34; Evelyn&#39;s voice cracked. &#34;They tortured him for days. Left him like this.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Julian absorbed this with surprising solemnity before shrugging. &#34;Occupational hazard. We all take risks, don&#39;t we?&#34; He gestured to his own scarred face. &#34;I&#39;m not exactly unscathed myself.&#34;</p>
                 <p>Returning to his casual demeanor, he sprawled on the couch. &#34;Now I&#39;m a fugitive in Aldenria. The Wright fortune is beyond my reach. So—&#34;</p>
                 <p>His lips curled into a predatory smile. &#34;Father, I hold all your fates in my hands. Perhaps we can negotiate terms for your survival.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;How much?&#34; Evelyn demanded.</p>
                 <p>&#34;Fifty billion.&#34; Julian held up five fingers, his tone disturbingly calm.</p>
                 <p>Archibald&#39;s eyes bulged.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Evelyn scoffed. &#34;You can&#39;t be serious. That&#39;s an impossible sum.&#34;</p>
                 <p>Julian stretched his arms along the couch back. &#34;For Aldenria&#39;s wealthiest family? Hardly. Liquidate assets. Sell shares at discount. Transfer everything to my offshore accounts.&#34;</p>
                 <p>&#34;There&#39;s no way to move that much money out of Aldenria so quickly!&#34; Evelyn protested.</p>
                 <p>Julian&#39;s smile turned icy. &#34;Seven days. Fifty billion in my accounts within seven days, or...&#34;</p>
                 <p>He picked up a remote control, his thumb hovering over the red button.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

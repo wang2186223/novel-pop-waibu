@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2331,7 +2411,7 @@
                 <p>But Seraphina was Arabella’s daughter.</p>
                 <p>Every smile, every hesitant glance from her tugged at him. Her innocence awakened something primal in him—a need to shield her from the world. Yet her lineage erected an impenetrable wall between them.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Lillian,&#34; he rasped, leaning against the wall, his bruised knuckles matching the bloodshot hue of his eyes, &#34;I do care for her. But it ends here.&#34;</p>
                 <p>&#34;Because she’s Arabella’s child?&#34; Lillian pressed.</p>
                 <p>&#34;Yes.&#34; The word scraped from his throat.</p>
@@ -2344,7 +2424,7 @@
                 <p>&#34;President Kingsley,&#34; she answered, her tone frosty, as if last night’s warmth had never existed.</p>
                 <p>&#34;Isabella.&#34; His voice was velvet.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;I don’t know a ‘Alexander.’ Only President Kingsley.&#34; Her lips curled.</p>
                 <p>&#34;Has Grandfather called you?&#34;</p>
                 <p>&#34;Grandfather? No. Why? Is he alright?&#34; Her spine stiffened.</p>
@@ -2357,7 +2437,7 @@
                 <p>&#34;Isabella, Nathaniel and I grew up together. Yes, he’s a womanizer, but he’s not reckless. Seraphina is my sister. He wouldn’t touch her.&#34;</p>
                 <p>&#34;Your sister?&#34; She scoffed. &#34;The only women safe from him are his mother and hypothetical daughter! Pray he hasn’t laid a finger on her. If he has, I’ll break every bone in his hand. And when I make promises, I keep them.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Fine.&#34;</p>
                 <p>&#34;What?&#34;</p>
                 <p>&#34;I said, fine. If he’s crossed the line, you take his left hand. I’ll take the right.&#34;</p>
@@ -2370,7 +2450,7 @@
                 <p>A blink. A nod.</p>
                 <p>&#34;Good.&#34; Relief loosened his shoulders. He reached for his phone. &#34;I’ll call your siblings—&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Seraphina’s hand shot out, gripping his wrist.</p>
                 <p>&#34;N-Nathaniel… I’m hungry.&#34;</p>
                 <p>&#34;I figured.&#34; His lips twitched. &#34;Lillian’s fetching food. She’ll be back soon.&#34;</p>
@@ -2387,7 +2467,7 @@
                 <p>Seraphina gulped, her fingers twisting the sheets.</p>
                 <p>&#34;Being fed by me is a bragging right for years. Now—open wide.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

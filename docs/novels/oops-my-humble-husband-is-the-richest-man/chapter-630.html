@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2319,7 +2399,7 @@
                 <p>Leo slowly lifted his head and looked at Ethan. &#34;I can&#39;t entrust the honor of the Special Operations Division to anyone else.&#34;</p>
                 <p>Ethan was stunned.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>He immediately understood. Leo was still bothered by their earlier argument.</p>
                 <p>&#34;I was wrong! The Cortez Sect disciples will fight with everything they have too!&#34;</p>
                 <p>Leo shook his head.</p>
@@ -2333,7 +2413,7 @@
                 <p>&#34;He can&#39;t keep fighting!&#34;</p>
                 <p>Marcus stared at the arena, his expression complex.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>He spoke slowly. &#34;He said maintaining the Special Operations Division&#39;s honor can&#39;t be left to others. This is what he must do.&#34;</p>
                 <p>The arena fell silent.</p>
                 <p>Grace stared at Marcus, dumbfounded.</p>
@@ -2347,7 +2427,7 @@
                 <p>He fell again and again, only to rise each time.</p>
                 <p>The arena floor was spattered with dark, blotchy stains of blood.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Ethan&#39;s eyes reddened. &#34;Leo! Yield!&#34;</p>
                 <p>Leo shook his head.</p>
                 <p>Even lying prone on the ground, he still clung desperately to the hem of King&#39;s clothes.</p>
@@ -2361,7 +2441,7 @@
                 <p>Leo could no longer stand, yet he refused to let go.</p>
                 <p>King was at a loss.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>The International Division representative stepped onto the stage, sneering. &#34;Is this all the Special Operations Division of Aldoria can do? Resorting to cheap tricks when you can&#39;t win? Refusing to leave the stage?&#34;</p>
                 <p>He curled his lip. &#34;Sick men of the East.&#34;</p>
                 <p>The four words caused an uproar.</p>
@@ -2375,7 +2455,7 @@
                 <p>Everyone&#39;s pupils constricted sharply.</p>
                 <p>King was taken aback.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Under the representative&#39;s intimidating gaze, he didn&#39;t dare disobey.</p>
                 <p>Ethan shouted, &#34;You wouldn&#39;t dare!&#34;</p>
                 <p>&#34;Why wouldn&#39;t I?&#34; The representative laughed. &#34;If you lose, hand over the person obediently.&#34;</p>
@@ -2392,7 +2472,7 @@
                 <p>Thud—</p>
                 <p>A slender hand steadily blocked the punch.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

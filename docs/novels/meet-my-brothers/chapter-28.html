@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>Still half-asleep, she answered the call, “Hello?”</p>
                 <p>“Mia, where’s my watch? Where did you put it?”</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Timothy’s curt voice dispelled all of Mia’s drowsiness.</p>
                 <p>She sat up in bed and replied, “I don’t know. Don’t ask me.” (</p>
                 <p>Once she finished speaking, she ended the call.</p>
@@ -2323,7 +2403,7 @@
                 <p>Meanwhile, Timothy pursed his lips. He couldn’t believe that Mia had hung up on him!</p>
                 <p>He picked up the watch nearby and marched out of the house. He was so furious that he didn’t even stick around for breakfast.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>When Timothy got into the car, he immediately asked Heath, “Did the hospital call her?”</p>
                 <p>“They did,” Heath replied.</p>
                 <p>“Are you sure?”</p>
@@ -2332,7 +2412,7 @@
                 <p>Timothy had specifically called Mia today to give her a chance to give in to him first, but on the contrary, she had the nerve to drop his call!</p>
                 <p>Heath spoke up hesitantly, “I had someone look into the situation. Her uncle’s medical fees have been paid off.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>“Hah,” Timothy scoffed. “She can probably only afford a month’s payment.”</p>
                 <p>“No, the medical fees have been paid off for the next ten years.” Heath clarified.</p>
                 <p>Ten years?</p>
@@ -2341,7 +2421,7 @@
                 <p>Timothy lowered the car window. The morning breeze came in.</p>
                 <p>With knitted brows, he asked Heath, “Who do you think did it?”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>“Perhaps the man who took her away in a helicopter the other day?” Heath suggested tentatively.</p>
                 <p>Timothy’s expression darkened. He had underestimated Mia. Now that she couldn’t get anything from him, she immediately threw herself into another man’s arms.</p>
                 <p>After thinking for a while, Timothy instructed Heath, “Gather all the information you can find on the Fleur International Design Competition.”</p>
@@ -2350,7 +2430,7 @@
                 <p>She remarked, “Liam, you look like that movie star, Linden Lane.”</p>
                 <p>Liam cleared his throat and said, “A lot of people say that. Well, I do work as his stand-in.”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>He stood up and hastily changed the subject. “Mia, I bought you breakfast. I don’t have anything to do today, so I can go out with you. If you need to get anything, just let me know.”</p>
                 <p>From today onward, he was going to follow Mia everywhere! After all, he was the one with the most time on his hands-and the most bored, too!</p>
                 <p>To him, shooting a film was nowhere near as interesting as spending time with Mia.</p>
@@ -2360,7 +2440,7 @@
                 <p>As Dominic was a real estate mogul, his company would organize interior design competitions. The winning designs would be used for their residential properties.</p>
                 <p>Liam was surprised to find that Mia was also joining the competition!</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

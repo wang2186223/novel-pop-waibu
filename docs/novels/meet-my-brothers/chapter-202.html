@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>“I’ll figure something out. But, Ms. Barrett, you know my situation right now. I lost my job and reputation. No one will take me in. I’m in need of cash.”</p>
                 <p>Shelly rolled her eyes. “I’ll transfer you a thousand dollars. As long as you can get me something to prove Mia’s pregnancy, you’ll gain what you deserve.”</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Wilhelmina received a notification of a transaction, her brows frowning in annoyance.</p>
                 <p>This amount of money didn’t even mean anything to her in the past. Shelly was trying to brush Wilhelmina off with that little money.</p>
                 <p>However, Wilhelmina was in dire need of money.</p>
                 <p>She cast a backward glance at the studio, and vowed to never forgive Mia and Shelly.</p>
                 <p>Meanwhile, Mia slumped in her seat, still in disbelief over what had just transpired.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Her heartbeat was racing.</p>
                 <p>Felix approached her, pouring her a glass of warm water. “Are you okay?”</p>
                 <p>“I’m okay. Thanks for earlier, Felix.” A few sips of warm water recentered her a bit, but they did nothing to placate her heartbeat.</p>
                 <p>Instead, dizziness clouded her mind and she felt cold.</p>
                 <p>She held the desk. “Felix.”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>“Mia, what’s wrong?”</p>
                 <p>+15 BONOS</p>
                 <p>Before she could stand up, she flopped onto the floor.</p>
                 <p>Felix carried her in his arms. “Hold on, I’ll take you to the hospital.”</p>
                 <p>Mia gritted her teeth in an attempt to stay awake. “Peace Hospital.”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Going to the hospital Connor worked at could give her a peace of mind.</p>
                 <p>Felix rushed to the hospital. Her face was pale and he kept comforting her along the way.</p>
                 <p>Mia mustered every ounce of strength left in her to call Connor. The line got through almost immediately. “Mia, what’s up?”</p>
                 <p>“I have a stomach ache. I’m reaching the hospital soon.”</p>
                 <p>“What? Hold on, I’m coming!”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>A wave of relief washed over her when she heard that. Things should be fine now.</p>
                 <p>She didn’t want anyone to find out that she was pregnant.</p>
                 <p>Felix parked the car before carrying her to the emergency room.</p>

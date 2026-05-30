@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2316,7 +2396,7 @@
                 <p>&#34;He always overthinks.&#34;</p>
                 <p>Evadne shook her head. &#34;In my heart, he’s no different from Cassius. I love and admire them equally.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;By the way, George is rotting in jail now. Arnold and Aaron teamed up to crack down on underground gambling dens and loan sharks. A few of those scumbags are locked up with him.&#34;</p>
                 <p>Jason clenched his jaw, eyes icy. &#34;George can take his sweet time repaying his debts behind bars.&#34;</p>
                 <p>Evadne smirked. &#34;My brothers are so thoughtful. I’ll have to cook them a feast as thanks.&#34;</p>
@@ -2327,7 +2407,7 @@
                 <p>&#34;But it’s strange. Acacia’s reputation is in ruins—she’s useless now. Elspeth isn’t a saint either. Why would she clean up the Sterlings’ mess?&#34; Jason voiced his confusion.</p>
                 <p>&#34;Even if Acacia is useless, she might have dirt on Elspeth.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Evadne’s tone turned frigid. &#34;They’ve been scheming together for years. Do you think Acacia doesn’t know any of Elspeth’s secrets? As you said, Elspeth isn’t a philanthropist. She’s being blackmailed into filling the Sterling Group’s financial hole.&#34;</p>
                 <p>&#34;Serves her right!&#34;</p>
                 <p>Jason peeled another grape and handed it to Evadne. &#34;I heard Acacia paid the hospital bill and fled abroad to avoid the scandal. Doubt she’ll dare show her face in Elmsworth anytime soon. That poor little girl was completely abandoned. As per your instructions, I sent her to the Ashbourne-sponsored welfare home. She’s adjusting well, so you needn’t worry.&#34;</p>
@@ -2349,7 +2429,7 @@
                 <p>Avery smiled, waving his phone. &#34;Then I logged into the game and saw you online. Figured I’d shoot my shot.&#34;</p>
                 <p>&#34;What would you like to drink? My treat.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>His thoughtfulness made her feel oddly guilty, as if she owed him an apology.</p>
                 <p>&#34;I’ve already had three coffees. Not thirsty, but I’m starving.&#34;</p>
                 <p>Avery adjusted his gold-rimmed glasses, his smile disarmingly genuine. &#34;President Ashbourne, may I sample the cuisine at your esteemed hotel? Been in Helgen for years—I’ve missed authentic Elmsworth flavors.&#34;</p>
@@ -2360,7 +2440,7 @@
                 <p>He despised Thaddeus.</p>
                 <p>And Avery? Jason didn’t trust him either.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Some people, you just knew instinctively—you’d never be friends. Your gut screamed warnings from the start.</p>
                 <p>Though Jason adored Evadne, he wasn’t the jealous type. He didn’t resent men who interacted with her.</p>
                 <p>But Avery’s ever-present smile felt like a mask. Unreadable. Unpredictable. Even Evadne couldn’t anticipate his sudden appearances.</p>

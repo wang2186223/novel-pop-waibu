@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2329,20 +2409,20 @@
                 <p>&#34;Mr. Stewart, I&#39;m the lead on this resort project. Let me know if you need anything-I&#39;m happy to assist.&#34;Elena addressed Wyatt this way because of his words last night.</p>
                 <p>After returning to the Green family household the previous night, Elena couldn&#39;t contain her anger. Her parents were also furious upon learning about what had happened at the Moonlit Restaurant.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Kevin Green and Carlotta Green were dissatisfied with what Wyatt had done. Still, they were unwilling to give up on the idea of making him their son-in-law. After hours of debate, they decided to hand the reins of the resort project to Elena, hoping Wyatt would see their daughter&#39;s capabilties.</p>
                 <p>Carlotta&#39;s final advice rang in Elena&#39;s mind: a woman&#39;s competence outweighed her looks-a truth that had her wading through dust and mud despite her displeasure. When she learned that Wyatt intended to entrust the project to Amelia, her smile vanished instantly.</p>
                 <p>Annoyance flared, and as she eyed Amelia&#39;s youthful look, jealousy twisted inside her. She said mockingly,&#34;Mr. Stewart, this project is huge. Miss Flynn is still new to the business world. I doubt she&#39;s ready for something of this scale.&#34;</p>
                 <p>Amelia replied, her tone steady but edged with steel, &#34;Nobody is born a veteran-every expert started out with zero experience. You haven&#39;t even seen what I can do, so on what grounds are you doubting my ability to run this project?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Secretly, Amelia had worried about whether she could pull off a project of this scale. Yet, Elena&#39;s thinly veiled contempt only fanned the flames of her determination to handle the project well.</p>
                 <p>Now, her mind was set-she would make this project a success, no matter what.</p>
                 <p>Wyatt stood firmly at Amelia&#39;s side, quietly impressed with the way she held her ground.</p>
                 <p>Those words landed like a challenge at Elena&#39;s feet, but she ignored Amelia and turned to Wyatt.Stewart, is it really wise to hand such a major project to a rookie? What if something goes wrong? Can she take responsibility?&#34;</p>
                 <p>Wyatt&#39;s reply was cold. &#34;I have full confidence in her. And if the project fails, that&#39;s fine-it&#39;ll just provide her with valuable experience. Either way, I stand by my decision.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

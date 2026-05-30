@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>Alexander&#39;s phone chimed with her distinct notification tone. Work forgotten, he strode out just in time to hear the front door click shut below.</p>
                 <p>The engagement party would have to wait. His response was brief: [I&#39;ll come get you when I&#39;m finished.]</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>[Don&#39;t bother,] she typed back.</p>
                 <p>Evelyn wasn’t the type to make a scene. A taxi would do just fine. There was no reason to drag Alexander back and forth across the city.</p>
                 <p>At six-fifteen, Evelyn arrived at Hawthorne Estate.</p>
@@ -2321,7 +2401,7 @@
                 <p>The housekeeper greeted her at the door. &#34;Miss Carter, you&#39;re home.&#34;</p>
                 <p>Hearing the noise, Richard and Margaret emerged, their smiles strained.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>When they saw Evelyn standing alone in the doorway, their eyes immediately flickered behind her.</p>
                 <p>No Alexander.</p>
                 <p>Their expressions hardened instantly.</p>
@@ -2329,7 +2409,7 @@
                 <p>&#34;What is this? Where’s Alexander? You promised you’d bring him for dinner! He hasn’t even properly introduced himself to us. Isn’t that basic courtesy?&#34;</p>
                 <p>Evelyn’s voice was cool. &#34;Rules are rules, but people aren’t bound by them. He’s swamped with work and barely has time to breathe. Expecting him to drop everything for dinner is unrealistic.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Her eyes flickered to the doorway, and Evelyn froze in surprise. Vanessa wasn&#39;t alone—Ethan sat beside her, his presence like an unexpected storm cloud.</p>
                 <p>Evelyn&#39;s gaze lingered for only a heartbeat before she sharply looked away.</p>
                 <p>Just her luck.</p>
@@ -2337,7 +2417,7 @@
                 <p>Vanessa noticed the way his eyes tracked Evelyn and felt irritation prickle under her skin.</p>
                 <p>With deliberate sweetness, she peeled a grape and pressed it to Ethan&#39;s lips.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>When he turned to her, Vanessa offered a demure smile. She laced her fingers through his, her grip possessive.</p>
                 <p>&#34;I don&#39;t buy that Alexander&#39;s too busy to see us,&#34; Richard snapped, his glare boring into Evelyn.</p>
                 <p>&#34;Let&#39;s be real—if you meant anything to him, would he treat you this way? Look at Vanessa. Every time she comes home, doesn&#39;t Ethan drop everything to be with her?&#34; His lip curled. &#34;You&#39;re sisters. Why are you such a disappointment?&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>Her finger jabbed toward Vanessa. &#34;That&#39;s right, I&#39;m not like her—no talent for stealing men and playing the perfect little puppet.&#34; Her voice turned razor-sharp. &#34;Maybe you should explain how you raised such a masterpiece of manipulation instead.&#34;</p>
                 <p>&#34;You—!&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>The air crackled with tension.</p>
                 <p>Evelyn&#39;s chest burned. She wouldn&#39;t let them twist the knife deeper. Not this time.</p>
                 <p>Vanessa&#39;s grip on Ethan tightened, her smile never wavering. But her eyes—those betrayed the fury simmering beneath.</p>
@@ -2357,7 +2437,7 @@
                 <p>&#34;Spare me the theatrics,&#34; Evelyn snapped.</p>
                 <p>Her icy gaze swept over Vanessa before she turned on her heel and strode toward the storage room without another word.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

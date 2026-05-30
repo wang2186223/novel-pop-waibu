@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>&#34;The flavors are actually quite good.&#34;</p>
                 <p>Olivia tilted her head. &#34;Then why do you look like you&#39;re marching to the gallows? I thought you&#39;d veto it.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Let&#39;s go here.&#34; Evelyn pocketed her phone, not wanting to dampen the mood.</p>
                 <p>After work, the group arrived promptly. Their reserved private room spared them the waitlist.</p>
                 <p>The department&#39;s Dutch treat tradition turned ordering into a relay race. When the phone reached Evelyn, she immediately selected steamed perch.</p>
                 <p>&#34;Not browsing more?&#34; A colleague seemed surprised.</p>
                 <p>&#34;No need.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Olivia interjected, &#34;Dr. Carter&#39;s a regular here. Her picks never miss.&#34;</p>
                 <p>This sparked immediate curiosity. Evelyn briefly recommended signature dishes: &#34;I prefer lighter flavors, so take these as suggestions.&#34;</p>
                 <p>&#34;Perfect for sampling more with a big group!&#34; The designated mood-lifter laughed.</p>
                 <p>When dishes arrived, Evelyn&#39;s recommendations earned universal praise.</p>
                 <p>&#34;Dr. Carter,&#34; a new resident asked excitedly, &#34;social media says Lily Waters&#39; night views are super photogenic. Any angles you&#39;d recommend?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Images flashed of Annabelle photographing Lydia by the pond. &#34;The stone steps near the water work well.&#34;</p>
                 <p>Several female colleagues immediately planned a post-dinner photoshoot.</p>
                 <p>&#34;Dr. Carter,&#34; the young resident suddenly ventured, &#34;when you came here before, was it with that guy who drives you daily? You two seem so in love—newlyweds?&#34;</p>
                 <p>Evelyn&#39;s chopsticks froze.</p>
                 <p>Newlywed wasn&#39;t wrong, though their most recent &#34;wedding&#34; had been a divorce. The topic was landmine territory.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>As she struggled to respond, another colleague tugged the questioner&#39;s sleeve, whispering urgently.</p>
                 <p>The resident flushed crimson. &#34;Sorry, Dr. Carter, I didn&#39;t know—&#34;</p>
                 <p>&#34;It&#39;s fine.&#34; Evelyn offered a faint smile.</p>
                 <p>The resident hastily raised her juice glass. &#34;Let me toast you.&#34;</p>
                 <p>&#34;Our situation is complicated,&#34; Evelyn sipped her drink, &#34;so I don&#39;t discuss it much.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Noticing the awkwardness, someone swiftly changed subjects: &#34;Heard anesthesiology&#39;s Dr. Wilson is dating!&#34;</p>
                 <p>This detonated the table.</p>
                 <p>&#34;With his qualifications, that&#39;s hardly surprising!&#34;</p>
@@ -2349,7 +2429,7 @@
                 <p>Gregory&#39;s love life became the meal&#39;s focal point. Evelyn ate quietly, avoiding the discourse.</p>
                 <p>Tonight&#39;s fears had materialized one by one. While she genuinely wished Gregory happiness, as someone who knew too much, silence remained her only option.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,17 +2390,17 @@
                 <p>She blinked, snapping out of her thoughts. &#34;Finished your call?&#34;</p>
                 <p>Gregory Wilson pocketed his phone. &#34;Olivia said Simon Stapleton and his mother caused another scene at the hospital. But don’t worry—the director had security throw them out immediately.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>The tension in Evelyn&#39;s shoulders eased slightly. &#34;We should’ve told the director sooner.&#34;</p>
                 <p>&#34;Timing was perfect.&#34; Gregory leaned against the wall. &#34;If you hadn’t laid the groundwork, he wouldn’t have acted so decisively.&#34;</p>
                 <p>&#34;At least Natalie will get her assets back.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Gregory chuckled. &#34;When a father sees his daughter in that state, he’d agree to anything just to end the marriage.&#34; He paused, then added dryly, &#34;If my future daughter ever dates trash like that, I’ll break her legs.&#34;</p>
                 <p>Evelyn arched a brow. &#34;Thinking far ahead, aren’t you? No girlfriend yet already worrying about a daughter? How’s Ms. Tan these days?&#34;</p>
                 <p>&#34;Busy.&#34; His tone was flat.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;With you two barely seeing each other—&#34;</p>
                 <p>&#34;Doctors are busy. Neither of us can complain.&#34; He cut her off, clearly unwilling to continue the topic.</p>
                 <p>Evelyn took the hint and fell silent.</p>
@@ -2330,7 +2410,7 @@
                 <p>She waved her hands dismissively. &#34;My coordination is nonexistent. I only passed the 800-meter run in college because the teacher took pity on me.&#34;</p>
                 <p>Gregory had already selected two cues and handed her one. &#34;Billiards is about technique.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Reluctantly accepting the cue, she followed him to the table.</p>
                 <p>Gregory bent over to break, his movements crisp and efficient. The triangular formation scattered instantly.</p>
                 <p>&#34;Start with basic shots.&#34; He positioned the cue ball. &#34;Aim to hit the brown one into the corner pocket.&#34;</p>
@@ -2338,7 +2418,7 @@
                 <p>&#34;Your grip’s wrong.&#34; Gregory set down his own cue and stepped behind her.</p>
                 <p>His fingers lightly adjusted hers, his warm breath brushing her ear. &#34;Like this—fingers slightly curved to create a pivot point for the cue.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,27 +2390,27 @@
                 <p>&#34;I&#39;ll also have Solterra&#39;s authorities assist in the search.&#34;</p>
                 <p>Liam&#39;s steps slowed, his grip on her hand tightening imperceptibly.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Liam,&#34; Evelyn&#39;s voice wavered, &#34;could you check on my grandparents occasionally? They&#39;re getting older, and they live alone...&#34;</p>
                 <p>She swallowed hard, her next words trembling. &#34;I&#39;m swamped with work, and they don&#39;t know about my job. They wouldn&#39;t understand why I can&#39;t visit or call. I can&#39;t return to Aldenria, and—&#34; Her voice broke. &#34;I hate that I have to leave them like this.&#34;</p>
                 <p>Liam stopped abruptly. He couldn&#39;t look at her—not when his own composure was hanging by a thread. His jaw clenched as he forced out the words, &#34;When you left Aldenria ten years ago, you&#39;d already decided never to come back.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;That&#39;s why you cut ties with everyone here. You only returned because of Julian.&#34; Liam&#39;s eyes glistened as he stared at the distant city lights. &#34;How long this time? Five years? Ten? Or will it be another lifetime?&#34;</p>
                 <p>Evelyn&#39;s heart shattered. Even without a future together, Liam would wait. The realization crushed her.</p>
                 <p>She drew a shaky breath. &#34;Liam, don&#39;t wait for me. If you meet someone wonderful, embrace it. Fall in love. Marry her. Build a life.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Liam&#39;s throat burned. He tipped his head back, blinking rapidly to keep the tears at bay. When he spoke, his voice was rough. &#34;And you? Will you find someone? Start a family? Have children?&#34;</p>
                 <p>&#34;I don&#39;t know,&#34; Evelyn whispered, wiping her cheeks. The future was a void she couldn&#39;t predict.</p>
                 <p>Liam had no words left. He pulled her into a crushing embrace. She clung to him just as desperately, her tears soaking into his shirt.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>He couldn&#39;t fathom the depth of her sorrow. Was it leaving Archibald and Margaret? Serving Aldenria one last time? Or the agony of failing to rescue her parents? Any one of those reasons was enough to break her.</p>
                 <p>She cried so easily now, yet she was still the woman he loved. But she was never meant to stay.</p>
                 <p>Liam gently stroked her hair. &#34;Evelyn,&#34; he murmured, &#34;when it&#39;s time to go, don&#39;t tell me. Just leave quietly, alright?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Evelyn&#39;s tears fell faster. &#34;Why?&#34;</p>
                 <p>&#34;Because I can&#39;t relive that pain—breaking down at the airport like I did ten years ago.&#34; His voice cracked. &#34;I&#39;m terrified I&#39;ll lose control. That I&#39;ll hide you away where no one can take you from me.&#34;</p>
                 <p>Evelyn buried her face deeper into his chest, her arms locking around him. She wept silently, wishing she could stay in his arms forever.</p>

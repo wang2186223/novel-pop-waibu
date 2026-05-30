@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>With one decisive motion, Olivia made her choice - she walked off set.</p>
                 <p>&#34;She&#39;s not doing it!&#34; Isabella immediately voiced Olivia&#39;s decision, shooting daggers at Evelyn. &#34;No one said Olivia had to participate. She&#39;s here as an assistant, not to be forced into something against her will.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Taking Olivia&#39;s arm firmly, Isabella marched them toward the exit.</p>
                 <p>The studio fell silent. Liam&#39;s irritation grew visibly while Evelyn, caught off guard, forced a tight smile. &#34;I&#39;ll do it myself then,&#34; she told the director.</p>
                 <p>&#34;Fine,&#34; the director replied smoothly, already adjusting his camera settings.</p>
                 <p>When Evelyn picked up the tweezers, the director stopped her with a raised hand. &#34;Wait, your grip is all wrong. You&#39;ll damage the artifacts holding them like that,&#34; he said, echoing Olivia&#39;s earlier advice.</p>
                 <p>Evelyn blinked in confusion. &#34;How should I hold them then?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>The director pulled up footage from yesterday, showing Olivia&#39;s flawless technique. He paused the video to emphasize her precise movements.</p>
                 <p>Evelyn&#39;s face tightened as she watched Olivia&#39;s skilled demonstration, the comparison clearly stinging her pride.</p>
                 <p>When she attempted to use the magnifying glass next, the director stopped her again. &#34;Your positioning is still incorrect. Do you even know how to use these tools? We didn&#39;t cover this yesterday.&#34;</p>
                 <p>Evelyn stared helplessly at the unfamiliar equipment. Flustered, she turned to Liam. &#34;What should I do?&#34;</p>
                 <p>&#34;I&#39;ll find someone,&#34; Liam said tersely, pulling out his phone without concern.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Mr. Blackwood,&#34; the director said professionally, &#34;we only have this morning to shoot. Another crew takes over this afternoon, and I have other commitments.&#34;</p>
                 <p>The director sat back, waiting as minutes ticked away with no replacement found.</p>
                 <p>&#34;Liam...&#34; Evelyn&#39;s voice trembled, tears welling in her eyes. &#34;Please call Olivia back to do the hand movements for me. She&#39;ll listen to you.&#34;</p>
                 <p>Liam hesitated, remembering Olivia&#39;s firm stance about their impending divorce. Would she really obey him now?</p>
                 <p>He sensed a change in her - she wasn&#39;t the compliant Olivia who always yielded to his demands anymore.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Without a word, Liam left the studio.</p>
                 <p>Olivia and Isabella hadn&#39;t gone far, waiting nearby for their ride.</p>
                 <p>&#34;Olivia,&#34; Liam called as he approached.</p>
                 <p>&#34;What do you want now?&#34; Isabella snapped, stepping protectively in front of Olivia.</p>
                 <p>&#34;She&#39;s my wife,&#34; Liam said firmly, meeting Isabella&#39;s glare. &#34;I need to speak with Olivia privately.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Isabella clenched her jaw but stepped aside after Olivia&#39;s subtle nod, though her anger remained palpable.</p>
                 <p>&#34;I need you to film the hand movements,&#34; Liam demanded, trying to assert his authority.</p>
                 <p>Olivia stood her ground, shaking her head firmly.</p>
@@ -2349,7 +2429,7 @@
                 <p>Liam recoiled at her audacity to use divorce as leverage. A disbelieving laugh escaped him.</p>
                 <p>&#34;Divorce? You&#39;re negotiating with me now?&#34; His laughter died as he grabbed her wrist, pulling her close in intimidation. &#34;Just because you work for the Whitmores doesn&#39;t mean you can dictate terms. How long do you think they&#39;ll protect you? If I go after them, do you really believe they&#39;ll stand by you?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

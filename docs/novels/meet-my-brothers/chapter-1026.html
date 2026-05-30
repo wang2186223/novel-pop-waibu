@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,31 +2391,31 @@
                 <p>Luna&#39;s back was hurting so much. Moreover, she initially thought Raymond would stand up for her!</p>
                 <p>Luna fixed her fierce gaze on Sharon and declared, &#34;I&#39;ll remember what happened today, and I won&#39;t let it go. Just wait and see.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Luna left right after that. She needed to accompany Raymond to the hospital for treatment. This was a chance for her to act pitifully and gain sympathy, so she didn&#39;t want to miss it. As for Sharon, that despicable old woman, there would be numerous opportunities to address her later.</p>
                 <p>After the departure of the three people, the private room became quiet. Mia nibbled on her snacks while comfortably seated on a chair. &#34;I haven&#39;t eaten anything all day, but I feel satisfied after watching the show.&#34;</p>
                 <p>It was worth it.</p>
                 <p>Timothy looked at her and asked, &#34;How&#39;s your hand? Show me.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Mia withdrew her hand and replied, &#34;I&#39;m perfectly fine. It was just a drop of water on my hand. No harm done.&#34;</p>
                 <p>After Mia finished speaking, she glanced at Sharon, who appeared lost. Then she said, &#34;The person who deserves your utmost concern at this moment is not me, but your mother.&#34;</p>
                 <p>Sharon appeared to have been struck by a powerful emotional blow, causing her to age considerably in a mere moment.</p>
                 <p>She gazed at Timothy sadly and said, &#34;Tim, I may not be the most intelligent or outstanding mother, and I may not have the affection of your grandparents. But I&#39;ve always cared for you with all my heart and soul, and I&#39;ve never caused you any harm. I don&#39;t understand why you are joining forces with Luna and that little rascal to humiliate me.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Sharon simply couldn&#39;t accept this fact.</p>
                 <p>Mia was genuinely curious about how Timothy could readily accept an illegitimate child and keep it a secret from Sharon. No matter how she contemplated the situation, she found it utterly implausible. It seemed inconceivable to her that any woman could accept her husband&#39;s illegitimate child.</p>
                 <p>Timothy fell into a brief silence, his</p>
                 <p>gaze fixed upon Sharon before he finally spoke up. &#34;From the very start, I had no choice but to accept this condition. Dad&#39;s will made no mention of allocating 5% of the shares to Asher.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;If it&#39;s not 5% of the shares, then what exactly is it?&#34;</p>
                 <p>&#34;The will left by Dad stipulated that my half-brother and I should jointly take over the company, sharing ownership equally. However, my so-called brother&#39;s health was</p>
                 <p>concerning, and he might not livet</p>
                 <p>long. Before his passing, he</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>expressed a desire for me</p>
                 <p>overne</p>
                 <p>allocate some of the company shares to his child, Asher He also agreed that Asher would not contest the ownership of the company with me and my children. He made it clear that agreeing to his terms</p>
@@ -2343,7 +2423,7 @@
                 <p>&#34;I see.&#34; Sharon&#39;s expression changed as a myriad of emotions overwhelmed her. She never expected that her long-dead husband would still find a way to play tricks on her.</p>
                 <p>Sharon was immediately disheartened and turned to Mia. &#34;Do you know why I resented you so much for marrying Tim back then?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

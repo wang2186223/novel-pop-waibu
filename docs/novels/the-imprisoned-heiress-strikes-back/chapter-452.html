@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,7 +2390,7 @@
                 <p>She would endure anything—humiliation, pain—if it meant keeping him safe. He was everything.</p>
                 <p>He pulled her into his arms, his breath warm against her skin. &#34;I won’t let him near you again.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>His voice was a vow, dark and unyielding. And Evelyn believed him.</p>
                 <p>Alexander&#39;s warm breath tickled Evelyn&#39;s neck, sending shivers down her spine. She instinctively leaned into him, craving his closeness.</p>
                 <p>&#34;Alexander, all I want is to focus on my health and our baby.&#34; Her voice trembled slightly. &#34;But I&#39;m terrified—what if Ethan and Vincent go too far? What if they hurt our child?&#34;</p>
@@ -2320,7 +2400,7 @@
                 <p>Alexander&#39;s hand rested protectively over her stomach, his touch gentle yet firm. &#34;They wouldn&#39;t dare. If they even try, I&#39;ll make sure they suffer for it.&#34;</p>
                 <p>Later that evening, Evelyn returned to Hawthorne Estate for dinner. When Margaret heard about the twenty days Evelyn had been trapped with Ethan, her face darkened with fury.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;What kind of monster is Ethan? First, he betrays you, then regrets it and tries to win you back—only to turn around and do this?&#34; Margaret&#39;s hands clenched into fists. &#34;Locking you up for weeks? If word gets out, your reputation could be ruined!&#34;</p>
                 <p>She hesitated, then lowered her voice. &#34;And Alexander… how is he handling this? Is he angry?&#34;</p>
                 <p>Margaret&#39;s concern was obvious—she feared Alexander might blame Evelyn. Being held captive by an ex-fiancé was the kind of scandal that could breed distrust.</p>
@@ -2330,7 +2410,7 @@
                 <p>Margaret exhaled in relief. &#34;Good. He&#39;s a good man.&#34;</p>
                 <p>As someone who had been through it all, Margaret had wisdom to spare. Looking back at her own life, she saw the signs of Richard’s betrayal clearly now. If he had been faithful, Vanessa wouldn’t even exist.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Evelyn noticed Richard’s prolonged absence and frowned. &#34;Has Dad been avoiding us lately?&#34;</p>
                 <p>Margaret shrugged, her voice steady. &#34;I don’t know where he is, and frankly, I don’t care. If anything happens to him, the estate remains ours. Men can be so childish—refusing to divorce just to prolong the misery.&#34;</p>
                 <p>Just as the words left her lips, a sharp knock echoed through the room, cutting their conversation short.</p>

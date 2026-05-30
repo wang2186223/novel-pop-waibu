@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,27 +2390,27 @@
                 <p>Seeing his blank expression only fueled Evelyn&#39;s frustration. She shoved against his chest with surprising force. &#34;If anything happens to our baby because of your carelessness, I swear to God, Liam Blackwood, I&#39;ll divorce you so fast your head will spin.&#34;</p>
                 <p>The word &#34;divorce&#34; hit Liam like a physical blow. Before he could respond, Evelyn had already turned on her heel and stormed away.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Liam didn&#39;t hesitate. Snatching his military coat, he sprinted after her. By the time he reached the parking lot, Rosalind was already holding the car door open for Evelyn. &#34;General Blackwood, don&#39;t worry,&#34; Rosalind assured him smoothly. &#34;I&#39;ll get Ms. Wright back to base safely.&#34;</p>
                 <p>&#34;Like hell,&#34; Liam growled, yanking open the opposite door and sliding into the backseat beside Evelyn.</p>
                 <p>The entire ride back to the military compound passed in suffocating silence. Evelyn kept her face turned resolutely toward the window, ignoring Liam&#39;s attempts to take her hand. Each rejection made his jaw tighten further.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Back at base, Evelyn disappeared into her quarters without a backward glance. That night, Liam&#39;s calls and texts went unanswered until finally, her phone was turned off completely.</p>
                 <p>Morning found Evelyn dressed and ready before dawn. She couldn&#39;t afford distractions today - not with the weapons prototype due for testing.</p>
                 <p>The research lab buzzed with unusual energy when she arrived. Colleagues swarmed her the moment she stepped through the door.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Cassandra! Is it true?&#34; Ethan Reynolds practically bounced with excitement. &#34;You actually married the Ice General?&#34;</p>
                 <p>Evelyn&#39;s eyes widened. &#34;How on earth did you all—&#34;</p>
                 <p>&#34;News travels fast in the science division,&#34; Ethan grinned, nudging her shoulder.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Come on, give us details! Who proposed to whom?&#34;</p>
                 <p>&#34;Was it a shotgun wedding? You can tell us!&#34;</p>
                 <p>&#34;Does this mean we&#39;ll be seeing General Blackwood lurking around here more often?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Evelyn opened her mouth to respond when a heavy stack of files slammed onto her workstation with enough force to make everyone jump. Her stomach lurched as she looked up into the scowling face of Theodore Graves.</p>
                 <p>Ethan shot the team leader a disapproving look. &#34;That was completely unnecessary, Theo. Cassandra&#39;s pregnant, for God&#39;s sake. You could have—&#34;</p>
                 <p>&#34;If she&#39;s pregnant,&#34; Theodore interrupted coldly, &#34;then she should take her maternity leave now. This isn&#39;t some hobby you can pick up and drop whenever you please, Wright. Where the hell have you been all week?&#34;</p>
@@ -2338,7 +2418,7 @@
                 <p>&#34;Did you file the proper leave request?&#34; Theodore demanded, his voice rising.</p>
                 <p>Evelyn glanced around at her colleagues, but their sympathetic expressions offered little comfort against Theodore&#39;s wrath.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

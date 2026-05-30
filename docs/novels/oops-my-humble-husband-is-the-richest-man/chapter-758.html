@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>In the earpiece, Chloe Raymond&#39;s sweet, simpering voice sounded again. &#34;Liam, why does she keep clinging to you? You&#39;ve treated her so badly, and she still won&#39;t leave. How pathetic!&#34;</p>
                 <p>Liam gave a light laugh, his tone casual. &#34;Her? She had an accident a few years ago. A firefighter saved her. I happened to be there at the time, and she mistakenly thought I was her savior. Because of that misunderstanding, she&#39;s completely devoted to me now. Hah, no matter how terribly I treat her, she won&#39;t fight back...&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>His words ended with a smug, low chuckle.</p>
                 <p>Each syllable was like a poisoned needle, piercing Mia&#39;s heart.</p>
                 <p>Mia pressed a hand to her chest, raised her head, and stared fixedly at Liam. &#34;It wasn&#39;t him... he wasn&#39;t the one who saved me?!&#34;</p>
@@ -2323,7 +2403,7 @@
                 <p>Mia stood up, her gaze toward Liam now burning with fury and accusation.</p>
                 <p>&#34;How could it not be him?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;This is impossible!&#34;</p>
                 <p>She trembled, her eyes shifting to Evelyn Ross.</p>
                 <p>Then to Sebastian Truman.</p>
@@ -2341,7 +2421,7 @@
                 <p>Having said that, she turned her furious gaze back to Liam Cooper!</p>
                 <p>She, the esteemed young lady of the Truman family, had been deceived by such trash for three and a half whole years!</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>She couldn&#39;t swallow this anger!</p>
                 <p>Mia ripped off the Bluetooth earpiece, shoved it into Evelyn&#39;s hand, and strode toward Liam.</p>
                 <p>Liam was whispering flirtatiously with Chloe, his words dripping with mockery about Mia&#39;s stupidity.</p>
@@ -2350,7 +2430,7 @@
                 <p>He frowned. &#34;Why are you back again?&#34;</p>
                 <p>Mia said nothing.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Liam&#39;s gaze swept over Evelyn and the others, landing on Sebastian. He raised an eyebrow. &#34;These your friends? Here to party at the bar too?&#34;</p>
                 <p>As soon as he spoke, the female companions sitting beside him and Chloe started chattering.</p>
                 <p>&#34;Mia Truman, are you done yet? Always harassing Liam, can&#39;t we even have fun?&#34;</p>
@@ -2362,7 +2442,7 @@
                 <p>Chloe also flared up. She stood and walked right up to Mia. &#34;You, get out of here right now!&#34;</p>
                 <p>Mia let out a scornful laugh and looked at Liam. &#34;This rich heir act of yours... have you had enough?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

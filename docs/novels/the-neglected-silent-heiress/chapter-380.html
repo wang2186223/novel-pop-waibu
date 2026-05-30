@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2308,24 +2388,24 @@
                 <p>Isabelle sat on the marble floor, her dress smudged with dirt. Tears streamed down her flushed cheeks. Standing beside her with cold indifference, Lillian addressed the gathering crowd clearly. &#34;I didn&#39;t do anything. She was caught stealing.&#34; Lillian&#39;s accusation sent murmurs rippling through the onlookers. &#34;Good heavens! Stealing? At her age?&#34; &#34;Some children are just born troublemakers. Look at her mother - Olivia never was proper society material. The apple doesn&#39;t fall far.&#34;</p>
                 <p>Isabelle tried to protest, but at her young age, her words came out jumbled between sobs. A heavyset woman stormed forward and grabbed Isabelle&#39;s wrist roughly. &#34;Well? Confess! I caught you red-handed with my bracelet. Such a little thief already! And still lying about it. Get out of here this instant!&#34; She began dragging the struggling child away.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Olivia arrived just as Isabelle was fighting uselessly against the woman&#39;s iron grip. The child&#39;s delicate arm already bore angry red marks from the rough handling.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Fury surged through Olivia. She barely restrained herself from shouting as she swiftly intervened, prying Isabelle free.</p>
                 <!-- 广告位 3 -->
                 <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Seeing her mother, Isabelle&#39;s controlled whimpers erupted into heart-wrenching sobs. &#34;Mommy! I didn&#39;t take anything! I promise!&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Olivia took a steadying breath before fixing the woman with an icy stare. &#34;Excuse me, but where&#39;s your proof? She&#39;s a child who doesn&#39;t even understand jewelry values. That bracelet wouldn&#39;t even fit her wrist.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>The woman sneered arrogantly. &#34;Why speculate about her motives? Some are just born thieves. I saw my bracelet in her hands myself.&#34; She smirked knowingly. &#34;I remember how you used to cling to the Blackwoods for survival. Seems you still haven&#39;t shaken those low-class habits, passing them to your daughter.&#34;</p>
                 <p>&#34;What exactly are you implying?&#34; Natalie&#39;s voice shook with barely contained rage as she stepped forward. Isabella arrived just then, placing a restraining hand on Natalie&#39;s shoulder, her expression grave. &#34;Natalie, control yourself,&#34; she murmured urgently before whispering to both women, &#34;This is no ordinary woman - she&#39;s Victoria&#39;s aunt.&#34;</p>
                 <p>This meant she was sister to Beatrice, a formidable political figure in Crestwood. The former civil servant turned deputy mayor was known for her uncompromising integrity.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

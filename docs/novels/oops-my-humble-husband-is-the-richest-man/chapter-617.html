@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2324,7 +2404,7 @@
                 <p>She had often seen Benjamin.</p>
                 <p>Though a forensic pathologist, Benjamin usually wore casual clothes.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>He would carry fried dough sticks, seeing Grace off to school.</p>
                 <p>Back then, if he occasionally knew she hadn&#39;t eaten breakfast, he would bring her a portion too.</p>
                 <p>When Benjamin spoke to Grace, he was always gentle, a smile on his face.</p>
@@ -2343,7 +2423,7 @@
                 <p>Now, she too had a father who cherished her...</p>
                 <p>Evelyn pulled her thoughts back and saw Grace&#39;s eyes redden.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>The girl who had put on a brave face in front of her instantly reverted to a child who never grew up in front of her father.</p>
                 <p>She said plaintively.</p>
                 <p>&#34;Dad, what exactly is going on with Grandpa?&#34;</p>
@@ -2362,7 +2442,7 @@
                 <p>Hearing Grace&#39;s words, Benjamin finally looked at Evelyn.</p>
                 <p>Seeing her face clearly, he was slightly taken aback.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Evelyn? You...&#34;</p>
                 <p>His words were interrupted by Grace.</p>
                 <p>&#34;Dad, she&#39;s not Evelyn. She just looks like her. She&#39;s the only daughter of the Valentine family, Grace Valentine.&#34;</p>
@@ -2381,7 +2461,7 @@
                 <p>&#34;My dad is the best!&#34;</p>
                 <p>Grace acted a little spoiled, then looked at Evelyn.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Grace, don&#39;t worry. Since my dad said he&#39;ll try, he&#39;ll definitely help you keep her here.&#34;</p>
                 <p>Evelyn nodded gratefully.</p>
                 <p>&#34;Thank you, Uncle.&#34;</p>
@@ -2400,7 +2480,7 @@
                 <p>&#34;Your grandfather and I have studied the Sterling Family. We believe that although the Sterling Family keeps a low profile, they are not to be underestimated. The Special Operations Division has also been collecting all information on the Sterling Family. Unfortunately, nothing substantial has been gathered so far. If your grandfather were here, he would never let the International Division take the person away. This is such a good opportunity to understand the Sterling Family!&#34;</p>
                 <p>Grace was taken aback.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Is the Sterling Family that important? Worth our attention like this?&#34;</p>
                 <p>Benjamin nodded.</p>
                 <p>&#34;Mainly because we don&#39;t know if they are friend or foe. Their stance is strange. It seems they have no stance, yet it seems they have some kind of stance...&#34;</p>
@@ -2422,7 +2502,7 @@
                 <p>Evelyn nodded, adding in her heart.</p>
                 <p>And incidentally, expose the mole, that fox, within the Special Operations Division!</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

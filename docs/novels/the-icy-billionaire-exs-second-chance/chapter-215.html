@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,15 +2389,15 @@
                 <p>Margaret hesitated, wrestling with her conscience before finally giving a reluctant nod.</p>
                 <p>Vivian removed her hand from the phone. &#34;Dominic, if this is truly a family matter, her father should be involved. It&#39;s not my place to interfere. You should contact the Dawson family instead.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Margaret&#39;s gaze drifted to the rain-lashed window, her fingers tightening around the phone until her knuckles turned white.</p>
                 <p>Meanwhile, the ocean raged with unrestrained fury, violent winds howling across the churning waters.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>On the medium-sized yacht, Maxwell lost his footing and crashed onto the deck.</p>
                 <p>A crew member burst into the cabin, his face etched with urgency. &#34;Mr. Sterling, we must turn back immediately.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Despite all their careful planning, nature seemed determined to mock their efforts.</p>
                 <p>Maxwell, irritation flashing across his face, adjusted his collar and demanded, &#34;What if we continue forward?&#34;</p>
                 <!-- 广告位 4 -->
@@ -2325,14 +2405,14 @@
                 <p>The crew member shook his head firmly. &#34;Impossible. Beyond this point lies international waters. Without proper documentation, we&#39;d be facing far greater consequences.&#34;</p>
                 <p>Still sprawled on the floor, Maxwell&#39;s gaze shifted to the bound woman before him. The ropes dug cruelly into her delicate skin, accentuating her curves. She met his stare with icy defiance, her cracked lips and bruised cheeks adding a haunting vulnerability to her beauty.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>A possessive hunger surged through him - this treasure would not escape his grasp. &#34;Change course for the harbor,&#34; he ordered, struggling to his feet unsteadily.</p>
                 <p>After a moment&#39;s pause, he added, &#34;Take her to the master cabin.&#34; Leaning heavily against the wall as he exited, two burly men immediately seized Vivian, dragging her toward another room.</p>
                 <p>The cabin was sparsely furnished - just a narrow bed and a tiny adjoining bathroom. They threw her onto the mattress and quickly departed.</p>
                 <p>Maxwell sat on the edge of the bed, fingers trembling with anticipation as he began removing his clothes. When he reached for her dress, Vivian swallowed her revulsion and forced a saccharine smile. &#34;Untie me, and I&#39;ll do it myself,&#34; she murmured softly.</p>
                 <p>Maxwell paused, studying her face before breaking into a knowing smirk. &#34;Darling, this is my one shot. I can&#39;t risk anything going wrong.&#34; His hands continued their invasion, pulling aside her dress and creeping toward her undergarments.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

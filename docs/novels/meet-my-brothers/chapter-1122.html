@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,7 +2392,7 @@
                 <p>Not to mention, simply eliminating someone troublesome instantly improved the atmosphere.</p>
                 <p>Suspecting that the individuals on Yellow Island were exploiting Sharon, Mia decided to send her back to Bern City.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>As Mia sat down for lunch, she suddenly remembered that it was Sage&#39;s first day of school. She couldn&#39;t help but wonder how he was adjusting to the cafeteria food. Almost immediately, her phone rang-it was a call from the kindergarten.</p>
                 <p>Mia answered promptly. &#34;Hello, what&#39;s the matter, Ms. Graziosi?&#34;</p>
                 <p>Could Sage be facing some difficulties at school?</p>
@@ -2326,21 +2406,21 @@
                 <p>Nonetheless, Mia hadn&#39;t anticipated him getting into a scuffle on his very first day of school!</p>
                 <p>Mia wasted no time in arriving at Sage&#39;s kindergarten. Upon arriving, she approached Casey. &#34;Ms. Graziosi, what led to the altercation between Sage and the other student?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;To be honest, I&#39;m not entirely sure. Both Sage and this new student recently transferred in, but the other child arrived a few days earlier.</p>
                 <p>&#34;It&#39;s difficult to fathom what might have triggered a conflict between two children meeting for the first time, yet neither of them is willing to provide an explanation.&#34;</p>
                 <p>Mia shared Casey&#39;s bewilderment. She knew Sage wouldn&#39;t instigate a fight without reason. &#34;Has this other student&#39;s family been contacted?&#34;</p>
                 <p>&#34;Yes, they&#39;re currently in the office.&#34;</p>
                 <p>As Mia entered the office, her attention was drawn to a middle-aged woman, Tonya Waterford. Stepping forward, Mia introduced herself. &#34;Hello, I&#39;m Sage&#39;s mother, and-&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Well, well. So, you&#39;re the mother</p>
                 <p>who couldn&#39;t raise her child properly. You appear respectable enough, but as a single mother, you must bear complete responsibility for your child&#39;s actions,&#34; Tonya interjected.</p>
                 <p>Mia&#39;s gaze turned cold. &#34;What a filthy mouth you have. Did you forget to brush your teeth before leaving the house? I&#39;d love to see what kind of kid someone like you would raise.&#34;</p>
                 <p>After all, behind every misbehaving child, there usually lay a misbehaving parent.</p>
                 <p>&#34;Are you insinuating something? Do</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>you even have any idea who we are? You&#39;re hardly qualified to speak in such a manner. If you don&#39;t offer a sincère apology for Mr. Asher&#39;s injury, you&#39;ll regret crossing us!&#34;</p>
                 <p>Mia&#39;s lips curved into a chilling smile. &#34;How convenient. I won&#39;t let this matter slide either, especially after my son was injured on his very first day of school.&#34;</p>
                 <p>&#34;Just so you&#39;re aware, you might be in for a surprise if I reveal our family&#39;s identity,&#34; Tonya shot back.</p>
@@ -2348,7 +2428,7 @@
                 <p>Raising an eyebrow, Mia responded sarcastically, &#34;Well then, I suppose I&#39;m rather intrigued to discover more about his identity. Please, feel free to surprise me.&#34; &#34;Mr. Asher is the mayor&#39;s grandson.&#34;</p>
                 <p>Mia fell silent abruptly, her mind flooded with confusion.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

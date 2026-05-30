@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2316,7 +2396,7 @@
                 <p>Sebastian Sterling.</p>
                 <p>The information Fox had given her mentioned this man.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>The younger brother of the family head. Ruthless methods. He rarely acted, but when he did, it was with thunderous force, leaving no room for retreat.</p>
                 <p>She and Alexander had merely exchanged a few harsh words with Scarlett. Why would that warrant summoning this fearsome figure?</p>
                 <p>A faint sense of unease stirred within Evelyn.</p>
@@ -2327,7 +2407,7 @@
                 <p>She had made it just in time.</p>
                 <p>She absolutely could not let Evelyn be taken away by them.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Sienna stared at Scarlett, her face full of contempt. &#34;Can&#39;t win an argument, so you call your daddy? How impressive.&#34;</p>
                 <p>Scarlett rolled her eyes and scoffed. &#34;I&#39;m dealing with two drifters. Do I need your permission? What are you, anyway?&#34;</p>
                 <p>&#34;You!&#34; Sienna was so angry she put her hands on her hips, like a bristling little animal. &#34;On Sterling territory, how dare you kill innocent people arbitrarily? What law have they broken?&#34;</p>
@@ -2338,7 +2418,7 @@
                 <p>Kingsley was also watching him.</p>
                 <p>The two girls&#39; quarrel was like background noise. The two men remained motionless, the atmosphere growing heavier in the silence.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Enough.&#34;</p>
                 <p>Kingsley finally spoke.</p>
                 <p>His voice was low, yet carried a trace of powerlessness.</p>
@@ -2349,7 +2429,7 @@
                 <p>She grabbed Sebastian&#39;s arm, shaking it coquettishly. &#34;Daddy, give the order! Kill them!&#34;</p>
                 <p>Sebastian gave her a faint glance.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>His eyes were cold, holding a hidden warning.</p>
                 <p>&#34;Be quiet.&#34;</p>
                 <p>Two words, brooking no argument.</p>
@@ -2360,7 +2440,7 @@
                 <p>But Sebastian began to walk. Unhurriedly, step by step, he moved toward them.</p>
                 <p>&#34;Evelyn, run!&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Sienna suddenly spread her arms wide, stubbornly blocking Evelyn and Alexander. She closed her eyes, her voice trembling. &#34;They won&#39;t dare touch me! You two, go now!&#34;</p>
                 <p>Evelyn did not move.</p>
                 <p>Alexander did not move either.</p>
@@ -2374,7 +2454,7 @@
                 <p>From the very beginning, what he wanted was Kingsley.</p>
                 <p>Sienna was also stunned, her eyes wide with disbelief, her voice trembling. &#34;Uncle Sebastian... where are you taking my father?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

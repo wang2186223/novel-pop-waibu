@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>Rodger and Heath wished they could simply vanish at that moment.</p>
                 <p>Timothy bore a stern expression, his appearance disheveled. His tie was carelessly tossed aside, and his collar hung loosely, marked by creases on his shoulders.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>In a corner, Mia took a moment to collect herself. She discreetly glanced at Heath in the passenger seat and whispered, “Just drop me off at the subway station up ahead.”</p>
                 <p>Heath hesitated, shooting a cautious glance at Timothy seated behind him. Without Timothy’s approval, he refrained from making any abrupt stops.</p>
                 <p>Meanwhile, Mia subtly observed Timothy beside her, noting his resolute and stern expression.</p>
@@ -2321,7 +2401,7 @@
                 <p>Shortly afterward, the car came to a stop outside the subway station.</p>
                 <p>Without looking back, Mia swiftly opened the car door and stepped into the subway station.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>It was only after Mia’s silhouette had vanished that Timothy withdrew his gaze.</p>
                 <p>Seated in the passenger seat, Heath couldn’t resist stealing glances behind, appearing to have something to say but hesitated.</p>
                 <p>Frowning, Timothy urged, “Spit it out.”</p>
@@ -2337,7 +2417,7 @@
                 <p>Mia took the subway back to the studio.</p>
                 <p>She appeared visibly unsettled, primarily due to Timothy’s impulsive actions.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>The awkward kiss they had shared left her with swollen lips. Timothy’s kissing style lacked finesse, almost like he was nibbling on something.</p>
                 <p>Had he not picked up any kissing techniques during his time with Maya?</p>
                 <p>Abruptly, Wilhelmina approached. “Mia, why are you back so soon? You don’t look too well,” she remarked.</p>
@@ -2345,7 +2425,7 @@
                 <p>Had it not been for the impromptu decision to employ Timothy as a bluff earlier, Mia wouldn’t have been able</p>
                 <p>to leave Oakwood Villa.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>It was peculiar how a prestigious design order landed directly in Mia’s hands.</p>
                 <p>After all, securing such an order proved to be a substantial deal for the studio, as it was highly sought after by everyone due to the allure of a higher commission.</p>
                 <p>Wilhelmina’s earlier words carried an unusual undertone, adding to the intrigue.</p>
@@ -2354,7 +2434,7 @@
                 <p>Without delay, she dialed Shelly’s number, reporting. “Ms. Barrett, everything seems to be taken care of. Mia has made significant progress with Keegan.</p>
                 <p>“Although they haven’t slept together yet, her swollen lips suggest that it’s only a matter of time.”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

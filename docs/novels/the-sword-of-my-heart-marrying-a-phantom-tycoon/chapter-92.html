@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,14 +2392,14 @@
                 <p>At a loss for words, Laura could only glare at Santos,her frustration evident.</p>
                 <p>The truth was, she wanted Amelia nowhere near the business world because she wanted Amelia to hand those sixty percent shares to Jaxton to manage.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>But such motives could never be revealed.</p>
                 <p>While Laura and Santos were arguing,Jaxton remained silent. It was only after Santos left in a huff that Jaxton turned to Laura. &#34;Mom, you really shouldn&#39;t always take this attitude with Dad. Didn&#39;t you always say that women should be gentle and considerate?You-&#34;</p>
                 <p>&#34;Enough!&#34; Laura snapped. Arguing with her husband had set her off, but Jaxton&#39;s words seemed to hit her where it hurt the most.</p>
                 <p>Tears of frustration glistened in Laura&#39;s eyes, and Jaxton quickly stopped talking.</p>
                 <p>Memories of the shareholders&#39; criticism fresh in his mind,he moved closer to her, gently taking her hand.&#34;I&#39;m sorry, Mom. I shouldn&#39;t have said that. Please don&#39;t be upset.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Laura&#39;s first instinct was to push Jaxton aside, but she remembered his injured ribs and held back.</p>
                 <p>Jaxton was all she had left. Seeing how downcast he looked, she softened her tone. &#34;Listen to me, Jaxton.You need to reconcile with Amelia. Only she has the power to save you now.&#34;</p>
                 <p>The mention of Amelia&#39;s name sent Jaxton&#39;s thoughts back to what he&#39;d witnessed at the hospital.</p>
@@ -2333,14 +2413,14 @@
                 <p>It was empty.</p>
                 <p>Was last night just a dream?</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>While Amelia was doubting herself, a flash of white on the bedside table caught her eye.</p>
                 <p>Without hesitation, she shuffled closer and snatched up the piece of paper. Just one line greeted her.&#34;I went out to buy breakfast.&#34;</p>
                 <p>Amelia didn&#39;t need a second glance to recognize Wyatt&#39;s handwriting. It carried the same charm as he did.</p>
                 <p>After tidying up the bed, she went to the bathroom to  freshen up. Cool water splashed across her cheeks as a faint noise from the front door echoed.</p>
                 <p>Her first thought was that Wyatt had returned with breakfast, so she didn&#39;t check immediately and only went to the living room after finishing up her morning skincare routine.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Instead of Wyatt, she found herself staring directly at Jaxton.</p>
                 <p>Disgust flashed in her eyes. &#34;What are you doing here?&#34;</p>
                 <p>After being persuaded by Laura, Jaxton had come to Amelia&#39;s apartment early in the morning. Concerned Amelia might not let him in, he had even gone to Dayna for a spare key to Amelia&#39;s apartment. 2</p>
@@ -2348,7 +2428,7 @@
                 <p>Amelia would have preferred not to deal with Jaxton,but out of respect for Santos, she asked, &#34;What is it?&#34;</p>
                 <p>&#34;Let&#39;s get married,&#34; Jaxton said.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

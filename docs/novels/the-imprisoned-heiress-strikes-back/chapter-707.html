@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,22 +2390,22 @@
                 <p>&#34;You&#39;re hurt,&#34; Victoria said with convincing concern, stepping closer. The streetlight haloed her blonde hair as she pulled out her phone. &#34;Let me call an ambulance.&#34;</p>
                 <p>Andrew moved faster than she anticipated. One moment her phone was in her hand, the next it sailed through the air to shatter against the pavement. The sound of breaking glass echoed through the narrow space.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Are you insane?&#34; Victoria stormed toward the wreckage, scooping up the destroyed device. &#34;That was brand new!&#34; She turned on him with impressive fury for someone facing a clearly dangerous man.</p>
                 <p>Andrew studied her through narrowed eyes. He remembered this woman - the convenience store cashier who always gave him exact change. Too exact. Like she&#39;d been waiting for him.</p>
                 <p>The fever made it hard to concentrate, but one thought cut through the haze: She knows who I am.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Victoria&#39;s performance was flawless - the indignant citizen, the concerned bystander. But Andrew had spent years reading people, and the calculation behind her eyes betrayed her.</p>
                 <p>&#34;You owe me for this,&#34; she declared, waving the broken phone. &#34;Four hundred dollars. Cash.&#34;</p>
                 <p>A laugh tore from Andrew&#39;s raw throat despite himself. The audacity. &#34;You&#39;re shaking down a bleeding man in an alley?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Her chin lifted stubbornly. &#34;Justice doesn&#39;t take sick days.&#34;</p>
                 <p>The absurdity of the situation struck him. Here he was, possibly dying, being extorted by some petite blonde with more courage than sense. The fever must be worse than he thought, because he found himself oddly charmed by her bravado.</p>
                 <p>When she reached to steady him, the contact sent an electric jolt through them both. Her fingers brushed his burning skin and recoiled. &#34;Christ, you&#39;re on fire!&#34; Her gaze dropped to his blood-soaked sleeve. &#34;My car&#39;s nearby. Let me help you.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Every instinct screamed this was a trap. But with the police closing in and his strength fading, Andrew made a calculated decision. He&#39;d play along - for now.</p>
                 <p>The ride to her apartment passed in a haze of pain. Victoria kept up a steady stream of chatter that he mostly tuned out, focusing instead on memorizing their route and noting potential escape routes.</p>
                 <p>The apartment surprised him - small but meticulously clean, with personal touches that didn&#39;t match the persona she presented at the convenience store. Interesting.</p>
@@ -2339,7 +2419,7 @@
                 <p>Andrew cocked the hammer. The click echoed through the silent apartment. &#34;Try again.&#34;</p>
                 <p>The game had begun. And only one of them would walk away alive.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2323,7 +2403,7 @@
                 <p>Mrs. White didn&#39;t dare get up.</p>
                 <p>Nathan suddenly looked up at Mrs. Evans. His gaze swept over Jane, and his fists clenched tightly.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>An unprecedented sense of shame, like a venomous snake, gnawed at his heart.</p>
                 <p>Just moments ago, when his mother suggested making Jane his mistress, he had felt a stir of desire.</p>
                 <p>Now, looking back, he realized with a shock that he had always subconsciously felt superior to Jane.</p>
@@ -2341,7 +2421,7 @@
                 <p>What gave Nathan the right to ask her to back down?</p>
                 <p>Where was he when his mother was pressuring her?</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Everything before her eyes had become so strange, so ironic.</p>
                 <p>She took a step back, wanting to say something to Mrs. Evans.</p>
                 <p>Just then—</p>
@@ -2359,7 +2439,7 @@
                 <p>This face, streaked with tears and snot, overlapped with the arrogant, pressuring face from before.</p>
                 <p>So ugly.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>She took a deep breath and stepped forward. She reached out and pushed Justin.</p>
                 <p>Justin, startled by her touch, immediately stopped and jumped back.</p>
                 <p>He looked at Jane, his tone urgent. &#34;Belle, this kind of scum deserves a beating! Don&#39;t stop me. If he dies, it&#39;s on me!&#34;</p>
@@ -2377,7 +2457,7 @@
                 <p>Nathan&#39;s face was already bruised and swollen, blood trickling from the corner of his mouth.</p>
                 <p>Justin spat. &#34;Get lost!&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Mrs. White, as if granted amnesty, scrambled to help Nathan up. &#34;Son, are you okay?&#34;</p>
                 <p>Nathan wiped the blood from his mouth. His fists clenched so tightly they creaked.</p>
                 <p>His gaze remained fixed on Jane, unwilling to look away.</p>
@@ -2395,7 +2475,7 @@
                 <p>Jane&#39;s pen paused slightly.</p>
                 <p>How ironic.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>When she was just Jane, she never even had the chance to write an explanation.</p>
                 <p>Every time she wrote a few words, she would be impatiently interrupted.</p>
                 <p>But now that she was Miss Evans, they were willing to wait for her to write this long passage.</p>

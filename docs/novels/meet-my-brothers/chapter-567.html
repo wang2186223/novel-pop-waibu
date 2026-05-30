@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>Around noon. Mia suddenly felt a discomfort in her stomach, as if something were kicking inside.</p>
                 <p>Concerned, she headed straight to the hospital to find Connor.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Upon receiving Mia’s call Connor anxiously waited for her, wheeling a chair along.</p>
                 <p>“Mia, please sit in this wheelchair. How long have you been feeling this pain? When did it start?”</p>
                 <p>“Connor, it’s not that serious. I’m just feeling a bit uncomfortable. I don’t think I need a wheelchair; that</p>
@@ -2323,7 +2403,7 @@
                 <p>before jumping to conclusions.</p>
                 <p>“Fortunately, I have a friend who came to visit me; he’s a highly proficient obstetrician.”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>With that, Mia was wheeled into the emergency room. She couldn’t help but notice a young man in a pristine white coat, his features cold and aloof, exuding an ethereal presence.</p>
                 <p>She was taken aback; when did obstetricians become this attractive? How had she not noticed before?</p>
                 <p>Connor introduced, “Hey Nick, meet my sister Mia. She’s experiencing some stomach pains. Would you</p>
@@ -2332,7 +2412,7 @@
                 <p>I think I’d prefer to be examined by the previous doctor.”</p>
                 <p>“Mia, please don’t be silly. A doctor’s ability is what matters, not their gender.”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Mia felt incredibly awkward. While she had no issue with male doctors, the fact that this was her brother’s close friend made the situation different.</p>
                 <p>The next moment, the tall, aloof–looking doctor approached her.</p>
                 <p>He carefully seated her in the wheelchair, holding a sharp surgical scalpel in his other hand. “Don’t worry.</p>
@@ -2341,7 +2421,7 @@
                 <p>”</p>
                 <p>“Excellent, that’s the right mindset.” he replied in a languid tone as he wheeled Mia into the examination</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>room.</p>
                 <p>“Nicholas, she’s my younger sister. Please, examine her carefully!”</p>
                 <p>“Hmm, you talk too much.”</p>
@@ -2350,7 +2430,7 @@
                 <p>Following the examination, Nicholas removed his gloves and stated, “The fetuses are healthy.”</p>
                 <p>“Why have I been feeling uncomfortable recently, ther?”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>“As the months progress, the babies‘ movements will become more frequent. Your two little ones in there seem especially mischievous.”</p>
                 <p>Mia let out a sigh of relief. Her discomfort was simply due to the fetal movements. She had feared it was something more serious.</p>
                 <p>As her anxiety eased, she discreetly stole a glance at the handsome doctor beside her. It seemed that Connor referred to him as “Nicholas“.</p>

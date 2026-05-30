@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>&#34;What deadline would you suggest, Mr. Macmillan?&#34;</p>
                 <p>&#34;Tomorrow morning.&#34; Gregory scanned the room. &#34;Same conference room. If Ms. Carter fails to deliver a satisfactory response, not just Mr. Chen, but everyone here may need to consider alternative employment.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>......</p>
                 <p>The study was still lit late at night.</p>
                 <p>Evelyn rubbed her tired eyes as the financial reports before her blurred into indistinct figures.</p>
@@ -2321,7 +2401,7 @@
                 <p>She opened the door to find Alexander standing outside, holding a thermal container.</p>
                 <p>&#34;Something urgent?&#34; Her voice was hoarse.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>His gaze traveled past her, landing on the mountain of documents piled on the desk. &#34;Still working this late?&#34;</p>
                 <p>Only then did Evelyn realize it was already 11 PM.</p>
                 <p>&#34;The proposal is due tomorrow.&#34; She massaged her temples wearily. &#34;Get to the point.&#34;</p>
@@ -2329,7 +2409,7 @@
                 <p>&#34;Thanks, but no.&#34; She moved to close the door.</p>
                 <p>Alexander blocked it with one hand. &#34;Trouble?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Work matters.&#34; Her reply was curt. &#34;I&#39;m pressed for time.&#34;</p>
                 <p>He asked abruptly, &#34;How was your day at Hamilton Group? Heard the meeting didn&#39;t go well.&#34;</p>
                 <p>Evelyn arched an eyebrow. &#34;Your intelligence network is impressively efficient.&#34;</p>
@@ -2337,7 +2417,7 @@
                 <p>Evelyn followed and noticed his frown deepening.</p>
                 <p>&#34;Who prepared these reports?&#34; His voice turned grim.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;The digital version from Marketing.&#34; She sighed. &#34;Couldn&#39;t get the hard copies.&#34;</p>
                 <p>Alexander smirked coldly. &#34;Because they never prepared them.&#34;</p>
                 <p>He pointed at the screen. &#34;All qualification certificates are missing. Submit this bid and we&#39;ll be eliminated in the first round.&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>&#34;Not your fault.&#34; He tapped the desk. &#34;What&#39;s Auditing even doing?&#34;</p>
                 <p>&#34;The whole company is waiting to see me fail.&#34; A bitter smile touched her lips. &#34;I have to handle everything personally.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Alexander suddenly turned and met her gaze directly. &#34;You have a better option.&#34;</p>
                 <p>&#34;What option?&#34;</p>
                 <p>He pointed at himself. &#34;Me.&#34;</p>

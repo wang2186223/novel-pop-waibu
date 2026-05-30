@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2324,7 +2404,7 @@
                 <p>Preston turned to look at Susan.</p>
                 <p>&#34;Were you doing it on purpose?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Susan hurriedly defended herself.</p>
                 <p>&#34;No, Preston, I really wasn&#39;t! The ginger tea was just too hot when it was brought over. My hand slipped and I...&#34;</p>
                 <p>Before she could finish, Evelyn let out a scornful laugh.</p>
@@ -2343,7 +2423,7 @@
                 <p>Evelyn looked up at Preston.</p>
                 <p>&#34;A genuine reaction to something truly hot would be like this. If you knew it was scalding, why would you specifically push the bowl towards the food?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Preston was taken aback.</p>
                 <p>He looked at Susan again.</p>
                 <p>Susan&#39;s face was deathly pale.</p>
@@ -2362,7 +2442,7 @@
                 <p>&#34;Susan Langley, you&#39;ve been targeting our little sister since the moment you walked in. What exactly is the grudge between you two? Could it be that the things little sister mentioned are actually true?&#34;</p>
                 <p>Natalie immediately asked curiously.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;What things are true?&#34;</p>
                 <p>&#34;That thing about her fooling around with someone else and little sister catching them! Because she was exposed, she holds a grudge, right? I can&#39;t think of any other reason!&#34;</p>
                 <p>Ethan spoke bluntly, spilling everything out.</p>
@@ -2381,7 +2461,7 @@
                 <p>These words carried immense weight.</p>
                 <p>Preston indeed stood up.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>He took her hand and looked at Evelyn.</p>
                 <p>&#34;Little sister, I&#39;m sorry about today. But Susan is my lifesaver. Can we... let this matter drop?&#34;</p>
                 <p>Evelyn&#39;s jaw tightened.</p>
@@ -2400,7 +2480,7 @@
                 <p>But then what?</p>
                 <p>This &#34;debt of a life&#34; was enough for Preston to forgive Susan for a lifetime.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Even if her relationship with that so-called &#34;younger brother&#34; was completely cleared up, Preston would likely still be bound by this sense of gratitude.</p>
                 <p>Evelyn lowered her eyes.</p>
                 <p>What method could thoroughly resolve this trouble?</p>
@@ -2420,7 +2500,7 @@
                 <p>Evelyn&#39;s gaze sharpened.</p>
                 <p>&#34;What did you say?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

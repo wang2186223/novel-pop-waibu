@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>&#34;Don’t be naive. This is just another one of her games.&#34; His thumb traced her collarbone possessively. &#34;She’ll come crawling back. She always does.&#34;</p>
                 <p>The certainty in his voice didn’t quite reach his eyes.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Somewhere in the downpour, a car horn blared—sharp, impatient. Like a warning.</p>
                 <p>Vanessa chewed her bottom lip nervously. &#34;She looked absolutely furious tonight. Shouldn&#39;t you call and check where she went?&#34;</p>
                 <p>Ethan waved a dismissive hand. &#34;Don&#39;t bother. She&#39;ll come crawling back with an apology soon enough.&#34;</p>
@@ -2321,7 +2401,7 @@
                 <p>In their relationship, she had always been the one to bridge the gap, regardless of whose fault it was.</p>
                 <p>She was the one who swallowed her pride, and he had grown accustomed to it.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Outside, the storm raged violently.</p>
                 <p>Lightning split the sky like jagged cracks in glass, followed by deafening thunder that shook the windows.</p>
                 <p>Simon stood beside the hospital bed, his voice low. &#34;Ms. Carter has a concussion. The doctors recommend keeping her under observation for at least three more days.&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>&#34;Alex, what the hell?&#34; Lucas Bennett&#39;s booming voice carried through the receiver. &#34;You vanish without a word in the middle of negotiations? People are starting to think you got kidnapped by some femme fatale.&#34;</p>
                 <p>A humorless smirk twisted Alexander&#39;s lips. &#34;Close enough. Jealous?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Dream on, pretty boy.&#34;</p>
                 <p>Lucas smirked, nudging Alexander with his elbow. &#34;You honestly believe women will be lining up for you just because you served in the military? Wake up, man.&#34;</p>
                 <p>Alexander didn’t respond, the glow of his cigarette casting shadows across his sharp features.</p>
@@ -2357,7 +2437,7 @@
                 <p>&#34;Tell them I’ll be there in five.&#34;</p>
                 <p>The tension in the air thickened as he crushed his cigarette beneath his boot.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

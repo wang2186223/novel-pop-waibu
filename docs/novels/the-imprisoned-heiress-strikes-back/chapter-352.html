@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2323,7 +2403,7 @@
                 <p>His voice dropped to a venomous whisper. &#34;You owe me. You owe Evelyn. Without my mother’s protection, do you think you’d still be breathing the air of Whitmore Manor? A woman like you doesn’t deserve to raise a Caldwell.&#34;</p>
                 <p>Vanessa&#39;s knees buckled beneath her. She clutched the car door for support, her fingers turning white from the pressure.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;You actually believe a child could chain me to you?&#34; Ethan&#39;s laugh was ice-cold. &#34;Vanessa, you&#39;ve sorely misjudged me. When a man falls out of love, that&#39;s when his true cruelty surfaces.&#34;</p>
                 <p>His words slithered through the air like venom.</p>
                 <p>&#34;Keep the baby if you insist. But don&#39;t expect a single ounce of paternal affection from me.&#34; His smirk was razor-sharp. &#34;Need I remind you? We never signed a marriage certificate. That child will be born a bastard—just like its mother. Something to be ashamed of, something to hide.&#34;</p>
@@ -2332,7 +2412,7 @@
                 <p>The engine roared to life as he spun the wheel sharply. Tires screeched against pavement, leaving Vanessa collapsed on the cold asphalt, her body wracked with tremors.</p>
                 <p>&#34;Evelyn!&#34; The name tore from her throat like a curse.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Her vision blurred with unshed tears, but beneath the grief burned something far darker—a hatred so potent it threatened to consume her.</p>
                 <p>The truth was undeniable: Ethan rejected this child because his heart still belonged to Evelyn.</p>
                 <p>He wanted a family with her.</p>
@@ -2341,7 +2421,7 @@
                 <p>Her nails dug into her palms hard enough to draw blood.</p>
                 <p>&#34;Fine. Let me help you with that.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>The morning light filtered through the curtains, casting a golden glow over the tangled sheets.</p>
                 <p>Evelyn stirred, her body pressed against Alexander&#39;s warmth. His arm draped possessively over her waist, pulling her closer even in sleep.</p>
                 <p>A bitter taste rose in her throat.</p>
@@ -2350,7 +2430,7 @@
                 <p>The words echoed in her mind, sharp as broken glass.</p>
                 <p>Evelyn&#39;s fingers twitched against the pillow. She should pull away. She should leave before he woke.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>But the weight of his embrace felt like chains she no longer wanted to break.</p>
                 <p>Outside, birds sang as if the world hadn&#39;t shifted on its axis.</p>
                 <p>Inside, Evelyn&#39;s heart pounded with the terrifying realization—she didn&#39;t want to escape.</p>
@@ -2363,7 +2443,7 @@
                 <p>This was ruin.</p>
                 <p>This was the point of no return.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

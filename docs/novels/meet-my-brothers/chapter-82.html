@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>After an hour, the car came to a stop at their new residential area.</p>
                 <p>Mia descended from the car with Liam and headed straight to her house. Patricia, on the other hand, was extremely satisfied with the house. She was particularly delighted with the kitchen furnishing.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>They cooked a few dishes together at night. Then, they had dinner with her other brothers through a video call.</p>
                 <p>After all, Nord City was a five-hour flight away from Bern City. The last thing Mia would want was her brothers going out of their way to satisfy her needs.</p>
                 <p>When she woke up late the next day, she received a text from Gina that said, “Mia, you’re trending on the news again! Just break it to me now-is that really Linden Lane?”</p>
                 <p>Mia clicked on the link Gina sent her.</p>
                 <p>The headlines were popping as it said, “Linden Lane’s New Date: Moving in With His Girlfriend!”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>The picture was taken right outside the residential area. Only their backs were facing the camera. It didn’t capture their faces.</p>
                 <p>Even so, Liam was a stunt double for Linden. Many were familiar with Linden’s looks, so it was easy for them</p>
                 <p>to recognize him.</p>
                 <p>Mia found this to be ridiculous.</p>
                 <p>She quickly forwarded the link to Liam and said, “Sorry, the paparazzi took pictures again. Can you please explain this to Mr. Lane?”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>The reason Liam was in Nord City was for his shoot. Obviously, it was Linden’s scene. Yet, it was only natural for Liam to work as well, given he was his stunt double.</p>
                 <p>Mia stroked her belly gently. It had only been a few months, so her belly wasn’t showing yet.</p>
                 <p>+15 BONOS</p>
                 <p>Glancing around the house, she thought it lacked some decorations despite having the perfect furnishing. Thus, she wanted to do some shopping on her own.</p>
                 <p>After she told Patricia, she got in a cab and headed to the furniture store.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>When she had just been strolling for a brief moment, she noticed a large crowd approaching in the distance. The man who was in front of the crowd was dressed in a khaki suit, looking extremely sophisticated.</p>
                 <p>Mia didn’t expect to bump into Timothy here. It was a small world indeed.</p>
                 <p>Secretly, she retreated to another store. She intended to come out once he was gone.</p>
                 <p>However, Timothy halted his steps. He turned around and followed her instead.</p>
                 <p>The store owner hurried after him anxiously as he rambled on, “Mr. Barrett, the cribs in our store are manufactured from imported materials to ensure zero formaldehyde and zero pollution. It’s 100% safe and eco-</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>friendly.”</p>
                 <p>Mia noticed he came in after her as well. Was he interested in cribs as well?</p>
                 <p>Didn’t she get one for him previously? Was it not enough for him? Just how many kids was he planning to</p>
@@ -2352,7 +2432,7 @@
                 <p>Timothy bent down and stared at her intensely as he asked, “Are you two-timing me?”</p>
                 <p>2</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

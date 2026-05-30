@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2315,7 +2395,7 @@
                 <p>I still couldn&#39;t help this strong feeling that something might go wrong somehow. I didn&#39;t want to die. But l also didn&#39;t want to leave Jaris yet. Not now.</p>
                 <p>****十</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>JARIS</p>
                 <p>After much conviction, I was able to get Lyric to fly back to Darkspire where she could gather her things.I had Kael keeping a close eye on her as I still didn&#39;t trust her to not attempt an escape.</p>
                 <p>As for me, I had to stay back here to do certain things.There were a lot of records I had to go over with the Council,so many things I needed to catch up with. I didn&#39;t miss how uncomfortable the Elders were around me during the meeting. They probably saw me as someone who was keeping a monster safe.Well,I guess it would&#39;ve mattered if I gave a damn.</p>
@@ -2325,7 +2405,7 @@
                 <p>Oh,damn it.</p>
                 <p>&#34;Finally, you&#39;re back.&#34; She stood up.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Her angry mood already told me what she wanted to talk about.</p>
                 <p>&#34;I am not done, mother. And believe me, I do not have the time for this-&#34; &#34;No,Jaris! We&#39;re going to have this conversation!&#34; She snapped. &#34;Why on earth&#39;s name are you protecting that girl?! She&#39;s a Siphon! A forbidden thing! Have you forgotten so soon what they did to our family? Her kind is the reason you and your brother have suffered!&#34;</p>
                 <p>&#34;And do you know how many other people have suffered because of Caden and I?&#34; | cut her off. &#34;Do you have any idea about the lives that&#39;s been lost because of us? People die everyday, mother. But so far,Lyric has been no murderer.&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>Why did fate have to be so cruel to me?</p>
                 <p>I had to lose my mother at a young age, got branded with silver and grew up with the &#39;ugly&#39; tag. As if that wasn&#39;t enough, I had to be a Siphon.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Bad news does travel faster. It looked like the entire world already knew I was a Siphon, because everywhere I turned, there were suspicious eyes on me. The people were keeping their distance like I was a plaque that could harm them.</p>
                 <p>Jace who was holding my hand beside me, gave it a little squeeze.</p>
                 <p>&#34;It&#39;s fine, Lyric. This will pass.&#34;</p>
@@ -2355,7 +2435,7 @@
                 <p>&#34;Greetings,Grand Luna.&#34;</p>
                 <p>&#34;Yes. Make sure you put the rest of the items together,&#34; I recognized Marta&#39;s voice.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Yes,Grand Luna.&#34;</p>
                 <p>&#34;And what about the other things I asked for? Have they been brought yet?&#34;</p>
                 <p>&#34;Yes,Grand Luna.&#34; I heard departing footsteps. My own steps had slowed as I contemplated if it was a good idea to go ahead and meet with her. I wasn&#39;t sure I wanted to deal with her right now.</p>
@@ -2368,7 +2448,7 @@
                 <p>&#34;Come on, Lyric. Don&#39;t make me force you for something that is necessary. I am no longer Marta Monroe-Jaris&#39; baby mama. I am his fucking wife! The Grand Luna of our world!&#34; She cackled. &#34;Can you imagine how sweet that is?&#34; She stepped closer, her gaze holding mine.</p>
                 <p>&#34;Now, address me as a grand Luna. Else, trust me,you wouldn&#39;t like how this would turn out for you.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

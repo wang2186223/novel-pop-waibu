@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2318,7 +2398,7 @@
                 <p>These New York socialites were Ryan&#39;s personal connections. Introducing them to Evelyn would at least improve her standing within the Vance household...</p>
                 <p>He was still thinking when the girl replied calmly, &#34;No need.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Ryan was taken aback.</p>
                 <p>Evelyn&#39;s tone was even. &#34;Thank you for your kindness. But Mr. Vance seems reluctant to engage too much with New York.&#34;</p>
                 <p>Ryan frowned. Behind his gold-rimmed glasses, his eyes held concern. &#34;That&#39;s his prejudice. You should understand, Miss Ross, business knows no borders. The most elite families and corporations in the country are in New York. Alexander Vance&#39;s stubbornness will eventually cost him his position with the board! As his wife, if you can help him secure connections in New York, the Vances will surely accept you.&#34;</p>
@@ -2344,7 +2424,7 @@
                 <p>He immediately saw Ryan and Evelyn together.</p>
                 <p>Evelyn wore white riding gear. Ryan was in blue. They stood side by side... strikingly well-matched.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Ryan wore a gentle smile.</p>
                 <p>A sharp sense of crisis surged in Alexander&#39;s heart. He strode over, took Evelyn&#39;s hand, and eyed Ryan warily, asserting his claim. &#34;Mr. Roland, do you need something from my wife?&#34;</p>
                 <p>Ryan was baffled. &#34;Nothing urgent, just—&#34;</p>
@@ -2357,7 +2437,7 @@
                 <p>It was like the emperor wasn&#39;t anxious, but the eunuch was!</p>
                 <p>Bah!</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>He was no eunuch.</p>
                 <p>Ryan frowned, muttering to himself, then called out, &#34;You&#39;re leaving just like that?&#34;</p>
                 <p>Alexander paused and looked back. &#34;Or what?&#34;</p>
@@ -2370,7 +2450,7 @@
                 <p>Seeing his cold demeanor, Ryan sighed inwardly.</p>
                 <p>He understood. Alexander deeply resented his maternal relatives.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Putting himself in those shoes, anyone cut out of their mother&#39;s womb at seven months, nearly dying, would hold no love for their birth mother.</p>
                 <p>Watching the couple head towards a secluded corner, he could only remind them, &#34;Miss Ross, don&#39;t forget our appointment to see the photo tonight.&#34;</p>
                 <p>Alexander stopped walking, frowning. &#34;What photo?&#34;</p>
@@ -2384,7 +2464,7 @@
                 <p>In the photo, a twenty-years-younger Mr. Roland stood beside a well-preserved woman in her forties.</p>
                 <p>The woman bore an eighty percent resemblance to Evelyn Ross!</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>Aaron explained, &#34;I called you several times, but you didn&#39;t answer. I was worried something had happened, so I used the phone&#39;s location tracking to find you.&#34;</p>
                 <p>Cecilia&#39;s face changed. &#34;You installed a tracker on my phone?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;I was concerned for your safety,&#34; Aaron said carefully, reaching out to take her arm.</p>
                 <p>Cecilia immediately shook off his hand.</p>
                 <p>This man was disgusting. He had colon cancer and still dared to touch her. Wasn&#39;t he afraid of passing the cancer cells to her?</p>
@@ -2323,7 +2403,7 @@
                 <p>Concern for her?</p>
                 <p>He was probably afraid that once she found out he had cancer, she would run away and no one would be left to take care of him.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Cecilia sneered inwardly, but her expression remained taut. She gave a faint nod. &#34;I understand. My phone died.&#34;</p>
                 <p>Aaron finally relaxed a little, but he couldn&#39;t help glancing again in the direction the man had left. Worried, he asked, &#34;Are you really okay? That person didn&#39;t seem like someone asking for directions...&#34;</p>
                 <p>&#34;He was asking for directions,&#34; Cecilia cut him off, forcing a smile. &#34;By the way, what did you need to see me about today?&#34;</p>
@@ -2332,7 +2412,7 @@
                 <p>Aaron was taken aback. &#34;You didn&#39;t? I&#39;ve searched the entire house and couldn&#39;t find it.&#34;</p>
                 <p>Cecilia&#39;s heart tightened. She then linked her arm through Aaron&#39;s and said softly, &#34;Maybe you overlooked it. Let&#39;s go home first. I&#39;ll help you look for it.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Aaron nodded.</p>
                 <p>The two got into the car and headed for the Truman residence.</p>
                 <p>On the way, Aaron remembered something else. &#34;By the way, have you withdrawn that two hundred thousand dowry?&#34;</p>
@@ -2341,7 +2421,7 @@
                 <p>Why was he fixated on her little bit of money?</p>
                 <p>Once she sold the house and added this two hundred thousand, she could disappear far away.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Two million might not be a huge amount abroad, but if she lived frugally, she could have a stable life.</p>
                 <p>Thinking this, a glint of calculation flashed in Cecilia&#39;s eyes.</p>
                 <p>Aaron didn&#39;t suspect a thing and nodded. &#34;Alright, I understand.&#34;</p>
@@ -2350,7 +2430,7 @@
                 <p>&#34;Okay.&#34;</p>
                 <p>Cecilia shot him a glance and turned to walk toward the house.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Before entering, she still overheard Aaron&#39;s lowered voice. &#34;Yes, it&#39;s colon cancer... There&#39;s a treatment plan? That&#39;s great! Money is not an issue. We&#39;ll treat it!&#34;</p>
                 <p>Cecilia&#39;s steps faltered, her eyes turning icy cold.</p>
                 <p>It really was colon cancer!</p>
@@ -2364,7 +2444,7 @@
                 <p>Even if he racked his brains, he would never guess that Cecilia mistakenly believed the medical report was Aaron&#39;s, completely unaware that she herself was the one who was sick.</p>
                 <p>Alexander pondered for a moment, then instructed, &#34;Pass this information on to Sebastian Truman and Aaron Truman.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

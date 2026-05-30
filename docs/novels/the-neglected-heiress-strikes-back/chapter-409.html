@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2317,7 +2397,7 @@
                 <p>Harrison&#39;s pupils contracted. His grip on the wheelchair&#39;s armrest tightened. &#34;You and your brother are both my sons. I&#39;ve never favored one over the other. It&#39;s your own insecurity that made you feel neglected! But now? Now I regret not throwing you in jail to teach you a lesson! I regret not stopping you from marrying that viper Arabella! I regret failing to protect Nathaniel and his mother, leaving him motherless so young. You lost a woman who truly loved you!&#34;</p>
                 <p>&#34;Loved me? What did you say?&#34; Sebastian&#39;s face paled, his voice shaking.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Harrison thought of Nathaniel&#39;s mother—Evelyn Lockwood. A pang of grief twisted his heart. &#34;Evelyn only ever loved you. Her feelings never wavered, and she never looked at another man. I used to wonder where Nathaniel got his romantic nature. I thought it was from me, but no—it was from his mother.&#34;</p>
                 <p>&#34;That&#39;s impossible,&#34; Sebastian muttered, his eyes clouded with confusion. &#34;If she loved me, why refuse to marry me? Why push me away? She wouldn&#39;t even let me touch her.&#34;</p>
                 <p>&#34;Because she was suffering—physically and mentally. She was drowning in depression, in constant pain. Every morning, her first thought was ending her life. Only thoughts of Nathaniel kept her going.&#34;</p>
@@ -2341,7 +2421,7 @@
                 <p>Tears welled in Harrison&#39;s eyes as he recounted this.</p>
                 <p>Sebastian stood frozen, his heart hammering against his ribs like a trapped bird.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;No... that can&#39;t be,&#34; he whispered, lips trembling, his cheek twitching.</p>
                 <p>Seeing his son&#39;s devastation, Harrison was reminded of Nathaniel. In many ways, his grandson surpassed his father—except in one fatal flaw: both were stubborn to the point of self-destruction, refusing to admit mistakes until it was too late.</p>
                 <p>&#34;Evelyn made me swear to keep this secret. She wanted to vanish quietly, leaving no traces for you or Nathaniel to mourn.&#34;</p>
@@ -2353,7 +2433,7 @@
                 <p>Lawrence produced a wooden box from his briefcase, handing it to Sebastian. &#34;Sir, these are the late Mrs. Sinclair&#39;s personal effects. She left them with Mr. Harrison before departing. She said discarding them would be a waste, but keeping them brought only pain. These tokens—the rings you gave her, the mementos of your love—should be returned to you.&#34;</p>
                 <p>Sebastian stared at the box, hands shaking but unable to take it.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Let the past stay buried, Sebastian. You&#39;ve replaced the old with the new. No need to cling to relics.&#34;</p>
                 <p>Harrison&#39;s gaze darkened. &#34;But now, I think you should have them. Otherwise, you&#39;ll never see who you truly loved. Never realize how blind you&#39;ve been.&#34;</p>
                 <p>Sebastian accepted the box, his throat too tight to speak.</p>
@@ -2365,7 +2445,7 @@
                 <p>The luxury car sped toward Windsor Estates.</p>
                 <p>Sebastian clutched the wooden box the entire ride, only daring to open it after an eternity.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>The box had two layers. The first held velvet pouches. Each one he opened sent fresh agony through his chest.</p>
                 <p>The diamond engagement ring seemed modest now, but thirty years ago, it would&#39;ve made any woman swoon. The jade bracelet was a birthday gift he&#39;d painstakingly selected.</p>
                 <p>Back then, he&#39;d remembered every anniversary, every lovers&#39; holiday. Now, he couldn&#39;t even recall the day Evelyn died.</p>

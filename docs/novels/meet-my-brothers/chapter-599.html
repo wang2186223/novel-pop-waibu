@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,32 +2390,32 @@
                 <p>Eva replied calmly. “Yes, it’s Lumiere. I don’t have a lot of hobbies, but collecting jewelry is one of them. I longed to have a sister, and now that I finally have one, I can doll her up with my collection.”</p>
                 <p>Doris chuckled and said, “Ms. Delgado is a renowned jewelry collector in Nord City, but she keeps a really low profile. If it wasn’t for the Lumiere, I wouldn’t have realized that you’re actually Ms. Delgado,</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Mrs. Lane.”</p>
                 <p>“I’ve heard of Ms. Delgado as well. Most famous jewelry are in her collection, so people actually have to go to her to borrow her collection if they want to organize an exhibition.”</p>
                 <p>Eva replied modestly. “Jewelry collection is just a personal hobby, but I’m glad that Mia gets to wear them now, giving them a chance to make an appearance again.‘</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>“Mr. Lane, you’re blessed to have such a wife.”</p>
                 <p>“Mia’s equally fortunate as well. She used to be the lady of the Barrett family before she returned as the daughter of the Lanes. Whatever her position may be, she’s exceptional indeed!”</p>
                 <p>As the socialites lavished praise on Mia, the tension lingering in the air faded. The Lane brothers looked visibly pleased, especially Dominic. The menacing look on his face flipped into satisfaction once the</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>socialites began complimenting Mia.</p>
                 <p>Mia was filled with a sense of novelty as she saw how the socialites worked their way around words. They belittled her back then, yet they kept fawning over her mannerisms and appearance today.</p>
                 <p>Sharon felt frustrated. She also wore jewelry from her precious collection, yet they were incomparable to Mia’s jewelry. Being overshadowed by Mia, whom she ofice bullied and looked down on, was a tough pill for her to swallow. With Mia’s six brothers standing next to her, it simply wasn’t possible for Sharon to</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>express her chagrin.</p>
                 <p>Sharon would drown in dread if the topic on Mia’s jewelry dragged on. Thus, she took the initiative to avert the topic. “Oh yeah, when are you planning to return to Nord City. Ms. Bowen?”</p>
                 <p>Mia replied calmly, “Soon. I’ll go back once I’ve settled my college issues.”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Another socialite chimed in. “As the daughter of the Lane family who was found after being missing for so long, aren’t you all going to hold a grand banquet to celebrate Ms. Bowen’s return?”</p>
                 <p>Dominic shot a glance at her and said indifferently. “That’s right.”</p>
                 <p>Connor added, “The banquet will be held at Andrews, the most mysterious and extravagant hotel in Nord City. Our friends and family, also not missing out some of our significant guests from the upper crust, will be invited. By then, we’ll officially introduce Mia as the daughter of the Lane family.”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

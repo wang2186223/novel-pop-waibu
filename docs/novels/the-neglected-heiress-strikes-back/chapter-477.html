@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2318,7 +2398,7 @@
                 <p>The pain was unbearable, her mind a blank void.</p>
                 <p>Valentina watched her with a wild, triumphant smile. Oh, how lovely, Isabella. Seeing you stripped of your pride, so lost and pathetic—it’s a beautiful sight!</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;The Kingsley Group and the Vanderbilt Group uniting? That’s monumental! But why wasn’t there any hint of this before? It feels so sudden!&#34;</p>
                 <p>&#34;Isn’t this just the Kingsley way? Remember when Isabella and Sebastian married? They kept it under wraps until the divorce. Their three-year marriage was a well-kept secret, and now it’s the same tactic with the Vanderbilts.&#34;</p>
                 <p>&#34;Wait—if Sebastian is engaged to Valentina, what was all that deep affection for Isabella about?&#34;</p>
@@ -2331,7 +2411,7 @@
                 <p>Nathaniel Whitmore blinked in surprise. &#34;Well, that’s certainly grand news! Congratulations, Mr. Alexander Kingsley, and to you, Mr. Sebastian Kingsley.&#34;</p>
                 <p>&#34;Are you joking, Alexander?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Sebastian’s fists clenched until his knuckles turned white, rage and panic crashing over him like a tidal wave. His eyes burned with defiance as he spoke through gritted teeth.</p>
                 <p>&#34;Everyone knows I love Isabella, and I will love her until death. Now you want me to marry Valentina? I don’t care what deal you’ve struck with the Vanderbilts—even if you threaten your own life, I will never marry her!&#34;</p>
                 <p>The crowd was stunned into silence. Even Nathaniel and his son were dumbfounded by Sebastian’s bold defiance.</p>
@@ -2344,7 +2424,7 @@
                 <p>&#34;What’s going on? It seems Sebastian had no idea about this arranged marriage—like Alexander just traded him off.&#34;</p>
                 <p>&#34;Isn’t it wrong to force a marriage like this?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;The Vanderbilts are even worse. Knowing Sebastian is devoted to Isabella, they push Valentina on him, making this awkward for everyone.&#34;</p>
                 <p>&#34;If I were Valentina, I’d be mortified. Who’s she trying to fool?&#34;</p>
                 <p>&#34;Valentina probably doesn’t care—she’s over the moon at the chance to be Mrs. Kingsley!&#34;</p>
@@ -2357,7 +2437,7 @@
                 <p>Alexander stepped forward, glaring up at his taller son. &#34;This isn’t up for debate!&#34; His voice was laced with barely contained fury. &#34;Even if you don’t marry Valentina, Isabella will never be part of this family!&#34;</p>
                 <p>&#34;Then I’ll marry no one but Isabella.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Though their exchange was meant to be private, Sebastian’s declaration was heard by all.</p>
                 <p>A single tear slipped from Isabella’s red-rimmed eyes. She moved toward Sebastian, but William grabbed her wrist, pulling her back.</p>
                 <p>&#34;Isabella, where do you think you’re going?&#34; he demanded sternly.</p>
@@ -2370,7 +2450,7 @@
                 <p>Valentina burst into theatrical sobs.</p>
                 <p>&#34;What’s wrong with demanding responsibility? If you love Ms. Sinclair so much, why did you get entangled with my granddaughter in the first place?!&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Dominic’s words were sharp, calculated. &#34;Are you this reckless because of your friendship with my grandson, or because you think my granddaughter—orphaned young, with no one to defend her—is an easy target?&#34;</p>
                 <p>His words made the guests recall the scandal involving Sebastian and Valentina. Back then, the Vanderbilts had pressured the Kingsleys, but Sebastian remained indifferent, leaving Valentina to retreat in silence.</p>
                 <p>Sebastian’s cold gaze locked onto Valentina, making her flinch. His voice was icy, assertive.</p>
@@ -2383,7 +2463,7 @@
                 <p>Before Alexander could finish, Sebastian was already striding toward the woman standing a short distance away, waiting for him in silence.</p>
                 <p>His Isabella. The love of his life. Priceless.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>“Mia Bowen!”</p>
                 <p>Mia’s head shot up at the unexpected guest.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>It was Wilhelmina.</p>
                 <p>It had only been days, but she appeared disheveled in shabby clothes, as if she hadn’t washed up for days.</p>
                 <p>Mia put her work on hold for a moment. “Anything I can help you with?”</p>
                 <p>Felix left his office immediately and stood before Mia. “Wilhelmina Jones, you’re already fired. If you’re trying</p>
                 <p>to cause trouble here, I won’t let it slide that easily.”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Wilhelmina’s expression contorted. “Why are you doing this to me, Felix Quilter? Have you forgotten what you said to me that night? That you’d take responsibility for it? And that you’ll reveal our relationship once we’re</p>
                 <p>stable?”</p>
                 <p>There was a nuance in his expression, but he calmly replied, “I never said such things.”</p>
                 <p>She retorted, “You jerk! We slept together!”</p>
                 <p>Frustrated, he snapped, “Wilhelmina Jones, everyone knows what you did. You were the one behind it and yet you framed Mia. This is the ending you brought upon yourself.”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Had he known earlier that she was a sugar baby, he wouldn’t have touched her at all.</p>
                 <p>He even went for a body checkup to make sure he was healthy.</p>
                 <p>Her eyes welled up with tears as she knelt before Mia. “I was wrong about that. I’m so sorry. Please forgive me!</p>
                 <p>Mia was completely dumbfounded. Wilhelmina was all confrontational as though she was trying to settle the</p>
                 <p>score, yet she was the one on her knees now.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Mia scanned the area, wondering if it was a prank.</p>
                 <p>Wilhelmina had Shelly’s support, so Mia needed to tread carefully.</p>
                 <p>12:05</p>
                 <p>+15 BONOS</p>
                 <p>The company had declared bankruptcy, leaving the family with no gains but the looming threat of substantial</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>debt.</p>
                 <p>Shelly, who had long deleted Wilhelmina’s contact number, didn’t answer her calls. Shelly clearly showed her intention to cut ties with Wilhelmina.</p>
                 <p>Adding to the pressure, Wilhelmina also received a letter from a famous law firm, which demanded she beg for Mia’s forgiveness, Otherwise, they would send Wilhelmina behind bars!</p>
@@ -2352,7 +2432,7 @@
                 <p>Still finding the situation perplexing, Mia approached Wilhelmina. “What are you-</p>
                 <p>Before Mia could finish, Wilhelmina abruptly charged in her direction.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

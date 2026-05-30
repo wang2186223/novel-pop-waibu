@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2315,7 +2395,7 @@
                 <p>&#34;You&#39;re lucky I didn&#39;t run into you completely,&#39;cause trust me, that was my intention,&#34; he drawled in a grumpy tone.</p>
                 <p>What? Was he kidding me?</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Are you-&#34; I paused, instantly realizing how familiar he looked.</p>
                 <p>There was somethingabout his cocky smirk and perfectly messy dark hair that struck a chord.</p>
                 <p>I furrowed my brows, trying to recall where I&#39;d seen him. And then, like lightning, it struck me.</p>
@@ -2325,7 +2405,7 @@
                 <p>＊＊＊＊＋＊＊＊＊十</p>
                 <p>Jace and I were childhood friends, long before | got my scar. He was the one person who never shied away from me, although at some point, he became inconsistent as he was away to a new country. I was devastated when he left &#39;cause he had been the one true friend I had left.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>We haven&#39;t seen each other in over fifteen years.I was surprised when he could recognize me without my scar. Apparently, Rufus had taken a picture of me at the airport and had it sent to him.</p>
                 <p>&#34;So,how have you been, Lyric? I haven&#39;t seen you in like, what, thirty years?&#34; Jace said as he locked some whipped cream off his fingers. We were in a cozy little restaurant by the window, sharing breakfast.</p>
                 <p>&#34;Jace! I&#39;m only twenty-five.&#34; I rolled my eyes at him.</p>
@@ -2335,7 +2415,7 @@
                 <p>&#34;Hey, we&#39;re adults now. Stop calling me that name.&#34;He stabbed his finger in the air toward me.</p>
                 <p>I couldn&#39;t help but laugh. He&#39;d always hated that name.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>We talked about so many things, including how Roderick had used and dumped me.</p>
                 <p>&#34;I swear, if I ever see that slimy Alpha, I&#39;ll rearrangehis face,&#34; Jace fumed.</p>
                 <p>&#34;I&#39;m afraid you can&#39;t. He&#39;s one of the most powerful Alphas now,&#34; I rolled my eyes, although my heart hurt from the truth.</p>
@@ -2345,7 +2425,7 @@
                 <p>&#34;So, have you found someone yet?&#34; I asked a while later, wanting to change the topic.</p>
                 <p>Jace had always had issues sustaining a relationship with a woman. It was one of the problems I worried about for him.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Nah. Believe me, Lyric, I&#39;ve tried. I&#39;ve given a lot of bitches too many chances, but it&#39;s just not working out. I don&#39;t know.&#34; He shrugged. &#34;Maybe it&#39;s because you&#39;re not trying enough. You&#39;re too flirty to stay committed, Jace.&#34;</p>
                 <p>&#34;Uh-uh. Trust me, I&#39;ve tried, Ly.&#34;</p>
                 <p>Suddenly, there was a certain interruption.</p>
@@ -2369,7 +2449,7 @@
                 <p>No. I&#39;d already made up my mind on what I needed to do. I was going back to Draconis, back to my normal life.I was done with the people here.</p>
                 <p>My jaw tightening, I forced the words out. &#34;I&#39;m sorry,but I&#39;m not seeing him. You can tell him I&#39;ve changed my mind.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

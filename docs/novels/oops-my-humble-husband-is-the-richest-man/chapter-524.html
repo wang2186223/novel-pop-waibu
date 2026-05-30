@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>Beside her, Mr. Evans&#39; eyes were red, his voice choked. &#34;Jane, how could we blame you? If you hadn&#39;t been targeted by traffickers all those years ago, it would have been your brother who was taken... He already owed you his life.&#34;</p>
                 <p>Jane&#39;s two older brothers stepped forward as well.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>One of them sighed. &#34;Little sister, Justin was a scoundrel before. Bullying you was wrong. But all these years... he never stopped looking for you. His so-called &#39;vacations&#39; every year were actually trips to different cities, searching for you like finding a needle in a haystack...&#34;</p>
                 <p>Mrs. Evans wiped her tears, her voice soft but firm. &#34;We were all about to give up. Only Justin didn&#39;t. He&#39;s a jerk. He hurt you... Belle, Mom doesn&#39;t ask for your forgiveness. I only beg you... don&#39;t push us away. Let us stay by your side, okay?&#34;</p>
                 <p>Jane stared at them blankly.</p>
@@ -2323,7 +2403,7 @@
                 <p>Mrs. Evans patted her back gently, her voice trembling as she tried to stay calm. &#34;Don&#39;t cry, Belle, don&#39;t cry... Your brother will be fine. He will definitely be okay.&#34;</p>
                 <p>Jane nodded vigorously, but her tears kept flowing.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>The two brothers stepped forward. One helped Mrs. Evans up, the other assisted Jane.</p>
                 <p>&#34;Mom, sister, let&#39;s get up first.&#34;</p>
                 <p>The family supported each other, standing firm once more outside the operating room doors, their gazes fixed intently on the closed door.</p>
@@ -2332,7 +2412,7 @@
                 <p>She stood there silently, suddenly feeling that blood ties were a strange thing indeed.</p>
                 <p>It could make a playboy like Justin Evans risk his life without hesitation for his sister in a moment of crisis.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Yet on the other hand, Mina Sherwood&#39;s parents could treat their daughter so coldly, as a tool to exchange for benefits.</p>
                 <p>Evelyn sighed inwardly and looked down at her phone.</p>
                 <p>That string of numbers had indeed sent a new message. [I never imagined familial love among Chinese people could be like this... Evelyn, you&#39;ve turned misfortune into fortune this time. Fox came to cause trouble, but inadvertently helped you resolve the rift between Jane and the Evans family... But next time, you won&#39;t be so lucky. Be careful of Fox.]</p>
@@ -2341,7 +2421,7 @@
                 <p>Who exactly was this person with the codename &#34;Fox&#34;?</p>
                 <p>Was it Susan Langley herself, or was there someone else behind her?</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>What role did &#34;Fox&#34; play in the Evans family turmoil?</p>
                 <p>She immediately sent a message to Alexander Vance. [Help me interrogate Mrs. White. Check for any clues about &#34;Fox.&#34;]</p>
                 <p>Just as the message was sent, a figure approached silently.</p>
@@ -2350,7 +2430,7 @@
                 <p>After confirming no one was around, Alexander spoke. &#34;I used some connections to interrogate Mrs. White. For the past few months, she&#39;s been frequently chatting with someone online with the username &#39;Fox.&#39; They met on the internet. Mrs. White felt a strong rapport with her. &#39;Fox&#39; was very patient, chatting with her, alleviating her loneliness. They called each other best friends.&#34;</p>
                 <p>Evelyn frowned. &#34;Was it this &#39;Fox&#39; who urged Mrs. White to obstruct Nathan and Jane?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Alexander nodded. &#34;Correct. We retrieved their chat logs. Mrs. White was already somewhat overindulgent towards Nathan. Nathan had pestered her for a long time, wanting to be with Jane. When Mrs. White complained to &#39;Fox,&#39; she expressed helplessness, feeling she might eventually give in. It was &#39;Fox&#39; who urged her to absolutely not agree, even giving her ideas, suggesting she threaten suicide... Later, when Mrs. White complained about her son resenting her, it was also &#39;Fox&#39; who proposed that Jane could become Nathan&#39;s mistress... to completely sever Nathan&#39;s hopes.&#34;</p>
                 <p>Evelyn clenched her fists tighter. &#34;And Nathan&#39;s death...&#34;</p>
                 <p>Alexander&#39;s expression turned grave. &#34;Also Fox&#39;s doing. Nathan accidentally saw the chat logs between Mrs. White and &#39;Fox.&#39; That&#39;s when he realized he had been manipulated and controlled by his mother all along... That&#39;s what completely destroyed his will to live.&#34;</p>
@@ -2362,7 +2442,7 @@
                 <p>The Evans family immediately surrounded them, voices urgent. &#34;Doctor, how is Justin?&#34;</p>
                 <p>Evelyn also immediately looked up—</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2319,21 +2399,21 @@
                 <p>Ginger and Caleb were taken aback by her declaration.</p>
                 <p>Mia glanced at them, her expression tinged with a hint of awkwardness. “What’s wrong? Can’t I drop by?”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Caleb quickly nodded, confirming, “Certainly, you can, Ms. Monalize. As long as you’re willing to sell us the reishi mushrooms, we’re open to any conditions. I’ll arrange the plane tickets immediately. Do either of you have any ions?”</p>
                 <p>Ginger promptly raised her hand. “None at all.”</p>
                 <p>Mia glanced at Ginger, waiting until Caleb stepped away to make the ticket reservation call. She then leaned down and whispered to Ginger, “Do you want to accompany me to Bern City?”</p>
                 <p>“Yes, Mommy. If I stay behind, how will your plan work? Besides, I’m quite good at pretending to be sick, so he surely won’t suspect it’s for Sage’s treatment.”</p>
                 <p>Mia affectionately patted Ginger’s head and smiled, saying, “Alright, then we’ll pay a visit to the Barrett family in Bern City.”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Mia was also curious about the place that had caused her so much distress before.</p>
                 <p>An hour later, Mia discreetly escorted Ginger to the airport.</p>
                 <p>Even Wade remained oblivious to their plan.</p>
                 <p>If Wade were to find out, her brothers would soon follow suit, and they certainly wouldn’t approve of her visiting the Barrett family in Bern City.</p>
                 <p>But for Sage’s sake, this journey was necessary.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>As the plane ascended into the sky, Mia watched the shrinking silhouette of Xanier Island below. Contemplating Sage’s illness, her gaze hardened with determination.</p>
                 <p>Seven hours later, the aircraft touched down at Bern City International Airport.</p>
                 <p>Mia gently lifted the sleeping Ginger from her seat. Despite Ginger’s excitement during the flight, she had drifted off to sleep just before they landed.</p>
@@ -2348,7 +2428,7 @@
                 <p>witness it firsthand.</p>
                 <p>However, she hadn’t anticipated seeing that woman again! The woman who bore such a striking resemblance was at the airport too!</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

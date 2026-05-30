@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>“The piece you played was beautiful But I think the opening is another song. More like a children’s song?” She tested the water.</p>
                 <p>Before this, Maya had contemplated many things in her head. Could Mia still remember what happened during their younger days?</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>If so, she should be able to recall how Maya convinced her to move to the other orphanage.</p>
                 <p>Maya’s question struck Mia as weird. Pausing momentarily, Mia answered, “You’re right. I merged it with another piece of my favorite. Anything wrong about it?”</p>
                 <p>“N–Nothing. It was beautiful, so I wanted to ask.” Maya’s back was drenched in a cold sweat.</p>
                 <p>Everything in Maya was pulling her from meeting Mia’s eyes. It was fear, the fear of Mia remembering the origin of that song and bringing up the orphanage.</p>
                 <p>If Claude heard it and questioned further, Mia’s true identity would be revealed!</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Maya couldn’t bring herself to think about what would transpire next.</p>
                 <p>At the same time, Maya’s reaction was weird in Mia’s view. Mia was certain that Maya was behind the “surprise” that happened today to embarrass Mia.</p>
                 <p>Obviously, Maya didn’t expect Mia to get away with it without humiliating herself.</p>
                 <p>When Mia was going to say something, she noticed the incoming Timothy and she froze.</p>
                 <p>Why was that bastard coming in their direction? Was he going to mock her for the bad</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>performance?</p>
                 <p>Timothy’s eyes were on Mia as his mind was thinking about her. She appeared foreign to him. He didn’t know that she could play piano, let alone her talent for piano.</p>
                 <p>+15 BONOS</p>
                 <p>He pursed his lips. “Mia, come with me. I have something to tell you.”</p>
                 <p>Shocked, she didn’t expect that to come from him.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Before she could give a response, Claude pulled her head, alarmed. He barked, “Say it here. It’s not like it’s anything disgraceful. Is there a need to speak to her privately?”</p>
                 <p>That alone sparked tension between the two men. A fight could break out at any moment.</p>
                 <p>Mia quickly said, “I have something to wrap up. Let’s talk after I’m done.” She then waved at</p>
                 <p>Claude. “I’ll call once I’m done.”</p>
                 <p>Claude could tell that she was trying to alleviate the tension in the air. He didn’t wish to make a</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>scene here either.</p>
                 <p>There were so many eyes watching on campus. Causing trouble for Mia was definitely the last thing on his mind.</p>
                 <p>After Mia left, Claude glared at Timothy. “I’ve warned you, stay away from Mia or don’t blame me</p>
@@ -2348,7 +2428,7 @@
                 <p>Timothy rolled up his sleeves. His gentle facade failed to mask the dangerous intent in his eyes.” That’s my line. This will be my last time saying this–Mia’s my wife.</p>
                 <p>“I hope your family can stay away from her or don’t blame me for not showing mercy!”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

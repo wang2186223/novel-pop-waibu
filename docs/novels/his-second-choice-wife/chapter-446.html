@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2319,28 +2399,28 @@
                 <p>Evelyn gave instructions calmly. &#34;Ryan, take me to Blackwood Manor first, then bring Rosalind back to Wright Manor.&#34;</p>
                 <p>&#34;Understood.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Rosalind frowned in confusion. &#34;Eve, why are you going to Blackwood Manor?&#34;</p>
                 <p>Evelyn leaned close, covering her mouth as she whispered conspiratorially, &#34;I&#39;m going to steal something.&#34;</p>
                 <p>Rosalind&#39;s eyes widened in shock. &#34;What could you possibly want to steal from him?&#34; she hissed back.</p>
                 <p>Evelyn only responded with an enigmatic smile, shaking her head slightly to indicate she couldn&#39;t reveal her plans yet.</p>
                 <p>Rosalind studied her friend&#39;s expression with growing curiosity. She couldn&#39;t fathom what Evelyn would need to take from Liam Blackwood of all people.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Under the cover of night&#39;s stillness, a sleek black sedan glided through the gates of Blackwood Manor.</p>
                 <p>The driver stepped out promptly, opening the rear door with practiced ease. &#34;Mr. Blackwood, we&#39;ve arrived.&#34;</p>
                 <p>Emerging from his thoughts, Liam closed the documents he&#39;d been reviewing, straightened his suit jacket, and gathered his files before stepping onto the cobblestone path. &#34;You&#39;re dismissed for the evening.&#34;</p>
                 <p>The driver bowed slightly. &#34;Goodnight, sir.&#34;</p>
                 <p>Liam pressed his thumb to the biometric scanner, pushing open the heavy oak door. As he entered, the unexpected glow of interior lights immediately put him on alert.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Why are the lights on? Is Ryan here?&#34; he wondered silently.</p>
                 <p>Closing the door behind him, Liam&#39;s sharp gaze swept across the living area before moving further inside.</p>
                 <p>A faint clinking sound came from the kitchen. Liam froze, his attention snapping toward the source of the noise.</p>
                 <p>At that moment, a graceful figure emerged from the kitchen doorway, carrying a tray of delicate china.</p>
                 <p>When Liam saw her, his heart stuttered before flooding with warmth. He stood rooted to the spot.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Evelyn&#39;s radiant smile lit up the room as she approached, her eyes soft with affection. &#34;Liam, you&#39;re home. I made your favorite bread pudding. Would you like some?&#34;</p>
                 <p>The domestic scene before him felt surreal - a beautiful woman waiting with homemade treats at this late hour. It seemed both dreamlike and painfully real.</p>
                 <p>Setting down the tray, Evelyn moved to take his jacket and files, arranging them neatly on the nearby sofa. When she turned back, her clear eyes met his, her smile like balm to his weary soul.</p>
@@ -2349,7 +2429,7 @@
                 <p>&#34;Liam, try the pumpkin soup first,&#34; she urged. &#34;I made it specially for you.&#34;</p>
                 <p>Liam remained unmoved, repeating his question more firmly. &#34;You still haven&#39;t told me why you came.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

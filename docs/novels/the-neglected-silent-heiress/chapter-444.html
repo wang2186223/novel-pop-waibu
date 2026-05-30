@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,19 +2393,19 @@
                 <p>The smile froze on Olivia&#39;s face, though her voice remained gentle. &#34;Not this time, sweetheart. This is our mother-daughter trip. We&#39;ll have so much fun together, and we&#39;ll be back before you know it.&#34; She crouched to meet Isabelle&#39;s eyes. &#34;Liam has someone special in his life now. Let&#39;s not bother them, okay?&#34;</p>
                 <p>Isabelle&#39;s lower lip trembled slightly. &#34;But Liam told me he doesn&#39;t have a girlfriend.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Olivia smoothed her daughter&#39;s hair with infinite patience. &#34;Whether he does or doesn&#39;t, that&#39;s not our concern anymore. You wouldn&#39;t want to make him uncomfortable, would you?&#34;</p>
                 <p>The little girl twisted the hem of her dress. &#34;I don&#39;t want anyone to be sad.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Olivia gave Isabelle&#39;s cheek an affectionate pinch. &#34;Do you remember what we just talked about?&#34;</p>
                 <p>Isabelle nodded solemnly. &#34;Yes, Mommy. I remember.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>At that moment, Winston entered with a worried expression.</p>
                 <p>&#34;Miss Sinclair, is this sudden departure truly necessary? Perhaps you should rest first before traveling? We still don&#39;t know the full effects of that medication in your system. Leaving now could be dangerous.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>He continued earnestly, &#34;After your recent illness, you should either see a doctor or return to the Kensington estate. At least there you&#39;d have proper medical support if anything happens.&#34;</p>
                 <p>Olivia shook her head firmly. &#34;Winston, I feel perfectly fine now. More importantly, I need to settle this matter quickly. I refuse to owe anyone anything—it only leads to complications later.&#34; Though she didn&#39;t elaborate, Winston suspected this involved Liam&#39;s recent stay.</p>
                 <p>Seeing her resolve, Winston stopped protesting. Instead, he made a firm request. &#34;Then at least allow me to accompany you.&#34;</p>
@@ -2334,7 +2414,7 @@
                 <p>Moved by his devotion, Olivia finally relented. &#34;Alright, pack your things. We leave tonight.&#34;</p>
                 <p>&#34;Very good, Miss.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

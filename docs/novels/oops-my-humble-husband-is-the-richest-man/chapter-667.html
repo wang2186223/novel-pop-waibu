@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>Alexander lowered his gaze. &#34;Grandma told me to stay with you.&#34;</p>
                 <p>Alexander had returned to the Vance home several times in between. Each time, Grandma would shoo him away, telling him to go be with Evelyn, afraid her granddaughter-in-law might disappear again.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Whenever Alexander thought of what the doctor had said, his chest tightened with pain.</p>
                 <p>Eleanor Vance had once told the doctor that she was afraid after she was gone, Alexander would have no family left in this world. So, she must protect Evelyn.</p>
                 <p>Evelyn was his only family now.</p>
@@ -2323,7 +2403,7 @@
                 <p>Now that she remembered the past, she was still worried about him.</p>
                 <p>He unconsciously quickened his pace.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Evelyn immediately followed, stating directly, &#34;You should have told me earlier. From now on, we&#39;ll stay at the Vance residence.&#34;</p>
                 <p>Alexander looked at her.</p>
                 <p>Evelyn&#39;s tone was firm. &#34;I&#39;ll do my things, you handle your work. But we&#39;ll come back every night to be with Grandma. We won&#39;t go to the Ashcroft house anymore.&#34;</p>
@@ -2332,7 +2412,7 @@
                 <p>&#34;Yes.&#34;</p>
                 <p>They exchanged a smile, holding hands as they strode into the old lady&#39;s courtyard.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Natalie followed behind them, watching their clasped hands. She couldn&#39;t help but look down at her own.</p>
                 <p>She stared blankly for a moment, smiled self-deprecatingly, and silently followed.</p>
                 <p>The group entered the courtyard and saw Fiona accompanying Eleanor Vance on a walk.</p>
@@ -2341,7 +2421,7 @@
                 <p>Fiona immediately became anxious. &#34;Madam, what are you saying! You mustn&#39;t go! Even if Mr. Vance is willing to support me, the main branch will bully me! I need you here to protect me!&#34;</p>
                 <p>Eleanor chuckled. &#34;I&#39;m eighty-seven. If I live any longer, won&#39;t I become an old monster? Fiona, don&#39;t worry. When I&#39;m gone, you stay here. The main branch... they won&#39;t be jumping around for much longer.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Fiona was puzzled. &#34;Madam, what do you mean?&#34;</p>
                 <p>&#34;You think Alexander can&#39;t really suppress those people from the main branch? All this back-and-forth fighting, pretending it&#39;s evenly matched, is just to make this old woman worry about him, so I don&#39;t dare to die. But ah, I discovered a little secret of Alexander&#39;s.&#34;</p>
                 <p>Fiona immediately asked, &#34;What secret?&#34;</p>
@@ -2350,7 +2430,7 @@
                 <p>But Eleanor waved her hand. &#34;Fiona, the Vance family owes Alexander. His mother ignored him back then. After he stayed with the Vances, his father ignored him too. He was so very small. He had such a hard time living alone in the old mansion as a child, then later left home to study abroad... The Vance family owes him! I can&#39;t be so selfish. Just for an old woman like me, to let him live in such憋屈 all this time. So, when it&#39;s time for me to die, I should die.&#34;</p>
                 <p>Fiona cried. &#34;Madam, please don&#39;t say that!&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Why are you crying?&#34; Eleanor sighed. &#34;When Evelyn had that accident, I was truly scared. I forced myself to hold on, thinking I had to live a few more years. I was really afraid that if I went first, Alexander would follow right after. But now it&#39;s good. He still has someone he can&#39;t bear to leave in this world.&#34;</p>
                 <p>Fiona sobbed. &#34;Madam...&#34;</p>
                 <p>&#34;Don&#39;t worry, I still have a month. But I&#39;m truly tired, and conflicted, and hesitant... I don&#39;t know if I should die or not. Fiona, are sons born to collect debts from their mothers? That scoundrel Robert Vance, he&#39;s been so awful to Alexander, but to me... he&#39;s truly filial. Sigh...&#34;</p>
@@ -2361,7 +2441,7 @@
                 <p>After all, that was her own son, her own grandson...</p>
                 <p>If Alexander truly went all out...</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

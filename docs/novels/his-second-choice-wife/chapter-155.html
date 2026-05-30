@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,27 +2390,27 @@
                 <p>For three long years, she had loved Liam with every fiber of her being. Whenever he visited Margaret, she would watch their interactions from a distance, lost in her own fantasies.</p>
                 <p>She had studied everything about him - probing Margaret for details about his preferences, his passions, his quirks, his past triumphs.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Her love for him never wavered, not even in her wildest dreams. But when she finally married him, she discovered his heart belonged to another.</p>
                 <p>Their marriage lacked the joy and fulfillment she had imagined. Seeing Liam&#39;s affection for Victoria twisted her heart with pain.</p>
                 <p>It was then Evelyn truly understood the agony of unrequited love within a marriage.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>After a heavy silence, Liam asked solemnly, &#34;Are you absolutely certain about this?&#34;</p>
                 <p>Avoiding his gaze to hide her tears, Evelyn replied calmly, &#34;I made this decision long ago. I&#39;ve simply found the right moment to act.&#34;</p>
                 <p>Liam said nothing, merely lifting his eyes to the ceiling with a deep sigh.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Evelyn continued, &#34;I trust you&#39;ll respect my choice. Let&#39;s end this peacefully.&#34;</p>
                 <p>With those final words, she turned to leave. But after only a few steps, Liam&#39;s unexpected response stopped her cold. &#34;I can&#39;t simply accept your decision,&#34; he confessed.</p>
                 <p>Evelyn froze, struggling to contain her tears as sharp pain pierced her chest.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Liam was pushing her to the edge. He didn&#39;t love her, yet refused to let her go. Why cling to a marriage devoid of real affection?</p>
                 <p>She couldn&#39;t even perform basic household tasks or contribute financially. The hope of having children together seemed distant. They slept in separate beds, denying her even the warmth of his presence at night.</p>
                 <p>Tears streaming down her face, Evelyn steeled herself and spoke with icy resolve, &#34;Then I&#39;ll file for divorce through legal channels.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>She wiped her tears and marched forward, only for Liam to grab her arm again. His voice trembled with pain and regret as he reached for her.</p>
                 <p>Furious, Evelyn whirled around and violently shook off his grip. Through her tears, she cried out, &#34;Enough! What do you want from me?&#34;</p>
                 <p>Shocked by her outburst, Liam fell into heavy silence.</p>
@@ -2339,7 +2419,7 @@
                 <p>Wiping her tears, Evelyn shot back, &#34;I married you for love, but you saw it differently. You claimed to respect me, promised to build a life together, yet your heart belongs to Victoria!&#34;</p>
                 <p>&#34;Whenever she calls, you come running. You even let her move into our home! Am I supposed to share my husband with another woman?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

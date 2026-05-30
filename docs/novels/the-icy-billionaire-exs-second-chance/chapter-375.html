@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,15 +2389,15 @@
                 <p>Vivian wasn&#39;t surprised by the sentence. With both Damien and Adrian involved, Cassandra was bound to face severe consequences. Yet Damien and Adrian usually avoided each other, and Ethan had been handling the matter. Vivian found it odd that Damien would personally visit Blackwood Group.</p>
                 <p>Frowning slightly, Vivian voiced her doubt, &#34;Did Mr. Vaughn really come here just to tell us that?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>As the elevator doors opened on their floor, Adrian turned his piercing gaze to the receptionist, his authoritative presence undeniable. He gave her a brief nod before addressing Ethan. &#34;Make sure she completes ten laps crawling. After that, she can submit her resignation.&#34;</p>
                 <p>Linking arms with Vivian, he moved to leave. Noticing Damien nearby, he said sharply, &#34;Mr. Vaughn, seems you&#39;ve got plenty of free time to enjoy the show?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>The receptionist burst into tears. &#34;Mr. Blackwood, this is unfair! How can you treat a woman like this?&#34; Ethan immediately signaled security to escort her away.</p>
                 <p>Damien gave Vivian a knowing smile. &#34;Considering Vivian is my business partner, it&#39;s only natural I&#39;d take interest in her affairs. Who knows? This might even become trending news.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Appreciate your concern for my wife, Mr. Vaughn,&#34; Adrian countered, locking eyes with Damien in a half-smile.</p>
                 <p>Sensing the rising tension, Vivian tugged at Adrian&#39;s sleeve. &#34;I&#39;m starving. Let&#39;s go have lunch.&#34;</p>
                 <!-- 广告位 4 -->
@@ -2325,13 +2405,13 @@
                 <p>Audrey chimed in, &#34;I&#39;ve been waiting here two hours without eating. Mind if I join you?&#34;</p>
                 <p>Adrian paused, thinking, &#34;Since when did we acquire so many extra guests?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Stepping out first, Adrian continued casually, &#34;He also asked us to delay releasing the variety show. Said your TV series is premiering soon, and airing the show now might cause unnecessary rumors.&#34;</p>
                 <p>He paused, studying her reaction. &#34;What do you think?&#34;</p>
                 <p>Vivian carefully considered his words from a professional standpoint. &#34;As a newcomer, announcing it now might make people focus more on our relationship than my performance.&#34;</p>
                 <p>&#34;So you&#39;re suggesting we postpone the variety show and keep our marriage secret?&#34; Adrian asked as they approached his office. The glass doors recognized his iris and slid open smoothly.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

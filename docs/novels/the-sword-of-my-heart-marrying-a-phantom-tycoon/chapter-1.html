@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2315,7 +2395,7 @@
                 <p>By doing this, they could spin the narrative online and bury the brewing scandal.</p>
                 <p>With a look that mingled sympathy and resignation, Clayton said softly, &#34;Miss Flynn, this is what Mr. Morrison wants. If you don&#39;t cooperate, there might be issues with Mrs. Davis&#39; treatment next week...&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>He left his sentence dangling, but Amelia understood him perfectly. This was Jaxton&#39;s threat.</p>
                 <p>Jaxton was using her grandmother, Michelle Davis, as leverage to threaten her.</p>
                 <p>Michelle required special treatment every week, and in all of Kretol, only the renowned doctor, Marc Chapman, could provide it.</p>
@@ -2325,7 +2405,7 @@
                 <p>Nothing about the anesthesia worked for Amelia due to her special condition.</p>
                 <p>By the time the tattoo artist finished his work, sweat clung to Amelia&#39;s skin, soaking the thin fabric of her hospital gown, while her face looked pale.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;I&#39;m sorry you had to endure that, Miss Flynn.&#34;</p>
                 <p>Clayton&#39;s words came as he approached, snapping a quick photo of the fresh tattoo on her waist. Then, he sent the photo to Jaxton.</p>
                 <p>After receiving Jaxton&#39;s reply, Clayton finally breathed a sigh of relief.</p>
@@ -2335,7 +2415,7 @@
                 <p>Only then did Amelia allow herself to open her eyes.</p>
                 <p>A dull ache pulsed at her lower back as she struggled upright and made her way into the bathroom.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Catching sight of the new tattoo-an exact match to Dayna&#39;s-in the mirror, her eyes grew cold, and her chest felt heavy.</p>
                 <p>Hours slipped past, and by seven that evening, Amelia found herself escorted by Clayton to the Morrison Group&#39;s press conference.</p>
                 <p>When she arrived, she found that Jaxton was already there.</p>
@@ -2355,7 +2435,7 @@
                 <p>&#34;Amelia, why don&#39;t you tell everyone what happened last night?&#34;</p>
                 <p>Jaxton sounded gentle, but his gaze was full of ridicule toward her.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Frustration simmered within Amelia, yet thoughts of her grandmother made her hold back.</p>
                 <p>She forced a polite smile and said, &#34;It&#39;s all a big misunderstanding. The woman in the video with Mr. Morrison was me.&#34;</p>
                 <p>One of the reporters said, &#34;Oh, so that&#39;s what happened! Looks like your relationship is quite stable. Should we be expecting a wedding soon?&#34;</p>
@@ -2370,7 +2450,7 @@
                 <p>Had it not been for the faint sound of breathing, Amelia might have thought no one was on the other end of the line at all.</p>
                 <p>After a while, she drew a shaky breath and finally found her voice. &#34;Does your promise to me still stand?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

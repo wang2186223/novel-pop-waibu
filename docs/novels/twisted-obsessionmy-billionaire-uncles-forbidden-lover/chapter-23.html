@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>The answer was obvious. All his tenderness belonged to the woman he had embraced so tightly that afternoon.</p>
                 <p>The look of raw emotion in Ethan’s eyes that day had become her recurring nightmare. The sleepless nights, the days when only medication could bring her rest—all of it was because of him.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>It wasn’t until her mother took her to see a therapist that things began to improve.</p>
                 <p>But on the very night she cut ties with Ethan for good, that haunting gaze invaded her dreams again…</p>
                 <p>Sophia wiped away her tears, composed herself, and headed to Roscente Group.</p>
                 <p>Her colleagues in the executive office stared in surprise when she arrived. When they heard she was there to hand over her duties, their expressions turned knowing.</p>
                 <p>Before she could wonder why, the answer walked in.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Isabella Valentine, dressed in a white dress, entered arm-in-arm with Ethan.</p>
                 <p>&#34;Hello, everyone. I’m Isabella Valentine, and from now on, I’ll be Mr. Roscente’s secretary,&#34; she announced with a sweet, practiced smile.</p>
                 <p>Sophia’s heart plummeted.</p>
                 <p>So that was why Ethan had agreed to her resignation so readily. He had already arranged for her replacement.</p>
                 <p>Why sneak around with her when he could openly flirt with his fiancée in the office? Thrilling, entertaining—why not?</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The only thing she didn’t understand was why Isabella, a top-tier celebrity, would give up her career to become a secretary.</p>
                 <p>&#34;Isabella is preparing for a role as a secretary in her next film. She’s here to shadow the job,&#34; Ethan explained coolly, his gaze sliding to Sophia. &#34;Hand over your work to her.&#34;</p>
                 <p>&#34;Understood, Mr. Roscente,&#34; Sophia replied, lowering her eyes.</p>
                 <p>&#34;Miss Lowell, I appreciate your help,&#34; Isabella said in a sugary voice. &#34;I’m a quick learner. I won’t delay your job search.&#34;</p>
                 <p>&#34;You’re too kind, Miss Valentine,&#34; Sophia responded with a professional smile.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Ethan studied her face, searching for any trace of resentment or jealousy.</p>
                 <p>But she was as composed as if she were simply transferring a routine document.</p>
                 <p>The realization made his chest tighten.</p>
                 <p>&#34;Isabella, you’re coming with me on a business trip,&#34; he ordered coldly.</p>
                 <p>&#34;A trip on my first day?&#34; Isabella pouted playfully. &#34;My father was right—you really are a workaholic.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;No work, no money.&#34;</p>
                 <p>No money, no way to keep you…</p>
                 <p>As the elevator doors closed, Sophia silently finished the sentence in her mind.</p>
@@ -2348,7 +2428,7 @@
                 <p>Some things aren’t about inability. They’re about unwillingness.</p>
                 <p>Some people aren’t incapable of love. They just don’t love you.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

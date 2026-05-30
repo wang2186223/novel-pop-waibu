@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,38 +2391,38 @@
                 <p>Since things weren&#39;t panning out with Timothy, she would have to persuade Ginger to play along in another scheme.</p>
                 <p>After finishing their shopping, Mia turned to Timothy and requested, &#34;Could you help carry these items to the car?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Seeing Timothy take up the bags, Mia&#39;s spirits lifted. She discreetly snapped a photo of his back— perhaps it could be used as leverage in the future.</p>
                 <p>It seemed that the formidable CEO had been reduced to the role of a laborer!</p>
                 <p>As Timothy and Mia stepped out of the store, a group of people approached them.</p>
                 <p>The middle-aged woman at the head of the group fixed Mia with a stern gaze and stated, &#34;You&#39;re Mia Lane, aren&#39;t you?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Pausing, Mia responded calmly, &#34;Yes, that&#39;s correct. May I ask who you are?&#34;</p>
                 <p>It was evident that the woman harbored no good intentions.</p>
                 <p>&#34;Ms. Lane, I&#39;m here to talk about my son, Chuck. A few days ago, during your dinner party, he and another young woman got carried away and acted inappropriately.</p>
                 <p>&#34;However, it seems that you&#39;ve exaggerated this into a criminal issue. That&#39;s why I&#39;ve come today to address this matter with you.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>It appeared that the woman in question was Agatha Sinclair, the mother of Chuck Jones, who had recently returned from abroad.</p>
                 <p>Mia&#39;s expression grew cold as she replied calmly, &#34;You should take this up with Harper Martinez, not me. I&#39;m not directly involved.&#34;</p>
                 <p>&#34;If that&#39;s your stance, Ms. Lane, then perhaps this conversation won&#39;t be productive. We&#39;ve already reached out to Harper and her family, and they&#39;ve agreed to a resolution.</p>
                 <p>&#34;However, it seems that your lawyer has been encouraging her to press charges against Chuck. That&#39;s why I&#39;ve come to speak with you, Ms. Lane, to understand what issues you have with Chuck that warrant such drastic actions.”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Mia had an inkling of why Agatha had approached her, but she hadn&#39;t anticipated that Harper and her parents were already willing to settle the matter.</p>
                 <p>With resolve, Mia asserted, “The lawyer I sent was to assist Harper. The ultimate decision lies with her. If she opts not to pursue legal action and prefers to reconcile with you, I won&#39;t interfere.”</p>
                 <p>&#34;Very well. In that case, please retract your lawyer, Ms. Lane. From here on out, the issue is between us and Harper. Please refrain from any further involvement.”</p>
                 <p>&#34;As I mentioned before, if Harper no longer requires legal representation, my lawyer will gracefully step aside.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Agatha&#39;s expression shifted abruptly as she countered, &#34;Ms. Lane, that&#39;s not what you assured us earlier. You mentioned you wouldn&#39;t intervene in this situation.</p>
                 <p>&#34;So, why did you arrange for a lawyer to represent Harper? It seems you&#39;re deliberately provoking a conflict with the Jones family.&#34;</p>
                 <p>Mia began to grasp the situation. It appeared that Harper probably wasn&#39;t interested in reconciliation, which prompted the Bowens to reach out to Mia.</p>
                 <p>Mia&#39;s tone grew cold as she replied, &#34;Considering Chuck&#39;s behavior at my business banquet, it&#39;s clear he also has grievances with the Lane family. In all fairness, he was the one who initiated the conflict.” Agatha&#39;s expression hardened as she confronted Mia. &#34;Mia, don&#39;t overstep your authority. The Jones family is close to forming a partnership with the Barrett family. Once that happens, the Lane family won&#39;t have the upper hand for much longer.”</p>
                 <p>Please bookmark the website to access chapters of novels early and in the highest quality.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

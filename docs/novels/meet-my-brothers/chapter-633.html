@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>With that the group of men abandoned their card game and rushed outside.</p>
                 <p>When it came to juicy gossip, it appeared that men were just as eager as women to participate.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Upon hearing this. Timothy hurried over and indeed saw the two women in a physical altercation, with Lena being the target of the attack.</p>
                 <p>Mia skillfully tugged at Lena’s hair with one hand while gripping Lena’s arm with the other, causing Lena to cry out. “Monalize, are you insane? How dare you touch me! This is Xanier Island!</p>
                 <p>“My brother won’t let you get away with this. He’ll definitely have you sold off as a prostitute!”</p>
                 <p>“Hmph, we’ll see if your brother has the guts to do that.” Mia was growing impatient; she had waited all night without finding any clue about Ginger’s whereabouts.</p>
                 <p>It seemed that Ginger was kidnapped by Lena when she went to find her scumbag father, with Lena</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>intending to use her as leverage.</p>
                 <p>Didn’t Lena realize whose daughter she was dealing with? How dare she kidnap Ginger!</p>
                 <p>Standing nearby, Timothy exclaimed in surprise, “Her name is Monalize?”</p>
                 <p>Caleb fell silent for</p>
                 <p>for a moment before remarking. “That’s quite an interesting name. Can you believe she had the nerve to lay hands on Lena? How audacious.”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>One of the onlookers interjected, “Caleb, don’t you know? She’s Monalize Langford, a prominent VIP on Xanier Island. She’s wealthy, attractive, and has an extensive network of connections.”</p>
                 <p>Curious, Caleb asked. “So, what’s her background, exactly?”</p>
                 <p>“Well, we don’t know for sure. Nobody knows Monalize’s background. She’s very mysterious; most people wouldn’t dare to provoke her.”</p>
                 <p>Timothy gazed intently at the women fighting, a hint of doubt crossing his eyes.</p>
                 <p>In pain, Lena cried out, “Let go of me! You’re finished this time. I’ll make sure you suffer like never before!”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>“Fine, but first, tell me, where is the little girl you kidnapped?”</p>
                 <p>“I don’t know!”</p>
                 <p>Mia touched Lena’s nose and taunted, “Your nose job looks pretty good. If I apply pressure, you might</p>
                 <p>need another surgery.</p>
                 <p>Lena quickly started sweating, stammering, “P–Please, don’t. I finally got my nose done perfectly this</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>time!”</p>
                 <p>“I can let you go, but you need to tell me where the little girl is.”</p>
                 <p>“I honestly don’t know. Caleb was the one who took her.”</p>
@@ -2352,7 +2432,7 @@
                 <p>Mia hesitated briefly before responding. “That’s none of your business. Just give me the child!”</p>
                 <p>Glancing down at her, Timothy inquired, “Do you know that little girl? What’s your connection to her?”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

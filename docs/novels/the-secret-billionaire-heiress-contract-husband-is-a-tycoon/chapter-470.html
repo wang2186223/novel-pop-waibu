@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,12 +2390,12 @@
                 <p>&#34;Move.&#34;</p>
                 <p>She wrenched her arm free with icy precision, removing her sunglasses. Those once-gentle eyes now held only glacial contempt. &#34;You&#39;ve mistaken me for someone else, sir.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Isabella Valentine stepped between them protectively. &#34;Xander Quincy, what do you think you&#39;re doing?&#34;</p>
                 <p>He froze. The woman before him wore a sharply tailored beige trench coat, her wavy hair cascading over shoulders, lips burning crimson. Her gaze held all the warmth of a stranger.</p>
                 <p>This wasn&#39;t the Bianca he remembered.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>His Bianca had always kept her eyes downcast, dressed in muted dresses, speaking in hushed tones.</p>
                 <p>&#34;Ranran...&#34; His voice cracked. &#34;I&#39;ve searched for you three years—&#34;</p>
                 <p>Evelyn Laurent shoved Ethan Sullivan&#39;s hand away, eyes flashing. &#34;You tipped him off?&#34;</p>
@@ -2325,12 +2405,12 @@
                 <p>Evelyn scanned the screen, shoulders relaxing marginally. She couldn&#39;t take risks—not when Bianca might be dragged back into that viper&#39;s nest of a Quincy family.</p>
                 <p>Bianca gently nudged Isabella aside, facing Xander squarely. She stood taller now, spine straight as a steel rod.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Sir,&#34; she enunciated each syllable, &#34;I don&#39;t know you. Step aside.&#34;</p>
                 <p>Xander&#39;s outstretched hand trembled midair. He searched her eyes desperately for any flicker of recognition, finding only indifference.</p>
                 <p>&#34;Ranran...&#34; He took another step, fingers grazing her coat sleeve.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>In one fluid motion, Bianca seized his wrist and flipped him clean over her shoulder.</p>
                 <p>Thud.</p>
                 <p>The impact echoed through the terminal. Gasps rippled through the crowd.</p>
@@ -2340,7 +2420,7 @@
                 <p>This woman who fought back, who looked at him with frost in her gaze—was this really his Ranran?</p>
                 <p>His Ranran had been lost long ago. By his own hands.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

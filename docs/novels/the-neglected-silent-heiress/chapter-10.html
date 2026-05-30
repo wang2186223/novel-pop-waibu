@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,25 +2391,25 @@
                 <p>His face darkened instantly. Was she really pushing him away? Didn&#39;t she want him anymore?</p>
                 <p>Olivia misinterpreted his expression as anger over her eavesdropping. She dropped her gaze, fingers flying in apology.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;I&#39;m coming,&#34; Liam bit out. He stormed out without a backward glance.</p>
                 <p>Olivia stood frozen as his footsteps faded. Hot tears traced her cheeks but she didn&#39;t wipe them. How she wished she could be selfish like Evelyn, could demand his attention.</p>
                 <p>But she had no right. She&#39;d spent years pretending not to love him. Only she knew the truth - she&#39;d die for him without hesitation.</p>
                 <p>Morning found Olivia at the bookstore, resignation letter in hand.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Olivia! What happened after you left yesterday? Did Liam apologize?&#34; Natalie pounced the moment she entered.</p>
                 <p>Olivia forced a smile, hands signing that everything was fine. She couldn&#39;t admit Liam had gone straight to Evelyn.</p>
                 <p>Natalie slammed her palm on the counter. &#34;At least he&#39;s not completely blinded by that snake!&#34;</p>
                 <p>Olivia chuckled weakly, warning Natalie to be careful.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;I can&#39;t help it! That woman makes my blood boil! Let her call the police - I&#39;ll expose her as the homewrecker she is!&#34;</p>
                 <p>Olivia patted Natalie&#39;s shoulder, signing frantically to keep her out of trouble.</p>
                 <p>&#34;I know this is hard for you...&#34; Natalie sighed.</p>
                 <p>Changing the subject, Olivia produced an envelope stuffed with cash.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;What&#39;s this?&#34; Natalie frowned.</p>
                 <p>Olivia&#39;s serious expression conveyed her decision to quit, the money meant as compensation.</p>
                 <p>&#34;Don&#39;t be ridiculous! Keep your money! Why quit? Is Liam forcing you? Divorce him and live with me! My family might not be as rich as the Blackwoods, but we&#39;re not afraid of him!&#34;</p>
@@ -2341,7 +2421,7 @@
                 <p>Olivia nodded gratefully. As she tried to stand, the room spun violently. She crumpled like a ragdoll.</p>
                 <p>&#34;Olivia!&#34; Natalie&#39;s scream echoed through the bookstore.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

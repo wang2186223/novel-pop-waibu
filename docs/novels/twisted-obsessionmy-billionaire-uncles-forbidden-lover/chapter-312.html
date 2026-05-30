@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,27 +2390,27 @@
                 <p>I scoffed. &#34;Seems you and Mr. Valrose are quite close. Next time, ask for my permission before sharing private information. It avoids unnecessary complications.&#34;</p>
                 <p>A flash of resentment crossed Isabella&#39;s face, but she quickly lowered her lashes, feigning remorse. &#34;I apologize. It was thoughtless of me—&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Ethan frowned impatiently. &#34;Enough. It won’t happen again.&#34;</p>
                 <p>Ah, the overprotective fiancé strikes again.</p>
                 <p>I had no patience for their charade and turned to leave.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>These high-society gatherings were nothing but mutual flattery. As someone with social anxiety, I couldn’t stand it. After two glasses of juice, I was desperate to escape.</p>
                 <p>As Ethan&#39;s fiancée, Isabella naturally attracted a crowd of sycophants. I hid behind a potted plant, catching snippets of conversation.</p>
                 <p>&#34;Isabella, I heard your wedding date was set ages ago. Why the delay?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Ethan’s been swamped with work,&#34; she replied sweetly. &#34;The ceremony was supposed to happen days ago, but he insisted on securing this project first.&#34;</p>
                 <p>&#34;You’re so lucky to have such a driven fiancé. My boyfriend lazes around all day. If not for his family’s money, he’d have squandered everything by now.&#34;</p>
                 <p>&#34;Your boyfriend is attentive too. He’s been fetching drinks for you all evening.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Once you return to New York, the wedding will happen, right?&#34;</p>
                 <p>My heart clenched.</p>
                 <p>So their wedding was imminent.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Of course. This was inevitable. It had always been a foregone conclusion.</p>
                 <p>Isabella tucked a loose strand of hair behind her ear, her earlier confidence melting into demure shyness. &#34;My father has already discussed it with Mr. Roscente Sr. We’ll finalize the details with Ethan when we return, then start preparations.&#34;</p>
                 <p>I followed her gaze to the garden. Under the moonlight, red roses bloomed vibrantly. Beside them stood a familiar tall figure—Ethan, deep in conversation, yet his eyes kept drifting in this direction.</p>
@@ -2339,7 +2419,7 @@
                 <p>How touching. He couldn’t bear to be apart from her for even a moment.</p>
                 <p>At the mention of their wedding, the juice in my mouth turned bitter.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

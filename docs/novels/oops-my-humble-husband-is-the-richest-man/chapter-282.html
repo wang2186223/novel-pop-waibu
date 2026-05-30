@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2329,7 +2409,7 @@
                 <p>Did she really think she could win?</p>
                 <p>She was just relying on Zack having just signed Mina&#39;s contract. Once the cooperation was stable, let&#39;s see how she could act so arrogant then.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Fuming, Kelsey left with Zack.</p>
                 <p>After they left, Mrs. Davis snorted. &#34;Satisfied? Now go make dinner!&#34;</p>
                 <p>&#34;...Okay.&#34;</p>
@@ -2341,7 +2421,7 @@
                 <p>Several times, she overheard Mrs. Davis on the phone. &#34;...Grace takes such good care of me! Now I can go square dancing every day. I don&#39;t have to lift a finger.&#34;</p>
                 <p>She continued, &#34;She&#39;s much more sensible than before. She even knows how to please me. After the divorce, she can just stay here as a live-in nanny. We won&#39;t have to pay her. What a bargain!&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>A faint smile touched Evelyn&#39;s lips.</p>
                 <p>It was easy to go from frugality to luxury. The reverse was much harder.</p>
                 <p>In modern society, what daughter-in-law would serve her mother-in-law like this?</p>
@@ -2353,7 +2433,7 @@
                 <p>&#34;The lawyers are all prepared. We&#39;ll sue him directly the day after tomorrow!&#34; Mina said excitedly.</p>
                 <p>She then looked seriously at Evelyn. &#34;Grace, I&#39;m asking you one last time. The cooling-off period is over. Are you really sure about the divorce?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Evelyn nodded. &#34;Yes, I&#39;m sure.&#34;</p>
                 <p>&#34;That&#39;s good. I was really afraid you&#39;d soften your heart. That all this was just to make him come back to you.&#34;</p>
                 <p>Evelyn changed the subject. &#34;Why did we agree to meet here today?&#34;</p>
@@ -2365,7 +2445,7 @@
                 <p>She rested her chin on her hand, looking somewhat dejected. &#34;Grace, sometimes I really envy you. Being a romantic at least gives you freedom. You married Zack because you wanted to. But me...&#34;</p>
                 <p>She lowered her eyes. &#34;If I&#39;m chosen by this distinguished person, my parents will have more standing at home.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>She gave a self-deprecating laugh, took out a compact mirror to touch up her makeup, and asked Evelyn, &#34;Gracie, do I look beautiful today? Do you think that distinguished person will fancy me?&#34;</p>
                 <p>Evelyn could see she was putting on a brave face.</p>
                 <p>She said softly, &#34;You&#39;re very beautiful. He&#39;ll definitely be interested.&#34;</p>
@@ -2381,7 +2461,7 @@
                 <p>As soon as the words were spoken, the shop door was pushed open.</p>
                 <p>Marcus Valentine strode in.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

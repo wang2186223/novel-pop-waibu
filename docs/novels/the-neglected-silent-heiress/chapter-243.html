@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,15 +2389,15 @@
                 <p>Seraphina snapped, &#34;Do you think I&#39;m blind? I don&#39;t need reminders about the obvious.&#34;</p>
                 <p>Her voice dripped with contempt as she continued, &#34;I&#39;ve no interest in competing for grandfather&#39;s attention. I&#39;ve prepared a masterpiece as his birthday gift. Even if Evelyn turns out to be family, I&#39;ll show her she can&#39;t compare.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Thinking of the exquisite artwork Olivia had spent weeks creating, Seraphina&#39;s confidence swelled, her chin lifting with pride.</p>
                 <p>The gift presentation arrived. Seraphina deliberately chose to go last, ensuring her offering would be the grand finale. She wanted this moment to leave an indelible impression on Liam.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>When Seraphina unveiled her present, the room fell into awed silence. On an emerald velvet tray sat a breathtakingly carved phoenix, its wings outstretched mid-flight. The craftsmanship was so exquisite that individual feathers appeared to flutter, as if the mythical bird might take flight at any moment.</p>
                 <p>Such artistry was rare, perhaps beyond even master craftsmen. While Seraphina didn&#39;t claim to have made it herself, guests praised her thoughtfulness and dedication. Even Donovan couldn&#39;t hide his admiration. &#34;Grandfather has always treasured such pieces. This will bring him immense joy.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>With regal poise, Seraphina replied, &#34;For our grandfather, only the best will do. His happiness makes every effort worthwhile.&#34;</p>
                 <p>Her statement came with a pointed glance at Evelyn, throwing down an unspoken gauntlet.</p>
                 <!-- 广告位 4 -->
@@ -2325,11 +2405,11 @@
                 <p>Evelyn had brought a gift for Alistair. But Seraphina&#39;s extraordinary present had raised the stakes, forcing Evelyn to reconsider how to make her own offering stand out. Her frustration was palpable.</p>
                 <p>She seethed that Liam had attended alone without securing her an invitation. Seraphina&#39;s obvious interest in him stoked Evelyn&#39;s insecurities.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Evelyn&#39;s gift - mere health supplements prepared by an assistant - paled in comparison to Seraphina&#39;s phoenix.</p>
                 <p>Donovan noticed Evelyn&#39;s discomfort and shook his head slightly at her poor manners. When Liam saw the carving, recognition flashed across his face, his hands trembling slightly. The style was unmistakably Olivia&#39;s. But how was this possible?</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

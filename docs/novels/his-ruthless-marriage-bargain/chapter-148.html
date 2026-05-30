@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,30 +2389,30 @@
                 <p>Then she turned to Evelyn, who had rested her head against the glass. Evelyn could feel Victoria’s scrutinizing stare but kept her eyes trained on the landscape, feigning ignorance.</p>
                 <p>Victoria, however, wasn’t one to let things go. She leaned in abruptly, her voice dropping to a conspiratorial whisper. &#34;Your boyfriend isn’t secretly part of Celestia Group’s upper management, is he?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Evelyn whipped her head around, blinking in exaggerated disbelief. &#34;If he were, do you think I’d be slaving away at Phoenix Labs? I’d be lounging at headquarters.&#34;</p>
                 <p>Victoria considered this and conceded with a thoughtful hum. &#34;Fair point. Still, this level of luxury is going to ruin me for future work trips.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Evelyn pretended not to hear, focusing instead on the approaching nursery.</p>
                 <p>As they neared the entrance, vibrant flower beds stretched endlessly before them, a riot of colors that instantly lifted their moods. The fields were so vast that the horizon blurred into a sea of blossoms.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>The moment the car stopped and the doors opened, the intoxicating fragrance of flowers enveloped them. &#34;Achoo! Achoo!&#34; Evelyn sneezed violently, hastily pulling on her facemask for relief.</p>
                 <p>Her sense of smell was unusually sharp—a gift that sometimes felt like a curse. Overwhelming scents could easily overpower her, especially when multiple fragrances mingled in the air.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Victoria, though less sensitive, still wrinkled her nose at the intensity.</p>
                 <p>A representative from the nursery was already waiting to greet them, having been briefed on their visit. After a quick introduction to the facility, he led them inside.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;All our roses are cultivated here. Though they belong to the same family, the varieties are endless. Over there, you’ll find our sunflowers, and beyond that, the camellias.&#34;</p>
                 <p>Pride laced his voice as he gestured around. &#34;You won’t find a nursery in all of Veridia with a collection as diverse as ours. Whatever flower you seek, we have it.&#34;</p>
                 <p>&#34;Mind if we explore on our own?&#34; Victoria asked, already nodding in anticipation.</p>
                 <p>The man hesitated briefly before relenting. &#34;Of course. Just be careful—this place is massive. It’s easy to get lost, and walking back can be exhausting.&#34;</p>
                 <p>Victoria flashed him a confident grin. &#34;Don’t worry about us!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>Olivia’s heart clenched at his words.</p>
                 <p>They said the elderly often regressed to childlike stubbornness, and perhaps there was truth in that.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Relenting, she promised to stay with Whitmore Holdings, which finally eased the tension in William’s expression.</p>
                 <p>He exhaled slowly. &#34;Even if you weren’t with the company, I would still give you those twenty million. It’s a debt I owe you and Henry. This role is meant to ease your mind, not add to your worries. Work hard, Olivia. And if anyone mistreats you, tell me. Don’t suffer in silence like Alexander did. When I’m gone, he’ll lead this family. He’ll protect you. You have nothing to fear.&#34;</p>
                 <p>His grip on her hand tightened, his eyes filled with concern.</p>
@@ -2329,7 +2409,7 @@
                 <p>Greed, she believed, was nurtured, not inherent.</p>
                 <p>Still, she remained silent, understanding the weight of William’s words. In old age, people yearned for their children’s love. If Eleanor changed, she and Julian could still have fulfilling lives. Their fate was in their own hands.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Back in the hospital room, Eleanor watched William take his medication before decisively dialing Julian’s number.</p>
                 <p>She didn’t hold back. &#34;Julian, Olivia visited your grandfather today. I don’t understand what spell that mute has cast. She’s not even blood-related, yet your cousin defends her, and so does your grandfather.&#34;</p>
                 <p>Julian’s voice sharpened with concern. &#34;Where are you now?&#34;</p>
@@ -2337,7 +2417,7 @@
                 <p>Julian exhaled sharply. &#34;Mother, I’ve told you to be careful. Step outside if you need to talk.&#34;</p>
                 <p>Grumbling, Eleanor retreated to the bathroom. &#34;I overheard William mention twenty million and supporting her. What does that mean? Is he planning to leave her part of his estate?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>She hadn’t caught everything, but the sum of twenty million stuck in her mind.</p>
                 <p>Julian’s tone turned urgent. &#34;I thought William wouldn’t be so reckless, but now I’m not sure. He might not leave it directly to her, but he could increase Alexander’s share to ensure she’s taken care of.&#34;</p>
                 <p>Eleanor’s stomach twisted. &#34;What do we do? Your grandfather never intended to give us anything, and now with Olivia in the picture, if he boosts Alexander’s inheritance because of her, we’ll be left with nothing!&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>Eleanor brightened. &#34;I’ll leave it to you. Don’t worry about the hospital—I have everything under control here.&#34;</p>
                 <p>After hanging up, Julian stared at the imposing gates of the Blackwood Villa.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>With determined strides, he approached and knocked. When admitted, he wasted no time. &#34;Is Mrs. Evelyn Hartley available?&#34;</p>
                 <p>The servant relayed his request.</p>
                 <p>Evelyn, unfamiliar with the name, frowned. &#34;The Hawthorne family? Do we know them?&#34;</p>
@@ -2358,7 +2438,7 @@
                 <p>...</p>
                 <p>...</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

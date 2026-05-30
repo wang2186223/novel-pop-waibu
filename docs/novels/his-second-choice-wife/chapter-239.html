@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,22 +2390,22 @@
                 <p>Evelyn startled, nearly spilling her coffee. She hurried to the foyer, her bare feet silent on the marble floor.</p>
                 <p>Her breath caught when she saw Liam standing there, looking impossibly handsome yet visibly exhausted in his rumpled military uniform.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Liam,&#34; she whispered, her voice cracking. Unbidden tears pricked at her eyes as she took in his haggard appearance.</p>
                 <p>Liam&#39;s tired face softened into a smile. He crossed the space between them in three strides, pulling her into a crushing embrace without a word. Evelyn melted into his arms, inhaling the familiar scent of sandalwood and gunpowder that clung to his uniform.</p>
                 <p>After a long moment, she tentatively wrapped her arms around his waist. &#34;You look exhausted,&#34; she murmured against his chest. &#34;Why don&#39;t you rest for a while?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Liam simply shook his head, burying his face in the crook of her neck.</p>
                 <p>&#34;Have you eaten? Should I make you breakfast?&#34;</p>
                 <p>Another shake of his head. His arms tightened around her almost desperately, as if she were his only anchor in a storm. Evelyn felt him exhale shakily against her skin.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Liam, do you—&#34; she began, but he cut her off with a hoarse whisper. &#34;Just let me hold you. I need this.&#34;</p>
                 <p>Her heart stuttered at his words. That this powerful man drew strength simply from holding her sent warmth flooding through her veins. She stood motionless, letting him take whatever comfort he needed.</p>
                 <p>Eventually, she coaxed him to a nearby café for a quick breakfast before leading him back to their bedroom. After a hot shower, he collapsed onto the mattress, pulling her down with him.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>It was barely 9 AM. Evelyn had been awake less than two hours before finding herself back in bed. She hadn&#39;t expected Liam to fall asleep so quickly.</p>
                 <p>The dark circles under his eyes told their own story—clearly he hadn&#39;t slept properly in days. She lay still, watching the tension gradually leave his handsome features. Resisting the urge to smooth the worry lines from his forehead, she eventually drifted off herself.</p>
                 <p>When Evelyn awoke hours later, the space beside her was empty. The sheets were cold—Liam had been gone for some time.</p>
@@ -2336,7 +2416,7 @@
                 <p>Evelyn approached cautiously. &#34;How long have you been up?&#34;</p>
                 <p>&#34;Long enough.&#34; He finally turned, his stormy gray eyes meeting hers. &#34;We need to talk about what&#39;s coming.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

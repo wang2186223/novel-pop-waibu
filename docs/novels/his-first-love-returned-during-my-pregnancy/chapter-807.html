@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,34 +2390,34 @@
                 <p>Alexander stood at the airport arrival gate waiting for her, his shirt wrinkled, dark stubble shadowing his jaw. She had never seen him look so haggard.</p>
                 <p>&#34;How long has it been since you slept?&#34; she couldn&#39;t help asking.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Caught some rest in the car.&#34; He rubbed his temples before getting straight to the point. &#34;The driver was definitely drunk, but his attitude was strange.&#34;</p>
                 <p>His brow furrowed as he recalled the middle-aged man&#39;s icy gaze—unnaturally cold for someone who&#39;d been intoxicated.</p>
                 <p>&#34;He&#39;s willing to pay compensation but hasn&#39;t offered a single apology.&#34; Alexander&#39;s voice lowered. &#34;I suspect there&#39;s more to this.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Evelyn&#39;s chest tightened. &#34;Could Vincent Croix be involved?&#34;</p>
                 <p>&#34;All evidence points to a standard drunk driving case.&#34; He sighed. &#34;Unless we find direct proof, it&#39;ll be hard to investigate further.&#34;</p>
                 <p>They walked in silence to the hotel, waiting for Bianca Langley&#39;s arrival.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Bianca came alone.</p>
                 <p>She wore a bright red dress, her makeup flawless, yet she moved like an empty shell devoid of spirit. Evelyn noticed her painted lips trembling slightly.</p>
                 <p>&#34;Should we rest at the hotel first?&#34; Evelyn asked gently.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Bianca nodded mechanically. &#34;I&#39;m fine. I&#39;m okay.&#34;</p>
                 <p>She&#39;d repeated those words endlessly throughout her journey.</p>
                 <p>Alexander tactfully excused himself from the room. Evelyn handed Bianca a glass of water, noticing her hands shook so badly she could barely hold it.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Do you want to see him?&#34; Evelyn whispered.</p>
                 <p>Bianca&#39;s pupils contracted violently. Her mouth opened, but only a stifled gasp escaped.</p>
                 <p>&#34;Crying might help,&#34; Evelyn said, holding her ice-cold hands. &#34;When my father passed, I thought staying strong meant not crying. But—&#34;</p>
                 <p>Before she could finish, Bianca began trembling violently, like a snapped string. She gripped Evelyn&#39;s arm desperately, her nails digging in.</p>
                 <p>&#34;He promised to come back...&#34; Bianca&#39;s voice shattered. &#34;He said he&#39;d give me and the baby a home...&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

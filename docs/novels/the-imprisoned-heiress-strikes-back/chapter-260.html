@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2316,7 +2396,7 @@
                 <p>For a fleeting moment, Vanessa&#39;s mind flashed back—three years ago, in this very house.</p>
                 <p>Ethan had stood just like this, his fury directed at Evelyn when he&#39;d learned about Vanessa&#39;s kidnapping.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Evelyn, you snake!&#34; His voice had been raw with anger. &#34;Vanessa is your sister, and she’s always protected you. How could you send those men after her?&#34;</p>
                 <p>&#34;Evelyn, I’m disgusted by you. Someone like you doesn’t deserve to breathe the same air as us!&#34;</p>
                 <p>Back then, she had been the one crying in Ethan’s arms while he raged at Evelyn.</p>
@@ -2327,7 +2407,7 @@
                 <p>She had played this game before.</p>
                 <p>But this time, she wasn’t sure she could win.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>The realization hit Vanessa like a bucket of ice water.</p>
                 <p>She was the antagonist now—the scheming woman everyone despised.</p>
                 <p>Her fingers dug into Ethan&#39;s sleeve with desperate strength. &#34;Ethan, please! Just let me explain!&#34;</p>
@@ -2338,7 +2418,7 @@
                 <p>&#34;Ethan, I&#39;m terrified of losing you. Do you have any idea how it feels? Sitting alone in that empty house, waiting for you to come home, only to spend days without a single word?&#34;</p>
                 <p>Her words spilled out in a frantic rush, her body trembling as tears streaked down her cheeks.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;I did all of this because I love you. I was afraid Evelyn would steal you away from me. The thought of you two reconnecting—it made me lose my mind. That&#39;s why I tried to sabotage her.&#34;</p>
                 <p>Her grip tightened.</p>
                 <p>&#34;I just wanted you to look at me, Ethan. Only me.&#34;</p>
@@ -2349,7 +2429,7 @@
                 <p>The words tasted bitter on my tongue. &#34;I&#39;ve never done this before. This is my first time, and it&#39;s tearing me apart inside.&#34;</p>
                 <p>&#34;Enough!&#34; Ethan&#39;s voice cut through the air like a blade, sharp and unyielding.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>He wasn&#39;t interested in Vanessa&#39;s justifications. She had shamelessly shifted all the blame onto Evelyn, painting herself as the wounded party.</p>
                 <p>But Ethan wasn&#39;t blind anymore. The illusion had shattered.</p>
                 <p>The way she had thrown herself down those stairs—without hesitation, without fear—spoke volumes. This wasn&#39;t an accident. This was calculated.</p>
@@ -2360,7 +2440,7 @@
                 <p>The moment his voice rose, Vanessa&#39;s tears stopped mid-fall, frozen in shock.</p>
                 <p>Her voice trembled. &#34;Ethan, I already apologized to Evelyn! Why can&#39;t you let this go?</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;If that&#39;s not enough, I&#39;ll apologize again. I&#39;ll beg—&#34;</p>
                 <p>But he wasn&#39;t listening.</p>
                 <p>The mask had slipped.</p>
@@ -2374,7 +2454,7 @@
                 <p>&#34;You’re still recovering,&#34; he said, his voice steady. &#34;The doctor said you need rest. Dry your tears and stop crying, Vanessa.&#34;</p>
                 <p>With that, he gently pried her hands away and turned to leave.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

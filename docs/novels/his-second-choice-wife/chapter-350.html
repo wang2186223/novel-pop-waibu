@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,7 +2391,7 @@
                 <p>For the first time, she understood what true belonging felt like. The safety of his arms became her entire world, and the thought of leaving them sent panic coursing through her veins.</p>
                 <p>&#34;General Blackwood, we&#39;re running out of time.&#34; Ryan Sullivan&#39;s urgent voice shattered the moment.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Before Evelyn could react, Liam had already stepped back. He turned away without a word or backward glance. Though his posture remained rigid with military precision, she caught the glimmer of moisture in his steel-gray eyes.</p>
                 <p>The car ride back to Wright Manor passed in a haze. Evelyn leaned against the window, her swollen eyes burning. She kept them shut tight, willing the world to disappear.</p>
                 <p>Rosalind Baskins, ever perceptive, maintained a respectful silence throughout the journey.</p>
@@ -2323,19 +2403,19 @@
                 <p>When Margaret finally emerged, she maintained her icy distance, avoiding Evelyn at every turn. The rejection cut deeper than Evelyn cared to admit. She couldn&#39;t comprehend her grandmother&#39;s continued attachment to the imposter.</p>
                 <p>At lunch the next day, Evelyn pushed food around her plate while Archibald studied her with kind eyes.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Something troubling you, my dear?&#34;</p>
                 <p>Evelyn sighed, resting her chin in her palm. &#34;Grandfather, it&#39;s been three days. Why won&#39;t Grandmother even look at me?&#34;</p>
                 <p>Archibald&#39;s smile held centuries of wisdom. &#34;Shall I arrange a DNA test to convince her?&#34;</p>
                 <p>&#34;No, that&#39;s not necessary.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;But she—&#34;</p>
                 <p>&#34;Knows the truth,&#34; Archibald interrupted gently. &#34;She simply refuses to acknowledge it.&#34;</p>
                 <p>Evelyn set down her fork with a clatter. &#34;I don&#39;t understand.&#34;</p>
                 <p>Dabbing his mouth with a linen napkin, Archibald leaned back. &#34;The depth of her love for you makes the deception unbearable. Accepting you means admitting she was fooled by an imposter.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;That doesn&#39;t make sense,&#34; Evelyn protested.</p>
                 <p>&#34;You&#39;ve always been the rational one, my dear. Your grandmother... she operates from the heart. Sometimes to the point of irrationality.&#34;</p>
                 <p>&#34;I never treated her poorly,&#34; Evelyn said defensively.</p>
@@ -2345,7 +2425,7 @@
                 <p>His expression turned wistful. &#34;Eventually, you even posted a sign: &#39;Grandmother—Do Not Disturb.&#39;&#34;</p>
                 <p>The revelation struck Evelyn like a physical blow. She&#39;d been so focused on her work, so determined to prove herself, that she&#39;d pushed away the very people who loved her most.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

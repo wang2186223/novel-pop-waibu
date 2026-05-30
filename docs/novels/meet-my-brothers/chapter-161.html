@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>Mia’s eyes widened as she stared at Timothy.</p>
                 <p>His narrow eyes, reminiscent of the sea, appeared as if they could entirely engulf her.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Within the confines of the car, the temperature surged noticeably.</p>
                 <p>Mia tightly clutched Timothy’s shirt, but her grasp seemed feeble, caught in a struggle between resistance and surrender.</p>
                 <p>Finally, she bit his lip, causing Timothy to release a muffled groan and pause momentarily.</p>
@@ -2321,7 +2401,7 @@
                 <p>Within the car, a profound silence took hold.</p>
                 <p>Wiping the corner of his mouth, Timothy shattered the silence with a piercing question. “Did you bite me?”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Mia locked eyes with him defiantly, her lips pursed. “So what if I did? Who gave you the right to kiss me out of the blue? That’s harassment! You’re acting like a rogue!”</p>
                 <p>A soft chuckle escaped Timothy’s lips. “So, now you understand what it feels like to be harassed? I merely offered you a taste of your own medicine. Are you struggling to handle it?” he quipped.</p>
                 <p>His retort momentarily silenced Mia, but she wasn’t ready to concede.</p>
@@ -2329,7 +2409,7 @@
                 <p>“From a legal standpoint, both actions carry the same criminal implications. There’s no distinction.” Timothy’s deep voice resonated, with his eyebrows raised slightly, and a hint of emotion flickered in his eyes.</p>
                 <p>Feeling uneasy in this position, Mia shifted her body and, blushing, requested, “So, could you let go of me now?</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>With one hand resting on the car door, Timothy had Mia cornered. “You did bite me, though. Do you have any suggestions on how we can settle that score?”</p>
                 <p>+15 BONOS</p>
                 <p>Mia was furious. Wasn’t Timothy being completely unreasonable?</p>
@@ -2337,7 +2417,7 @@
                 <p>“Mr. Barrett, that’s enough. I’m not here to provide additional opportunities for you to assert yourself. Let’s consider things settled after what transpired,” she retorted.</p>
                 <p>Clutching her delicate wrist. Timothy sneered, “What’s this? You’re hesitant with me but so open with other men?”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Timothy’s words hit Mia like a painful blow, causing her to tremble and a pang of hurt to resonate in her heart.</p>
                 <p>In Timothy’s eyes, Mia was consistently seen as a gold digger–an individual who, in his perception, would stop at nothing for money.</p>
                 <p>Resigned to the persistent label, Mia decided to embrace it more fully.</p>
@@ -2345,7 +2425,7 @@
                 <p>In response, Timothy chuckled with exasperation. “Remember, we’re still in the waiting period for our divorce. It’s not finalized yet.”</p>
                 <p>Timothy’s eyes lingered on Mia’s seemingly innocent face, noting the subtle swelling of her lips. His gaze deepened as he observed her lips.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Unexpectedly, the sensation of their kiss wasn’t as unpleasant as he had anticipated. Perhaps he didn’t dislike it as much as he had initially thought.</p>
                 <p>“Is the bar for dating set so high now? Does it have to be with someone unattached? What’s wrong with someone going through a divorce?” Mia retorted.</p>
                 <p>“Mia, I never realized how sharp–witted you are. It’s a shame you’re not on a variety show.”</p>
@@ -2353,7 +2433,7 @@
                 <p>“Mr. Barrett, your enlightening perspective is truly appreciated,” Mia quipped.</p>
                 <p>Ever since broaching the topic of divorce with Mia, Timothy’s daily frustration levels had soared.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

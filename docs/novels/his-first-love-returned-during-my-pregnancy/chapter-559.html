@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>As she stood, the cat nuzzled against her with a pleading whimper. Alexander seized the opportunity to scoop it up, expertly tucking it into a pet carrier.</p>
                 <p>&#34;You&#39;re bringing it along?&#34; Evelyn frowned.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>He lifted the carrier and gave it a slight shake. &#34;Can&#39;t just leave her here alone.&#34;</p>
                 <p>Seeing the cat&#39;s pitiful eyes, she didn&#39;t object further.</p>
                 <p>The restaurant was the most exclusive private dining spot in the city. The moment they entered, the manager personally escorted them to the innermost private room.</p>
@@ -2323,7 +2403,7 @@
                 <p>Evelyn noted that three of them were the individuals she had highlighted in the files.</p>
                 <p>Alexander smoothly pulled out a chair for her. &#34;This is Evelyn Carter, the new CEO of Anderson Group.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>The four exchanged knowing glances.</p>
                 <p>&#34;An honor to meet you, Ms. Carter,&#34; the bespectacled man spoke first. &#34;I&#39;m Zhou Ming from Finance.&#34;</p>
                 <p>The others introduced themselves in turn. Evelyn memorized each—they headed Finance, HR, Marketing, and R&amp;D, the core departments.</p>
@@ -2341,7 +2421,7 @@
                 <p>Zhou Ming recovered first. &#34;Naturally! Ms. Carter is young and capable. We&#39;re honored to work with her.&#34;</p>
                 <p>The others echoed enthusiastically, their attitudes noticeably warmer.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>From the corner of her eye, Evelyn caught Alexander&#39;s satisfied look. She understood—he was paving her way. But his method was undeniably bold.</p>
                 <p>Midway through dinner, conversation turned to company affairs. Zhou Ming lowered his voice during a toast. &#34;Ms. Carter, there&#39;s something you should know.&#34;</p>
                 <p>She set down her chopsticks. &#34;Go ahead.&#34;</p>
@@ -2350,7 +2430,7 @@
                 <p>Zhou Ming took the hint. &#34;A few senior board members have voiced discontent about the leadership change, especially Director Wang...&#34;</p>
                 <p>Evelyn listened impassively before nodding. &#34;Thank you for the heads-up, Director Zhou.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>When they left, the night was deep. Alexander carried the pet carrier and suddenly asked, &#34;How do you feel?&#34;</p>
                 <p>Evelyn gazed at the distant neon lights. &#34;Smoother than expected.&#34;</p>
                 <p>&#34;Those four have worked under me for five years. Their competence isn&#39;t in question.&#34; He paused. &#34;Their loyalty is for you to verify.&#34;</p>
@@ -2360,7 +2440,7 @@
                 <p>Evelyn looked away. &#34;Let&#39;s go back. Tomorrow&#39;s another battle.&#34;</p>
                 <p>She didn&#39;t see the restrained tenderness in Alexander&#39;s gaze as he watched her leave.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

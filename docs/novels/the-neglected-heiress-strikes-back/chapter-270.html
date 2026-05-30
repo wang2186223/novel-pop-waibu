@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2317,7 +2397,7 @@
                 <p>&#34;I&#39;m dispatching a security team to surround the hospital immediately. Hands-on at the ward door. Sebastian, it&#39;s going to be a long night for you. If that bastard Nathaniel dares lay a finger on Isabella, you report to me instantly.&#34;</p>
                 <p>&#34;Yes, Mr. Dubois!&#34; Sebastian stiffened under the colonel&#39;s intimidating tone.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Alexander&#39;s voice was ice-cold. &#34;If Nathaniel harms my sister, he won&#39;t leave that hospital alive.&#34;</p>
                 <p>Isabella agreed to stay.</p>
                 <p>Nathaniel, elated, took his medicine and applied his ointment without complaint.</p>
@@ -2329,7 +2409,7 @@
                 <p>&#34;Can you make it for me?&#34; Nathaniel asked hopefully.</p>
                 <p>&#34;I&#39;ve cooked for you before. You never seemed to care.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Isabella scoffed, pushing her tray aside. She grabbed her pajamas and toiletries, heading to the bathroom. &#34;Vanessa is a decent cook. Ask her.&#34;</p>
                 <p>The door clicked shut.</p>
                 <p>Nathaniel swallowed hard, the taste of regret bitter in his mouth.</p>
@@ -2353,7 +2433,7 @@
                 <p>&#34;No—that&#39;s not what I meant.&#34; He laughed bitterly. &#34;I was offering you the bed.&#34;</p>
                 <p>&#34;One more word, and I&#39;m leaving. You&#39;ve had your medicine. Nothing&#39;s keeping me here.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>He clamped his mouth shut.</p>
                 <p>He&#39;d fought to make her stay. He couldn&#39;t ruin this.</p>
                 <p>The lights dimmed. The room fell silent.</p>
@@ -2365,7 +2445,7 @@
                 <p>How careful he&#39;d become—living in fear, in humility.</p>
                 <p>&#34;No. It&#39;s just... your breathing changes when you sleep. I can tell.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Silence settled between them.</p>
                 <p>Isabella curled tighter, clutching her nightgown.</p>
                 <p>She hated herself.</p>
@@ -2378,7 +2458,7 @@
                 <p>&#34;I mean it—&#34;</p>
                 <p>She cut him off with a soft laugh. &#34;If you&#39;d ever loved me, it would&#39;ve happened long ago. Why now? Even if you&#39;ve suddenly &#39;developed feelings,&#39; it&#39;s just a whim. I&#39;m not naive enough to mistake fleeting passion for devotion.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

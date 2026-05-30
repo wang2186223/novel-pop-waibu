@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>help me cover the compensation.”</p>
                 <p>With tears in her eyes, Edna grabbed Patricia’s hand, pleading. “Patricia, when you weren’t around, it was</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Karen who looked after me. Can you bear to see her like this?”</p>
                 <p>Mia couldn’t stand to witness the situation unfolding any longer; she had foreseen this outcome.</p>
                 <p>Nonetheless, seeing Patricia so joyful was a rare occurrence; Mia was determined to prevent the</p>
@@ -2323,7 +2403,7 @@
                 <p>“Oh Mia, I knew you would lend a hand. After all, this amount of money is insignificant to you, not even a fraction of your monthly allowance. Please, show me some kindness, Mia?”</p>
                 <p>Mia smirked. “Of course, but let’s put it in writing.”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>“A written agreement?”</p>
                 <p>“Yes, since I’m lending you this money, it’s only fair to have a written agreement.”</p>
                 <p>Mia reached into her bag and pulled out a piece of paper and a pen; she had been preparing for exams recently, so her bag was well–stocked with these items.</p>
@@ -2332,7 +2412,7 @@
                 <p>She was hesitant to simply give away 5,000 dollars as a favor.</p>
                 <p>Did they truly expect to receive such a handout? Where was the dignity in that?</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Karen immediately burst into tears and rushed over to clasp Patricia’s hand, pleading. “Patricia, you have</p>
                 <p>to help me! I can’t afford to pay 5,000 dollars!”</p>
                 <p>Mia calmly remarked, “But didn’t you mention that Sean earns about a grand a month? Five months” salary should suffice.”</p>
@@ -2341,7 +2421,7 @@
                 <p>your sister out.”</p>
                 <p>“But… but I don’t have 5,000 dollars either.”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>“How is that even possible? Mia is so wealthy now; she must have been quite generous to you. And with</p>
                 <p>your old house being demolished, you must have received a substantial sum of money,” Edna persisted.</p>
                 <p>Patricia sighed. “I entrusted all my money to Mia for safekeeping. She helps me with investments and</p>
@@ -2350,7 +2430,7 @@
                 <p>reluctant to keep so much money with me,” she explained.</p>
                 <p>“Patricia, why don’t you ask Mia to return the money? It’s much safer to have it in your own hands.”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Karen couldn’t help but roll her eyes, her mind already scheming about how to spend the money once it</p>
                 <p>was in her possession.</p>
                 <p>Mia smirked. “Sure. The money can be withdrawn, but we need to have a written loan agreement.”</p>
@@ -2360,7 +2440,7 @@
                 <p>agreement,” she demanded.</p>
                 <p>Certainly, Mia had no tolerance for freeloaders who constantly begged for handouts.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

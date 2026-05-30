@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2317,32 +2397,32 @@
                 <p>Approaching her, Peyton asked, &#34;Ms. Mia, there&#39;s a promotional event for the movie tonight. Would you like to attend?&#34;</p>
                 <p>&#34;Of course, why wouldn&#39;t I?&#34; Mia replied.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Peyton added cautiously, “By the way, Mr. Barrett insisted on being discharged from the hospital today.&#34;</p>
                 <p>&#34;Alright, if he wants to leave the hospital, we&#39;ll accommodate that. It just so happens there&#39;s a banquet tonight, so I&#39;ll take him with me.&#34;</p>
                 <p>With that settled, Mia headed straight to the mall for some shopping. As Mia exited the dressing room after trying on a few outfits, she noticed Timothy standing nearby. He was dressed in a sleek black suit and sunglasses, his tall and straight posture exuding a sense of authority.</p>
                 <p>He certainly looked like he meant business!</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>With a smirk, Mia approached him. &#34;Is your arm feeling better now?&#34; Timothy maintained a stoic expression as he replied, “It&#39;s nothing serious. Your brother sustained more injuries than I did.”</p>
                 <p>His stubborn attitude was quite typical of him.</p>
                 <p>&#34;Well, since you&#39;re here, you can help me carry these things,&#34; Mia said, handing him the bags filled with clothes she had purchased.</p>
                 <p>Given Timothy&#39;s insistence on being discharged, Mia decided to put him to work.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Timothy briefly glanced at the bags, a frown crossing his face, but he eventually accepted and carried them without protest.</p>
                 <p>In an attempt to embarrass Timothy, Mia deliberately purchased more items, leaving him to carry all the boxes alone.</p>
                 <p>She couldn&#39;t conceal her satisfaction as she observed Timothy&#39;s awkward and hesitant demeanor.</p>
                 <p>However, as Mia walked ahead, she heard a woman&#39;s shrill voice behind her. &#34;Hey, you, stupid bodyguard, can&#39;t you watch where you&#39;re going? Don&#39;t you see I&#39;m here?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Turning around, Mia spotted a woman with a designer handbag pointing and scolding Timothy.</p>
                 <p>Mia walked over and said, &#34;Hey Isabella, I heard your recent plastic surgery didn&#39;t go too well. I thought you&#39;d never dare to show your face in public again.”</p>
                 <p>Isabella Bowen appeared slightly flustered upon seeing Mia. &#34;Who told you my plastic surgery failed? I&#39;ve never had any cosmetic procedures!&#34;</p>
                 <p>Ignoring Isabella, Mia turned to Timothy. &#34;Hey, you dropped all the items I bought. Aren&#39;t you going to pick them up?&#34;</p>
                 <p>Isabella immediately interjected, &#34;So, this clueless bodyguard belongs to you, huh? It appears both you and he are equally incompetent.”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

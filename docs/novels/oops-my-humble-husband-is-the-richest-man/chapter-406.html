@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>Evelyn also looked surprised, her gaze turning to the butler.</p>
                 <p>The butler, beaming, hurried in. &#34;The Vances have brought many gifts. They&#39;re unloading them now. Someone sent word that these are all betrothal gifts and asked me to announce it first!&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>The Third Master laughed heartily. &#34;Good! That boy has finally come to his senses! Today is truly a double blessing!&#34;</p>
                 <p>The butler nodded repeatedly. &#34;Yes, yes, a double blessing!&#34;</p>
                 <p>Hearing this, Marcus Valentine looked at his newly recognized cousin, Grace.</p>
@@ -2341,7 +2421,7 @@
                 <p>Penelope became even shyer. &#34;Not yet. But our family has been in contact with him…&#34;</p>
                 <p>She instinctively glanced at Evelyn, a smug smile curling her lips.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>What did it matter how many gifts her brothers gave her?</p>
                 <p>If she could marry Alexander Vance, the entire Vance fortune would be hers!</p>
                 <p>The Vances were the wealthiest family in San Francisco. Their assets were no less than the Xus, perhaps even greater!</p>
@@ -2350,7 +2430,7 @@
                 <p>No sooner had the thought crossed his mind than he saw his daughter step forward.</p>
                 <p>She laughed loudly. &#34;Grace, see that? Even if you are the Third Master&#39;s biological daughter, so what? The Vances are here to support Penelope now! Among the Xu daughters, Penelope is the most accomplished!&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>She recklessly looked at the Third Master. &#34;Third Uncle, I understand you favor your own daughter. I accept you making my father hit me earlier. But there are some things I must say!&#34;</p>
                 <p>Xu Chong rushed forward to grab his daughter&#39;s arm. &#34;Are you still insane?&#34;</p>
                 <p>She pushed him away. &#34;I&#39;m not insane! Even if I don&#39;t say it, everyone knows! Grace&#39;s past is utterly disgraceful! Dad, don&#39;t stop me! I want to say my piece!&#34;</p>
@@ -2364,7 +2444,7 @@
                 <p>Evelyn listened to these words, her expression calm.</p>
                 <p>She glanced at the Third Master. The cold aura around him intensified, a murderous glint flashing in his eyes.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

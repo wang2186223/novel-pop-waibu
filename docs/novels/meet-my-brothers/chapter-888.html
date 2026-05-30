@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,27 +2390,27 @@
                 <p>There was no way he would let Timothy intrude into Mia&#39;s life now. Timothy gazed at Mia. &#34;I was wrong that year, so I want to—&#34;</p>
                 <p>&#34;But I don&#39;t need you to make up for it,&#34; Mia interrupted him. &#34;Mr. Barrett, I have everything I need now. I don&#39;t need you to do anything.” Nicholas added, &#34;Money, status, a medical team. Mia has everything here. What else do you think you can provide to make up for it? And what rights do you have to do so?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Timothy&#39;s words were stuck in his throat.</p>
                 <p>Mia pulled Nicholas aside. &#34;You have something to do, don&#39;t you? Go ahead. I can wait for you.&#34;</p>
                 <p>He nodded. &#34;Okay. It won&#39;t take long. Call me if anything happens.” Once Nicholas left, she looked at Timothy. &#34;You should leave too.&#34; Timothy, who was walking toward her, stopped in his tracks.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>It took him a while to form a coherent sentence. &#34;I crossed the line with my words. I hope you won&#39;t take it to heart.”</p>
                 <p>&#34;Honestly, I don&#39;t care about this. But you shouldn&#39;t have spoken to Nick that way. You should apologize to him.&#34;</p>
                 <p>&#34;Are you telling me to apologize to that guy?&#34; He looked at her in disbelief.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Something was stifling in his chest, suffocating him, because of her words.</p>
                 <p>Why should he apologize to that guy?</p>
                 <p>Mia looked at him sternly. &#34;Because I would&#39;ve suffered from a miscarriage if it weren&#39;t for his help. I was able to give birth to my child thanks to him. That&#39;s why he&#39;s the godfather.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Nicholas saved her child!</p>
                 <p>Frustration bubbled in Timothy as he fell silent for a moment. &#34;I&#39;ll buy something to thank that doctor.”</p>
                 <p>&#34;Save it. Just give him the respect he deserves. Ginger has had a weak body since she was born. Itis Nicholas’ medical team that has been figuring out solutions for her case.” Mia had always been grateful for Nicholas.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Timothy couldn&#39;t be any more annoyed than he was right now. &#34;There are great doctors in Bern City too. You can bring her there.”</p>
                 <p>Mia arched her brow mockingly. “So you think that&#39;s possible? Timothy, it&#39;s been years but you haven&#39;t changed.”</p>
                 <p>He was that same egoistic man.</p>

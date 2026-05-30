@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>Cecilia lowered her head, her voice trembling. &#34;...The two million you gave me... I... I put it into a fixed-term investment. I can&#39;t withdraw it right away. You said you needed money urgently, so I thought a mortgage loan would be faster than selling...&#34;</p>
                 <p>&#34;Then why did you hide it from Aaron?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Sebastian asked calmly in return.</p>
                 <p>He truly couldn&#39;t figure out what Cecilia was scheming.</p>
                 <p>Aaron was selling the house to pay for her medical treatment, yet she secretly took the deed to get a mortgage—was she afraid Aaron would be reluctant to sell?</p>
@@ -2323,7 +2403,7 @@
                 <p>Sebastian, however, quietly observed Cecilia.</p>
                 <p>He knew something was off.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>He had never particularly liked Cecilia, but Aaron loved her, and she had been relatively well-behaved after marriage, so he hadn&#39;t interfered.</p>
                 <p>Although he couldn&#39;t guess her intentions at this moment, Sebastian was clear—there was definitely a problem here.</p>
                 <p>He didn&#39;t press further, instead turning to Aaron. &#34;Why didn&#39;t you come to me if you needed money? Did you have to sell the house?&#34;</p>
@@ -2332,7 +2412,7 @@
                 <p>His parents had died in a car accident when he was young. He grew up in the Truman family&#39;s old mansion, sharing a deep bond with Sebastian and working sincerely for him.</p>
                 <p>Sebastian had always taken good care of this distant cousin.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>But Aaron always remembered his place in this family, always treading carefully, unwilling to spend too much of the family&#39;s money even when he fell ill...</p>
                 <p>He looked at Sebastian, his voice choked. &#34;Big brother, Cecilia&#39;s illness... it&#39;s a special case. The costs are significant, I...&#34;</p>
                 <p>&#34;The Truman family isn&#39;t short of this money, and we have the backing of the Evans family. Don&#39;t worry.&#34;</p>
@@ -2341,7 +2421,7 @@
                 <p>Aaron&#39;s eyes were moist.</p>
                 <p>Cecilia, however, stared fixedly at the property deed in Sebastian&#39;s hand, her nails digging deeply into her palms.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Charging all expenses to his account—wasn&#39;t this just to prevent her from transferring assets?</p>
                 <p>And that property deed...</p>
                 <p>Once Aaron died, Sebastian could rightfully take over this house, couldn&#39;t he?</p>
@@ -2350,7 +2430,7 @@
                 <p>She bit her lip hard, almost tasting blood.</p>
                 <p>Aaron, moved, looked at her. &#34;Cecilia, big brother... is truly good to us.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Cecilia forced a slight upward curve of her lips, her smile stiff.</p>
                 <p>Back in their room, she began to quickly calculate—once Aaron was gone, how could she secure more benefits for herself?</p>
                 <p>As she was thinking, Aaron walked up to her, his complexion somewhat pale. &#34;Cecilia, I haven&#39;t been feeling well lately... Let&#39;s go to the hospital together for a comprehensive check-up?&#34;</p>
@@ -2363,7 +2443,7 @@
                 <p>Just then, two nurses walked past her, their low conversation drifting into her ears:</p>
                 <p>&#34;That husband is so devoted... He&#39;s seriously ill himself, but he hides it from his wife and accompanies her for check-ups, just so she won&#39;t worry...&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

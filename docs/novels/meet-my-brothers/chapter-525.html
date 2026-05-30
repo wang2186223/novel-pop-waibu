@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2315,7 +2395,7 @@
                 <p>wealthy backgrounds, unlike Sally. Have you no sense of shame?”</p>
                 <p>“Fine. I guess I’m just an unwanted guest here, right? I’ll go.”</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Frustrated, Karen slammed her hand on the table and rose to leave. Patricia quickly reached out to</p>
                 <p>restrain her. “Karen, please don’t be upset.”</p>
                 <p>“Patricia, Mia’s family is overstepping their bounds. Despite our financial struggles, we were the ones</p>
@@ -2325,7 +2405,7 @@
                 <p>Eva gestured toward the door. “Feel free to leave if you wish.”</p>
                 <p>“Fine. I’ll leave immediately. Who cares, anyway?”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>As Karen made her way toward the door, she hesitated, her eyes flickering back to Patricia.</p>
                 <p>Mia grasped Patricia’s hand firmly and spoke in a composed tone. “Let’s focus on our meal.”</p>
                 <p>“But what about Karen?” Patricia replied.</p>
@@ -2335,7 +2415,7 @@
                 <p>If they didn’t establish boundaries now, Mia feared Edna and Karen would only become more audacious.</p>
                 <p>and troublesome in the future.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Edna gestured dismissively. “Oh, don’t mind her, that’s just her temper.”</p>
                 <p>As Karen reached the door, nobody attempted to stop her or convince her to stay.</p>
                 <p>Faced with the embarrassment of returning, she stormed out of the room In a fit of frustration,</p>
@@ -2345,7 +2425,7 @@
                 <p>Edna also insisted on joining them, and eventually, Eva accompanied them as well.</p>
                 <p>From outside the restroom, they could hear heated arguing.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>“I’m sorry: I didn’t mean to.”</p>
                 <p>“Madam, do you have any idea how costly this gown is? You couldn’t afford to reimburse me even if you</p>
                 <p>sold everything.”</p>
@@ -2355,7 +2435,7 @@
                 <p>Upon hearing the familiar voice, Mia hesitated to intervene, but Patricia had already recognized the</p>
                 <p>person.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>As she approached, Patricia found Karen standing before an elegantly dressed woman, Regina Lawson,</p>
                 <p>wearing an apologetic expression.</p>
                 <p>Tears welled up in Karen’s eyes as she spotted Patricia.</p>
@@ -2368,7 +2448,7 @@
                 <p>Turning to Mia with pleading eyes, Karen Implored, “Mia, please help me.”</p>
                 <p>Mia’s patience was wearing thin; It seemed Edna and Karen were simply troublemakers.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

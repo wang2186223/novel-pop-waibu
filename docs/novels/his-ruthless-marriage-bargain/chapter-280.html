@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,27 +2390,27 @@
                 <p>Gregory&#39;s smile didn&#39;t waver. &#34;Because you&#39;re our most qualified candidate.&#34;</p>
                 <p>Evelyn studied the gilded invitation, her fingers tracing the raised lettering. Something about this felt orchestrated.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Victoria noticed her hesitation. &#34;What&#39;s troubling you? This is a career-making opportunity. The event takes place in Laurentia&#39;s perfume district - think of the connections you&#39;ll make! When will you get another chance like this?&#34;</p>
                 <p>&#34;Am I going alone?&#34; Evelyn pressed. She&#39;d never lacked confidence in her abilities. Years of intensive research and countless formula experiments had honed her skills to razor sharpness. The incident from her past... she&#39;d long since proven that wasn&#39;t her failure.</p>
                 <p>Still, the world brimmed with extraordinary talent. While certain of her capabilities, Evelyn remained curious where she truly stood among her peers.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;An assistant will accompany you,&#34; Gregory assured.</p>
                 <p>Evelyn glanced at Victoria. &#34;You&#39;re not coming?&#34;</p>
                 <p>Victoria shook her head. &#34;My schedule&#39;s packed with product launches. I can&#39;t abandon my responsibilities now.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Then let me bring Bella,&#34; Evelyn suggested, referring to her former lab assistant.</p>
                 <p>&#34;Absolutely not,&#34; Victoria cut in sharply. &#34;Laurentia requires someone experienced with international logistics - accommodations, transportation, coordinating with event staff. Bella lacks those skills.&#34;</p>
                 <p>The explanation made sense. And since this was company policy, Evelyn didn&#39;t push further. &#34;When do we depart?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Next Wednesday.&#34;</p>
                 <p>&#34;Wednesday?&#34; Evelyn&#39;s eyes widened. Today was Friday. That gave her barely four days to prepare.</p>
                 <p>&#34;But our vacation plans-&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Will have to wait,&#34; Victoria said with an apologetic shrug. &#34;The dates overlap. Consider this an investment in your future. We&#39;ll reschedule your holiday for after you return victorious.&#34;</p>
                 <p>Gregory clapped his hands. &#34;Exactly! I expect you&#39;ll make us proud. When you come back with that trophy, I&#39;ll authorize an extended leave for both of you.&#34;</p>
                 <p>Evelyn nearly rolled her eyes. Victorious? Trophy? He made it sound like she was heading into battle.</p>
@@ -2338,7 +2418,7 @@
                 <p>Evelyn arched an eyebrow but said nothing. Truthfully, her pulse had quickened with anticipation. This was the proving ground she&#39;d secretly longed for - a chance to measure her skills against the best.</p>
                 <p>&#34;I&#39;ll start preparing immediately,&#34; Evelyn said, already mentally reviewing her fragrance formulas. The game was on.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

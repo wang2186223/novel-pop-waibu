@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2318,7 +2398,7 @@
                 <p>She opened her door, and I followed her into the room.</p>
                 <p>&#34;Maddy, please. I&#39;m losing my mind here. If you don&#39;t help me, there&#39;s no telling what I&#39;d do.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>It took me about half an hour to finally get her to open up. She didn&#39;t know how grateful I was for it.</p>
                 <p>&#34;Jaris is at a point where he can&#39;t control himself. He&#39;s...battling some mental problems and has probably gone away to isolate himself. That was what he always did back then when it was too much for him.&#34;</p>
                 <p>My expression clenched in shock.</p>
@@ -2331,7 +2411,7 @@
                 <p>&#34;Hold on,&#34; I quickly turned to Maddy. &#34;Jaris didn&#39;t kill those people,did he?&#34;</p>
                 <p>Maddy&#39;s eyes dropped to the floor. It dawned on me that it was the secret she&#39;d been trying to protect.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Jaris was just like Caden.He was a Hexed wolf.</p>
                 <p>&#34;Oh, gods,&#34; I muttered, shaking my head.</p>
                 <p>&#34;I didn&#39;t tell you anything.&#34; Maddy turned away,brushing her fingers into her hair.</p>
@@ -2344,7 +2424,7 @@
                 <p>&#34;Lyric, rest it out. Trust me, you don&#39;t want to be anywhere near him. He&#39;s beyond dangerous right now.He might&#39;ve gotten to the stage where he doesn&#39;t even recognize friend and foe. Everyone is just foe to him.&#34;</p>
                 <p>I stayed silent for a minute, thinking her words were true. Then, I decided I didn&#39;t care.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;I just want to see him. Please.&#34;</p>
                 <p>I couldn&#39;t make sense of this overwhelming longing to be near him. I just felt he was lonely.</p>
                 <p>&#34;Maddy,please.&#34;</p>
@@ -2357,7 +2437,7 @@
                 <p>And what would Darkspire do without their Alpha for a whole year?</p>
                 <p>&#34;T-That&#39;s unacceptable,&#34; I shook my head in disapproval. &#34;Please, Maddy. Do this for me. I promise,I&#39;ll return the favour someday.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>She was still adamant and it had to take me more convincing to get her her on my side.</p>
                 <p>&#34;Fine. I&#39;ll give you the address, but I&#39;ll not be going with you. And I&#39;m serious. I&#39;m not risking my life on this.&#34;</p>
                 <p>I nodded eagerly.</p>
@@ -2370,7 +2450,7 @@
                 <p>I drove past so many trees and bushes for almost an hour and didn&#39;t see any buildings in sight. The very few ones I saw looked abandoned.</p>
                 <p>For a split second, I considered heeding Maddy&#39;s advice and just leaving it alone.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>But the thought of all the things that could go wrong kept me from doing that.</p>
                 <p>I finally reached the cabin and spent time in the car,trying to picture what I&#39;d find in there.Would Jaris really have no control of himself?</p>
                 <p>He was alone and troubled. It was awful for someone to be alone in this condition.</p>
@@ -2384,7 +2464,7 @@
                 <p>My eyes expanded in disbelief as an unfathomable shock penetrated deep into my soul</p>
                 <p>Jaris wasn&#39;t alone! Who the hell was that?!</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

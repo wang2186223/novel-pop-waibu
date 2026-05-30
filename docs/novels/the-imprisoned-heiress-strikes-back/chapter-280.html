@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2316,7 +2396,7 @@
                 <p>Darkness swallowed Evelyn&#39;s vision as a rough hood was yanked over her head. Strong arms shoved her into the back of a van, the door slamming shut with a metallic clang.</p>
                 <p>The vehicle lurched forward, jolting her body with every turn. After what felt like hours, the hood was finally torn away, revealing the dim interior of a decaying factory.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Rusted machinery and broken crates littered the space, the air thick with dust and the scent of mildew.</p>
                 <p>Evelyn&#39;s pulse spiked.</p>
                 <p>She knew this place.</p>
@@ -2327,7 +2407,7 @@
                 <p>Her voice bounced off the crumbling walls, drawing irritated glances from the men playing cards nearby.</p>
                 <p>One of them, a burly figure with a scarred cheek, stood abruptly and backhanded her.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Shut your mouth,&#34; he growled. &#34;You&#39;re ruining my luck.&#34;</p>
                 <p>Vanessa recoiled, stunned.</p>
                 <p>Her mind raced.</p>
@@ -2338,7 +2418,7 @@
                 <p>But Vanessa wasn&#39;t done.</p>
                 <p>&#34;Listen to me, you fools!&#34; she spat. &#34;Do you even know who you&#39;re working for?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Another man, this one with a cigarette dangling from his lips, sighed and flicked ash onto the floor.</p>
                 <p>&#34;Boss said to grab the blonde. That&#39;s what we did.&#34;</p>
                 <p>Vanessa&#39;s face twisted in disbelief.</p>
@@ -2349,7 +2429,7 @@
                 <p>Vanessa’s breath hitched, her pulse roaring in her ears. The realization struck her like a physical blow.</p>
                 <p>&#34;You—you’re not Damian’s men?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Not a chance in hell.&#34;</p>
                 <p>The leader stepped forward, the jagged scar across his cheekbone catching the dim light. The cobra inked on his forearm seemed to coil tighter as he flexed his muscles.</p>
                 <p>Vanessa’s stomach twisted.</p>
@@ -2360,7 +2440,7 @@
                 <p>&#34;Unlock it. Call your man. Tell him to gather twenty million in cash—untraceable bills. No tricks.&#34;</p>
                 <p>The pieces clicked into place.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>She wasn’t just taken—she’d been sold.</p>
                 <p>Damian had traded her like collateral, and now these vultures saw a golden opportunity.</p>
                 <p>Evelyn’s name was the key to a fortune.</p>
@@ -2373,7 +2453,7 @@
                 <p>This is perfect, Evelyn thought. Vanessa finally bit off more than she could chew. These aren’t Damian’s men—this situation has spiraled beyond her control. At least she’s the one losing her mind right now, not me.</p>
                 <p>Outside, the sky darkened unnaturally fast. It was barely five, but winter nights swallowed daylight whole. Shadows stretched long and ominous, creeping closer with every passing second.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

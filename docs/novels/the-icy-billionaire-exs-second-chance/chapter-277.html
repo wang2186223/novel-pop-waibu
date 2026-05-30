@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,19 +2389,19 @@
                 <p>Their eyes suddenly brightened at the approach of a heavyset figure. Scrambling to their feet like eager puppies, they cried, &#34;Mr. Pembroke!&#34;</p>
                 <p>Rushing to their apparent savior, they jabbed accusing fingers at Adrian. &#34;Sir, these animals attacked us completely unprovoked!&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Mr. Pembroke followed their gestures, his confident expression faltering when he recognized Adrian. Just yesterday, the young tycoon had expressed interest in acquiring Crystalpeak Hot Springs - the crown jewel of Willowbrook&#39;s tourism industry. While several parties had shown interest, Adrian&#39;s offer had been conservative, leading Pembroke to dismiss him as just another trust fund kid playing businessman.</p>
                 <p>The injured men were crucial suppliers for his resort. In resource-scarce Willowbrook, reliable vendors were worth their weight in gold.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Decision made, Pembroke straightened his tie and approached.</p>
                 <p>&#34;Mr. Blackwood,&#34; he began with false politeness, &#34;I extended complimentary passes for your enjoyment, not for you to assault my valued business partners.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>The suppliers nursed their wounds behind him - one rubbing his swollen jaw, the other clutching his ribs. &#34;We&#39;re filing charges,&#34; one spat. &#34;Medical reports don&#39;t lie.&#34;</p>
                 <p>Dominic barked a laugh. &#34;Complimentary? Adrian could buy this entire resort with pocket change.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Pembroke&#39;s lips curled. &#34;Many in Crestwood could afford Crystalpeak. Your offer yesterday was... underwhelming.&#34;</p>
                 <p>Adrian&#39;s glacial sidelong glance made the older man shiver. The Blackwood Group&#39;s meteoric rise wasn&#39;t built on frivolous spending, but strategic investments. That piercing gaze held more authority than Pembroke had seen in executives twice Adrian&#39;s age.</p>
                 <!-- 广告位 5 -->
@@ -2329,7 +2409,7 @@
                 <p>Vivian stepped forward, her voice arctic. &#34;By all means, call the authorities. We&#39;ll gladly explain how these pigs harassed women.&#34;</p>
                 <p>Audrey crossed her arms beside her. &#34;Disgusting old perverts. When was the last time you looked in a mirror?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

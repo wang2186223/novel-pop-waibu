@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2327,7 +2407,7 @@
                 <p>I released a deep breath.</p>
                 <p>&#39;Focus, Lyric. We have an important day ahead.&#39;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>On my way to TCH, Jace called me.</p>
                 <p>I picked the call and put it on speaker so my hands could focus on the steering.</p>
                 <p>After our usual greetings and teasing, he told me the reason he called.</p>
@@ -2338,7 +2418,7 @@
                 <p>&#34;Please, don&#39;t be. Trust me, I&#39;m not doing anything that&#39;d get me in trouble. I&#39;m not you.&#34;</p>
                 <p>He huffed. &#34;Of course. I&#39;m the one who gets into trouble because I&#39;m always taking care of your mess.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>I rolled my eyes. We talked some more before the call ended.</p>
                 <p>I&#39;d been hoping Zarek would be at the party last night.It was one of the reasons I was hell-bent on going. So,since he didn&#39;t show up, I asked Jace for his contact.</p>
                 <p>I needed to ask him about that night. I didn&#39;t trust the fact that he had come into the garden, right after Marta left.</p>
@@ -2349,7 +2429,7 @@
                 <p>A few minutes later, I arrived at TCH.</p>
                 <p>When I showed one of the ladies at the reception my email,she showed me where to wait.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>I waited alone for almost an hour before the woman from the other day who I suspected was Marta&#39;s superior, walked up to me. &#34;Good morning, ma&#39;am.&#34; I rose to my feet.</p>
                 <p>&#34;Good morning, Mrs. Dreadmoor.&#34; She shook my hands. &#34;Sorry you had to wait for long. Please come with me.&#34;</p>
                 <p>I followed her into the elevator and onto a certain floor. She looked strict and always spoke in that stern,professional tone. Like the kind of woman that didn&#39;t take nonsense from anyone.</p>
@@ -2360,7 +2440,7 @@
                 <p>&#34;I&#39;ll be in ward four on this floor when you two are done. Just find me.&#34; The woman left.</p>
                 <p>I stayed rooted at the door for some seconds before dragging my legs in. What&#39;s he doing here? Here to ruin this tiny fragment of happiness I&#39;m trying to have?</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>I didn&#39;t say a word as I stood, waiting for him to do the talking.</p>
                 <p>And finally, he did. &#34;Do you have any idea how embarrassing it is to get to hear from strangers that my mate is applying to TCH?&#34;</p>
                 <p>I frowned, not quite getting his point.</p>
@@ -2375,7 +2455,7 @@
                 <p>I knew it. I knew he was here to ruin this little peace.</p>
                 <p>&#34;In case you had no idea, the woman that just left is my aunt-my father&#39;s sister. And the one at the top,the one everybody answers to-he&#39;s a member of Darkspire. You could say I have TCH wrapped around my finger.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

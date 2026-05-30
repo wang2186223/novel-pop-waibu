@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,19 +2389,19 @@
                 <p>The mention of Vivian&#39;s husband was clearly an afterthought. All eyes were on Giselle&#39;s supposedly illustrious boyfriend Victor, who had promised to foot the bill for this reunion dinner.</p>
                 <p>With polite murmurs and nervous laughter, the group began filing into the private dining room. Several male classmates rushed to play gentlemen, pulling out chairs for Vivian, Audrey, and Dominic.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Giselle seethed as she watched the attention shift away from her. Just minutes ago, everyone had been hanging on her every word about her powerful boyfriend. Now they were fawning over Vivian&#39;s circle instead.</p>
                 <p>Slumping back into her seat, Giselle angrily pulled out her phone and fired off a message to Victor. &#34;Sweetheart, where are you?&#34; she typed furiously.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>The reply came instantly but was frosty. &#34;I said I&#39;m coming. Stop pestering me. It&#39;s irritating.&#34;</p>
                 <p>Heat flooded Giselle&#39;s cheeks. She quickly locked her phone screen, terrified someone might have seen the humiliating exchange.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>As she tried to compose herself, the elevator pinged again. A classmate who hadn&#39;t yet sat down turned toward the sound. The doors slid open to reveal Adrian Blackwood striding toward them with the effortless grace of someone who owned every room he entered.</p>
                 <p>The man froze mid-step, his jaw dropping. &#34;M-Mr. Blackwood?&#34; he stammered, voice barely above a whisper.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>His reaction sent a ripple through the group as heads swiveled toward the doorway. The atmosphere shifted instantly, charged with electricity. A stunned silence fell before erupting into excited murmurs.</p>
                 <p>&#34;He&#39;s even more gorgeous in person!&#34; &#34;Those cheekbones could cut glass!&#34; &#34;Is he a model or something?&#34; &#34;Why is he coming here?&#34;</p>
                 <!-- 广告位 5 -->
@@ -2331,7 +2411,7 @@
                 <p>A warm glow spread through her chest as she realized this extraordinary man was truly hers. Vivian, long accustomed to being the most admired woman in any room, found greater pride in seeing her classmates awestruck by her husband than she&#39;d ever felt from personal compliments.</p>
                 <p>There was a time she&#39;d felt like mere dust at Adrian&#39;s feet, only notable through reflected glory. But now she understood - she belonged beside him at the summit, not beneath it.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

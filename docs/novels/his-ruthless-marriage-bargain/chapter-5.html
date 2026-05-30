@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,28 +2392,28 @@
                 <p>After years of waiting, she was finally his. Alexander had endured three long years, watching Dominic—a man he deemed unworthy—cling to Evelyn. He would have never allowed their marriage to happen.</p>
                 <p>But fate had intervened. Evelyn had finally seen Dominic for who he truly was.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>The woman who had once been timid, who had shrunk into herself under Dominic’s influence, now sat with quiet confidence. The fire in her eyes hadn’t dimmed. She was still the fierce, untouchable woman he remembered.</p>
                 <p>&#34;I&#39;m going out,&#34; Evelyn said, setting her glass down and meeting Alexander’s gaze.</p>
                 <p>He nodded. &#34;Remember, I’m here.&#34;</p>
                 <p>She didn’t need his intervention, but his words steadied her. With a grateful glance, she pushed open the VIP room door and stepped into the fray.</p>
                 <p>The venue was still in chaos, with Dominic leading the charge. He was the loudest voice in the crowd, rallying others to his cause. Beside him, Vanessa Blake struggled to hide her nervousness. She had never stood so close to Dominic before, never been the center of attention like this.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>The host frowned until someone whispered in his ear. His expression shifted, and he turned to Dominic. &#34;We intended to handle this discreetly, but given the public demand, the committee has agreed to reveal the names of the two companies—along with their competition entries.&#34;</p>
                 <p>&#34;A plagiarist is a thief who deserves no respect!&#34; Dominic declared passionately, certain he wasn’t the one under scrutiny. If anything, this was his chance to tarnish his competition and elevate DR Holdings’ reputation.</p>
                 <p>The host adjusted his microphone. &#34;Both companies submitted identical perfumes—both named Eternal Bloom.&#34;</p>
                 <p>Vanessa stiffened. Dominic feigned shock. &#34;Eternal Bloom? That’s DR Holdings’ creation. I’d like to know which company dared to copy our work.&#34; Vanessa scanned the crowd as if searching for the culprit.</p>
                 <p>The host wasted no time. &#34;The other company that submitted the same fragrance is Phoenix Labs.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Phoenix Labs?&#34; Dominic blinked. &#34;I’ve never heard of them.&#34; His tone was humble, but inwardly, he was triumphant. It didn’t matter who they were—as long as he secured his victory.</p>
                 <p>&#34;Phoenix Labs?&#34; someone in the crowd murmured. &#34;Isn’t that Celestia Group’s subsidiary?&#34;</p>
                 <p>&#34;Yes, they’re new to the industry, but Celestia backs them.&#34;</p>
                 <p>Dominic scoffed. &#34;Well, my team worked tirelessly for months to perfect Eternal Bloom. I’d love to know how Phoenix Labs got their hands on it.&#34;</p>
                 <p>At that moment, a composed man stepped onto the stage. &#34;Good evening. I’m Preston, PR manager for Phoenix Labs. We, too, were surprised by tonight’s events. Initially, we agreed to resolve this privately, but since the other party insists on public scrutiny, we welcome an on-site verification.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>His calm demeanor and Celestia Group’s influence earned nods of approval from the crowd.</p>
                 <p>Dominic, sensing the shift, quickly interjected, &#34;I agree! DR Holdings may be smaller than Celestia, but we stand by our integrity. We can prove our originality!&#34;</p>
                 <p>Vanessa chimed in, her voice trembling with conviction. &#34;I created Eternal Bloom myself. I don’t understand how someone else could have copied it.&#34;</p>
@@ -2349,7 +2429,7 @@
                 <p>With a sweeping gesture, he motioned toward the back of the venue.</p>
                 <p>A figure stepped forward.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

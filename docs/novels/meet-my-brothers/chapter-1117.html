@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,21 +2392,21 @@
                 <p>Hiding behind the sofa, Ginger whispered, &#34;Hello?&#34;</p>
                 <p>Why did he call at this time? She&#39;d be doomed if her uncles found out. She couldn&#39;t afford to be exposed as a traitor.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Timothy felt a bit bitter when he heard her voice. &#34;Is your mommy really going to be engaged with another man?&#34; he asked.</p>
                 <p>&#34;Yeah. Uncle Nicholas came over for dinner today, and it seemed like they were talking about this. Aunt Eva wanted to set Mommy up with him back then, but Mommy refused.&#34;</p>
                 <p>Hearing that Mia refused, Timothy instantly heaved a sigh of relief. A pang of glee shot through him.</p>
                 <p>&#34;Did your mommy really refuse?&#34;</p>
                 <p>&#34;Yeah. Mommy said she wasn&#39;t interested in a relationship since Sage hadn&#39;t recovered yet.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Timothy&#39;s heart skipped a beat.</p>
                 <p>In the past, Mia was disinterested in relationships because of Sage&#39;s health. At this point, it seemed like Sage&#39;s recovery and discharge from the hospital were nothing but bad news to him.</p>
                 <p>Now that Mia no longer had to worry about Sage, would she possibly begin a relationship?</p>
                 <p>Timothy, who was always so</p>
                 <p>confident, felt somewhat insecure et</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>now. He knew that the odds were against him if the Lane family were to compare him with Nicholas.</p>
                 <p>&#34;Ginger, do you want your mommy to be with Uncle Nicholas or me?&#34; Timothy asked nervously.</p>
                 <p>His question stumped Ginger.</p>
@@ -2340,7 +2420,7 @@
                 <p>Ginger nodded.</p>
                 <p>&#34;Uncle Nicholas,&#34; she greeted, glancing up at Nicholas.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Nicholas went up to her and stroked her head. &#34;You&#39;ve grown quite a bit.&#34;</p>
                 <p>&#34;I&#39;m going to be an adult. Of course I&#39;m going to grow taller.&#34;</p>
                 <p>&#34;I bought you a present. Open it and have a look.&#34;</p>
@@ -2349,7 +2429,7 @@
                 <p>Mia sighed. &#34;The kids already have a lot of presents. You don&#39;t have to spend money on their gifts.&#34;</p>
                 <p>&#34;These two kids are like my own. What&#39;s wrong with buying them gifts?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

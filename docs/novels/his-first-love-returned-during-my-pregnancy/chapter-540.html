@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,7 +2391,7 @@
                 <p>&#34;Pity what?&#34;</p>
                 <p>&#34;Pity Alexander Hamilton was born with a silver spoon.&#34; He licked his lips. &#34;With his resources and my brains, we could conquer the world.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Evelyn scoffed. &#34;First, you overestimate yourself. Second, even with his wealth, I&#39;d never ally with a demon.&#34;</p>
                 <p>&#34;And Alexander&#39;s a saint?&#34; Peter sneered. &#34;He just puts on a good act for you.&#34;</p>
                 <p>She refused to engage. &#34;Did you send Annabelle to harass my sister?&#34;</p>
@@ -2323,19 +2403,19 @@
                 <p>A wave of nausea hit her. She pressed her temples.</p>
                 <p>&#34;I&#39;m leaving.&#34; She turned. &#34;No money, and you won&#39;t dare kill me.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Wait.&#34; Peter pointed into the distance. &#34;See that car?&#34;</p>
                 <p>A black sedan idled behind shrubs, two men in black standing guard.</p>
                 <p>&#34;Alexander&#39;s bodyguards.&#34; Peter gritted his teeth. &#34;They watch me 24/7—even at my mother&#39;s place! This is prison!&#34;</p>
                 <p>Evelyn smirked. &#34;If you hadn&#39;t targeted Emily Anderson, would you be in this mess?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;My fault?&#34; His voice rose hysterically. &#34;You&#39;re the problem! Without you, would Alexander be hunting me? He could vanish me anytime!&#34;</p>
                 <p>&#34;Afraid of getting caught for your crimes?&#34;</p>
                 <p>&#34;Afraid of losing everything!&#34; He advanced. &#34;Today, you&#39;ll help me—&#34;</p>
                 <p>Evelyn stepped back, hand reaching for her phone. &#34;Not afraid to die?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Terrified! But more afraid of mediocrity!&#34; Madness burned in his gaze. &#34;Give me one chance from Alexander, and I&#39;ll prove my worth! If he wastes millions on incompetents, he owes me billions!&#34;</p>
                 <p>She yanked out her phone—only for Peter to snatch it away.</p>
                 <p>&#34;Ah!&#34; He dragged her toward the roadside, her nails scraping deep grooves into tree bark.</p>
@@ -2346,7 +2426,7 @@
                 <p>Her breath came in gasps. Black spots danced in her vision.</p>
                 <p>&#34;Now!&#34; His fingers tightened around her throat. &#34;Or this time... you really will die.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

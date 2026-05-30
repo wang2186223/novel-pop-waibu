@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,21 +2392,21 @@
                 <p>Her jaw clenched so tightly her teeth ached.</p>
                 <p>Her fingers curled into fists, nails digging into her palms until they turned bone-white. A flicker of fury twisted her expression, but with her head still lowered, no one noticed.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Inside, she seethed.</p>
                 <p>This wasn’t over.</p>
                 <p>The rain fell in heavy sheets, soaking Vanessa to the bone. Her shoulders shook, though whether from the cold or suppressed emotion was unclear.</p>
                 <p>Inside the car, Evelyn watched silently. Her expression remained unreadable, her gaze distant.</p>
                 <p>She knew Vanessa’s apology was hollow. But it didn’t matter anymore.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Evelyn had long since stopped caring about the Harts and their twisted version of family.</p>
                 <p>Alexander studied the quiet sorrow in Evelyn’s eyes.</p>
                 <p>From the moment he arrived, she hadn’t reacted—not to Vanessa’s accusations, not even to the cruel ultimatum of being disowned.</p>
                 <p>There was no anger. No pleading. Just resignation.</p>
                 <p>It told him everything.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>The Harts had broken her. Tonight was merely the final blow.</p>
                 <p>She had endured their cruelty alone for too long.</p>
                 <p>How much pain must she have suffered to reach this point? To walk away without looking back?</p>
@@ -2340,7 +2420,7 @@
                 <p>&#34;Anywhere else? Does your ankle still ache?&#34; His gaze flickered downward, assessing.</p>
                 <p>&#34;It’s fine,&#34; she murmured. &#34;It always flares up when it rains. I’m used to it by now.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>She exhaled, forcing a casual shrug. &#34;Did coming to get me interfere with your meeting?&#34;</p>
                 <p>&#34;Not at all.&#34; His grip loosened gently. &#34;Wait here for me. I won’t be long.&#34;</p>
                 <p>With that, Alexander pushed open the car door again. A sleek black umbrella snapped open in his hand as he strode toward the entrance of Hawthorne Estate.</p>
@@ -2352,7 +2432,7 @@
                 <p>As the grand doors of the estate swung open, harsh light spilled out, illuminating his sharp features.</p>
                 <p>The eerie stillness of his expression only made him look more ruthless.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

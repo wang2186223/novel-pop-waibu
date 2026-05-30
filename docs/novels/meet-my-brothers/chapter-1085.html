@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,15 +2389,15 @@
                 <p>However, the owner of Aide Castle had always been shrouded in mystery, designing each banquet venue with a flair that never failed to surprise and captivate. With every new theme, they manage to set trends and become the talk of the town. Despite various speculations surrounding the owner&#39;s identity, it was known that the Lane family was certainly involved. After all, Aide Castle&#39;s initial investment came from Dominic.</p>
                 <p>Shelly also overheard the conversations of the people around her, and it was clear that everyone was curious about the identity of the owner of Aide Castle.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;I heard that the owner of Aide Castle is a man.&#34;</p>
                 <p>&#34;I&#39;ve also heard that someone has apparently met the owner of Aide Castle. He&#39;s not too young, and he&#39;s very kind to others.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Luna&#39;s lips curled into a cold smile. &#34;Ms. Lane, if that&#39;s the case, then please verify your identity. After all, everyone here holds a certain status. If you&#39;re deceiving us, it won&#39;t bode well for the Lane family, will it?&#34;</p>
                 <p>Shelly further fanned the flames by stating, &#34;Mia, your birth determines everything. You were an orphan from a young age and only recently returned to the Lane family. Why did you lie?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Luna heard Shelly&#39;s words and immediately glared at her. Shelly was clearly mocking her on purpose. Mia stood there calmly, unfazed by the situation, and openly accepted everyone&#39;s suspicions.</p>
                 <p>She openly confessed to Shelly and Luna that she was the rightful owner of Aide Castle and had no plans to conceal her identity. Her decision had nothing to do with timing, instead, it stemmed from her refusa to tolerate these women&#39;s pretense.</p>
                 <!-- 广告位 4 -->
@@ -2325,7 +2405,7 @@
                 <p>Given their apparent desire to receive a reality check, she graciously gave them the opportunity to have their egos bruised today.</p>
                 <p>Jasmine remained silent, attentively observing the show from the sidelines. She was convinced that Mia was the rightful owner of Aide Castle. Thus, she considered Shelly and Luna mere clowns who deserved to face the consequences.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Raymond looked at Mia in surprise and asked, &#34;Ms. Lane, what&#39;s happening? Are you close to the owner of Aide Castle?&#34;</p>
                 <p>Shelly replied before Mia did and said, &#34;I believe Mia may have met the owner of Aide Castle a few times, but she&#39;s not acquainted with the owner at all. Despite the owner&#39;s mysterious nature, she still insisted on flaunting and deceiving others. Just earlier, the general manager of Aide Castle came out to greet my Aunt Sharon. At that moment, the general manager did not acknowledge Mia at all. Mia must be lying.&#34; Jasmine quickly clarified, &#34;The general manager is just overseeing the shift, and he&#39;s new to the team. So it&#39;s understandable that he doesn&#39;t know who Mia is.&#34;</p>
                 <p>Luna continued, &#34;It&#39;s amusing, isn&#39;t it? Nowadays, every general manager knows what their boss looks like. Would anyone believe him if he said otherwise?&#34;</p>

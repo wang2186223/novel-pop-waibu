@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2319,14 +2399,14 @@
                 <p>&#34;It—it slithered away!&#34; Isabella stammered. &#34;Let&#39;s head back, Grandfather.&#34;</p>
                 <p>The footsteps receded.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Sophia&#39;s back was drenched in cold sweat. She shoved Ethan away, her legs buckling beneath her.</p>
                 <p>He caught her waist, thumb brushing her swollen lips. &#34;That nervous?&#34;</p>
                 <p>&#34;You&#39;re insane!&#34; Her voice shook. &#34;If your grandfather had seen—&#34;</p>
                 <p>&#34;So what?&#34; Ethan&#39;s eyes darkened as he wiped her damp lower lip. &#34;Who dares question what belongs to me?&#34;</p>
                 <p>Sophia trembled with rage. &#34;Isabella definitely saw us!&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;And?&#34; He laughed coldly, suddenly hoisting her up. &#34;Would she dare breathe a word?&#34;</p>
                 <p>Sophia&#39;s arms instinctively circled his neck, her feet dangling. The position made her ears burn with humiliation. &#34;Put me down!&#34;</p>
                 <p>Instead, Ethan bit her throat. &#34;You weren&#39;t complaining earlier.&#34;</p>
@@ -2340,7 +2420,7 @@
                 <p>&#34;Focus.&#34; Ethan pinched Sophia&#39;s waist in warning.</p>
                 <p>She startled, realizing her blouse had ridden up to her chest. She grabbed his wandering hand. &#34;Ethan!&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>He chuckled darkly. &#34;Calling for an audience?&#34;</p>
                 <p>Sophia immediately fell silent, glaring at him with red-rimmed eyes.</p>
                 <p>Ethan&#39;s gaze turned predatory—then he abruptly released her. &#34;Get out.&#34;</p>
@@ -2350,7 +2430,7 @@
                 <p>Ethan watched her retreat, his expression unreadable. He swiped his thumb across his lips, still tasting her sweetness.</p>
                 <p>From the shadows, Isabella lowered her phone, having captured everything. She dialed a number, her voice venomous. &#34;Move the timeline up. I want Sophia Lowell ruined.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

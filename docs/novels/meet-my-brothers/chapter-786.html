@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,21 +2392,21 @@
                 <p>He glared at Mia as she backed away, gritting his teeth. “Stop right there!”</p>
                 <p>Nonetheless, Mia had no intention of staying. She proceeded directly to the elevator, determined to leave the hospital.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Upon reaching the hospital’s exit, she was confronted by a red sports car parked right in front of her.</p>
                 <p>Mia narrowed her eyes, finding the sports car oddly familiar.</p>
                 <p>Suddenly, Shelly stormed out of the vehicle. “You bitch! How dare you trick me with counterfeit goods!”</p>
                 <p>“Damn, you caught on quickly. I guess your brain isn’t totally useless after all,” Mia remarked sarcastically.</p>
                 <p>With Timothy’s bone marrow sample already sent away, Mia no longer needed to maintain the facade in front of Shelly. She had nothing left to fear at this point.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Shelly’s expression contorted with anger. She hadn’t expected Monalize to admit so readily.</p>
                 <p>Throughout the journey, Shelly had harbored doubts, pondering whether Monalize, too, had fallen prey to someone else’s deceit.</p>
                 <p>Enraged, Shelly hurled the replica handbag she had been holding to the ground. “We have no grievances between us, so why resort to using these counterfeit goods to deceive me? Do you not have any shame?”</p>
                 <p>Mia remained composed as she responded, “We’re not exactly close, so it’s surprising that you shamelessly turn to me every time you want something.</p>
                 <p>“The total value of these luxury items amounts to millions of dollars. Since you boldly demanded them, I had to resort to such measures to minimize my losses.”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>“Who would have imagined that the heiress of the Barrett family would be in such dire financial straits?”</p>
                 <p>At that moment, Luna emerged from the passenger seat and walked up to Shelly. “Shelly, it seems she’s been deliberately cozying up to you with an agenda from the beginning. Do you finally see her true colors?”</p>
                 <p>Upon Luna’s arrival, Mia finally realized how someone as gullible as Shelly could quickly identify the high–quality counterfeits.</p>
@@ -2340,14 +2420,14 @@
                 <p>“If you don’t compensate me, I’ll sue you for selling counterfeit goods!”</p>
                 <p>Mia smirked in response. “I gave them to you, but I didn’t tell you to sell them. If you’re not satisfied, feel free to find a lawyer and sue me whenever you like.”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Enraged, Shelly snapped, “Hold on a minute! Who said you could leave? If you don’t explain yourself now, don’t even think about walking away!”</p>
                 <p>Mia’s gaze turned icy as she looked at the two bodyguards standing before her. She gazed at Shelly and asked, “Are you serious?”</p>
                 <p>Without hesitation, she raised her hand, summoning a group of bodyguards to surround</p>
                 <p>them.</p>
                 <p>The imposing bodyguards encircled Shelly and Luna.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

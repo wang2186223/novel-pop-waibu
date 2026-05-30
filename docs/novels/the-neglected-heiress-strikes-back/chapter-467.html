@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2321,7 +2401,7 @@
                 <p>Nathaniel&#39;s cruel words echoed in her mind—that her sister&#39;s engagement to the Chambers heir was merely a stepping stone for her own relationship with Alexander. A choked sob escaped her.</p>
                 <p>&#34;Should we break up?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Alexander&#39;s heart clenched. &#34;Isabella,&#34; he whispered, voice rough with fear. &#34;What&#39;s wrong? Why would you say that?&#34;</p>
                 <p>&#34;Is it because of me that people keep getting hurt?&#34;</p>
                 <p>The words spilled out, her usual strength crumbling. With others, she was unshakable. But with him, she was raw, vulnerable. &#34;First my brother, now Seraphina... Alexander, maybe we&#39;re not meant to be. Maybe we&#39;re just—&#34;</p>
@@ -2337,7 +2417,7 @@
                 <p>He caught her hand, pressing a kiss to her knuckles, his gaze burning. &#34;I&#39;d tear the world apart to keep you.&#34;</p>
                 <p>You wouldn&#39;t have to, she thought. I&#39;ve always been yours.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;But thanks to Evelyn&#39;s interference, Nathaniel&#39;s opinion of you has softened,&#34; she murmured. &#34;Otherwise, he might have thrown both me and Seraphina at the Chambers family just to cut you off completely. I think Mr. Chambers must have pressured him, forcing him to offer Seraphina as a sacrifice. It&#39;s disgusting.&#34;</p>
                 <p>Alexander shared her fury. &#34;Isabella, as much as I hate to say it, Adrian&#39;s obsession with you runs deep. He might not settle for marrying your sister. If he&#39;s determined to have you, an arranged marriage won&#39;t stop him. With Byron out of the picture, Nathaniel would never let Seraphina marry him. This engagement might fall apart.&#34;</p>
                 <p>&#34;True,&#34; she sighed, leaning into him. &#34;But Adrian is desperate. And desperate men are dangerous. Maybe this is just another one of his schemes—agreeing to the marriage to torment me, to make me feel so guilty I can&#39;t be happy with you. If he can&#39;t kill me, he&#39;ll settle for breaking my heart.&#34;</p>
@@ -2353,7 +2433,7 @@
                 <p>The car was too small, too restrictive—yet Isabella felt weightless, as if floating among the clouds, her body melting into his.</p>
                 <p>Later, when the storm had eased, she lay limp in his arms, hair tousled from their passion.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Next time,&#34; she murmured, &#34;maybe book us a room? My back is killing me.&#34;</p>
                 <p>Alexander chuckled, mischief in his voice. &#34;You think a bed would save your back?&#34;</p>
                 <p>She swatted his chest, cheeks flushing.</p>
@@ -2385,7 +2465,7 @@
                 <p>For a second, she thought he&#39;d reconsider.</p>
                 <p>But he only said, coldly, &#34;Preston, back off. Don&#39;t try to clear Elspeth&#39;s name. Or I might do something even I can&#39;t predict.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Are you threatening me?&#34; Preston spat.</p>
                 <p>Sebastian smirked. &#34;You&#39;re right about one thing—I am a dog. But not like you. I&#39;m the kind that bites.&#34;</p>
                 <p>Then he was gone, leaving Preston trembling in the cold.</p>
@@ -2401,7 +2481,7 @@
                 <p>Margaret sighed. &#34;So what&#39;s your plan? You wouldn&#39;t call me here unless you needed help.&#34;</p>
                 <p>Byron leaned in, eyes dark. &#34;You high-society ladies always find reasons to visit Elvira&#39;s salons. Surely you can get me close to Seraphina before Adrian does?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

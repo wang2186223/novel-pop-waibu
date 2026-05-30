@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>Within minutes, Evelyn was en route with two armored SUVs flanking her vehicle, bodyguards scanning the surroundings.</p>
                 <p>The convoy merged onto the interstate, sunlight glinting off tinted windows.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Evelyn&#39;s mind raced - this summons couldn&#39;t be trivial. Archibald never met anyone without cause.</p>
                 <p>&#34;Ma&#39;am,&#34; the lead security agent turned, &#34;should we alert Mr. Blackwood about this meeting?&#34;</p>
                 <p>She hesitated only a second. &#34;Yes. He should be informed.&#34; Her thumb hovered over Liam&#39;s contact.</p>
@@ -2321,7 +2401,7 @@
                 <p>Evelyn whipped around. The pursuing cars were closing distance aggressively, engines roaring.</p>
                 <p>&#34;Brace!&#34; The driver slammed the accelerator as metal screeched behind them.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>The sudden lurch sent Evelyn&#39;s phone skittering across the leather seats. Her vision blurred momentarily from the G-force as their armored vehicle became a bullet on asphalt.</p>
                 <p>Danger crystallized in her mind. Two bodyguards were insufficient against this orchestrated attack.</p>
                 <p>One agent already had his satellite phone to his ear when the world exploded.</p>
@@ -2337,7 +2417,7 @@
                 <p>Evelyn blinked against soft light to see a woman with kind eyes smiling down at her.</p>
                 <p>&#34;Five more minutes, Mother,&#34; she murmured, snuggling deeper into plush blankets.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Let the child sleep,&#34; came a warm baritone. &#34;Being late won&#39;t end the world.&#34;</p>
                 <p>She sat up rubbing her eyes, grinning at the distinguished gentleman. &#34;Father spoils me rotten.&#34;</p>
                 <p>&#34;Only fifty days leave this time?&#34; he asked with mock severity.</p>
@@ -2354,7 +2434,7 @@
                 <p>Julian ignored the protest, sliding into the driver&#39;s seat. &#34;Nonsense. It&#39;s my privilege.&#34;</p>
                 <p>The car hummed with pleasant family chatter, none noticing when the GPS route quietly diverted from its programmed destination.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

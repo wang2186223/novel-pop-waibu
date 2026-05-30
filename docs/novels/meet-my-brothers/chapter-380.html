@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,31 +2391,31 @@
                 <p>Mia was relieved that Timothy always had a bad impression of her. Otherwise, she wouldn’t be able to come up with an excuse for the child.</p>
                 <p>“But we haven’t finalized the divorce. You’re still my wife!” argued Timothy.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>“But aren’t you engaged to Maya? What’s the difference? You’re a pot calling the kettle black!” Mia met his gaze squarely. “Timothy, we’ve been keeping up the act for Grandma Laura’s sake, and we’ve agreed not to meddle in each other’s personal lives. I haven’t broken our deal.”</p>
                 <p>Right after Mia said that, she felt an overwhelming pressure emanating from Timothy. It was silent yet threatening.</p>
                 <p>But she couldn’t back down. If he sensed anything was amiss, the child would be at risk.</p>
                 <p>Timothy cleared his throat. “But our agreement didn’t include you getting pregnant!”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>“And does it include you being engaged to Maya?” Mia retorted. At that moment, she was filled with courage, like a lioness protecting her cub.</p>
                 <p>Timothy bent down to her eye level with a dark gaze. He hissed, “No man can tolerate being cheated on. Mia, I’ll give you a choice.”</p>
                 <p>As he inched closer, Mia instinctively backed away. But her back was already against the headboard with nowhere to go.</p>
                 <p>+15 BONOS</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>She widened her eyes as Timothy approached. At this proximity, she could see Timothy’s handsome features, how smooth his skin was, and even his pores.</p>
                 <p>Timothy’s skin was much smoother than hers.</p>
                 <p>They were so close they could feel each other’s breath.</p>
                 <p>Mia pursed her lips. “And what’s that?”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>“Abort the baby!” growled Timothy.</p>
                 <p>“No!” Mia’s refusal was instant and resolute.</p>
                 <p>At the same time, her heart sank. He wouldn’t keep the child, after all.</p>
                 <p>Timothy’s gaze hardened. “Do you think I’m giving you a choice? Since you don’t want to take the</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>easy way out, fine. I’ll arrange for a doctor to perform the abortion.”</p>
                 <p>“No!” Mia grabbed his arm and gave him a pleading look. “Please!”</p>
                 <p>He grasped her chin firmly. “What makes you think begging would work? Until we’ve finalized the</p>
@@ -2344,7 +2424,7 @@
                 <p>“Well, it’s not my child.” Timothy huffed cruelly.</p>
                 <p>“Who says it’s not?” shrieked Mia.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

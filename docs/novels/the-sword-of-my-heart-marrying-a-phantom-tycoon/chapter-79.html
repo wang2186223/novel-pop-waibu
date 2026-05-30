@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,14 +2392,14 @@
                 <p>Hope had burned bright for Dayna when the police took her in. She&#39;d longed to see Jaxton come for her.However,he had never showed.</p>
                 <p>Longing for answers, Dayna had walked straight into the Morrison home, determined to see Jaxton and ask if Janessa&#39;s words were true. But before she managed a word, Laura&#39;s palm whipped across her face.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>The slap sent Dayna crashing to the floor.</p>
                 <p>&#34;What gives you the nerve to show up here?&#34;</p>
                 <p>Hatred blazed in Laura&#39;s eyes, as though she&#39;d tear Dayna apart right then. Even as her cheek stung,Dayna pressed a hand to her face and said, voice trembling, &#34;Please, I need to talk to Jaxton. I have something important to ask him.&#34;</p>
                 <p>&#34;Shut your mouth! You&#39;ve made Jaxton&#39;s life miserable enough, and now, you want to cause him more pain? Haven&#39;t you done enough damage?&#34;</p>
                 <p>&#34;But Laura, I would never hurt Jaxton. I care about him deeply-&#34; &#34;Have you no shame?&#34; Before Dayna could finish,Laura interrupted with a scornful taunt. &#34;Jaxton is your sister&#39;s fiancé, and yet you constantly try to seduce him. You&#39;re just like your mother, chasing after men who aren&#39;t yours!&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Tears spilled down Dayna&#39;s cheeks, Laura&#39;s words cutting deeper than any slap.</p>
                 <p>All the noise downstairs drew Jaxton from his room.His face was dark as he came downstairs.</p>
                 <p>Dayna spotted him, and hope flickered in her eyes.She rushed over, hand outstretched for his.</p>
@@ -2333,14 +2413,14 @@
                 <p>Tears slipped down Dayna&#39;s face as she stared at him,her body shaking.</p>
                 <p>He hadn&#39;t been like this when she had handed him the files that day.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Get out of here. I don&#39;t want to see you anymore,&#34;Jaxton said.</p>
                 <p>As he made for the stairs, Dayna rushed to block him,desperation plain in her voice.&#34;Jaxton, that&#39;s not true!Amelia set this up. She left the files on the computer on purpose. She deliberately went to the Stewart Group to-&#34;</p>
                 <p>&#34;What nonsense are you spouting?&#34;</p>
                 <p>A stern voice suddenly came from the doorway, and the three in the living room instinctively looked towards it.</p>
                 <p>Santos shot Dayna a cold glare. He did not bother to mask the contempt flickering in his eyes. &#34;You made a mistake. Instead of owning up to it, you want to blame someone else. Dayna, is this really what your parents taught you?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Once Santos stepped inside, Laura wasted no time. She ordered the servants to throw Dayna out.</p>
                 <p>After Dayna was gone, Santos turned to Jaxton, his gaze filled with disappointment. &#34;So, you really hurt Amelia over and over for a woman like that? Jaxton,you&#39;ve truly let me down!&#34;</p>
                 <p>Laura winced at how cutting Santos&#39; words sounded,but after weighing the damage Jaxton had caused,she met Santos&#39; gaze, holding back her frustration.&#34;Pointing fingers won&#39;t fix anything now. Did you come up with a solution?&#34;</p>
@@ -2351,7 +2431,7 @@
                 <p>As for breaching the contract directly, Santos didn&#39;t dare to even consider it.</p>
                 <p>In all of Kretol, no one dared to breach a contract with the Stewart Group.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

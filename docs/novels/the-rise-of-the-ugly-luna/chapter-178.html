@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2318,7 +2398,7 @@
                 <p>I was excited when I got a call from Thomas, telling me he was outside already.</p>
                 <p>Thomas was a hacker Juan recommended to me. I got him to hack into our CCTV footage and check if any clip was deleted on certain dates.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>I met him in his car where he handed an envelope to me.</p>
                 <p>&#34;You were right. Some clips had been deleted. There&#39;s a chip in there containing the missing footage,&#34; he told me.</p>
                 <p>Eagerly, I inserted the chip into the laptop I&#39;d come with and watched the video in awe.</p>
@@ -2344,7 +2424,7 @@
                 <p>Guinevere turned her system to her. I couldn&#39;t help a smile as the clips played one after the other.</p>
                 <p>Her mask slipped. She was damn worried.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;On this day, you told me it was you who performed surgery on Mr. Owens. But from the clip, you spent less than three minutes in there while Lyric had spent close to an hour. Which of you would you say performed the surgery?&#34; Guinevere questioned her.</p>
                 <p>Marta&#39;s eyes darted to mine, a silent threat in them.Oh,to hell with her.</p>
                 <p>&#34;I-I don&#39;t really- I mean...&#34;</p>
@@ -2357,7 +2437,7 @@
                 <p>&#34;Then, explain why all of these footages containing your face were missing, Marta,&#34; another Superior said.&#34;To say I am disappointed in you would be an understatement.&#34;</p>
                 <p>&#34;Please, you have to believe me. I didn&#39;t do anything wrong. I-I honestly don&#39;t know why these footages were missing. Shouldn&#39;t the tech guys be blamed for this?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Guinevere scoffed. &#34;You know, from the onset, Marta,I have always had this uneasy feeling about you.Something about you always screamed dubious. Who knows? Maybe it&#39;s the reason the Alpha didn&#39;t make you his Luna.&#34;</p>
                 <p>Woah. That was a bit personal. Yet,I tried and failed to suppress my smile.</p>
                 <p>When Marta spoke again, her voice told me she&#39;d started crying.</p>
@@ -2370,7 +2450,7 @@
                 <p>****十</p>
                 <p>When my shift ended in the evening and | returned home,the kids came to spend some time with me.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>We were playing a game when my door was abruptly opened.</p>
                 <p>Marta stormed into the room, her hair looking messy with mascara smeared over her eyes, a clear indication that she had been crying.</p>
                 <p>She was still wearing the clothes and had on from TCH which made me wonder where she had been since she left hours before me.</p>
@@ -2385,7 +2465,7 @@
                 <p>I wanted to stop, but Marta was out of her mind and wasn&#39;t letting me go.</p>
                 <p>I lost the fight when she hit me in the belly. Normally,it shouldn&#39;t have hurt enough to weaken my defenses,but the thing hurt like a bitch, I basically screamed as I doubled over.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

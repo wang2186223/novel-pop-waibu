@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2317,32 +2397,32 @@
                 <p>&#34;Tim, you&#39;re finally here!&#34; Luna&#39;s eyes shone with a glimmer of hope.</p>
                 <p>&#34;Son, you&#39;re here! If you arrived even a minute later, I would&#39;ve been killed by this woman!&#34; Sharon exclaimed.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Timothy appeared like their last ray of hope.</p>
                 <p>However, Mia stepped forward and stopped him.</p>
                 <p>She stared daggers at him. &#34;You better not take another step closer. I haven&#39;t found out where they hid the bone marrow.”</p>
                 <p>Her mood soured. If this bastard hadn&#39;t showed up, Sharon would&#39;ve revealed where the bone marrow was!</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>It was all Timothy&#39;s fault! Just why did he have to show up at this moment? At such a bad timing! Timothy didn&#39;t expect her sources to be quicker than his.</p>
                 <p>It seemed like Mia had been suspecting Luna, but she didn&#39;t tell him about it. That was why she was one step ahead of him.</p>
                 <p>He asked Sharon, &#34;Where is my bone marrow?&#34;</p>
                 <p>&#34;Let&#39;s talk about this after you get me out of here. Look at what Mia did to my hand. A witch like her doesn&#39;t deserve to be one of us. You donated your bone marrow to her daughter, but look at what she did to me,” Sharon complained.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Luna chimed in, &#34;Tim, this woman has only been eyeing your bone marrow the entire time. She doesn&#39;t have feelings for you. You&#39;ve been deceived.”</p>
                 <p>&#34;That&#39;s right, son. She was so fierce. She looked like she was going to kill someone. Thank God I have Luna to protect me. Look at how Mia tortured Luna. Luna&#39;s face is ruined!&#34;</p>
                 <p>Luna cried out, &#34;Mrs. Barrett, I was simply doing what&#39;s right.”</p>
                 <p>Mia stood there, completely silent.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>She wanted to see what Timothy would do next. No matter what happened next, she was determined to find out where the bone marrow was.</p>
                 <p>Timothy frowned. &#34;Mom, answer me first. Where is the bone marrow?&#34;</p>
                 <p>Sharon couldn&#39;t understand why he was so insistent about that. &#34;Get me out of here first, Tim. Then, I&#39;ll tell you where it is. It is something we can use as leverage over her head. If she doesn&#39;t apologize and pay the price, I will never give it to her.”</p>
                 <p>Timothy&#39;s presence gave her more confidence to act more boldly.</p>
                 <p>At that moment, Mia warned, &#34;I&#39;m warning you, do not come any closer. Otherwise, I don&#39;t know what my bodyguards will do to your mother.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

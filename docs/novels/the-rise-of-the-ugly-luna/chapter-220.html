@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2316,7 +2396,7 @@
                 <p>&#34;She must be close by. Check thoroughly.&#34; It&#39; was Cole.</p>
                 <p>My heart raced the fastest it&#39;s ever had. I suddenly understood how people died of heart attacks.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>I decided to glance back to see their position so l&#39;d know where to ruin to. I gasped when I found one very close to me. Luckily, she hadn&#39;t seen me.</p>
                 <p>My panic increased. If I were to leave my hiding spot and continue running, they&#39;d definitely see me,and judging from how close they were, they&#39;d catch me in seconds.</p>
                 <p>I was doomed.</p>
@@ -2327,7 +2407,7 @@
                 <p>His eyes crinkled with amusement as he stared down at me.</p>
                 <p>&#34;Hello, there. Long time no see.&#34; His voice carried mirth, like this whole thing was a fun game to him.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;I heard something! Over there,&#34; one of the Executioners said. I fearfully looked around before settling my eyes on Caden. What if he was here to make sure I got caught.</p>
                 <p>Their footsteps were getting closer. I had to run.</p>
                 <p>Before I could take a step, Caden snatched my hand.</p>
@@ -2338,7 +2418,7 @@
                 <p>&#34;Found her!&#34;</p>
                 <p>At that moment, I nearly passed out. I was right!Caden was here to help them catch me.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>However, to my dismay, he smirked. &#34;Looking for someone? I&#39;m sorry you&#39;ll have to find someone else.I need this one.&#34; Before I could fully grasp the moment, his hand wrapped around me, lifted me off the ground, and off we went, running through the air at a speed that no wolf could catch up with.</p>
                 <p>We came to a stop in a deserted place. I was sure it was far from where the Executioners could find us.</p>
                 <p>As soon as he set me on the ground, I stepped away and ran my hands along my skin, hoping to scrub away his touch.</p>
@@ -2349,7 +2429,7 @@
                 <p>&#34;And you were just smart enough to be the one  to find me?&#34;</p>
                 <p>&#34;Well,&#34; he shrugged. &#34;Me and the Executioners. You should feel lucky we found you together.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>I started walking away, but his hand shot out, holding mine. &#34;Where are you going?&#34;</p>
                 <p>&#34;Home? Can you let me go?&#34; I forced my hand free form his.</p>
                 <p>Saving me didn&#39;t make him less of a monster to me.It didn&#39;t make me suddenly forget all he had done and was likely going to do.</p>
@@ -2360,7 +2440,7 @@
                 <p>I bobbed. &#34;Maybe you do care. But because I&#39;m a Siphon, isn&#39;t it? You looking for a way to turn me into a tool.&#34;</p>
                 <p>&#34;Don&#39;t be ridiculous. If I wanted to make you a tool,I&#39;d easily abduct you.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Well, thanks but I don&#39;t want your help, Caden.I appreciate you saving me today, but please don&#39;t expect me to give you a hug for it.&#34;</p>
                 <p>I attempted leaving again, but he walked around and got in my way. &#34;Come on, Lyric. I&#39;m only trying to protect you.&#34;</p>
                 <p>&#34;And I&#39;m telling you to stay away from me! Please, I don&#39;t need your protection!&#34; The words finally seemed to sink in &#39;cause he didn&#39;t take another step toward me. So, I left.</p>
@@ -2373,7 +2453,7 @@
                 <p>I rounded up the packing and made my way to the living room. That was when a frost settled over my soul.</p>
                 <p>My bag slipped from my hand as I froze at the door.In front of me were the Executioners-a sight that shouldn&#39;t be possible. How in Hell&#39;s name were they here? I didn&#39;t hear them come into the house.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

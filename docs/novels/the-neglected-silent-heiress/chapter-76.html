@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,7 +2391,7 @@
                 <p>&#34;Olivia?&#34; Liam&#39;s voice shattered her concentration. She looked up to find him leaning against the doorway, his expression unreadable.</p>
                 <p>He&#39;d been watching her longer than she realized. When Marcus had noticed Liam&#39;s arrival earlier, he&#39;d simply gestured for silence, valuing Olivia&#39;s focus over formalities. Surprisingly, Liam hadn&#39;t minded waiting.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>This was a side of his wife Liam had never seen before. The woman who usually moved through their mansion like a ghost now worked with quiet confidence, her fingers dancing with tweezers as she reconstructed history. The contentment on her face was mesmerizing.</p>
                 <p>Only the vibration of his phone - a message from Alfred about dinner - broke the spell.</p>
                 <p>&#34;We should head home,&#34; Liam said softly, startling Olivia from her work.</p>
@@ -2323,7 +2403,7 @@
                 <p>Olivia quickly intervened, explaining it had been her choice. As she secured the final fragment, the bottle stood nearly complete - still needing finishing touches, but unmistakably whole again.</p>
                 <p>The same visitors who&#39;d mocked Olivia earlier now stood silent. Taunting a neglected society wife was one thing; challenging someone under Liam Blackwood&#39;s protection was another matter entirely.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Methodically cleaning her workspace, Olivia secured the bottle in its case and washed up. Liam waited patiently by the door, an uncharacteristic show of support.</p>
                 <p>After bidding Marcus goodbye, Olivia tried to pull away when Liam took her hand. &#34;We have guests,&#34; he murmured.</p>
                 <p>Reluctantly, Olivia let him lead her to the car. Today, unusually, Liam had driven himself.</p>
@@ -2342,7 +2422,7 @@
                 <p>&#34;A rumor?&#34; Liam&#39;s interest sharpened as he took the tablet.</p>
                 <p>The screen displayed a trending video showing Olivia laughing intimately with an unidentified man. The caption screamed: &#34;Mrs. Blackwood&#39;s Sweet Revenge - Caught in Secret Affair!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2319,28 +2399,28 @@
                 <p>Within moments, all police officers lowered their weapons and withdrew.</p>
                 <p>Ryan called after them pointedly, &#34;Inspector Reeves! Don&#39;t forget to take Ms. Dawson with you.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Damien turned back with a scowl, grabbing Victoria&#39;s arm roughly. &#34;You&#39;re coming to the station.&#34;</p>
                 <p>Victoria shot Evelyn a venomous glare before being dragged away.</p>
                 <p>Adrian approached Evelyn quietly. He checked his watch before explaining, &#34;My apologies, Mrs. Blackwood. General Blackwood has a crucial meeting in Miston by noon. He&#39;s racing against time now.&#34;</p>
                 <p>Understanding dawned on Evelyn - she&#39;d disrupted his important duties.</p>
                 <p>She nodded contritely. &#34;Please convey my gratitude to General Blackwood and my apologies for interfering with his schedule.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Adrian looked surprised by the formality between husband and wife.</p>
                 <p>&#34;Of course.&#34; He turned and jogged to catch up with Liam.</p>
                 <p>After ensuring the police departure, Ryan returned to Evelyn&#39;s side. &#34;Mrs. Blackwood, the General has never been late to anything before. Not once in fifteen years of service. Yet he delayed this critical meeting for you.&#34;</p>
                 <p>Guilt washed over Evelyn, but greater than that was her worry about potential repercussions Liam might face.</p>
                 <p>&#34;I&#39;m so sorry...&#34; she murmured.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Ryan smiled gently. &#34;No need for apologies, Mrs. Blackwood. The General will return tonight.&#34;</p>
                 <p>With that, he sprinted after Liam.</p>
                 <p>Witnesses to the incident approached Evelyn with words of comfort and support.</p>
                 <p>After thanking them, Evelyn retreated to her room and locked the door.</p>
                 <p>She&#39;d planned to meet with the professors about the Azurium project, but after the day&#39;s events, academic discussions were the last thing on her mind.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Evelyn waited for Liam all night, finally succumbing to exhaustion near dawn.</p>
                 <p>In her half-asleep state, she felt gentle fingers brushing her hand.</p>
                 <p>Blinking awake, she found Liam&#39;s handsome face inches from hers. He was carefully rewrapping the bandage on her palm with surprising tenderness.</p>
@@ -2349,7 +2429,7 @@
                 <p>Her pulse quickened beneath his ministrations.</p>
                 <p>&#34;Liam? You&#39;re back?&#34; Evelyn murmured sleepily, her soft voice caressing his ears in the quiet room.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

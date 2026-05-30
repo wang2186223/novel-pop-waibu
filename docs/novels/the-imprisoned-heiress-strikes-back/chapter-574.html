@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,17 +2390,17 @@
                 <p>Before she could react, he dragged the sharp edge across his own palm.</p>
                 <p>Crimson droplets splattered against his dark trousers, spreading in ominous stains. Dominic leaned back in his wheelchair, watching the blood flow with detached amusement, applying more pressure as if testing his own pain threshold.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Evelyn stood frozen, words failing her.</p>
                 <p>She lunged forward, wresting the dagger from his grasp, and hurled it into the nearest trash bin outside the hotel entrance. &#34;Nathaniel,&#34; she commanded sharply, &#34;take Mr. Powell away immediately!&#34;</p>
                 <p>She couldn&#39;t bear to witness his self-destructive spectacle any longer. When Nathaniel wheeled Dominic away without protest, Evelyn finally exhaled the breath she&#39;d been holding.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>As she turned toward the hotel lobby, movement caught her eye. Alexander stood near the elevators, gesturing to security. &#34;Please escort my guest upstairs,&#34; he instructed.</p>
                 <p>Isabella&#39;s plea to be accompanied was met with refusal. The rejection drained all color from her face. &#34;Alexander, you won&#39;t even walk me up?&#34;</p>
                 <p>Before he could respond, Evelyn entered the scene. Alexander opened his mouth to explain, but Evelyn pressed a finger to his lips. &#34;No explanations needed,&#34; she murmured with a soft smile. &#34;I trust you completely.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Their fingers intertwined naturally as she turned to assess Isabella&#39;s condition. The woman&#39;s tear-streaked makeup and torn dress spoke volumes about her recent ordeal. Evelyn thought grimly, &#34;Dominic shows no mercy, even to his own fiancée.&#34;</p>
                 <p>Compassion softened Evelyn&#39;s voice. &#34;Would you like me to go upstairs with you?&#34;</p>
                 <p>Isabella blinked as if struck. &#34;What did you just say?&#34;</p>
@@ -2330,13 +2410,13 @@
                 <p>Disbelief flickered across Isabella&#39;s features. Nearly fifteen seconds passed before she managed a stiff, &#34;No.&#34;</p>
                 <p>Respecting the clear boundary, Evelyn watched the elevator doors close before leaving with Alexander. His grip tightened around her hand. &#34;You&#39;re not upset?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;At first, I was hurt when you left me. But she&#39;s Andrew&#39;s sister, alone and vulnerable now. My heart aches for her.&#34; Evelyn didn&#39;t want Alexander caught in emotional crossfire.</p>
                 <p>They entered a boutique where Evelyn selected a complete outfit, arranging for delivery to Isabella&#39;s room. Outside, Alexander suddenly pulled her into an embrace. &#34;Mrs. Whitmore,&#34; he murmured against her hair, &#34;your kindness humbles me.&#34;</p>
                 <p>His lips found hers in a sudden, passionate kiss that left Evelyn breathless. She flushed scarlet, glancing around at passing pedestrians. &#34;Alexander! We&#39;re in public!&#34;</p>
                 <p>His answering smile held both apology and promise.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

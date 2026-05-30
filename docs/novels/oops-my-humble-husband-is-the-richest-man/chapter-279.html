@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2320,7 +2400,7 @@
                 <p>She added sourly, “Definitely not me.”</p>
                 <p>She couldn’t help complaining. “I considered you my best friend. We’ve been at the same school since kindergarten. All these years of friendship, and I come after Chloe in your heart. Fine. But I’m even less important than your mother-in-law and Zack. For them, you abandoned me… Forget it. I don’t want to talk about it. It still hurts.”</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>She was genuinely hurt.</p>
                 <p>Mina pouted.</p>
                 <p>Grace didn’t know how to comfort people. She remained silent.</p>
@@ -2335,7 +2415,7 @@
                 <p>Mina shrugged. “Just calling it as I see it.”</p>
                 <p>“You!”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Mrs. Davis clutched her chest in anger. She pointed at Grace and yelled, “Grace, are you just going to let her insult me like this? Let me tell you, her treating me this way means she doesn’t respect you! Otherwise, why would she make things difficult for you?”</p>
                 <p>“Grace, kick her out right now! And don’t you dare see her again, or I’ll tell Zack you let your friend come here and bully me!”</p>
                 <p>Mina’s jaw tightened.</p>
@@ -2365,7 +2445,7 @@
                 <p>She wanted to say more, but after their previous fallout, she was afraid of pushing too hard and getting blocked again. She held back her words and left with a conflicted expression.</p>
                 <p>After Mina left, Grace turned around.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Mrs. Davis sneered. “What are you looking at? Hurry up and make dinner! You’re so dull and clumsy. How can you compare to Kelsey? No wonder Zack never comes home!”</p>
                 <p>Grace’s eyes darkened.</p>
                 <p>The corners of her lips curled into a faint smile. “Okay, I’ll get right to it.”</p>
@@ -2380,7 +2460,7 @@
                 <p>She lowered her gaze.</p>
                 <p>Using her skills as a disciple of a master chef to spoil Mrs. Davis’s palate was the first step of her revenge!</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>She had many straightforward ways to force Zack to leave with nothing.</p>
                 <p>But she didn’t want to expose her identity. She needed to avoid using her past identity as much as possible to avoid arousing “their” suspicion again. Besides, Evelynge had suffered for so many years. She had to make them pay.</p>
                 <p>Not only would she get a divorce, but after the divorce, she would make sure the scumbag, the other woman, and the wicked mother-in-law all got what they deserved!!</p>
@@ -2395,7 +2475,7 @@
                 <p>Thinking this, her eyes reddened.</p>
                 <p>She immediately picked up her phone, fuming as she was about to block Grace Nan, whom she had just added back. Suddenly, a message popped up in the chat interface…</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

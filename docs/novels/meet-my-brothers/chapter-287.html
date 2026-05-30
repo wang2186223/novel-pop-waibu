@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>For Mia, who was attached to Laura, he would do his best to cure Laura.</p>
                 <p>That way, nothing about the Barrett family would hold Mia back.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>A grin played on her lips. “Now I’m at peace of mind with your promise.”</p>
                 <p>“Come live in Nord City with us, Mia. Start a new life here with your baby. Stay far away from the Barretts.”</p>
                 <p>“Sure, but now’s not the time.”</p>
@@ -2323,7 +2403,7 @@
                 <p>Calculations formed in his head. It was only a few months. He could wait that long.</p>
                 <p>After the duo arrived at the hospital, Mia headed for the prenatal checkup right away.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>During the B–ultrasound, the doctor was surprised. “Congratulations! I can hear two heartbeats. You’re having twins.”</p>
                 <p>+15 BONOS</p>
                 <p>Mia looked at the monitor in disbelief. “Really?”</p>
@@ -2332,7 +2412,7 @@
                 <p>Connor walked up to her. “How was it?”</p>
                 <p>“The doctor said I’m having twins and told me to get my blood drawn for a checkup.” She couldn’t</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>stop smiling.</p>
                 <p>“Connor, I’m having two babies!” Mia couldn’t contain her excitement.</p>
                 <p>He fetched and read the report, the corner of his lips curling up slightly.</p>
@@ -2341,7 +2421,7 @@
                 <p>She tugged at Connor’s arm. “Nothing’s going to happen. I’ll be careful.”</p>
                 <p>A sigh escaped from him. “Are you still going to keep it a secret from Dominic and the others?”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>“Let’s keep it this way for now. We can talk after I go to Nord City with you guys.” Her puppy eyes</p>
                 <p>were pleading with him.</p>
                 <p>Finally, he bit the bullet by giving in. “Fine. Only until then.”</p>
@@ -2350,7 +2430,7 @@
                 <p>The same outcome would happen even if Dominic found out about it now.</p>
                 <p>Connor could already envision his future, where he was willing to get beaten up by Dominic for</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Mia.</p>
                 <p>At that moment, a woman rushed over to snatch the report from Mia. “I knew it! You’re pregnant,</p>
                 <p>Mia Bowen! You’re dead meat this time!”</p>
@@ -2360,7 +2440,7 @@
                 <p>It was Wilhelmina indeed!</p>
                 <p>This was the first time Mia met Wilhelmina after the demolition.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

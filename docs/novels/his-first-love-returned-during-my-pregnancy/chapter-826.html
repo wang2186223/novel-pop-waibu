@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,31 +2391,31 @@
                 <p>Evelyn Carter and Alexander Hamilton exchanged a glance. Only after Bianca gave a slight nod did they rise and move toward the lounge area outside the side door.</p>
                 <p>Alexander pulled out a sanitizing wipe, meticulously cleaning the wooden chair.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Since when did you develop germaphobia?&#34; Evelyn chuckled.</p>
                 <p>&#34;Proximity breeds similarity.&#34; Alexander helped her sit before settling beside her. &#34;I never noticed how offensive dust was before.&#34;</p>
                 <p>Evelyn blinked. &#34;Or maybe someone always cleaned it for you?&#34;</p>
                 <p>Alexander paused, then laughed. &#34;Then I&#39;ll be the one wiping it down from now on.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Sunlight filtered through the leaves, casting dappled shadows across them. Were it not for needing to keep watch over Vincent, this would&#39;ve made for a perfect date.</p>
                 <p>Back at the tea table, the air was so still the ripple of water could be heard.</p>
                 <p>Bianca drank her water leisurely until Vincent placed his hand on the table—a wedding band glaringly visible on his ring finger.</p>
                 <p>&#34;I thought you threw it away,&#34; she sneered.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>During their divorce, both rings had been flung out the window. That hers had been recovered was miracle enough—where had his come from?</p>
                 <p>&#34;Custom-made.&#34; Vincent rubbed the band. &#34;An exact replica.&#34;</p>
                 <p>Bianca set down her glass with a sharp clink.</p>
                 <p>&#34;Counterfeits will always be counterfeits.&#34; She locked eyes with him. &#34;Just like how killing Adrian changed nothing.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Even now, saying Adrian&#39;s name sent a stab through her heart. But time was the best healer, and hatred the strongest painkiller.</p>
                 <p>Vincent&#39;s gaze darted around, checking for recording devices before scowling. &#34;I don&#39;t know what you&#39;re talking about.&#34;</p>
                 <p>&#34;Relax, I&#39;m not that petty.&#34; Bianca&#39;s lips curled mockingly. &#34;There are countless ways to ruin you. How many enemies have you made climbing to your current position?&#34;</p>
                 <p>Vincent paled but held his ground. &#34;What will it take for you to forgive me?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Simple.&#34; Bianca stood. &#34;When you&#39;re dead, I&#39;ll personally place flowers on your grave.&#34;</p>
                 <p>Vincent grabbed her wrist. &#34;Baby Chloe is our daughter—you can&#39;t possibly—&#34;</p>
                 <p>Before he could finish, a glass of ice water hit him square in the face.</p>
@@ -2346,7 +2426,7 @@
                 <p>His performative devotion turned her stomach. She yanked free, only for his grip to tighten.</p>
                 <p>Outside the side door, Evelyn and Alexander immediately rushed toward them.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

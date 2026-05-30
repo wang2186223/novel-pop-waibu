@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2319,7 +2399,7 @@
                 <p>&#34;Is this her retribution?&#34; he wondered bitterly.</p>
                 <p>&#34;The woman who once adored me now wants me to taste her suffering...&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Vanessa chose that moment to appear, rushing toward him with outstretched arms.</p>
                 <p>She wrapped herself around his waist from behind, pressing her cheek against his back.</p>
                 <p>&#34;You still have me, Ethan. Evelyn doesn&#39;t deserve you, but I do. We&#39;re married now. Let&#39;s build our happiness together, yes?&#34; Her voice dripped with saccharine sweetness, her manicured fingers tracing circles on his abdomen.</p>
@@ -2333,14 +2413,14 @@
                 <p>Vanessa&#39;s tears fell freely.</p>
                 <p>She&#39;d foolishly believed his reluctance to divorce after her miscarriage signaled lingering tenderness.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Now she understood. He simply wanted her to suffer.</p>
                 <p>The man&#39;s heart was carved from ice.</p>
                 <p>The orchestra members arrived at dawn, their shuttle bus pulling up to the concert hall&#39;s grand entrance.</p>
                 <p>Cassandra Brown stepped off with a spring in her step. The memory of Evelyn being locked inside overnight had erased all her nerves. She hummed a jaunty tune, adjusting the straps of her designer gown.</p>
                 <p>&#34;Cassandra, you&#39;re radiant today!&#34; Eleanor gushed from behind her. &#34;Is that a new Valentino? It hugs your curves perfectly.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Cassandra preened. As principal cellist, she always dressed to impress for performances.</p>
                 <p>Today&#39;s selection required her most exquisite ensemble.</p>
                 <p>The internal competition would determine who performed at next month&#39;s gala. Beyond orchestra members, Cresthaven&#39;s elite had been invited to judge.</p>
@@ -2350,7 +2430,7 @@
                 <p>Her daydreams carried her so high she barely noticed the ground beneath her feet.</p>
                 <p>Miranda&#39;s sharp gasp shattered the reverie. &#34;Wait—why are there police cars surrounding the hall?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

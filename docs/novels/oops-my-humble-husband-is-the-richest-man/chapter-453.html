@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2320,7 +2400,7 @@
                 <p>Evelyn looked up. &#34;Looking for a fight? Or is your skin itching for another lesson?&#34;</p>
                 <p>Justin smirked. &#34;Jane disturbed a guest in the VIP suite. Shouldn&#39;t she apologize?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Evelyn took a deep breath.</p>
                 <p>Her hands itched intensely.</p>
                 <p>If they weren&#39;t in New York, she would have punched him already.</p>
@@ -2335,7 +2415,7 @@
                 <p>Why?</p>
                 <p>Did having power and influence mean you could do whatever you wanted?</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>What had she and her brother done wrong?</p>
                 <p>It was Jason who went to their home, attacked her brother, and tried to assault her... Evelyn only acted in defense... Why was everything suddenly her fault?</p>
                 <p>Her entire body trembled, her blood running cold.</p>
@@ -2350,7 +2430,7 @@
                 <p>Evelyn frowned. &#34;Justin, do you have any respect for the law?&#34;</p>
                 <p>Justin laughed. &#34;I&#39;m a law-abiding citizen. But what if someone has a grudge against Jane&#39;s brother? If he accidentally falls down the stairs, or tumbles from a rooftop, how is that my concern?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Evelyn was speechless.</p>
                 <p>This was clearly about hiring thugs to kill, then shifting the blame to them!</p>
                 <p>Jane frantically waved her hands.</p>
@@ -2365,7 +2445,7 @@
                 <p>She didn&#39;t want to burden Evelyn, and she feared for her brother&#39;s safety.</p>
                 <p>Otherwise, she would never forgive herself...</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>So...</p>
                 <p>She turned to Jason on the hospital bed and without hesitation, dropped to her knees with a loud &#34;thud!&#34;</p>
                 <p>Evelyn was stunned. &#34;Jane!&#34;</p>
@@ -2380,7 +2460,7 @@
                 <p>Jason sneered. &#34;Kowtow!&#34;</p>
                 <p>Justin added, &#34;Yes, kowtow!&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Jane closed her eyes tightly and slammed her forehead against the floor.</p>
                 <p>The sound made Evelyn&#39;s heart tremble.</p>
                 <p>She couldn&#39;t help but shout, &#34;Enough!&#34;</p>
@@ -2397,7 +2477,7 @@
                 <p>Mrs. Evans frowned, her thoughts still preoccupied with finding her daughter.</p>
                 <p>Suddenly, someone rushed in through the doorway. &#34;Jane, your phone has been ringing nonstop in my bag...&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

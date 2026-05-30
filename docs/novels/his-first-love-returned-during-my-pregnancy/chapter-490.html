@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>Alexander stiffened.</p>
                 <p>Evelyn quickly interjected, &#34;Lydia&#39;s right. You must be swamped with work, Mr. Hamilton. Don&#39;t let us keep you.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Their gazes clashed in the air.</p>
                 <p>Oblivious to the tension, Lydia chimed in, &#34;Alexander is always so kind. He&#39;d help anyone, even strangers.&#34;</p>
                 <p>Alexander&#39;s expression darkened. &#34;I&#39;m not that idle.&#34;</p>
@@ -2321,7 +2401,7 @@
                 <p>A phone buzzed.</p>
                 <p>Alexander glanced at the caller ID and declined the call.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>He checked the IV bag. &#34;This one&#39;s almost done. There&#39;s another glucose bag after—about an hour left.&#34;</p>
                 <p>The phone buzzed again.</p>
                 <p>Evelyn sighed. &#34;You should take that.&#34;</p>
@@ -2329,7 +2409,7 @@
                 <p>He turned to Lydia. &#34;Please look after Dr. Carter.&#34;</p>
                 <p>Lydia nodded obediently. &#34;Don&#39;t worry, Alexander!&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Before leaving, Alexander asked Evelyn, &#34;Need anything?&#34;</p>
                 <p>&#34;No, thank you.&#34;</p>
                 <p>Once alone, Lydia fluttered around like a sparrow. &#34;Evelyn, some water? Fruit? Want me to tell you a joke?&#34;</p>
@@ -2337,7 +2417,7 @@
                 <p>A doctor entered for rounds.</p>
                 <p>&#34;Temperature last night?&#34; He flipped through the chart. &#34;Good, the fever&#39;s down, but the infection persists. Continue the IV.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Glancing at the drip, he asked casually, &#34;Your sister? Where&#39;s your husband?&#34;</p>
                 <p>Before Evelyn could explain, Lydia blurted, &#34;Not her husband! They barely know each other!&#34;</p>
                 <p>The doctor looked startled. &#34;Barely know each other? Then why was he giving you a sponge bath last night?&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>Lydia&#39;s eyes widened. &#34;A... sponge bath?&#34;</p>
                 <p>&#34;Just wiping my hands with alcohol,&#34; Evelyn clarified quickly.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>The doctor shook his head. &#34;I saw him carrying multiple basins of hot water. That&#39;s excessive for just hands.&#34;</p>
                 <p>Silence fell.</p>
                 <p>Realizing his blunder, the doctor stammered, &#34;Maybe for the humidifier... I&#39;ll check other rooms!&#34;</p>

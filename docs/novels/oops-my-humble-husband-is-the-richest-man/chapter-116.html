@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2317,7 +2397,7 @@
                 <p>Evelyn pressed her lips together, hesitating for a moment before finally nodding. &#34;Madam, let&#39;s go inside first.&#34;</p>
                 <p>She knew Eleanor Vance had sent Fiona.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>She understood she shouldn&#39;t exploit the elder lady&#39;s fondness to plead for Isabella.</p>
                 <p>Yet she couldn&#39;t stand by and watch Sophia be mistreated.</p>
                 <p>Unaware of the circumstances, Sophia nodded faintly, suppressing a cough as she followed inside.</p>
@@ -2329,7 +2409,7 @@
                 <p>Evelyn shot her a cold glare.</p>
                 <p>For the sake of a marriage, she would let Sophia humble herself like this?</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Sophia didn&#39;t notice their exchange. She suppressed another cough and simply sat down.</p>
                 <p>Margaret sneered. &#34;Such fine upbringing, Mrs. Ashcroft. I hear Evelyn Ross is the love child you raised? No wonder she lacks any manners!&#34;</p>
                 <p>Sophia looked up with a gentle smile. &#34;Evelyn was indeed raised by me. Thank you for the compliment, Mrs. Vance.&#34;</p>
@@ -2341,7 +2421,7 @@
                 <p>Sophia turned to Evelyn and Isabella. &#34;You two, go take a walk outside.&#34;</p>
                 <p>Evelyn glanced at her with concern, but ultimately rose and left.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Isabella followed, her face beaming with joy.</p>
                 <p>They stood on the empty grounds outside the living room.</p>
                 <p>Evelyn kept looking back toward the house.</p>
@@ -2353,7 +2433,7 @@
                 <p>Isabella said triumphantly, &#34;Then let me tell you what a real mother feels for her daughter. I went home crying today. My mother&#39;s heart ached for me. She insisted on coming here to plead for me.&#34;</p>
                 <p>Evelyn retorted angrily, &#34;The Vance family is the wealthiest in San Francisco! What could Madam possibly offer to plead with?!&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Isabella&#39;s eyes turned dark and vicious. &#34;If she has nothing to offer, then she can kneel and kowtow! She&#39;ll kneel until Mrs. Vance agrees!&#34;</p>
                 <p>&#34;You...!&#34;</p>
                 <p>&#34;Evelyn Ross, let me say it again. She is my mother! Everything she does for me is her duty! You said you don&#39;t owe me? Then let me make you face reality!&#34;</p>
@@ -2365,7 +2445,7 @@
                 <p>Evelyn had no right to interfere.</p>
                 <p>A profound sense of helplessness washed over her.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>She had considered all the ways Isabella might salvage her engagement, but never imagined she would drag her frail, ill mother into this.</p>
                 <p>Evelyn took a step back, her worried gaze returning to the living room.</p>
                 <p>Half an hour later, Sophia emerged.</p>
@@ -2380,7 +2460,7 @@
                 <p>She had seen the paternity test for the child in Linda Lowell&#39;s womb herself. There was no mistake.</p>
                 <p>Evelyn was momentarily stunned. &#34;I truly am not...&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

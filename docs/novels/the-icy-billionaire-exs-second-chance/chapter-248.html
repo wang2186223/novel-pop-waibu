@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,7 +2390,7 @@
                 <p>She&#39;d been so absorbed in work that she&#39;d forgotten to visit her mother&#39;s grave.</p>
                 <p>Without Gwendolyn&#39;s reminder, Memorial Day might have completely slipped her mind.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Adrian glanced at Vivian. &#34;You&#39;re in charge of household matters. Discuss it with her.&#34;</p>
                 <p>Vivian spoke softly, maintaining her composure. &#34;Take the week. Message me if you need more time.&#34;</p>
                 <p>&#34;Thank you, Mr. and Mrs. Blackwood,&#34; Gwendolyn replied quickly.</p>
@@ -2320,7 +2400,7 @@
                 <p>After Catherine&#39;s death, Richard had been preoccupied with his new wife, leaving funeral arrangements to Eleanor, who had taken Catherine&#39;s ashes home.</p>
                 <p>&#34;I have business there. I&#39;ll accompany—&#34; Adrian began, interrupted by his ringing phone.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>His hesitation was evident as he looked at Vivian.</p>
                 <p>Vivian instantly recognized Serena&#39;s call. She turned away, continuing her meal. The lightly seasoned dishes perfectly suited Adrian&#39;s taste—another reminder of how Gwendolyn catered to his preferences.</p>
                 <p>Adrian hesitated before answering.</p>
@@ -2330,7 +2410,7 @@
                 <p>His response was cool and distant. &#34;Serena, the Emberglow County development has sparked interest in neighboring areas. I need to assess renovation potential. I&#39;ll send you a card—buy whatever you like. I&#39;ll arrange company for you.&#34;</p>
                 <p>Vivian stabbed a shrimp with unnecessary force, biting into it as if it were Adrian himself.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>As Gwendolyn passed by, she muttered just loud enough to hear, &#34;Mr. Blackwood is always so generous with Ms. Whitmore. She must be drowning in money by now.&#34;</p>
                 <p>Vivian caught the barbed comment, wondering if it was directed at her.</p>
                 <p>Not that it mattered.</p>

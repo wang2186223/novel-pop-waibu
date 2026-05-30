@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,25 +2391,25 @@
                 <p>Ethan gave her fingertips an approving squeeze. &#34;You&#39;ve always been good at charming elders.&#34;</p>
                 <p>As the car door opened, Sophia wobbled in her heels.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>His strong arm steadied her waist. Amusement flickered in his eyes. &#34;Can&#39;t even stand properly. Want me to carry you in?&#34;</p>
                 <p>Before she could retort, she spotted the housekeeper approaching from the villa entrance.</p>
                 <p>Instantly, she pitched her voice into a sugary tone. &#34;I&#39;m just not used to wearing heels~&#34;</p>
                 <p>The corner of Ethan&#39;s mouth lifted as he pulled her closer.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Their intimate posture made the housekeeper beam. &#34;Mr. Roscente brought his girlfriend!&#34;</p>
                 <p>&#34;Margaret.&#34; Ethan nodded in greeting.</p>
                 <p>A booming shout came from inside: &#34;You brat! Did you crawl here?&#34;</p>
                 <p>Without missing a beat, Ethan replied, &#34;If you&#39;re in a hurry, I can book you a prime burial plot right now.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;You little—!&#34; Dr. Xavier&#39;s beard quivered with indignation before he turned to Sophia with grandfatherly warmth. &#34;Don&#39;t mind him, dear. This rascal&#39;s needed discipline since childhood.&#34;</p>
                 <p>Sophia stifled a laugh. The spirited old man before her bore no resemblance to the stern medical authority she&#39;d imagined.</p>
                 <p>&#34;Hello, Dr. Xavier. I&#39;m Sophia Lowell.&#34; She offered a demure greeting, presenting a gift box. &#34;A small token of my respect.&#34;</p>
                 <p>The doctor accepted it cheerfully. &#34;Such a thoughtful girl! Unlike certain people who show up empty-handed and still call themselves my student!&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>The &#34;certain person&#34; massaged his temples in resignation.</p>
                 <p>Sophia shot Ethan a smug blink.</p>
                 <p>Dr. Xavier suddenly frowned. &#34;Dear, your complexion is off.&#34; His sharp gaze scanned her. &#34;Have you been fatigued lately?&#34;</p>
@@ -2342,7 +2422,7 @@
                 <p>&#34;Better be!&#34; Satisfied, the doctor tugged Sophia toward the sitting room. &#34;Come keep an old man company.&#34;</p>
                 <p>Over her shoulder, Sophia stuck out her tongue at Ethan, earning a warning look. The warmth of their interlaced fingers still lingered—this performance was only beginning.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

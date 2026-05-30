@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,21 +2392,21 @@
                 <p>All eyes froze when Evelyn Laurent returned dragging four thick tree trunks.</p>
                 <p>Rachel Clemenson&#39;s nails dug deep into her palms.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>She stared at the trees, lips twisting into a sneer. &#34;The production crew must be working overtime.&#34;</p>
                 <p>Leo Clemenson immediately caught her drift. &#34;Sis, connections are everything these days. Regular folks like us should know our place.&#34;</p>
                 <p>Crystal Rothschild frowned. &#34;Stop spreading rumors. The cameras are rolling.&#34;</p>
                 <p>&#34;So what?&#34; Rachel raised her voice. &#34;With today&#39;s editing technology, who knows what&#39;ll end up on screen?&#34;</p>
                 <p>She deliberately glanced toward the cameras, already imagining the trending hashtags.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Hugo Rothschild&#39;s gaze turned glacial.</p>
                 <p>&#34;Brains are useful things.&#34; His thin lips barely moved. &#34;Pity you lack them.&#34;</p>
                 <p>Rachel&#39;s face stiffened. &#34;Hugo—&#34;</p>
                 <p>&#34;Don&#39;t call me that.&#34; His voice cut like ice. &#34;It disgusts me.&#34;</p>
                 <p>Leo jumped up. &#34;What&#39;s that supposed to mean?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Exactly what I said.&#34; Hugo&#39;s smile was arctic. &#34;The air turns foul around you.&#34;</p>
                 <p>He turned to pull Crystal away. &#34;We&#39;re switching teams.&#34;</p>
                 <p>&#34;You can&#39;t!&#34; Rachel shrieked. &#34;The director won&#39;t allow it!&#34;</p>
@@ -2340,7 +2420,7 @@
                 <p>Rachel immediately straightened, projecting her voice. &#34;Don&#39;t get cocky! The audience sees everything!&#34;</p>
                 <p>Hugo paused mid-step.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>He turned, eyes colder than glacial ice. &#34;One more word against her...&#34;</p>
                 <p>The unspoken threat hung heavy in the air.</p>
                 <p>Rachel involuntarily stepped back.</p>
@@ -2349,7 +2429,7 @@
                 <p>&#34;Shut up!&#34; Rachel hissed through clenched teeth. &#34;Let&#39;s see how long she can keep up this act!&#34;</p>
                 <p>Her venomous gaze locked onto Evelyn&#39;s retreating figure, eyes burning with malice.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

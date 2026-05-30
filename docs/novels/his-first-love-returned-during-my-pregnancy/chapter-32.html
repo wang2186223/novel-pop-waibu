@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,7 +2392,7 @@
                 <p>Evelyn had her reasons. Margaret had treated her like a daughter, and she cherished that bond. But she refused to keep anything from the Hamiltons. A blunt return would hurt the older woman, so she chose to express gratitude in her own way.</p>
                 <p>The deliveryman arrived as Vivian lounged on the couch scrolling through her phone.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>She suddenly snorted in derision.</p>
                 <p>Evelyn glanced up from studying real estate listings. &#34;What&#39;s wrong?&#34;</p>
                 <p>&#34;Nathan York,&#34; Vivian growled through clenched teeth. &#34;Just messaged me out of nowhere.&#34;</p>
@@ -2326,21 +2406,21 @@
                 <p>The day Alexander reverted to his cloud avatar, Evelyn had deleted him without hesitation.</p>
                 <p>&#34;Figures.&#34; Vivian smirked. &#34;Now he&#39;s reduced to stalking you through my feed. Classic Nathan—screws up even that.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Evelyn returned to her property research. &#34;Or maybe someone has a crush on you.&#34;</p>
                 <p>Vivian rolled her eyes. &#34;Then why panic-delete the message?&#34;</p>
                 <p>Minutes later, she thrust her phone forward. &#34;See for yourself.&#34;</p>
                 <p>The chat log showed Nathan&#39;s awkward greeting after the deleted screenshot.</p>
                 <p>Vivian cackled. &#34;Worst cover story ever.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Evelyn focused on her tablet&#39;s real estate data. Buying a home required thorough research.</p>
                 <p>&#34;Evelyn.&#34; Vivian rested a hand on her shoulder. &#34;Alexander... he still cares about you.&#34;</p>
                 <p>A faint smile touched Evelyn&#39;s lips. &#34;That &#39;care&#39; changes nothing. Time will fade it all.&#34;</p>
                 <p>&#34;But the baby—&#34;</p>
                 <p>&#34;Vivian,&#34; Evelyn interrupted, &#34;what exactly did you post earlier?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Just a handbag photo.&#34; Vivian shrugged. &#34;Nothing related to you.&#34;</p>
                 <p>Evelyn nodded. &#34;Post something new for me.&#34;</p>
                 <p>&#34;Sure.&#34; Vivian winked. &#34;Might as well use Nathan as our messenger pigeon.&#34;</p>
@@ -2351,7 +2431,7 @@
                 <p>This was a silent nudge—a reminder for Alexander to sign and return them promptly.</p>
                 <p>&#34;Got it.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

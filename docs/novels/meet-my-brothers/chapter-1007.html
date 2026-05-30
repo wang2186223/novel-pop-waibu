@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,30 +2389,30 @@
                 <p>After all, Luna was only acting the way she was now because Raymond agreed to adopt Asher, which granted her grandeur in return.</p>
                 <p>If the Shelberts agreed to adopt Asher only, Luna would lose her leverage. Raymond desired a boy as his successor, and it&#39;d be best for him if the Shelbert family was willing to accept the child. It would be a breeze for him to take a child away in Nord City.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Mia felt a little sympathy for Asher. Ever since he was born, Luna had used him as a bargaining chip for her own benefit. She came to the Barrett family first, and now she&#39;d turned to Raymond once the Barretts appeared unreliable.</p>
                 <p>When Mia left the mall, Peyton approached her and said, &#34;Yellow Island has already sent someone over to deal with the situation, and Mr. Dominic&#39;s assistant has gone to handle it. Do you want to contact Mr. Dominic and discuss how to handle this? Yellow Island is a sensitive topic, after all.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;I know. I&#39;ll go home later tonight.&#34;</p>
                 <p>Mia knew trouble was inevitable after she got into a conflict with the Yellow Islanders. Dominic would definitely intervene by then, but she was unfazed. Louisa had caused such a huge scene at the research institute that day, so how could she stand by and let her disrupt the staff&#39;s routine?</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Sage&#39;s treatment depended on the research institute, after all.</p>
                 <p>Mia noticed Ginger was making some handicrafts when she arrived home. Surprised, she went up to her and asked, &#34;What are you doing, Ginger?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Sage is coming back to school with me next month. I&#39;m going to make some gifts for him to give to my teachers and classmates, so he can get close to them. Then, he&#39;ll have friends too.&#34;</p>
                 <p>Ginger beamed at her. It was the first time Mia saw her being this attentive in making handicrafts.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Stroking Ginger&#39;s head, Mia said, &#34;With you around Sage, he&#39;ll definitely have friends in kindergarten. I don&#39;t have to worry because you&#39;ll protect him.&#34;</p>
                 <p>&#34;Of course you don&#39;t have to worry, Mommy! I&#39;ll take good care of Sage.&#34;</p>
                 <p>Eve chuckled. &#34;Ever since Ginger found out the exact date Sage is returning to kindergarten, she has been insisting on preparing gifts. She didn&#39;t go out to play all afternoon today. Instead, she has been making gifts in the living room. She didn&#39;t ask for help from others either.&#34;</p>
                 <p>Ginger has always been pampered by everyone in the Lane family, and even the maids doted on her. There would always be people assisting her if she were to do something. Her past creations used to be crooked, and the maids always helped her perfect her handicrafts. However, she didn&#39;t let anyone help her this time.</p>
                 <p>Casting a benevolent look at Ginger, Mia remembered that Sage only agreed to attend kindergarten after hearing Ginger boast about having a brother. He didn&#39;t want to disappoint her.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

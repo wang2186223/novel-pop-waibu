@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>At Maya’s words, Mia raised her eyebrows slightly. There was something strangely familiar about</p>
                 <p>Maya’s remark.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Timothy had previously expressed a similar sentiment about Mia and Connor not being a suitable</p>
                 <p>match.</p>
                 <p>Of course, Mia and Connor weren’t compatible–they were siblings! The idea of them being</p>
@@ -2323,7 +2403,7 @@
                 <p>assuming they were a couple.</p>
                 <p>If that were indeed the case, handling the situation would be much easier.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>With a sly smile, Mia remarked, “Maya, don’t you think you’re meddling a bit too much?“.</p>
                 <p>“Very well, I’ll speak with Connor directly to clarify matters. Then you’ll realize if I’m truly meddling,</p>
                 <p>”</p>
@@ -2332,7 +2412,7 @@
                 <p>determined to prevent her from reaching Connor.</p>
                 <p>Frustrated, Maya demanded, “Let go!”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>“I won’t!” Pressing Maya’s shoulders, Mia forcefully pinned her against the wall, rendering her unable to move.</p>
                 <p>Their proximity was uncomfortably close.</p>
                 <p>+15 BONOS</p>
@@ -2341,7 +2421,7 @@
                 <p>Suddenly, a cold voice broke their confrontation. “What’s going on here?”</p>
                 <p>Mia glanced over to see Timothy and Sharon nearby, though she couldn’t shake the sense of</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>ambiguity in their gazes.</p>
                 <p>Timothy’s expression turned grim as he demanded, “Aren’t you going to let go?”</p>
                 <p>Observing the two women closely, with Mia pressing Maya against the wall, their positions seemed oddly intimate from a distance.</p>
@@ -2350,7 +2430,7 @@
                 <p>Upon spotting Sharon, Maya swiftly adopted a pitiable expression. “Mrs. Barrett, I have no idea what Ms. Bowen wants from me. She suddenly restrained me and wouldn’t let go. She even hurt my hand!”</p>
                 <p>Mia immediately let go and responded with a cheerful expression, “I was simply teasing Ms. Lane,</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>that’s all.”</p>
                 <p>Sharon looked up. “Is it appropriate to play such a prank on Ms. Lane? Tim, you witnessed it</p>
                 <p>firsthand!”</p>
@@ -2362,7 +2442,7 @@
                 <p>Mia was taken aback and stared incredulously at Maya. “Please tell me, when did your moral compass go astray?”</p>
                 <p>When exactly did Mia behave inappropriately?</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

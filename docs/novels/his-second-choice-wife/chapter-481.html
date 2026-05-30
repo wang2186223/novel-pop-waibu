@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,31 +2391,31 @@
                 <p>&#34;Pity? Doesn&#39;t he have Victoria by his side? Save your pity for me,&#34; Evelyn replied with a bitter twist of her lips.</p>
                 <p>Rosalind tightened her grip around Evelyn&#39;s arm and rested her head against her shoulder. &#34;You&#39;ll always have me.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Yes, I have you—the incomparable Rosalind,&#34; Evelyn managed a small smile. &#34;Evelyn, I&#39;ve been doing some research. It&#39;s completely normal not to show much during mid-pregnancy. The bump will become more pronounced later. Hiding it from General Blackwood won&#39;t work forever.&#34;</p>
                 <p>&#34;Why not tell him the truth when the time&#39;s right? We could return to Aldenria during your pregnancy if you&#39;re worried about Victoria harming the baby,&#34; Rosalind suggested.</p>
                 <p>Evelyn fell into deep contemplation.</p>
                 <p>The next morning, Evelyn returned to her work in the research department. Theodore Graves slammed a stack of documents in front of her. His usual unpleasant demeanor remained, though his words carried a different tone.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;These are all Team B&#39;s current projects. Pick whichever you want to join.&#34; Evelyn blinked in surprise at his uncharacteristic offer.</p>
                 <p>&#34;You&#39;ve already reported to General Blackwood. Why pretend otherwise?&#34; Theodore sneered.</p>
                 <p>Evelyn gently pushed the papers aside. &#34;That won&#39;t be necessary. I have my own research priorities. I don&#39;t have bandwidth for additional projects now.&#34;</p>
                 <p>Theodore snorted and snatched back the documents. His eyes raked over her with undisguised contempt before muttering, &#34;Just another privileged connection hire leaching off the system.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Evelyn&#39;s expression darkened. She clenched her jaw and shot him a furious glare.</p>
                 <p>Theodore stalked away with visible disdain.</p>
                 <p>Taking a steadying breath, Evelyn placed a protective hand over her stomach, forcing herself to swallow both her anger and the humiliation.</p>
                 <p>She&#39;d been occupied all morning. Her colleagues remained oblivious to the nature of her research, only noticing her frequent trips to the restroom. To them, she hardly appeared focused on work.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>By early afternoon, hunger weakened Evelyn. Rosalind arrived with snacks to tide her over. While others worked through lunch, Evelyn headed to the cafeteria with Rosalind.</p>
                 <p>As they entered, a figure came barreling toward them, colliding with Evelyn&#39;s shoulder. Startled, Evelyn stumbled backward.</p>
                 <p>Rosalind reacted instantly, wrapping an arm around Evelyn&#39;s waist to steady her.</p>
                 <p>The collision sent a lunchbox tumbling to the floor, its contents spilling across the tiles. Evelyn looked up at the person who&#39;d bumped into her, her pulse racing.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>It was Victoria.</p>
                 <p>Rosalind&#39;s temper flared. &#34;Watch where you&#39;re going! Are you blind?&#34;</p>
                 <p>Victoria showed no remorse. &#34;I was in a hurry to bring lunch to Liam. It was an accident—no harm done. Though you&#39;ve ruined my lunch now.&#34;</p>
@@ -2344,7 +2424,7 @@
                 <p>Evelyn quickly dropped her hands when she noticed Victoria&#39;s curious stare.</p>
                 <p>&#34;You&#39;re pregnant?&#34; Victoria&#39;s voice rang with shock.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

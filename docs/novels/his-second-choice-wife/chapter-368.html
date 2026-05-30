@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,33 +2390,33 @@
                 <p>Evelyn&#39;s breath hitched. &#34;How many went with him?&#34;</p>
                 <p>&#34;A dozen elite operatives. Adrian Castillo joined them.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;That makes no sense!&#34; Evelyn&#39;s voice cracked. &#34;When Dominic sold me to the border traffickers, Liam mobilized an entire battalion with air support!&#34;</p>
                 <p>Ryan shook his head grimly. &#34;Different situation, Ms. Wright. That was within our borders. Obsidian Circle&#39;s base is in Valtoria - foreign soil. Any military incursion would trigger their missile defenses.&#34;</p>
                 <p>Understanding dawned on Evelyn. She clutched Ryan&#39;s sleeve desperately. &#34;Let me go after him.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Absolutely not.&#34; Ryan pulled away sharply.</p>
                 <p>Evelyn blocked his path. &#34;I&#39;m begging you, Ryan.&#34;</p>
                 <p>He rubbed his temples in frustration. &#34;You&#39;re not trained for combat. How exactly would you rescue a Special Forces commander? You&#39;d just become another liability.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;But—&#34;</p>
                 <p>&#34;I only told you this because I need you to stay here and wait.&#34; Ryan&#39;s voice softened. &#34;If...if the General doesn&#39;t make it back, at least you&#39;ll have the chance to—&#34;</p>
                 <p>The word &#34;dead&#34; struck Evelyn like a physical blow. A sharp pain radiated through her chest as silent tears traced down her cheeks.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>As Ryan departed with the prison convoy, Evelyn numbly approached Rosalind Baskins&#39; waiting car.</p>
                 <p>&#34;Any news?&#34; Rosalind asked urgently as Evelyn slid inside.</p>
                 <p>&#34;Nothing.&#34; Evelyn stared blankly ahead as the car accelerated. After a long silence, she whispered with sudden conviction, &#34;He&#39;s at Obsidian Circle&#39;s base. I know it. And he&#39;s still alive.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Rosalind&#39;s grip tightened on the wheel. &#34;Evelyn, I won&#39;t let you risk your life on some suicide mission.&#34;</p>
                 <p>Evelyn leaned back, closing her eyes. Her mind raced with rescue plans.</p>
                 <p>Days later in Aldenria, news arrived that the researchers had been safely exchanged - but with no word of Liam. Obsidian Circle had taken Julian but left Evelyn behind, proving Julian&#39;s importance to their organization.</p>
                 <p>Despite Rosalind and Ryan&#39;s vehement protests, Evelyn quietly purchased a one-way ticket to Valtoria. She would find Liam Blackwood or die trying.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>Inside the comfort of Wyatt&#39;s car, Amelia learned that the Stewart Group&#39;s headquarters was nearby.</p>
                 <p>&#34;Miss Flynn, is there something important that brought you here today?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Wyatt&#39;s deep voice filled the space between them as the car pulled away, his question revealing an unexpected trace of concern to Amelia.</p>
                 <p>Thinking about the scene earlier, Wyatt couldn&#39;t shake the ache that settled in his chest.</p>
                 <p>The person he cared deeply about, with reddened eyes, had brought coffee to her lips with a trembling hand. That was a sight he never wanted to see again. Something about Wyatt&#39;s steady presence made Amelia feel reassured.</p>
@@ -2321,7 +2401,7 @@
                 <p>After Katrina&#39;s passing, Laura had been rather kind to her,and Amelia felt grateful for it.</p>
                 <p>However, after today, she felt she owed nothing to the Morrison family.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Wyatt, however, picked up on the missing pieces in her story. Everything he knew about Amelia told him she wouldn&#39;t be like this because of a difficult job search alone.</p>
                 <p>But since Amelia didn&#39;t wish to elaborate, he didn&#39;t press further.</p>
                 <p>It was only after Amelia finished speaking that she remembered an important matter: she was about to marry Wyatt.</p>
@@ -2329,7 +2409,7 @@
                 <p>A heavy feeling crept over her when she thought about that.</p>
                 <p>Just then, Wyatt&#39;s voice cut through her anxiety with a gentle question. &#34;Have you ever thought about working for the Stewart Group?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Shock filled Amelia&#39;s eyes as she stared at the man beside her.</p>
                 <p>With a small cough, Wyatt continued, &#34;Your achievements at Kretol University haven&#39;t gone unnoticed. If you&#39;re interested, the Stewart Group could use someone like you. In fact, I need a secretary, and there happens to be an opening.&#34;</p>
                 <p>From the front seat, Davin saw Wyatt&#39;s serious demeanor through the rearview mirror, and the corners of his mouth twitched.</p>
@@ -2337,7 +2417,7 @@
                 <p>Wyatt&#39;s words brought a hint of delight to Amelia&#39;s eyes.</p>
                 <p>Landing a role at the Stewart Group was every job seeker&#39;s dream. Yet, as her excitement faded, Amelia felt a wave of hesitation.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Working as Wyatt&#39;s secretary would be no easy task,and with two years away from the workforce,her confidence wavered. Was she up for the task?</p>
                 <p>&#34;Should you be interested, Miss Flynn, you&#39;re welcome to a month-long trial. At the end of your internship, whether you want to stay or not is entirely your choice,&#34; Wyatt said.</p>
                 <p>Some of Amelia&#39;s unease slipped away with that proposal. The last thing she wanted was for others to believe she&#39;d coasted on family ties.</p>
@@ -2345,7 +2425,7 @@
                 <p>&#34;Miss Flynn, the Stewart Group provides the best benefits in Kretol. Even during the trial period, the base salary for Mr. Stewart&#39;s secretary is twenty thousand, with triple pay for regular overtime and quintuple pay for holidays,&#34; Davin said.</p>
                 <p>&#34;You talk too much,&#34; Wyatt scolded, but his glance at Davin carried a hint of approval, as if saying, &#34;Well done.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Wyatt&#39;s mention of a trial period had already swayed Amelia&#39;s decision, and Davin&#39;s words only made her want to accept the offer more.</p>
                 <p>Considering the road ahead, Amelia decided to be honest.&#34;Mr.Stewart, after our marriage, I still want to keep working. Will you support that?&#34;</p>
                 <p>&#34;Miss Flynn, do you remember our conversation at Hillside Villa?&#34; Wyatt said.</p>
@@ -2358,7 +2438,7 @@
                 <p>Watching from the front, Davin saw the big pile of certificates and suddenly felt pressured himself.</p>
                 <p>Amelia waited, nerves fluttering, until Wyatt set aside the resume, turned to her, and reached out his hand with a warm smile. &#34;Miss Flynn, I have great confidence in your abilities. You can join the Stewart Group.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

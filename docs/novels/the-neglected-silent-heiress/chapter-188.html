@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2325,7 +2405,7 @@
                 <p>Malice lurked beneath Evelyn&#39;s flawless smile and polished beauty.</p>
                 <p>Olivia knew accepting this token was impossible.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Forcing a polite smile, Olivia gracefully declined the jewelry.</p>
                 <p>Evelyn feigned hurt, her expression crumbling. &#34;Why won&#39;t you accept it? Are you still angry with me? Today&#39;s my special day, and while I don&#39;t understand why those people targeted you, Olivia, you must see my perspective. I knew it - you loathe me. Perhaps I deserve that.&#34;</p>
                 <p>Onlookers couldn&#39;t resist commenting.</p>
@@ -2335,7 +2415,7 @@
                 <p>Isabella Rossi cleared her throat calmly. &#34;Miss Hartley, please understand Olivia recognizes this as a misunderstanding. She bears no ill will. This pendant symbolizes your connection with Mr. Blackwood. Though they remain legally married, Olivia genuinely wishes you both happiness. However, given their unresolved marital status, this places her in an awkward position.&#34;</p>
                 <p>Olivia played along, her voice catching as she typed on her phone: &#34;It&#39;s fine. I don&#39;t believe Miss Hartley meant any harm. I hope she and Liam find fulfillment together. While certain matters between Mr. Blackwood and I require resolution, Miss Hartley, you needn&#39;t worry. I&#39;ll expedite the divorce proceedings.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Evelyn&#39;s perfect smile nearly faltered.</p>
                 <p>A quiet giggle rippled through the crowd as Olivia secretly congratulated herself on her acting skills.</p>
                 <p>The guests began regarding Evelyn differently, their expressions shifting noticeably.</p>
@@ -2345,7 +2425,7 @@
                 <p>&#34;Miss Hartley has apologized. Will you still hold her accountable?&#34;</p>
                 <p>Olivia studied Julian, perplexed. They&#39;d never had conflicts before, and he&#39;d always been courteous. What had changed today?</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Evelyn voiced Olivia&#39;s silent question.</p>
                 <p>Evelyn aligned herself with Julian, saying, &#34;Mr. Hawthorne, I thought you and Olivia were close. What&#39;s caused this sudden change? Did you witness what transpired earlier? It was merely a misunderstanding. Olivia would never steal another&#39;s husband.&#34;</p>
                 <p>Julian scoffed. &#34;Misunderstanding or not, I wouldn&#39;t put it past her.&#34;</p>
@@ -2355,7 +2435,7 @@
                 <p>It was common knowledge the Whitmores consistently supported Olivia, with Alexander frequently appearing as her public champion.</p>
                 <p>For Julian, also a Whitmore, to display such open contempt for Olivia suggested deeper complexities.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>The crowd&#39;s curiosity intensified, their attention riveted on Julian, eager for revelations.</p>
                 <p>Evelyn turned to Julian in pretended mediation. &#34;You were once friends. If there&#39;s been some misunderstanding, why not discuss it with Olivia? Better to part amicably.&#34;</p>
                 <p>Julian responded sharply, his icy stare fixed on Olivia. &#34;There&#39;s nothing left to say.&#34;</p>
@@ -2365,7 +2445,7 @@
                 <p>Evelyn caught Julian&#39;s attention with a subtle gesture.</p>
                 <p>Understanding her cue, Julian raised his voice. &#34;Running away because you fear I&#39;ll expose your secrets?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

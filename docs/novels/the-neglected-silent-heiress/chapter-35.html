@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,27 +2390,27 @@
                 <p>Marcus summoned Gregory to inspect her work. The master restorer examined every angle through his loupe before breaking into a proud smile. His hands moved in quick, approving gestures - &#34;Natural talent,&#34; they said. &#34;Just like when I first discovered you.&#34;</p>
                 <p>Olivia ducked her head, signing her gratitude for his mentorship. The personal seal Gregory pressed into the velvet box lid marked his official approval - and her professional triumph.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Ensure you personally deliver this tomorrow,&#34; Marcus instructed as she packaged the finished piece.</p>
                 <p>When Victoria arrived the next day, her crimson lips curled in a smile that didn&#39;t reach her eyes. She accepted the box with careless grace, as if holding a winning card.</p>
                 <p>That evening, Olivia returned Liam&#39;s bracelet to his study, certain he wouldn&#39;t notice. But as she prepared for bed, the bedroom door swung open. Water droplets glistened on Liam&#39;s bare chest where his robe gaped open.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>He tossed the bracelet onto the duvet. &#34;Explain.&#34;</p>
                 <p>Olivia signed that she no longer needed the reference piece.</p>
                 <p>Liam&#39;s jaw tightened. &#34;Keep it.&#34; The words came out gruff, almost reluctant.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>She stored it in her nightstand, determined to return it after the divorce. Then Liam dropped another bombshell - an embossed invitation fluttered onto the bed.</p>
                 <p>&#34;The Whitmore gala. You&#39;re attending.&#34;</p>
                 <p>Olivia&#39;s stomach knotted as she read William Hayes&#39; birthday celebration details. Why would Liam want her there after last time&#39;s disaster?</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>On the evening of the event, Olivia chose an understated navy gown. Even with her eyes downcast, she felt the weight of curious stares as they entered the grand ballroom. The whispers were more subdued this time, the greetings politely restrained.</p>
                 <p>The ceremony began with family tributes. Victoria took center stage, the golden child basking in attention. Then she presented a familiar velvet box.</p>
                 <p>&#34;Grandfather, our ancestral bracelet - restored to honor you today.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Olivia&#39;s blood ran cold when she saw the broken seal. As William opened the box, her worst fears materialized - deep scratches marred the once-pristine surface.</p>
                 <p>Victoria&#39;s triumphant gaze locked onto Olivia&#39;s across the room.</p>
                 <p>The trap had sprung.</p>

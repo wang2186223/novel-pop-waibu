@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2315,7 +2395,7 @@
                 <p>&#34;Are there any photos from when she and Roderick were together?&#34;</p>
                 <p>&#34;Sadly, no. It was quite surprising when I couldn&#39;t even find any old pictures of her. Turned out Lyric wasn&#39;t fully involved with her family before now. I don&#39;t know why, but she didn&#39;t take pictures of herself.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Well, that&#39;s strange.Who wouldn&#39;t have pictures of themselves?</p>
                 <p>&#34;And what about the death of a loved one?&#34; I asked.</p>
                 <p>Nerion shook her head. &#34;The last time she lost someone important was when she was six years old when her mother died. And I confirmed that the woman was buried and never incinerated. Since then, she hasn&#39;t lost anyone important to her.&#34;</p>
@@ -2325,7 +2405,7 @@
                 <p>Suddenly vanished? That didn&#39;t make any sense.</p>
                 <p>&#34;I need to know where she&#39;s been, Nerion. Find out everything you can on her from the last five years.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>I didn&#39;t know why, but I couldn&#39;t help but feel that something was missing from her.</p>
                 <p>LYRIC</p>
                 <p>I kept Xyla company until her brother came awake. I&#39;dalso intentionally stayed behind because I wanted to make sure the boy was fine enough for me to leave.</p>
@@ -2335,7 +2415,7 @@
                 <p>He didn&#39;t strike me like someone that stammered. I think he was just scared of speaking. Why was he so scared?</p>
                 <p>&#34;I did. And now, I need a gift from you.&#34; I beamed at him, lightly massaging his scalp.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>He looked intrigued.&#34;Help?&#34;</p>
                 <p>&#34;Yes. And that will be you telling me what you want to eat.&#34;</p>
                 <p>His nanny said he hardly ate, especially after an epistle. Something about him being too sad to eat. He lowered his eyes from mine, not saying a word.</p>
@@ -2355,7 +2435,7 @@
                 <p>&#34;Why?&#34; This time, it was Xyla who asked.</p>
                 <p>I&#39;d have actually loved to work in a hospital, but after what happened three years ago, I wasn&#39;t sure I wanted to get into more trouble.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Xylon scribbled down on his tablet. &#34;A lot of people are suffering, Aunty. I go to the hospital most of the time, and I see people worse than me. If you can help them, it&#39;d be really nice.&#34; His words left my heart in fragments. How touching that he was more concerned about others in his condition. With the pain he was going through, he must feel really bad that they went through worse.</p>
                 <p>&#34;Will you do it, Aunty? You&#39;d be helping a lot of people,&#34; Xyla winked at me.</p>
                 <p>I chuckled.</p>
@@ -2365,7 +2445,7 @@
                 <p>Woah!</p>
                 <p>&#34;Thank you, Aunty. I had a good feeling about you the first day I saw you.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

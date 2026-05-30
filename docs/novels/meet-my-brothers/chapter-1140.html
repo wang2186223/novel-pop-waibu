@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,21 +2391,21 @@
                 <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Ultimately, it&#39;s all for Asher&#39;s benefit. As his mother, I trust you can understand, right?&#34; Portraying oneself as the innocent victim-it seemed that skill had becuniversal, hadn&#39;t it? Once upon a time, Jasmine would have looked down upon such tactics, but strangely, witnessing Luna&#39;s frustration now brought her a sense of satisfaction.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Ever since Luna&#39;s arrival, their family dynamic had been thoroughly disrupted.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>It was tfor Luna to experience a taste of her own medicine.</p>
                 <!-- 广告位 4 -->
                 <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Jasmine, keep your mouth shut! Don&#39;t think for a second that I&#39;m unaware of your intentions. You&#39;re trying to forceout so you can manipulate Asher more easily, aren&#39;t you? &#34;Well, keep dreaming. I won&#39;t give up!&#34; Luna shot back, feeling utterly deceived at that moment.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Turning to Raymond, she pressed on, &#34;Dad, remember our agreement? We made a deal that Asher would be considered your grandson, but only if I remained part of the Shelbert family.</p>
                 <p>&#34;Now that you wantgone, that agreement no longer holds. If I leave, I&#39;m taking Asher with me!&#34; Interrupting sternly, Irene interjected, &#34;Take the child for all I care! To you, he&#39;s just a pawn for your benefit, isn&#39;t he? It&#39;s no surprise he hasn&#39;t learned any good values under your care. With a mother like you, can he ever truly thrive?&#34; Raymond&#39;s brow furrowed as he addressed Luna, &#34;Asher&#39;s adoption paperwork is already finalized. He&#39;s legally my grandson now, and you don&#39;t have the authority to take him away.&#34; &#34;That&#39;s not true. As Asher&#39;s mother, I have the right to take him withif I choose to leave. If you continue to pressure me, I&#39;ll have no choice but to escalate this matter to the media. Let the public decide. A mayor like you competing withover a child. Let&#39;s see whose side they take.&#34; &#34;Luna, are you seriously threatening me? &#34;Dad, it&#39;s not a threat. You were the one who broke your promise first. We both agreed that Asher would remain in the Shelbert family, and would too. It was your decision to acquiesce to their demands and attempt to pushaside. How is this my fault?&#34; Indeed, Luna was prepared to risk everything at this crucial moment.</p>
                 <p>.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

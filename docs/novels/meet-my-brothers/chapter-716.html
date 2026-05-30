@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>While the investigation revealed little about Luna’s relationship with Timothy, it was evident that Luna, along with Asher, had been living in the Barrett residence.</p>
                 <p>Indeed, their relationship appeared to be anything but ordinary.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Luna’s expression brightened with a smile. “It’s challenging for me to raise a child by myself. After a previous bad experience with a nanny, Mrs. Barrett was concerned for Asher’s well–being and arranged for a new nanny to</p>
                 <p>assist.”</p>
                 <p>Finally, Monalize inquired about Asher’s identity.</p>
                 <p>Mia raised an eyebrow. “Is Asher your son, Mr. Barrett?”</p>
                 <p>“No,” Timothy denied firmly.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Luna seemed somewhat embarrassed as she uttered, “Regardless, Asher is still part of the Barrett bloodline.”</p>
                 <p>Mia was puzzled by Luna’s statement. Despite Timothy’s denial that Asher</p>
                 <p>was his son, Luna continued to insist that he was connected to the Barce lineage.</p>
                 <p>However, Timothy was an only child!</p>
                 <p>“Oh! I’m going to beat you! I’ll keep hitting you until you’re dead! How dare you take my toy!”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Suddenly, Asher’s voice echoed nearby.</p>
                 <p>As Mia turned around, she noticed Ginger being pinned to the ground by Asher. Her expression quickly shifted, and she dashed over without hesitation. “Why are you attacking her?”</p>
                 <p>Pushing Asher aside, Mia quickly scooped Ginger up, embracing her tightly, “Ginger, are you alright? Can you let Mommy know if you’re hurt?”</p>
                 <p>Nonetheless, Ginger offered no response. She weakly leaned against Mia’s chest before slipping into unconsciousness.</p>
                 <p>Mia’s heart raced with fear as she begged, “Ginger, please wake up, don’t scare mommy!”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Luna expressed her surprise, musing, “It seems like just a small squabble between the kids. Knowing Asher, he’s not typically that rough. Is it possible that Ginger might be suffering from some other ailment?”</p>
                 <p>Timothy sternly intervened, “Luna, keep your mouth shut!”</p>
                 <p>With that, he picked up the unconscious Ginger and cradled her in his arms. “I’ll take her to the hospital.”</p>
                 <p>Mia’s eyes reddened slightly as she glanced back at Luna, a hint of hostility in her gaze. “If anything happens to Ginger, I won’t let you off the hook.”</p>
                 <p>Luna instinctively shielded Asher behind her. Nervously, she asked, “What do you plan to do? Asher is still so young; he doesn’t grasp the situation.”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>“You’d better pray Ginger is alright!” Mia retorted as she left the lounge, leaving Luna visibly shaken.</p>
                 <p>With a pale complexion, she turned to Asher and asked, “Asher, why did</p>
                 <p>you hit Ginger, especially with Uncle Tim nearby? How many times have 1 reminded you? You need to win Uncle Tim’s favor and be on your best</p>
@@ -2352,7 +2432,7 @@
                 <p>Mia’s anxiety surged as she turned to Timothy, her tone laced with an ominous warning.</p>
                 <p>“If anything were to happen to Ginger, I would never forgive Luna and Asher. Your relationship with them means nothing to me. Mark my words.”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

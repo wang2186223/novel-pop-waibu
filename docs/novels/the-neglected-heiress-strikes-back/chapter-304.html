@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2339,7 +2419,7 @@
                 <p>Mrs. Fairhaven’s heart ached. Her precious daughter, her little princess. Her son—always dutiful, always respectful—had raised a hand against his own sister over that wretched girl?</p>
                 <p>What next? Would he disown his own mother?</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Mother! You can’t let Jareth marry Mari! If he does, our family’s reputation will be ruined! Jareth will become a laughingstock in Fairhaven Group!&#34; Edith’s voice was raw with desperation.</p>
                 <p>&#34;What do you mean?&#34;</p>
                 <p>&#34;Mari is mentally challenged! She’s autistic!&#34;</p>
@@ -2356,7 +2436,7 @@
                 <p>The night before the party, Myra was blindfolded and led into a room by Evadne and the other ladies.</p>
                 <p>&#34;What’s all this secrecy?&#34; Myra laughed.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Three! Two! One!&#34;</p>
                 <p>Evadne removed the blindfold.</p>
                 <p>Myra blinked, then gasped.</p>
@@ -2373,7 +2453,7 @@
                 <p>&#34;Suri, Aviana, don’t worry. When your birthdays come, I’ll have Haron design for you too.&#34;</p>
                 <p>Suri narrowed her eyes. &#34;Haron’s notoriously reclusive. How do you keep getting her to work for you?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>She leaned in. &#34;Evadne… is Haron another one of your aliases?&#34;</p>
                 <p>Myra and Aviana whipped their heads toward her.</p>
                 <p>&#34;What? No!&#34; Evadne laughed awkwardly. &#34;I’m already Alea. I can’t be Haron too. I’m not magic.&#34;</p>
@@ -2390,7 +2470,7 @@
                 <p>&#34;Ms. Evadne, I’m feeling better. Thought I’d update you.&#34; Thaddeus’s deep voice was uncharacteristically warm. &#34;Next time, call me directly. No need to go through Gordon.&#34;</p>
                 <p>Her pulse quickened.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Or I’ll call you. Gladly.&#34;</p>
                 <p>&#34;Unnecessary. I’m not your doctor.&#34; She hardened her tone. &#34;You’re fine? Good. We’re done here.&#34;</p>
                 <p>&#34;Last time—thank you. Without you, my fever wouldn’t have broken so fast.&#34; His chuckle was low, intimate. &#34;You’re better than medicine.&#34;</p>

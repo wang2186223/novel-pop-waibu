@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2325,7 +2405,7 @@
                 <p>By the moon, I could swear my heart stopped beating.Jaris&#39; laugh was always the cutest. It was always deep and dark and so rich enough to savor. I didn&#39;t miss the way his Adam&#39;s apple always bobbed when he did. It was so adorable.</p>
                 <p>&#34;Mr. Dreadmoor?&#34; He repeated. Though, he&#39;d stopped laughing, but the mirth remained in his eyes. &#34;Did you seriously call me that?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>I rolled my eyes, but a smile slipped through in the end. &#34;You were mocking me!&#34;</p>
                 <p>&#34;Well,tell me,doctor Lyric. What did you expect when you were stuttering over a mere invitation to dinner?&#34;</p>
                 <p>I twisted my lips, wishing I could stop the color making its way to my cheeks. What was I saying? They&#39;d already been there from the second I opened the door to Jaris.</p>
@@ -2335,7 +2415,7 @@
                 <p>I scoffed. &#34;You really have TCH wrapped around your little finger,huh?&#34;</p>
                 <p>&#34;You&#39;d be surprised what people are willing to do for someone like me.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Geez.Such pride.</p>
                 <p>&#39;Like it doesn&#39;t send a swarm of butterflies dancing in your belly.</p>
                 <p>&#34;See you tomorrow at seven. Exactly seven. I&#39;ll be there to pick you up.&#34; He started walking away, then paused to glance back at me. &#34;I hate waiting, Lyric.&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>Before I told him about it at lunch yesterday, I&#39;d already gotten the books from Botanical Bliss.</p>
                 <p>I trusted myself. Once I&#39;ve learned to use my powers,I was only going to use it for my protection. And that&#39;d be once in a while. Or it might never even happen if danger doesn&#39;t come my way.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>When it was time for TCH, I got ready and left. Work at TCH was going smoothly. Marta was here,but fortunately, I didn&#39;t get to see her.</p>
                 <p>On my schedule, I had to inject four of my patients with Calmizol. It was a powerful wolf drug that was meant to bring them instant relief.</p>
                 <p>I watched as they peacefully went to sleep.</p>
@@ -2355,7 +2435,7 @@
                 <p>His text beeped into my phone.</p>
                 <p>JARIS:Where are you?</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>That butterfly thingy happened again. Geez</p>
                 <p>I fixed my bag and hurried out of the room. But of course, I had to meet one she-devil.</p>
                 <p>One of the rude doctors-Kayla-was at the door and gawked at me &#34;Why are you this dressed up?&#34;</p>
@@ -2366,7 +2446,7 @@
                 <p>&#34;Hi, Lyric. You look good.&#34;</p>
                 <p>Oh, to hell with suppressing my smiles. &#34;Thank you.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

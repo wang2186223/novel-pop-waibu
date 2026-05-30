@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2326,21 +2406,21 @@
                 <p>Had she always cared this much about Alexander? Liam had been so secure in her devotion that he&#39;d never noticed potential rivals. This revelation struck like a physical blow.</p>
                 <p>A cold chuckle escaped him as he addressed the room. &#34;Regarding whether Whitmore Holdings survives this crisis... I might possess crucial information.&#34; His smirk turned predatory. &#34;For the right price.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Alexander&#39;s nostrils flared. &#34;Name it.&#34;</p>
                 <p>&#34;Oh, I doubt you&#39;re prepared for my terms.&#34; Liam&#39;s gaze locked onto Olivia. &#34;She spends the night with me.&#34;</p>
                 <p>Dead silence.</p>
                 <p>The clueless manager, oblivious to Olivia&#39;s true identity as Liam&#39;s wife, saw only an opportunity to curry favor. He leaned toward Alexander with a conspiratorial wink.</p>
                 <p>&#34;Mr. Hayes, she&#39;s lovely, but surely not worth risking your company? Women like her are replaceable. Be reasonable.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Alexander&#39;s fists clenched, but Sebastian Montgomery struck first.</p>
                 <p>One glance at Liam&#39;s thunderous expression told Sebastian this fool had signed his own death warrant.</p>
                 <p>He grabbed the manager by his collar and delivered a crushing blow.</p>
                 <p>The man staggered back, clutching his bleeding nose in shock. &#34;Mr. Montgomery! What did I—&#34;</p>
                 <p>&#34;Remove him,&#34; Liam commanded icily. &#34;This imbecile has wasted enough of my time. Hiring such morons would bankrupt Blackwood Enterprises through sheer stupidity.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Terror dawned on the manager&#39;s face as Sebastian dragged him away. His career was over.</p>
                 <p>In the parking garage, the man whimpered, &#34;Please, tell me how I offended Mr. Blackwood! I betrayed my employer for him today!&#34;</p>
                 <p>Sebastian looked down in disgust. &#34;Had you kept your mouth shut, you might have survived. But insulting her?&#34; He shook his head. &#34;You&#39;ve angered someone far more dangerous than Liam Blackwood.&#34;</p>
@@ -2351,7 +2431,7 @@
                 <p>Liam noticed. His fingers drummed impatiently against the table.</p>
                 <p>Alexander opened his mouth to speak—</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

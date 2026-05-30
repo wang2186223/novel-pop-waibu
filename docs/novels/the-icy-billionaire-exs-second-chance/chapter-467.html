@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,33 +2390,33 @@
                 <p>Apparently, her efforts had paid off spectacularly.</p>
                 <p>Giselle flipped her freshly highlighted hair over one shoulder and commandeered the chair opposite Vivian. &#34;Service!&#34; she snapped her fingers at the barista.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>The young woman behind the counter, unfazed by the rudeness, simply smiled. &#34;We just received a shipment of Ivory Summit beans - quite rare this season.&#34;</p>
                 <p>Giselle&#39;s nose wrinkled. &#34;Never heard of it. I only drink Sapphire Ridge.&#34;</p>
                 <p>As the barista prepared their drinks, she caught Vivian&#39;s eye. The subtle exchange spoke volumes - both recognizing Giselle&#39;s transparent attempt at sophistication. Ivory Summit beans retailed at nearly five times the price of Sapphire Ridge, yet remained unknown to casual coffee drinkers who associated quality with brand recognition alone.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Vivian accepted her cup, admiring the delicate latte art - a crescent moon with tiny stars scattered beneath it. The first sip brought a smile to her lips. &#34;The citrus notes are exceptional.&#34;</p>
                 <p>Giselle snorted. &#34;That childish scribble? The café near my penthouse does proper designs - swans, roses, that sort of thing.&#34; She waved a dismissive hand. &#34;This place is overhyped.&#34;</p>
                 <p>The barista, wise beyond her years, simply continued smiling as she wiped down the espresso machine.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>With no audience to perform for, Giselle turned her attention to Vivian. &#34;Where&#39;s that handsome husband of yours? Too busy making millions to join you?&#34;</p>
                 <p>Vivian took another measured sip before answering. &#34;Adrian&#39;s at the office.&#34; Her tone suggested the conversation would end there.</p>
                 <p>But Giselle, never one to read social cues, barreled forward. &#34;You know, I ran into Serena Whitmore last week at the Opal Galleria. She was asking about you.&#34; A calculated pause. &#34;And Adrian, of course.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Vivian&#39;s fingers tightened imperceptibly around her cup. The name hung between them like an uninvited guest.</p>
                 <p>Giselle&#39;s smile turned feline. &#34;Funny how life works out, isn&#39;t it? Who would have thought back in high school that you&#39;d end up married to her...&#34; She let the sentence dangle, watching for Vivian&#39;s reaction.</p>
                 <p>The boutique&#39;s bell chimed again, saving Vivian from responding as two well-dressed women entered, their laughter filling the small space. Giselle immediately straightened, her social antennae quivering at the potential for new connections.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Vivian used the distraction to check her watch. &#34;Excuse me,&#34; she murmured, gathering her things. &#34;I have an appointment.&#34;</p>
                 <p>Giselle barely glanced up from adjusting her diamond tennis bracelet. &#34;We should do lunch,&#34; she said absently, already assessing the newcomers&#39; handbags for authenticity.</p>
                 <p>Vivian&#39;s smile didn&#39;t reach her eyes. &#34;We really shouldn&#39;t.&#34;</p>
                 <p>Outside, the crisp autumn air felt like a reprieve. Vivian inhaled deeply, the lingering tension easing from her shoulders. She pulled out her phone, thumb hovering over Adrian&#39;s contact before thinking better of it. Some ghosts were better left undisturbed.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

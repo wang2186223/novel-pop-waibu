@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,22 +2390,22 @@
                 <p>While she&#39;d been terrified for Liam&#39;s safety, his only concern had been Victoria.</p>
                 <p>After transferring Victoria to the medical team, Liam turned back toward the building without hesitation.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Nate!&#34; Victoria&#39;s trembling fingers caught his sleeve. Tears streaked her ashen face. &#34;Don&#39;t leave me. I can&#39;t breathe—&#34;</p>
                 <p>&#34;Easy now.&#34; Liam&#39;s voice softened as he pried her grip loose. &#34;The doctors have you.&#34;</p>
                 <p>Her chest heaved with panicked sobs. &#34;I&#39;m dying, Nate. I can feel it!&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>At that moment, Ryan&#39;s voice cut through the commotion. &#34;General Blackwood! Building&#39;s cleared. Thirty-five confirmed poison cases.&#34;</p>
                 <p>Liam&#39;s attention snapped to Ethan Reynolds nearby. &#34;Doctor, what chemical leaked? Fatal?&#34;</p>
                 <p>Ethan&#39;s hands shook as he adjusted his glasses. &#34;Azurium, sir. Experimental import. We barely understand its properties—&#34; He flinched under Liam&#39;s glacial stare.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;General, I swear,&#34; Ethan babbled, &#34;I&#39;ve never encountered Azurium in twenty years of practice. We need tox screens before—&#34;</p>
                 <p>&#34;Carelessness with hazardous materials?&#34; Liam&#39;s roar made several researchers jump. &#34;Explain this negligence!&#34;</p>
                 <p>Ethan swallowed hard. &#34;Ms. Dawson was...rummaging through restricted storage when the container tipped.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>All eyes turned to Victoria, who sniffled dramatically. &#34;If they&#39;d labeled things properly, this wouldn&#39;t have happened!&#34;</p>
                 <p>Liam&#39;s jaw hardened. &#34;This is a secure facility. What were you doing in chemical storage?&#34;</p>
                 <p>Victoria dissolved into fresh tears. &#34;You&#39;re blaming me when I&#39;m poisoned? How cruel!&#34;</p>
@@ -2338,7 +2418,7 @@
                 <p>Adrian nodded sharply. &#34;On it, Ms. Carter.&#34;</p>
                 <p>As he sprinted away, skeptical murmurs rippled through the onlookers. Liam studied Evelyn with an unreadable expression, something unfamiliar stirring behind his steel-gray eyes.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

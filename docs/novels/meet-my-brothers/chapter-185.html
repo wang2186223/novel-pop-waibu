@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>Lowering his eyes, Timothy retorted. “So what? Our engagement was never real in the first place, and you know it better than anyone else.”</p>
                 <p>Maya’s breath caught for a moment, and she spoke with a pleading tone. “Tim, could you please help me maintain a sense of dignity in front of my brothers? After all, Connor thinks our engagement is genuine.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>“If he discovers next week that it’s merely a transaction, and particularly if you’re absent, what if Connor</p>
                 <p>reconsiders his decision regarding Grandma Laura’s surgery?”</p>
                 <p>Timothy, his gaze reflecting a distant coldness, remained silent before walking away.</p>
                 <p>Maya stood alone, her eyes expressing hesitation.</p>
                 <p>Next to her, Shelly anxiously inquired. “Maya, have you talked to Timothy about reinstating my credit card?”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Maya, her eyes turning red, responded, “Shelly, you’ve seen Timothy’s attitude toward me. I’m afraid there isn’t</p>
                 <p>much I can do to assist you.”</p>
                 <p>Growing increasingly anxious, Shelly exclaimed, “How am I supposed to handle my credit card situation? Do I really have to apologize to Mia? It feels utterly unbearable.”</p>
                 <p>Shelly had always held a contemptuous view of Mia, consistently belittling her both openly and discreetly.</p>
                 <p>Now, compelled to apologize to Mia, Shelly felt as though she was being pushed to the brink of despair.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Despite Maya’s disheartened mood, she maintained her composure and quickly reassured Shelly, saying, “For the time being. just use the credit card I gave you.</p>
                 <p>“As time passes, Timothy is likely to forget about this incident. Mia deliberately complained to Timothy to</p>
                 <p>portray herself as the victim.</p>
                 <p>“If you approach Mia, you’ll be falling into her trap,”</p>
                 <p>Upon hearing this. Shelly’s discontent intensified. “But wouldn’t that mean Mia is getting away with it? I cannot just swallow my pride like this.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>+15 BONOS</p>
                 <p>“Wilhelmina, that incompetent fool, can’t even handle such a minor issue properly. I even gave her two designer bags. Shelly complained.</p>
                 <p>Maya’s lips curled with disdain. In her perspective, Shelly was just as incompetent, struggling to deal with someone as insignificant as Mia.</p>
                 <p>Nevertheless, Maya understood the importance of maintaining Shelly’s allegiance for the time being. Once she married Timothy, she wouldn’t have to deal with such foolishness anymore.</p>
                 <p>Out of the blue, Shelly recalled something, “Maya, when I was searching for Mia today, I learned that she has been avoiding her adoptive parents. It appears they are not the easiest people to deal with.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>“If Mia’s adoptive parents managed to locate her, she could face significant trouble.”</p>
                 <p>A glint of amusement crossed Maya’s eyes. “That’s a clever approach. With Timothy and Grandma Laura safeguarding Mia, even I wouldn’t dare to harm her casually. It appears to be the only viable option.”</p>
                 <p>“I can’t fathom what’s admirable about Mia. I’ve heard she was adopted from an orphanage. How woman with such a humble background be considered worthy of someone like Timothy?”</p>
@@ -2351,7 +2431,7 @@
                 <p>Nonetheless, Maya quickly brushed aside these thoughts. After all, she was now the heiress of the Lane</p>
                 <p>family, destined to live a life of luxury and privilege for the rest of her days!</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

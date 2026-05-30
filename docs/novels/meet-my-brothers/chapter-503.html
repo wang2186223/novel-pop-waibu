@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>orphanage. She remembers you because you look the same as you were when you were young. Ms.</p>
                 <p>Lane–oh wait–you’re not Ms. Lane. Mia is the true Ms. Lane!” Something in Dana’s eyes flickered with a</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>hint of madness. 1</p>
                 <p>Color drained from Maya’s face. “Nonsense! If you spread any strange rumors, I swear I will kill you.</p>
                 <p>Dana McQueen! You should know that I have the power to make that happen.”</p>
@@ -2321,7 +2401,7 @@
                 <p>movies. To think that I’m witnessing it in real life? Wow. Maya, you stole Mia’s identity. Am I right?”</p>
                 <p>“Shut up! Can’t you hear me!” Maya gave her bodyguards a look. “Teach this bitch a lesson. Let her know</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>the consequences of not knowing her place.”</p>
                 <p>With a swollen face and a smile, Dana kept staring at Maya. “I know your biggest secret, Maya. You’ll</p>
                 <p>never get away from me now.”</p>
@@ -2329,7 +2409,7 @@
                 <p>Once she calmed her nerves, she kicked Dana. “But let me tell you this–you’re messing with the wrong.</p>
                 <p>person. Do you know that talking too much might get you killed? No one will stand up for an orphan like</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>you when something happens to you, especially when you’re going to be expelled. If you die, they’ll</p>
                 <p>simply assume that it’s a suicide.”</p>
                 <p>Horror swallowed Dana. “N–No! You can’t do that!”</p>
@@ -2337,7 +2417,7 @@
                 <p>Do not let anyone enter before everything’s done.” She then left the floor.</p>
                 <p>She simply wished she could dismember Dana at this moment. Who would’ve known that Dana would</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>see right through her? Maya was being careless.</p>
                 <p>Blake approached Maya. “The ceremony is commencing. Ms. Lane. Do you want us to fake Dana’s death</p>
                 <p>with a suicide?”</p>
@@ -2345,7 +2425,7 @@
                 <p>took a deep breath before asking, “Are Dominic and the others here?”</p>
                 <p>“They arrived a second ago.”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Smiling faintly, she held her luxury bag and walked outside, her strides voluming confidence.</p>
                 <p>Outside, the hall was swarmed with students. None of the guests arrived yet.</p>
                 <p>According to Blake, Dominic and the others were already there. But why couldn’t Maya see them?</p>

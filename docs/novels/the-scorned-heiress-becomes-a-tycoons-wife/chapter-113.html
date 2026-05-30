@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>Her icy stare took in his slouching posture. &#34;All you do is bark.&#34;</p>
                 <p>Christopher turned to face her.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>The girl&#39;s clear eyes showed no trace of fear.</p>
                 <p>His anger morphed into bitter laughter.</p>
                 <p>&#34;Look who&#39;s grown a backbone. Now you dare insult me?&#34;</p>
@@ -2321,7 +2401,7 @@
                 <p>Not only had she targeted Emily Lowell at every turn, now she dared challenge them directly?</p>
                 <p>&#34;I heard you dethroned Nathan, stole William&#39;s project, and even sued Mother?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Why don&#39;t you just shoot for the moon while you&#39;re at it?&#34;</p>
                 <p>Sophia remained unruffled.</p>
                 <p>&#34;My affairs are none of your concern.&#34;</p>
@@ -2329,7 +2409,7 @@
                 <p>Christopher&#39;s brow furrowed.</p>
                 <p>&#34;Emily said you&#39;d changed. I didn&#39;t believe her.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Sophia&#39;s voice turned glacial.</p>
                 <p>&#34;If you&#39;re done, get out. Pearl Group doesn&#39;t entertain rabid dogs.&#34;</p>
                 <p>He let out a cold laugh. &#34;Who do you think you are, Sophia?&#34;</p>
@@ -2337,7 +2417,7 @@
                 <p>The sound of shattering glass filled the air.</p>
                 <p>&#34;You gutter-born bastard, how dare you speak to me like this?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Think you&#39;re somebody now?&#34;</p>
                 <p>&#34;I only tolerated you before out of respect for the Lowell name. But since you&#39;re courting death...&#34;</p>
                 <p>&#34;Pearl Group, huh? I&#39;ll come make trouble every day. Let&#39;s see how long you last...&#34;</p>
@@ -2345,7 +2425,7 @@
                 <p>She&#39;d been the one who propelled Christopher to stardom.</p>
                 <p>The &#34;wealthy heir pursuing showbiz dreams&#34; persona, coupled with carefully selected scripts, had won him countless fans.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Blind adoration made him increasingly reckless.</p>
                 <p>After all, Lowell Entertainment&#39;s PR team and obsessive fans always cleaned up his messes.</p>
                 <p>Sophia&#39;s gaze made him uneasy.</p>
@@ -2353,7 +2433,7 @@
                 <p>&#34;No.&#34;</p>
                 <p>She shook her head slightly. &#34;I just didn&#39;t expect fame would cost you your brains too.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

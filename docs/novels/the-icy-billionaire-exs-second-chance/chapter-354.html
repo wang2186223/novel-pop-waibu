@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,27 +2389,27 @@
                 <p>Cassandra&#39;s face flushed crimson as she spat, &#34;I&#39;ll drag your company&#39;s dirty secrets through the mud online!&#34;</p>
                 <p>The assistant remained unfazed, his response chillingly calm. &#34;By all means. Should you choose that path, we&#39;ll happily add libel to your existing charges of attempted vehicular assault.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Additional charges?&#34; Cassandra&#39;s voice cracked, her bravado crumbling. &#34;What other ridiculous accusations are you fabricating?&#34;</p>
                 <p>Years of scraping by in the industry - her modest savings drained on a cramped apartment and leased car - left her financially vulnerable.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Vivian observed the exchange with detached calm before addressing the assistant. &#34;I trust you&#39;ll handle this appropriately.&#34;</p>
                 <p>&#34;Your generosity is misplaced, Ms. Hartley,&#34; the assistant replied smoothly. &#34;This reflects our failure to properly vet talent. Mr. Vaughn will contact you personally regarding compensation.&#34; His gaze hardened as he turned back to Cassandra. &#34;After processing her termination, we&#39;ll deliver her directly to the police precinct. You have my word.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>At his signal, two broad-shouldered security officers materialized, flanking Cassandra with military precision. Their viselike grips on her arms rendered further protests impossible. Her mouth worked soundlessly, all fight drained from her.</p>
                 <p>Adrian, already settled in the luxury sedan, leaned forward as Vivian slid in beside him. His usually sharp features softened unexpectedly. &#34;If anyone ever threatens you again, come to me immediately. Even if you&#39;re capable of handling it alone... I want to be your first call.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Vivian&#39;s lips curved slightly, though her eyes remained unreadable. &#34;She&#39;s painfully transparent.&#34; The words were dismissive, but her mind circled the true puppet master behind Cassandra&#39;s audacity: Serena. Without Serena&#39;s backing, Cassandra would never have dared such recklessness.</p>
                 <p>But Vivian swallowed the observation. Raising Serena&#39;s involvement now would only trigger another pointless argument with Adrian. Some battles required strategic timing.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>The assistant&#39;s frosty voice carried through the open car door: &#34;The security footage clearly shows you intentionally swerving toward Ms. Hartley. That we&#39;re pursuing criminal charges rather than civil litigation speaks to our company&#39;s values. Ivory Phoenix protects its partners.&#34;</p>
                 <p>His words hung in the air as the car door thudded shut, sealing them in soundproofed luxury. The engine purred to life, carrying them away from the confrontation, though the tension lingered like static electricity.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

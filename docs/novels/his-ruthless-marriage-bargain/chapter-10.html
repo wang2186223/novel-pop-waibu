@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,27 +2390,27 @@
                 <p>Noticing her confusion, Alexander anticipated her question. &#34;Today&#39;s events left little time for proper preparations.&#34;</p>
                 <p>&#34;That&#39;s quite alright,&#34; Evelyn murmured. Their marriage was transactional after all - no need for pomp. Yet when she saw the rose-petaled restaurant interior, genuine emotion tightened her throat.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>The expansive dining room held only two seats. Staff maintained discreet distance, clearly instructed to preserve privacy. Alexander had reserved the entire establishment - impressive even for his influence, given the short notice.</p>
                 <p>&#34;Relax,&#34; he said, slicing into his steak with effortless grace. &#34;The press won&#39;t disturb us here.&#34;</p>
                 <p>&#34;Th-thank you, Alex.&#34; Normally articulate, Evelyn found herself tongue-tied.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Alexander stilled, raising an eyebrow. &#34;For?&#34;</p>
                 <p>&#34;For honoring our agreement. And... all this.&#34; However impulsive their union, Evelyn felt no regret.</p>
                 <p>A rare chuckle escaped Alexander as he transferred perfectly cut steak to her plate. &#34;You may have more to thank me for later.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>The suite&#39;s private hot tub steamed invitingly when they arrived. Evelyn&#39;s pulse quickened at the implication. Flushed, she busied herself with a water ss in the kitchenette.</p>
                 <p>Noticing her tension, Alexander retrieved wine sses instead. &#34;Join me?&#34;</p>
                 <p>Initially refusing, Evelyn reconsidered - perhaps liquid courage would help. She&#39;d exhausted her boldness proposing this arrangement.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Their sses clinked. Evelyn gulped hers recklessly, coughing when the alcohol burned her throat.</p>
                 <p>Alexander laughed softly, patting her back. &#34;I&#39;ll soak first. Take your time.&#34; His retreat gave her space to reconsider.</p>
                 <p>Instead, Evelyn downed another ss. Then another. Half the bottle later, warmth spread through her limbs. Through the haze, she saw Alexander&#39;s silhouette in the tub - broad shoulders glistening, muscles defined by water droplets.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Dry-mouthed, she approached. Alexander didn&#39;t turn, granting her this choice.</p>
                 <p>Decision made, Evelyn shed her outer layers. The hot water prickled her skin as she slid in beside him. Suddenly sober, she crossed her arms self-consciously. Nathaniel had never seen her like this - their relationship hadn&#39;t progressed beyond chaste kisses.</p>
                 <p>Their proximity made the water seem cooler by comparison. Alexander cupped her chin, forcing eye contact. &#34;Last chance to back out.&#34;</p>
@@ -2338,7 +2418,7 @@
                 <p>In this world of calculated exchanges, she&#39;d pay whatever price necessary.</p>
                 <p>Alexander needed no further invitation. What began in the tub continued as he carried her to bed, Evelyn&#39;s damp hair fanning across the sheets like spilled ink. Her lashes fluttered against flushed cheeks - a vision of surrender.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2315,7 +2395,7 @@
                 <p>&#34;You said you&#39;d love our child the same, boy or girl...&#34;</p>
                 <p>&#34;...&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>She was saying these lines for Grace.</p>
                 <p>&#34;Enough!&#34;</p>
                 <p>Zack cut her off roughly, his face dark. &#34;What&#39;s the point of all this? So I found someone else. Are you so innocent yourself? You slept with Mr. Vance!&#34;</p>
@@ -2325,7 +2405,7 @@
                 <p>Marcus, listening outside, felt his anger boil over.</p>
                 <p>He was about to push the door open when he heard the girl&#39;s trembling voice. &#34;Fine. I&#39;ll sign!&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Marcus paused.</p>
                 <p>...If this could end the marriage, maybe it was for the best.</p>
                 <p>It was just an agreement. With Grace&#39;s status, she could nullify it anytime if she changed her mind.</p>
@@ -2335,7 +2415,7 @@
                 <p>Kelsey smiled with satisfaction.</p>
                 <p>Zack breathed a sigh of relief.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Mrs. Davis couldn&#39;t wait. &#34;We&#39;ll go to City Hall for the divorce certificate tomorrow!&#34;</p>
                 <p>Zack nodded, his gaze lingering on the villa. He started to say something, but Evelyn interrupted him. &#34;Zack, I&#39;ve agreed to all the terms. Can you grant me one request?&#34;</p>
                 <p>Zack eyed her warily. &#34;What is it?&#34;</p>
@@ -2355,7 +2435,7 @@
                 <p>Evelyn&#39;s voice was tearful. &#34;Zack, you are her legal father! If the child can&#39;t afford school, the authorities will hold you responsible! This isn&#39;t some unreasonable demand...&#34;</p>
                 <p>Marcus, listening outside, grew increasingly agitated.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>The divorce is happening, and she&#39;s still hung up on a little child support?</p>
                 <p>Can&#39;t this woman have any self-respect?</p>
                 <p>He suppressed his anger, feeling that Grace wasn&#39;t worth his intervention.</p>
@@ -2367,7 +2447,7 @@
                 <p>She pretended to panic, shaking her head. &#34;No, please don&#39;t...&#34;</p>
                 <p>Zack immediately pulled out a blank sheet of paper. &#34;You don&#39;t get a say! We&#39;re cutting ties today, for good!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

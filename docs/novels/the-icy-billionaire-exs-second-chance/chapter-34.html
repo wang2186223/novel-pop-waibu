@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,7 +2389,7 @@
                 <p>Without warning, Serena&#39;s knees buckled. She clutched at her chest, her body folding like a delicate paper crane as she collapsed toward the floor.</p>
                 <p>&#34;Serena!&#34; Alarm flashed across Adrian&#39;s face as he lunged forward, catching her just in time.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Miranda immediately dialed emergency services.</p>
                 <p>In the chaos, Miranda managed to procure a chaise lounge where Adrian could lay Serena down. Then she whirled around, pinning Vivian with a venomous glare. &#34;If anything happens to Serena, I&#39;ll hold you personally responsible!&#34;</p>
                 <!-- 广告位 2 -->
@@ -2317,7 +2397,7 @@
                 <p>Serena stirred weakly. &#34;Miranda... this isn&#39;t Ms. Hartley&#39;s fault. My health... it&#39;s always been fragile.&#34;</p>
                 <p>She turned glassy eyes toward Vivian, offering a fragile smile. &#34;Ms. Hartley, please don&#39;t be alarmed. My condition... it&#39;s unpredictable. You bear no responsibility for this.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Miranda&#39;s glare remained fixed on Vivian, burning with accusation. &#34;How can you say that? If she hadn&#39;t forced this competition, would Serena have pushed herself to exhaustion with rehearsals? If the worst happens, how could someone like her possibly atone?&#34;</p>
                 <p>The room bristled at Miranda&#39;s baseless accusations.</p>
                 <!-- 广告位 4 -->
@@ -2325,7 +2405,7 @@
                 <p>With the A-list star and Blackwood Group&#39;s powerful CEO on one side, and an unknown newcomer on the other, the imbalance of power hung heavy in the air.</p>
                 <p>Even Julian could only offer Vivian a sympathetic glance, subtly shaking his head as if advising her to endure the injustice.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Lydia moved to speak up, but Vivian stopped her with a barely perceptible gesture.</p>
                 <p>Vivian searched Adrian&#39;s face for any sign of recognition, any flicker of defense.</p>
                 <p>But Adrian&#39;s entire focus remained on Serena, his expression taut with concern. The complete dismissal cut deeper than any blade, sending waves of icy pain through Vivian&#39;s chest. A bitter smile touched her lips. Foolish, she thought, to expect anything different.</p>
@@ -2334,7 +2414,7 @@
                 <p>The original script had called for sweeping scenes across Paris - the Eiffel Tower, the Louvre, the grandeur of Versailles. Budget constraints had initially forced production to relocate to the less prestigious Crestwood area.</p>
                 <p>Though Vivian&#39;s talent outshone Serena&#39;s, the combination of Serena&#39;s star power and Adrian&#39;s financial backing once again tipped the scales.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">

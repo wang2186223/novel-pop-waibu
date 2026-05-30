@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2319,28 +2399,28 @@
                 <p>To Cassandra, this calm was infuriating.</p>
                 <p>&#34;She&#39;s loving every second of this,&#34; Cassandra thought bitterly. &#34;She&#39;s just playing hard to get to make them more curious.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Before Evelyn&#39;s arrival, Cassandra had been the undisputed star. Every major solo had been hers.</p>
                 <p>Now whispers suggested Cassandra&#39;s reign might be ending. The thought made her blood boil.</p>
                 <p>She was the principal cellist! This newcomer meant nothing.</p>
                 <p>Yet beneath her anger, unease grew. In mere weeks, Evelyn had earned undeniable praise. The future suddenly seemed uncertain.</p>
                 <p>Cassandra raised her voice, ensuring everyone heard.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Someone like you joining us is an insult! So tell us, which sugar daddy bought your way in? Don&#39;t be shy - share with the class!&#34;</p>
                 <p>A crowd gathered instantly. Cassandra&#39;s accusation sent shockwaves through them.</p>
                 <p>&#34;Could it be true?&#34; someone whispered.</p>
                 <p>&#34;I did see a man drop her off in a rare sports car this morning,&#34; another added.</p>
                 <p>&#34;God, she acts so humble but there&#39;s clearly more to her.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>The whispers swelled, fingers pointing at Evelyn.</p>
                 <p>Just then, Isabella Morgan walked by with her violin.</p>
                 <p>She&#39;d changed from the stylish outfit Evelyn bought her last night back into her usual dress.</p>
                 <p>Seeing Evelyn cornered, Isabella frowned and shot Cassandra a withering look.</p>
                 <p>As she passed Evelyn, Isabella muttered, &#34;Pathetic. Letting trash like that walk all over you? Alexander would be ashamed.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Then Isabella turned her full attention to Cassandra.</p>
                 <p>&#34;You&#39;re the principal cellist, correct?&#34; Her voice cut like ice. &#34;With all your experience, you don&#39;t recognize Alexander Whitmore? The man who dropped her off is her husband - CEO of Titan Capital Group.&#34;</p>
                 <p>The revelation struck like lightning. The crowd gasped collectively, eyes widening in shock.</p>
@@ -2348,7 +2428,7 @@
                 <p>That Evelyn was married to one of the nation&#39;s most powerful men seemed impossible.</p>
                 <p>Cassandra stared at Evelyn, her face frozen in stunned disbelief.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

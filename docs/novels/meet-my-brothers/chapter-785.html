@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2321,7 +2401,7 @@
                 <p>However, upon boarding the aircraft, Mia discovered that the pilot and bodyguard had been</p>
                 <p>detained.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>As she stood there, Timothy’s footsteps drew near from behind. “I’ve warned you. This time, you can’t just walk away as you please.”</p>
                 <p>Nonetheless, Mia didn’t flinch. Turning to meet his gaze squarely, she countered, “Mr.</p>
                 <p>Barrett, do you still think of me as that same vulnerable woman you could just manipulate?”</p>
@@ -2329,7 +2409,7 @@
                 <p>“Of course, I believe you. Your brothers have done an impressive job of keeping you hidden over the years. They even managed to deceive me,” Timothy said.</p>
                 <p>“Timothy, we went through a divorce, remember? So, why are you now insisting on keeping</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>I can’t be</p>
                 <p>me here? If the thought of us being apart because you love me, just say so. It might earn you more respect from me!”</p>
                 <p>Timothy felt his anger surge, his blood pressure spiking noticeably. Even after many years apart, it appeared that Mia’s talent for provoking him remained unchanged.</p>
@@ -2337,7 +2417,7 @@
                 <p>“This is between us. Why drag Ginger into it?”</p>
                 <p>“But Ginger is my daughter too. Don’t I deserve to know?”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Mia’s hand clenched slowly. “When did I ever claim that Ginger is your daughter?”</p>
                 <p>“This matter can be resolved easily. We just need to do a DNA test using both Ginger’s blood and mine to see if she’s my biological daughter.”</p>
                 <p>Mia’s demeanor hardened as she retorted, “Timothy, Ginger belongs to me. She has no ties to the Barrett family whatsoever.”</p>
@@ -2345,7 +2425,7 @@
                 <p>Timothy’s audacity seemed to have no limits.</p>
                 <p>Mia scoffed, saying, “Ginger has left Bern City, flown away on the private jet I arranged. Even if you try to chase her, you wouldn’t be able to catch up.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>“Fine, if I can’t catch her, then I’ll pursue you instead!”</p>
                 <p>With a smirk, Mia retorted, “Oh, Mr. Barrett, it seems you still have feelings for me, don’t you?”</p>
                 <p>}</p>
@@ -2356,7 +2436,7 @@
                 <p>Mia had never been concerned about custody issues before.</p>
                 <p>Timothy’s expression soured as he said, “Mia, this time, Ginger came to Nord City to find her dad. Can you really bear to let her go without a father figure in her life?”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

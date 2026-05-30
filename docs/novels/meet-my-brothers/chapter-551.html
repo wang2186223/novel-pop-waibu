@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2319,14 +2399,14 @@
                 <p>Yet, despite the implications, Jeremy remained somewhat skeptical of Timothy’s identity..</p>
                 <p>Considering Mia’s social status, how could she possibly have connections with someone of Timothy’s caliber?</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Even Jeremy himself lacked the credentials to engage with someone of that stature. Typically, only the company chairman would be entitled to such interactions.</p>
                 <p>Jeremy couldn’t help but suspect that Timothy might be a high–ranking executive from the Barrett Group.</p>
                 <p>Observing Jeremy’s awkwardness, Mia stole a glance at Timothy before her. Was he there to flaunt his wealth?</p>
                 <p>Timothy remained in front of Mia, holding his umbretta. Til drop you home,” he declared.</p>
                 <p>With his striking appearance and confident demeanor, Timothy exuded an air of indifference toward the surrounding crowd.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Mia stood in place as the female classmates nearby cast admiring glances. This handsome and affluent man had personally come to escort Mia. How romantic!</p>
                 <p>Witnessing their interaction, Ramona, consumed by jealousy, couldn’t resist but interject. “Excuse me, sir, are you acquainted with Mia?”</p>
                 <p>Upon hearing Ramona’s voice, Timothy turned his gaze toward her. His features were strikingly handsome, and his gaze exuded a sense of calm authority.</p>
@@ -2340,7 +2420,7 @@
                 <p>Mia smirked and nodded, “Go on. Is there anything else?”</p>
                 <p>Ramona’s confidence grew as she continued, “There’s plenty more, sir. You might not be aware that Mia was once a top student, but she abruptly dropped out from college for an older, wealthy man.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>“Now, I reckon she can’t even bear children. After the old man got tired of her, he divorced her and tossed her out like trash!”</p>
                 <p>Jolene eagerly joined in, “Exactly! Mia may appear innocent and kind, but her background is quite complicated.</p>
                 <p>“She dropped out of college to chase after an older man for his money. She’s nothing but a gold digger!”</p>
@@ -2352,7 +2432,7 @@
                 <p>tính t?</p>
                 <p>x?n xao, huyên na?o, om so?m, n a?o</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

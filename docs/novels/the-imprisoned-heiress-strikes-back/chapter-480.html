@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,31 +2391,31 @@
                 <p>Her only lifeline? Alexander.</p>
                 <p>She had orchestrated this dance with one purpose—</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Yet as the music faded, no enraged fiancé stormed into the ballroom.</p>
                 <p>Alexander opened his mouth to speak when his gaze snagged on a pair of figures at the far end of the corridor.</p>
                 <p>Evelyn Carter and Ethan Caldwell stood bathed in moonlight, their bodies angled toward each other. Evelyn&#39;s eyes shimmered with unshed tears while Ethan&#39;s expression warred between longing and restraint.</p>
                 <p>To any onlooker, they looked like star-crossed lovers torn apart by cruel fate.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Alexander&#39;s jaw tightened, his hands curling into fists at his sides. The air around him turned glacial.</p>
                 <p>Isabella followed his line of sight and immediately recognized Evelyn—the same woman who had nearly interrupted their meeting that morning.</p>
                 <p>Even now, standing motionless, Evelyn commanded attention effortlessly. The soft glow of the overhead lights kissed her porcelain skin, the delicate pearl earrings at her lobes enhancing her ethereal beauty.</p>
                 <p>She was elegance personified—the kind of woman who made others pale in comparison.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Is that your nephew?&#34; Isabella asked casually, nodding toward Ethan.</p>
                 <p>The question hung between them, heavy with unspoken implications.</p>
                 <p>Leaning forward with her elbow resting on the table, Isabella studied Evelyn with narrowed eyes. &#34;That woman sitting across from him... Could she be his wife?&#34;</p>
                 <p>Alexander&#39;s jaw clenched.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>He snatched a champagne flute from a passing waiter and downed it in one swift motion, his stormy gaze never leaving the couple across the room.</p>
                 <p>Through gritted teeth, he bit out, &#34;She&#39;s my wife.&#34;</p>
                 <p>Isabella had already pieced it together.</p>
                 <p>She sighed dramatically, tilting her head. &#34;Oh dear... So your wife is seeing someone else?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>The deliberate phrasing made Alexander&#39;s expression turn glacial. With a sharp exhale, he slammed the empty glass onto the table hard enough to make nearby guests flinch.</p>
                 <p>The air around him crackled with barely restrained fury.</p>
                 <p>As he moved to storm over, Isabella caught the edge of his tailored jacket.</p>

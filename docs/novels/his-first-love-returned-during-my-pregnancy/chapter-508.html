@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,31 +2391,31 @@
                 <p>He answered casually, but his expression darkened the moment he heard the voice on the other end.</p>
                 <p>Alexander&#39;s gaze sharpened.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Vincent&#39;s knuckles whitened around his phone as if straining to catch every syllable. After a heavy pause, he barely managed: &#34;Understood.&#34;</p>
                 <p>The rest of the conversation consisted solely of nasal hums.</p>
                 <p>Even Evelyn Carter looked up from her documents. The baby stopped babbling, staring curiously at this strange uncle.</p>
                 <p>&#34;I&#39;m at the resort.&#34; Vincent finally muttered before hanging up hastily, his eyes darting everywhere except at Alexander.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Nothing trivial could make the second son of the Wilson family this nervous.</p>
                 <p>Amused, Alexander asked with rare concern: &#34;Debt collectors?&#34;</p>
                 <p>&#34;Worse.&#34; Vincent wiped sweat from his temple. &#34;My brother. He&#39;s coming.&#34;</p>
                 <p>Alexander kept playing with the baby, unfazed. &#34;So?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>The domestic scene sent chills down Vincent&#39;s spine. Everyone knew Alexander and Gregory Wilson were romantic rivals. Their meeting would be like lightning striking dynamite.</p>
                 <p>Stealing glances at Alexander&#39;s calm profile and Evelyn&#39;s indifferent demeanor, he forced out: &#34;Should I... greet him at the entrance?&#34;</p>
                 <p>&#34;Sit.&#34; Alexander didn&#39;t even look up. &#34;We don&#39;t turn away paying guests.&#34;</p>
                 <p>The unnatural tranquility made Vincent fidget. He shot Evelyn a pleading look, only to find her already reabsorbed in her documents, utterly detached.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Breakfast ended as the baby squirmed for a change of scenery.</p>
                 <p>&#34;The kids&#39; zone is just ahead,&#34; Alexander suggested. &#34;Shall we?&#34;</p>
                 <p>Evelyn closed her folder. &#34;Alright.&#34;</p>
                 <p>Vincent trailed behind, watching their seamless coordination with growing dread. This sight would shatter Gregory&#39;s heart.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Laughter filled the colorful play area. The baby waved excitedly at the bright equipment.</p>
                 <p>&#34;Not yet, sweetheart.&#34; Evelyn cradled her gently, placing protective hands around the tiny body.</p>
                 <p>The baby quieted obediently, though not fully understanding.</p>

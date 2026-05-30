@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2310,22 +2390,22 @@
                 <p>With Maya and Kaleb hovering like vultures at the closet door, Mia made a desperate, gut-wrenching decision.</p>
                 <p>She turned her back to them, secretly retrieved the crumpled pregnancy test, and tore it into tiny shreds. With a dry throat and a breaking heart, she forced herself to swallow the pieces. As she stared at Timothy’s expensive suits lining the walls, the last spark of love she held for him finally died.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>From this day forward, she vowed silently, my child will have nothing to do with the Barrett family.</p>
                 <p>She stood up, clutching the flimsy plastic bag. “Do you want to check this now?”</p>
                 <p>Maya covered her nose, looking revolted. “Ugh, just get out. That bag stinks! I don&#39;t even want to touch your things.” Maya was in a hurry; she needed Mia gone before Timothy finished his shower so there would be no chance for second thoughts.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Kaleb stepped forward and shoved Mia toward the door. “Are you deaf? The lady said get out!”</p>
                 <p>Mia walked out of the villa alone. The driveway was short, but every step felt like a mile. Just as she reached the gates, Kaleb caught up to her. He snatched the bag from her hand and dumped its contents onto the gravel, kicking through her clothes as if looking for stolen treasure. He found nothing.</p>
                 <p>Mia crouched on the ground, her fingers trembling as she tried to gather her things from the dirt.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Suddenly, her phone buzzed in her pocket. Seeing the caller ID, the tears she had been holding back for three years finally spilled over. She answered with a choked sob. “Aunt Patricia.”</p>
                 <p>“Mia? Why are you crying? What’s wrong?”</p>
                 <p>“I’m getting a divorce, Aunt Patricia,” Mia whispered, her voice breaking. “I’m losing my family all over again.”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>“Oh, you silly girl. Who told you that you don&#39;t have a family?” Patricia’s voice was uncharacteristically excited. “That’s why I’m calling! Your biological family finally tracked me down. Mia, you aren&#39;t an orphan. You have three older brothers from the Lane family in Nord City. And three older cousins—that’s six men ready to burn the world down for you. They’re coming for you, Mia. They are your family.”</p>
                 <p>Mia froze. “The… Lane family? My brothers?”</p>
                 <p>She had spent her life believing she was unwanted, but the name &#39;Lane&#39; struck a chord of pure shock. Before she could ask more, her screen went black. Her battery had died.</p>
@@ -2336,7 +2416,7 @@
                 <p>A voice like ice shattered her thoughts. Timothy stood at the villa entrance, dressed in a loose bathrobe, his hair still damp. He had intended to be &#34;charitable&#34; by letting her stay a few more days to find her footing. Seeing her huddled in the dirt with her clothes scattered around her, he felt a strange, uncomfortable surge of irritation.</p>
                 <p>“I told you that you could leave in a few days,” Timothy said, walking toward her. “Why are you making such a scene in the driveway while I&#39;m in the shower?”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

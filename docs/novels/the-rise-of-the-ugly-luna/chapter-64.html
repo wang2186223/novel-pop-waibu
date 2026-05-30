@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2319,35 +2399,35 @@
                 <p>Jaris sighed, his expression like one being pestered.&#34;I thought we had an understanding, Lyric. You&#39;re to accompany me to meetings and events. Or was l supposed to include &#39;without complaints&#39; in the contract?&#34;</p>
                 <p>There was something about the way he spoke that always unnerved me. He had the uncanny ability to drop bombshells of annoyance, all while maintaining a serenity that would make Buddha proud.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>My anger heightened. &#34;Well, the least you can do is inform me on time. I&#39;m not a robot, Alpha. I have feelings and I get tired.&#34;</p>
                 <p>He continued with whatever it was he was doing on the table.</p>
                 <p>His silence was frustrating.</p>
                 <p>&#34;Why don&#39;t you just take someone else?&#34; I moved my hands up and down in exhaustion. Afterall, you took Marta to the Rhys&#39; party.</p>
                 <p>He didn&#39;t say anything, only grating on my nerves.I soon realized what his silence meant.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Tears stung at the corner of my eyes. &#34;This isn&#39;t fair.It&#39;s really not.&#34;</p>
                 <p>I stormed out of the room.</p>
                 <p>In less than an hour, I was fully dressedand went downstairs to meet Jaris.</p>
                 <p>Turned out he wasn&#39;t down yet. So, I had to wait for him. How funny that I was always doing the waiting.</p>
                 <p>I huffed as I took a seat. I was irked at the absurdity of attending such a ludicrous meeting. If only I had a choice.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Finally, &#39;the arrogant king&#39; joined me.I rolled my eyes as I stood up and headed for the door. But | didn&#39;t miss the way his eyes lingered on my dress</p>
                 <p>Well, I was sure looking good in my ankle-length purple dress. My hair was flowing on my shoulders,and I had my red lipstick on.</p>
                 <p>We both got in the car. Kael drove while Nerion took the front passenger seat. And in no time, we hit the road.</p>
                 <p>I kept glaring out the window, feeling so mad that was sitting next to him right now and couldn&#39;t do anything. He was busy with his system and didn&#39;t seem to care about me.</p>
                 <p>We stopped at a traffic light, awaiting the pedestrians to cross over. Someone caught my attention;someone that made my heart stop in my chest.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>My eyes widened in shock as the name escaped my lips.&#34;Penelope?&#34;</p>
                 <p>She was right there, crossing over with the pedestrians.It looked like a dream to me.</p>
                 <p>For close to five years, I&#39;ve been looking for her.I&#39;ve been longing to know where my kids were buried. And now,she was right there! &#34;Penelope!&#34; I called again, louder this time, my hands on the windows.</p>
                 <p>Of course, she couldn&#39;t hear me. The car was soundproofed and tinted black.</p>
                 <p>Jaris and the others must be looking at me right now like I&#39;d lost my mind. But I didn&#39;t care. Before I could stop myself, I opened the door and jumped out of the car.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">

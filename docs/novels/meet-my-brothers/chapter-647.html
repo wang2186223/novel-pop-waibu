@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,37 +2391,37 @@
                 <p>Timothy withdrew his gaze. While staying in his seat, he eyed the private lounge on the second floor again.</p>
                 <p>Luna, who was sitting behind him, happened to notice his gaze. It irked her. Luna had an inkling of that woman&#39;s background.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>According to the sources, that woman was Monalize, a regular at Xanier Island.</p>
                 <p>She normally hung out with men. People had lost count of the number of men she hung out with.</p>
                 <p>Irritated, Luna looked at Caleb. &#34;Caleb, I heard something about that woman when I was on my way here. Do you want to know?&#34; &#34;Fancy me. What did you hear?&#34; &#34;She seems to be a regular at Xanier Island. This place is known for its male hosts. She selects different men for a company for every visit. She&#39;s popular because she&#39;s generous with money.&#34;</p>
                 <p>She sneaked a peek at Timothy to observe his expression, but the mask was covering his face.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Caleb asked, &#34;That&#39;s it? Nothing more? Nothing about her hometown or real name?&#34;</p>
                 <p>She replied slowly, &#34;I haven&#39;t heard anything about that, but I&#39;ve heard that her personality is different from Mia Bowen&#39;s. I don&#39;t think she&#39;s Mia Bowen.</p>
                 <p>Timothy finally piped up, but in a steely voice, &#34;Mia Bowen, Mia Bowen. Can&#39;t you address her respectfully?&#34;</p>
                 <p>Feeling wronged, she retorted, &#34;Do I have to call her Mrs. Barrett? You&#39;re divorced, though.&#34; &#34;Shut up! If you&#39;re going to keep this up, you might as well return.&#34; His patience was running thin.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Luna kept quiet despite the frustration boiling in her.</p>
                 <p>Caleb gave her a helpless look. &#34;I told you not to stick your nose in it and not to ask questions. Forget it. Let&#39;s focus on the auction.&#34;</p>
                 <p>Instead of fighting back, Luna let the conversation end. She couldn’t help but look at the second floor.</p>
                 <p>Was there something magical about that face? Why was Timothy attracted to Monalize despite her bad reputation?</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>The auction would commence at any moment now.</p>
                 <p>The curtains in the private lounge were drawn. Mia was on the couch overlooking the view on the first floor.</p>
                 <p>Her gaze landed in Caleb and Timothy&#39;s direction.</p>
                 <p>Ginger tiptoed. &#34;Mommy, is Mister here? Where is he?&#34; &#34;The middle seat on the third row, wearing a black and white mask.&#34; &#34;Oh, I saw him. Can I call him later?&#34; Ginger showed her pink wristwatch, which was repaired.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Mia swirled a glass of champagne. &#34;If you want to. I wonder what is he going to buy from here.&#34;</p>
                 <p>At that moment, Tanner knocked on the door and entered the room. &#34;Ms. Lane, I&#39;m terribly sorry. I didn&#39;t know that she&#39;s your daughter. Here&#39;s an apology gift. I hope you&#39;ll have a wonderful stay here.&#34;</p>
                 <p>He felt his life shaved off by ten years the moment he learned the news of Ginger going missing.</p>
                 <p>Fortunately, Ginger was safe and sound, otherwise, the Lanes would&#39;ve turned the whole island upside down.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

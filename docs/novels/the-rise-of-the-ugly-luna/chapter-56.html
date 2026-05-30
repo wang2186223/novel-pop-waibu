@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2316,7 +2396,7 @@
                 <p>Of course, he had every reason to suspect me.It did look like I was trying to flee. But how do I explain to him that I&#39;d changed my mind? How do I even explain why I&#39;d been trying to flee in the first place? It wouldn&#39;t make any sense.</p>
                 <p>Jaris was so pissed. He looked at me like I&#39;d betrayed him. It was almost like that night at the temple when he glared at me like I was his enemy.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;And here I was, thinking you cared for my kids. For my son,&#34; he said low, his voice filled with disappointment. &#34;We had an agreement for you to help them. Yet, you&#39;re willing to run away just for some other selfish interest.&#34;</p>
                 <p>No. I wasn&#39;t going to let him do this to me. His kids were the reason I was staying. I was risking my life for them! &#34;I love your kids! They&#39;re the reason you still met me here!&#34; | snapped.</p>
                 <p>His eyes darkened. &#34;So, you do admit that you were trying to flee, then.&#34;</p>
@@ -2338,7 +2418,7 @@
                 <p>But no response came. Instead, I heard his receding footsteps.</p>
                 <p>****+****+</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>For two whole days, I was locked in my room by Jaris.</p>
                 <p>I didn&#39;t have access to my phone to call anyone, so l was stuck here at his will.</p>
                 <p>The only time I got to see people was when the maids came with food and drinks, and each time, there would be two guards at the door, making sure I didn&#39;t try to leave. They wouldn&#39;t even talk to me. I guess Jaris must have warned them not to so I wouldn&#39;t try to talk my way out of here.</p>
@@ -2349,7 +2429,7 @@
                 <p>He opened his arms and I ran right in, feeling like an abandoned wolf who was finally meeting her family</p>
                 <p>&#34;How-How did you get access?&#34; Jaris wouldn&#39;t let me see anyone.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Just then, I caught Kael by the door.</p>
                 <p>&#34;The bastard owed me a favour,&#34; Jace clarified</p>
                 <p>Oh.</p>
@@ -2360,7 +2440,7 @@
                 <p>&#34;What the fuck is going on, Lyric? You never showed up, and I couldn&#39;t even reach you on phone. And when I came here, that fucker told me you were locked up.Good thing he owed me a favor.&#34;</p>
                 <p>I turned away from Jace, sinking my fingers into my hair. I told him what happened; how Jaris had caught me leaving. As expected, he was enraged.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;And so fucking what? You&#39;re not his slave, Lyric. He has no right to lock you up,&#34; he fumed.</p>
                 <p>&#34;It&#39;s actually a breach of contract.&#34; He has the right to do worse to me.</p>
                 <p>&#34;Please, spare me. This is nonsense. I could talk to my father.&#34;</p>
@@ -2375,7 +2455,7 @@
                 <p>&#34;I-I know. But I need to be there for him.&#34;</p>
                 <p>Right now, it was beyond what Jaris and I shared. Jaris and Marta aside, the kids had become my friends and I wanted to be there for them.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">

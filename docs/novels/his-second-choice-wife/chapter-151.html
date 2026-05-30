@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2313,7 +2393,7 @@
                 <p>As both women painted, the appraisers studied their progress closely. When they glimpsed &#34;Isabella&#39;s&#34; nearly finished work, their brows furrowed in disapproval before turning to Evelyn&#39;s canvas. The moment they saw Evelyn&#39;s painting, their eyes widened in shock.</p>
                 <p>The reporters seized the moment, addressing their audience: &#34;Can our viewers identify the real Isabella from these two artworks?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Obviously the fake is just copying old works. She&#39;s memorized them so well they&#39;ve become soulless replicas,&#34; one commenter scoffed.</p>
                 <p>&#34;I knew she was fake! The moment she revealed her face, the live streams and charity work stopped,&#34; another pointed out.</p>
                 <!-- 广告位 3 -->
@@ -2321,11 +2401,11 @@
                 <p>&#34;Both are stunning, but Evelyn&#39;s work has undeniable life and energy,&#34; a viewer praised.</p>
                 <p>&#34;Case closed then. Evelyn must be the real Isabella. Who knew she&#39;d be this adorable?&#34; someone concluded.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Indeed, Evelyn&#39;s sweet, heart-shaped face only enhanced her charm on camera.</p>
                 <p>Finishing her piece, Evelyn set down her brush and glanced up - straight into Liam Blackwood&#39;s intense gaze. The depth in his eyes sent warmth flooding through her chest. Flustered, she quickly looked away.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>As spectators gathered to admire Evelyn&#39;s work, &#34;Isabella&#34; completed hers. Comparing both paintings, the appraisers declared Victoria an impostor. Though technically perfect, her work lacked the authentic spark of true artistry, merely tracing a previous piece.</p>
                 <p>Evelyn&#39;s depiction of Blackwood Manor&#39;s gardens, however, took their breath away - every petal and leaf rendered with photographic precision.</p>
                 <p>&#34;The evidence is clear. Ms. Evelyn Carter is the real Isabella Grayson. What do you have to say for yourself?&#34; The lead appraiser turned sternly to the impostor.</p>
@@ -2333,7 +2413,7 @@
                 <p>&#34;Isabella&#39;s creations are spontaneous, never repeating. Yours looks machine-printed - completely contrary to her style.&#34; The appraiser&#39;s voice turned icy. &#34;Clearly you&#39;ve practiced this specific piece endlessly to achieve such empty perfection.&#34;</p>
                 <p>Victoria paled. When she looked for her assistant, the woman had mysteriously vanished.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

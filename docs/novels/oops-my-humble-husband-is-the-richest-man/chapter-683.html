@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2321,7 +2401,7 @@
                 <p>&#34;First secret, telling you why you can&#39;t find it—the Sterling Family uses cloaking technology. Someone invented a cloaking material that covers the entire Sterling Family territory. So on any map, that area appears either as ocean, forest, or land... perfectly blending into the surrounding environment.&#34;</p>
                 <p>Evelyn pressed further.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Specifically, is it ocean, forest, or land?&#34;</p>
                 <p>Natalie blinked.</p>
                 <p>&#34;That&#39;s the second question~ What&#39;s your second dish?&#34;</p>
@@ -2337,7 +2417,7 @@
                 <p>&#34;So I&#39;m guessing, is Professor Nathaniel Wright about to return to the country?&#34;</p>
                 <p>Evelyn&#39;s hands stilled.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>She turned, the tip of her knife pointing directly at Natalie&#39;s face.</p>
                 <p>One inch closer, and it would have grazed her delicate skin.</p>
                 <p>Evelyn&#39;s eyes were icy.</p>
@@ -2353,7 +2433,7 @@
                 <p>&#34;I told you, we have nine competitors. Besides Nicole Sterling siding with me, there are six others eyeing you with hostility!&#34; Natalie said, casually picking up a cucumber from the side and taking a crisp bite.</p>
                 <p>Evelyn frowned.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>She understood something.</p>
                 <p>Immediately, she took out her phone and called Mr. Valentine.</p>
                 <p>&#34;Dad, can we publicly disown each other as father and daughter for four days?&#34;</p>
@@ -2369,7 +2449,7 @@
                 <p>&#34;What trouble are you causing now? Is the sect unable to cover for you this time?&#34;</p>
                 <p>Evelyn was silent for a moment.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>She said seriously, &#34;Someone reminded me that the better I appear in public, the more suspicious I become.&#34;</p>
                 <p>Natalie was right.</p>
                 <p>The other six Sterling Family heirs didn&#39;t know about Mr. Valentine, Alexander Vance, and the Cortez Sect Leader&#39;s fiercely protective natures.</p>
@@ -2385,7 +2465,7 @@
                 <p>Natalie&#39;s earlier words, which seemed like a threat, were actually a warning!</p>
                 <p>After explaining briefly to the Cortez Sect Leader, Evelyn hung up and looked at Natalie.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Thank you.&#34;</p>
                 <p>Natalie grinned.</p>
                 <p>&#34;Verbal thanks aren&#39;t enough. If you really want to thank me, how about cooking one more dish?&#34;</p>
@@ -2401,7 +2481,7 @@
                 <p>Evelyn looked at her.</p>
                 <p>&#34;Continue. What&#39;s the next secret about the Sterling Family?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">

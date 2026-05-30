@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>&#34;Until one day, Caden became more attracted to her and wanted to keep her for himself. I backed off and he believed she was his girlfriend. But unknown to him, Etta had always had eyes for me. The reason she agreed to be with my brother and I was because it was the only way she could be near me. She told Caden she couldn&#39;t be with him and always came to be with me. But I stll didn&#39;t want her. Never been the type to want something serious with girls.&#34;</p>
                 <p>&#34;Why?&#34; The question slipped from my lips.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>He shrugged and chuckled. &#34;A lot of people wanted my brother and I because of our status. Our Pack has always been the highest ranking. Most of them wanted me more because they knew I was better &#34;Etta choosing me, it caused a rift between Caden and I. She was quite beautiful, and maybe, overtime, I became attracted to her. Yes, red was her favorite. But I don&#39;t like red lipstick because of her.&#34; He turned on his seat to lock eyes with me.</p>
                 <p>&#34;Etta was the first girl I did pay attention to. I always saw her on red lipstick and realized I enjoyed seeing it on the ladies | like.I realized it was a beautiful color for the lips. But that&#39;s as far as it goes, Lyric. It&#39;s just like someone introducing you to a new meal which is their favorite. You taste the meal, fall in love with it, and it also becomes your favorite. That doesn&#39;t mean each time you eat it, you&#39;re thinking of that person.It just simply became your favorite.&#34;</p>
                 <p>It was hard holding a grudge against him after all these. He spoke to me like a teacher would a child.It amused me that he cared this much about my feelings and really wanted to clear things up.</p>
@@ -2323,7 +2403,7 @@
                 <p>I let a brief moment pass before I added. &#34;He... also said you killed her.&#34;</p>
                 <p>He readjusted himself to face forward, his hand tightening around the steering.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;It was an accident,&#34; his voice had turned frosty. &#34;I&#39;d never intentionally hurt Etta on my own.&#34;</p>
                 <p>&#34;B-But what happened?&#34;</p>
                 <p>&#34;It was an accident, Lyric. Leave it be.&#34; His voice was a little rough it startled me.</p>
@@ -2332,7 +2412,7 @@
                 <p>I nodded, already scared of insisting on it. Besides, if it was something he could talk about, I was sure he would have already.</p>
                 <p>&#34;We should go homeadded with a small smile. &#34;I could really use a warm bath right now.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>That brought a small smile from him. He started the car, but before we could get back to the road, he got a call. The phone was beside him, so l could see it was Kael.</p>
                 <p>He picked the call and put it on speaker.</p>
                 <p>Kael&#39;s voice didn&#39;t sound pleasant when he spoke.&#34;Alpha, you&#39;ll want to get down here. Millow street. It&#39;s important.&#34;</p>
@@ -2361,7 +2441,7 @@
                 <p>His hand gripped his forehead, like it was aching. My anxiety shot to a whole new level when I noticed he was bleeding from the nose.</p>
                 <p>No. No. No. What was happening?</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">

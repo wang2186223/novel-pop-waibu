@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2312,35 +2392,35 @@
                 <p>As her words faded, Timothy glanced up at her, a playful sparkle in his eyes. &#34;Is all this fuss because you&#39;re thinking about giving our relationship another shot?&#34;</p>
                 <p>&#34;Timothy!&#34; Mia snapped, standing abruptly from her seat. Meeting his gaze, she retorted, &#34;Whether you eat or not is entirely your decision.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>With a sharp turn, she stormed out of the ward, seething with frustration from their recent exchange. Each step felt like a release of pent-up irritation as she kicked out at the empty air. How aggravating. Timothy was truly a piece of work.</p>
                 <p>Despite her genuine concern for him, he persisted in his playful banter.</p>
                 <p>He had no one to blame but himself for being alone.</p>
                 <p>As Mia ascended to the upper ward, she found Ginger fast asleep on the sofa, wrapped snugly in a blanket.</p>
                 <p>Laura, on the other hand, was awake, a soft smile gracing her face as she watched over Ginger.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Grandma Laura, how are you feeling?&#34; Mia approached, her voice laced with concern.</p>
                 <p>Upon spotting Mia, Laura offered a slight nod. &#34;Much better.&#34;</p>
                 <p>As Mia tenderly held Laura&#39;s hand, she couldn&#39;t help but notice a slight chill. &#34;That&#39;s great news. Just make sure to take good care of yourself and follow the doctor&#39;s advice. You&#39;ll be back on your feet before you know it.&#34;</p>
                 <p>&#34;Don&#39;t fret, I&#39;m quite in tune with my body. Oh, by the way, Luna has been caught, hasn&#39;t she?&#34;</p>
                 <p>&#34;You seem to catch everything, don&#39;t you? But we&#39;ve got this covered; no need for you to worry.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Looking sincerely at Mia, Laura confessed, &#34;If only I had summoned the courage to send her away back then. If I had, you wouldn&#39;t have been hurt, and the children wouldn&#39;t have suffered.&#34;</p>
                 <p>Mia understood that despite Laura&#39;s illness, her mind remained astute.</p>
                 <p>In a hushed tone, Mia reassured her, &#34;There&#39;s no reason for you to shoulder the blame for any of this. Who could have foreseen Luna&#39;s cruelty and her capability for such deeds?</p>
                 <p>&#34;Fortunately, we&#39;ve all emerged unharmed, and the children have grown. That&#39;s all the more reason for you to focus on your recovery. Remember how you once mentioned your wish to see Ginger and Sage?&#34; &#34;Mia, I appreciate your endurance over the years. I assume you&#39;re aware of Tim&#39;s background now, aren&#39;t you?&#34;</p>
                 <p>Mia fell silent momentarily. &#34;I am. Mrs. Barrett is aware too.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Laura remained composed as she responded, &#34;If she&#39;s aware, then so be it. Secrets can&#39;t stay hidden forever, after all.&#34;</p>
                 <p>As Mia&#39;s mind wandered to Timothy&#39;s agreement with Sharon, she felt compelled to discuss it with Laura.</p>
                 <p>Upon hearing the news, Laura raised an eyebrow. &#34;Did she really make such a demand?&#34;</p>
                 <p>&#34;Yes. I have no doubt that Timothy is a man of his word. If he&#39;s made a commitment, he&#39;ll surely follow through without hesitation. Remember when Mrs. Barrett hurried to Nord City for her brother&#39;s sake? &#34;If she were to inherit everything from the Barrett family, there&#39;s a danger she could be manipulated or exploited. After all, her family is not to be underestimated.&#34;</p>
                 <p>&#34;That foolish woman! Who does she</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>think has been looking out for her all these years? I can&#39;t believe she now wants to take control of the Barrett Group Doesn&#39;t she understand that Timothy has poured his heart and soul into building his company?&#34;</p>
                 <p>Mia couldn&#39;t shake the feeling that there was a hidden layer to Laura&#39;s words.</p>
                 <p>She proceeded cautiously, inquiring, &#34;Is there more to this?&#34;</p>
@@ -2349,7 +2429,7 @@
                 <p>responding, &#34;But what about your health? The doctor cautioned against getting agitated; it&#39;s not conducive to your well-being. If there&#39;s anything, perhaps I can</p>
                 <p>convey the message on your behalf.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">

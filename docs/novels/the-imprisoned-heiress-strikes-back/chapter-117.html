@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2316,7 +2396,7 @@
                 <p>Then, without warning, Alexander pulled her into his arms.</p>
                 <p>Evelyn stiffened for a second before melting into his embrace. His heartbeat thudded steadily against her ear, a silent reassurance.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>“You should’ve called me,” he murmured into her hair.</p>
                 <p>She exhaled, tension seeping out of her. “I didn’t want to bother you.”</p>
                 <p>Alexander pulled back just enough to look into her eyes. His thumb traced her cheek.</p>
@@ -2327,7 +2407,7 @@
                 <p>And he held her like he’d never let go.</p>
                 <p>Evelyn lifted her hand, her elbow bending slightly as she reached toward Alexander.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>His fingers closed around hers, their hands locking together in an instant.</p>
                 <p>Before Evelyn could react, Alexander&#39;s strong arms encircled her, pulling her firmly against his chest.</p>
                 <p>His palm settled at the small of her back, drawing her closer until the warmth of his body seeped into hers. The rich, intoxicating scent of sandalwood and aged whiskey clung to him, making her head spin.</p>
@@ -2349,7 +2429,7 @@
                 <p>More than once, he&#39;d nearly broken. Nearly pulled her into his arms right there in the office, consequences be damned.</p>
                 <p>The house felt hollow without her.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Her presence lingered—in the sheets they&#39;d shared, in the kitchen where she&#39;d hummed while making coffee, in every damn corner.</p>
                 <p>Just stepping through the front door flooded his mind with memories. Evelyn beneath him, gasping his name, her nails scoring his back—</p>
                 <p>Alexander exhaled sharply, dragging a hand through his hair.</p>
@@ -2360,7 +2440,7 @@
                 <p>Two days.</p>
                 <p>After waiting an entire decade, two days felt like nothing.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>His eyes remained fixed ahead, his voice steady and resolute. &#34;Do whatever you need to do. If you want to destroy Ethan Caldwell, then do it. From now on, you can act as recklessly as you please. Just remember—no matter what happens, I’ll handle the fallout.&#34;</p>
                 <p>Evelyn’s breath caught. She hadn’t expected Alexander to give her this much freedom, this much power.</p>
                 <p>They climbed into the car. After a brief hesitation, Evelyn finally voiced the question lingering in her mind. &#34;What was that about the drunk guy tonight?&#34;</p>
@@ -2376,7 +2456,7 @@
                 <p>&#34;That... was a lifetime ago,&#34; she murmured, her voice barely above a whisper. The dashboard lights cast shadows across her downcast face. &#34;I haven&#39;t touched a needle in years.&#34;</p>
                 <p>The unspoken question hung heavily between them as the car sped through the neon-lit streets of Cresthaven. Somewhere in the distance, a siren wailed.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">

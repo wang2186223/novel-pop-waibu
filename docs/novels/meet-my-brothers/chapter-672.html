@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2317,13 +2397,13 @@
                 <p>Out of nowhere, Mia delivered a forceful slap that left Luna staggering.</p>
                 <p>Fixing Luna with a cold stare, Mia warned, “Mind your words. There isn’t a man on this planet beyond my reach. Rest assured, once I’ve had my fun, I’ll return him to you.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>“Men, you see, are like clothing. Once you grow weary of them, you’ll just replace them with something new.”</p>
                 <p>Luna immediately called out, “Tim, did you hear what she said? Looks like she’s been deceiving you all along!”</p>
                 <p>Mia turned around and spotted Timothy standing at the restaurant’s entrance.</p>
                 <p>Nonetheless, she didn’t display any remorse for being caught, instead flashing a radiant smile. “Mr. Barrett, I look forward to our meeting tomorrow!”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>With that, she gracefully stepped into the elevator, even giving Timothy a wink before the doors closed.</p>
                 <p>Timothy stood in place, observing as Mia disappeared into the elevator, his expression. darkening.</p>
                 <p>Mia’s nonchalant demeanor and her unwavering confidence that Timothy would take the bait, even after he overheard their conversation, left him inexplicably unsettled.</p>
@@ -2335,7 +2415,7 @@
                 <p>“Tim did you catch what that woman just said? She’s not Mia at all. She probably knew she resembled Mia and deliberately dressed up to seduce you.”</p>
                 <p>“Shut up!” Timothy snapped back. “Hand me the phone.”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Anxiously, Luna responded, “I didn’t film anything just now.”</p>
                 <p>“If</p>
                 <p>any photos or videos from today surface, you won’t be able to continue staying in the Barrett family. I’m sure you understand the conditions for remaining here.”</p>
@@ -2346,7 +2426,7 @@
                 <p>Timothy couldn’t help but glance at the mirror, recalling the intense scene at the restaurant. He grabbed a glass of cold water and gulped it down, trying to calm the turmoil within.</p>
                 <p>At that moment, there was a knock on the door. “Is Mr. Barrett there? Ms. Monalize has a gift for you.”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">

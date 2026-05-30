@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2319,28 +2399,28 @@
                 <p>Her breath hitched. Compliments from him were rare—so rare that they always caught her off guard.</p>
                 <p>She ducked her head, but he caught her chin, tilting her face back up.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>This time, his kiss was rougher, more demanding. When she instinctively turned away, he chuckled darkly.</p>
                 <p>&#34;Running from me now?&#34; His voice was a velvet growl. &#34;You weren’t so shy when you teased me in the car earlier.&#34;</p>
                 <p>His fingers tangled in her hair, angling her head back as his lips trailed down her neck, nipping and tasting.</p>
                 <p>Evelyn gasped, her knees giving way beneath her.</p>
                 <p>The world spun as Evelyn&#39;s knees gave way, only to be caught against Alexander&#39;s solid chest.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>His strong arm encircled her waist effortlessly, guiding her backward until the mattress met her legs.</p>
                 <p>Before she could protest, his weight pressed her into the sheets, the shift in position igniting a new intensity between them.</p>
                 <p>Her thoughts blurred, the air thick with unspoken desire.</p>
                 <p>Their breaths tangled as her fingers suddenly wrapped around his wrist, halting his descent. &#34;Wait—Alexander, we haven&#39;t eaten yet.&#34;</p>
                 <p>He lifted his head, his darkened gaze pinning her beneath him. &#34;Dinner?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>She couldn&#39;t hold his stare, her focus dropping to the tantalizing curve of his throat. &#34;Yes, dinner. I&#39;m hungry.&#34;</p>
                 <p>A low chuckle rumbled from his chest. The hunger in his eyes wasn&#39;t just for food. &#34;Is this your way of teasing me?&#34;</p>
                 <p>&#34;I—I&#39;m not!&#34; Her teeth sank into her lower lip.</p>
                 <p>Alexander braced himself above her, studying her with unnerving focus. &#34;No? Then prove it.&#34; His voice dropped to a whisper. &#34;Kiss me.&#34;</p>
                 <p>Evelyn&#39;s pulse stuttered. &#34;You can&#39;t be serious.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Her pulse stuttered. The sudden realization that she&#39;d stepped into a carefully laid snare made her breath catch.</p>
                 <p>But retreating now would only confirm his suspicions. She&#39;d already taken the bait—there was no turning back.</p>
                 <p>Evelyn&#39;s heartbeat thundered in her ears.</p>
@@ -2348,7 +2428,7 @@
                 <p>Her lashes dipped as she brushed her lips against the vulnerable hollow of his throat—a featherlight press that sent electricity crackling between them.</p>
                 <p>Alexander&#39;s entire body tensed. &#34;Who,&#34; he rasped, fingers digging into her waist, &#34;taught you to aim there?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">

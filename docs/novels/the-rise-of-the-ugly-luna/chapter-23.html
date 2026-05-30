@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2314,7 +2394,7 @@
                 <p>How could he walk out on father and l? Was he ashamed of having me introduced as his soon to be Luna? Yet, he had stormed into the club and ripped out a man&#39;s heart for my sake.</p>
                 <p>Embarrassment coloured my cheeks as father and l continued our walk. But soon, he got too involved in a conversation with some Alphas that I didn&#39;t have any interest in.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>I had to find my way around to avoid being bored. I made it to the wine counter to ask for something light. While I was waiting formy order, I felt a light tap on my shoulder and turned around to see Jace. My mood brightened up at once.</p>
                 <p>&#34;Goodness! Forgive me, pretty lady, I must have tapped the wrong lady. I&#39;m looking for Lyric, and you sure look a lot like her.&#34; He said with his hand on his chest.</p>
                 <p>I laughed as he hit him on the shoulder. &#34;Stop joking around, Jace. I&#39;m glad you made it.&#34;</p>
@@ -2332,7 +2412,7 @@
                 <p>&#34;Thank you for the vivid description of how long I&#39;ll be stuck with the monster.&#34; I rolled my eyes.</p>
                 <p>&#34;Monster? He doesn&#39;t look like a monster, Ly. He&#39;s the complete opposite.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>I rolled my eyes again, refusing to dignify that with words.</p>
                 <p>We were soon interrupted by the presence of Kael.Geez,I preferred dealing with Nerion.</p>
                 <p>Kael was always grumpy and short tempered, while Nerion was the gentle one. I wasn&#39;t surprised Jaris picked Karl as his beta. The two were a perfect match made in Hades.</p>
@@ -2350,7 +2430,7 @@
                 <p>Oh, please. I couldn&#39;t deal with this again. Not anymore.</p>
                 <p>&#34;Jace...&#34; I tried to hold him, but he wrenched his hand free.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Are you sure about that?&#34; He was staring Kael right in the eye. &#34;If I remember correctly,you left with some really bad bruises. Unless you want to pin it on a Halloween costume.&#34;</p>
                 <p>&#34;Like you said, &#39;if you remember correctly&#39;. I guess now we know you also have memory problems.&#34;</p>
                 <p>&#34;Guys, please stop.&#34; I stepped in their middle.</p>
@@ -2364,7 +2444,7 @@
                 <p>&#34;I need some air,&#34; I muttered and left the hall.</p>
                 <p>But as soon as I stepped outside, I regretted my decision.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">

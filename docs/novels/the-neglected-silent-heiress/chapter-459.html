@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2309,15 +2389,15 @@
                 <p>Was this some sort of scam? Liam&#39;s sharp gaze took in her designer clothes and expensive jewelry - she clearly wasn&#39;t desperate for money. Sebastian leaned closer. &#34;Shall I arrange transport to Mercy Hospital, sir?&#34;</p>
                 <p>Liam responded with nothing but a cold stare that sent Sebastian scrambling from the vehicle, umbrella in hand.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Margaret blinked rainwater from her lashes as footsteps approached. First came the sight of handmade Italian leather shoes worth more than most people&#39;s monthly rent. Her gaze traveled upward, taking in the imposing figure of the masked man before her. The disguise did nothing to diminish his striking presence - if anything, it added an air of dangerous mystery. Her pulse quickened. She&#39;d been right about him.</p>
                 <p>Liam studied the woman before him, noting how despite her trembling hands, her eyes remained sharp and assessing. &#34;Speak quickly,&#34; he commanded, his voice like frozen steel. &#34;What game are you playing? My patience wears thin.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Margaret rose unsteadily to her feet, swaying slightly for effect. &#34;Forgive me, sir. I felt faint and collapsed. Your kindness is appreciated.&#34;</p>
                 <p>A derisive snort escaped Liam as he turned away. Margaret couldn&#39;t let this opportunity slip through her fingers. She rushed forward, tears welling in her eyes. &#34;Wait! There&#39;s more. I&#39;m being hunted by a powerful enemy. I thought... perhaps someone of your obvious stature could help. I can make it worth your while.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Sebastian barely suppressed a laugh at the transparent ploy. Liam&#39;s expression darkened further. &#34;Do I look like the sort of fool who falls for such obvious theatrics?&#34;</p>
                 <p>Margaret&#39;s voice dropped to a whisper. &#34;My enemy controls half of Westhaven&#39;s underworld. Check my credentials - I run the largest information network in Newport. My children see everything. Need someone found? A problem disappeared? I&#39;m your woman.&#34;</p>
                 <!-- 广告位 4 -->
@@ -2325,7 +2405,7 @@
                 <p>Liam turned slowly, one eyebrow arched. &#34;Is that so?&#34;</p>
                 <p>She nodded eagerly. &#34;Just one night of protection. That&#39;s all I ask. You&#39;re clearly capable - why would I lie to someone like you?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Sebastian interjected quietly, &#34;Sir, we know nothing about this woman. It could be a trap.&#34;</p>
                 <p>Liam&#39;s gloved hand rose, silencing his assistant. His piercing gaze never left Margaret&#39;s face. &#34;You have exactly thirty seconds to convince me not to leave you here in the rain.&#34;</p>
                 <p>Margaret&#39;s mind raced. This was her chance. She straightened her shoulders, all pretense of weakness gone. &#34;Because I know who&#39;s been sabotaging your Royal Arch project. And I can deliver them to you on a silver platter.&#34;</p>

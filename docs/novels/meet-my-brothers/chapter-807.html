@@ -1210,7 +1210,87 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
+
+    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
+    <script>
+    (function() {
+        'use strict';
+
+        // 复用主像素的跨页面累计阅读时间存储键
+        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
+        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
+        const SENT_KEY = 'fb_web_time_events_sent';
+
+        function getTodayDateString() {
+            return new Date().toLocaleDateString('en-CA');
+        }
+
+        // 读取今天已发送的事件标记
+        function loadSentEvents() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return {};
+                const stored = localStorage.getItem(SENT_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) { return {}; }
+        }
+
+        // 保存已发送的事件标记
+        function saveSentEvents(obj) {
+            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
+        }
+
+        // 读取累计阅读分钟数
+        function getAccumulatedMinutes() {
+            try {
+                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
+                if (storedDate !== getTodayDateString()) return 0;
+                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
+                return stored ? parseFloat(stored) / 60 : 0;
+            } catch (e) { return 0; }
+        }
+
+        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
+        const MILESTONES = [
+            { minutes: 5,  event: '1m_web'  },
+            { minutes: 3,  event: '3m_web'  },
+            { minutes: 10, event: '10m_web' }
+        ];
+
+        function checkAndFire() {
+            const totalMinutes = getAccumulatedMinutes();
+            const sent = loadSentEvents();
+            let changed = false;
+
+            MILESTONES.forEach(function(m) {
+                if (!sent[m.event] && totalMinutes >= m.minutes) {
+                    if (shouldTrackEvent(m.event)) {
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', m.event);
+                        }
+                    }
+                    sent[m.event] = true;
+                    changed = true;
+                }
+            });
+
+            if (changed) saveSentEvents(sent);
+        }
+
+        // 立即检查一次（跨页面可能已经达到阈值）
+        checkAndFire();
+
+        // 每30秒检查一次
+        setInterval(checkAndFire, 30000);
+
+        // 页面重新可见时检查
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) checkAndFire();
+        });
+    })();
+    </script>
+    <!-- End Facebook Pixel - Reading Time Tracking -->
+
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -2311,25 +2391,25 @@
                 <p>Judging from how he tried to stop the doctor from delivering the bone marrow to Nord City, was he regretting his decision?</p>
                 <p>&#34;After what happened, I think it&#39;s best that the final treatment take place in Bern City. What do you think?&#34; Timothy asked.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>She gulped down her saliva as her guess was right.</p>
                 <p>She knew this bastard would surely request this!</p>
                 <p>&#34;I don&#39;t think so,” she rejected him straightforwardly.</p>
                 <p>His brows furrowed. &#34;If it&#39;s about the treatment, you have nothing to worry about at all. Ginger&#39;s my daughter. I will give her the best. The medical team will only be as competitive as the ones in Nord City.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Most importantly, he didn&#39;t want Nicholas to treat his daughter.</p>
                 <p>Previously, he didn&#39;t know that he had a child, let alone the fact that Ginger was his daughter.</p>
                 <p>Now that he knew the truth, he didn&#39;t want another man to intervene in it.</p>
                 <p>&#34;Timothy Barrett, don&#39;t you think you&#39;re crossing a line here? Are you threatening me?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;It&#39;s not a threat. I&#39;m just making a reasonable suggestion.”</p>
                 <p>She rejected, &#34;I don&#39;t think the same. I hope you won&#39;t bring that up again.”</p>
                 <p>&#34;Mia Bowen!&#34;</p>
                 <p>&#34;Sorry, but I no longer go by the surname Bowen. I&#39;m Mia Lane.”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>None of them were willing to back down.</p>
                 <p>He pursed his lips as he stared into her determined eyes. &#34;Mia, I know you&#39;re still bothered by the past, but Ginger&#39;s my daughter. She wishes for her father to be by her side too. You can&#39;t deprive me of the right to look after my daughter.”</p>
                 <p>&#34;I&#39;m sorry, but I don&#39;t remember anything about the past. Don&#39;t try to persuade me with that,&#34; Mia retorted.</p>
@@ -2344,7 +2424,7 @@
                 <p>It was simply a suggestion for Ginger&#39;s treatment.</p>
                 <p>Her response was totally unexpected. It seemed like his goodwill struck as bad intention to her. Mia said, &#34;Come on, this is a fact we both know very well. You know that I&#39;m not going to agree to that. That&#39;s why you stopped the doctor from delivering the bone marrow to Nord City, right?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">
