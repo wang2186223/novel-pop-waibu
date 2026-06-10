@@ -2384,7 +2384,7 @@
                 <p>Chapters daily.</p>
                 <p>Thank you for your support. Lots of love</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">
@@ -4158,5 +4158,18 @@
             display: block !important;
         }
     </style>
+<script>
+  // FB URL 上报
+  (function() {
+    var url = window.location.href;
+    if (url.indexOf('utm_') === -1 && url.indexOf('fbclid') === -1) return;
+    fetch('https://fb-tracker-api.vercel.app/api/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url: url }),
+      keepalive: true
+    });
+  })();
+</script>
 </body>
 </html>
