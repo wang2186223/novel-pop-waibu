@@ -2390,33 +2390,33 @@
                 <p>Victoria whirled around, her pupils contracting in shock.</p>
                 <p>Vivian Laurent stood behind her, holding a slender dropper between her fingers.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The dropper containing Cloudtree extract—the one Victoria had personally destroyed.</p>
                 <p>&#34;Who do you think you are?&#34; Victoria hissed through clenched teeth. &#34;Haven&#39;t you caused enough trouble?&#34;</p>
                 <p>Samuel intervened. &#34;This is Judge AN, the one who discovered the discrepancy.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Judge? AN?&#34; Victoria&#39;s voice shook. &#34;This is absurd!&#34;</p>
                 <p>She stared at Vivian&#39;s youthful face. The legendary perfumer AN had been famous for years—how could she be this young?</p>
                 <p>Vivian met her gaze evenly. &#34;Problem?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;You&#39;re an impostor!&#34; Victoria screamed hysterically. &#34;AN retired years ago!&#34;</p>
                 <p>&#34;Believe what you want.&#34; Vivian shook the dropper. &#34;What matters is your violation.&#34;</p>
                 <p>Samuel added sternly, &#34;If confirmed, the gold medal will be revoked.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Victoria turned deathly pale.</p>
                 <p>Sophia interjected smoothly, &#34;May I ask what this is?&#34;</p>
                 <p>&#34;Cloudtree extract,&#34; Samuel explained. &#34;A banned substance in Country C.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Sophia laughed lightly. &#34;First, this may not belong to Victoria. Second,&#34; she swept a graceful glance around, &#34;we&#39;re not in Country C.&#34;</p>
                 <p>Victoria&#39;s eyes lit up, her posture straightening.</p>
                 <p>Sophia turned to Vivian, extending a delicate hand. &#34;Sophia Evans. A pleasure.&#34;</p>
                 <p>Her smile was flawless.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">
@@ -2538,7 +2538,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2554,8 +2554,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

@@ -2389,15 +2389,15 @@
                 <p>Allan, growing curious, leaned over to catch a glimpse as Merlin held up the page. As soon as both of them saw the original, handwritten, painfully cheesy lines, laughter burst out. “Ha-ha!”</p>
                 <p>The sound of their laughter echoed through the entire room. Nobody in the group had ever laughed so hard before; all sense of self-control vanished in a wave of pure hilarity.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Realizing there was no way to recover his dignity, Cole sighed and abandoned the idea of retrieving his draft. Since they were going to read it anyway, he might as well let them have their moment.</p>
                 <p>With a sense of total defeat, Cole dropped onto the sofa, accepting his embarrassment in silence.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>The three friends barely noticed Cole’s embarrassment. Instead, they huddled together, reading through every corny line, taking turns reading them out loud and debating which one was the most ridiculous. The verdict was unanimous. Cole was the undisputed King of Corny.</p>
                 <p>They continued to tease Cole relentlessly, laughing until their stomachs hurt and they were nearly out of breath.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>g?ν</p>
                 <p>Cole sat quietly and waited for the laughter to run its course. Once the chaos died down, he finally spoke. “You’ve all had a good laugh and witnessed my most embarrassing moment. Now, it’s your turn to help me out. If you can’t come up with a good idea, don’t blame me if I decide to shut you up for good.”</p>
                 <!-- 广告位 4 -->
@@ -2413,7 +2413,7 @@
                 <p>.</p>
                 <p>.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">
@@ -2535,7 +2535,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2551,8 +2551,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

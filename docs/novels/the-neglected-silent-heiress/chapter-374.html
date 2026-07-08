@@ -2388,16 +2388,16 @@
                 <p>The sound of Isabelle&#39;s sobbing snapped Olivia from her spiraling thoughts. Kneeling, she gathered the trembling child into her arms. &#34;This isn&#39;t your fault, sweetheart. It&#39;s mine. If I&#39;d taken you to preschool today, none of this would have happened. Go rest now. I promise we&#39;ll find Great-grandpa Alistair.&#34;</p>
                 <p>Turning to the elderly butler, Olivia continued, &#34;Alfred, you&#39;ve served the Kensingtons for decades. You could have retired years ago, but your devotion kept you here. I&#39;m truly grateful. Don&#39;t blame yourself - this is my responsibility.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Tears glistened in Alfred&#39;s eyes. &#34;Mr. Kensington has always treated me like family. And yet I failed in this simple duty.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>When the butler raised a hand to strike himself in anguish, Olivia caught his wrist firmly. &#34;Alfred, we need you sharp and focused right now. Remember when Alistair wandered off to Eldermere during one of his episodes? It took Donovan weeks to find him then. We&#39;ll find him again. Now think - where would he most likely go? You know him better than anyone.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Wiping his eyes, Alfred quickly suggested several locations. Olivia and her team searched through the night but found nothing.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>After twenty-four fruitless hours, Olivia filed a missing persons report with the police, providing detailed descriptions of Alistair&#39;s appearance, clothing, and last known whereabouts.</p>
                 <!-- 广告位 5 -->
                 <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
@@ -2407,7 +2407,7 @@
                 <p>Olivia&#39;s knees nearly buckled. She bit her tongue hard, using the sharp pain to ground herself. Heartbreak threatened to overwhelm her, but she couldn&#39;t afford to lose control now. She needed to remain composed.</p>
                 <p>Handing the team leader an envelope, Olivia&#39;s voice turned steely. &#34;Continue the search. Money is no object. But understand this - my grandfather&#39;s disappearance remains confidential. I&#39;ve impressed this upon my staff. If word leaks, I&#39;ll hold each of you personally accountable.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">
@@ -2529,7 +2529,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2545,8 +2545,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

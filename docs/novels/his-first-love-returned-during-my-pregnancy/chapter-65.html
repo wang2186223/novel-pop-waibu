@@ -2392,14 +2392,14 @@
                 <p>&#34;You are Mr. Hamilton&#39;s...?&#34;</p>
                 <p>Evelyn hesitated.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>The divorce papers hadn&#39;t been finalized yet. Legally, they were still married.</p>
                 <p>But in reality, their marriage had long been dead.</p>
                 <p>As she struggled for words, Alexander emerged from the interrogation room, accompanied by a male officer.</p>
                 <p>The male officer eyed Evelyn. &#34;Here to file a report?&#34;</p>
                 <p>The female officer clarified, &#34;She&#39;s here for Mr. Hamilton&#39;s bail.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>The man raised an eyebrow. &#34;Family? Sister?&#34;</p>
                 <p>&#34;My wife,&#34; Alexander said quietly.</p>
                 <p>The two officers exchanged glances. The female officer couldn&#39;t resist asking, &#34;Then what about the pregnant woman earlier—&#34;</p>
@@ -2413,14 +2413,14 @@
                 <p>Evelyn had no interest in explaining further. &#34;Where do I sign?&#34;</p>
                 <p>The female officer handed her a form. &#34;Over here.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Leaning against the wall, Evelyn slowly made her way to the desk. Alexander moved to help, but she declined. &#34;No need for your concern, Mr. Hamilton.&#34;</p>
                 <p>She carefully filled out her personal information, pausing briefly at the &#34;Relationship&#34; field before finally writing &#34;Spouse.&#34;</p>
                 <p>&#34;Done.&#34;</p>
                 <p>The female officer took the form. &#34;One moment—I&#39;ll get the receipt.&#34;</p>
                 <p>Alexander spoke up quickly. &#34;Let me. Her leg—&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>The male officer stopped him. &#34;You&#39;re not free to move until the paperwork is complete. I&#39;ll handle it.&#34;</p>
                 <p>Evelyn nodded politely. &#34;Thank you.&#34;</p>
                 <p>The waiting area was tucked in a corner.</p>
@@ -2430,7 +2430,7 @@
                 <p>&#34;Your leg injury—&#34;</p>
                 <p>&#34;Don&#39;t apologize.&#34; Evelyn cut him off. &#34;Every time we&#39;ve met since deciding to divorce, you&#39;ve said sorry. I&#39;ve heard enough.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">
@@ -2552,7 +2552,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2568,8 +2568,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

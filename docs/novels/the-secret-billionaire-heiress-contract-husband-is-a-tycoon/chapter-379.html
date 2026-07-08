@@ -2391,7 +2391,7 @@
                 <p>Ethan opened his eyes, amusement dancing in his gaze. &#34;The Oscar-winning actor should rest.&#34;</p>
                 <p>A vein throbbed at Julian&#39;s temple.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>He stared daggers at Ethan&#39;s contented expression, itching to yank him from the chair.</p>
                 <p>&#34;Third Brother,&#34; Evelyn sighed. &#34;Your pressure is too strong.&#34;</p>
                 <p>Julian looked thunderstruck.</p>
@@ -2403,19 +2403,19 @@
                 <p>Ethan could feel the warmth of her touch, the faint floral scent clinging to her.</p>
                 <p>He remembered their first meeting—when she&#39;d shattered a sandbag with one punch.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>That explosive strength now controlled with such delicate mastery.</p>
                 <p>&#34;Done.&#34; Evelyn withdrew her hands.</p>
                 <p>Ethan rolled his shoulders. &#34;Much better.&#34;</p>
                 <p>He stood and circled behind her. &#34;My turn.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Julian bristled instantly. &#34;Don&#39;t you dare!&#34;</p>
                 <p>He seized Ethan&#39;s collar, murder in his eyes.</p>
                 <p>&#34;Third Brother.&#34; Evelyn caught Julian&#39;s wrist. &#34;It&#39;s just a massage.&#34;</p>
                 <p>She sat down and nodded to Ethan. &#34;Your turn.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Ethan&#39;s long fingers settled on her shoulders, impossibly gentle.</p>
                 <p>Julian stood rigid, knuckles cracking from clenched fists.</p>
                 <p>His glare fixed on Ethan&#39;s hands, already calculating how many extra gym sessions he&#39;d need.</p>
@@ -2546,7 +2546,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2562,8 +2562,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

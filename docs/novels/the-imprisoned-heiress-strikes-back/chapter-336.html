@@ -2403,7 +2403,7 @@
                 <p>But when Evelyn broke down, confessing how she had endured society’s judgment while raising her child alone, he understood.</p>
                 <p>She hadn’t wanted her daughter to grow up labeled as a bastard.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>So she had taken Margaret’s child instead.</p>
                 <p>&#34;Where is the other girl?&#34; Richard had demanded.</p>
                 <p>Once Evelyn confessed, he tracked down Evelyn Carter—his flesh and blood, no matter who raised her.</p>
@@ -2412,7 +2412,7 @@
                 <p>Doing so would only redirect Margaret&#39;s fury toward her, escalating the conflict further.</p>
                 <p>&#34;Evelyn has been found, and that chapter is closed. Why dredge up the past?&#34; Richard replied, forcing his voice to remain calm.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Tears welled in Margaret&#39;s eyes, her voice trembling with raw emotion. &#34;Finding her doesn&#39;t erase the pain she endured!&#34;</p>
                 <p>&#34;Richard, you owe us both! I want a divorce—and you will walk away with nothing!&#34;</p>
                 <p>A cold mask settled over Richard&#39;s features.</p>
@@ -2430,7 +2430,7 @@
                 <p>A confrontation about his betrayal.</p>
                 <p>But he acted like it was just another petty disagreement.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Her chest tightened as she thought of Evelyn Carter.</p>
                 <p>How devastating it must have been for her to endure this kind of cruelty in the past.</p>
                 <p>The realization hit her like a physical blow.</p>
@@ -2444,7 +2444,7 @@
                 <p>Making a scene?</p>
                 <p>If he wanted a scene, she’d give him one.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">
@@ -2566,7 +2566,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2582,8 +2582,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

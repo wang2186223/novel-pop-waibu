@@ -2390,27 +2390,27 @@
                 <p>&#34;He went to our house?&#34;</p>
                 <p>&#34;No, probably too awkward. He had me come over to his place to fill everything out.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Still going for Hudson Tech? What major?&#34;</p>
                 <p>&#34;Materials Science. Peter said it has good prospects and is relatively welcoming for women.&#34;</p>
                 <p>&#34;Do you actually like it?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Emily&#39;s voice softened. &#34;Doesn&#39;t matter if I like it—as long as it pays well. Sis, in families like ours, who gets to talk about dreams?&#34;</p>
                 <p>Evelyn&#39;s chest tightened. &#34;You&#39;re so young. When did you become this pragmatic?&#34;</p>
                 <p>&#34;That&#39;s just reality, sis. Only the privileged get to be picky. Ordinary people like us have to focus on survival first.&#34; Emily forced a light laugh. &#34;Anyway, gotta go—my anime just updated!&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>After hanging up, Evelyn stared blankly out the window.</p>
                 <p>Peter had handled things decently—preserving both families&#39; dignity while helping her sister with college plans.</p>
                 <p>But her sister&#39;s change broke her heart.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>The girl who once rebelled for love had been worn down by reality in just one summer.</p>
                 <p>She didn’t know if this was good or bad.</p>
                 <p>Was it their circumstances forcing Emily to abandon her passions, or just the inevitable pain of growing up? Either way, it was heartbreaking.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Years from now, when Emily worked late in a lab, she might remember that summer spent obsessing over anime.</p>
                 <p>But this was the fate of ordinary people—in the relentless tide of time, even grief felt like a luxury.</p>
                 <p>&#34;Dr. Carter! Big news!&#34;</p>
@@ -2420,7 +2420,7 @@
                 <p>&#34;Psychiatry?&#34;</p>
                 <p>&#34;Yeah! Do you think she...&#34; Olivia made a wild gesture, &#34;...snapped?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">
@@ -2542,7 +2542,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2558,8 +2558,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

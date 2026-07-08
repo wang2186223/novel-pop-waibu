@@ -2394,7 +2394,7 @@
                 <p>Evelyn rubbed her temples. &#34;Didn&#39;t I ask you to talk her out of it?&#34;</p>
                 <p>&#34;I tried! But Mom and Dad don’t want to burden you. They said they’d figure out a way to raise the money first...&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;...I see.&#34; Evelyn paused. &#34;Has Peter contacted you?&#34;</p>
                 <p>&#34;How did you know? He just called to invite me to the new ski resort.&#34;</p>
                 <p>Evelyn&#39;s chest tightened. &#34;What did you say?&#34;</p>
@@ -2421,7 +2421,7 @@
                 <p>&#34;Evelyn, I&#39;m back.&#34;</p>
                 <p>The exhaustion in her voice made Evelyn’s heart clench. &#34;Grandma Dempsey—&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Grandma’s condition is stable. It’s my own problem.&#34; Vivian gave a bitter laugh. &#34;I might need your help from now on.&#34;</p>
                 <p>&#34;What happened?&#34;</p>
                 <p>&#34;The factory... the bank is foreclosing on it.&#34;</p>
@@ -2430,7 +2430,7 @@
                 <p>&#34;Is there no way to stop it?&#34;</p>
                 <p>&#34;There is,&#34; Vivian said hoarsely. &#34;If Alexander withdraws and Banyan Group continues the partnership, we can save the factory.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Silence stretched between them.</p>
                 <p>&#34;I just found out,&#34; Vivian whispered, her voice breaking, &#34;that for the past five years, it was only because of you that Alexander let my family barely scrape by...&#34;</p>
                 <p>Evelyn tightened her grip on her phone. &#34;Let me think about this.&#34;</p>
@@ -2442,7 +2442,7 @@
                 <p>Though puzzled, Andrew was too preoccupied with their financial troubles to press further.</p>
                 <p>The next morning, Evelyn stood face-to-face with Vivian.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">
@@ -2564,7 +2564,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2580,8 +2580,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

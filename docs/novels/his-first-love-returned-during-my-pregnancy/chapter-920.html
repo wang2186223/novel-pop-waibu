@@ -2397,19 +2397,19 @@
                 <p>Alexander offered his thermos. When their fingers brushed, she recoiled like she&#39;d been burned.</p>
                 <p>&#34;Let&#39;s go.&#34; His suggestion came suddenly.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Relief flooded her—until she noticed every other couple tangled in their own worlds. One pair had practically melted into their seats.</p>
                 <p>She froze.</p>
                 <p>&#34;I&#39;ll lead,&#34; he murmured.</p>
                 <p>She pictured his tall frame eclipsing half the screen, possibly getting them ejected. Gritting her teeth, she sat back down. &#34;Wait a bit longer.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Breathy moans rose from the row behind them. Even in the dark, she saw the tips of his ears redden.</p>
                 <p>Evelyn forced her gaze forward. The actress now straddled her co-star, their lips locked. She thanked the universe for the darkness.</p>
                 <p>&#34;This movie—&#34; His voice strained.</p>
                 <p>&#34;Wasn&#39;t my pick,&#34; she cut in.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>When credits rolled, she sprang up like a jack-in-the-box. Rushing toward the exit, she nearly collided with a soda-bearing usher. Alexander shielded her with one arm while carrying untouched popcorn, his composure unshaken.</p>
                 <p>Cool air hit her face. She exhaled. &#34;I didn&#39;t know it was that kind of film.&#34;</p>
                 <p>He nodded. &#34;Your viewing history leans toward documentaries.&#34;</p>
@@ -2543,7 +2543,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2559,8 +2559,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

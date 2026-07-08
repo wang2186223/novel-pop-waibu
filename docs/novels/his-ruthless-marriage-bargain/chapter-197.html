@@ -2388,23 +2388,23 @@
                 <p>Sweat slicked his palms as he swallowed hard. &#34;Fine. Let&#39;s...negotiate. What do you want?&#34;</p>
                 <p>&#34;You already know,&#34; Evelyn replied icily.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Sophia Grant? That&#39;s what this is about?&#34; Dominic&#39;s brow furrowed. &#34;What does she have on you? Why go to such lengths?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Someone like you could never understand,&#34; Evelyn said with disdain. &#34;Remember - my patience has limits. Don&#39;t make me wait.&#34; The line went dead.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Alexander observed Evelyn&#39;s rigid posture before closing the distance. He wrapped his arms around her from behind, resting his chin on her shoulder. &#34;You don&#39;t have to handle this alone. Give it to me - I&#39;ll make it disappear. No more wasting breath on that parasite.&#34;</p>
                 <!-- 广告位 4 -->
                 <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Evelyn turned in his embrace, returning the hug fiercely. &#34;I know exactly what you&#39;re capable of, Alexander. But this is personal. My mess. My responsibility. I protect what&#39;s mine.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Alexander released her with a playful smirk. &#34;I&#39;m starting to feel jealous of that dedication. I wonder if Mrs. Kensington would take care of me as thoroughly as she does Sophia Grant.&#34;</p>
                 <p>Evelyn laughed at his antics but answered with proud conviction, &#34;Without question.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">
@@ -2526,7 +2526,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2542,8 +2542,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

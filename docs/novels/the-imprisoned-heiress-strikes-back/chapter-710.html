@@ -2403,7 +2403,7 @@
                 <p>His gaze drifted. &#34;You once told me nothing in this world truly belongs to us. Only our feelings, our experiences. Living is about embracing it all—joy, pain, everything in between.&#34;</p>
                 <p>A pause. &#34;I figured you weren’t ready to die yet. If trading my life for yours meant you got to keep living, it was worth it. Honestly? I’ve never found life that meaningful anyway.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>The words settled heavily in Evelyn’s chest. He’d been ready to die for her—and they weren’t even close.</p>
                 <p>&#34;You saved me,&#34; she said, pressing the needle into his skin with precision. &#34;But my skills are solid. Now that you’re awake, dying isn’t an option.&#34; Another jab.</p>
                 <p>Dominic grinned, deliberately misreading her. &#34;So you want me around? Miss my company?&#34;</p>
@@ -2412,7 +2412,7 @@
                 <p>&#34;No answer? I’ll take that as a yes.&#34; His fingers curled around the back of her neck, pulling her closer.</p>
                 <p>Evelyn stiffened, turning her face away. &#34;What are you doing?&#34; His breath brushed her skin, warm and unsettling.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Dominic smirked. &#34;What do you think? I’m going to kiss you.&#34;</p>
                 <p>He leaned in—just as the needle hit the pressure point on his forehead.</p>
                 <p>Dominic went still. His head dropped back onto the pillow, limbs slack, eyes closed—as if he’d fallen asleep.</p>
@@ -2421,7 +2421,7 @@
                 <p>She packed her kit and left. Outside, she told Nathaniel, &#34;He’ll wake in half an hour.&#34;</p>
                 <p>Nathaniel nodded. But when he re-entered the room, Dominic’s eyes were open.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Nathaniel froze. Didn’t she say thirty minutes?</p>
                 <p>Dominic’s lips curved. He’d heard every word. She’s actually considering divorce?</p>
                 <p>A quiet laugh escaped him.</p>
@@ -2562,7 +2562,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2578,8 +2578,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

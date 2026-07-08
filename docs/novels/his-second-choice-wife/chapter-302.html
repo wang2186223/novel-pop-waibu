@@ -2390,17 +2390,17 @@
                 <p>The taxi ride home blurred through Evelyn&#39;s tears. The driver offered awkward condolences about &#34;young love,&#34; mistaking her grief for a simple breakup. She let him talk, unable to explain these tears were for the man she loved too deeply to be with.</p>
                 <p>Rosalind answered the door at Wright Manor. One look at Evelyn&#39;s swollen eyes and she gasped. &#34;Evelyn! What happened?&#34; Her fingers tightened around Evelyn&#39;s wrist. &#34;Who did this to you?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;I&#39;m fine,&#34; Evelyn lied, brushing past her.</p>
                 <p>Rosalind pursued her up the grand staircase. &#34;Tell me who hurt you!&#34;</p>
                 <p>Evelyn collapsed onto the canopied bed, burying her face in silk pillows. Rosalind perched beside her. &#34;Where were you? I&#39;ve been worried sick.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Shudders wracked Evelyn&#39;s frame. &#34;He... he told me he loved me,&#34; she choked out. &#34;And I had to say no.&#34;</p>
                 <p>&#34;General Blackwood?&#34; Rosalind breathed.</p>
                 <p>Evelyn&#39;s composure shattered. &#34;He asked for so little! Just... just occasional messages. And I couldn&#39;t even give him that.&#34; She clutched at her chest. &#34;I&#39;m monstrous, aren&#39;t I? This pain... it&#39;s unbearable.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Rosalind gathered the weeping woman into her arms. &#34;Evelyn... do you love him too?&#34;</p>
                 <p>The silent answer spoke volumes. Rosalind stroked her hair. &#34;You&#39;re doing what you must. He&#39;ll understand someday.&#34;</p>
                 <p>&#34;Make it stop,&#34; Evelyn begged between sobs. &#34;The pain... is there medicine? Anything?&#34;</p>
@@ -2410,13 +2410,13 @@
                 <p>&#34;Evelyn, please,&#34; Rosalind whispered later. &#34;General Blackwood would support your decision if he knew—&#34;</p>
                 <p>&#34;Enough!&#34; Evelyn cut her off sharply.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Rosalind bit her lip, glancing at the door. She stayed the night, watching over Evelyn&#39;s fitful sleep.</p>
                 <p>Morning light revealed the damage - puffy eyes, pale complexion. Yet the storm of tears had left Evelyn strangely hollow, numb.</p>
                 <p>She was halfway to Archibald&#39;s suite when Victoria&#39;s voice froze her in the grand foyer.</p>
                 <p>&#34;Stop right there.&#34; The blonde lounged on a velvet settee, arms crossed. Her expression promised trouble.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -2538,7 +2538,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2554,8 +2554,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

@@ -2394,7 +2394,7 @@
                 <p>Victoria huffed. &#34;I just think it’s ridiculous. You took a bullet for her, didn’t you?&#34;</p>
                 <p>Silence. He tucked the phone beneath the blanket.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Her lips pursed. &#34;You’d die for her, but what does she do? Drops you at the hospital and leaves.&#34;</p>
                 <p>Her voice rose. &#34;Ryan and I barely arrived when she was already rushing out. We couldn’t even convince her to stay—she insisted on returning to Solterra.&#34;</p>
                 <p>Victoria scoffed. &#34;Solterra? Please. She’s probably still asleep at Wright Manor.&#34;</p>
@@ -2403,7 +2403,7 @@
                 <p>Liam’s expression darkened. &#34;Are you done?&#34;</p>
                 <p>Victoria smirked. &#34;Not even close. I was so furious when Evelyn left that I chased her down and told her we were together.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>His eyes snapped to hers, sharp as daggers.</p>
                 <p>She swallowed. &#34;Don’t look at me like that. I was trying to help. But she didn’t care—she even wished us happiness.&#34;</p>
                 <p>Liam’s voice was dangerously calm. &#34;Did she leave because of what you said, or was she already leaving?&#34;</p>
@@ -2412,7 +2412,7 @@
                 <p>She looked away. &#34;She was leaving anyway. I just... said it.&#34;</p>
                 <p>Liam’s fists clenched. He shut his eyes, leaning back against the headboard.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Victoria bit her lip. &#34;Are you mad?&#34;</p>
                 <p>Silence.</p>
                 <p>She sighed. &#34;We’ve been friends for years, Liam. You know I just want what’s best for you.&#34;</p>
@@ -2421,7 +2421,7 @@
                 <p>Liam’s voice was flat. &#34;Don’t say things that could mislead people about us.&#34;</p>
                 <p>Victoria laughed bitterly. &#34;Won’t happen again. Evelyn’s probably packing for Solterra. You’ll never see her again.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Liam pulled the blanket over his head. &#34;Leave.&#34;</p>
                 <p>She patted the covers. &#34;Rest. I’ll visit tomorrow.&#34;</p>
                 <p>The next day, Blackwood Manor</p>
@@ -2430,7 +2430,7 @@
                 <p>He frowned. &#34;What are you doing here?&#34;</p>
                 <p>Her voice was tight with worry. &#34;How is Liam?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Ryan’s reply was curt. &#34;Thanks to Ms. Wright, he’s stable.&#34;</p>
                 <p>Evelyn exhaled, but the weight in her chest remained.</p>
                 <p>He crossed his arms. &#34;The Blackwoods just returned from visiting him. So why were you coming from inside?&#34;</p>
@@ -2443,7 +2443,7 @@
                 <p>&#34;He took a bullet for you. And you couldn’t even wait to see him wake up?&#34;</p>
                 <p>His voice cracked. &#34;You just left.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">
@@ -2565,7 +2565,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2581,8 +2581,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

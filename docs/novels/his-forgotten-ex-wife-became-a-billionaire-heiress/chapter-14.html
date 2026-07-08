@@ -2394,7 +2394,7 @@
                 <p>His relationship with Sophia Evans was far more complicated than it appeared.</p>
                 <p>&#34;It&#39;s not what you think.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;So the private yacht wasn&#39;t real? The years spent with another woman weren&#39;t real either?&#34; Lucas pressed relentlessly.</p>
                 <p>Ethan had no rebuttal. He had indeed wronged Vivian.</p>
                 <p>Vivian gently tugged at Lucas&#39;s sleeve.</p>
@@ -2412,7 +2412,7 @@
                 <p>That Oliver Roland was also interested in Vivian?</p>
                 <p>Ethan&#39;s expression darkened. His indifference toward Vivian stemmed from lack of feelings, not her appearance. But how did her looks attract so many suitors?</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>...</p>
                 <p>In the car, Vivian spoke softly.</p>
                 <p>&#34;Thank you, Lucas.&#34;</p>
@@ -2421,7 +2421,7 @@
                 <p>&#34;Viv, that was your ex-husband? I should&#39;ve taught him a lesson. Letting him off was too easy.&#34;</p>
                 <p>Vivian shook her head. &#34;There&#39;ll be other chances. Take me to Isabella&#39;s first.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Langley Corporation.</p>
                 <p>Isabella Langley was reviewing documents when Vivian arrived. She immediately pulled her into the office.</p>
                 <p>&#34;You&#39;re giving me more work again!&#34; Isabella pouted in complaint.</p>
@@ -2441,7 +2441,7 @@
                 <p>Isabella&#39;s eyes widened.</p>
                 <p>What happened to that promised vacation?</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">
@@ -2563,7 +2563,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2579,8 +2579,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

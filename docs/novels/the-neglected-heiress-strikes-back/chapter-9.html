@@ -2397,7 +2397,7 @@
                 <p>Thaddeus frowned. &#34;Since when does she drive like this?&#34;</p>
                 <p>&#34;You didn’t know?&#34; Gordon’s excitement bubbled over. &#34;She’s obsessed with racing films. Every time I visited, The Fast and the Furious was playing. I always thought she was delicate—turns out she’s a speed demon!&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Thaddeus’ stomach twisted.</p>
                 <p>His own secretary knew his wife better than he did.</p>
                 <p>&#34;Damn it—she’s pulling away!&#34;</p>
@@ -2409,7 +2409,7 @@
                 <p>&#34;Evangeline… what else are you hiding?&#34;</p>
                 <p>That night, Cassian and Adrian arrived at their sister’s private villa.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>In the open kitchen, Cassian expertly flipped a sizzling pan while Adrian chopped vegetables. Evangeline lounged nearby, a lollipop dangling from her lips as she watched her brothers cook.</p>
                 <p>&#34;Victory! Four kills!&#34;</p>
                 <p>She grinned at her gaming screen, triumphant.</p>
@@ -2421,7 +2421,7 @@
                 <p>&#34;Only because of that emergency mission! We would’ve won!&#34; Adrian huffed.</p>
                 <p>&#34;Evangeline, you’re smoke-sensitive. Go wait in the living room.&#34; Cassian’s tone softened.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Her chest tightened.</p>
                 <p>She hadn’t told them—though allergic, she’d cooked for the Abernathys for three years. Her hands bore calluses; her body had built resistance.</p>
                 <p>If they knew how the Abernathys treated her…</p>
@@ -2433,7 +2433,7 @@
                 <p>&#34;Seriously? He won’t quit!&#34;</p>
                 <p>Her face flushed. The lollipop clattered onto the table.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Thaddeus is still harassing you?&#34; Adrian plucked the candy from the table and popped it into his mouth. &#34;After mistaking Cassian for your boyfriend at Evergreen Meadows?&#34;</p>
                 <p>&#34;Yes.&#34;</p>
                 <p>Adrian snorted. &#34;The man’s blind.&#34;</p>
@@ -2445,7 +2445,7 @@
                 <p>&#34;Do it.&#34;</p>
                 <p>Cassian hit speakerphone.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Where’s my wife?&#34; Thaddeus’ voice dripped with possessiveness.</p>
                 <p>Adrian nearly exploded. Evangeline silenced him with a glare.</p>
                 <p>&#34;Mr. Abernathy, Evangeline isn’t your wife anymore. Remember the divorce?&#34; Cassian kept his tone neutral.</p>
@@ -2584,7 +2584,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2600,8 +2600,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

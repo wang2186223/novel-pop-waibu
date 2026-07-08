@@ -2389,23 +2389,23 @@
                 <p>The professors huddled together, their eyes gleaming behind spectacles.</p>
                 <p>&#34;This problem-solving approach...&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;She&#39;s even mastered advanced calculus?&#34;</p>
                 <p>&#34;She just graduated high school!&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Professor Montgomery suddenly looked up. &#34;Young lady, have you considered studying mathematics with me?&#34;</p>
                 <p>&#34;Step aside, Montgomery. Her physics aptitude makes her perfect for my program!&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Nonsense! Chemistry offers far better prospects!&#34;</p>
                 <p>Professor Klein stroked his beard in amusement. &#34;Now you&#39;re fighting over her? Who was it that said high schoolers weren&#39;t capable?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Evelyn glanced uncertainly at her mentor.</p>
                 <p>&#34;Don&#39;t worry.&#34; Professor Klein patted her shoulder. &#34;Let them teach you whatever they want. You&#39;ll always be my official protégé.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Ethan Sullivan stood nearby, his eyes warm with approval. &#34;Miss Laurent truly has remarkable talent.&#34;</p>
                 <p>&#34;Then what are we waiting for?&#34; Professor Klein waved his hand. &#34;Let&#39;s get her enrolled at Harvard immediately!&#34;</p>
                 <p>As the group reached the doorway, the glass door suddenly swung open.</p>
@@ -2414,7 +2414,7 @@
                 <p>Ethan&#39;s brow furrowed almost imperceptibly. &#34;What are you doing here?&#34;</p>
                 <p>&#34;I...I came to see Professor Klein...&#34; Her voice trailed off as her eyes locked onto Evelyn&#39;s hand resting on the professor&#39;s arm.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">
@@ -2536,7 +2536,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2552,8 +2552,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

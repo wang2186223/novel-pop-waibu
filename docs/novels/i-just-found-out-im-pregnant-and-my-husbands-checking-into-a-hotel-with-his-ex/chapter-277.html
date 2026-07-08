@@ -2392,14 +2392,14 @@
                 <p>Vincent didn&#39;t press further. He accepted the bowl in silence. He sipped at the soup unhurriedly, each taste echoing in the hush of the room-only the quiet scrape of his spoon and the soft sound of swallowing filled the space.</p>
                 <p>After a few spoonfuls, he shattered the silence. &#34;So what dragged you here at midnight?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>His words were gentle, barely above a whisper, but in the stillness, they seemed to hang between them.</p>
                 <p>Hannah made a show of adjusting the thermos lid,but the motion faltered for a second at his words.She kept her gaze lowered, her voice deliberately sharp. &#34;I just wanted to check if you were still breathing.Heard from Derek you&#39;re planning to check yourself out tomorrow? Are you trying to get yourself killed?&#34;</p>
                 <p>Hannah finally looked up, meeting his eyes with a flash of dry defiance. &#34;Vincent, you really believe the company will fall apart just because you&#39;re gone for a day?&#34;</p>
                 <p>Vincent&#39;s grip tightened ever so slightly on his spoon, but he let the jab slide. Instead, he studied her for a long moment, taking in every nuance of her expression. &#34;What about you? How are you holding up?&#34;</p>
                 <p>The question caught her off balance, and her lips parted in surprise. &#34;Me? What are you even asking?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>He leaned in, voice deepening, steady as a heartbeat. &#34;After the fire, didn&#39;t Claude rush you to the hospital? Are you all right?&#34;</p>
                 <p>Hannah shifted in her seat, suddenly uneasy beneath the weight of his gaze. The raw concern in his voice threatened to unravel her composure, and she found herself glancing away. &#34;I&#39;m fine,&#34; she replied, her voice clipped, every syllable sharp with distance.</p>
                 <p>She leaned in, shifting the topic. &#34;But you, Vincent-what on earth are you thinking? Your back&#39;s still a mess, your fracture&#39;s nowhere close to healed, and now you&#39;re talking about heading back to work tomorrow? What are you, made of steel?&#34;</p>
@@ -2413,14 +2413,14 @@
                 <p>Hannah&#39;s tone returned to its earlier sharpness.&#34;Forget the soup! I want an answer-are you seriously planning to discharge yourself tomnorrow?&#34;</p>
                 <p>Vincent stayed focused on his bowl, taking a slow spoonful. He swallowed, waited a beat, and then replied in his steady, unreadable way, &#34;I am.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Hannah&#39;s expression clouded over. Her lips parted,ready to unleash another tirade.</p>
                 <p>But Vincent looked up, eyes locking on hers, the hint</p>
                 <p>of a smile flickering at the corner of his mouth. The icy mask he&#39;d worn all night melted just enough for a sliver of warmth to break through. &#34;But, actually,&#34; he said, voice softer, &#34;my mood&#39;s better now. Since I&#39;m feeling decent, maybe there&#39;s no rush to leave after all.&#34;</p>
                 <p>The sudden shift&#39; in his demeanor left Hannah momentarily speechless. She found herself blurting out, &#34;Unbelievable. You really are impossible to figure out.&#34;</p>
                 <p>Vincent barely reacted to her barb, only following her words with a thoughtful frown, as if weighing her accusation seriously. &#34;Maybe I have been a bit unpredictable lately,&#34; he admitted, voice low and even.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>He brushed aside the thought and steered the conversation toward the fire report. Hannah summarized the current report, explaining that investigators blamed the incident on a wiring fault-just an accident, as far as anyone could tell.</p>
                 <p>Vincent listened, his expression unreadable, until a</p>
                 <p>hard line creased his brow. &#34;Claude&#39;s got some explaining to do about all this.&#34;</p>
@@ -2549,7 +2549,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2565,8 +2565,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

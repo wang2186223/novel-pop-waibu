@@ -2413,7 +2413,7 @@
                 <p>The tiny garments still carried traces of milky fragrance.</p>
                 <p>...She was the one who truly ached for this child.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Losing interest in the mobile, the baby stretched out her arms for a hug.</p>
                 <p>Alexander produced a wind-up plush bird from a bag and twisted the key.</p>
                 <p>&#34;Chirp chirp!&#34;</p>
@@ -2427,7 +2427,7 @@
                 <p>&#34;Then where&#39;s the toy from?&#34;</p>
                 <p>&#34;The Kids&#39; Wonderland area.&#34; He licked his lips, looking slightly abashed. &#34;Bought it from a child.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Evelyn froze.</p>
                 <p>&#34;The lollipop I gave you too.&#34;</p>
                 <p>&#34;...How much did you pay?&#34;</p>
@@ -2441,7 +2441,7 @@
                 <p>&#34;...&#34;</p>
                 <p>When Evelyn stayed silent, Alexander grew anxious. &#34;Not enough? Should I add more?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;This is fine.&#34;</p>
                 <p>&#34;Okay.&#34;</p>
                 <p>&#34;I haven&#39;t reviewed the documents Vincent Wilson sent. I should get to that.&#34;</p>
@@ -2455,7 +2455,7 @@
                 <p>&#34;Or I could bring the baby to your room?&#34; he proposed. &#34;I&#39;ll keep her quiet.&#34;</p>
                 <p>Evelyn glanced between him and the teary-eyed baby, biting her lip.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Better stay here.&#34; Alexander stood. &#34;All her things are in this room—more convenient.&#34;</p>
                 <p>Before she could respond, he was already striding out. &#34;I&#39;ll get your documents.&#34;</p>
                 <p>Moments later, Alexander returned with her files and favorite water cup.</p>
@@ -2469,7 +2469,7 @@
                 <p>Without someone lying on either side, she&#39;d fuss endlessly.</p>
                 <p>When Alexander mentioned bedtime, his subtext was clear: Time to become sandwich bread.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -2591,7 +2591,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2607,8 +2607,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

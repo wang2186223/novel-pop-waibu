@@ -2393,15 +2393,15 @@
                 <p>When Cassandra finished her call, the host practically bounced toward Vivian. &#34;Now Vivian, who will you be inviting today?&#34;</p>
                 <p>The female MC, clearly impressed by Cassandra&#39;s connection, gave Vivian a patronizing smile. &#34;Don&#39;t stress if you don&#39;t have industry friends yet. Bringing someone from your personal life is completely fine.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Julian suddenly spoke up. &#34;Why not call Sebastian Hartwell?&#34; His gaze lingered on Vivian&#39;s composed expression - serene as a winter rose untouched by the surrounding storm.</p>
                 <p>A male guest nearly choked. &#34;Sebastian Hartwell? The Sebastian Hartwell?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Recognition flashed across an audience member&#39;s face. &#34;Wait, isn&#39;t she starring opposite Sebastian in that new drama?&#34;</p>
                 <p>&#34;She&#39;s even more breathtaking in person, no wonder she got cast with him!&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>But not all comments were kind. &#34;I heard she&#39;s been clinging to Sebastian&#39;s coattails for publicity. Is that what she&#39;s trying to do now?&#34;</p>
                 <p>&#34;Sebastian takes his craft seriously, while she&#39;s just using him as a stepping stone. Disgusting.&#34;</p>
                 <!-- 广告位 5 -->
@@ -2413,7 +2413,7 @@
                 <p>Vivian&#39;s voice remained steady. &#34;Sebastian and I are professional colleagues. His participation would be a favor, not an obligation. As someone new, I&#39;d rather not impose.&#34;</p>
                 <p>The host quickly intervened. &#34;Vivian, have you decided who you&#39;ll invite?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">
@@ -2535,7 +2535,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2551,8 +2551,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

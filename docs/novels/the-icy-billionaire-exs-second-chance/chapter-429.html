@@ -2390,12 +2390,12 @@
                 <p>She offered him a warm smile. &#34;Happy birthday, Julian.&#34;</p>
                 <p>With a playful shrug, she spread her hands. &#34;No gift this time, but I promise I’ll make it up to you.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>A flicker of delight crossed Julian’s face as he lightly brushed his fingers over hers. Vivian froze, caught off guard by the unexpected touch.</p>
                 <p>Just as she tensed, he pretended to tighten his grip before releasing her with a grin. &#34;The best gift is already mine.&#34;</p>
                 <p>Her gaze dropped to her empty palm, the fleeting warmth of his touch lingering like a phantom sensation.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;What gift?&#34; she murmured, her wide, curious eyes lifting to meet his.</p>
                 <p>The faint confusion on her face only made her more enchanting.</p>
                 <p>Julian chuckled, his voice low and rich. &#34;Your promise to make it up to me. That’s more than enough.&#34;</p>
@@ -2405,7 +2405,7 @@
                 <p>Julian moved to the passenger side, holding the door open with effortless grace.</p>
                 <p>Still slightly dazed, Vivian ducked into the seat.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>He closed the door behind her and circled the car to take the driver’s seat.</p>
                 <p>Only then did she realize his assistant wasn’t joining them.</p>
                 <p>Julian parked near the university, a knowing smile forming on his lips. &#34;Does this place bring back memories?&#34;</p>
@@ -2417,7 +2417,7 @@
                 <p>Julian’s fingers tapped lightly against the steering wheel. &#34;Shall we?&#34;</p>
                 <p>She nodded, the past and present blurring together as they stepped into the warmth of the restaurant.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">
@@ -2539,7 +2539,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2555,8 +2555,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

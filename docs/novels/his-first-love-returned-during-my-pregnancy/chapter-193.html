@@ -2393,7 +2393,7 @@
                 <p>Only when she disappeared around the corner did Alexander finally look away. His voice was cold as he addressed Andy. &#34;Your sister is your responsibility now.&#34;</p>
                 <p>He turned to leave.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Andy called after him, &#34;When are you coming back, Alex? I need to take her home.&#34;</p>
                 <p>Alexander paused. &#34;Uncertain. Send her back to the Taylor residence.&#34;</p>
                 <p>&#34;Alex!&#34; Annabelle grabbed his sleeve. &#34;Call me when you return, okay? I&#39;ll go home myself.&#34;</p>
@@ -2409,7 +2409,7 @@
                 <p>At the mention of Grandma Hamilton, Annabelle&#39;s defiance crumbled.</p>
                 <p>Her eyes reddened. &#34;We&#39;re engaged. You promised my parents.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Alexander gave her a long, inscrutable look before walking away.</p>
                 <p>Outside, Evelyn was already gone.</p>
                 <p>Only a white Cayenne remained parked in the rain.</p>
@@ -2425,7 +2425,7 @@
                 <p>&#34;But your apartment is so far from the Design Institute.&#34;</p>
                 <p>&#34;I&#39;ll manage.&#34; He changed the subject. &#34;What will you tell your parents?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Evelyn studied her sister&#39;s sleeping face with a headache.</p>
                 <p>This girl had too many secrets. No plausible excuse came to mind.</p>
                 <p>&#34;Tell them you stayed out shopping too late and crashed at my place? They trust me.&#34;</p>
@@ -2433,7 +2433,7 @@
                 <p>Peter added, &#34;By the way, I found two adjacent apartments at City Lights. Close to the hospital. Want to check them out?&#34;</p>
                 <p>Evelyn went still.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">
@@ -2555,7 +2555,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2571,8 +2571,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

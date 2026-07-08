@@ -2390,12 +2390,12 @@
                 <p>&#34;Refund! Now!&#34; More voices joined the outcry.</p>
                 <p>Vivian noticed the loudest protesters had shifty eyes—nothing like genuine homebuyers.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;I personally guarantee all problematic buildings will be demolished and rebuilt without delay,&#34; she declared firmly.</p>
                 <p>Her words were met with jeers.</p>
                 <p>&#34;Women shouldn&#39;t run businesses!&#34; A thug with a pockmarked face spat. &#34;No refund today? We&#39;ll smash this pathetic company!&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Several burly men shoved past security onto the stage.</p>
                 <p>Vivian retreated until her back hit the cold display board.</p>
                 <p>&#34;Stop.&#34;</p>
@@ -2410,12 +2410,12 @@
                 <p>Under his black umbrella, Ethan&#39;s leather shoes stepped through puddles, each footfall syncing with the crowd&#39;s held breaths.</p>
                 <p>Vivian tightened her grip on the document folder. Meeting him during her most humiliating moment was the last thing she wanted.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Ethan paused at the steps. As his umbrella tilted up, those fathomless eyes locked onto hers.</p>
                 <p>The entire crowd froze.</p>
                 <p>He spoke slowly...</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">
@@ -2537,7 +2537,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2553,8 +2553,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

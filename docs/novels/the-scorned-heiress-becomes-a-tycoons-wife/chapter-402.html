@@ -2393,7 +2393,7 @@
                 <p>What a shame to lose such a lucrative client like Emily.</p>
                 <p>She had always been generous—whether funding smear campaigns against rivals or promoting herself.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Just as netizens were speculating about the culprit, Summit News released an official statement.</p>
                 <p>#Summit News: We sincerely apologize to Ms. Sophia Laurent for publishing falsified footage.#</p>
                 <p>The announcement stunned the internet.</p>
@@ -2401,7 +2401,7 @@
                 <p>This outlet had a notorious reputation but had never issued retractions before.</p>
                 <p>Alexander Valdemar must have intervened! That&#39;s the Valdemar power!</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Amid the chatter, Summit News dropped another bombshell.</p>
                 <p>#Summit News: We were misled and hope for your understanding!#</p>
                 <p>Attached were screenshots of conversations with Emily&#39;s assistant, Chloe Preston.</p>
@@ -2417,7 +2417,7 @@
                 <p>Netizens who had previously attacked Sophia now flooded Emily&#39;s social media accounts demanding answers.</p>
                 <p>At the Lowell estate...</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Emily had just finished comforting Victoria Lowell and retreated to her room.</p>
                 <p>She had intended to relish Sophia&#39;s online humiliation.</p>
                 <p>But the moment she unlocked her phone, her inbox exploded.</p>
@@ -2434,7 +2434,7 @@
                 <p>Stumbling to her computer, Emily pulled up the surveillance footage copied from the hotel.</p>
                 <p>This time, she watched every second without skipping.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">
@@ -2556,7 +2556,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2572,8 +2572,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

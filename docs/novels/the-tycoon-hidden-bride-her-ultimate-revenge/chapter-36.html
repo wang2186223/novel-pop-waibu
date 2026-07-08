@@ -2397,19 +2397,19 @@
                 <p>Cole reached out and served her food himself. “Eat quickly. We’re meeting someone after this.”</p>
                 <p>Elliana looked up. “Who?”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>“You’ve probably heard of Lexi—the mysterious owner behind Ublento Hotel. In truth, this hotel is just one part of Lexi’s empire. Lexi leads the Star Society. Today, we’re meeting Lexi’s second-in-command, Matthew Santos.”</p>
                 <p>The Star Society was a shadowy network with ties to both the legal world and the underworld. Lexi was a legend, but no one had ever seen her face. All operations were handled by her right-hand man, Matthew.</p>
                 <p>Elliana frowned. “What do you want to see Matthew for?”</p>
                 <p>Cole sighed. “The trip to Valland was a dead end. I need the Star Society’s help to find the legendary healer, Milena.”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Elliana said nothing. She simply bit her fork and kept quiet.</p>
                 <p>After they finished eating, the hotel manager led them into another private room. Matthew was already waiting.</p>
                 <p>Seeing Cole, Matthew stood politely—but the moment he saw Elliana beside him, he stiffened.</p>
                 <p>Elliana glanced at Matthew. That was all it took. Matthew understood immediately—she wanted him to pretend he didn’t know her, to keep her discreet identities as Lexi and Milena concealed.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Matthew was quick-witted and smooth. Gathering himself swiftly, he cheerfully spoke, “Mr. Evans, pleasure to meet you. Please, have a seat.” Cole gave a courteous nod and sat with Elliana.</p>
                 <p>Matthew didn’t waste time. “Mr. Evans, what can the Star Society do for you?”</p>
                 <p>Cole placed a check on the table. “I want to find Milena. Five hundred million. Just as a deposit. If you take the job, you can name your price. No limits.”</p>
@@ -2545,7 +2545,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2561,8 +2561,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

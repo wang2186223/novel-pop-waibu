@@ -2392,7 +2392,7 @@
                 <p>&#34;Jumping to defend so quickly? Does Lucas&#39; wife know about this?&#34;</p>
                 <p>Lucas&#39; fans weren&#39;t about to take it lying down.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Some people need to mind their own business. Having dinner equals an affair? Then you must be the queen of nightclubs.&#34;</p>
                 <p>&#34;Is he even a real father? Too busy basking in his own glory to care about his daughter...&#34;</p>
                 <p>&#34;What rotten luck to have a father like that.&#34;</p>
@@ -2406,14 +2406,14 @@
                 <p>The announcement sent shockwaves across the internet.</p>
                 <p>Not only were netizens stunned, even Lucas&#39; own fans were baffled.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Director Lucas is returning to filmmaking?&#34;</p>
                 <p>&#34;Hah! A variety show director making movies? This is going to flop hard.&#34;</p>
                 <p>&#34;Also a historical political drama? Is this a direct challenge to Richard Lowell?&#34;</p>
                 <p>Richard&#39;s fans immediately piled on the mockery.</p>
                 <p>&#34;Some people really overestimate themselves!&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Too much variety TV has warped his sense of reality.&#34;</p>
                 <p>&#34;Can&#39;t wait to see the train wreck Lucas produces!&#34;</p>
                 <p>Meanwhile, Lucas was signing contracts with Sophia Laurent at Pearl Group.</p>
@@ -2427,7 +2427,7 @@
                 <p>Lucas&#39; eyes widened. &#34;Gavin Croix? The writer of &#39;Lone Mountain&#39;?&#34;</p>
                 <p>Sophia gave a slight nod. &#34;Yes.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">
@@ -2549,7 +2549,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2565,8 +2565,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

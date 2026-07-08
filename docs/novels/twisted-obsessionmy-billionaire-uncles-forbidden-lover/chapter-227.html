@@ -2397,25 +2397,25 @@
                 <p>&#34;Was Daniel Clementson&#39;s incident your doing?&#34; Her voice trembled.</p>
                 <p>Ethan smirked disdainfully.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Just a warning.&#34; He traced her pale cheek. &#34;Who do you think will be next?&#34;</p>
                 <p>Sebastian yanked Sophia behind him.</p>
                 <p>&#34;Quite the display of power, Mr. Roscente.&#34; He sneered. &#34;What kind of man bullies a woman?&#34;</p>
                 <p>Ethan&#39;s gaze lingered on their clasped hands before turning glacial.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Sophia.&#34; His tender tone was unnerving. &#34;Are you sure you want him fighting your battles?&#34;</p>
                 <p>Sophia recoiled from Sebastian as if electrocuted.</p>
                 <p>&#34;I&#39;ll go with you.&#34; She bit her lip. &#34;Leave the innocent out of this.&#34;</p>
                 <p>Sebastian moved to intervene, but Sophia shook her head.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Their silent exchange fueled Ethan&#39;s rage. He roughly dragged Sophia and shoved her into the car.</p>
                 <p>The black Maybach sped off, leaving Sebastian standing alone, his knuckles white.</p>
                 <p>The car&#39;s atmosphere was suffocating.</p>
                 <p>Sophia rubbed her reddened wrist, breaking the silence first.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;What&#39;s today&#39;s performance about?&#34; She mocked. &#34;An inquisition? Or catching me in the act?&#34;</p>
                 <p>Up front, Zachary Evans nearly choked on his saliva.</p>
                 <p>Ethan seized her chin.</p>
@@ -2543,7 +2543,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2559,8 +2559,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

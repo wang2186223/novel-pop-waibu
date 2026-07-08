@@ -2389,23 +2389,23 @@
                 <p>&#34;I mean your skills!&#34; Finn leaned closer. &#34;Medical expertise is one thing, but you&#39;re scarily proficient with Dark Web contracts too.&#34;</p>
                 <p>A smirk curled Vivian&#39;s lips. &#34;How else could I be your mentor?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Then take me as your apprentice!&#34; Finn&#39;s eyes lit up.</p>
                 <p>&#34;Get in line.&#34; Vivian swiped through the screen. &#34;The queue of wannabe disciples could circle the city three times.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Finn huffed. &#34;I&#39;m a top-fifty expert on the Dark Web!&#34;</p>
                 <p>&#34;Remind me—who was it that got outplayed by me last time?&#34; She arched a brow.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Finn chuckled awkwardly. &#34;That was a fluke... Anyway, are you sure about these?&#34; He pointed to several high-risk contracts highlighted in red.</p>
                 <p>One stood out—intercepting an arms shipment from the Integrity Group in North America.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Two hundred million commission. Worth a shot.&#34; Vivian clicked to accept.</p>
                 <p>Finn paled. &#34;Are you insane? The Integrity Group is the largest syndicate in North America!&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Vivian studied him with interest. &#34;You&#39;re well-informed.&#34;</p>
                 <p>&#34;Just... doing my homework.&#34; Finn gulped his water, his Adam&#39;s apple bobbing.</p>
                 <p>Vivian swiftly pulled up a dossier. &#34;Their leader goes by Dominic Atlante. Quite the enigma.&#34;</p>
@@ -2534,7 +2534,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2550,8 +2550,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

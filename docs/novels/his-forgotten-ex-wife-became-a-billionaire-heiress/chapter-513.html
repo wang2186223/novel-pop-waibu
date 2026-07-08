@@ -2395,7 +2395,7 @@
                 <p>Years of pent-up rage fueled Isabella&#39;s outburst.</p>
                 <p>She&#39;d vehemently opposed when Vivian abandoned her promising career to marry Ethan Roscente.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Someone as brilliant as Vivian throwing everything away for a man?</p>
                 <p>And what did she get in return?</p>
                 <p>Nothing but repeated disappointments before receiving divorce papers.</p>
@@ -2410,12 +2410,12 @@
                 <p>She despised spineless men who refused accountability.</p>
                 <p>&#34;The boy isn&#39;t mine,&#34; Ethan stated firmly.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Isabella trembled with rage. &#34;Ethan Roscente, you&#39;re not just a cheat—you&#39;re a coward! Denying your own flesh and blood!&#34;</p>
                 <p>&#34;You admitted the child was yours before. Now you&#39;re lying to manipulate Vivian again?&#34; Her fists clenched. &#34;If we weren&#39;t in a hospital, I&#39;d punch your lights out!&#34;</p>
                 <p>She took a deep breath. &#34;Stay away from Vivian. If you harass her again, I&#39;ll make you regret it.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">
@@ -2537,7 +2537,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2553,8 +2553,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

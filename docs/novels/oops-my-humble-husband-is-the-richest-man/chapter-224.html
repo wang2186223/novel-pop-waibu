@@ -2419,7 +2419,7 @@
                 <p>That night, they jumped into the courtyard and threw stones at the windows.</p>
                 <p>His sister-in-law always kept a knife under her pillow.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>He was young and timid.</p>
                 <p>He said, &#34;Just give them the money!&#34;</p>
                 <p>His sister-in-law shook her head. &#34;No. This money is for your schooling.&#34;</p>
@@ -2436,7 +2436,7 @@
                 <p>Later, his sister-in-law and Robert had disagreements.</p>
                 <p>His sister-in-law withdrew from the company and handed full control to Robert.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Elder Howard supported Robert.</p>
                 <p>To ensure Robert&#39;s sole authority, he resigned and returned to his hometown.</p>
                 <p>After learning this, his sister-in-law built him a large estate with high walls in his hometown.</p>
@@ -2492,7 +2492,7 @@
                 <p>Robert made it clear. &#34;Mom previously promised that younger family members would receive shares when they married… Last time, when Julian married, his wife treated Mom poorly, so she didn&#39;t give any. Now Cecilia is marrying into the Truman family, which is a significant event for our family. Mom, how much do you plan to give Cecilia?&#34;</p>
                 <p>His words were reasonable and difficult to refute.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -2614,7 +2614,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2630,8 +2630,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

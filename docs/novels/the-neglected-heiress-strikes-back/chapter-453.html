@@ -2403,7 +2403,7 @@
                 <p>Emeric watched Myra, stunned. After decades of quiet grace, seeing her stand so fiercely—it was breathtaking.</p>
                 <p>This was how an Ashbourne should be.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Gary, ever Barry’s snarling attack dog, sneered. &#34;Eloquent as you are, Ms. Ashbourne, it doesn’t change the facts—you’ve slandered our family, tarnished our name, and we won’t let this slide!&#34;</p>
                 <p>Barry’s lips twisted. &#34;You’ve already won the race. What more do you want? Must you drag us through the mud just to secure your deal with William Morris?&#34;</p>
                 <p>Evadne remained composed, but William’s conflicted expression betrayed his wavering trust.</p>
@@ -2412,7 +2412,7 @@
                 <p>Confused, everyone checked their screens. Evadne’s breath caught.</p>
                 <p>The video was damning.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Duke, sneaking into the stables. A switchblade flashing. A deep gash carved into Wind’s flank.</p>
                 <p>Caught red-handed.</p>
                 <p>Barry’s vision blurred. &#34;W-What is this?!&#34;</p>
@@ -2430,7 +2430,7 @@
                 <p>&#34;Duke,&#34; Evadne said coldly, &#34;you understand the consequences. Attempted murder. Animal cruelty. A long prison sentence.&#34;</p>
                 <p>She leaned closer. &#34;But confess who sent you, and I’ll request leniency.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Duke’s gaze flicked to Edith—only to find her eyes deadly, warning him to stay silent.</p>
                 <p>He laughed bitterly. &#34;No one sent me. I acted alone. You deserved to die for stealing Miss Fairhaven’s man. Do your worst.&#34;</p>
                 <p>Evadne’s blood ran cold. She knew Edith was behind this.</p>
@@ -2439,7 +2439,7 @@
                 <p>Gary’s secretary shrieked. &#34;Mr. Barry—it’s everywhere! The whole world just saw everything!&#34;</p>
                 <p>The Fairhavens froze—their empire crumbling in real time.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">
@@ -2561,7 +2561,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2577,8 +2577,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

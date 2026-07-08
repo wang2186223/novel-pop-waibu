@@ -2393,25 +2393,25 @@
                 <p>The principal&#39;s face darkened as he glared at the ashen-faced dean and professor. &#34;Laying hands on a student? Smashing phones? Is this how you uphold professional standards?&#34;</p>
                 <p>Beads of sweat formed on Frederick&#39;s forehead. &#34;Principal, Jason started—&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Started what?&#34; The principal snapped. &#34;Apologize to him immediately!&#34;</p>
                 <p>Fuming but cornered, the two men muttered reluctant apologies.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Jason scoffed. &#34;What about Ms. Lowell&#39;s tenure?&#34;</p>
                 <p>Ethan Roscente chose that moment to speak, his tone laced with mockery. &#34;So promotions here depend on connections, not merit?&#34; His sidelong glance caught Sophia&#39;s tightened brow.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>This woman. Even when wronged, she resented his interference.</p>
                 <p>He yanked the retreating Sophia to his side. &#34;Apparently the Roscente name carries no weight here if we can&#39;t even secure a tenure position.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;The Roscentes?&#34;</p>
                 <p>&#34;Your niece?&#34;</p>
                 <p>Frederick and Dylan froze as if struck by lightning. Their surreptitious scrutiny of Ethan quickly confirmed the identity of the Roscente family&#39;s heir.</p>
                 <p>Ethan Roscente—the crown prince of the Roscente dynasty.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">
@@ -2533,7 +2533,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2549,8 +2549,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

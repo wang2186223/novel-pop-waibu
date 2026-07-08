@@ -2397,25 +2397,25 @@
                 <p>Lydia stole a glance at his profile. &#34;You look tired.&#34;</p>
                 <p>&#34;I&#39;m not.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Her gaze landed on the water bottle in the console. &#34;I... I&#39;m thirsty.&#34;</p>
                 <p>&#34;Take it yourself.&#34;</p>
                 <p>By the time they entered the highway ramp, darkness had fully descended. Under the cover of night, Lydia discreetly emptied a hidden powder into the water and gave it a gentle shake.</p>
                 <p>&#34;Alexander,&#34; she cooed, &#34;your eyes are bloodshot. Let me drive?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>He arched a brow. &#34;You know the way?&#34;</p>
                 <p>&#34;We can use GPS...&#34;</p>
                 <p>His fingers tapped the steering wheel twice. &#34;Fine.&#34;</p>
                 <p>The mountain road was riddled with forks where navigation often failed. If Lydia could actually find the village...</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;I&#39;ll rest in the back.&#34; Alexander pulled over to switch seats, casually taking the opened water bottle with him.</p>
                 <p>Lydia turned down the GPS volume, flashing a strange smile in the rearview mirror. &#34;Don&#39;t worry. I&#39;ll drive carefully.&#34;</p>
                 <p>The drug took effect swiftly. Just before slipping into unconsciousness, Alexander jolted awake.</p>
                 <p>&#34;Where are we?&#34; His voice was hoarse, his limbs leaden.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Lydia slammed the brakes, nearly sending them off the road. In the jolt, Alexander glimpsed unfamiliar wilderness outside.</p>
                 <p>&#34;Where are you taking me?&#34; His gaze turned razor-sharp.</p>
                 <p>Lydia&#39;s shoulders stiffened visibly. &#34;To see Father. He&#39;s waiting.&#34;</p>
@@ -2546,7 +2546,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2562,8 +2562,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

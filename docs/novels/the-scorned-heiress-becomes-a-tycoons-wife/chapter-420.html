@@ -2393,7 +2393,7 @@
                 <p>Day and night, regret gnawed at their hearts.</p>
                 <p>Every time they closed their eyes, Sophia&#39;s face haunted them.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>They reached out, only for her to vanish like mist.</p>
                 <p>The torment was driving them mad.</p>
                 <p>Even their patience with Emily had worn thin.</p>
@@ -2401,7 +2401,7 @@
                 <p>She pulled out her phone to make a call.</p>
                 <p>&#34;Mom, who are you calling?&#34; Nathan frowned.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Your father is hospitalized. Sophia and Emily should know.&#34;</p>
                 <p>Her tone was weary.</p>
                 <p>She hoped Sophia might soften at the news of her father&#39;s condition.</p>
@@ -2409,7 +2409,7 @@
                 <p>&#34;Your father adores her. Seeing her might lift his spirits.&#34;</p>
                 <p>Nathan and Daniel exchanged glances, a flicker of hope in their silence.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Would Sophia relent?</p>
                 <p>The first call went to Emily.</p>
                 <p>It rang endlessly before she picked up.</p>
@@ -2417,7 +2417,7 @@
                 <p>&#34;Your father is in the hospital. I&#39;ll send you the address.&#34;</p>
                 <p>Victoria hinted for her to come immediately.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Mom, I&#39;m with Ryan Cunningham right now. I might not be able to make it until tomorrow...&#34;</p>
                 <p>Emily sounded hesitant.</p>
                 <p>The disastrous performance of &#34;River Banquet&#34; had shaken her most of all.</p>
@@ -2425,7 +2425,7 @@
                 <p>Without value, she&#39;d become the next Sophia.</p>
                 <p>Ryan was her last lifeline.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>At the private club, Emily had dressed meticulously.</p>
                 <p>A pink slip dress clung to her curves, sheer white chiffon adding a tantalizing hint of skin.</p>
                 <p>Her dark hair cascaded down, a mix of innocence and seduction.</p>
@@ -2558,7 +2558,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2574,8 +2574,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

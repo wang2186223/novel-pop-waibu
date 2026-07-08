@@ -2393,7 +2393,7 @@
                 <p>Glynnis stiffened.</p>
                 <p>A warning.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;But you did cancel the contract,&#34; she pressed.</p>
                 <p>&#34;Because integrity matters.&#34; Ada’s smile was razor-thin. &#34;Unlike some, I don’t need to tear others down to rise.&#34;</p>
                 <p>Humiliation burned through Glynnis.</p>
@@ -2409,7 +2409,7 @@
                 <p>&#34;Only trust Thaddeus?&#34; The insult stung. She needed a damn exorcist—Evadne had clearly possessed Ada.</p>
                 <p>She called Elspeth, wailing. &#34;Mom, she humiliated me!&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;That little actress dares disrespect you?&#34; Elspeth hissed. &#34;Go to your father. Thaddeus will comply if he orders it.&#34;</p>
                 <p>——</p>
                 <p>At Abernathy Group, Glynnis clung to Frederic, recounting Ada’s slights.</p>
@@ -2417,7 +2417,7 @@
                 <p>He video-called Thaddeus.</p>
                 <p>The screen flickered to life, revealing Thaddeus’s glacial expression. Glynnis clung tighter to Frederic, flaunting their bond.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Thaddeus ignored her. &#34;What?&#34;</p>
                 <p>&#34;Ada’s deal is nearly sealed,&#34; Frederic commanded. &#34;Finalize it.&#34;</p>
                 <p>Thaddeus smirked. &#34;If Glynnis is so capable, let her handle it. I won’t steal her glorious victory.&#34;</p>
@@ -2438,7 +2438,7 @@
                 <p>She twirled before the mirror. &#34;I need a distraction. Got any fun ideas?&#34;</p>
                 <p>Glynnis paused—then laughed. &#34;Oh, I’ve got plenty.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -2560,7 +2560,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2576,8 +2576,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

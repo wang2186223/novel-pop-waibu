@@ -2391,7 +2391,7 @@
                 <p>Sophia smirked.</p>
                 <p>If only this acting talent had been used on-screen, she&#39;d have won an Oscar by now.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Ms. Valentine claimed the video was from a film shoot,&#34; Sophia said coolly. &#34;But your next project hasn&#39;t even started. You&#39;re still working at Roscente Holdings.&#34;</p>
                 <p>Isabella stiffened.</p>
                 <p>&#34;If it was for a film, the production team would have the raw footage.&#34; Sophia pressed forward. &#34;If not, then you were bullying that waitress at the restaurant.&#34;</p>
@@ -2403,25 +2403,25 @@
                 <p>Sophia turned. Ethan stood there, his gaze icy.</p>
                 <p>Her pulse jumped, but she steadied herself.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Reinforcements have arrived,&#34; she said dryly. &#34;Let the performance begin.&#34;</p>
                 <p>Ethan&#39;s lips curled. &#34;Commissioner Chen, since when does this station allow criminals to argue their case?&#34;</p>
                 <p>The commissioner wiped his brow. &#34;We&#39;ll wrap this up immediately!&#34;</p>
                 <p>The officers snapped to attention.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Sophia&#39;s stomach dropped.</p>
                 <p>Ethan&#39;s presence had shifted the momentum entirely.</p>
                 <p>Isabella rushed to his side. &#34;Ethan, I was so scared...&#34;</p>
                 <p>Vivian mimed gagging.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Ethan&#39;s eyes turned glacial. &#34;Control her mouth.&#34;</p>
                 <p>&#34;She&#39;s just expressing an opinion.&#34; Sophia didn&#39;t back down. &#34;Feeling sensitive, Mr. Roscente?&#34;</p>
                 <p>Their locked stares turned the air frigid.</p>
                 <p>An officer checked his watch. &#34;When is that witness arriving?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">
@@ -2543,7 +2543,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2559,8 +2559,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

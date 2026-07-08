@@ -2391,7 +2391,7 @@
                 <p>The chessboard was quickly set up. Sophia took the white pieces, moving swiftly. Though she had learned from her grandfather since childhood and had solid fundamentals, Dr. Xavier soon had her on the retreat.</p>
                 <p>&#34;Your skill is unmatched, Professor. I concede defeat.&#34; Sophia placed down her last white piece, admiration shining in her eyes.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Dr. Xavier stroked his beard with a hearty laugh. &#34;You little rascal, you deliberately let me take three moves. Did you think this old man wouldn&#39;t notice?&#34;</p>
                 <p>Sophia pressed her lips together, amused. &#34;Nothing escapes your sharp eye.&#34;</p>
                 <p>&#34;Your playing style...&#34; Dr. Xavier mused. &#34;Who taught you?&#34;</p>
@@ -2403,26 +2403,26 @@
                 <p>&#34;I&#39;d love to meet this gentleman someday.&#34;</p>
                 <p>Sophia&#39;s fingers stilled. &#34;He... has passed.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Dr. Xavier&#39;s expression faltered. &#34;And your grandmother?&#34;</p>
                 <p>&#34;Gone as well.&#34;</p>
                 <p>&#34;Poor child...&#34; Dr. Xavier sighed, patting her hand gently.</p>
                 <p>Sophia shook her head. &#34;Talking about them with you makes me happy.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>In the bathroom, Sophia studied her reflection in the mirror and exhaled softly.</p>
                 <p>Back in the living room, the housekeeper poured tea for Dr. Xavier and whispered, &#34;What do you think of Miss Sophia, sir?&#34;</p>
                 <p>Dr. Xavier rubbed a chess piece between his fingers, his eyes warm. &#34;That boy has good taste.&#34;</p>
                 <p>&#34;So you approve?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;He&#39;s had a hard time all these years. It&#39;s good that he has someone who truly cares for him now.&#34;</p>
                 <p>The housekeeper nodded knowingly.</p>
                 <p>When the next game began, Sophia held nothing back. After two rounds, Dr. Xavier couldn&#39;t stop marveling at the prowess of the younger generation.</p>
                 <p>Ethan watched from the staircase landing, an unfamiliar warmth blooming in his chest.</p>
                 <p>At the dinner table, the three raised their glasses, sharing a quiet moment of joy.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">
@@ -2544,7 +2544,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2560,8 +2560,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

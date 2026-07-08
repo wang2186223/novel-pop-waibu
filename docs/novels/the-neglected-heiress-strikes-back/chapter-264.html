@@ -2395,7 +2395,7 @@
                 <p>Jason turned to leave but paused abruptly. &#34;The man in emergency—Thaddeus Abernathy. Inform President Ashbourne to dispatch two top specialists immediately.&#34;</p>
                 <p>Evadne awoke the next afternoon, eyelids fluttering open like someone emerging from a decade-long slumber. &#34;Where...?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Every muscle screamed in protest as she tried moving. She felt hollowed out, like her very essence had been drained.</p>
                 <p>&#34;Evadne! You&#39;re awake! It&#39;s me, Bet!&#34;</p>
                 <p>Bet&#39;s choked cry filled the room as he lunged forward, crushing her in a desperate embrace. He&#39;d kept vigil all night, clutching her hand until his knuckles turned white, eyes swollen from unshed tears.</p>
@@ -2405,7 +2405,7 @@
                 <p>&#34;The army... your leave?&#34; Evadne fretted over him despite her own condition.</p>
                 <p>&#34;Nothing matters more than you.&#34; His voice roughened with emotion. &#34;Never has.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Bet...&#34; She buried her face against his neck, breathing in his familiar scent.</p>
                 <p>Seeing how much weight she&#39;d lost, how the light had dimmed in her eyes—it shattered something in Bet&#39;s chest.</p>
                 <p>&#34;Wait, how did I get here?&#34; She pulled back slightly as he helped prop her up.</p>
@@ -2415,7 +2415,7 @@
                 <p>Yet unease coiled in her gut. &#34;Where is he?&#34;</p>
                 <p>The door swung open abruptly.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Cassius and Jason entered, relief washing over their faces at her awake state.</p>
                 <p>&#34;Miss Evadne!&#34;</p>
                 <p>Jason nearly tripped in his haste, tears springing to his eyes. Noticing Bet&#39;s glare, he composed himself with a respectful bow before approaching.</p>
@@ -2425,7 +2425,7 @@
                 <p>&#34;There&#39;s... something you should know.&#34; Jason hesitated before plunging ahead. &#34;Thaddeus suffered internal injuries. He coughed up blood.&#34;</p>
                 <p>&#34;What?!&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Evadne jerked upright, pulse skyrocketing. Cassius and Bet exchanged stunned glances.</p>
                 <p>&#34;The impact damaged his organs,&#34; Jason explained bluntly. However much he disliked Thaddeus, he wouldn&#39;t lie about this.</p>
                 <p>Memory flashed—Thaddeus&#39;s back slamming against that boulder as he shielded her from falling debris. His casual dismissal afterward.</p>
@@ -2567,7 +2567,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2583,8 +2583,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

@@ -2392,7 +2392,7 @@
                 <p>On the day the college entrance exam results were announced, cheers erupted in the Anderson living room.</p>
                 <p>Andrew Anderson stared at the computer screen, his fingers trembling slightly. &#34;630 points! I always knew our daughters were exceptional!&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Grace Anderson beamed with pride. &#34;That’s my good genes at work!&#34;</p>
                 <p>&#34;You’re right,&#34; Andrew conceded uncharacteristically. &#34;And Peter deserves credit too. He tutored and drove Emily around all semester.&#34;</p>
                 <p>Grace nodded eagerly. &#34;We should thank him properly.&#34;</p>
@@ -2413,14 +2413,14 @@
                 <p>&#34;It’s not them you’re avoiding, is it?&#34;</p>
                 <p>Silence stretched over the line.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Vivian sighed in sudden understanding. &#34;If you truly want a child, start fresh.&#34;</p>
                 <p>Evelyn tightened her grip on the phone.</p>
                 <p>She’d never been particularly eager for marriage or motherhood.</p>
                 <p>Yet Grandma Hamilton’s dying words echoed relentlessly: The child said they’d return to the heavens to choose a mother again.</p>
                 <p>If she never remarried or had children, would that mean she’d never see them?</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>She wanted to meet them again.</p>
                 <p>Even if the odds were one in a million.</p>
                 <p>&#34;Hold on,&#34; Vivian said abruptly. &#34;I need to check something.&#34;</p>
@@ -2428,7 +2428,7 @@
                 <p>A notification.</p>
                 <p>Evelyn opened it to find a screenshot.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">
@@ -2550,7 +2550,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2566,8 +2566,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

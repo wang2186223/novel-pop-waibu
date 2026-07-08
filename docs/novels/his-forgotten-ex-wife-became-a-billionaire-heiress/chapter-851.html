@@ -2390,34 +2390,34 @@
                 <p>Ethan was already striding toward them. The silver fork he&#39;d been holding now lay twisted on his abandoned table.</p>
                 <p>&#34;Vivian, what a coincidence,&#34; he forced a smile, his voice tight. &#34;Mind if I join you?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;No.&#34;</p>
                 <p>&#34;Absolutely not.&#34;</p>
                 <p>Their simultaneous rejection darkened Ethan&#39;s expression. He sat beside Vivian anyway. &#34;Three&#39;s a party, right Dominic? You don&#39;t mind.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Dominic sliced his steak deliberately. &#34;Your audacity remains unmatched, Roscente.&#34;</p>
                 <p>&#34;Still can&#39;t compete with your talent for opportunism,&#34; Ethan&#39;s murderous glare promised violence. This was his wife—how dare Dominic flirt right before his eyes?</p>
                 <p>Dominic set down his knife. &#34;Vivian, shall we go somewhere else?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>She dabbed her lips. &#34;I&#39;m finished. Let&#39;s head back.&#34;</p>
                 <p>Dominic took her purse. &#34;I didn&#39;t book a hotel. Hope you don&#39;t mind me staying over tonight.&#34;</p>
                 <p>&#34;Fine,&#34; Vivian agreed without hesitation.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Ethan&#39;s fist clenched. Staying at her place? He&#39;d barely been invited! Worse still, he overheard them planning a Disneyland trip tomorrow—when he&#39;d suggested it before, Vivian had claimed to hate crowds.</p>
                 <p>Watching them leave together, Ethan immediately followed. The food he&#39;d ordered arrived untouched as he threw down cash and stormed out.</p>
                 <p>Pregnant women always got hungry at night...</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>In the car, Vivian stared out the window. &#34;I&#39;ve already reserved your hotel.&#34;</p>
                 <p>Dominic chuckled. &#34;Throw me away after use? I just helped you drive Ethan mad.&#34;</p>
                 <p>&#34;You could&#39;ve refused,&#34; she said flatly. &#34;Drop me at the next intersection.&#34;</p>
                 <p>Instead of slowing, Dominic accelerated. &#34;Wonder how much ransom Ethan would pay if I kidnapped you? Ten billion?&#34;</p>
                 <p>The rearview mirror showed Ethan&#39;s car in relentless pursuit.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">
@@ -2539,7 +2539,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2555,8 +2555,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

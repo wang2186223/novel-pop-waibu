@@ -2397,13 +2397,13 @@
                 <p>Meanwhile.</p>
                 <p>Vivian and Isabella Langley stared at a computer screen.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>The feed from the pinhole camera made both women pale simultaneously.</p>
                 <p>&#34;Viv...that person...&#34; Isabella&#39;s voice trembled. &#34;Isn&#39;t that you?&#34;</p>
                 <p>Had Vivian not been beside her, she&#39;d have sworn the woman onscreen was Vivian herself.</p>
                 <p>How could two people look so identical?</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;That&#39;s not me.&#34; Vivian&#39;s gaze burned through the screen.</p>
                 <p>The face reminded her of someone—Sophia Evans. But Sophia&#39;s resemblance paled compared to this doppelgänger.</p>
                 <p>——</p>
@@ -2415,14 +2415,14 @@
                 <p>Her obsession with her appearance was pathological. She always forced others to acknowledge her superiority.</p>
                 <p>Madeline&#39;s nails dug into her palms as she compared them.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Though their features were similar, Annika&#39;s face had an unnatural stiffness, devoid of Vivian&#39;s effortless grace.</p>
                 <p>&#34;Who are you?&#34; Madeline demanded.</p>
                 <p>Annika crossed her legs. &#34;I heard you wanted to meet me. Let&#39;s negotiate terms.&#34; Her eyes turned glacial. &#34;Don&#39;t even think about refusing—or else—&#34;</p>
                 <p>&#34;Impossible!&#34; Madeline snapped. &#34;I won&#39;t help you smuggle anything.&#34;</p>
                 <p>Annika chuckled. &#34;Fine. I&#39;m sure your husband will cooperate.&#34; She adjusted her sleeve with deliberate slowness. &#34;If he refuses...I can always replace him with someone more...compliant.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">
@@ -2544,7 +2544,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2560,8 +2560,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

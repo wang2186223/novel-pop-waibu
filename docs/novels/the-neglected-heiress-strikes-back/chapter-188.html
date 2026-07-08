@@ -2397,7 +2397,7 @@
                 <p>Meanwhile, not far away—</p>
                 <p>Seraphina was scanning the crowd for Ada, her eyes bright with excitement.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>But when she spotted Edith playing the piano on stage, her expression froze. Her face paled, and the light in her eyes dimmed like a flower wilting in an instant.</p>
                 <p>Beneath the red dress, her body trembled.</p>
                 <p>Memories of humiliation and ridicule from her childhood flooded back, drowning her in despair.</p>
@@ -2409,7 +2409,7 @@
                 <p>On stage, Edith played the piano with full concentration, completely unaware of the venomous glare directed at her from the crowd.</p>
                 <p>Seraphina’s eyes turned bloodshot as she clutched her teddy bear and began backing away, cold sweat trickling down her forehead.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Suddenly, Alexander grabbed her arm.</p>
                 <p>&#34;Seraphina, what’s wrong? Are you nervous? Didn’t you say you wanted Ada’s autograph? Come on, I’ll take you to her.&#34;</p>
                 <p>But Seraphina violently yanked her arm free and bolted for the exit without looking back.</p>
@@ -2421,7 +2421,7 @@
                 <p>She had wanted so badly to meet Ada. She’d spent countless lonely nights watching her movies, living vicariously through the fearless heroines who always triumphed.</p>
                 <p>But seeing Edith in person made her want to disappear.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>She was nothing but a burden. A fragile, worthless thing.</p>
                 <p>The taunts and cruelty chased her like demons from the past.</p>
                 <p>HONK! HONK! HONK!</p>
@@ -2433,7 +2433,7 @@
                 <p>&#34;Seraphina! Watch out!&#34;</p>
                 <p>At the last second, Alexander lunged forward, wrapping his arms around her fragile body.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Just as she protected her teddy bear, he shielded her with everything he had.</p>
                 <p>Then, he twisted, taking the brunt of the impact as they crashed onto the pavement.</p>
                 <p>His shoulder slammed into a jagged rock by the roadside. A muffled groan escaped him as pain radiated through his body, his suit drenched in sweat.</p>
@@ -2580,7 +2580,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2596,8 +2596,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

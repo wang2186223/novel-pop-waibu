@@ -2415,7 +2415,7 @@
                 <p>Now, at 32 weeks, with the lung-promoting injections administered, the doctors suggested inducing labor. Eleanor had reluctantly agreed.</p>
                 <p>Vanessa was terrified.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>The doctors had warned her—the baby had congenital heart disease. Survival was unlikely.</p>
                 <p>Even as she entered the operating room, dread coiled in her stomach.</p>
                 <p>And then, Evelyn Sinclair appeared.</p>
@@ -2435,7 +2435,7 @@
                 <p>Had Evelyn Sinclair been involved with Vincent before Richard?</p>
                 <p>If Eleanor ever discovered Vanessa was her daughter...</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>She didn’t dare finish the thought.</p>
                 <p>Ethan didn’t love her. Eleanor was her only lifeline.</p>
                 <p>But now, even that seemed fragile.</p>
@@ -2449,7 +2449,7 @@
                 <p>The doctors had hinted at the fetus’s abnormalities.</p>
                 <p>For her future, she had no other choice.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">
@@ -2571,7 +2571,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2587,8 +2587,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

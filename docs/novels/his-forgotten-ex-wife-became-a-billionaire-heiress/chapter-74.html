@@ -2397,25 +2397,25 @@
                 <p>She strode toward the villa entrance but froze when her key met unlocked resistance.</p>
                 <p>The door swung inward from within.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Viv—&#34;</p>
                 <p>Her hand clamped over Lucas Lefèvre&#39;s mouth as she shoved him inside. The door slammed shut behind them.</p>
                 <p>Ethan&#39;s eyes narrowed.</p>
                 <p>He&#39;d clearly seen a man&#39;s silhouette.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>His fingers tightened around the keys. Within seconds, Ethan was striding up the walkway.</p>
                 <p>Inside, Vivian glared at Lucas. &#34;What are you doing here?&#34;</p>
                 <p>&#34;I—&#34;</p>
                 <p>The doorbell chimed.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Vivian paled. &#34;Hide. Now.&#34;</p>
                 <p>&#34;Why—&#34;</p>
                 <p>&#34;No questions!&#34; She propelled him toward the bathroom. &#34;Move!&#34;</p>
                 <p>Bewildered but compliant, Lucas ducked inside.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Vivian inhaled sharply before cracking the door open. &#34;Something else, Mr. Roscente?&#34;</p>
                 <p>Ethan&#39;s gaze swept past her, scanning the interior. &#34;Mind if I use your restroom?&#34;</p>
                 <p>He shouldered past before she could respond.</p>
@@ -2423,7 +2423,7 @@
                 <p>Behind the bathroom door, Lucas held his breath.</p>
                 <p>Ethan&#39;s footsteps grew louder...</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">
@@ -2545,7 +2545,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2561,8 +2561,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

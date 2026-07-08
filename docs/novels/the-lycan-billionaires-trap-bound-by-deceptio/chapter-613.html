@@ -2390,7 +2390,7 @@
                 <p>But his men stood motionless, ignoring his command as if they hadn&#39;t heard a word.</p>
                 <p>Rage flared in Hudson&#39;s eyes as he turned around and shouted, &#34;Are you all deaf? I said kill them! Do you no longer care about the money I promised to pay you?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Yet still, none of them lifted a finger. One by one, they slid their guns back into their holsters, stepped aside,and lowered their heads in silece.</p>
                 <p>Before Hudson could erupt again, a firm, authoritative voice rang out from behind Hannah. &#34;Mr. Chadwick,are you disregarding even the President now?&#34;</p>
                 <p>The words struck Hudson like thunder. His breath hitched as he whipped his head around-only to see his political adversary, Sullivan, entering the room alongside a composed, middle-aged man radiating power.</p>
@@ -2400,7 +2400,7 @@
                 <p>The President&#39;s presence explained why Hudson&#39;s men no longer obeyed him.</p>
                 <p>Cold sweat rolled down Hudson&#39;s temples as his voice faltered. &#34;M-Mr. President... Sullivan... What brings you here?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Hannah stepped forward, her expression calm yet unyielding. &#34;I invited the President and Mr. Prescott.&#34;</p>
                 <p>When she&#39;d received the emergency signal from the bodyguard, she hadn&#39;t wasted time rushing to the boutique. Instead, she&#39;d told Nate to drive straight to Sullivan&#39;s residence.</p>
                 <p>The meeting had been tense-Sullivan, wary of a stranger showing up in the dead of night, had been openly skeptical.</p>
@@ -2542,7 +2542,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2558,8 +2558,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

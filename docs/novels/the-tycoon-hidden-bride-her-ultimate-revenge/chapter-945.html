@@ -2389,19 +2389,19 @@
                 <p>The kitchen offered little comfort. He tore off a slice of bread, crammed it into his mouth, and scrolled through the family chat. Trinity’s messages lit up the screen.</p>
                 <p>Even after being dragged through the mud online all night, he had learned nothing. His bitterness boiled over, and his fingers raced to be the first to reply.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>“See? What did I tell you? Lilah can’t stop throwing herself at every guy who pays her attention. I was blind to think she was different. Just watching her now makes me sick. The next time she crosses my path, I’ll put her in her place and make her understand what decency means.”</p>
                 <p>The elders of the Evans family refrained from commenting on anything involving Lilah, but the younger members had no such restraint. One after another, they jumped in.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>“Taylor, what happened to you? You act like you’ve gone from head over heels for Lilah to flat-out despising her.”</p>
                 <p>Let your imagination soar with gα?ησν?s．?ο</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>“When a guy swings that hard from love to hate, it’s usually one of two things. Either he put his heart on the line and got rejected, or she slammed the door on him before he even had the chance. Which one is it, Taylor?”</p>
                 <p>“Come on, the way Taylor flipped overnight, I’m betting on the second! Ha-ha!”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>“Ooooh, the famous movie star couldn’t even get through the front gate of a so-called heartbreaker. Now he’s throwing a tantrum, and his love has curdled into hate, so he’s badmouthing her. Imagine if this little story leaked online—Taylor’s career would be toast! Ha-ha!”</p>
                 <p>Their teasing piled up, nothing but blind guesses tossed around for fun. But their words cut deep as the casual digs landed far too close to reality. Only Jason, Lance, and Jeff knew the truth.</p>
                 <!-- 广告位 5 -->
@@ -2535,7 +2535,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2551,8 +2551,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

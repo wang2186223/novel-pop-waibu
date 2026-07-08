@@ -2395,17 +2395,17 @@
                 <p>Sebastian&#39;s gaze dropped to her hands. &#34;Is the child Ethan Roscente&#39;s?&#34;</p>
                 <p>She bit her lip and nodded.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Does he know?&#34;</p>
                 <p>&#34;He never will.&#34; Her voice was barely audible. &#34;This is my child.&#34;</p>
                 <p>After a pause, Sebastian spoke softly. &#34;I&#39;ll keep your secret.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Sophia looked up in surprise.</p>
                 <p>&#34;I trust you have your reasons.&#34; His eyes were gentle. &#34;Come to me if you need help.&#34;</p>
                 <p>Her eyes stung. Finding understanding at such a moment felt like a miracle.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Should you get checked?&#34; Sebastian asked with concern. &#34;After last night&#39;s ordeal...&#34;</p>
                 <p>&#34;I was just heading there.&#34; She glanced toward the hospital room. &#34;Stay with the professor.&#34;</p>
                 <p>The maternity ward was on the second floor.</p>
@@ -2418,7 +2418,7 @@
                 <p>His girlfriend asked curiously, &#34;Is the professor married?&#34;</p>
                 <p>&#34;Holy—!&#34; Felix yanked out his phone. &#34;Ethan&#39;s gonna be a dad?!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">
@@ -2540,7 +2540,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2556,8 +2556,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

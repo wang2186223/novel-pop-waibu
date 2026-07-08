@@ -2390,7 +2390,7 @@
                 <p>Both Ethan and Vivian looked up—one grave-faced, the other smirking. Sophia&#39;s stomach twisted, fearing Vivian had already uncovered her scheme.</p>
                 <p>&#34;Ethan...&#34; She leaned weakly against a maid. &#34;The blood draw hurt so much. Look how swollen my wrist is.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>As she approached Ethan, her legs suddenly buckled. &#34;I feel dizzy...&#34;</p>
                 <p>Ethan sidestepped her.</p>
                 <p>The maid barely caught Sophia before she fell.</p>
@@ -2400,7 +2400,7 @@
                 <p>&#34;Are you cursing me?&#34;</p>
                 <p>&#34;Just stating facts. Even I wouldn&#39;t dare fabricate such outrageous results. Ms. Evans is truly... extraordinary.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Sophia bit her lip as she sat down. &#34;Are you mocking me, Dr. Laurent?&#34;</p>
                 <p>&#34;Not at all. I&#39;m impressed. Ordinary people with these blood levels would be in ICU. Ms. Evans&#39; constitution is... remarkable.&#34;</p>
                 <p>Sophia clenched her fists. &#34;I hate hospital smells. That&#39;s why Ethan let me recuperate at home. I know I&#39;m a burden...&#34; She gazed tenderly at Ethan. &#34;But he won&#39;t let me go. He keeps searching for specialists—&#34;</p>
@@ -2410,14 +2410,14 @@
                 <p>&#34;The best private facility in Eudora,&#34; Ethan answered.</p>
                 <p>&#34;Apparently not good enough.&#34; Vivian chuckled. &#34;Couldn&#39;t even detect poisoning. Shall we get a second opinion elsewhere?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Sophia&#39;s pupils constricted. &#34;Ethan, I&#39;m too exhausted...&#34; She suddenly covered her face, sobbing. &#34;Is Dr. Laurent accusing someone of poisoning me? Or... that I poisoned myself? Am I insane?&#34;</p>
                 <p>Tears streaked her pale cheeks.</p>
                 <p>&#34;I may have conflicts with Dr. Laurent, but she can&#39;t just make wild accusations!&#34; She looked pleadingly at Ethan. &#34;I want to live more than anyone...&#34;</p>
                 <p>Vivian watched the performance coldly.</p>
                 <p>Sophia&#39;s nails dug into her palms. This Vivian Laurent was too sharp—she&#39;d seen through the act immediately.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">
@@ -2539,7 +2539,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2555,8 +2555,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

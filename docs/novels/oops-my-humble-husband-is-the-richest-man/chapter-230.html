@@ -2396,7 +2396,7 @@
                 <p>Evelyn thought she had encountered one of those scam artists and frowned.</p>
                 <p>But the old woman&#39;s eyes shone brightly as she asked, &#34;Good child, are you married?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Evelyn shook her head.</p>
                 <p>The woman smiled. &#34;I have a hopeless grandson. Would you consider making do with him?&#34;</p>
                 <p>Evelyn was stunned.</p>
@@ -2407,7 +2407,7 @@
                 <p>Eleanor handed her a business card.</p>
                 <p>Evelyn didn&#39;t say much. Over the years, she had met many capable elderly people and learned numerous skills from them.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>She knew well that older people often developed eccentric personalities.</p>
                 <p>Leaving the hospital, she placed the business card on a nearby trash can and walked away.</p>
                 <p>It was just a minor incident in an ordinary day, gradually fading from memory.</p>
@@ -2418,7 +2418,7 @@
                 <p>Eleanor gave her a reproachful look. &#34;After your marriage that day, you brought us home. You said you&#39;d go back to pack your things and move in, leaving the marriage certificate with me for safekeeping. But you never returned... Dear, why didn&#39;t you come back to us? Did you change your mind?&#34;</p>
                 <p>Evelyn&#39;s eyes widened in astonishment.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>She had clearly thrown away the business card. How could she have gone back to find the old woman?</p>
                 <p>She asked seriously, &#34;Are you sure the person who came to you later was really me?&#34;</p>
                 <p>&#34;It was you!&#34;</p>
@@ -2429,7 +2429,7 @@
                 <p>Alexander gave a bitter smile, massaging his temples helplessly.</p>
                 <p>Before he could speak, Eleanor interjected. &#34;Dear, that rascal has one weakness - he can&#39;t handle alcohol. One glass makes him drunk. But he&#39;s different when drunk. Outwardly he seems normal, but he becomes extremely obedient. He&#39;ll do whatever I tell him to!&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Eleanor said triumphantly, &#34;So back then I tricked him into taking a sip. While he was muddled, I made him go with you to get registered!&#34;</p>
                 <p>Evelyn: &#34;...&#34;</p>
                 <p>Since meeting Alexander, she had indeed never seen him drink alcohol.</p>
@@ -2578,7 +2578,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2594,8 +2594,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

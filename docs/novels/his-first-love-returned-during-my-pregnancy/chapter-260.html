@@ -2392,35 +2392,35 @@
                 <p>Almost instantly, Alexander Hamilton&#39;s message appeared: [Has Peter figured it out?]</p>
                 <p>[What did he say to you?]</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>[Simon suddenly became cold toward Lora. He met with Peter this morning.]</p>
                 <p>Evelyn rubbed her temples.</p>
                 <p>Last night&#39;s dinner had left her utterly drained.</p>
                 <p>Peter&#39;s detached demeanor throughout the meal was a stark contrast to his usual gentle attentiveness.</p>
                 <p>Even she didn&#39;t believe that flimsy excuse he gave.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>What puzzled her more was that he sent his mother to propose this morning.</p>
                 <p>What game was this man playing?</p>
                 <p>[Let’s meet after work.]</p>
                 <p>Evelyn refused outright: [We can discuss it over text.]</p>
                 <p>[Some things must be said face-to-face.]</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>[Then have Emily Zade relay the message.]</p>
                 <p>The moment she sent it, regret flickered through her.</p>
                 <p>She still needed Alexander&#39;s help with this matter.</p>
                 <p>Irritated, she added: [Should I try to probe Peter myself?]</p>
                 <p>[Don’t.]</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Another message followed immediately: [He’s more dangerous than you think.]</p>
                 <p>Evelyn raised an eyebrow: [You seem to know him well?]</p>
                 <p>Alexander sidestepped the question: [Six o’clock. Meet me at the hospital entrance.]</p>
                 <p>Just then, another notification appeared.</p>
                 <p>[Fleeting Blossom: Dr. Carter, would you join my parents and me for dinner tonight?]</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Evelyn scoffed and sent a screenshot to Alexander.</p>
                 <p>[Your ex-wife is inviting me out.]</p>
                 <p>Her phone rang instantly.</p>
@@ -2430,7 +2430,7 @@
                 <p>Evelyn shot to her feet: &#34;Where are you?&#34;</p>
                 <p>&#34;The parking lot. Same spot as always—under the streetlight.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">
@@ -2552,7 +2552,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2568,8 +2568,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

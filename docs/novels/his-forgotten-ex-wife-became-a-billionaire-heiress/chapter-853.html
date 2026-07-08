@@ -2391,25 +2391,25 @@
                 <p>The mansion stood silent around her, amplifying her heartbeat.</p>
                 <p>The moment her fingers touched the container, she knew.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Inside held two simple dishes and soup. The presentation was amateurish at best.</p>
                 <p>No ginger shreds. Undercooked. These culinary failures could only be Ethan&#39;s work.</p>
                 <p>Vivian checked the security feed. Thirty minutes ago, Ethan had sneaked in like a thief.</p>
                 <p>He&#39;d placed the food here, glanced upstairs, then left quickly.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>This time, his car didn&#39;t linger.</p>
                 <p>Her chest tightened. The mighty CEO of Roscente Group, cooking for her.</p>
                 <p>Each attempt showed slight improvement.</p>
                 <p>How did he know she&#39;d be hungry? Since when did this oblivious man become so attentive?</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>The spoonful tasted predictably mediocre.</p>
                 <p>But every bite carried warmth. Vivian&#39;s eyes stung, her heart aching strangely.</p>
                 <p>She finished everything without realizing.</p>
                 <p>Returning to bed, sleep felt further away than ever.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>...</p>
                 <p>Morning revealed dark circles under Vivian&#39;s eyes.</p>
                 <p>Dominic Atlante waited in the living room when she descended.</p>
@@ -2545,7 +2545,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2561,8 +2561,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

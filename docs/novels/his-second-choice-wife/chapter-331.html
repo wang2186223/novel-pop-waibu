@@ -2391,7 +2391,7 @@
                 <p>&#34;Goodnight then, Liam,&#34; she said with a small wave before disappearing up the staircase.</p>
                 <p>Liam watched her retreating form with complex emotions swirling in his chest. The truth was, he&#39;d never truly worried about Victoria&#39;s schemes or potential drugging attempts. He&#39;d always been several steps ahead of her marriage ploys.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>This entire charade served one purpose - to keep Evelyn close just a little longer, to steal more moments in her presence.</p>
                 <p>Dawn found Evelyn unusually alert, her internal clock reset by recent events. She invaded the kitchen before sunrise, determined to assist Rosalind with breakfast preparations.</p>
                 <p>No amount of gentle discouragement could sway her. The old Evelyn had never lifted a finger for domestic chores, famously declaring such tasks beneath her genius. But this new version stubbornly chopped vegetables with intense concentration.</p>
@@ -2403,13 +2403,13 @@
                 <p>&#34;Just... because,&#34; Evelyn muttered, focusing intently on slicing mushrooms.</p>
                 <p>Rosalind&#39;s lips curved knowingly. &#34;Is this for Mr. Blackwood, by any chance?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Evelyn&#39;s knife clattered against the cutting board. &#34;Don&#39;t be ridiculous!&#34; she snapped, cheeks flushing. &#34;Why would I bother learning to cook for him?&#34;</p>
                 <p>&#34;Of course, my mistake,&#34; Rosalind conceded with poorly concealed amusement.</p>
                 <p>They worked in companionable silence until Liam descended for breakfast. He settled at the dining table, scrolling through security reports on his phone.</p>
                 <p>Evelyn emerged triumphantly from the kitchen, balancing a laden breakfast tray. &#34;Morning, Liam!&#34; she chirped, her apron dusted with flour.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Liam looked up, his stern expression softening at the sight. &#34;Good morning, Cassandra,&#34; he replied, using her given name with deliberate gentleness.</p>
                 <p>&#34;I made this for you,&#34; she announced proudly, setting the tray before him before taking the opposite seat. She propped her chin on folded hands, watching him with eager anticipation.</p>
                 <p>&#34;All by yourself?&#34; Liam arched an eyebrow.</p>
@@ -2545,7 +2545,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2561,8 +2561,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

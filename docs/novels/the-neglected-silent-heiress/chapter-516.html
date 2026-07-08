@@ -2388,16 +2388,16 @@
                 <p>A gust of wind rattled the windows. Without hesitation, Liam shrugged off his tailored coat and draped it over her shoulders, his fingers lingering a heartbeat too long. &#34;I get it. I just wanted to see you’re okay. If you are, I’ll go.&#34;</p>
                 <p>She caught his wrist as he turned, cursing her traitorous heart. &#34;Stay for dinner,&#34; she muttered. &#34;Isabelle keeps asking for you.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>The change in Liam was instantaneous—his eyes, usually so guarded, lit up like dawn breaking over the city. He fell into step beside her, his masked face doing little to hide the smile in his voice. By the time they reached her penthouse, he’d negotiated his way into cooking, rolling up his sleeves with the focus of a surgeon prepping for operation.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>In Olivia’s kitchen, Liam shed his public persona along with the mask. The apron strings strained against his broad shoulders as he moved with precision, each slice of the knife deliberate. Golden stove light caught the sharp angles of his face, softening the man who’d once frozen boardrooms with a glance.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The spread he prepared—Isabelle’s favorite lemon-glazed salmon, Olivia’s truffle risotto—was obscenely perfect. Their daughter beamed, swinging their joined hands between them like this was any normal family dinner.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Alistair joined them, more present than he’d been in weeks. The haunted look in his eyes had dulled, though his gaze kept darting to the door. Olivia knew who he was searching for. Reluctantly, she called Margaret.</p>
                 <!-- 广告位 5 -->
                 <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
@@ -2408,7 +2408,7 @@
                 <p>Two worlds colliding in a penthouse kitchen.</p>
                 <p>And Olivia, stranded between them.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">
@@ -2530,7 +2530,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2546,8 +2546,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

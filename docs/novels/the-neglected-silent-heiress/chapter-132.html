@@ -2403,7 +2403,7 @@
                 <p>The mention of Liam sent Olivia&#39;s pulse racing.</p>
                 <p>As Isabella explained, the puzzle pieces clicked into place. The logistics company Whitmore Holdings partnered with turned out to be a Blackwood Enterprises subsidiary.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Renowned for handling complex international shipments flawlessly, Blackwood&#39;s logistics division had served the Hayes family impeccably for years.</p>
                 <p>Until now.</p>
                 <p>Both parties vehemently denied fault as accusations flew.</p>
@@ -2415,7 +2415,7 @@
                 <p>William&#39;s sudden illness amid the scandal only deepened the crisis.</p>
                 <p>Olivia texted Isabella: &#34;Even if Blackwood&#39;s involved, Liam wouldn&#39;t condone this. He&#39;s likely unaware.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Warmth flooded Olivia&#39;s cheeks at Isabella&#39;s reply: &#34;You still care for him, don&#39;t you?&#34;</p>
                 <p>Her fingers flew across the screen: &#34;It&#39;s not that. I know Liam. He&#39;d investigate thoroughly—whether it involved Blackwood or Whitmore. He&#39;d never let rumors damage the Hayes family unchecked!&#34;</p>
                 <p>The argument held merit. Liam wasn&#39;t one to evade responsibility or scapegoat others. Identifying the truth mattered most.</p>
@@ -2426,7 +2426,7 @@
                 <p>Taking a steadying breath, Olivia typed decisively: &#34;William&#39;s always supported me. I&#39;ll help however possible. Just tell me what&#39;s needed.&#34;</p>
                 <p>Isabella&#39;s relief was palpable. &#34;Could you speak with Liam? Not expecting miracles, but perhaps he could mediate...&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">
@@ -2548,7 +2548,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2564,8 +2564,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

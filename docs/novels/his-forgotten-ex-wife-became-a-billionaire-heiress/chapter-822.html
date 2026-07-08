@@ -2390,12 +2390,12 @@
                 <p>With Annika Heilbronn gone, there was no reason for Vivian to stay.</p>
                 <p>&#34;I&#39;m leaving.&#34; She turned away. &#34;Install surveillance and hire bodyguards.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;It&#39;ll be done immediately!&#34; Madeline nodded frantically.</p>
                 <p>Bianca Semona rushed after her. &#34;Wait for me!&#34;</p>
                 <p>She reached for the car door.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;What do you think you&#39;re doing?&#34; Vivian blocked her.</p>
                 <p>&#34;I&#39;m safer with you,&#34; Bianca insisted urgently.</p>
                 <p>Vivian scoffed. &#34;Annika wants me dead. If she can&#39;t kill me, she&#39;ll go after those close to me. Still sure?&#34;</p>
@@ -2410,14 +2410,14 @@
                 <p>&#34;You don&#39;t trust me, so why should I trust you?&#34; Vivian smirked. &#34;If you don&#39;t speak up today, you&#39;re on your own.&#34;</p>
                 <p>Bianca trembled.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>She couldn&#39;t take that risk.</p>
                 <p>&#34;I&#39;ll do it!&#34; She gritted her teeth. &#34;But you have to guarantee my safety.&#34;</p>
                 <p>&#34;One more thing.&#34; Vivian added, &#34;Publicly admit I&#39;m Dr. Luna.&#34;</p>
                 <p>&#34;Fine.&#34; Bianca agreed.</p>
                 <p>The deal was struck. Bianca hastily contacted the media while Vivian had Isabella Langley release the damning recording.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">
@@ -2539,7 +2539,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2555,8 +2555,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

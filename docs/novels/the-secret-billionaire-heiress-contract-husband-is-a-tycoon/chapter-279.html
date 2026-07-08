@@ -2390,12 +2390,12 @@
                 <p>Victoria Langley elegantly lifted her teacup and took a sip. &#34;Vincent, we all admire Ethan&#39;s loyalty.&#34;</p>
                 <p>&#34;To keep searching for over a decade because of a childhood promise—that kind of devotion is rare.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;So we&#39;ve decided to grant his wish.&#34;</p>
                 <p>Evelyn&#39;s head jerked up, but her mother silenced her with a look.</p>
                 <p>&#34;Aunt Victoria!&#34; Ethan stood abruptly. &#34;Actually, I—&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;No need.&#34; Victoria interrupted gently. &#34;Love can&#39;t be forced. Our Evelyn has other options.&#34;</p>
                 <p>She gave Ethan a meaningful glance. &#34;I hope you find that girl soon and understand your own heart.&#34;</p>
                 <p>Ethan froze as if struck by lightning.</p>
@@ -2405,12 +2405,12 @@
                 <p>His sharp gaze pinned Evelyn in place.</p>
                 <p>Her fingers tightened around her skirt. &#34;Thank you for your understanding, Uncle Vincent.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Richard Langley rose to leave. &#34;We&#39;ve overstayed our welcome.&#34;</p>
                 <p>&#34;Our Ethan was at fault.&#34; Vincent Sullivan apologized.</p>
                 <p>Victoria guided her daughter out, her heels clicking sharply against the marble floor.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Silence descended upon the living room.</p>
                 <p>Vincent Sullivan gazed thoughtfully at the doorway before turning to see his son&#39;s thunderous expression.</p>
                 <p>&#34;Ethan—&#34;</p>
@@ -2419,7 +2419,7 @@
                 <p>The moment the door closed, he burst into laughter.</p>
                 <p>His always composed son had finally shown his true colors.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -2541,7 +2541,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2557,8 +2557,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

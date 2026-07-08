@@ -2391,7 +2391,7 @@
                 <p>Only work emails, financial news, and WeChat remained.</p>
                 <p>Annabelle opened the inbox - nothing but correspondence with Andy Taylor. The pinned WeChat contact showed &#34;Mom,&#34; with Margaret Hamilton&#39;s latest message about her headaches.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>[Mom: These headaches won&#39;t stop. What medicine should I take?]</p>
                 <p>[Alexander: Get checked at the hospital.]</p>
                 <p>[Mom: No need. Painkillers will do.]</p>
@@ -2403,19 +2403,19 @@
                 <p>&#34;Satisfied?&#34; Alexander snatched back his phone. &#34;Move.&#34;</p>
                 <p>&#34;How dare you speak to me like this? I&#39;m pregnant!&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Honorable Miss Taylor,&#34; Alexander sneered. &#34;Kindly remove your noble foot from blocking the doorway.&#34;</p>
                 <p>&#34;Alexander, you—&#34;</p>
                 <p>Before she could finish, he yanked her aside and slammed the door behind him.</p>
                 <p>&#34;Wait!&#34; Annabelle chased him to the entrance. &#34;Take out the trash.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Alexander strode toward the balcony without turning.</p>
                 <p>The cardboard box contained no garbage.</p>
                 <p>Evelyn&#39;s dress reeked of dead fish slime. Plush toys and succulents mingled together, emitting a putrid stench.</p>
                 <p>&#34;Why are you still here?&#34; Annabelle leaned against the doorframe.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;You call this trash?&#34;</p>
                 <p>&#34;What else?&#34; She stroked her belly with a smirk. &#34;My territory tolerates no other woman&#39;s belongings.&#34;</p>
                 <p>&#34;According to property law—&#34;</p>
@@ -2425,7 +2425,7 @@
                 <p>Her smile froze. &#34;What do you mean?&#34;</p>
                 <p>&#34;Exactly what I said.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">
@@ -2547,7 +2547,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2563,8 +2563,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

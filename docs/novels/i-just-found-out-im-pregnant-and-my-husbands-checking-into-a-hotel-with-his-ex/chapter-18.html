@@ -2399,14 +2399,14 @@
                 <p>Hannah shook her head and answered, &#34;I&#39;m much better.Thank you.&#34;</p>
                 <p>The nurse replaced her IV bag with practiced hands.&#34;You&#39;ll need these fluids through the night. It&#39;s best if someone stays here with you.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Vincent gave a courteous reply. &#34;I understand. Thank you.&#34;</p>
                 <p>Rena waved him off. &#34;Go keep your precious Brinley company. I&#39;ll stay here and look after Hannah.&#34;</p>
                 <p>In a steady voice, Vincent replied, &#34;I&#39;ll stay. There&#39;s no need for you to trouble yourself, Miss Brown.&#34;</p>
                 <p>Rena&#39;s eyes narrowed. &#34;Really? I was the one who&#39;d picked Hannah up and rushed her to the hospital.Where were you while she needed you the most?&#34;</p>
                 <p>Vincent had no answer for that.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Rena looked like she wanted to continue, but Vincent pressed his finger to his lips and softly said, &#34;She&#39;s asleep now.&#34;</p>
                 <p>A heavy silence filled the room.</p>
                 <p>Not long after, Rena&#39;s phone rang, and she excused herself. Vincent nodded, walking her to the door.</p>
@@ -2427,7 +2427,7 @@
                 <p>The way he said it left her unsure-had he been awake the whole night, or had he only managed to close his eyes just now? But she didn&#39;t care enough to find out.</p>
                 <p>Right then, her phone vibrated with a new message from Brinley. &#34;Believe it or not-just one text from me and Vincent will come running to me.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">
@@ -2549,7 +2549,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2565,8 +2565,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

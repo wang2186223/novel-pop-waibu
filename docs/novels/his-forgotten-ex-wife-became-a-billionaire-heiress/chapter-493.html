@@ -2390,7 +2390,7 @@
                 <p>Vivian chuckled. &#34;What brings such a brave boy to the hospital today?&#34;</p>
                 <p>&#34;I came to play with you!&#34; His big eyes sparkled.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>She took a sip of the tea—perfectly sweet. Only then did she remember she hadn&#39;t eaten lunch.</p>
                 <p>&#34;Let&#39;s go to the pediatric ward, okay?&#34; She took his chubby little hand.</p>
                 <p>Theo skipped beside her. &#34;You can call me Theo!&#34;</p>
@@ -2405,12 +2405,12 @@
                 <p>&#34;Sis!&#34;</p>
                 <p>Theo&#39;s bright voice broke the tension. He peeked through the doorway, curious.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>An idea struck Vivian. &#34;Theo, will you help me with something?&#34;</p>
                 <p>&#34;Okay!&#34; he answered enthusiastically.</p>
                 <p>She whispered instructions in his ear. Theo nodded solemnly, as if accepting a critical mission.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Medical staff stepped outside. Theo toddled to the bed and held out his treasured candy.</p>
                 <p>&#34;Here, big brother. It&#39;s super yummy!&#34;</p>
                 <p>The boy&#39;s eyes lifted slowly. Theo chattered about kindergarten adventures, gesturing animatedly.</p>
@@ -2539,7 +2539,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2555,8 +2555,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

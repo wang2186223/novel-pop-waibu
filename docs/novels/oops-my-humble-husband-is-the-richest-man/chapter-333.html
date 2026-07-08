@@ -2429,7 +2429,7 @@
                 <p>The crowd immediately swarmed around to offer congratulations.</p>
                 <p>&#34;Congratulations, Mr. Valentine!&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Double happiness for Minister Sherwood!&#34;</p>
                 <p>&#34;Wishing you a lifetime of happiness!&#34;</p>
                 <p>Evelyn was pushed aside, a slight smile on her lips.</p>
@@ -2451,7 +2451,7 @@
                 <p>Alexander snapped out of his thoughts and looked down with a soft sigh.</p>
                 <p>He tightened his grip on her hand.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Evelyn, don&#39;t leave me.&#34;</p>
                 <p>&#34;Okay.&#34;</p>
                 <p>&#34;Everyone else has someone who cares for them. I only have you and Grandma. Grandma is unwell... recuperating in San Francisco. Right now, I only have you.&#34;</p>
@@ -2473,7 +2473,7 @@
                 <p>&#34;Find a time to get an abortion.&#34;</p>
                 <p>Mina froze.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>She looked at him in disbelief.</p>
                 <p>&#34;What did you say?&#34;</p>
                 <p>Marcus irritably loosened his tie.</p>
@@ -2495,7 +2495,7 @@
                 <p>He didn&#39;t know either.</p>
                 <p>At that moment, he had only one thought: he didn&#39;t want to see Mina get hurt.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>...</p>
                 <p>Elsewhere.</p>
                 <p>Alexander drove Evelyn back to the Nan family home.</p>
@@ -2518,7 +2518,7 @@
                 <p>The other party laughed.</p>
                 <p>&#34;I&#39;ll give you the route home.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">
@@ -2640,7 +2640,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2656,8 +2656,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

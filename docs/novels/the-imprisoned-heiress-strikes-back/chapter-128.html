@@ -2394,7 +2394,7 @@
                 <p>The sight of Evelyn Carter struck Ethan Caldwell like a bolt of lightning to his soul. Her presence was magnetic, impossible to ignore.</p>
                 <p>His pulse raced wildly. He could feel heat creeping up his neck, grateful for the dim bathroom lighting and the way he stood silhouetted against it. Surely, she hadn’t noticed.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>To mask his unease, he forced an air of indifference, turning away before tossing his charcoal-gray scarf toward her.</p>
                 <p>Evelyn stood there in nothing but a soft butter-yellow sweater, her lips tinged blue from the cold. He knew she must be freezing.</p>
                 <p>That scarf had been the first thread binding them together—a silent promise.</p>
@@ -2403,7 +2403,7 @@
                 <p>The memory cut off abruptly. Staring at Evelyn now, he felt as though he were looking at a stranger.</p>
                 <p>She still wore pale yellow, but everything else about her had changed—especially the way her gaze held his, cool and detached.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;I wasn’t looking for you,&#34; Evelyn said flatly, taking two deliberate steps back to widen the distance between them.</p>
                 <p>His jaw tightened. &#34;Really? Then who? Vanessa?&#34;</p>
                 <p>Ethan&#39;s brows furrowed as he tilted his head, studying her with suspicion. &#34;You can&#39;t seriously be here to see Alexander, can you?&#34;</p>
@@ -2412,7 +2412,7 @@
                 <p>Ethan&#39;s hand shot out, gripping her wrist. &#34;Evelyn, enough games. What the hell are you playing at?&#34;</p>
                 <p>She met his gaze with icy defiance, unwilling to waste another second.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>With deliberate slowness, she lifted her hand, the sunlight catching the dazzling diamond on her finger. &#34;I&#39;m Alexander&#39;s wife now. So from this moment on, you’ll address me as &#39;aunt.&#39; Understood, nephew?&#34;</p>
                 <p>Ethan froze, his grip slackening as if struck by lightning.</p>
                 <p>He had noticed the ring days ago, but dismissed it as just another piece of jewelry. Young women wear rings all the time—it doesn’t mean anything.</p>
@@ -2430,7 +2430,7 @@
                 <p>All eyes turned toward them.</p>
                 <p>Silence.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Then—</p>
                 <p>&#34;Evelyn?&#34; Grace Caldwell&#39;s voice, sweet as poisoned honey, rang out first. &#34;What a... surprise.&#34;</p>
                 <p>Evelyn smiled. It wasn&#39;t the brittle, practiced one she&#39;d worn for years. This one was different.</p>
@@ -2565,7 +2565,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2581,8 +2581,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

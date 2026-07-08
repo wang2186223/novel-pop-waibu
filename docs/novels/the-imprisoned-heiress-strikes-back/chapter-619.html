@@ -2397,7 +2397,7 @@
                 <p>Everything was immaculate, as always. The military-precise bed, the stacks of medical textbooks with their dog-eared pages and meticulous margin notes.</p>
                 <p>She&#39;d heard through the grapevine he&#39;d been awarded the prestigious Harrison Scholarship this term.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Her gaze swept the room until it landed on the empty space where his suitcase usually sat.</p>
                 <p>Her breath caught.</p>
                 <p>Flinging open the closet confirmed her fears - several of his favorite outfits were missing.</p>
@@ -2409,7 +2409,7 @@
                 <p>She&#39;d always believed Julian would never leave unless she asked him to.</p>
                 <p>How wrong she&#39;d been.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>No calls. No texts. Just... silence.</p>
                 <p>Twenty minutes passed before she could think clearly again.</p>
                 <p>Life had to continue, Julian or no Julian.</p>
@@ -2421,7 +2421,7 @@
                 <p>&#34;Mr. Bennett sent us,&#34; the silver-haired butler announced.</p>
                 <p>Behind him stood two uniformed maids. One immediately washed up and expertly took Sophia from Claire&#39;s arms, while the other marched toward the kitchen.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;These ladies will handle all household duties,&#34; the butler explained. &#34;Mr. Bennett has arranged their compensation.&#34; With a polite nod, he departed.</p>
                 <p>The maid bounced Sophia gently, engaging her with high-contrast flashcards while the other produced a steaming plate of pasta.</p>
                 <p>&#34;The pantry was nearly empty,&#34; the cooking maid apologized. &#34;I&#39;ll do proper grocery shopping after cleaning.&#34;</p>
@@ -2445,7 +2445,7 @@
                 <p>Now, finding him would be like searching for a ghost.</p>
                 <p>At dawn, Evelyn returned to the conservatory to whispers and pointed stares.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Head high, she deposited her bags in the dorm before slinging her cello across her back and marching to the practice rooms.</p>
                 <p>With the international composition competition days away, she cycled through playlists - classical, jazz, pop - desperate for inspiration.</p>
                 <p>She was steps from the practice room when someone yanked out her earbuds.</p>
@@ -2459,7 +2459,7 @@
                 <p>Whoever had orchestrated this smear campaign using Natalie Riley as a pawn, it certainly wasn&#39;t Cassandra Brown.</p>
                 <p>That girl couldn&#39;t plot her way out of a paper bag.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">
@@ -2581,7 +2581,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2597,8 +2597,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

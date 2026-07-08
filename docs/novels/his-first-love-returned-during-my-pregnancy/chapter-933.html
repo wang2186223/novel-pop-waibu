@@ -2390,27 +2390,27 @@
                 <p>&#34;How much did you give?&#34; Evelyn rushed forward to steady his swaying frame.</p>
                 <p>&#34;Four hundred.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Evelyn&#39;s pupils constricted.</p>
                 <p>Vivian&#39;s water bottle clattered to the floor. Four hundred milliliters—the maximum donation limit. No wonder he could barely stand.</p>
                 <p>The operating room doors burst open.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;More blood needed!&#34; A nurse&#39;s mask was smeared with crimson. &#34;At least another four hundred!&#34;</p>
                 <p>The hallway air turned to ice.</p>
                 <p>Vivian&#39;s knees buckled, only the wall keeping her upright. The blood bank was empty. Her grandmother couldn&#39;t wait.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;I&#39;ll do it.&#34; Alexander pushed himself up using the chair, his sleeve still stained with antiseptic.</p>
                 <p>&#34;No!&#34; Two nurses gasped in unison.</p>
                 <p>He unfastened his cufflink. &#34;That&#39;s my fiancée&#39;s most cherished family member in there.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Vivian&#39;s tears splattered against the tiles.</p>
                 <p>Evelyn&#39;s nails dug into her palms. Reason and emotion warred within her until the heart monitor&#39;s alarm pierced the operating room.</p>
                 <p>&#34;I&#39;m coming with you.&#34; She seized Alexander&#39;s icy hand.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>In the donation room, dark crimson snaked through the tubing. Evelyn watched the viscous flow, stomach churning. She&#39;d witnessed bloodier scenes, yet now each breath felt like shards of glass.</p>
                 <p>&#34;I weigh ninety kilos.&#34; Alexander&#39;s lips were turning chalky. &#34;This amount...&#34;</p>
                 <p>Evelyn pressed down on the cotton swab covering his puncture site. Eight hundred milliliters—equivalent to two water bottles. Suddenly she remembered the stack of donation certificates in his study drawer, dating back five years.</p>
@@ -2541,7 +2541,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2557,8 +2557,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

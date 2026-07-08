@@ -2403,7 +2403,7 @@
                 <p>The car returned to the Valentine estate.</p>
                 <p>Upstairs, Penelope and Fiona Valentine were trembling in their room.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Fiona was frantic. &#34;Penelope, is Grace really Uncle&#39;s daughter? If she comes back, where does that leave us?&#34;</p>
                 <p>Penelope was irritated. &#34;Keep your voice down! We&#39;re adopted. We&#39;ll still have a place, but our status will drop.&#34;</p>
                 <p>The Valentine family had no biological daughters.</p>
@@ -2421,7 +2421,7 @@
                 <p>She immediately raised a hand to Fiona. &#34;Shh…&#34;</p>
                 <p>They opened the door.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>They crept into the hallway and peered down.</p>
                 <p>Marcus Valentine approached. &#34;Uncle, how did the recognition go? Will you announce Grace as your biological daughter? My true cousin?&#34;</p>
                 <p>Marcus shook his head. &#34;Not yet…&#34;</p>
@@ -2439,7 +2439,7 @@
                 <p>Marcus smiled. &#34;Yes, it&#39;s still on!&#34;</p>
                 <p>Evelyn and Alexander were meant to be!</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>What was there to continue? They were already together!</p>
                 <p>Marcus Valentine misunderstood, thinking his uncle approved of Grace and Alexander.</p>
                 <p>He nodded. &#34;Alright, I&#39;ll continue pushing for it. The alliance between our families should be announced publicly.&#34;</p>
@@ -2475,7 +2475,7 @@
                 <p>Fiona immediately said, &#34;Yes, it is.&#34;</p>
                 <p>&#34;Please come to the kindergarten right away!&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Fiona clenched her fingers. &#34;Who told you to call me?&#34;</p>
                 <p>The phone was snatched away.</p>
                 <p>Evelyn&#39;s cool voice came through. &#34;It&#39;s me. Get over here now!&#34;</p>
@@ -2493,7 +2493,7 @@
                 <p>Despite her conflicts with Fiona, she wouldn&#39;t take it out on the child.</p>
                 <p>She immediately called Fiona to warn her.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">
@@ -2615,7 +2615,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2631,8 +2631,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

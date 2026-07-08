@@ -2391,19 +2391,19 @@
                 <p>&#34;It&#39;s more fun when everyone plays together.&#34;</p>
                 <p>She stopped before a claw machine, her gaze fixed on a sparrow plushie inside.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>The claw descended repeatedly, each attempt ending in failure.</p>
                 <p>&#34;Is this machine rigged?&#34;</p>
                 <p>Ethan stood behind her, his lips curving upward involuntarily.</p>
                 <p>&#34;Are you laughing at me?&#34; Vivian turned to glare at him.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>He schooled his expression instantly. &#34;Absolutely not.&#34;</p>
                 <p>Determined, Vivian kept feeding tokens into the machine. After countless tries, the claw finally grasped the plushie.</p>
                 <p>&#34;For you.&#34;</p>
                 <p>She turned to offer it, but Ethan caught her hand instead.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Let go.&#34; The tips of Vivian&#39;s ears turned pink.</p>
                 <p>&#34;Thank you.&#34; His voice was low and warm.</p>
                 <p>This was his first time experiencing a movie date, arcade games, and plushie prizes—all with someone by his side.</p>
@@ -2424,7 +2424,7 @@
                 <p>A sudden thought struck him—when their own child arrived, Vivian would make an incredibly gentle mother.</p>
                 <p>The idea sent warmth flooding through his chest.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -2546,7 +2546,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2562,8 +2562,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

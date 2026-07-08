@@ -2389,7 +2389,7 @@
                 <p>His eyes widened in mock offense. &#34;You know that’s not true. I’ve always treated you well.&#34;</p>
                 <p>When he caught the mischievous glint in her eyes, he realized she was playing with him. With a low chuckle, he swatted her hip lightly. &#34;Cheeky. Since when did you become such a tease?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Vanessa laughed, dodging away. &#34;Mercy! I was only joking.&#34; Then, her smile faltered slightly. &#34;But… do you think this is bad timing?&#34;</p>
                 <p>Dominic’s amusement vanished. &#34;What do you mean?&#34;</p>
                 <!-- 广告位 2 -->
@@ -2397,7 +2397,7 @@
                 <p>She sighed. &#34;DR Holdings is just stabilizing. There’s still so much to handle. And… we haven’t even had our wedding yet.&#34;</p>
                 <p>His expression softened. &#34;Is that what’s worrying you?&#34; Leaning in, he pressed a kiss to her forehead. &#34;Don’t. I have everything planned. You’ll have the grandest wedding Sapphine has ever seen.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>The truth was, he had hesitated before. Evelyn had meant something to him—enough that he hadn’t been ready to let go. But now that she was gone, Dominic knew where his heart truly lay.</p>
                 <p>Vanessa had stood by him through everything—his temper, his failures, even when he didn’t deserve her loyalty.</p>
                 <!-- 广告位 4 -->
@@ -2405,7 +2405,7 @@
                 <p>She’s the one I want.</p>
                 <p>Pulling her into his arms, he murmured, &#34;I know these past months haven’t been easy for you.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Her breath hitched. The words struck deeper than she expected.</p>
                 <p>&#34;So you were aware?&#34; she muttered, pouting. &#34;I thought you were completely oblivious.&#34;</p>
                 <p>&#34;Of course I knew.&#34; His grip tightened. &#34;And I’m sorry. I’ll make it up to you—I promise.&#34;</p>
@@ -2536,7 +2536,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2552,8 +2552,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

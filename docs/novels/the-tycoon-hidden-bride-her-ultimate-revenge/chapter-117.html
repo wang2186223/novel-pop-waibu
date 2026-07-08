@@ -2403,19 +2403,19 @@
                 <p>The room was a zoo, crammed with two families facing off.</p>
                 <p>An imposing black coffin dominated the center of the room. Barbara’s photograph rested on the table. The Henderson family, attired in somber funeral garb, displayed reddened, swollen eyes. They had transformed the Evans family’s living room into an impromptu memorial.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>The atmosphere hung heavy, bordering on eerie.</p>
                 <p>Eloisa Henderson, Barbara’s mother, clutched Jeff’s arm with fierce intensity, her voice hoarse as she shrieked, “My daughter was merely eighteen, and you murdered her, you worthless boy! Today you’ll pay with your very life!”</p>
                 <p>Eloisa then began forcibly pulling Jeff toward the coffin.</p>
                 <p>Irene seized Jeff’s other arm, her voice equally strained. “Release him! It was unintentional! Jeff never meant harm, and we’ve already compensated you generously. What additional restitution do you seek?” Jeff, trapped between the two women, trembled violently. Then, he lost control of his bladder. “No! I refuse to get close to that coffin! Someone help me!”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>With each powerful tug from Eloisa, Jeff’s cries intensified, as though being dragged toward certain doom.</p>
                 <p>Elliana couldn’t suppress a slight smirk at the unfolding pandemonium. Jeff, that arrogant youth who had behaved as though the world could barely contain him, now cowered in abject terror, confronted by someone demanding retribution.</p>
                 <p>The commotion proved so intense that nobody noticed Elliana observing from the staircase.</p>
                 <p>Ruben slumped dejectedly on the sofa, exhaling repeatedly, while the remaining Evans family members stood in silence. None dared intervene.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Bertram, Jeff’s father, appeared at a loss, uncertain what to say.</p>
                 <p>The Evans family possessed wealth and influence. Ordinarily, anyone creating disturbances here would face swift repercussions. But the Hendersons weren’t just anybody.</p>
                 <p>In years past, Barbara’s grandfather and Ruben shared a profound bond, their families practically one.</p>
@@ -2425,7 +2425,7 @@
                 <p>.</p>
                 <p>.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">
@@ -2547,7 +2547,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2563,8 +2563,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

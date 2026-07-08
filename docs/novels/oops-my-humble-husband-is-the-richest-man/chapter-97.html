@@ -2423,7 +2423,7 @@
                 <p>He evaluated objectively. &#34;Isabella&#39;s jealousy is too strong.&#34;</p>
                 <p>Sophia sighed. &#34;Neither of us are like that.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>William said softly, &#34;It&#39;s my fault.&#34;</p>
                 <p>He looked at his wife. &#34;Other families don&#39;t have a love child.&#34;</p>
                 <p>&#34;Isabella has always had a knot in her heart.&#34;</p>
@@ -2480,7 +2480,7 @@
                 <p>It was an entry ticket into New York&#39;s top social circle.</p>
                 <p>Priceless and rarely on the market.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Mrs. Roland looked at her husband in shock.</p>
                 <p>Mr. Roland hurriedly declined. &#34;This is too valuable.&#34;</p>
                 <p>Sophia shook her head. &#34;I have settled in San Francisco.&#34;</p>
@@ -2502,7 +2502,7 @@
                 <p>Chloe immediately stood up. &#34;I&#39;m not leaving.&#34;</p>
                 <p>Her tone was firm. &#34;My savior is in trouble. I can&#39;t just abandon her and return to New York.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">
@@ -2624,7 +2624,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2640,8 +2640,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

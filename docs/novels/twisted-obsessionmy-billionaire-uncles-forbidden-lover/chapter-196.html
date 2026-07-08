@@ -2389,19 +2389,19 @@
                 <p>&#34;On purpose?&#34; Sophia cut straight to the point.</p>
                 <p>Tiffany played dumb. &#34;I have no idea what you&#39;re talking about.&#34; She turned to leave.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Sophia blocked her path. &#34;Pick it up.&#34;</p>
                 <p>Tiffany crossed her arms and sneered. &#34;It&#39;s just a cheap phone. I&#39;ll pay for it. Why so serious? Trying to scam me?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;With all this space, you just had to bump into me?&#34;</p>
                 <p>&#34;I said it was an accident.&#34; Tiffany lifted her chin defiantly.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Sophia smiled coldly. &#34;Fine. Let&#39;s pretend it was.&#34;</p>
                 <p>Tiffany spun away, seething inwardly that she hadn&#39;t pushed harder. If only she&#39;d shoved the bitch into the water and snapped some humiliating photos for the internet—that would&#39;ve been satisfying.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Stop.&#34; Sophia stepped on the trailing hem of Tiffany&#39;s gown.</p>
                 <p>Tiffany stumbled, nearly falling. She yanked at her skirt, furious. &#34;Sophia! Have you lost your mind?&#34;</p>
                 <!-- 广告位 5 -->
@@ -2409,7 +2409,7 @@
                 <p>&#34;I said,&#34; Sophia replied calmly, arms folded, &#34;pick it up.&#34;</p>
                 <p>&#34;You&#39;re insane!&#34; Tiffany shrieked.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">
@@ -2531,7 +2531,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2547,8 +2547,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

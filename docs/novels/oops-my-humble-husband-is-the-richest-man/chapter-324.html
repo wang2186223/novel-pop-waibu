@@ -2433,7 +2433,7 @@
                 <p>Fiona hated that look.</p>
                 <p>She was just middle-class, yet she dared to act arrogantly in front of her, and even hit her...</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>But she had to admit, that face was indeed easy on the eyes.</p>
                 <p>Fiona clenched her jaw and sent another message: [You won&#39;t leave because of the boss, Grace Nan, right?]</p>
                 <p>There was no reply from the other side.</p>
@@ -2449,7 +2449,7 @@
                 <p>After sending the message, Evelyn handed her phone to Mina.</p>
                 <p>Mina finished reading the chat history and was furious. &#34;Let&#39;s go. Let&#39;s see together who has the nerve to do this!&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>The two walked towards the second balcony.</p>
                 <p>Before they could enter, a voice came from behind. &#34;I&#39;m using this place. Go somewhere else.&#34;</p>
                 <p>Evelyn and Mina turned around and saw Fiona Valentine standing there, acting bossy.</p>
@@ -2465,7 +2465,7 @@
                 <p>We just texted.</p>
                 <p>He’s very interested in joining the Valentine Group.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>We’re meeting here to discuss it.”</p>
                 <p>Fiona Valentine’s plan was cunning.</p>
                 <p>Whether N showed up or not, her words would plant seeds of doubt in Grace Nan’s mind.</p>
@@ -2486,7 +2486,7 @@
                 <p>You’re so selfish!”</p>
                 <p>Evelyn Ross exchanged an amused glance with Mina Sherwood.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">
@@ -2608,7 +2608,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2624,8 +2624,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

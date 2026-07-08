@@ -2415,7 +2415,7 @@
                 <p>But she had never been afraid of trouble.</p>
                 <p>Still, making an enemy for no good reason was never wise.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>She sighed inexplicably.</p>
                 <p>Deep down, she truly did not wish to be at odds with a man like him.</p>
                 <p>At that very moment—</p>
@@ -2430,7 +2430,7 @@
                 <p>So, even though he claimed not to believe, he had remained vigilant against external vehicles.</p>
                 <p>He never expected the danger would come from inside his own home!</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>What was wrong with this car?!</p>
                 <p>As Sebastian&#39;s mind raced with shock and suspicion, the sports car was already upon him.</p>
                 <p>A panicked young girl&#39;s scream came from inside the vehicle. &#34;Brother, get out of the way! The brakes are gone!!&#34;</p>
@@ -2460,7 +2460,7 @@
                 <p>Ten o&#39;clock exactly.</p>
                 <p>He had jumped into this vehicle destined for an accident.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>This was the car crash!</p>
                 <p>&#34;Brother, what are you doing in here?! The car won&#39;t stop!&#34;</p>
                 <p>Mia cried out, her voice choked with tears as she continued stomping on the useless brake.</p>
@@ -2601,7 +2601,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2617,8 +2617,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

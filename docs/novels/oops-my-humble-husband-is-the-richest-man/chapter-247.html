@@ -2412,7 +2412,7 @@
                 <p>Just yesterday, Alexander Vance was still being difficult.</p>
                 <p>He clearly had the documents but claimed he didn&#39;t.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Today, he was the one who initiated contact.</p>
                 <p>Evelyn suppressed her bitter smile.</p>
                 <p>She looked up to see Grace Nan&#39;s anxious, worried expression.</p>
@@ -2439,7 +2439,7 @@
                 <p>Evelyn continued, &#34;I don&#39;t know what difficulties you&#39;re facing. But if you need help, you can tell me directly.&#34;</p>
                 <p>Grace Nan opened her mouth.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Finally, she just patted Evelyn&#39;s shoulder.</p>
                 <p>&#34;Evelyn, I&#39;m your older sister. I should be the one protecting you.&#34;</p>
                 <p>Evelyn felt a warmth in her heart.</p>
@@ -2493,7 +2493,7 @@
                 <p>Inside was a jade thumb ring.</p>
                 <p>He tied the ring to a red string.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Then he attached it to a balloon.</p>
                 <p>It was a helium balloon that could float in the air.</p>
                 <p>He placed the balloon in the trunk.</p>
@@ -2520,7 +2520,7 @@
                 <p>…</p>
                 <p>Le Jardin Secret.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Mr. Valentine sat in private room number eight.</p>
                 <p>Marcus Valentine was with him.</p>
                 <p>They both stared intently at the door.</p>
@@ -2550,7 +2550,7 @@
                 <p>Mr. Valentine bore the marks of time.</p>
                 <p>But he still looked exactly as she remembered.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">
@@ -2672,7 +2672,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2688,8 +2688,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

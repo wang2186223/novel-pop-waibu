@@ -2409,7 +2409,7 @@
                 <p>He&#39;d scoffed at the idea.</p>
                 <p>With Adrian&#39;s failing health, how long could an outsider last?</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Sophia regarded Damian coldly.</p>
                 <p>Before marrying into the Valdemar family, she&#39;d thoroughly investigated their secrets.</p>
                 <p>Including Vincent&#39;s affair with Genevieve and the two illegitimate sons.</p>
@@ -2425,7 +2425,7 @@
                 <p>&#34;The evidence is right here. Shall we let the police decide?&#34;</p>
                 <p>Damian&#39;s heart lurched.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>In the chaos, he&#39;d forgotten about the recording.</p>
                 <p>He signaled his bodyguard. &#34;Get that phone!&#34;</p>
                 <p>The bodyguard lunged at Sophia.</p>
@@ -2434,7 +2434,7 @@
                 <p>Watching the last bodyguard dragged away, Damian finally panicked.</p>
                 <p>He retreated two steps, blustering. &#34;Do you know who I am? How dare you touch me!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">
@@ -2556,7 +2556,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2572,8 +2572,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

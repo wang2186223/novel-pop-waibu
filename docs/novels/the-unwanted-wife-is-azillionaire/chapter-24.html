@@ -2394,7 +2394,7 @@
                 <p>Germaine&#39;s eyes narrowed at the disrespect.</p>
                 <p>&#34;Next month is the Senator&#39;s primary fundraising gala,&#34; Germaine commanded.&#34;You will attend.You will wear the Chambers diamonds. You will stand next to August, you will hold his hand,and you will smile for the cameras. You will play the perfect,loving wife until the election is over.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Elisa let out a short, harsh laugh.</p>
                 <p>&#34;I asked August for a divorce,&#34; Elisa said,her voice ringing with absolute finality. &#34;I am not playing dress-up for your political theater.&#34;</p>
                 <p>Germaine slammed her open palm flat against the desk. The sound cracked like a whip.</p>
@@ -2403,7 +2403,7 @@
                 <p>Germaine was desperate for a public display of unity. She needed Elisa to cooperate.</p>
                 <p>This was the perfect leverage.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Elisa&#39;s cold smile vanished. She dropped her arms and leaned slightly over the desk, adopting the posture of a ruthless negotiator.</p>
                 <p>&#34;Fine,&#34; Elisa said smoothly. &#34;I&#39;ll play the loving wife.I&#39;ll smile for the cameras. But my acting fee has gone up.&#34;</p>
                 <p>Germaine scoffed, a look of profound disgust crossing her face. &#34;I knew it. You&#39;re just holding out for more money.How predictable.&#34;</p>
@@ -2421,7 +2421,7 @@
                 <p>&#34;Elisa is in my study,&#34; Germaine said coldly. &#34;She claims you two are actively discussing divorce. Is this true?&#34;</p>
                 <p>The study was dead silent. Elisa stopped breathing.She stared at the black plastic of the speakerphone,her heart hammering against her ribs.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>A harsh,cruel laugh echoed from the speaker.</p>
                 <p>&#34;Divorce?&#34; August mocked, his voice dripping with pure arrogance. &#34;She&#39;s throwing a tantrum, Mother.She&#39;s using the word to get attention because she&#39;s jealous of Allena. She would never walk away from my money.&#34;</p>
                 <p>&#34;She said she gave you papers,&#34; Germaine pressed.&#34;I didn&#39;t even read them,&#34; August scoffed dismissively. &#34;I told Brenda to file that garbage away. I never gave it a second thought. It&#39;sover.Don&#39;t let her manipulate you.&#34;</p>
@@ -2443,7 +2443,7 @@
                 <p>She had her excuse. She had a legitimate,Germaine-approved reason to shove a massive stack of legal documents right under August&#39;s nose.</p>
                 <p>The trap was set.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -2565,7 +2565,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2581,8 +2581,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

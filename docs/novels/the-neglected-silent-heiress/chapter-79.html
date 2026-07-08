@@ -2392,7 +2392,7 @@
                 <p>&#34;Don&#39;t be absurd! She&#39;s Liam&#39;s wife!&#34; another countered.</p>
                 <p>&#34;Ah, so she&#39;s favored because she&#39;s Mrs. Blackwood.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;But haven&#39;t you heard? Liam and Olivia are having problems. Rumor has it he&#39;s been seen with Evelyn Hartley frequently.&#34;</p>
                 <p>As realization dawned about William&#39;s high regard for Olivia, the crowd turned on Victoria.</p>
                 <p>&#34;Victoria, are you deliberately tarnishing the Whitmore name? We won&#39;t tolerate such disgraceful behavior!&#34;</p>
@@ -2420,7 +2420,7 @@
                 <p>Olivia was stunned. She&#39;d always believed herself an orphan without any family legacy.</p>
                 <p>&#34;Henry once saved my life as well. You know about his chronic knee injury from wartime shrapnel?&#34; William tapped his temple meaningfully. &#34;That shrapnel was meant for me. It would have pierced my skull if Henry hadn&#39;t intervened.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Henry didn&#39;t just provide financial support when my family struggled. He literally saved my life. So when he asked for this favor, how could I refuse? I&#39;d never face him in the afterlife if I failed you,&#34; William continued, voice thick with emotion.</p>
                 <p>Tears welled in Olivia&#39;s eyes as she nodded understanding.</p>
                 <p>&#34;But-&#34; William hesitated, his expression darkening with regret. &#34;I failed you in another way. I allowed you to suffer after marrying Liam-&#34;</p>
@@ -2430,7 +2430,7 @@
                 <p>She paused, then added decisively that she&#39;d chosen to divorce Liam, and knowing William supported her was enough.</p>
                 <p>&#34;What? You&#39;re considering divorcing Liam?&#34; William&#39;s eyes widened in shock.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">
@@ -2552,7 +2552,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2568,8 +2568,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

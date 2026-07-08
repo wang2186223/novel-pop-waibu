@@ -2393,7 +2393,7 @@
                 <p>Eleanor feared Ethan might lash out at Vanessa again. If that happened, she wasn’t sure she could protect her.</p>
                 <p>Ethan had never experienced such utter frustration before.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>His fever burned through him, leaving his limbs weak and trembling. A pounding headache made his vision swim dangerously, threatening to send him crashing to the floor at any second.</p>
                 <p>His clothes were still damp, clinging uncomfortably to his skin.</p>
                 <p>Once Eleanor had ushered Vanessa out and shut the door, Ethan had no energy left to argue.</p>
@@ -2401,7 +2401,7 @@
                 <p>Just as he finished changing into dry clothes, a sudden realization struck him. Gritting his teeth against the exhaustion, he forced himself to the window and looked down.</p>
                 <p>Evelyn had leapt from the window, bracing for impact.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>But instead of hitting the ground, she landed safely in someone’s arms.</p>
                 <p>Alexander had caught her, and the force sent them both tumbling onto the grass.</p>
                 <p>Evelyn’s face pressed flush against Alexander’s, and in her overwhelming relief, she impulsively kissed him—hard.</p>
@@ -2409,7 +2409,7 @@
                 <p>Wincing, she pulled back, clutching her mouth.</p>
                 <p>And when she looked up, she found herself trapped in Alexander’s piercing, stormy gaze.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Eleanor&#39;s Choice</p>
                 <p>Alexander’s arm remained locked around her waist as he murmured, &#34;Mrs. Whitmore, care to explain why you just jumped out of Ethan’s window?&#34;</p>
                 <p>&#34;What exactly were the two of you doing in there? Hmm?&#34;</p>
@@ -2417,7 +2417,7 @@
                 <p>She realized how this must look—her, jumping out of a window in the dead of night. It screamed of guilt, of someone caught in the act and fleeing.</p>
                 <p>Her words stumbled. &#34;It’s… complicated.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Alexander’s grip tightened slightly. &#34;Then simplify it.&#34;</p>
                 <p>&#34;Vanessa pushed Ethan into the water. I pulled him out, took him to his room, but then Vanessa showed up with a crowd.&#34;</p>
                 <p>Evelyn let out a disbelieving laugh at how absurd it sounded.</p>
@@ -2555,7 +2555,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2571,8 +2571,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

@@ -2403,7 +2403,7 @@
                 <p>Evelyn sat stunned in the dim living room. Nearly twenty minutes later, Julian crept in quietly.</p>
                 <p>Thinking everyone was asleep, Julian stealthily hid something beneath the shoe rack before grabbing pajamas.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>When the bathroom light flicked on, Evelyn rose to investigate.</p>
                 <p>Beneath the rack sat a designer handbag worth about $50,000.</p>
                 <p>Suddenly everything made sense.</p>
@@ -2421,7 +2421,7 @@
                 <p>Meanwhile at Bennett Manor, Claire moved like a shadow through the darkened halls.</p>
                 <p>Bella&#39;s faint whimpers guided her.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Why is she crying? Did that nanny neglect her again?&#34;</p>
                 <p>Creeping toward the nursery, Claire&#39;s pulse raced.</p>
                 <p>The sight that greeted her shattered expectations: Lucas, who should&#39;ve been absent, cradling their daughter with surprising tenderness.</p>
@@ -2430,7 +2430,7 @@
                 <p>&#34;She&#39;s hungry,&#34; Lucas observed when Bella nuzzled Claire&#39;s chest.</p>
                 <p>Claire blinked in confusion until realization struck.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Noticing Lucas&#39;s practiced movements, Claire realized he&#39;d been caring for Bella extensively.</p>
                 <p>As Claire prepared to nurse, she glared at Lucas. &#34;Out!&#34;</p>
                 <p>Lucas smirked. &#34;My house. My rules. Besides...&#34; His gaze trailed meaningfully before he retreated to the bathroom.</p>
@@ -2444,7 +2444,7 @@
                 <p>&#34;Babies need burping after feeding,&#34; Lucas explained gently. &#34;Claire...it&#39;s not that I won&#39;t share custody. But you can&#39;t even care for yourself properly - how can you care for our daughter?&#34;</p>
                 <p>As Bella drifted to sleep in her crib, Lucas made his offer: &#34;Stay the night. Prove me wrong.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -2566,7 +2566,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2582,8 +2582,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

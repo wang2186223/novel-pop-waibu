@@ -2393,7 +2393,7 @@
                 <p>She&#39;d wait for his return and a proper explanation.</p>
                 <p>The meal ended too soon, with Alexander still absent. Evelyn settled the bill and stepped into the cooling evening air.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>As she debated returning to the theater, a sleek black sedan pulled up beside her.</p>
                 <p>&#34;Standing me up?&#34;</p>
                 <p>Dominic&#39;s smirk carried a dangerous edge. &#34;Night&#39;s young. How about keeping me company instead?&#34;</p>
@@ -2401,7 +2401,7 @@
                 <p>&#34;No, thank you,&#34; she said firmly.</p>
                 <p>Dominic&#39;s gaze burned into her retreating figure. &#34;First woman to refuse me,&#34; he murmured. &#34;Makes you even more irresistible.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Nathaniel, his driver, exchanged a glance through the rearview mirror.</p>
                 <p>Bold move, Mr. Powell. Stealing Alexander Whitmore&#39;s woman takes guts.</p>
                 <p>Alexander burst into the private booth to find Isabella pinned beneath Vincent, her dress torn at the shoulders.</p>
@@ -2409,7 +2409,7 @@
                 <p>&#34;You&#39;ll regret this!&#34; she sobbed. &#34;The Morgans will have your head!&#34;</p>
                 <p>Vincent laughed cruelly. &#34;Your family&#39;s been irrelevant for decades. Who&#39;d avenge you?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>His belt clattered to the floor. Isabella went deathly pale.</p>
                 <p>The weight difference made escape impossible.</p>
                 <p>Just as Vincent leaned in, the door exploded inward.</p>
@@ -2425,7 +2425,7 @@
                 <p>Vincent groaned on the floor, struggling to rise after Alexander&#39;s devastating punch.</p>
                 <p>Alexander turned to Isabella. &#34;Why are you alone here?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Newly returned to the city, she shouldn&#39;t know about places like Eclipse Lounge.</p>
                 <p>&#34;Dominic brought me!&#34;</p>
                 <p>&#34;Dominic?&#34;</p>
@@ -2555,7 +2555,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2571,8 +2571,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

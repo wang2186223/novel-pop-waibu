@@ -2392,21 +2392,21 @@
                 <p>&#34;Mr. Lowell, didn&#39;t you give your sister a tour of the facility last month?&#34;</p>
                 <p>Emily Lowell&#39;s visit had left an impression on every researcher present.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;The woman on surveillance footage also had caramel-colored hair and a similar—&#34;</p>
                 <p>&#34;Enough!&#34; William snapped.</p>
                 <p>The assistant recoiled under his glacial stare.</p>
                 <p>Richard Lowell noticed the tension immediately.</p>
                 <p>&#34;Who did you bring into the facility?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>William&#39;s legs turned to jelly.</p>
                 <p>Cold sweat beaded on his forehead.</p>
                 <p>He should have known.</p>
                 <p>That woman&#39;s mannerisms—they matched Emily perfectly.</p>
                 <p>And the only person who&#39;d been near him frequently was Emily.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Sophia would never have had the opportunity to obtain his fingerprints.</p>
                 <p>This revelation froze the blood in his veins.</p>
                 <p>He had pointed fingers at Sophia with such conviction.</p>
@@ -2420,7 +2420,7 @@
                 <p>Richard studied his son for a long moment before turning away.</p>
                 <p>Victoria Lowell followed her husband in confusion.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>William bowed deeply to Dr. Quincy.</p>
                 <p>&#34;My apologies for my earlier rudeness.&#34;</p>
                 <p>&#34;No matter.&#34; The scientist adjusted his glasses calmly.</p>
@@ -2432,7 +2432,7 @@
                 <p>&#34;We&#39;re relocating. You may bill us for any outstanding facility fees.&#34;</p>
                 <p>&#34;Absolutely not!&#34; William slammed his palms on the table as he shot to his feet.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">
@@ -2554,7 +2554,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2570,8 +2570,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

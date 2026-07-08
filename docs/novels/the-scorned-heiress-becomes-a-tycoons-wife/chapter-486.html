@@ -2389,23 +2389,23 @@
                 <p>&#34;Father, Mother, brothers... what brings you here so suddenly?&#34;</p>
                 <p>&#34;How dare you ask?&#34; Richard Lowell&#39;s face darkened, his voice low but razor-sharp.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Emily&#39;s smile froze. The surrounding stares prickled her skin like needles.</p>
                 <p>&#34;Father, this isn&#39;t the place.&#34; She softened her tone. &#34;Shall we speak in the parlor?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Richard&#39;s chest heaved with suppressed rage. He knew better than to air dirty laundry in public. With a cold snort, he turned on his heel.</p>
                 <p>As Nathan moved to follow, Emily caught his sleeve lightly.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Not you, Nathan.&#34; Her eyes glistened faintly. &#34;This is family business.&#34;</p>
                 <p>Nathan nodded agreeably, relief flashing in his gaze.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>The moment the Lowells departed, whispers rippled through the ballroom.</p>
                 <p>&#34;Aren&#39;t you going after them, Mr. Cunningham?&#34; someone prodded.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Ryan Cunningham swirled his champagne glass with detached amusement. &#34;Family matters require discretion.&#34;</p>
                 <p>&#34;Here to reclaim the research data, perhaps?&#34; another voice interjected.</p>
                 <p>Ryan merely smiled, tracing the rim of his glass. What&#39;s swallowed is never spit out.</p>
@@ -2414,7 +2414,7 @@
                 <p>Emily recoiled half a step. Of course she knew its value—why else would Ryan covet it so desperately?</p>
                 <p>&#34;The Cunningham project needed those findings...&#34; Her voice dwindled to a murmur.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">
@@ -2536,7 +2536,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2552,8 +2552,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

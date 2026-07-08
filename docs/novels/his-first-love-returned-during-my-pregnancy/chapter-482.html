@@ -2398,7 +2398,7 @@
                 <p>[Alexander: Third door on the right after B Section exit]</p>
                 <p>She sent a question mark in reply.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>[Alexander: Bring the package]</p>
                 <p>Evelyn locked her screen without responding.</p>
                 <p>Another vibration.</p>
@@ -2424,7 +2424,7 @@
                 <p>&#34;Few breakfast places nearby. This bun shop had the longest queue—must be decent.&#34;</p>
                 <p>The steamed buns had thin wrappers bursting with piping hot filling.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Got soybean milk too.&#34;</p>
                 <p>He unscrewed the lid and set it before her.</p>
                 <p>&#34;Plenty of time. Thirty minutes.&#34;</p>
@@ -2437,7 +2437,7 @@
                 <p>&#34;How will you thank me?&#34; His brow arched.</p>
                 <p>Seeing her wariness, he chuckled. &#34;Relax. No afterparty plans.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Fifteen minutes remained after the meal.</p>
                 <p>&#34;Take off your shoes. Rest a bit,&#34; he suggested.</p>
                 <p>&#34;No need. I&#39;ll send Vivian my notes.&#34;</p>
@@ -2450,7 +2450,7 @@
                 <p>&#34;Really unnecessary—&#34;</p>
                 <p>His hands continued their work as she blinked back tears.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>With people passing outside, she bit back any sounds.</p>
                 <p>&#34;Enough?&#34;</p>
                 <p>Seeing her genuine distress, he finally relented.</p>
@@ -2586,7 +2586,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2602,8 +2602,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

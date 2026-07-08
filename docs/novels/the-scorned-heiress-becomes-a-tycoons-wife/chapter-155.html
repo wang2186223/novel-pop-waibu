@@ -2392,42 +2392,42 @@
                 <p>Emily lowered her head modestly, though the corners of her lips curled slightly upward.</p>
                 <p>Though the commotion at the opening ceremony had settled, online discussions only grew fiercer.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Julian Lombardi&#39;s fanbase was in an uproar.</p>
                 <p>&#34;We found out! Scarlett Ashcroft is an artist under Lowell Entertainment!&#34;</p>
                 <p>&#34;She was involved in a scandal last year—caught cheating red-handed.&#34;</p>
                 <p>&#34;How dare someone like her get close to our idol?&#34;</p>
                 <p>Fans feverishly dug up dirt on Scarlett and Melanie Vance.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>But the trail soon went cold.</p>
                 <p>&#34;Strange... The three of them seem to have no connection at all.&#34;</p>
                 <p>Meanwhile, Scarlett was drenched in sweat inside the rehearsal studio.</p>
                 <p>She practiced her expressions repeatedly before the mirror.</p>
                 <p>&#34;Again.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Sophia Laurent sat nearby, lightly tapping the script with her fingers.</p>
                 <p>&#34;For Empress Xiao Yue&#39;s coronation scene, your gaze needs more ferocity.&#34;</p>
                 <p>Scarlett nodded, taking a deep breath.</p>
                 <p>The woman in the mirror suddenly sharpened her eyes.</p>
                 <p>A week later, at the &#34;Empress&#34; audition venue.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Director Lucas Sheridan flipped through documents when his eyes suddenly lit up.</p>
                 <p>&#34;Sophia!&#34;</p>
                 <p>He strode forward eagerly, though his gaze remained fixed on Scarlett.</p>
                 <p>&#34;Is this the actress you mentioned?&#34;</p>
                 <p>Sophia smiled faintly.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Shall we let her try?&#34;</p>
                 <p>Lucas nodded impatiently.</p>
                 <p>&#34;Start now!&#34;</p>
                 <p>The audition room door slowly closed.</p>
                 <p>Scarlett took a deep breath and stepped toward her chance to change her destiny.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">
@@ -2549,7 +2549,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2565,8 +2565,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

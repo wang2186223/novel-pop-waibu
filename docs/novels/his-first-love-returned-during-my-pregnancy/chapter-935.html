@@ -2390,12 +2390,12 @@
                 <p>A flicker of surprise crossed his eyes. He hadn’t expected Evelyn to handle things for him, and warmth bloomed in his chest.</p>
                 <p>&#34;What about the important meeting this afternoon?&#34; he asked weakly, feigning concern.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Moved online.&#34; She fed him another bite. &#34;Why are you smiling?&#34;</p>
                 <p>The corners of his lips curved up. &#34;The congee is sweet.&#34;</p>
                 <p>Evelyn paused, thinking he must be starving to find plain congee delicious. Guilt twisted in her heart.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>A soft knock sounded at the bedroom door.</p>
                 <p>Margaret Hamilton hurried in, frowning at her son’s pale face. &#34;You foolish boy, how could you push yourself like this?&#34;</p>
                 <p>She turned to Evelyn. &#34;Make him rest for a few more days. Use up all his accumulated leave.&#34;</p>
@@ -2410,7 +2410,7 @@
                 <p>Before she could finish, the door swung open again. Baby Chloe, her hair tied into tiny braids, stumbled in, clutching Grace Anderson’s hand.</p>
                 <p>&#34;Mommy!&#34; The little girl’s sweet voice rang out as she rushed toward Evelyn.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Alexander instinctively reached for her, but the moment he sat up, darkness clouded his vision. He collapsed back onto the pillow.</p>
                 <p>Grace sighed. &#34;She’s been crying since her early education class ended, insisting on seeing you.&#34;</p>
                 <p>Evelyn gently wiped the tears from the child’s cheeks, but Baby Chloe suddenly pulled away. Wobbling unsteadily, she toddled toward Alexander and stretched out her tiny hand. &#34;Daddy…&#34;</p>
@@ -2537,7 +2537,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2553,8 +2553,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

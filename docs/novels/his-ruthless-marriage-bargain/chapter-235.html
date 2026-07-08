@@ -2390,17 +2390,17 @@
                 <p>After making sure Evelyn was settled, Sophia rushed over to stop her. &#34;It&#39;s fine. I’ll get her home safe. If you come, it’ll just be more complicated. You have work tomorrow—go rest. I’ll text you when we get to her place.&#34;</p>
                 <p>&#34;But...&#34; Victoria wavered, but she knew Sophia was right. Reluctantly, she nodded.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Okay, but be careful! Text me if you need anything,&#34; she insisted, scribbling down the cab’s license plate number.</p>
                 <p>As the car pulled away, Sophia finally let out a breath. She glanced at Evelyn, stunned by her state. They’d worked together for years, but she’d never seen her like this. It was unsettling.</p>
                 <p>The cab reached Crestview Heights but was stopped at the gates. Sophia didn’t know which building Evelyn lived in, nor did she have Alexander Kensington’s number. Her only option was to wake Evelyn up.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Evelyn, wake up. We’re here! Which building is yours?&#34; She gently patted her cheek.</p>
                 <p>&#34;Ugh... Quiet!&#34; Evelyn groaned, cracking her eyes open for a second before shutting them again.</p>
                 <p>Sophia sighed. She thought about checking Evelyn’s phone, but the driver impatiently urged them out before she could.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>With Evelyn half-slumped against her, Sophia struggled to keep her upright while fishing for the phone.</p>
                 <p>&#34;Evelyn, come on. You can sleep once we’re inside!&#34; she pleaded, still trying to rouse her.</p>
                 <p>Just then, a sleek black car pulled up beside them.</p>
@@ -2419,7 +2419,7 @@
                 <p>&#34;Harrison will drive you home.&#34; His tone left no room for argument.</p>
                 <p>She could only nod.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">
@@ -2541,7 +2541,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2557,8 +2557,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

@@ -2417,7 +2417,7 @@
                 <p>Ryan nodded slightly, polite yet distant. &#34;So you&#39;re the young Mr. Evans. I have business with your Mr. Vance.&#34;</p>
                 <p>Julian awkwardly stepped aside. &#34;Please go ahead...&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Suddenly, a surprised voice spoke.</p>
                 <p>&#34;You... are Ryan Roland?&#34;</p>
                 <p>They turned to see Isabella looking shocked.</p>
@@ -2433,7 +2433,7 @@
                 <p>But if Julian was the fiancé of his sister&#39;s benefactor... he had to help.</p>
                 <p>After all, the Roland family owed their benefactor a life!</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Julian was flattered.</p>
                 <p>Without Dr. Nan, his position in R&amp;D was awkward.</p>
                 <p>The Rolands were a powerful family from New York. Ryan personally inviting him to participate in the collaboration would significantly boost his standing in the company!</p>
@@ -2449,7 +2449,7 @@
                 <p>After sending it, she realized something was wrong. Since when did she have a fiancé?</p>
                 <p>&#34;Dr. Nan, you graduated from San Francisco University. You understand our teaching philosophy. We sincerely invite you to return as a faculty member...&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>The Vice President was earnest. &#34;Please consider it.&#34;</p>
                 <p>Evelyn looked up, tired of pleasantries. She said directly, &#34;I was planning to accept, as Professor Lowell mentored me. But now he&#39;s suspended, and I heard his graduate students are being treated unfairly.&#34;</p>
                 <p>The Dean&#39;s face stiffened. &#34;Dr. Nan, that&#39;s a misunderstanding... I didn&#39;t know you were Dr. Nan...&#34;</p>
@@ -2485,7 +2485,7 @@
                 <p>Just then, James&#39;s phone rang.</p>
                 <p>He answered. A voice came through: &#34;James, about that secret regarding the boss&#39;s uncle, Leo Lowell, that she wanted investigated... I found something!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">
@@ -2607,7 +2607,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2623,8 +2623,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

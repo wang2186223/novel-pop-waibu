@@ -2392,14 +2392,14 @@
                 <p>In fact, Mia was actually one of the people Maya suspected. Mia was adopted, so she should be an</p>
                 <p>orphan.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Maya’s fingers were trembling. If Mia was the person she had been looking for–the true Ms. Lane she</p>
                 <p>had been looking for–what should she do?</p>
                 <p>Maya’s eyes scoured for Timothy. If the Lanes found Mia, would Maya lose her chance to be Mrs.</p>
                 <p>Barrett?</p>
                 <p>No, she would never let that happen!</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Maya zeroed in on Mia performing onstage, her eyes mixed with malicious emotions as she thought,”</p>
                 <p>You’ve been sent away, so why are you still getting in my way?”</p>
                 <p>While performing, Mia flickered a glance at Claude because she couldn’t shake off the nervousness.</p>
@@ -2413,14 +2413,14 @@
                 <p>When Timothy was going to clap his hands, Claude stood and applauded first with a proud grin. “As I expected, Mia’s the best.”</p>
                 <p>The corner of Timothy’s lips twitched.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>A flustered Maya gaped at Mia, mixed feelings churning in her stomach. Maya was afraid that Claude might find out Mia’s true identity.</p>
                 <p>Yet, the clues began replaying in Maya’s head.</p>
                 <p>The way Claude, Connor, and Liam treated Mia; and how Jason’s lawyer team issued a letter for her</p>
                 <p>when she became the victim of awful rumors.</p>
                 <p>The clues were connecting each other, leading Maya to one conclusion.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Her eyes widened and her branded bag almost slipped out of her hand.</p>
                 <p>Perhaps, the Lanes had found Mia a long time ago and had been keeping Maya in the dark!</p>
                 <p>That’s right. That explained everything!</p>
@@ -2554,7 +2554,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2570,8 +2570,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

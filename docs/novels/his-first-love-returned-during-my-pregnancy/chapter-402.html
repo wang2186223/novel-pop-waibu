@@ -2394,7 +2394,7 @@
                 <p>After confirming the payment, Evelyn sent another transfer.</p>
                 <p>&#34;Eight thousand. For the hotel.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Alexander&#39;s smile froze.</p>
                 <p>He should&#39;ve seen this coming.</p>
                 <p>Evelyn always drew clear lines.</p>
@@ -2412,7 +2412,7 @@
                 <p>Evelyn met his gaze calmly. &#34;This is how I treat people I want no connection with.&#34;</p>
                 <p>Alexander shot to his feet. &#34;Evelyn!&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;I mean it.&#34; Her tone remained even. &#34;If you marry Annabelle, I&#39;ll genuinely wish you happiness.&#34;</p>
                 <p>&#34;Stop!&#34;</p>
                 <p>&#34;You&#39;ve known each other for over twenty years—&#34;</p>
@@ -2421,7 +2421,7 @@
                 <p>A sudden ringtone interrupted them.</p>
                 <p>Evelyn checked the caller ID and walked to the balcony. &#34;Dad?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Terry, where are you staying now?&#34;</p>
                 <p>She frowned. &#34;A hotel.&#34;</p>
                 <p>&#34;It&#39;s not safe alone. Maybe—&#34;</p>
@@ -2430,7 +2430,7 @@
                 <p>&#34;Anthony Taylor?&#34;</p>
                 <p>Evelyn didn&#39;t answer.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;They want to reclaim you?&#34;</p>
                 <p>&#34;None of your concern.&#34;</p>
                 <p>Alexander stepped forward. &#34;Let me help.&#34;</p>
@@ -2563,7 +2563,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2579,8 +2579,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

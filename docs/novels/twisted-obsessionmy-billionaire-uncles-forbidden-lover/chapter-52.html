@@ -2395,22 +2395,22 @@
                 <p>The talisman burst into ashes the moment it touched Julian&#39;s uniform. Before Vincent could reach him, a golden light repelled him, sending him crashing to the floor.</p>
                 <p>&#34;Impossible...&#34; Vincent gaped. Julian stood bathed in blinding golden radiance that seared his eyes.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Gabriel arched a brow and clapped Julian&#39;s shoulder. &#34;Nice charm, brother-in-law.&#34;</p>
                 <p>Julian adjusted his tie with a sigh. &#34;Just sunlight reflecting, Captain Macmillan.&#34;</p>
                 <p>Nearby flight attendants exchanged bewildered looks—the scene defied logic.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Restrained again, Vincent looked defeated. Decades of studying esoteric arts, yet he&#39;d never seen such mastery of protective magic.</p>
                 <p>Then a porcelain-faced little girl came darting over.</p>
                 <p>&#34;Daddy!&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Luna Fairsprene fluttered into Gabriel&#39;s arms like a butterfly, with Walter Deross shadowing her every step.</p>
                 <p>&#34;Uncle Walter even guards the bathroom door!&#34; Luna pouted. &#34;He scared all my classmates!&#34;</p>
                 <p>Gabriel ruffled her hair and frowned at Walter. &#34;I told you to keep a reasonable distance.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Walter snapped to attention. &#34;Priority one is the young miss&#39;s safety!&#34;</p>
                 <p>Luna tugged Gabriel&#39;s sleeve. &#34;Grandma threatened to break Uncle Walter&#39;s legs.&#34;</p>
                 <p>The boarding announcement echoed through the terminal. Julian nodded at Gabriel and left with his crew. As Vincent was hauled into a police van, his eyes burned into Julian&#39;s retreating figure.</p>
@@ -2539,7 +2539,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2555,8 +2555,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

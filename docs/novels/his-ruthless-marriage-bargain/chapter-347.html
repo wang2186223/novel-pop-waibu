@@ -2390,17 +2390,17 @@
                 <p>They didn’t want to know. But Evelyn didn’t care.</p>
                 <p>&#34;A thick rope,&#34; she murmured, &#34;tied just right. Tight enough to hurt, but not enough to kill. The person would still be breathing, still be conscious.&#34; She sighed dramatically. &#34;But we live in modern times, don’t we? Equality and all that. If women could endure it, strong men like you definitely could.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>The more she spoke, the paler Dmitri became. He looked seconds away from passing out.</p>
                 <p>Even if he survived this, the nightmares would haunt him forever.</p>
                 <p>Across from him, Viktor Petrov strained against his restraints, his face flushed with fury. But he couldn’t move. Couldn’t speak.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;So,&#34; Evelyn said sweetly, &#34;have you decided? Or should I suggest something else—?&#34;</p>
                 <p>A sharp ring cut her off.</p>
                 <p>Viktor’s phone.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Evelyn picked it up, examining the screen. The caller had saved her the trouble.</p>
                 <p>&#34;Who wants to answer?&#34; She dangled the phone between them.</p>
                 <p>Ivan Volkov remained silent.</p>
@@ -2419,7 +2419,7 @@
                 <p>Dmitri’s voice shook, his split lip throbbing.</p>
                 <p>&#34;WHAT?!&#34; The caller exploded. &#34;I told you—three days&#39; worth! Not all at once! Are you idiots trying to ruin everything?!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">
@@ -2541,7 +2541,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2557,8 +2557,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

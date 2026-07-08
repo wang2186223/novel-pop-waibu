@@ -2389,7 +2389,7 @@
                 <p>Just then, Audrey strolled into the boutique, having overheard the conversation. &#34;What? Giselle, since when did you start settling for middle-aged men?&#34; She positioned herself protectively in front of Vivian, her expression dripping with disdain as she scrutinized Giselle.</p>
                 <p>Giselle startled momentarily but quickly regained her composure. She pressed a dramatic hand to her chest as if to calm her racing heart.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Audrey!&#34; Giselle exclaimed. &#34;You&#39;ve changed so much since school—where&#39;s that shy girl I knew? You nearly gave me a heart attack! And middle-aged? Please. Victor is distinguished, not old.&#34;</p>
                 <p>She tossed her hair. &#34;I&#39;ve moved past those immature college boys and their meaningless flings. I prefer men who know what they want.&#34;</p>
                 <!-- 广告位 2 -->
@@ -2405,14 +2405,14 @@
                 <p>Taking the cue, Vivian gave Giselle a sidelong glance and added coolly, &#34;If I recall correctly, Victor already has a wife. And unless something&#39;s changed, it&#39;s not you.&#34;</p>
                 <p>Audrey smirked. &#34;Maybe you&#39;re just bitter because no one wants to marry you.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Giselle&#39;s expression darkened. &#34;What do either of you know? Victor and his wife? That&#39;s not a marriage—it&#39;s a corporate merger. She&#39;s just another trust fund princess.&#34; She paused for effect. &#34;Speaking of money, Audrey, your family&#39;s quite wealthy too, aren&#39;t they? Better hope your future husband doesn&#39;t turn out like Victor—disinterested and unfaithful. Or maybe you should aim for someone like Vivian&#39;s husband. At least a regular office worker is easier to control.&#34;</p>
                 <p>&#34;Regular?&#34; Audrey turned to Vivian in surprise.</p>
                 <p>Vivian barely registered the comment. Adrian&#39;s stern, unreadable face flashed in her mind. She suppressed a laugh, wondering how he&#39;d react to being called &#34;easy to control.&#34;</p>
                 <p>Giselle reached for her coffee but withdrew her hand when she realized it had gone cold. With an exaggerated sigh, she stood, her tone turning dismissive. &#34;This conversation is pointless.&#34;</p>
                 <p>She adjusted her designer bag. &#34;Our lives—and our perspectives—have changed since graduation. Anyway, there&#39;s a class reunion coming up. You&#39;re both invited. Will you be there?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">
@@ -2534,7 +2534,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2550,8 +2550,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

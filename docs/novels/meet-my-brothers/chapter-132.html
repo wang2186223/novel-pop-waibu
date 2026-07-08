@@ -2395,7 +2395,7 @@
                 <p>The next day, Mia headed straight to the private hospital where Laura was staying.</p>
                 <p>Gina’s message slid into the notification when Mia got into a cab. “Mia, you’re the person with the mask on,</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>aren’t you?</p>
                 <p>“And you told me that you have nothing to do with the famous actor. I gave you that tote bag for your last</p>
                 <p>birthday.”</p>
@@ -2405,7 +2405,7 @@
                 <p>Girlfriend”</p>
                 <p>With a single glance at the picture, she could tell that it was taken outside the neighborhood.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Now, the award–winning actor suddenly had a girlfriend without his knowledge!</p>
                 <p>Mia didn’t know what to feel about it anymore.</p>
                 <p>She explained her stance before this, but now, she simply wanted to let it be.</p>
@@ -2415,7 +2415,7 @@
                 <p>Otherwise, she would’ve been on the chopping board!</p>
                 <p>1/2:</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>+15 BONOS</p>
                 <p>Then, she retweeted the article on Twitter. “It’s time to lay my cards on the table–that’s right, I’m his girlfriend.”</p>
                 <p>The number of likes increased in a short time.</p>
@@ -2445,7 +2445,7 @@
                 <p>“Wait. Take the prenatal test first before you go.”</p>
                 <p>Her expression slightly changed at the mention of the prenatal test.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">
@@ -2567,7 +2567,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2583,8 +2583,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

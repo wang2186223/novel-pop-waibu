@@ -2403,25 +2403,25 @@
                 <p>Frustrated, the reporters turned their attention to the Blackwoods, bombarding them with inquiries. The family struggled to maintain composure while concealing their true feelings.</p>
                 <p>In the commotion, Victoria noticed Evelyn and Liam&#39;s disappearance and rushed to find them.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>The garden stood empty when she arrived. Furious, she crushed a rose in her palm, its petals scattering to the ground.</p>
                 <p>She hadn&#39;t anticipated the organization sending such an incompetent imposter. That fool had embarrassed herself spectacularly in front of the real Isabella Grayson.</p>
                 <p>If this continued, Victoria feared her own deception might be exposed.</p>
                 <p>&#34;You should have died when I first had the chance,&#34; she hissed to the absent Evelyn.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Meanwhile, Liam led Evelyn to the conservatory, where orchids bloomed in profusion. Gently withdrawing her hand, Evelyn looked up at him with nervous anticipation.</p>
                 <p>&#34;Why bring me here?&#34; she asked.</p>
                 <p>&#34;Privacy for our conversation,&#34; Liam explained, leaning against a marble pillar, his intense gaze never leaving her face.</p>
                 <p>&#34;Have your memories returned?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Evelyn shook her head.</p>
                 <p>&#34;Yet you seemed certain of being Isabella earlier,&#34; he observed.</p>
                 <p>A small smile touched Evelyn&#39;s lips. &#34;When one person calls you Isabella, it might be a mistake. When the whole world insists you&#39;re Isabella Grayson...&#34; She trailed off meaningfully.</p>
                 <p>&#34;Sometimes your art speaks for you,&#34; Liam said quietly. &#34;Like fingerprints on canvas.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -2543,7 +2543,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2559,8 +2559,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

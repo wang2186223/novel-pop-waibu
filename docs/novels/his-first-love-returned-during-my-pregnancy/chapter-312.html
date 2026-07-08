@@ -2395,22 +2395,22 @@
                 <p>Teresa stared at her husband in disbelief.</p>
                 <p>&#34;But one request,&#34; Anthony&#39;s voice cracked. &#34;Could we...see you sometimes?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;I&#39;m leaving for further studies in the UK.&#34;</p>
                 <p>Teresa&#39;s glass shattered on the floor.</p>
                 <p>&#34;When?&#34; Anthony&#39;s words shook.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Next month.&#34;</p>
                 <p>Teresa beat her own thighs in anguish. &#34;These useless legs! I can&#39;t even visit my own daughter...&#34;</p>
                 <p>Anthony knelt beside her, clasping her hands. &#34;I&#39;ll carry you onto planes. I&#39;ll wheel you around the world. Anywhere you want to go.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Watching this couple past their prime, my chest tightened.</p>
                 <p>&#34;We can video call.&#34; The words escaped before I realized.</p>
                 <p>Teresa jerked her head up, tears still glistening. &#34;Really?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Medical work keeps me busy. It won&#39;t be frequent.&#34;</p>
                 <p>Tears turned to tremulous smiles. &#34;Yes, yes! You focus on your career. Just seeing your face would be enough...&#34;</p>
                 <p>Waiters began serving, covering the table with exquisite dishes.</p>
@@ -2418,7 +2418,7 @@
                 <p>&#34;Terry,&#34; Teresa ventured timidly, &#34;before you leave...could you come home for one meal?&#34;</p>
                 <p>Surveying the lavish spread, I gave a small nod.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">
@@ -2540,7 +2540,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2556,8 +2556,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

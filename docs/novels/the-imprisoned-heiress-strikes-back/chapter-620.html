@@ -2398,7 +2398,7 @@
                 <p>Evelyn stood frozen, watching them go. Her teeth grazed her lower lip.</p>
                 <p>Curiosity gnawed at her. She pulled out her phone—she hadn’t checked social media all day.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Her notifications were flooded. Demands for a response to the plagiarism scandal clogged her mentions.</p>
                 <p>No wonder everyone’s whispering.</p>
                 <p>It’s everywhere.</p>
@@ -2411,7 +2411,7 @@
                 <p>One hand tucked in his pocket, his gaze flickered toward her—sharp, magnetic.</p>
                 <p>Her pulse stuttered.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>That face never failed to unravel her.</p>
                 <p>Then she remembered the condom she’d once found in his pocket.</p>
                 <p>He might not even be here for me.</p>
@@ -2424,7 +2424,7 @@
                 <p>Isabella brushed past Evelyn, reaching Alexander first. She held out a gift, beaming.</p>
                 <p>Alexander didn’t take it. His eyes stayed locked on Evelyn, confusion flickering at her hesitation.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Evelyn froze. Then Nathaniel came sprinting from the distance.</p>
                 <p>He whispered something to her. Her expression shifted.</p>
                 <p>Under Alexander’s watchful gaze, she turned and followed Nathaniel toward Powell Manor.</p>
@@ -2437,7 +2437,7 @@
                 <p>As night fell, Alexander stood under the dimming sky, his silhouette swallowed by shadows.</p>
                 <p>His eyes stayed fixed on Powell Manor, sharpening dangerously.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Dominic was injured.</p>
                 <p>Evelyn rushed to check on him after hearing his leg had worsened.</p>
                 <p>Inside, Dominic lay on the bed, face contorted in pain.</p>
@@ -2463,7 +2463,7 @@
                 <p>Now he was paying the price.</p>
                 <p>Sebastian, he thought, I won’t forget this.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">
@@ -2585,7 +2585,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2601,8 +2601,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

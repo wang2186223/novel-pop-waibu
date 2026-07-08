@@ -2395,17 +2395,17 @@
                 <p>Evelyn watched the scene coldly before yanking Bianca&#39;s wrist. &#34;Let&#39;s go. We&#39;ve seen enough.&#34;</p>
                 <p>Beatrice glared at Evelyn&#39;s retreating back, teeth grinding. That meddlesome woman kept ruining her plans.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Julian Langley and Ethan Sullivan followed Evelyn without sparing Beatrice a glance. Only the sound of Timothy wiping sweat remained. &#34;Everyone, please be careful! Stop filming immediately if you feel unwell!&#34;</p>
                 <p>He touched his neck in relief. Thank God it was just an allergy. A real accident would have ended his career on this godforsaken island.</p>
                 <p>Live stream comments exploded:</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>[That was terrifying! Thought something serious happened]</p>
                 <p>[Xander treats his sisters so differently!]</p>
                 <p>[Bianca deserves it! She must&#39;ve caused Beatrice&#39;s allergy]</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>[Pretty sure Beatrice faked it. Xander was about to check on Bianca]</p>
                 <p>[Are you blind? Beatrice was clearly suffering]</p>
                 <p>In the Quincy mansion, a crystal glass shattered against the TV screen.</p>
@@ -2537,7 +2537,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2553,8 +2553,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

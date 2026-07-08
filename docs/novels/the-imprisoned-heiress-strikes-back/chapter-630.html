@@ -2396,7 +2396,7 @@
                 <p>&#34;You got caught - don&#39;t drag me down with you! Supervisor, you must believe me!&#34;</p>
                 <p>Isabella&#39;s voice trembled with theatrical distress, her performance worthy of an Oscar.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Cassandra gaped at the audacity. &#34;How does she live with such shamelessness?&#34;</p>
                 <p>She clenched her fists, nails biting into her palms, desperate to wipe that calculated innocence off Isabella&#39;s face.</p>
                 <p>While backstage erupted in chaos, the live broadcast continued seamlessly.</p>
@@ -2407,7 +2407,7 @@
                 <p>A transparent ploy to silence dissent.</p>
                 <p>Cassandra&#39;s expression wavered. Though disqualified, the quiet handling meant her name could still appear as co-composer.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>On screen, the results prepared to unveil.</p>
                 <p>Evelyn expected nothing - the competition was fierce, and she was still new to composition.</p>
                 <p>The ten finalists lined up on stage.</p>
@@ -2418,7 +2418,7 @@
                 <p>The special award mattered most - audience votes meant commercial potential.</p>
                 <p>Nerves twisted Isabella&#39;s stomach as she edged closer to Evelyn.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Their entry numbers placed them side by side.</p>
                 <p>Evelyn seemed distracted. Isabella scoffed internally. &#34;A national broadcast! How can she zone out?&#34;</p>
                 <p>Then reconsidered. &#34;She must be terrified. Good.&#34;</p>
@@ -2429,7 +2429,7 @@
                 <p>But she didn&#39;t want first place called yet - the special award was her target.</p>
                 <p>The host gripped the envelope, spotlight intensifying.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;First place goes to...&#34;</p>
                 <p>The audience held its breath.</p>
                 <p>Then - infuriatingly - the host set down the envelope, grabbed water, and read an ad.</p>
@@ -2440,7 +2440,7 @@
                 <p>&#34;First place... entry fifty! Evelyn Carter!&#34;</p>
                 <p>Thunderous applause.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The classical-leaning piece had charmed the judges - a predictable choice.</p>
                 <p>Isabella exhaled. Evelyn&#39;s win removed her toughest competition for the special award.</p>
                 <p>Now for the main event.</p>
@@ -2577,7 +2577,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2593,8 +2593,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

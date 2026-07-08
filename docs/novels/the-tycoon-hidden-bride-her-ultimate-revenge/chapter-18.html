@@ -2409,7 +2409,7 @@
                 <p>“It’s just a little skinny,” Elliana said, beaming. “Some food, some cuddles—it’ll be its adorable self in no time.”</p>
                 <p>Cole smirked, started the engine, and eased the car back onto the road. Elliana took out her phone, snapped a quick photo of the cat nestled against her chest, and fired off a message. “Adah, I found Darling!”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Adah and Elliana had been inseparable since childhood, bonded not just by age but by shared scars from turbulent upbringings.</p>
                 <p>Their mothers had been just as close—best friends who had vanished together the night the Jones family’s estate burned to the ground. Neither woman was ever seen again.</p>
                 <p>Adah’s grandmother had never warmed up to Adah’s mother. Declaring Adah cursed, she had shipped Adah off to distant relatives in some rural backwater and never called her back.</p>
@@ -2425,7 +2425,7 @@
                 <p>Back in the day, Elliana and Adah used to speculate about Cole’s looks for fun. Now, with the real deal sitting right beside her, Elliana figured it was time her bestie got a peek.</p>
                 <p>With a sly glance at Cole, Elliana tipped her phone to the side, grabbed a quick profile shot, and sent it straight to Adah.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Adah’s response buzzed back almost instantly. “Damn. He’s even hotter than I imagined. Certified heartthrob. Be honest—are you into him?”</p>
                 <p>Elliana thought back to the first time she laid eyes on Cole—how she’d toyed with the idea of snatching him from Paige just for the thrill. She didn’t even try to lie. “Yup.”</p>
                 <p>“Did you shoot your shot yet?” Adah texted back.</p>
@@ -2438,7 +2438,7 @@
                 <p>.</p>
                 <p>.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">
@@ -2560,7 +2560,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2576,8 +2576,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

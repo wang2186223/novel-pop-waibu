@@ -2395,7 +2395,7 @@
                 <p>Mia found it weird as well. But it didn’t really matter. This competition was only</p>
                 <p>held once every three years, and many designers couldn’t wait to win an award from</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>1. it. After all, all the big names in the industry recognized this competition. It was a</p>
                 <p>hefty accomplishment to place in such a competition.</p>
                 <p>“Mia, the people from Barrett Group have contacted me again to ask whether you got</p>
@@ -2405,7 +2405,7 @@
                 <p>Mia couldn’t come clean to Gina. Though Gina knew she’d been married, she had no</p>
                 <p>idea it was to Timothy. After some thought, Mia replied, “I want to go back to college</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>and complete my education, so I don’t intend to get a proper job for now. It might</p>
                 <p>delay my studies; I want that degree.”</p>
                 <p>Gina said, “Alright, then. I’ll support you no matter what you decide to do.”</p>
@@ -2415,7 +2415,7 @@
                 <p>Timothy also soon received news that the list of finalists had been announced. He</p>
                 <p>saw Mia’s name among the finalists and was surprised. He hadn’t expected her to</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>get this far in the competition.</p>
                 <p>Timothy pulled out his phone to see a notification that Mia had a new post on her</p>
                 <p>Instagram. For an inexplicable reason, he clicked on it to see what she’d posted.</p>
@@ -2435,7 +2435,7 @@
                 <p>“Disappeared three years ago?” Timothy glanced at Mia’s Instagram post. Could it</p>
                 <p>really be that coincidental?</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>The following day, Dominic and Eya arrived with plenty of gifts for Mia.</p>
                 <p>Eva said, “Mia, these are some of Nord City’s local specialties. Congratulations on</p>
                 <p>getting into the finals!”</p>
@@ -2571,7 +2571,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2587,8 +2587,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

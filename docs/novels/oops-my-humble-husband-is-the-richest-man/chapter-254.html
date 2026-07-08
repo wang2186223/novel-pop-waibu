@@ -2401,7 +2401,7 @@
                 <p>Julian Evans stood to the side, his gaze vacant, as if genuinely heartbroken.</p>
                 <p>Evelyn didn&#39;t see Sophia Ashcroft.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Given Sophia&#39;s health condition, she must have been overwhelmed by the shock and fainted again.</p>
                 <p>Where was Alexander Vance?</p>
                 <p>Just as she thought this, she heard Margaret explaining to mourners, &#34;Alexander is too grief-stricken. He refuses to accept that it&#39;s his wife. He&#39;s hiding in his room, unwilling to come out. He won&#39;t even see her off on her final journey…&#34;</p>
@@ -2417,7 +2417,7 @@
                 <p>Most of the servants in the courtyard had gone to the main house to help.</p>
                 <p>Fiona was talking to another maid.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Fiona looked miserable. &#34;Is the master still refusing to eat?&#34;</p>
                 <p>The other maid nodded. &#34;Ever since Mrs. Vance&#39;s body was recovered, the master has been completely broken…&#34;</p>
                 <p>Fiona wiped her tears. &#34;The master values感情 deeply. The madam is also heartbroken and has taken to her bed. Ah!&#34;</p>
@@ -2465,7 +2465,7 @@
                 <p>The steady, reserved man buried his head in his knees, holding it tightly with both hands. His voice was muffled. &#34;Grandmother, that&#39;s not Evelyn. My intuition tells me it&#39;s not her!&#34;</p>
                 <p>Eleanor sighed. &#34;I know the body is unrecognizable, but the police have already done a DNA test. Foolish boy, you must face reality!&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Evelyn&#39;s heart clenched on the balcony.</p>
                 <p>Hearing everyone say the body was unrecognizable, she had still held onto a sliver of hope. Now, reality crushed her!</p>
                 <p>Her sister looked so much like her. They must have been identical twins. Their DNA would be nearly identical!</p>
@@ -2481,7 +2481,7 @@
                 <p>She stepped out from the shadows and gently knocked on the balcony&#39;s glass door.</p>
                 <p>Alexander Vance, don&#39;t be sad. I&#39;m not dead.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -2603,7 +2603,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2619,8 +2619,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

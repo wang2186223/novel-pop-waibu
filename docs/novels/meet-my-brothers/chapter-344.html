@@ -2392,14 +2392,14 @@
                 <p>She scrutinized the balcony, which was also empty. “Where is he?”</p>
                 <p>“He left because something urgent came up. This is the card he left for you.”</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>The sight of the black card churned mixed feelings in her. Ever since her brothers‘ career was booming, they kept giving her money.</p>
                 <p>She held the black card. “Aunt Patricia, should I accept this? You taught me to live with pride even</p>
                 <p>though we were poor.”</p>
                 <p>“Silly girl. This is the money your brother gave you. They’re your family. I’ve asked, and Claude</p>
                 <p>said that this is nothing to them. It’s your pocket money, so take it.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>“You guys are a family, who’ll go through thick and thin together in the future.”</p>
                 <p>She grinned. “You’re my family too.”</p>
                 <p>“Mia, Dominic told me that it’ll take too long for you to settle the house installment alone. They</p>
@@ -2413,7 +2413,7 @@
                 <p>+15 BONOS</p>
                 <p>“Since you have a family to depend on, why don’t you enjoy the privilege? Don’t be too rigid, Wind down a little. Not anyone can have such a caring brother, let alone six of them. What’s holding you back?”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Mia returned to her bedroom and Patricia’s words kept ringing in her ears. As Patricia had said, was Mia being too rigid in front of her brothers?</p>
                 <p>Her gaze fell upon the black card and she stroked her belly.</p>
                 <p>She took her phone out to call Dominic, who answered the call instantly. “Mia, what’s up?”</p>
@@ -2429,7 +2429,7 @@
                 <p>Right when she received a number, she bumped into Felix.</p>
                 <p>“Mia, what are you doing here early in the morning?” He sounded astonished.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">
@@ -2551,7 +2551,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2567,8 +2567,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

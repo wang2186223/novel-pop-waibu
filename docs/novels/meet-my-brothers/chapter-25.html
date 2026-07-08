@@ -2394,7 +2394,7 @@
                 <p>Mia took out her phone and sent Patricia a text. “Aunt Patricia, I won’t be coming back tonight. Help me inform Dominic.”</p>
                 <p>She had promised to head back tonight, but there was no way she could leave now.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Laura’s health had deteriorated. Mia couldn’t let Laura worry about other things before she got the surgery.</p>
                 <p>After all, she had put up with everything for three years, so what was the harm in waiting for a few more days?</p>
                 <p>Once Mia finished texting, she looked around for a couch but couldn’t find one. There was only one bed in the</p>
@@ -2403,7 +2403,7 @@
                 <p>Alas, when Mia opened the drawers, she didn’t find any bedding.</p>
                 <p>It didn’t make sense to her. She knew there used to be extra sets in here.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Timothy’s voice rang out behind her. “Grandma arranged everything on purpose.”</p>
                 <p>The situation dawned on Mia as well. She realized that Laura genuinely wanted her to have a baby. Unfortunately, she couldn’t tell Laura about the divorce yet.</p>
                 <p>Feeling a little awkward, Mia looked at the only set of bedding that was covering the only bed in the room. She felt conflicted. “What now?”</p>
@@ -2412,7 +2412,7 @@
                 <p>She lay down on one side of the bed, but there was no blanket. It would be a little cold with the air-</p>
                 <p>conditioning on.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Timothy passed the blanket to Mia and said, “Take it. I’m not cold.”</p>
                 <p>Mia didn’t try to be courteous with him. She was pregnant, so she couldn’t afford to get a cold.</p>
                 <p>As Timothy lay on the other side of the bed, he found himself unable to fall asleep.</p>
@@ -2421,7 +2421,7 @@
                 <p>After a while, Timothy closed his eyes. Soon, he felt something warm snuggling against him and nuzzling against his chest.</p>
                 <p>Timothy looked at the woman who had rolled into his arms on her own accord. Now that she was no longer</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>making biting remarks, she looked a lot more docile.</p>
                 <p>He preferred this side of her.</p>
                 <p>The next day, Mia woke up alone in bed.</p>
@@ -2430,7 +2430,7 @@
                 <p>When she was done, she saw Timothy coming out of the home gym. He instinctively walked toward her.</p>
                 <p>When Timothy saw the lemonade and a familiar-looking pastry on the kitchen counter, his expression softened a little. He assumed that Mia had simply been putting on an act and going against him the last two days just to get his attention.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Well, she was now obediently preparing a snack for him like she always did.</p>
                 <p>As he approached Mia with an aloof expression, she picked up the plate as well as the glass of lemonade and</p>
                 <p>walked off.</p>
@@ -2566,7 +2566,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2582,8 +2582,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

@@ -2394,7 +2394,7 @@
                 <p>So, I turned around and left, leaving the parents on stage to celebrate their win.</p>
                 <p>****+</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>JARIS</p>
                 <p>If it wasn&#39;t mandatory for me to stay here until the end, the sky knew I&#39;d have been out of here.</p>
                 <p>Lyric was gone.</p>
@@ -2412,7 +2412,7 @@
                 <p>&#34;Is there a problem, boss?&#34; Nerion asked,showing up with Kael and two other guards.</p>
                 <p>&#34;Lyric. Any idea where she might be?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Kael shook his head while Nerion shrugged.	saw her arrive a while ago. Did she leave again?&#34;</p>
                 <p>I looked around the wide space, hardly noticing the people staring at me. They had admiration in their eyes, and some of them even bowed to me. Yet, in that moment, it meant nothing. The only thing that mattered was finding Lyric.</p>
                 <p>I knew her. If she was upset, she wouldn&#39;t stick around here.She&#39;d want somewhere safe and quiet. Since we weren&#39;t in Darkspire,she couldn&#39;t have gone to her friends or family. So, she was definitely in a hotel around here.</p>
@@ -2430,7 +2430,7 @@
                 <p>&#34;Not now, Marta,&#34; I grumped before l walked away.</p>
                 <p>It took thirty more minutes for me to finally locate Lyric. That was after I&#39;d sent multiple texts and tried calling severally. Her line finally went through.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Where the hell are you, Lyric? We&#39;ve been worried!&#34;It was hard to keep the anger from my voice</p>
                 <p>I&#39;d actually been worried when she became unreachable for too long &#34;I&#39;m fine.&#34; Her reply was simple. She sounded tired too.</p>
                 <p>&#34;Where are you?&#34;</p>
@@ -2442,7 +2442,7 @@
                 <p>&#34;Text me the address, Lyric. Now.&#34;</p>
                 <p>I cut the call, not wanting to give her an option to disagree.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">
@@ -2564,7 +2564,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2580,8 +2580,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

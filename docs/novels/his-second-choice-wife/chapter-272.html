@@ -2391,13 +2391,13 @@
                 <p>&#34;No.&#34;</p>
                 <p>&#34;Isn&#39;t it perfect? Your lover comes to Aldenria while you inherit the family empire. You could stay and spend time with your grandparents.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>She offered him a sad smile and shook her head.</p>
                 <p>His jaw tightened, but he managed to say stiffly, &#34;Then I wish you happiness.&#34;</p>
                 <p>Without another glance, he strode away. Ryan hurried after him.</p>
                 <p>Adrian remained, his face pale with suppressed anger. He pointed an accusing finger at Evelyn. &#34;I&#39;ve never met a woman as heartless as you. I know exactly who you are.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>His teeth ground together. &#34;Mr. Blackwood has loved you for over a decade. To become worthy of you, he risked his life climbing the ranks. That&#39;s how he reached his current position.&#34;</p>
                 <p>&#34;Every time you were in danger, he dropped everything to save you. When you were in that coma, he cared for you day and night-&#34;</p>
                 <p>Rosalind cut in sharply, &#34;That&#39;s enough! What are you trying to do? Guilt-trip her? His sacrifices were his choice. He can&#39;t demand repayment.&#34;</p>
@@ -2409,7 +2409,7 @@
                 <p>A man she didn&#39;t love? The words struck Evelyn like physical blows, leaving her disoriented and heartsick.</p>
                 <p>Before leaving Aldenria years ago, she&#39;d been too young to understand love. She&#39;d only known she was fond of Liam.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>But these past three years had changed everything. She&#39;d fallen deeply, irrevocably in love with him.</p>
                 <p>Even if their relationship was doomed, the last thing she wanted was to hurt him.</p>
                 <p>Tears welled up instantly. Brushing past Adrian, Evelyn ran after Liam, leaving a startled Rosalind scrambling to follow. &#34;Evelyn? What&#39;s wrong?&#34;</p>
@@ -2423,7 +2423,7 @@
                 <p>His gaze softened as he looked at her. &#34;Take care of yourself. Leave your grandparents&#39; matter to me.&#34;</p>
                 <p>&#34;But-&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">
@@ -2545,7 +2545,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2561,8 +2561,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

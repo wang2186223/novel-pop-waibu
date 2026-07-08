@@ -2390,27 +2390,27 @@
                 <p>&#34;Who would dare deceive a clever fox like you?&#34;</p>
                 <p>The call ended abruptly. Sophia tossed her phone into her bag and yanked the car door open with more force than necessary.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Ethan Roscente stared at the darkened screen, a faint smile playing on his lips.</p>
                 <p>&#34;Her temper&#39;s grown.&#34; He turned to Jessica, who had just entered. &#34;When Sophia arrives, greet her.&#34;</p>
                 <p>Jessica&#39;s eyes lit up. &#34;She&#39;s coming back?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Yes.&#34;</p>
                 <p>&#34;I&#39;ll prepare right away!&#34; Jessica turned to leave but was stopped.</p>
                 <p>&#34;You&#39;re close with Isabella&#39;s agent?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Jessica paused. &#34;You mean Zoe? She&#39;s my cousin, but we&#39;re not particularly close.&#34;</p>
                 <p>Ethan nodded thoughtfully. &#34;You&#39;re better than her.&#34;</p>
                 <p>Jessica stood frozen, only snapping out of it after the office door clicked shut.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Thirty minutes later, in front of Roscente Tower.</p>
                 <p>Sophia adjusted her mask in the rearview mirror. Returning after being kicked out was beyond awkward.</p>
                 <p>&#34;Sophia!&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>The familiar voice sent a jolt through her. Jessica waved at her from beside the revolving doors.</p>
                 <p>&#34;Jessica.&#34; Her smile under the mask was strained.</p>
                 <p>&#34;My god!&#34; Jessica squeezed her wrist. &#34;You&#39;ve lost so much weight! Any thinner and you&#39;ll float away.&#34;</p>
@@ -2542,7 +2542,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2558,8 +2558,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

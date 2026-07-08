@@ -2413,7 +2413,7 @@
                 <p>&#34;Mom, your second uncle from the hometown is coming to see you today. Will you see him?&#34;</p>
                 <p>&#34;Second brother? Of course I&#39;ll see him.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Eleanor chuckled.</p>
                 <p>Robert seized the opportunity.</p>
                 <p>&#34;Since Second Uncle is here, why don&#39;t we change the will in front of him, okay?&#34;</p>
@@ -2427,7 +2427,7 @@
                 <p>…</p>
                 <p>Soon, Elder Howard Vance arrived.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>He was old, and the last time he came was when Eleanor was sick.</p>
                 <p>He had driven all day from his hometown to get here, and he looked a bit tired when he entered.</p>
                 <p>As soon as he stepped inside, he sensed something was off.</p>
@@ -2441,7 +2441,7 @@
                 <p>&#34;Of course I do!&#34;</p>
                 <p>Eleanor laughed.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Second brother, you&#39;re here!&#34;</p>
                 <p>Elder Howard pointed at Alexander.</p>
                 <p>&#34;Then how could you not recognize him? He&#39;s your most beloved grandson!&#34;</p>
@@ -2455,7 +2455,7 @@
                 <p>Robert immediately explained.</p>
                 <p>&#34;Second Uncle, it&#39;s like this. After we moved to New York, Alexander spent a long time chasing his fiancée and rarely came home. With Mom&#39;s illness, if she doesn&#39;t see someone, she easily forgets them. So, she slowly forgot Alexander. On the other hand, Richard and his wife and daughter have been with the old lady every day, taking good care of her. The old lady likes them more now.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>These words were clearly a complaint.</p>
                 <p>Implying that Alexander hadn&#39;t taken good care of the old lady.</p>
                 <p>Evelyn&#39;s face darkened.</p>
@@ -2469,7 +2469,7 @@
                 <p>Richard cleared his throat awkwardly.</p>
                 <p>&#34;Before, it was Margaret and Julian who were ignorant and made Grandma angry. I drove them out.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">
@@ -2591,7 +2591,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2607,8 +2607,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

@@ -2393,15 +2393,15 @@
                 <p>Watching them disappear down the corridor, Ruben let out a heavy sigh. They were so similar—relentless, sharp, and both blessed with a rare determination. What a pity they were getting divorced.</p>
                 <p>Deep down, Ruben nursed a personal wish. He could see how much Cole cared for Elliana, and he hoped Elliana wouldn’t let Cole’s illness drive her away. Still, if Cole truly wanted the divorce, there was nothing he could do to intervene. Despite Elliana’s lack of conventional beauty, her talent and potential guaranteed she’d thrive no matter what path she chose. It wouldn’t be right to tie her down for the rest of her life.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>As soon as Cole left, a wave of relief swept over the family elders. They stood up, bid their farewells to Ruben, and left one after another. Ruben made his way back to his quarters, with Emmanuel quietly keeping him company.</p>
                 <p>Only Bertram and Irene remained in the conference room.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Bertram intentionally stayed behind with Irene, wanting a private conversation with her.</p>
                 <p>M0re detailz at glovels.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Under Bertram’s steely gaze, Irene squirmed, her nerves unraveling. Unease gnawed at her, and she couldn’t shake the fear that he’d uncovered her secret plot to have Cole killed.</p>
                 <p>“Bertram, is there something you need to say to me?” Irene asked, her voice barely above a whisper.</p>
                 <!-- 广告位 5 -->
@@ -2534,7 +2534,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2550,8 +2550,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

@@ -2390,7 +2390,7 @@
                 <p>Edgar and Elsie’s only daughter. That single phrase detonated Elliana’s suspicions into certainty. Years ago, when Maxine had stolen Rita away, she’d replaced Rita with another baby girl — Amilia — to fool the Thompson family. All this time, Amilia had been luxuriating in a life that belonged to Rita by birthright.</p>
                 <p>The absurdity of it crashed over Elliana like a wave. Her mother’s life had become one of those melodramatic switched-at-birth stories she’d always rolled her eyes at; except this wasn’t fiction — this was her mother’s stolen existence. Her mother was the true Thompson heir, yet fate had twisted so cruelly that she’d spent a decade enslaved as a servant in her own parents’ home, tormented daily by the impostor and her spawn. The injustice of it burned.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Elliana’s fingers struck the keys again.</p>
                 <p>“Who’s causing that chaos downstairs?”</p>
                 <p>“Amilia and Karlee — here for their routine bullying of Bexley,” Levi replied.</p>
@@ -2400,12 +2400,12 @@
                 <p>Elliana smirked.</p>
                 <p>“As if that has ever instilled fear in me.”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Your escape is on g ? ln σ ν s?com</p>
                 <p>“I know you’ve never been afraid of such things, and you could handle them with your eyes closed,” Levi wrote.</p>
                 <p>“But I’m warning you — it’s not worth making enemies of the Thompson family over someone who’s supposedly nothing to you. Picking that fight will leave scars.”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Pausing, Levi added, “Speaking of Amilia, her life reads like a cautionary tale. She has been married six times. Each marriage combusted spectacularly, ending in bitter divorce for one disaster or another. Eventually, no man would touch her with a ten-foot pole.”</p>
                 <p>“Karlee was born out of wedlock—Amilia can’t even identify the father. She has cycled through lovers like changing clothes, most of them forgettable one-night encounters. At one point she contracted an STD and underwent extensive treatment. But recovery taught her nothing—if anything, she emerged more promiscuous than before.”</p>
                 <p>Levi shifted the topic.</p>
@@ -2538,7 +2538,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2554,8 +2554,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

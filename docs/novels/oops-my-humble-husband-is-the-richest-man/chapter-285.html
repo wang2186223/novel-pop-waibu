@@ -2404,7 +2404,7 @@
                 <p>His secretary hurried in.</p>
                 <p>She placed a document on the desk.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Mr. Davis, this is a lawsuit from Sherwood Group.&#34;</p>
                 <p>&#34;They claim we failed to deliver the Hydrogen Fuel Project research proposal on time.&#34;</p>
                 <p>&#34;They&#39;re demanding a two million USD penalty for breach of contract.&#34;</p>
@@ -2423,7 +2423,7 @@
                 <p>He mentioned an offer from Dr. Nan&#39;s company.</p>
                 <p>Zack, already in a bad mood, had told him to get lost.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>His secretary had warned him it might affect the deal with Sherwood Group.</p>
                 <p>But he hadn&#39;t cared.</p>
                 <p>With Mina involved, what could possibly go wrong?</p>
@@ -2442,7 +2442,7 @@
                 <p>&#34;Now it&#39;s all over! Clean up your own mess!&#34;</p>
                 <p>The call ended abruptly.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Zack stood frozen.</p>
                 <p>He yelled at his secretary.</p>
                 <p>&#34;Go to Sherwood Group and find out what&#39;s happening!&#34;</p>
@@ -2461,7 +2461,7 @@
                 <p>She wore an apron, playing the role of the dutiful wife.</p>
                 <p>Seeing Zack return, she feigned surprise.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;You&#39;re back?&#34;</p>
                 <p>Zack issued a direct command.</p>
                 <p>&#34;Call Mina right now. Tell her to drop the lawsuit!&#34;</p>
@@ -2480,7 +2480,7 @@
                 <p>A message from Mina appeared.</p>
                 <p>[Don&#39;t contact me again.]</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>When she tried to send another message, a red exclamation mark appeared.</p>
                 <p>She had been blocked.</p>
                 <p>Evelyn stared blankly at her phone.</p>
@@ -2503,7 +2503,7 @@
                 <p>He could walk away free.</p>
                 <p>His eyes lit up with sudden realization.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">
@@ -2625,7 +2625,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2641,8 +2641,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

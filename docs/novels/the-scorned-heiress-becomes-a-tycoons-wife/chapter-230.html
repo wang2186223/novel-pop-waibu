@@ -2399,14 +2399,14 @@
                 <p>The welts from this morning&#39;s beating still ached faintly.</p>
                 <p>He forced a dry laugh. &#34;J-just kidding...&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>This woman was practically a violent maniac.</p>
                 <p>When they first met, he&#39;d mistaken her for some delicate little flower.</p>
                 <p>Turned out she was a thorny, aggressive predator.</p>
                 <p>Adrian had never been hit in his life before.</p>
                 <p>Now just looking at Sophia made his whole body ache.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Spit it out. I&#39;m busy.&#34;</p>
                 <p>Sophia dropped the playful tone.</p>
                 <p>&#34;I own an entertainment company. I want to sign you.&#34;</p>
@@ -2420,7 +2420,7 @@
                 <p>&#34;Suit yourself.&#34; Sophia changed tactics. &#34;What are your plans then?&#34;</p>
                 <p>Adrian lifted his chin arrogantly.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;I&#39;ll take a few acting roles.&#34;</p>
                 <p>Sophia burst out laughing.</p>
                 <p>&#34;What decent scripts would come looking for you?&#34; She didn&#39;t mince words. &#34;Don&#39;t tell me it&#39;s another fourth male lead in some cheap web drama like &#39;Love You Forever&#39;?&#34;</p>
@@ -2428,7 +2428,7 @@
                 <p>With his controversial reputation and cringe-worthy acting skills, no serious production would cast him.</p>
                 <p>Those offering roles just wanted to cash in on his notoriety.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">
@@ -2550,7 +2550,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2566,8 +2566,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

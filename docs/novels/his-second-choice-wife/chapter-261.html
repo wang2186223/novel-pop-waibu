@@ -2390,12 +2390,12 @@
                 <p>&#34;Are you ready to tell us what happened?&#34; Liam&#39;s deep voice resonated with barely restrained concern. &#34;How did you vanish from our secured estate? Where were you taken?&#34;</p>
                 <p>Evelyn&#39;s fingers tightened around the teacup before she gestured toward the French windows.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;There&#39;s an ancient oak in the south garden,&#34; she began. &#34;I was sitting beneath it when a rope ladder descended from the branches above.&#34;</p>
                 <p>&#34;What?&#34; Liam&#39;s brows furrowed.</p>
                 <p>&#34;Before I could react, a woman rappelled down,&#34; Evelyn continued, avoiding eye contact. &#34;I never saw her face—everything went black. I woke up alone in an abandoned amusement park on the city outskirts.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Ryan immediately pulled out his tablet, fingers flying across the screen as he accessed security feeds.</p>
                 <p>&#34;Did she hurt you?&#34; Liam&#39;s voice dropped dangerously low.</p>
                 <p>Evelyn shook her head, her fingers twisting the fabric of her skirt. &#34;No... she was gone when I came to.&#34;</p>
@@ -2419,7 +2419,7 @@
                 <p>&#34;Just need rest,&#34; she said softly, placing a hand over his. The unspoken understanding passed between them.</p>
                 <p>Though concern still darkened his features, Liam reluctantly released her. As she ascended the staircase, she could feel his protective gaze following her every step.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">
@@ -2541,7 +2541,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2557,8 +2557,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

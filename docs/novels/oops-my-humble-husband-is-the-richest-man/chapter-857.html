@@ -2403,7 +2403,7 @@
                 <p>She suddenly felt a twinge of guilt for deceiving someone so guileless.</p>
                 <p>Evelyn put down her phone and looked at Poppy. &#34;Can you take me to see Astrid?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Sure.&#34; Poppy agreed readily, then added, &#34;But first you have to pass the group&#39;s test!&#34;</p>
                 <p>&#34;Test?&#34;</p>
                 <p>&#34;Yeah, we admire strength. We only bow to the strong.&#34; Poppy said seriously. &#34;If you can gain everyone&#39;s approval, then you can join us!&#34;</p>
@@ -2421,7 +2421,7 @@
                 <p>&#34;Try it.&#34; Poppy handed over a spoon, her eyes expectant. &#34;My cooking is fantastic, these dishes are practically banquet-level! I&#39;m a national culinary champion!&#34;</p>
                 <p>Evelyn took the spoon and tasted a bite.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>She frowned slightly.</p>
                 <p>Alexander also tasted it, his expression neutral.</p>
                 <p>&#34;How is it?&#34; Poppy&#39;s eyes sparkled.</p>
@@ -2439,7 +2439,7 @@
                 <p>Poppy waved her hand. &#34;I won&#39;t bully you with cooking. I know that&#39;s the least useful skill. As long as you show me something else you&#39;re good at, something better than me, then from now on you&#39;re Fourth Sister, and I&#39;m Fifth Sister!&#34;</p>
                 <p>Evelyn was silent.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>She was good at... a bit of programming.</p>
                 <p>And a bit of cooking.</p>
                 <p>And a bit of scientific research.</p>
@@ -2457,7 +2457,7 @@
                 <p>Evelyn&#39;s movements were fluid.</p>
                 <p>Chopping, adding to the pan, stir-frying, seasoning.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Every step was precise and efficient.</p>
                 <p>A tempting aroma gradually filled the kitchen.</p>
                 <p>Poppy&#39;s nose twitched.</p>
@@ -2616,7 +2616,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2632,8 +2632,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

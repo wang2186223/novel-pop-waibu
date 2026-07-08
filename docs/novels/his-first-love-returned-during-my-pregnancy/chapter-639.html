@@ -2390,12 +2390,12 @@
                 <p>A pigtailed girl came sprinting toward them, breathless. &#34;Grandpa Elder! There&#39;s a huge shiny car at the village entrance!&#34;</p>
                 <p>The elder frowned. &#34;Who would visit this remote place?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;The man&#39;s so handsome!&#34; The child gestured wildly. &#34;Even prettier than TV stars!&#34;</p>
                 <p>Evelyn&#39;s pulse quickened.</p>
                 <p>&#34;Dr. Carter, you&#39;ve seen the world.&#34; Elder Thompson entreated. &#34;Would you accompany me? Perhaps it&#39;s an investor...&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Evelyn nodded faintly.</p>
                 <p>As they walked, she casually asked the girl, &#34;What color was the car?&#34;</p>
                 <p>&#34;White!&#34; The child skipped ahead. &#34;With a jumping horse emblem!&#34;</p>
@@ -2405,17 +2405,17 @@
                 <p>Of course.</p>
                 <p>The village entrance swarmed with spectators. At the center, Alexander Hamilton stood besieged by children. Muddy handprints smeared his tailored suit.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Mister, your watch glows!&#34;</p>
                 <p>&#34;Brother, why&#39;s your tie so tight?&#34;</p>
                 <p>&#34;Uncle, your shoes shine like mirrors!&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Alexander floundered under the onslaught. Then he looked up—and locked eyes with Evelyn&#39;s amused gaze.</p>
                 <p>She stood at the crowd&#39;s edge in a dirt-streaked white coat, hands in pockets. Sunlight gilded her silhouette.</p>
                 <p>&#34;Alexander.&#34; She tilted her head slightly. &#34;Looking for me?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">
@@ -2537,7 +2537,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2553,8 +2553,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

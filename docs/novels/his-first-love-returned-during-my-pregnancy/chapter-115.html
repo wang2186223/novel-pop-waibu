@@ -2390,27 +2390,27 @@
                 <p>&#34;Yeah. Played a stupid game, won a stupid prize—&#34; Simon froze mid-sentence.</p>
                 <p>Evelyn Carter stood before them, holding a bottle of shampoo.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;What a coincidence,&#34; she said flatly.</p>
                 <p>Simon paled. &#34;E-Evelyn? Why are you—&#34;</p>
                 <p>&#34;Not a coincidence.&#34; Evelyn placed the shampoo in her cart. &#34;I followed you here.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Simon instinctively stepped away from Annabelle. &#34;Don’t misunderstand. Jane and I are just friends.&#34;</p>
                 <p>Evelyn’s gaze flickered between them before settling on Annabelle’s arm looped through Simon’s.</p>
                 <p>&#34;Good friends?&#34; She smirked.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Annabelle yanked her arm back, voice sharp. &#34;I’m pregnant. Is it a crime for him to steady me?&#34;</p>
                 <p>&#34;Sure.&#34; Evelyn turned back to the shelves without another word.</p>
                 <p>&#34;If you dare breathe a word of this to Alexander—&#34; Annabelle hissed.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Evelyn didn’t look back. &#34;Breathe what?&#34;</p>
                 <p>&#34;About Simon and me—&#34; Annabelle’s eyes narrowed. &#34;Are you recording this?&#34;</p>
                 <p>&#34;Not interested.&#34; Evelyn’s tone was ice.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Annabelle sneered. &#34;Playing the saint? A divorced woman forcing herself into someone else’s wedding as a bridesmaid—who knows what you’re really after?&#34;</p>
                 <p>Evelyn picked up a bottle of body wash and dropped it into her cart. &#34;Think whatever you want.&#34; She met Annabelle’s glare. &#34;Either way, I’m not the one feeling sick about it.&#34;</p>
                 <p>Simon stood awkwardly between them, suddenly irrelevant.</p>
@@ -2418,7 +2418,7 @@
                 <p>&#34;Evelyn,&#34; he forced a smile, &#34;I owe you an apology for neglecting you at the banquet. Let me treat you to dinner sometime.&#34;</p>
                 <p>Annabelle’s face darkened instantly. &#34;Weren’t you just complaining about her ruining your reputation? Now you’re playing nice?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">
@@ -2540,7 +2540,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2556,8 +2556,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

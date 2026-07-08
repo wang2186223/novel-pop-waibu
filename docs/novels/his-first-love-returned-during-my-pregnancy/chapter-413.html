@@ -2391,7 +2391,7 @@
                 <p>&#34;Let&#39;s go!&#34; Emily tugged Evelyn&#39;s sleeve.</p>
                 <p>He blocked their escape. &#34;Don&#39;t rush off. Name your price.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Emily&#39;s face burned with anger. &#34;You&#39;re disgusting! We&#39;re here to meet someone!&#34;</p>
                 <p>&#34;Meet someone?&#34; He scoffed. &#34;Who comes to a place like this to meet someone?&#34;</p>
                 <p>Another man emerged from the KTV. &#34;Lao He, drunk again?&#34;</p>
@@ -2403,7 +2403,7 @@
                 <p>Emily&#39;s eyes suddenly lit up. &#34;Alexander!&#34; she shouted toward the entrance. &#34;Help us!&#34;</p>
                 <p>Alexander Hamilton paused mid-step, a red-lipped woman draped over his arm. His gaze lifted at the commotion.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Oh, now you know Mr. Hamilton?&#34; Lao He sneered. &#34;You think someone like him would claim trash like you?&#34;</p>
                 <p>Emily stomped her foot. &#34;He really is my brother-in-law!&#34;</p>
                 <p>&#34;Enough,&#34; the other man cut in coldly. &#34;Since when does Mr. Hamilton&#39;s wife frequent places like this?&#34;</p>
@@ -2415,7 +2415,7 @@
                 <p>Nathan&#39;s glare was icy. &#34;Get lost.&#34;</p>
                 <p>The sisters hurried away, Lao He&#39;s lewd chuckle trailing after them. &#34;A sister duo...what man wouldn&#39;t be tempted...&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Inside the taxi, Emily trembled.</p>
                 <p>&#34;Scared now?&#34; Evelyn&#39;s tone was stern. &#34;Still want to come to places like this?&#34;</p>
                 <p>Emily shook her head violently. &#34;Never again...&#34;</p>
@@ -2423,7 +2423,7 @@
                 <p>Evelyn watched the city lights blur past the window. &#34;Call him Mr. Hamilton.&#34;</p>
                 <p>The night deepened as their taxi merged into the river of taillights.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">
@@ -2545,7 +2545,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2561,8 +2561,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

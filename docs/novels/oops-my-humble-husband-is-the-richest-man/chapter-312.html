@@ -2404,7 +2404,7 @@
                 <p>Evelyn raised an eyebrow. &#34;What is it?&#34;</p>
                 <p>Mina gritted her teeth in anger. &#34;My uncle wants me to seduce Alexander Vance! He says the man is in New York now!&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Cough!&#34;</p>
                 <p>Evelyn shot a look at Alexander.</p>
                 <p>Mina grew more furious. &#34;Am I that desperate? He wants me to go after some old widower?!&#34;</p>
@@ -2423,7 +2423,7 @@
                 <p>She nodded.</p>
                 <p>Evelyn turned to enter the room.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Alexander immediately followed.</p>
                 <p>He refused to let her out of his sight now.</p>
                 <p>Terrified she might vanish if he blinked.</p>
@@ -2480,7 +2480,7 @@
                 <p>Surprised, he walked over.</p>
                 <p>&#34;Alexander Vance? It really is you! Why are you dressed like that? And here of all places?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Alexander lazily looked up.</p>
                 <p>All traces of颓废 had vanished from his face.</p>
                 <p>&#34;And what are you doing here?&#34;</p>
@@ -2499,7 +2499,7 @@
                 <p>Marcus froze instantly.</p>
                 <p>&#34;What?!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">
@@ -2621,7 +2621,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2637,8 +2637,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

@@ -2392,14 +2392,14 @@
                 <p>&#34;Not pathetic,&#34; Evelyn said flatly. &#34;Just not funny at all.&#34;</p>
                 <p>Alexander let out a self-deprecating chuckle. &#34;I&#39;ve become a walking joke lately.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Your personal life isn&#39;t my business to judge.&#34; Her voice remained calm. &#34;All I can offer is my blessing.&#34;</p>
                 <p>&#34;Blessing for what?&#34;</p>
                 <p>&#34;A long marriage? A house full of children?&#34;</p>
                 <p>His smile froze. &#34;That sounds like sarcasm.&#34;</p>
                 <p>&#34;I didn&#39;t mean it that way.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;I know.&#34; His lips twisted bitterly. &#34;I&#39;m mocking myself.&#34;</p>
                 <p>&#34;After twenty years of obsession, you finally got what you wanted. Why doubt it now?&#34;</p>
                 <p>Alexander&#39;s eyes darkened. &#34;Twenty years... yet now that we&#39;re together, it&#39;s nothing like I imagined.&#34;</p>
@@ -2413,7 +2413,7 @@
                 <p>&#34;The wedding ring.&#34; Her tone was matter-of-fact. &#34;I heard it&#39;s worth a house. Not appropriate for me to keep.&#34;</p>
                 <p>&#34;Evelyn...&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Enough.&#34; She interrupted firmly. &#34;We failed as spouses, and we can&#39;t be friends either. Strangers is the cleanest way. Oh, and there are some things I left—&#34;</p>
                 <p>She broke off mid-sentence.</p>
                 <p>That place wasn&#39;t her home anymore.</p>
@@ -2430,7 +2430,7 @@
                 <p>&#34;How long will it take?&#34;</p>
                 <p>Alexander suddenly asked, &#34;Why the hurry to divorce... Planning something new?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">
@@ -2552,7 +2552,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2568,8 +2568,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

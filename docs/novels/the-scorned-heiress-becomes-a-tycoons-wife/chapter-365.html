@@ -2392,21 +2392,21 @@
                 <p>If it weren&#39;t for this woman—if Natalie Lockwood had married Alexander Valdemar—things wouldn&#39;t have come to this!</p>
                 <p>Sophia was baffled by the hostility.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Just as she frowned in confusion, a steaming bowl of chicken soup was placed before her.</p>
                 <p>&#34;Ignore her.&#34;</p>
                 <p>The rich aroma of the soup, simmered since afternoon in the Valdemar kitchen, filled the air.</p>
                 <p>Sophia had noticed it earlier but hadn&#39;t dared to move during the tense atmosphere.</p>
                 <p>She hadn&#39;t expected Alexander to serve her.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Thank you.&#34;</p>
                 <p>She took a sip, savoring the delicious flavor.</p>
                 <p>Seeing her distracted, Alexander exhaled quietly in relief.</p>
                 <p>If not for him, Sophia wouldn&#39;t have been subjected to such unwarranted hostility tonight.</p>
                 <p>Patriarch Valdemar sat in silence, his expression dark.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Alexander pressed his lips together, unsure how to comfort him.</p>
                 <p>The Patriarch and Matriarch had once defied their families for love.</p>
                 <p>Their bond had been strong—until Vincent Valdemar&#39;s infidelity and Diana Valdemar&#39;s breakdown.</p>
@@ -2420,7 +2420,7 @@
                 <p>As the Patriarch wallowed in sorrow, Adrian Valdemar suddenly spoke.</p>
                 <p>&#34;Old man, don&#39;t you think Natalie Lockwood wanting to marry my brother is like a toad lusting after swan meat?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>The Patriarch frowned at him.</p>
                 <p>Adrian grinned.</p>
                 <p>&#34;What I mean is, she&#39;s not even fit to compare to a single strand of my sister-in-law&#39;s hair...&#34;</p>
@@ -2553,7 +2553,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2569,8 +2569,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

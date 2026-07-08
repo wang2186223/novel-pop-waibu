@@ -2391,13 +2391,13 @@
                 <p>Ethan&#39;s gaze drifted from his documents.</p>
                 <p>He noticed the faint dimple that appeared when Vivian bit her lower lip in concentration. Her stylus moved in absent circles like a lazy cat kneading.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>His throat tightened involuntarily.</p>
                 <p>The cabin air suddenly felt stifling. Ethan loosened his tie but only grew warmer.</p>
                 <p>Vivian looked up, catching his lingering stare.</p>
                 <p>&#34;Too much free time, Mr. Roscente?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Reviewing proposals.&#34; He hastily lowered his eyes to the files where numbers had blurred into gibberish.</p>
                 <p>Vivian scoffed, pulling the blanket tighter.</p>
                 <p>She didn&#39;t see Ethan carefully retrieving the slipped blanket later, handling it like fragile porcelain.</p>
@@ -2409,7 +2409,7 @@
                 <p>His untouched steak grew cold as he watched Vivian&#39;s lashes flutter with each breath, casting delicate shadows.</p>
                 <p>During turbulence, she instinctively curled deeper into the blanket.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Ethan&#39;s hand shot out to steady her shoulder, lingering long after the shaking stopped. The residual warmth made him clench his fist.</p>
                 <p>&#34;&#39;AN Atelier design inspiration&#39;...&#34; He read the filename on her tablet, lips quirking upward.</p>
                 <p>So this was how she worked. Forehead creasing in focus, eyes brightening with breakthroughs.</p>
@@ -2422,7 +2422,7 @@
                 <p>Retreating to his seat, Ethan pretended to check emails. His burning ears betrayed the thunderous heartbeat.</p>
                 <p>Only the steady hum of engines and their synchronized breathing filled the cabin.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">
@@ -2544,7 +2544,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2560,8 +2560,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

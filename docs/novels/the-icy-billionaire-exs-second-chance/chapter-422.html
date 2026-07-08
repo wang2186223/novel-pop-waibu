@@ -2391,16 +2391,16 @@
                 <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Vivian studied the man&#39;s weathered face. She recognized him from the engineering department. Both her research and Ethan&#39;s reports confirmed his impeccable record—underpaid yet loyal for decades. She vaguely recalled seeing him at her mother&#39;s memorial.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>One by one, other employees voiced their commitment to stay.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>The tide had turned. With the Blackwood Group&#39;s backing, new possibilities emerged.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Vivian produced a document. &#34;Our preliminary development plan. Certain projects require restructuring. Consider this draft open for discussion—I welcome all suggestions.&#34; Her gaze swept the room. &#34;Any other business?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>The atmosphere transformed. Where gloom had lingered, now buzzed with animated discussion. Employees who&#39;d judged Vivian based on Richard&#39;s disparagement now saw her sharp market analysis and clear vision—nothing like the clueless socialite he&#39;d described.</p>
                 <p>Several exchanged relieved glances, grateful they&#39;d held their tongues earlier. Some mused that Richard&#39;s greatest failures weren&#39;t business losses, but the remarkable women he&#39;d underestimated—his ex-wife who&#39;d been his foundation, and Vivian who now revitalized the company he&#39;d run into the ground.</p>
                 <p>Fortune favors those who recognize its worth.</p>
@@ -2527,7 +2527,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2543,8 +2543,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

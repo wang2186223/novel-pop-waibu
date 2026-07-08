@@ -2391,31 +2391,31 @@
                 <p>The photo was deliberately suggestive, omitting the moment he had pushed Sophia away.</p>
                 <p>&#34;Take down all related reports immediately.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Yes, sir.&#34;</p>
                 <p>&#34;Also issue a statement clarifying that I&#39;m single and Ms. Evans is just a friend.&#34;</p>
                 <p>Ethan stared at the photo, his gaze icy.</p>
                 <p>He never cared about tabloid gossip before.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>But now was different.</p>
                 <p>He couldn’t let Vivian misunderstand.</p>
                 <p>Three calls went unanswered.</p>
                 <p>He switched phones and tried again.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Who is this?&#34; Vivian&#39;s cool voice came through.</p>
                 <p>&#34;It&#39;s me.&#34;</p>
                 <p>Silence. Then the line went dead.</p>
                 <p>Ethan redialed immediately.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Make it quick,&#34; Vivian snapped.</p>
                 <p>&#34;You saw the news?&#34;</p>
                 <p>&#34;Which one? The engagement announcement with Ms. Evans?&#34;</p>
                 <p>A faint smile touched his lips.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>She cared.</p>
                 <p>&#34;That’s media fabrication. I’ve already had it corrected.&#34;</p>
                 <p>&#34;No need to explain to me.&#34; Her tone was flat. &#34;Are we even close?&#34;</p>
@@ -2423,7 +2423,7 @@
                 <p>A soft laugh drifted through the line.</p>
                 <p>&#34;Don’t flatter yourself, Mr. Roscente. I couldn’t care less.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">
@@ -2545,7 +2545,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2561,8 +2561,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

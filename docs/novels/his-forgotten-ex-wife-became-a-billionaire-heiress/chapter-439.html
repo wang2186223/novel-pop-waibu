@@ -2391,25 +2391,25 @@
                 <p>&#34;It might be good news. What you&#39;ve been hoping for... may have come true.&#34;</p>
                 <p>The candy fell to the floor with a soft thud.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>The Queen&#39;s hand instinctively pressed against her stomach, her eyes shimmering with disbelief.</p>
                 <p>&#34;Dr. Laurent, are you saying—&#34;</p>
                 <p>Just a month ago, Vivian had told her the chances of conception were slim.</p>
                 <p>&#34;It&#39;s just a preliminary assessment. We need a hospital to confirm.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>The Queen stood abruptly, not even pausing to grab her coat as she rushed out.</p>
                 <p>&#34;Take care of Fiona for me.&#34;</p>
                 <p>Emily watched the Queen&#39;s hurried departure, her expression troubled.</p>
                 <p>&#34;Vivian, if Her Highness really is expecting...&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>She bit her lip, leaving the thought unfinished.</p>
                 <p>Vivian shook her head gently.</p>
                 <p>&#34;At her age, carrying this pregnancy to term will be extremely difficult.&#34;</p>
                 <p>The risks for a woman in her forties were far too high.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Emily&#39;s eyes reddened.</p>
                 <p>&#34;How heartbreaking for her...&#34;</p>
                 <p>Vivian turned to the window.</p>
@@ -2422,7 +2422,7 @@
                 <p>But the doctor&#39;s expression remained grim.</p>
                 <p>&#34;Your Highness, this fetus...&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">
@@ -2544,7 +2544,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2560,8 +2560,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

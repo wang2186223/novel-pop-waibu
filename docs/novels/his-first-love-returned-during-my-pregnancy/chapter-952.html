@@ -2390,17 +2390,17 @@
                 <p>Vivian&#39;s eyes widened. &#34;And you&#39;re okay with that? I thought he&#39;d have figured out it&#39;s twins by now! Men really are useless.&#34;</p>
                 <p>A soft laugh escaped Evelyn. &#34;It&#39;s not that he can&#39;t guess. He&#39;s waiting for me to tell him.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Vivian sucked in a sharp breath. &#34;Your relationship dynamic... I&#39;d have flipped the table by now!&#34; Her expression suddenly soured. &#34;Speaking of which, the candidates my dad set me up with are something else.&#34;</p>
                 <p>&#34;The first one brought his mother to the &#39;interview.&#39; The old lady announced she was hiring me as her daughter-in-law on the spot.&#34;</p>
                 <p>Evelyn choked.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;The second was even better—started lecturing me on how to run my company the moment we met.&#34;</p>
                 <p>&#34;The third looked like a K-pop idol but opened with &#39;just bear me a son.&#39;&#34; Vivian rolled her eyes. &#34;What, is there a throne waiting to be inherited?&#34;</p>
                 <p>Evelyn massaged her temples. &#34;Where does Uncle Dempsey find these specimens?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;His old buddies&#39; connections.&#34; Vivian looked utterly defeated. &#34;A few more of these blind dates, and Dad will get booted from their group chat.&#34;</p>
                 <p>Now Evelyn understood why Uncle Dempsey had asked Alexander to arrange introductions.</p>
                 <p>Her phone screen lit up just then. Alexander&#39;s video call request appeared.</p>
@@ -2410,7 +2410,7 @@
                 <p>&#34;It&#39;s 3 a.m. Why aren&#39;t you asleep?&#34;</p>
                 <p>&#34;Just finished the meeting.&#34; Alexander adjusted the camera to reveal a sleeping baby surrounded by pillows, a smile still on the tiny face.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Evelyn&#39;s eyes grew moist. &#34;The Langley family...&#34;</p>
                 <p>This was the unavoidable challenge between them.</p>
                 <p>Alexander&#39;s voice remained steady. &#34;The baby stays with us.&#34; He rubbed his temples. &#34;Mr. and Mrs. Langley... they know now.&#34;</p>
@@ -2540,7 +2540,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2556,8 +2556,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

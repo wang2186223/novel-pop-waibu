@@ -2395,22 +2395,22 @@
                 <p>Vivian pocketed her phone, ignoring the remark.</p>
                 <p>Two minutes later, murmurs rippled through the banquet hall.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Check AN Atelier&#39;s official website!&#34; someone gasped.</p>
                 <p>&#34;Oh my god, an official statement!&#34;</p>
                 <p>&#34;It includes the photo—the one just taken!&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Guests whispered among themselves, their eyes darting between Bianca and their screens.</p>
                 <p>Bianca&#39;s hands trembled as she opened the website. Her face drained of color.</p>
                 <p>The announcement was clear: This gown is not an AN Atelier design. It is a counterfeit.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Convinced now?&#34; Vivian arched a brow. &#34;Next time, make sure you buy the real thing.&#34;</p>
                 <p>Bianca&#39;s lips quivered. Tears spilled as she spun on her heel and fled the hall.</p>
                 <p>Victoria rushed after her. &#34;Bianca! I have other gowns—&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;You knew, didn’t you?&#34; Bianca shoved her away. &#34;You set me up!&#34;</p>
                 <p>Victoria protested, &#34;I warned you—&#34;</p>
                 <p>&#34;Shut up!&#34; Bianca&#39;s voice turned shrill. &#34;I’m always the one humiliated in public!&#34;</p>
@@ -2420,7 +2420,7 @@
                 <p>&#34;The Semona family just lost all face tonight.&#34;</p>
                 <p>Vivian sipped her champagne, a cold glint flashing in her eyes.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -2542,7 +2542,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2558,8 +2558,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

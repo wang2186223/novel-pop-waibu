@@ -2403,7 +2403,7 @@
                 <p>Even now, her father was still pushing Vanessa forward as if she were the only daughter who mattered.</p>
                 <p>All his previous kindness had been nothing but a performance.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Thank heavens she had never trusted his empty promises.</p>
                 <p>Leonard’s expression darkened, his displeasure sharpening his tone. &#34;No need for that.&#34;</p>
                 <p>Leonard flicked his wrist in clear dismissal, his expression icy.</p>
@@ -2412,7 +2412,7 @@
                 <p>&#34;Is she?&#34;</p>
                 <p>Leonard’s lips curled in disdain.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Though he didn’t involve himself in Cresthaven’s petty gossip, the Hart family scandals had reached even his ears.</p>
                 <p>Vanessa’s so-called virtues aside, stealing her sister’s fiancé and being caught by paparazzi outside a luxury hotel? That wasn’t just scandalous—it was disgraceful.</p>
                 <p>Among the elite, whispers were inevitable. But true power demanded discretion.</p>
@@ -2421,7 +2421,7 @@
                 <p>With those sharp words hanging in the air, Alexander Whitmore spun around without another glance.</p>
                 <p>His polished dress shoes clicked against the marble floor as he strode away, his broad shoulders rigid with unspoken fury.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Richard Hayes stood frozen in place, his mouth slightly agape.</p>
                 <p>The weight of Alexander’s dismissal settled over him like a suffocating blanket.</p>
                 <p>His fingers twitched at his sides, as if grasping for words that wouldn’t come.</p>
@@ -2430,7 +2430,7 @@
                 <p>He had expected resistance—but not this cold, cutting finality.</p>
                 <p>Alexander’s retreating figure turned the corner, disappearing from view.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Only then did Richard exhale, his shoulders slumping.</p>
                 <p>A bitter taste coated his tongue.</p>
                 <p>He had gambled and lost.</p>
@@ -2566,7 +2566,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2582,8 +2582,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

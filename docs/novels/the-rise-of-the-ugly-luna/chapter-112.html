@@ -2397,7 +2397,7 @@
                 <p>&#34;It was a good experience. I didn&#39;t have a lot of things to worry about.&#34;</p>
                 <p>&#34;You sound like you have a lot of things to worry about now,&#34; I huffed, drawing a small laugh from her.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>I found it cute that it was easy to make her laugh. And man,she had one of the cutest smiles.</p>
                 <p>&#34;Actually, I do. If you think of it.&#34; She rolled her eyes.</p>
                 <p>Hm.I&#39;d definitely have to do something about this eye -rolling. She was too used to it.</p>
@@ -2409,7 +2409,7 @@
                 <p>&#34;That woman you chased after in traffic the other day,can you honestly tel me who she was?&#34;</p>
                 <p>Unease glimmered subtly in her eyes. For a moment,I thought she&#39;d actually get up and run.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;I-&#34; she struggled for words, unconsciously playing with her cutlery. &#34;She&#39;s just someone I used to know.She um...she took something that belonged to me.Something important.&#34;</p>
                 <p>Now I was even more curious.</p>
                 <p>&#34;And...this thing isn&#39;t replaceable? It&#39;s so important you had to run after her in traffic and nearly lost your mind?&#34;</p>
@@ -2433,7 +2433,7 @@
                 <p>&#34;Nothing goes for nothing.&#34;I shrugged.</p>
                 <p>Walking side by side, I stared down at her hands. I&#39;d missed holding them. The only times I got to was during the &#39;dreams.&#39; But she didn&#39;t take the pills last night. I didn&#39;t know why.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Right now, I couldn&#39;t help but wonder if she&#39;d react to me taking her hand in mine. Would it be too strange?Would she become dramatic?</p>
                 <p>&#34;Lyric,&#34; My voice came out softer.</p>
                 <p>We were by the car now, and as she stood face-to-face with me, I had a hard time concentrating.</p>
@@ -2462,7 +2462,7 @@
                 <p>The call wasn&#39;t on speaker, but I was close enough to hear Guinevere&#39;s panicked voice.</p>
                 <p>&#34;Where are you, Lyric? Come here this instant! They&#39;re dead. All the patients are dead!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">
@@ -2584,7 +2584,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2600,8 +2600,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

@@ -2393,11 +2393,11 @@
                 <p>Relief softened Victor’s face. “Sophie managed to live with her illness, but she couldn’t bear the thought of Cole going through the same suffering. She wanted to give him one last chance… a miracle.”</p>
                 <p>“So she thought of me.” Elliana spoke quietly. “She knew I’d inherited the Medical Codex, that I’d become Dr. Atkinson. She hoped I might create a real cure for Psychephrenia. So she tied Cole and me together—by force?”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Victor gave a weak laugh. “You’re as sharp as ever. Nothing escapes you. If you need to blame someone, blame me. Please, spare Sophie. She’s already paid too much for her.”</p>
                 <p>“For her son’s life, she allowed herself to be selfish for once.”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>But Elliana’s expression held no trace of anger. Instead, she smiled warmly. “You don’t have to worry. I meant what I said—I’m not angry. If anything, I’m thankful. You gave me such a wonderful husband.”</p>
                 <p>Cole’s heart clenched with a mix of guilt and gratitude. His marriage to Elliana hadn’t begun with love—it had been born from his mother’s desperate plan. Yet Elliana had never resented him. She had loved him, cured him, and was now carrying his children. She was his light, his salvation.</p>
                 <!-- 广告位 4 -->
@@ -2535,7 +2535,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2551,8 +2551,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

@@ -2402,7 +2402,7 @@
                 <p>&#34;Do you understand now?&#34;</p>
                 <p>Evelyn was stunned.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;You mean, if the Sterling Family prophesies you&#39;ll die at the fifth watch, even the Grim Reaper won&#39;t come for you at the third watch?&#34;</p>
                 <p>Natalie pouted.</p>
                 <p>&#34;That&#39;s the general idea, but why curse me to die?&#34;</p>
@@ -2436,7 +2436,7 @@
                 <p>&#34;You&#39;ve done something like this before?&#34;</p>
                 <p>Natalie rubbed her nose.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;There was a serial killer once. I wanted to kill him.&#34;</p>
                 <p>&#34;I asked the Sterling Family. The prophecy they gave me was that he would die by drowning on a specific day.&#34;</p>
                 <p>&#34;I didn&#39;t believe it. I tried to kill him several days in advance, repeatedly, but never succeeded.&#34;</p>
@@ -2453,7 +2453,7 @@
                 <p>&#34;And after ten, Sebastian would have left, so she had no need to act either.&#34;</p>
                 <p>&#34;Therefore, if I were Scarlett, and I wanted to kill Sebastian, I would also choose ten o&#39;clock.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Evelyn nodded.</p>
                 <p>She understood.</p>
                 <p>Natalie glanced again in the direction Sebastian had left.</p>
@@ -2470,7 +2470,7 @@
                 <p>&#34;My mentor taught me not to demand repayment for a favor.&#34;</p>
                 <p>Natalie was speechless.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>She twitched her mouth.</p>
                 <p>&#34;Seriously, why are you so stubborn? If your mind is this inflexible, how are you going to save your mother?&#34;</p>
                 <p>&#34;Let me tell you, stop pretending to be some saintly, pure-hearted person here. Sometimes you just have to speak up.&#34;</p>
@@ -2488,7 +2488,7 @@
                 <p>&#34;Let&#39;s go back. The cooperation will continue.&#34;</p>
                 <p>&#34;What?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">
@@ -2610,7 +2610,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2626,8 +2626,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

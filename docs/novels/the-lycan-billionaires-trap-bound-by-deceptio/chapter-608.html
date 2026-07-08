@@ -2395,12 +2395,12 @@
                 <p>&#34;When will he wake?&#34; Hannah asked, her voice edged with anxiety.</p>
                 <p>The doctor shook his head gravely. &#34;It&#39;s uncertain. It hinges on his response to treatment. If we can curb the infection, if the fever subsides, and his vitals stabilize, he might wake. But there are no guarantees.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Hannah&#39;s heart sank as she pressed further. &#34;Given his condition, could we transfer him to another</p>
                 <p>hospital?&#34;</p>
                 <p>The doctor&#39;s brow creased with concern. &#34;Transfer him? In his state? With an active infection,persistent fever, and the risk of aggravating his condition, it&#39;s reckless. Are you trying to save him or endanger him further?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Hannah asked with measured care, &#34;If the infection is under control, his vitals are stable, and he&#39;s improving, would a transfer be possible then?&#34;</p>
                 <p>The doctor hesitated, weighing the question. &#34;If the infection clears, his vitals remain steady, and he&#39;s accompanied by a skilled medical team with proper equipment to protect the wound, then theoretically,yes.But it&#39;s still risky, and I&#39;d strongly advise against it.&#34;</p>
                 <p>&#34;I understand. Thank you,&#34; Hannah said, storing his answer.</p>
@@ -2419,7 +2419,7 @@
                 <p>Nate frowned. &#34;Are we transferring Mr. Jones? Didn&#39;t you say we must wait until he&#39;s stable?&#34;</p>
                 <p>Hannah&#39;s gaze didn&#39;t waver. &#34;We&#39;re not transferring him. We&#39;re taking him straight back to Dorbarrow.That&#39;s the safest place.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">
@@ -2541,7 +2541,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2557,8 +2557,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

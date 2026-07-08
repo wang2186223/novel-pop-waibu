@@ -2425,7 +2425,7 @@
                 <p>Cecilia&#39;s eyes lit up. &#34;Deal.&#34;</p>
                 <p>She sold the special medication to the scalper and went to a pharmacy to buy identical vitamins.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Back home, both she and Aaron were taking &#34;vitamins.&#34;</p>
                 <p>Aaron wouldn&#39;t live more than two weeks?</p>
                 <p>It didn&#39;t matter.</p>
@@ -2435,7 +2435,7 @@
                 <p>But it was fine.</p>
                 <p>She took the medicine and left the hospital with Aaron.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>That evening, Aaron brought two bottles of &#34;vitamins.&#34; &#34;Honey, the doctor said we&#39;re deficient in vitamins. From now on, we&#39;ll take them together every day.&#34;</p>
                 <p>Cecilia smiled meaningfully. &#34;Sure, darling. Let&#39;s take them together.&#34;</p>
                 <p>Aaron smiled and handed her the bottle.</p>
@@ -2450,7 +2450,7 @@
                 <p>Natalie nodded. &#34;Yes, I&#39;m sure.&#34;</p>
                 <p>Evelyn said, &#34;Alright, let&#39;s go together and see.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">
@@ -2572,7 +2572,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2588,8 +2588,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

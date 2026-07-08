@@ -2399,28 +2399,28 @@
                 <p>Turning to Vivian, he asked, &#34;Dr. Laurent, care for a drink?&#34;</p>
                 <p>&#34;No thanks. I&#39;m leaving.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Perfect timing. I&#39;ll drive you.&#34;</p>
                 <p>&#34;I have my own car.&#34; Vivian turned to walk away.</p>
                 <p>&#34;You can&#39;t drive after drinking.&#34;</p>
                 <p>&#34;I&#39;ll call a designated driver.&#34;</p>
                 <p>&#34;What a coincidence.&#34; Ethan pointed at himself. &#34;You&#39;ve got one right here.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Felix&#39;s jaw dropped. The CEO of Roscente Group volunteering as a chauffeur?</p>
                 <p>His shock intensified when Ethan removed his jacket and draped it gently over Vivian&#39;s shoulders.</p>
                 <p>Rubbing his eyes again, Felix wondered if this was the same ice-cold tyrant he knew.</p>
                 <p>Meanwhile, Isabella Langley emerged from the dance floor and spotted Vivian walking out with Ethan.</p>
                 <p>Wasn&#39;t that Vivian&#39;s ex-husband? What was he up to?</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Just as Isabella moved to intercept them, someone grabbed her wrist.</p>
                 <p>With a swift twist, she had the offender&#39;s arm locked behind his back.</p>
                 <p>&#34;Ow! That hurts!&#34; Felix grimaced in pain.</p>
                 <p>This woman fought dirty!</p>
                 <p>Recognizing Felix, Isabella released him. &#34;What do you want?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;My buddy will make sure your friend gets home safe. No need for third wheels.&#34; Felix massaged his sore wrist.</p>
                 <p>Isabella considered it. Vivian could handle herself.</p>
                 <p>&#34;Hey, where&#39;ve you been lately?&#34; Felix asked offhandedly.</p>
@@ -2549,7 +2549,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2565,8 +2565,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

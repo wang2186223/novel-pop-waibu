@@ -2391,19 +2391,19 @@
                 <p>Bianca exhaled in relief, regaining her haughty demeanor. &#34;You&#39;re clearly an impostor!&#34;</p>
                 <p>With deliberate slowness, Vivian retrieved her phone.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>She logged into the AN Atelier official backend, displaying the verification credentials for all to see.</p>
                 <p>&#34;Any more doubts?&#34;</p>
                 <p>Gasps rippled through the crowd.</p>
                 <p>Several socialites began whispering behind their hands.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Oh my God, she really is AN...&#34;</p>
                 <p>&#34;Bianca just humiliated herself.&#34;</p>
                 <p>&#34;To wear counterfeit designs so brazenly...&#34;</p>
                 <p>Bianca&#39;s face flushed crimson. &#34;This proves nothing! It could be fabricated!&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Vivian pocketed her phone with a pitying look. &#34;Must you lie to yourself?&#34;</p>
                 <p>&#34;You—!&#34; Bianca trembled with rage.</p>
                 <p>Victoria took a subtle step backward, attempting to distance herself.</p>
@@ -2415,13 +2415,13 @@
                 <p>Vivian shook her head. &#34;I gave you every chance.&#34;</p>
                 <p>From her clutch, she produced an embossed business card and placed it on the table.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;AN Atelier welcomes visitors anytime.&#34;</p>
                 <p>The socialites swarmed forward eagerly, leaving Bianca standing alone.</p>
                 <p>Her gown suddenly felt like a garish mockery, every detail taunting her foolishness.</p>
                 <p>Vivian gave her one final glance. &#34;Remember—you brought this upon yourself.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">
@@ -2543,7 +2543,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2559,8 +2559,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

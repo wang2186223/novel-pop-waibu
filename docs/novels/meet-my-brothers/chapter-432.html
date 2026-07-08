@@ -2391,13 +2391,13 @@
                 <p>Mia entered the elevator and that bastard followed along. Due to the little space, they stood very close to each other.</p>
                 <p>The elevator stopped at the next floor and the people filled the space. One of them was an old man sitting in a wheelchair.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>The elevator was filled to the brim.</p>
                 <p>The sight of the crowd prompted Mia to retreat, protecting her baby.</p>
                 <p>However, the lady in front of her drew in the distance too much so that her grandchild could play. The boy was playing with a ball, immersed in his own world.</p>
                 <p>Feeling the press on her stomach, Mia frowned. “Could you give me some space? I can’t go backward</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>anymore.”</p>
                 <p>The lady pointed at her nose, barking. “Miss, this elevator is small to begin with. How can I make space</p>
                 <p>for you?</p>
@@ -2415,7 +2415,7 @@
                 <p>That was her favorite and most familiar scent.</p>
                 <p>She took care of his outfits and clothes for three years. Even the detergent was handpicked by herself.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>At that moment, the boy cried because there wasn’t enough space for him to play.</p>
                 <p>Furious, the old lady turned her head to scold Mia, “You youngsters are getting in the way! My grandson can’t play anymore. Don’t you know how to respect the elderly and care for the children?”</p>
                 <p>Before Mia could respond to that. Timothy riveted the old lady with his intimidating glare.</p>
@@ -2425,7 +2425,7 @@
                 <p>At the same time, Mia was completely baffled.</p>
                 <p>The old lady didn’t back down. “You better explain yourselves! Who are you to scare kids like that?”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">
@@ -2547,7 +2547,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2563,8 +2563,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

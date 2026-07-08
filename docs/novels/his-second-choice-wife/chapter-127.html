@@ -2390,27 +2390,27 @@
                 <p>The woman who&#39;d once been a constant thorn in her side now moved through Blackwood Manor like a perfect angel. Victoria had transformed into the epitome of grace and humility in everyone&#39;s eyes.</p>
                 <p>She massaged Richard and Eleanor&#39;s shoulders after dinner. Presented rare medicinal herbs from her family&#39;s private reserves. Distributed designer gifts to Liam&#39;s siblings with calculated generosity.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Even the staff received her favors - an extra day off here, a designer scarf there. The entire household sang Victoria&#39;s praises, a chorus Evelyn could never hope to join.</p>
                 <p>Rubbing her tired eyes one evening, Evelyn emerged from the study when Winston announced dinner. She descended the grand staircase to find Victoria already arranging silverware with practiced elegance.</p>
                 <p>&#34;Mr. Blackwood,&#34; Victoria cooed as she served Richard an ornate soup bowl, &#34;this is my special truffle-infused wild mushroom consommé. I prepared it myself this afternoon.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Richard accepted it with a pleased nod. &#34;Remarkable! I had no idea our Victoria possessed such culinary talents. Any man would be fortunate to call you his wife.&#34;</p>
                 <p>Eleanor beamed in agreement. &#34;Absolutely perfect wife material!&#34;</p>
                 <p>Evelyn kept her eyes on her own soup, the steam curling before her face.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Victoria&#39;s lips curved in triumph as she turned to Evelyn. &#34;I heard you&#39;ve been burying yourself in psychology texts. Planning to take the licensing exam?&#34;</p>
                 <p>Evelyn set down her spoon with deliberate calm. &#34;Since I&#39;m between opportunities, I thought I&#39;d expand my knowledge. Unlike you, Ms. Dawson, I don&#39;t have the luxury of scheming to replace Beatrice in the kitchen.&#34;</p>
                 <p>The dining room froze. Beatrice Cook, the head chef, suddenly realized Victoria&#39;s constant kitchen &#34;help&#34; had subtly eroded her position over weeks. The entire family now preferred Victoria&#39;s dishes to hers.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Eleanor cleared her throat. &#34;Victoria simply enjoys cooking. She&#39;s not trying to take anyone&#39;s job.&#34;</p>
                 <p>Evelyn flashed a brilliant smile, matching Victoria&#39;s saccharine tone. &#34;In that case, Ms. Dawson, I&#39;d love to sample your coq au vin, bouillabaisse, and ratatouille tomorrow. Surely that&#39;s not too much to ask?&#34;</p>
                 <p>Beatrice nearly choked suppressing her laughter at the request for three notoriously labor-intensive dishes.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Victoria&#39;s knuckles whitened around her napkin. The flush creeping up her neck betrayed her struggle to maintain composure.</p>
                 <p>Before she could respond, Winston&#39;s voice carried from the foyer. &#34;Mr. Blackwood! You&#39;ve returned!&#34;</p>
                 <p>The family erupted in excitement, chairs scraping as they rushed to greet Liam. Only Evelyn remained seated, methodically finishing her soup.</p>
@@ -2538,7 +2538,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2554,8 +2554,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

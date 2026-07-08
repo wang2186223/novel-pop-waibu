@@ -2392,7 +2392,7 @@
                 <p>Kayce answered exactly as Hannah had hoped, &#34;Some vegetables may have spoiled from poor storage. And with all the extra tourists lately, usage has climbed higher than expected.&#34;</p>
                 <p>Uninterested in getting bogged down by such trivial details, Brixton brushed the matter off with a wave.&#34;Fine, see to it as you always do. Take a speedboat with a sailor and bring along a kitchen boy. Just be sure the list is complete.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Understood,&#34; Kayce replied crisply.</p>
                 <p>&#34;Dismissed.&#34;</p>
                 <p>Hannah stepped through the doorway at that moment, meal in hand, feigning perfect coincidonce.</p>
@@ -2413,7 +2413,7 @@
                 <p>Then, an idea struck. Alfredo was still a boy-around fourteen, perhaps fifteen-with a weakness for treats.And it appeared that he was allergic to seafood.</p>
                 <p>A while later, in the kitchen on the lower deck, Hannah carefully baked a batch of seafood pastries. She casually placed them on the counter.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>As expected, Alfredo soon wandered in, nose leading him. &#34;Hannah, what&#39;s this? Smells incredible!&#34; His mouth watered as he spoke.</p>
                 <p>Hannah smiled sweetly, sliding the plate toward him. &#34;Freshly made. You can have one. The rest are reserved.&#34;</p>
                 <p>She had measured the portion carefully, enough to spark a mild allergic reaction, nothing life-threatening.</p>
@@ -2432,7 +2432,7 @@
                 <p>Hannah steeled herself. Even though she wasn&#39;t confident, she insisted, &#34;Alfredo&#39;s reaction is my responsibility. I can&#39;t sit back and do nothing. I&#39;ll go request permission from Mr. Ward. Wait for me.&#34;</p>
                 <p>Before Kayce could respond, she spun and hurried upstairs, heart hammering, urgency drowning every other thought. She flung open Brixton&#39;s door. But what she saw inside chilled her blood to the marrow.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">
@@ -2554,7 +2554,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2570,8 +2570,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

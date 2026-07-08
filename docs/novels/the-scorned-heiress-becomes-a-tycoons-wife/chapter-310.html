@@ -2393,7 +2393,7 @@
                 <p>She studied Adrian Valdemar skeptically.</p>
                 <p>Was this boy misunderstanding something?</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Adrian smirked knowingly.</p>
                 <p>&#34;Don&#39;t be shy, sister-in-law. I saw the Valdemar Group&#39;s press conference...&#34;</p>
                 <p>Only then did Sophia recall that day.</p>
@@ -2401,7 +2401,7 @@
                 <p>&#34;...&#34;</p>
                 <p>This misunderstanding had spiraled out of control!</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;That was just PR talk. Don&#39;t take it seriously.&#34;</p>
                 <p>Adrian winked. &#34;I get it, I get it. No need to explain.&#34;</p>
                 <p>Sophia: &#34;...&#34;</p>
@@ -2409,7 +2409,7 @@
                 <p>Valdemar Sanatorium.</p>
                 <p>The Patriarch had prepared an elaborate lunch.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Sophia, come sit.&#34;</p>
                 <p>Patriarch Valdemar beckoned warmly. &#34;You&#39;ve been working hard lately.&#34;</p>
                 <p>Sophia took her seat gracefully.</p>
@@ -2417,7 +2417,7 @@
                 <p>The Patriarch didn&#39;t even glance up. &#34;Leave if you&#39;re not eating.&#34;</p>
                 <p>Adrian: &#34;...&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;This is blatant favoritism!&#34;</p>
                 <p>Ignoring him, the Patriarch turned to Sophia.</p>
                 <p>&#34;Sophia, thank you for looking after this troublemaker.&#34;</p>
@@ -2425,7 +2425,7 @@
                 <p>The thought filled him with both heartache and guilt.</p>
                 <p>Damian Valdemar had been corrupted from childhood.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>And the most despicable one was Vincent Valdemar.</p>
                 <p>Without his backing, who would dare target Adrian?</p>
                 <p>Sophia paused mid-bite. &#34;It was nothing, Grandfather. No need to dwell on it.&#34;</p>
@@ -2555,7 +2555,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2571,8 +2571,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

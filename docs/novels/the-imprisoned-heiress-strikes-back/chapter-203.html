@@ -2393,7 +2393,7 @@
                 <p>In the backseat of the taxi, Evelyn pieced together the story.</p>
                 <p>Last night, Lucas had downed fifteen bottles of liquor. After Simon dropped him off, he collapsed onto his bed and passed out cold.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>That night&#39;s sleep nearly cost him everything.</p>
                 <p>Lucas Bennett awoke in the pitch-black hours, his body wracked with excruciating pain. His trembling fingers fumbled for his phone, dialing Claire Dawson&#39;s number with desperate urgency.</p>
                 <p>Silence.</p>
@@ -2409,7 +2409,7 @@
                 <p>Noticing Claire&#39;s pallor, Evelyn&#39;s eyes dropped to her friend&#39;s midsection. &#34;You should rest.&#34;</p>
                 <p>&#34;I&#39;m fine,&#34; Claire murmured, though dark circles shadowed her eyes.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>On the bed, Lucas lay frighteningly still, his complexion ashen against the stark white sheets. The emergency surgery had left him fragile, every shallow breath a visible effort.</p>
                 <p>The moment Lucas Bennett laid eyes on Claire Dawson, his vision blurred with unshed tears. &#34;Claire...&#34;</p>
                 <p>Claire studied him with an unreadable expression.</p>
@@ -2417,7 +2417,7 @@
                 <p>&#34;Don&#39;t ever do that again,&#34; she murmured.</p>
                 <p>Noticing the sheen of cold sweat on his forehead, she reached for a tissue and dabbed it gently across his skin.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;You got lucky this time. The doctor said if it happens again, you might not wake up.&#34;</p>
                 <p>Lucas seized her wrist. &#34;Does this mean you still care? Claire, tell me you still feel something for me.&#34;</p>
                 <p>Claire remained silent, her gaze steady and unflinching.</p>
@@ -2425,7 +2425,7 @@
                 <p>&#34;But I&#39;ve given you too many chances already.&#34; Her voice was barely above a whisper, fragile as a breath.</p>
                 <p>&#34;This time is different!&#34; His grip tightened desperately. &#34;Isabella and I are over. There&#39;s nothing left between us! If you just say yes, nothing will stand in our way!&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>The conversation was interrupted by a soft knock at the door.</p>
                 <p>Julian Mercer stood there, holding a plush lumbar pillow.</p>
                 <p>Lucas Bennett’s expression darkened the moment he saw him. &#34;Why did you bring him here, Claire? What are you trying to prove?&#34;</p>
@@ -2438,7 +2438,7 @@
                 <p>&#34;No.&#34; She reached out and grasped his hand firmly. &#34;You’re staying.&#34;</p>
                 <p>Lucas looked like he was about to explode.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">
@@ -2560,7 +2560,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2576,8 +2576,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

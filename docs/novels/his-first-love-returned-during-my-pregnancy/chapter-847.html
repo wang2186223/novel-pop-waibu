@@ -2391,25 +2391,25 @@
                 <p>Alexander glanced down, his brows furrowing instantly.</p>
                 <p>It was a picture of Bianca and Vincent, with their baby nestled between them. He remembered clearly—it was taken during the baby&#39;s hundred-day celebration.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Vincent struggled out of bed, staggering as he picked up the photo. The hospital gown hung loosely on his frame, his bloody palm staining the edges of the picture.</p>
                 <p>&#34;Now you care?&#34; Bianca sneered. &#34;Why didn&#39;t you stop me when I burned the rest?&#34;</p>
                 <p>Vincent&#39;s Adam&#39;s apple bobbed. &#34;I&#39;m sorry...&#34;</p>
                 <p>&#34;Do you remember how this photo was taken?&#34; Bianca&#39;s voice trembled.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Vincent clenched the photo tighter, oblivious to the glass shards digging into his palm.</p>
                 <p>Alexander spoke up suddenly. &#34;The baby wouldn&#39;t stop crying that day until she saw the balloons. The photographer captured that exact moment.&#34;</p>
                 <p>Vincent&#39;s hand shook slightly.</p>
                 <p>Blood dripped onto the photograph.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;I&#39;ll make it right...&#34; His voice was hoarse.</p>
                 <p>&#34;Don&#39;t bother.&#34; Bianca cut him off. &#34;I&#39;m here today for answers.&#34;</p>
                 <p>She turned to Alexander. &#34;I&#39;d like you to witness this.&#34;</p>
                 <p>Alexander sighed and nodded.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Vincent shot him a dark look. &#34;Ask away.&#34;</p>
                 <p>&#34;What really happened with last night&#39;s car accident?&#34;</p>
                 <p>&#34;Probably enemies seeking revenge.&#34; Vincent gave a bitter smile. &#34;I dragged you into it.&#34;</p>
@@ -2545,7 +2545,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2561,8 +2561,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

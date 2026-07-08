@@ -2395,17 +2395,17 @@
                 <p>The guards bowed in unison, their voices gratingly loud.</p>
                 <p>Sophia&#39;s nails bit into her palms. Her gaze locked onto the diamonds swaying from Evelyn&#39;s ears—the legendary &#34;Stellar Tears&#34; heirloom she&#39;d only seen in auction catalogs.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Inside The Grand Hyatt, crystal chandeliers blazed.</p>
                 <p>&#34;Evelyn, my dear!&#34; Vincent Sullivan excused himself from guests to greet her. &#34;Has this rascal been treating you well?&#34;</p>
                 <p>Evelyn offered a demure smile. &#34;Happy birthday, Uncle Vincent.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Her moon-white cheongsam shimmered under the lights, the Sullivan emerald brooch pinned at her collar. She looked like a porcelain goddess.</p>
                 <p>By the time the Lowell family arrived, the ballroom was alive with clinking glasses.</p>
                 <p>&#34;Go mingle with the young crowd,&#34; Vincent patted her shoulder, then lowered his voice. &#34;The Valentine girl is here. Don&#39;t engage.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>In the lounge area, Isabella Valentine toyed with her diamond-studded manicure. She deliberately slammed her champagne flute down as Evelyn approached.</p>
                 <p>The glass clatter revealed another figure in the shadows.</p>
                 <p>Bianca Fairchild sat curled in a peacock-blue velvet chair like a sparrow trapped in a gilded cage. A half-eaten cake slumped on the table before her.</p>
@@ -2418,7 +2418,7 @@
                 <p>Evelyn lifted her lashes, casting delicate shadows across her cheeks. Her swan-like neck curved gracefully, a crimson birthmark peeking above her collarbone.</p>
                 <p>Oliver&#39;s glass tilted. Red wine splashed across his tailored trousers.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">
@@ -2540,7 +2540,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2556,8 +2556,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

@@ -2389,19 +2389,19 @@
                 <p>Adah’s eyebrow lifted. Surprise flickered through her chest. For as long as she could remember, her father had been soft-spoken—a devoted son who never defied his mother. Even when Gia had blatantly favored her uncle’s family, he had always accepted it in silence.</p>
                 <p>Adah never expected Leonel to take her side against the rest of the Norris family—she hadn’t even dared to hope for it. Hearing that steel in his voice now felt surreal.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Crash! Glass exploded somewhere in the living room. Gia’s voice followed, shrill and venomous. “Leonel! Have you lost all respect for your own mother?”</p>
                 <p>“Mom, please, calm down. Don’t work yourself up—if you get sick, I’ll be heartbroken.” Westley’s voice dripped false concern as he rushed to placate her. Then he whirled on Leonel, his features twisting into something harsh and calculating. “Leonel, how dare you speak to Mom like that? She is the head of this family—her decisions are not up for debate. Apologize to her. Now!”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>“Heh.” The sound that left Leonel’s throat was dark and humorless. “Westley, you’ve spent your entire life weaponizing that silver tongue to curry favor with Mom and Dad. You’ve taken advantage of me for half my life. You should be satisfied by now.” He paused, letting the words settle. “I’m your older brother, but I owe you nothing. Don’t expect me to keep pretending there’s anything brotherly between us.”</p>
                 <p>Leonel turned back to Gia. His voice stayed level, but something dangerous lurked beneath it. “Mom, you raised me. I’ve been your dutiful son for forty years. I’ve provided you with wealth, comfort, and security. I’ve done everything expected of me. Now, I’m going to live for myself.”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>“You…” Gia’s finger trembled as she pointed at him. “What exactly are you saying?”</p>
                 <p>Leonel dropped a stack of papers onto the table in front of her. They landed with a sharp slap. “This is my resignation letter, along with the transfer documents. Since Westley has been reaping all the rewards, it’s time for him to take over the company and shoulder all the responsibility. I’m taking Adah and leaving. I’m done working for this family.”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Panic rippled through the room like a shockwave. Everyone knew the truth. Westley might hold the title of family head and own all the shares of Norris Group, but he couldn’t run a lemonade stand, let alone a corporation. His only skills involved spending money and chasing women. The company under his leadership would be bankrupt within a year.</p>
                 <p>“Leonel, how can you be so selfish?” Kimberly Norris, Westley’s wife, hissed as she lunged toward Leonel. “You’re the eldest! The future of this entire legacy sits on your shoulders. You can’t just walk away because you’re throwing a tantrum!”</p>
                 <!-- 广告位 5 -->
@@ -2533,7 +2533,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2549,8 +2549,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

@@ -2412,7 +2412,7 @@
                 <p>The receptionist gaped, stunned. She hadn’t expected Olivia to warrant such treatment. Normally, only high-profile clients were greeted by managers—let alone Sebastian, who usually only acknowledged CEOs of partner companies. Why would someone like him be here for a lunch delivery?</p>
                 <p>&#34;Were you delayed here?&#34; Sebastian asked Olivia, his tone gentle but firm as he prepared to guide her upstairs.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Terrified, the receptionist stammered, &#34;I—I didn’t realize who she was, and last time Mr. Blackwood—&#34;</p>
                 <p>&#34;Didn’t you check the notification?&#34; Sebastian cut in sharply.</p>
                 <p>&#34;I—I haven’t had the chance—&#34;</p>
@@ -2430,7 +2430,7 @@
                 <p>Olivia nodded and sat. The lounge was framed by floor-to-ceiling windows, offering a breathtaking view of the city. She pulled out her phone and began snapping photos.</p>
                 <p>&#34;Oh, is that her?&#34; two secretaries whispered as they entered.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Engrossed, Olivia didn’t notice them at first. When they neared, she looked up and smiled warmly.</p>
                 <p>They returned polite smiles before moving past her to the water dispenser.</p>
                 <p>&#34;She’s even more stunning than in the photo. I’d recognize her anywhere!&#34; one murmured.</p>
@@ -2444,7 +2444,7 @@
                 <p>As the secretaries walked away, Olivia refocused on her phone, ensuring she had a clear path to Liam’s office. She wouldn’t let Evelyn’s shadow shake her resolve.</p>
                 <p>With one last glance around the bustling lounge, she stood and made her way toward Liam’s office, ready to fulfill her promise—no matter what lay ahead.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">
@@ -2566,7 +2566,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2582,8 +2582,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

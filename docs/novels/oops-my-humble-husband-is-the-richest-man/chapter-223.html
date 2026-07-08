@@ -2430,7 +2430,7 @@
                 <p>Evelyn looked up sharply.</p>
                 <p>Her fists were clenched tightly. &#34;He&#39;s just a puppy! How could you do this?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Richard sneered. &#34;A beast that bites its owner deserves to die. What, you dare hit me? The main house people will be here soon. If they see you disrespecting your elder brother, they can annul your marriage in the Family Shrine immediately!&#34;</p>
                 <p>Evelyn trembled with rage.</p>
                 <p>Alexander, who had been about to throw the stick away, suddenly reversed its direction.</p>
@@ -2445,7 +2445,7 @@
                 <p>It was the secondary branch of the Vance family from the main house.</p>
                 <p>The Second Elder was eighty years old this year.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>He presided over the Family Shrine and held a highly respected position in the clan.</p>
                 <p>Alexander had been sent to the secondary branch to be raised, escaping Richard&#39;s persecution.</p>
                 <p>Therefore, Alexander held great respect for this Second Grandfather.</p>
@@ -2477,7 +2477,7 @@
                 <p>Evelyn was taken aback. &#34;Remember what?&#34;</p>
                 <p>&#34;Remember how you and that rascal got your marriage certificate!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">
@@ -2599,7 +2599,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2615,8 +2615,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

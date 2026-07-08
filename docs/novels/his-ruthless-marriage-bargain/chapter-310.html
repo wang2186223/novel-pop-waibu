@@ -2395,12 +2395,12 @@
                 <p>When Serena still didn’t respond, Vanessa’s smile faltered, but she wasn’t about to give up. Quickly, she turned to Evelyn. &#34;You remember, don’t you? We shared a dorm with Lily—er, Evelyn—back then. We used to eat at that little restaurant near the campus gates all the time. The one with the amazing pickled fish?&#34;</p>
                 <p>At the mention of food, Serena’s eyes lit up. She nodded eagerly. &#34;Oh! That place! Their pickled fish was incredible. I haven’t had anything like it since I left. Just thinking about it makes my mouth water. Is it still there?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Seizing the opportunity, Vanessa slid into the seat beside her. &#34;It is! The original owner retired and handed it over to his son, but the recipe’s exactly the same. I’ll take you there sometime!&#34;</p>
                 <p>&#34;Really?&#34; Serena clapped her hands together. &#34;I could fly back just for that!&#34;</p>
                 <p>Vanessa laughed. &#34;Then let’s go! You’ve been away from Veridian City for so long—there’s so much that’s changed. I’ll show you around. And trust me, there’s way more than just pickled fish. We’ll make a whole food tour out of it.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>As she spoke, she shot Evelyn a smug glance.</p>
                 <p>Serena was just a sweet, naive girl. Getting close to her was child’s play for Vanessa—all she had to do was find common ground.</p>
                 <p>Maybe Serena could be another stepping stone for me.</p>
@@ -2410,12 +2410,12 @@
                 <p>Vanessa’s smile stiffened.</p>
                 <p>Evelyn met her gaze, a faint smirk playing on her lips. &#34;Of course.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Evelyn, the perfumery competition is tomorrow. You’re not leaving right after, are you? Stay a few more days. I’ll show you all the best spots. Oh! And you have to come visit my house—you’ve never been!&#34; Serena gushed.</p>
                 <p>Evelyn chuckled. &#34;Don’t worry, I’m not going anywhere yet. I’ll be here a while longer. We’ll have plenty of time.&#34;</p>
                 <p>&#34;Perfect! Now that we’ve reconnected, I can message you whenever I want. I’ve missed you so much!&#34; Serena pulled out her phone. &#34;Here, add me on WhatsApp!&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">
@@ -2537,7 +2537,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2553,8 +2553,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

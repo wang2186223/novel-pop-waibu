@@ -2389,11 +2389,11 @@
                 <p>Sebastian&#39;s greatest talent? Sheer audacity. They wrestled over the platter until he triumphantly speared a slice of beef—</p>
                 <p>&#34;Dominic, my car&#39;s acting up again.&#34; A melodic voice floated down the staircase. &#34;Could you have Harrison take it to the shop tomorrow?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Take mine,&#34; Dominic replied without hesitation.</p>
                 <p>Evelyn Carter descended with lazy grace, damp hair curling at her shoulders. &#34;No thanks. Your car screams arrogant billionaire. I&#39;ll call a cab.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Dominic intercepted her with a towel, draping it over her head. &#34;Let Harrison drive you. Cabs are unreliable.&#34; His fingers gently scrunched her hair. &#34;You never dry it properly.&#34;</p>
                 <p>&#34;Too much effort.&#34; She flicked the strands aside—then froze, noticing Sebastian mid-bite, gaping at her. Her nose wrinkled. &#34;Why is he still here?&#34;</p>
                 <!-- 广告位 3 -->
@@ -2401,16 +2401,16 @@
                 <p>Sebastian&#39;s soul left his body.</p>
                 <p>One moment, he was dazzled by this ethereal vision; the next, her blunt dismissal shattered the illusion. He, the charming socialite who charmed everyone effortlessly, had been reduced to an unwelcome pest. Worse? Dominic actually nodded. &#34;You&#39;re right. I&#39;ll kick him out.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Listen to this betrayal! Sebastian internally wailed. Since when does Dominic take orders?</p>
                 <p>Salvation came when Evelyn sighed. &#34;Let him stay. He&#39;s your... acquaintance.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Bless her angelic heart.</p>
                 <p>Dominic&#39;s lip curled. &#34;He&#39;s not. And he&#39;ll inhale half the food. You&#39;ll go hungry.&#34;</p>
                 <p>Sebastian choked. A glutton?! The table groaned under enough dishes to cater a wedding. &#34;I eat like a bird!&#34; he lied, pressing a hand to his heart. &#34;Besides, gazing upon such radiance is nourishment enough. Who needs steak when beauty like this exists?&#34; He shot Evelyn a smoldering look, eyelashes fluttering.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">
@@ -2532,7 +2532,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2548,8 +2548,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

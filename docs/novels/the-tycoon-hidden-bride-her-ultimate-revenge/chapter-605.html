@@ -2393,11 +2393,11 @@
                 <p>Elliana voiced her thoughts, “Adah, if your mother was strong enough to stand up for herself but chose not to, maybe she was running from some assassins. The Norris family was her shelter.”</p>
                 <p>Adah sounded stunned, “Running from assassins? Why would anyone go after—”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>“I was just getting to that,” Elliana answered. “I’ve dug up some things recently. My mother fled overseas to Ublento back then. My biological father could have been some big shot from abroad—he’s the one who kept sending assassins after her. Considering how close our mothers were, I bet they escaped to Ublento together, and both were on the run. I just haven’t figured out exactly how they’re connected yet.”</p>
                 <p>Adah raised an eyebrow, her words rushing out. “Hold on—are you saying Darin isn’t your biological father?”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Discover fresh tales at g α? ησ ν s, com</p>
                 <p>Elliana nodded. “My mom was already pregnant when the threats started. She ran to Ublento, changed her name, and married Darin—just an ordinary guy—to keep herself safe.”</p>
                 <!-- 广告位 4 -->
@@ -2405,7 +2405,7 @@
                 <p>Adah’s brow furrowed. “But why would your biological father want your mother dead if she was carrying his child?”</p>
                 <p>“I wish I knew,” Elliana responded quietly. “But he never stopped hunting her. Wave after wave of killers came for her. Even the fire at the Jones estate back then was his doing.”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Adah, always quick, put the pieces together. “So what we need is to lure your real father out. That’s the only way we’ll ever learn the truth about our moms.”</p>
                 <p>“Exactly,” Elliana replied. “But we’ll have to hold off on that plan for a bit. I have something more urgent to take care of first.”</p>
                 <p>.</p>
@@ -2534,7 +2534,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2550,8 +2550,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

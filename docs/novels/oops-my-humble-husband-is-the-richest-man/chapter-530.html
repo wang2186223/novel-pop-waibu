@@ -2405,7 +2405,7 @@
                 <p>Kiki and I are also having a wedding soon.</p>
                 <p>Kiki&#39;s dress has been in the works for two years now...</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>If someone came to borrow Kiki&#39;s dress, I definitely wouldn&#39;t agree!&#34;</p>
                 <p>After saying this, he glanced at Evelyn and added.</p>
                 <p>&#34;Of course, our sister is an exception.&#34;</p>
@@ -2425,7 +2425,7 @@
                 <p>&#34;Right!</p>
                 <p>We brothers never imagined we&#39;d have a real cousin.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Since childhood, we haven&#39;t accumulated many nice things.</p>
                 <p>We&#39;re currently scouring the country for jewelry.</p>
                 <p>We&#39;ll definitely prepare a dowry for you that&#39;s one-of-a-kind in all of New York!&#34;</p>
@@ -2445,7 +2445,7 @@
                 <p>They directly lifted him up.</p>
                 <p>Then, they pretended they were going to ram him into the nearby staircase pillar!</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Ethan immediately shouted.</p>
                 <p>&#34;Brothers, have mercy!</p>
                 <p>Put me down!</p>
@@ -2465,7 +2465,7 @@
                 <p>The Valentine family atmosphere was indeed good.</p>
                 <p>There wasn&#39;t much scheming.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>The brothers were united.</p>
                 <p>When they got rowdy, even the quietest Fourth Brother laughed heartily.</p>
                 <p>She lowered her gaze faintly, suddenly feeling these brothers were all particularly endearing.</p>
@@ -2485,7 +2485,7 @@
                 <p>&#34;If it were Mina who came to you to borrow the wedding dress, would you lend it?&#34;</p>
                 <p>This question made Evelyn frown deeply.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>If Mina and Marcus were getting married and truly couldn&#39;t find a suitable dress, of course she would lend it.</p>
                 <p>After all, that was Mina...</p>
                 <p>Back when Mina and Marcus had their rushed wedding, there was no time for a custom dress, so they bought one off the rack.</p>
@@ -2508,7 +2508,7 @@
                 <p>In her heart, she doesn&#39;t really see me as her Fifth Sister-in-law, does she?&#34;</p>
                 <p>These words caused Preston&#39;s expression to gradually darken.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">
@@ -2630,7 +2630,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2646,8 +2646,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

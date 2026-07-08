@@ -2391,13 +2391,13 @@
                 <p>&#34;At twenty, married an octogenarian who died within two years - leaving you penniless.&#34;</p>
                 <p>The merciless cataloging continued. &#34;Formal education ends at elementary level. Arrested twice for prostitution.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Fifteen cosmetic surgeries. Three STD treatments. Thirty-two documented relationships - including five simultaneous partners - plus countless anonymous encounters.&#34;</p>
                 <p>&#34;Returned to Aldenria three years ago. Deliberately befriended Mrs. Blackwood. Schemed your way into this family to become General Blackwood&#39;s wife.&#34;</p>
                 <p>Cold sweat trickled down Evelyn&#39;s spine as each sordid detail struck like a whip.</p>
                 <p>She couldn&#39;t believe what she was hearing.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Ryan delivered the final blow with a sneer. &#34;Marrying General Blackwood was winning the lottery for trash like you. How dare you mention divorce?&#34;</p>
                 <p>Evelyn felt stripped bare, exposed in her shame. Her nails dug crescent moons into her palms.</p>
                 <p>Liam remained impassive. This marriage had always been just a concession to his grandmother. Meaningless to him.</p>
@@ -2409,7 +2409,7 @@
                 <p>Liam closed the distance between them. His towering presence made the air feel thick. Nervous, Evelyn lifted her gaze to meet his.</p>
                 <p>His lips curled in derision. &#34;I&#39;ll decide when this marriage ends.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>What did that make her?</p>
                 <p>His grandmother&#39;s pet project?</p>
                 <p>Tears of frustration pricked Evelyn&#39;s eyes. &#34;I don&#39;t know who I was before, but the woman I am now won&#39;t accept a loveless marriage or trade dignity for wealth.&#34;</p>
@@ -2546,7 +2546,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2562,8 +2562,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

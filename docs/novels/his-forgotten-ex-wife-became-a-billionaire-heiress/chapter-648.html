@@ -2395,12 +2395,12 @@
                 <p>&#34;Emily!&#34; Vivian frowned.</p>
                 <p>&#34;What? I&#39;m just asking.&#34; Emily stuck out her tongue.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Liam&#39;s gaze settled on Vivian, his tone serious. &#34;I&#39;d like to, but I don&#39;t know if she&#39;ll give me the chance.&#34;</p>
                 <p>Vivian shifted uncomfortably under his stare.</p>
                 <p>&#34;Stop joking. We&#39;ve known each other for years—we&#39;re practically siblings.&#34; Vivian waved a hand dismissively. &#34;He&#39;s just teasing, right, Liam?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Liam lowered his lashes. &#34;Right. Just a joke.&#34;</p>
                 <p>At the entrance, Ethan Roscente watched the scene with cold eyes. Seeing Liam preparing to join them, his expression darkened further.</p>
                 <p>&#34;Vivian.&#34; Ethan strode forward.</p>
@@ -2540,7 +2540,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2556,8 +2556,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

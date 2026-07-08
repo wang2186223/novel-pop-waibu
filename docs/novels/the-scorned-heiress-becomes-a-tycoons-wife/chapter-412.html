@@ -2392,7 +2392,7 @@
                 <p>Meanwhile, Richard Lowell was clinking glasses with investors for &#34;Imperial Feast.&#34;</p>
                 <p>Despite two casting controversies, the film&#39;s popularity had only soared.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Director Lowell, your talent never fades!&#34;</p>
                 <p>&#34;Come, let&#39;s toast to Director Lowell!&#34;</p>
                 <p>The investors, faces flushed, raised their glasses.</p>
@@ -2406,21 +2406,21 @@
                 <p>&#34;Richard, about your daughter...&#34;</p>
                 <p>One investor couldn&#39;t resist sighing.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;To throw away such a good match with the Valdemars...&#34;</p>
                 <p>At the mention of the Valdemars, the room buzzed with interest.</p>
                 <p>&#34;If Emily had married into that family...&#34;</p>
                 <p>Richard swirled his wine glass.</p>
                 <p>&#34;Every cloud has a silver lining.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>He cast a meaningful glance at Emily Lowell beside him.</p>
                 <p>Ryan Cunningham had been making frequent overtures lately—a union between their families was imminent.</p>
                 <p>Though the Cunninghams couldn&#39;t compare to the Valdemars, their reputation was impeccable.</p>
                 <p>&#34;Miss Lowell, could it be...?&#34;</p>
                 <p>The investors instantly caught the hint.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Emily blushed furiously.</p>
                 <p>&#34;Dad!&#34;</p>
                 <p>Richard laughed heartily.</p>
@@ -2428,7 +2428,7 @@
                 <p>The group exchanged knowing looks.</p>
                 <p>&#34;Could it be the young master of the Cunningham family?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">
@@ -2550,7 +2550,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2566,8 +2566,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

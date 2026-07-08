@@ -2389,15 +2389,15 @@
                 <p>The surgical lights blazed to life. The scar tissue on Fiona&#39;s face had formed over a decade ago - dark brown keloids crawling across half her face like centipedes.</p>
                 <p>Vivian picked up the scalpel. This type of mature scar required excision and skin grafting, a procedure most surgeons wouldn&#39;t dare attempt.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Ryan watched Vivian&#39;s hands with rapt attention. Each incision was executed with flawless precision, as though she were sculpting a masterpiece.</p>
                 <p>Meanwhile, Sophia Evans was executing her own scheme. She&#39;d timed it perfectly - Ethan Roscente had an important board meeting today.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Have Theo slip out through the back,&#34; she whispered to the nanny, pressing a note into her hand. &#34;Tell them he was crying for his mother.&#34;</p>
                 <p>The news reached Ethan within minutes.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Young master, Theo is missing!&#34; The butler rushed in, sweat beading on his forehead.</p>
                 <p>Ethan shot to his feet. &#34;Since when?&#34;</p>
                 <!-- 广告位 4 -->
@@ -2405,13 +2405,13 @@
                 <p>&#34;He said he wanted to find his mother...then vanished when we turned around.&#34;</p>
                 <p>Ethan immediately dialed Sophia&#39;s number. Over-the-top sobs answered him. &#34;My baby! I need to find him!&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Amid the chaos, Sophia slipped out of the mansion. Theo waited by the designated fountain, just as planned.</p>
                 <p>&#34;Mommy!&#34; He ran toward her. &#34;Let&#39;s go home...&#34;</p>
                 <p>Sophia seized his wrist. &#34;Mommy&#39;s taking you for ice cream.&#34;</p>
                 <p>She dragged the child toward the shopping district, deliberately choosing crowded routes. Theo stumbled along, his small face clouded with unease.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">
@@ -2533,7 +2533,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2549,8 +2549,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

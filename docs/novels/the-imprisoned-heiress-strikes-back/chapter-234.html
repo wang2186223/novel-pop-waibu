@@ -2395,7 +2395,7 @@
                 <p>And that was what destroyed Ethan the most.</p>
                 <p>A man of Alexander Whitmore&#39;s stature investing his precious time and energy in her could only mean one thing—his feelings ran deep.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Ethan Caldwell had never witnessed Alexander show this level of devotion to any woman before.</p>
                 <p>The fireworks over the ocean blazed for a glorious thirty minutes.</p>
                 <p>Alexander had spared no expense, ensuring everyone present witnessed the breathtaking spectacle.</p>
@@ -2405,7 +2405,7 @@
                 <p>But Evelyn adored it.</p>
                 <p>No woman could resist romance, and she was no different.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>The brilliant explosions transformed into cascading blossoms, painting the heavens in shifting hues of gold and scarlet. They pulsed like living embers, now dazzling, now soft, weaving a dreamscape that stole her breath away.</p>
                 <p>In Evelyn&#39;s eyes, Alexander had always carried himself with icy detachment. Given his decade in law enforcement, she&#39;d assumed words like &#34;romantic&#34; would never apply to him.</p>
                 <p>Yet here he was, rewriting every expectation.</p>
@@ -2415,7 +2415,7 @@
                 <p>This was a promise.</p>
                 <p>She never expected him to orchestrate such an elaborate fireworks display just for her.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Evelyn&#39;s eyes shimmered with the reflection of the bursting colors above, her voice soft with wonder. &#34;This is breathtaking.&#34;</p>
                 <p>Alexander watched her with undisguised tenderness, his arm slipping around her waist. &#34;Do you enjoy it?&#34;</p>
                 <p>She nodded without hesitation. &#34;More than anything.&#34;</p>
@@ -2425,7 +2425,7 @@
                 <p>Evelyn&#39;s breath hitched as realization dawned.</p>
                 <p>Against the backdrop of cascading sparks, his eyes burned brighter than any flame.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Every single one of these,&#34; he murmured, &#34;is for you. To tell you what words never could.&#34;</p>
                 <p>Her pulse stuttered at the raw emotion in his voice.</p>
                 <p>Alexander cradled her face, his touch devastatingly gentle. &#34;You&#39;re my wife. Our beginning wasn&#39;t conventional, but that doesn&#39;t matter now. I need more than your trust, Evelyn. I need your heart.&#34;</p>
@@ -2571,7 +2571,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2587,8 +2587,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

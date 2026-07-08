@@ -2445,7 +2445,7 @@
                 <p>But now—when everything hinged on that proof—the cameras had gone dark.</p>
                 <p>Evelyn&#39;s fingers clenched around the edge of the desk, her knuckles whitening.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Alexander had assured her the system was flawless.</p>
                 <p>&#34;Nothing gets past these cameras,&#34; he had said, that confident smirk playing on his lips.</p>
                 <p>Yet here she stood, staring at a blank screen where there should have been irrefutable evidence of Vanessa&#39;s treachery.</p>
@@ -2460,7 +2460,7 @@
                 <p>Evelyn didn&#39;t need to turn to know who it was.</p>
                 <p>Vanessa&#39;s perfume—heavy, cloying—filled the room before she even spoke.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Looking for something, sister?&#34;</p>
                 <p>The mocking lilt in her voice made Evelyn&#39;s stomach twist.</p>
                 <p>She turned slowly, meeting Vanessa&#39;s smug gaze.</p>
@@ -2476,7 +2476,7 @@
                 <p>And that uncertainty was more dangerous than any lie Vanessa could spin.</p>
                 <p>Secret Admiration: Finding True Love After Prison (Evelyn Carter) novel</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -2598,7 +2598,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2614,8 +2614,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

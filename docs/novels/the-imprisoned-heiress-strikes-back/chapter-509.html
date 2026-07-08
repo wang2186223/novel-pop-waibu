@@ -2399,35 +2399,35 @@
                 <p>Back in prison, there had been a notorious inmate—a wealthy heir locked away for violent crimes.</p>
                 <p>Initially sentenced to three years, his penchant for chaos extended his stay. Fights, riots, even a death—his sentence ballooned to a decade.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Most prisoners sought early release through good behavior.</p>
                 <p>Not him.</p>
                 <p>He ruled the prison like a king, feared by inmates and guards alike. No one dared cross him.</p>
                 <p>Evelyn had kept to herself during her three-year sentence. The men’s and women’s blocks were separate, so their paths should never have crossed.</p>
                 <p>But on Christmas Eve, the annual prison gathering blurred those lines.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Evelyn, barred from joining due to &#34;special restrictions,&#34; stood outside in the biting cold.</p>
                 <p>That was when she saw him.</p>
                 <p>At first, she barely noticed the man walking past.</p>
                 <p>Then she spotted the dark stain on her sleeve.</p>
                 <p>Blood.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>His blood.</p>
                 <p>She had no idea where he was injured.</p>
                 <p>With less than a year left on her sentence, Evelyn had learned the hard way—kindness in that hellhole only brought suffering.</p>
                 <p>Her own legs still ached from old wounds. How could she help anyone else?</p>
                 <p>But as she turned away, flashes of her own past assaults flooded her mind.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>The beatings. The retaliation. The scars that never fully healed.</p>
                 <p>Maybe he was just like her.</p>
                 <p>Against all reason, she ran after him.</p>
                 <p>By the time she found him, he was slumped in a shadowed corner, unconscious.</p>
                 <p>Only minutes had passed—how had he deteriorated so fast?</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">
@@ -2549,7 +2549,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2565,8 +2565,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

@@ -2389,15 +2389,15 @@
                 <p>Victoria didn’t care who Evelyn was or what strings she’d pulled with upper management. What mattered was competence. She refused to let an unqualified stranger drag her team down.</p>
                 <p>&#34;I never claimed to be an exception,&#34; Evelyn replied smoothly, her voice calm, her smile unshaken. &#34;Isn’t that why you’re testing me?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>There was no defensiveness, no insecurity—just quiet confidence. It was infuriating.</p>
                 <p>&#34;Exactly. And passing one test doesn’t mean you’ve won me over,&#34; Victoria snapped.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>The first challenge had been impulsive, a quick assessment. But Evelyn had handled it effortlessly, forcing Victoria to reconsider. Maybe she wasn’t just some entitled outsider.</p>
                 <p>Which meant Victoria needed to up the stakes.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Ms. Sterling, feel free to make it harder. If I back down, consider it my loss.&#34; Evelyn’s gaze never wavered. Then, with deliberate grace, she stepped closer.</p>
                 <p>Victoria stiffened. There was something unsettling about that smile—not threatening, but… calculating. &#34;What now?&#34;</p>
                 <!-- 广告位 4 -->
@@ -2413,7 +2413,7 @@
                 <p>Victoria’s jaw tightened. She wouldn’t lose her composure. Not here. Not to her.</p>
                 <p>But damn if Evelyn Carter didn’t know how to push her buttons.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">
@@ -2535,7 +2535,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2551,8 +2551,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

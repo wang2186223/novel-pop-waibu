@@ -2423,7 +2423,7 @@
                 <p>Marcus grabbed her arm. &#34;Grace...&#34;</p>
                 <p>&#34;Chloe Roland jumped because of me.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Only I can save her.&#34;</p>
                 <p>&#34;Any delay could cost her life!&#34;</p>
                 <p>Evelyn&#39;s eyes burned with urgency.</p>
@@ -2442,7 +2442,7 @@
                 <p>Rooftop structures obstructed her view.</p>
                 <p>Sobbing guided her direction.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Chloe&#39;s voice trembled with tears.</p>
                 <p>&#34;Brother, even you lied to me!&#34;</p>
                 <p>&#34;You want to work with her because she resembles your savior, don&#39;t you?&#34;</p>
@@ -2461,7 +2461,7 @@
                 <p>&#34;I&#39;d rather die to make you remember her!&#34;</p>
                 <p>Chloe&#39;s voice broke.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;It&#39;s only been a month...&#34;</p>
                 <p>&#34;Just one month...&#34;</p>
                 <p>&#34;Alexander Vance finds a replacement...&#34;</p>
@@ -2504,7 +2504,7 @@
                 <p>&#34;I&#39;m here.&#34;</p>
                 <p>&#34;You wanted to see me, didn&#39;t you?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">
@@ -2626,7 +2626,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2642,8 +2642,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

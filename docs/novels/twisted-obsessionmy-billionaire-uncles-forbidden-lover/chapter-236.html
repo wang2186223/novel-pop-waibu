@@ -2395,12 +2395,12 @@
                 <p>&#34;What? Now you&#39;re policing how I speak too?&#34; She snapped her phone shut. &#34;Did your precious darling not teach you that being too controlling shortens your lifespan?&#34;</p>
                 <p>&#34;Sophia!&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>She moved to slam the door, but Ethan seized her wrist and dragged her out. Stumbling in her heels, Sophia tried to wrench free. &#34;Let go!&#34;</p>
                 <p>&#34;Come with me.&#34; His grip didn&#39;t budge. &#34;We need to talk.&#34;</p>
                 <p>&#34;Sophia!&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Vivian came sprinting with two ice cream cones, only to freeze at the sight before her. She lunged forward but was intercepted by a black-clad bodyguard two meters away.</p>
                 <p>&#34;Back off!&#34; Vivian&#39;s eyes turned sharp.</p>
                 <p>The bodyguard remained impassive. &#34;You can&#39;t win against me.&#34;</p>
@@ -2420,7 +2420,7 @@
                 <p>&#34;Fuck you! Fight me fair!&#34;</p>
                 <p>The bodyguard gave her a look reserved for idiots and increased the pressure.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">
@@ -2542,7 +2542,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2558,8 +2558,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

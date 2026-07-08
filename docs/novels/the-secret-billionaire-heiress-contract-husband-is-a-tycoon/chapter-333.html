@@ -2400,17 +2400,17 @@
                 <p>On the beach, Evelyn and Julian Langley returned with full baskets.</p>
                 <p>Ethan Sullivan remained waist-deep in the ocean, his spear now laden with plump fish.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;That&#39;s enough. Come ashore.&#34; Evelyn frowned at the figure in the water.</p>
                 <p>How could anyone stay submerged for hours like some aquatic creature?</p>
                 <p>Ethan turned, water droplets glistening in his hair. He gave her a tender smile. &#34;As you wish.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Julian swiftly inserted himself between them, thrusting their haul forward. &#34;Look at this!&#34;</p>
                 <p>Ethan&#39;s gaze swept over the provisions. &#34;Impressive work, Evelyn. And you too, Julian.&#34;</p>
                 <p>Julian snorted. The man&#39;s silver tongue was getting sharper by the day.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Unaware of their silent battle, Evelyn deftly wrapped the fish in broad leaves, coating them with freshly gathered herb paste.</p>
                 <p>By the fire, she expertly turned the grilling fish. Nearby, a stone pot bubbled with seafood stew.</p>
                 <p>Director Timothy Gold hurried over. &#34;Aren&#39;t you trading these for supplies?&#34;</p>
@@ -2419,7 +2419,7 @@
                 <p>She met his gaze with a faint smile. &#34;We&#39;ll offer extra seafood for specific items.&#34;</p>
                 <p>The crew&#39;s meals probably depended on the contestants&#39; catches anyway.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">
@@ -2541,7 +2541,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2557,8 +2557,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

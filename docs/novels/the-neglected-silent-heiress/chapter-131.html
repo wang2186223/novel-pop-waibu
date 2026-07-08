@@ -2403,7 +2403,7 @@
                 <p>Seeing him tire, Olivia prepared to leave. Giving his hand one final squeeze, she quietly exited.</p>
                 <p>Before departing on an errand, Isabella caught up with her. &#34;Alexander plans to stop by later to discuss something with you.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Having matters to discuss with Alexander herself, and no other commitments, Olivia decided to wait.</p>
                 <p>She nodded her goodbye to Isabella.</p>
                 <p>Stepping into the hallway, Olivia found herself face-to-face with Julian.</p>
@@ -2421,7 +2421,7 @@
                 <p>Eleanor approached with a disapproving frown. &#34;That mute girl - I can&#39;t fathom why Father favors someone like her. He must be losing his faculties.&#34;</p>
                 <p>Julian smirked. &#34;Mother, her background isn&#39;t what you think. Regardless, we should support Grandfather&#39;s choices. If he likes her, we should too. It proves we&#39;re the most prudent of his grandchildren.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Eleanor lowered her voice. &#34;She seemed quite willing to give you her number. Perhaps she&#39;s interested? You should pursue this.&#34;</p>
                 <p>Julian&#39;s expression soured. &#34;Really, Mother? You think I&#39;d date someone who can&#39;t hold a conversation? Imagine introducing her to our circle. Still...perhaps I&#39;ll humor her. We&#39;ll see how things develop.&#34;</p>
                 <p>Eleanor fell silent.</p>
@@ -2430,7 +2430,7 @@
                 <p>Alexander visited William accompanied by a medical team.</p>
                 <p>Ever methodical and decisive, Alexander handled every situation with precision.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>When Julian and Eleanor tried to follow him in, Alexander&#39;s bodyguards barred their way.</p>
                 <p>Years of honed observation skills let Olivia catch the brief flash of resentment in Julian&#39;s eyes.</p>
                 <p>The contents of William&#39;s hospital room conversation remained a mystery.</p>
@@ -2562,7 +2562,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2578,8 +2578,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

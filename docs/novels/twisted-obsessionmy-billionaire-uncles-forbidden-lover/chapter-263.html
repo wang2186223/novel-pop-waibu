@@ -2390,12 +2390,12 @@
                 <p>The scent of cedar greeted her as she entered. Fresh from his shower, Ethan stood by the floor-to-ceiling window. A crisp white shirt hugged his broad shoulders, paired with a charcoal-gray vest that accentuated his tapered waist. The tailored suit outlined his athletic frame to perfection, the shirt tucked in to emphasize his lean hips.</p>
                 <p>City lights glittered beyond the glass. A cigarette dangled between his fingers, smoke curling around his tall, statuesque silhouette—like a figure stepped out of an oil painting.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Sophia&#39;s pulse stuttered.</p>
                 <p>The man had this uncanny ability to make hearts race with just his back turned.</p>
                 <p>She dug her nails into her palm, forcing composure. &#34;What did you need, Mr. Roscente?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>He turned, nodding toward a tie on the table. &#34;Help me with this.&#34;</p>
                 <p>She nearly rolled her eyes.</p>
                 <p>Were his arms broken?</p>
@@ -2405,12 +2405,12 @@
                 <p>&#34;Problem?&#34; Ethan arched a brow, lips quirking in amusement. He emphasized each syllable: &#34;Miss Secretary unwilling?&#34;</p>
                 <p>That title—delivered in his trademark drawl—sent heat rushing to her ears. It instantly transported her back to those reckless moments in his office, when he&#39;d murmur &#34;Miss Secretary&#34; against her skin in that gravelly voice...</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Your face is red.&#34; He closed the distance abruptly, breath scorching her neck. Sophia jolted backward. &#34;N-nothing! Just...admiring how handsome you look today.&#34;</p>
                 <p>She averted her gaze, terrified he&#39;d see right through her.</p>
                 <p>&#34;Oh?&#34; His chuckle was low. &#34;With that expression, I&#39;d think you were imagining something indecent.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Sophia: &#34;...&#34;</p>
                 <p>Wasn&#39;t he the very source of all indecency?</p>
                 <p>When she still didn&#39;t move, Ethan&#39;s eyes darkened. &#34;Tying my tie falls under secretarial duties. Have you forgotten already?&#34;</p>
@@ -2541,7 +2541,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2557,8 +2557,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

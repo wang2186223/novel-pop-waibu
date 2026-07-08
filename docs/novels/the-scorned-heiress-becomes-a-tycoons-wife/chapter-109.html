@@ -2391,19 +2391,19 @@
                 <p>&#34;Of course. She&#39;s pure and kind.&#34; Sophia&#39;s lips curved into a cold smile. &#34;I&#39;m the wild child with a vicious heart, incapable of goodness.&#34;</p>
                 <p>Her fingers traced the rim of her water glass.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Now I&#39;m exactly that malicious person who wants to see you suffer. What will you do about it?&#34;</p>
                 <p>&#34;You—&#34; William trembled with rage. &#34;Don&#39;t push your luck.&#34;</p>
                 <p>&#34;I already am.&#34; Sophia tilted her chin up. &#34;What can you possibly do?&#34;</p>
                 <p>Sunlight streamed through the window, gilding her silhouette.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>William faltered, momentarily stunned.</p>
                 <p>&#34;Pearl Entertainment may be impressive, but it&#39;s no match for Lowell&#39;s decades of foundation.&#34; He lowered his voice. &#34;If you&#39;re smart, you&#39;ll make the right choice.&#34;</p>
                 <p>Richard nodded. &#34;If it matters to you, I can make Emily apologize. Let bygones be bygones.&#34;</p>
                 <p>&#34;Spare me.&#34; Sophia stood. &#34;The thought disgusts me.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>She walked toward the exit without looking back.</p>
                 <p>&#34;Sophia!&#34; William roared. &#34;You think you&#39;re untouchable? Investing in &#39;Empress&#39; to compete with Dad&#39;s project? You&#39;re digging your own grave!&#34;</p>
                 <p>Lowell Entertainment&#39;s &#34;River Banquet&#34; was a high-budget historical drama.</p>
@@ -2421,7 +2421,7 @@
                 <p>Richard detested that tone.</p>
                 <p>&#34;&#39;River Banquet&#39; stars Christopher and Emily. The box office will crush your project.&#34; His voice turned stern. &#34;Stop being stubborn...&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -2543,7 +2543,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2559,8 +2559,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

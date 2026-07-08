@@ -2393,7 +2393,7 @@
                 <p>Richard gave a curt nod. &#34;What about him?&#34;</p>
                 <p>Her smirk widened with quiet triumph. &#34;He&#39;s still obsessed with Vivian. We could use that to our advantage.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Maxwell Sterling, sole heir to the Sterling fortune, had once been Richard&#39;s chosen match for Vivian. Even after her marriage to Adrian, Maxwell&#39;s obsession had festered—a toxic blend of unrequited passion and bitter envy.</p>
                 <p>If Vivian divorced, she&#39;d lose Adrian&#39;s formidable protection. Natasha had learned this during a private gathering where a drunken Maxwell had bared his soul.</p>
                 <!-- 广告位 3 -->
@@ -2401,7 +2401,7 @@
                 <p>&#34;Think about it,&#34; Natasha pressed, her voice honeyed with persuasion. &#34;If we steer him toward Vivian, we could regain the Sterlings&#39; favor. Those old promises they made? Still valid. And right now, our family desperately needs their connections.&#34;</p>
                 <p>Richard exhaled heavily, skepticism darkening his features. &#34;Vivian would never agree. She rejected Maxwell without hesitation—that&#39;s how she ended up with Adrian. Last time I mentioned the Sterlings, she blocked my number. Besides, no man would dare approach Adrian Blackwood&#39;s wife.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>It would be social suicide. Vivian&#39;s fiery rejection still stung—a humiliation Richard had no desire to repeat.</p>
                 <p>But Natasha remained undeterred. &#34;Everyone has a weakness, Father. Find it, and even the strongest will crumble.&#34; Her words hung like a poised dagger until an icy voice interrupted.</p>
                 <!-- 广告位 5 -->
@@ -2410,7 +2410,7 @@
                 <p>Daphne Fairchild, Richard&#39;s second wife, had emerged from her boutique shopping spree. A sardonic smile played on her lips as she joined the conversation. &#34;If Maxwell Sterling wants to taste what belongs to Adrian Blackwood, why should we care? In fact...&#34; Her eyes gleamed. &#34;It might solve all our problems.&#34;</p>
                 <p>Several days later, just as dawn painted the sky, persistent knocking tore Vivian from sleep.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">
@@ -2532,7 +2532,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2548,8 +2548,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

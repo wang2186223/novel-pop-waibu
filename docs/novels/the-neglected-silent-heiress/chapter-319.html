@@ -2390,33 +2390,33 @@
                 <p>With Donovan absent, Olivia left the gift in his study before preparing to leave.</p>
                 <p>Olivia had business commitments that evening, and bringing Isabelle along might complicate matters.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Lately, Alistair was rarely sober. In this household, aside from Donovan and Alistair, there truly was no one else Olivia could rely on. Isabelle was her everything, her most precious bond.</p>
                 <p>Left with no choice, Olivia decided to take Isabelle along. Fortunately, the little girl was remarkably well-behaved for her age, full of bright energy but never causing trouble.</p>
                 <p>Their luxury car pulled up before an imposing neoclassical building.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Carrying Isabelle, Olivia entered through the discreet service entrance. Few knew that the entire building belonged to Olivia. It was one of the most prestigious auction houses in the city.</p>
                 <p>Over recent years, Olivia&#39;s passion for antique restoration had blossomed from casual interest to professional expertise. What began as a hobby had evolved into a trained eye capable of spotting treasures.</p>
                 <p>She&#39;d discovered countless valuable pieces in markets across the globe, all destined for the auction block at her exclusive venue.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Initially operating in obscurity, Olivia&#39;s reputation grew as the quality of her acquisitions became known, drawing increasingly elite clientele through word of mouth alone.</p>
                 <p>Eventually, Olivia assembled a team of trained specialists to source rare finds on her behalf.</p>
                 <p>The journey hadn&#39;t been smooth. She&#39;d suffered financial losses, faced moments of doubt, and even endured betrayal from those she trusted.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Yet Olivia persevered, initially funding her venture with a forgotten credit card Liam had given her years ago, tucked away in an old keepsake box. Despite having access to his accounts, she never touched the regular checks he sent.</p>
                 <p>Olivia understood she might never see Liam again, and if that were their fate, she was determined never to use his money.</p>
                 <p>Now her auction house stood among the most respected in the industry.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Prospective bidders required advance reservations and thorough financial vetting. Olivia had even expanded her operations internationally.</p>
                 <p>She dedicated thirty percent of all profits to charitable causes.</p>
                 <p>The once-silent girl who endured bullying had transformed into a formidable businesswoman.</p>
                 <p>Understanding the struggles of the disabled firsthand, Olivia tasked Donovan with directing a portion of their donations to an Eldermere-based charity supporting disabled children in remote, impoverished regions.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">
@@ -2538,7 +2538,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2554,8 +2554,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

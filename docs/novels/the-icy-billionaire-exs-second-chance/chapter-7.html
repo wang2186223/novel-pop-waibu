@@ -2390,7 +2390,7 @@
                 <p>A bitter laugh escaped Vivian&#39;s lips.</p>
                 <p>Of course he&#39;d assume this was some pathetic scheme. In his eyes, she was just another attention-seeking wife who&#39;d resorted to dramatics when ignored.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Her expression turned stony. &#34;It&#39;s a cosmetic procedure. The wound can&#39;t get wet,&#34; she lied smoothly.</p>
                 <p>&#34;Why would you suddenly need such treatment?&#34; Adrian asked casually as he carried her outside, showing no real interest in her answer.</p>
                 <p>His broad frame dwarfed her. Through the thin fabric of his shirt, she could feel the heat radiating from his body, the hard planes of his chest muscles.</p>
@@ -2400,7 +2400,7 @@
                 <p>Her voice turned sharp. &#34;Since when do you care about such trivial matters, Mr. Blackwood?&#34;</p>
                 <p>Adrian&#39;s lips twitched at her uncharacteristic sarcasm. He found it oddly amusing.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;You&#39;re my wife,&#34; he said calmly. &#34;Naturally I&#39;m concerned about your wellbeing.&#34;</p>
                 <p>&#34;Really?&#34; Vivian&#39;s tone turned somber. &#34;You&#39;ve never treated me like a wife. I could die tomorrow and you wouldn&#39;t notice until it was convenient.&#34;</p>
                 <p>The truth cut deep. At that very moment when she&#39;d needed him most, Adrian had been preoccupied with his precious Serena, too busy to answer her desperate calls.</p>
@@ -2410,7 +2410,7 @@
                 <p>Vivian froze.</p>
                 <p>Her place?</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>The realization hit her like a physical blow. Their marriage had always been transactional - her freedom exchanged for his financial security.</p>
                 <p>She&#39;d been the fool who broke the rules, who&#39;d dared to fall in love.</p>
                 <p>In the cruel game of hearts, the one who loved first always lost.</p>
@@ -2537,7 +2537,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2553,8 +2553,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

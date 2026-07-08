@@ -2395,12 +2395,12 @@
                 <p>Since she wasn&#39;t officially signed with Ivory Phoenix, appearing on unrelated shows seemed unnecessary.</p>
                 <p>&#34;No,&#34; Damien clarified. &#34;This is purely for exposure. Your screen presence could win you fans. Right now, you&#39;re vulnerable to online attacks without a solid fanbase. This could help shape your public image.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Vivian had considered this before. While acting remained her passion, avoiding the spotlight entirely might hinder her career growth.</p>
                 <p>Yet after weathering multiple scandals, staying low-key felt safer.</p>
                 <p>&#34;I think I should maintain my current approach,&#34; she said firmly.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Sounds like a perfect opportunity,&#34; a deep voice interjected unexpectedly.</p>
                 <p>Vivian startled, looking up to find Adrian looming over her.</p>
                 <p>His proximity allowed Damien to hear him clearly. &#34;Is that Adrian Blackwood with you?&#34;</p>
@@ -2416,7 +2416,7 @@
                 <p>She turned to Adrian, eyes blazing. &#34;Did you really need to humiliate me in front of my employer?&#34;</p>
                 <p>Adrian&#39;s expression darkened. &#34;You think that&#39;s why I spoke up?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">
@@ -2538,7 +2538,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2554,8 +2554,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

@@ -2392,7 +2392,7 @@
                 <p>Evelyn frowned. &#34;Emily genuinely thinks you&#39;re a good person.&#34;</p>
                 <p>&#34;So?&#34; Peter scoffed. &#34;Want me to go apologize to her now?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;At least don&#39;t badmouth her in front of me.&#34;</p>
                 <p>&#34;Fine,&#34; Peter stubbed out his cigarette. &#34;Then make sure I never see her again.&#34;</p>
                 <p>Evelyn pointed to the elevator. &#34;You can leave right now.&#34;</p>
@@ -2420,7 +2420,7 @@
                 <p>&#34;Big news!&#34; Vivian gasped. &#34;Simon Stapleton is getting married!&#34;</p>
                 <p>Evelyn arched a brow. &#34;That fast?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Unbelievable, right?&#34; Vivian gulped down her iced americano. &#34;Dad says Oceanic Group is already planning the wedding.&#34;</p>
                 <p>&#34;Lora agreed?&#34;</p>
                 <p>&#34;Apparently she’s head over heels,&#34; Vivian rolled her eyes. &#34;Dad’s dying to know who this mystery groom is.&#34;</p>
@@ -2431,7 +2431,7 @@
                 <p>The sharp click of stilettos approached.</p>
                 <p>A woman with crimson lips smiled down at them. &#34;Dr. Carter? I’ve heard so much about you.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">
@@ -2553,7 +2553,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2569,8 +2569,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

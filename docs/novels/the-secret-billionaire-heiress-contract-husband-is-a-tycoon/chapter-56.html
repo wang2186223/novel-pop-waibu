@@ -2437,7 +2437,7 @@
                 <p>Ethan tightened his embrace, murmuring reassurance against her ear.</p>
                 <p>&#34;Look at me, Evelyn.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Lightning flashed once more.</p>
                 <p>Recognition finally flickered in her dilated pupils.</p>
                 <p>&#34;E...Ethan?&#34;</p>
@@ -2450,7 +2450,7 @@
                 <p>&#34;Don&#39;t be afraid. I&#39;m taking you out.&#34;</p>
                 <p>A waiter&#39;s startled voice echoed from the hallway.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Sir! What happened?&#34;</p>
                 <p>Ethan strode past without acknowledgment, heading straight for the elevator.</p>
                 <p>Evelyn lay motionless in his arms like a porcelain doll, only her fluttering lashes betraying her distress.</p>
@@ -2464,7 +2464,7 @@
                 <p>Ethan adjusted his hold, his deep voice resonating in the enclosed space.</p>
                 <p>&#34;Because you were waiting for me.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">
@@ -2586,7 +2586,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2602,8 +2602,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

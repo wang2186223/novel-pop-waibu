@@ -2389,19 +2389,19 @@
                 <p>Annika&#39;s pupils contracted violently.</p>
                 <p>&#34;What do you want?&#34; she hissed through clenched teeth, looking ready to tear Vivian apart.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Vivian smoothed her sleeves with deliberate slowness. &#34;To see how you&#39;re doing.&#34; Her voice dropped to a whisper. &#34;And to inform you—your master&#39;s position in the organization is... precarious now.&#34;</p>
                 <p>&#34;Liar!&#34; Annika slammed both palms on the table.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Isabella flinched backward.</p>
                 <p>Vivian&#39;s laughter tinkled like broken glass. &#34;I know you want me dead.&#34; She locked eyes with Annika&#39;s bloodshot gaze. &#34;Because you&#39;re jealous Zero chose me.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>The words stabbed like daggers.</p>
                 <p>&#34;He doesn&#39;t love you!&#34; Annika&#39;s voice cracked with hysteria.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Vivian reclined in her chair. &#34;He confessed his feelings personally.&#34; She ran her tongue over her lips. &#34;You copied my face hoping he&#39;d love you instead, didn&#39;t you?&#34;</p>
                 <p>Annika&#39;s breathing turned ragged.</p>
                 <!-- 广告位 5 -->
@@ -2413,7 +2413,7 @@
                 <p>Vivian&#39;s victorious smile bloomed.</p>
                 <p>Every whispered confession was fabricated. But watching Annika unravel made the performance worthwhile.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -2535,7 +2535,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2551,8 +2551,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

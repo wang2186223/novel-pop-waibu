@@ -2393,7 +2393,7 @@
                 <p>The commotion woke the entire dorm floor.</p>
                 <p>Students rubbed sleep from their eyes and peeked out.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>A thunderstorm raged outside.</p>
                 <p>Security personnel swarmed the halls.</p>
                 <p>This level of mobilization was unprecedented.</p>
@@ -2409,7 +2409,7 @@
                 <p>Especially not after enduring vicious rumors for a week.</p>
                 <p>Delaying action risked irreparable damage.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Along with the three instigators, over a dozen copycat harassers were brought in.</p>
                 <p>All fell silent upon seeing Evans&#39; stormy expression.</p>
                 <p>&#34;You three started this?&#34;</p>
@@ -2417,7 +2417,7 @@
                 <p>The exchange students came from the same university.</p>
                 <p>Respectable, but no Harvard.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Now they trembled before the dean.</p>
                 <p>&#34;We...we just shared opinions...&#34;</p>
                 <p>Evans slammed the desk.</p>
@@ -2425,7 +2425,7 @@
                 <p>Every malicious comment clearly visible.</p>
                 <p>&#34;Opinions?&#34; He sneered. &#34;This is blatant defamation!&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>The office held its breath.</p>
                 <p>&#34;The university has contacted law enforcement.&#34;</p>
                 <p>&#34;Your exchange privileges are revoked.&#34;</p>
@@ -2433,7 +2433,7 @@
                 <p>Evans turned to the others, voice glacial. &#34;The rest receive disciplinary marks. Tomorrow&#39;s bulletin will announce it.&#34;</p>
                 <p>Rain hammered the windows like a judge&#39;s gavel.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -2555,7 +2555,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2571,8 +2571,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

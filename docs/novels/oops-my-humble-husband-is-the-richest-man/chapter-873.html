@@ -2402,7 +2402,7 @@
                 <p>She nodded slightly, her tone indifferent.</p>
                 <p>&#34;I&#39;m all ears.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>The assistant snorted, as if about to boast about some extraordinary family lineage.</p>
                 <p>&#34;Listen carefully.&#34;</p>
                 <p>&#34;This island is the kingdom of the Sterling family. Over twenty million people here recognize only the Sterlings as their masters.&#34;</p>
@@ -2419,7 +2419,7 @@
                 <p>The assistant quickly cut in, her tone sharp.</p>
                 <p>&#34;Direct lineage? You wish! Do you think you can just meet one of the nine heirs whenever you want?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;However, although my young mistress is not one of those nine, among all the collateral branches, she is at the very top!&#34;</p>
                 <p>She lowered her voice, adding a touch of mystery.</p>
                 <p>&#34;Let me tell you, in the Sterling family, aside from the Matriarch, the highest status belongs to the nine heirs and their mothers.&#34;</p>
@@ -2436,7 +2436,7 @@
                 <p>The so-called direct lineage essentially consisted of the few daughters eligible to compete for the heir position.</p>
                 <p>The nine heirs, including herself, might not all be daughters of sisters.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>As expected, her question left the assistant speechless.</p>
                 <p>Sienna&#39;s face flushed bright red. She stammered for a long moment before finally lifting her chin defiantly, speaking fiercely.</p>
                 <p>&#34;My aunt... my aunt is Sophia Ashcroft!&#34;</p>
@@ -2613,7 +2613,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2629,8 +2629,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

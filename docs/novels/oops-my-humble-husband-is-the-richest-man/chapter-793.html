@@ -2413,7 +2413,7 @@
                 <p>This man.</p>
                 <p>His jealousy was obvious, yet he still remembered to help her carry the dishes.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>They walked into the living room one after the other.</p>
                 <p>Elian Cross was already seated at the dining table.</p>
                 <p>His young attendant stood behind him, eyes red-rimmed.</p>
@@ -2427,7 +2427,7 @@
                 <p>Elian ate with great difficulty.</p>
                 <p>But he finished.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>When he set down his chopsticks, a faint hint of color finally returned to his pale face.</p>
                 <p>&#34;Thank you,&#34; he said, looking at Evelyn, his voice still weak. &#34;After four months without food, Miss Ross&#39;s culinary skills have improved even more.&#34;</p>
                 <p>Evelyn smiled slightly. &#34;Practice makes perfect.&#34;</p>
@@ -2471,7 +2471,7 @@
                 <p>She looked at Alexander, her gaze resolute.</p>
                 <p>&#34;We must get to the bottom of this.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -2593,7 +2593,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2609,8 +2609,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

@@ -2393,19 +2393,19 @@
                 <p>With a dramatic toss of her golden curls, Seraphina interrupted, &#34;What exactly are you suggesting? Only the most exceptional men deserve my attention. I admired Liam for his business acumen. If he becomes destitute, he&#39;s worthless to me. Handsome features might be pleasing, but why would I settle for a failure?&#34;</p>
                 <p>Her crimson lips twisted into a predatory grin as she added, &#34;Though I&#39;m not completely heartless. If he comes crawling back in desperation, perhaps I&#39;ll entertain myself with him for a while.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Celeste fawned, &#34;Miss, your generosity knows no bounds.&#34;</p>
                 <p>Then, with calculated casualness, Celeste mentioned, &#34;Mr. Julian Kensington is hosting a welcome banquet for Olivia. Miss, you might want to prepare accordingly.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Seraphina&#39;s smile vanished instantly. She replied through gritted teeth, &#34;I&#39;m aware. I&#39;ll comply with my cousin&#39;s wishes.&#34;</p>
                 <p>Under her breath, she seethed, &#34;That Olivia, who does she think she is? She&#39;s nothing but a fraud, and I&#39;ll expose her sooner or later.&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The day of the grand banquet arrived at last.</p>
                 <p>Though Julian had generously provided designer gowns and exquisite jewelry, Olivia had no intention of wearing them.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Donovan, ever thoughtful, had arranged for an alternative wardrobe and even hired a professional styling team.</p>
                 <p>Unfortunately, all three couture dresses Donovan sent were discovered mysteriously damaged - clearly the work of sabotage.</p>
                 <p>Winston, who had delivered the garments, was visibly furious. &#34;Miss, rest assured I&#39;ll investigate this thoroughly. Whoever dared do this will face consequences,&#34; he vowed.</p>
@@ -2535,7 +2535,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2551,8 +2551,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

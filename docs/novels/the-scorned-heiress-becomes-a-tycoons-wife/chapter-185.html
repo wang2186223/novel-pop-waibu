@@ -2391,7 +2391,7 @@
                 <p>Its collapse would cripple the entire Lowell empire.</p>
                 <p>William immediately ordered a media blackout.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>But public outrage spread faster than anticipated. The PR department couldn&#39;t contain the fallout.</p>
                 <p>Cold sweat soaked through his dress shirt.</p>
                 <p>Chaos had reigned since Sophia Laurent left. Shareholders&#39; displeasure was written on their faces.</p>
@@ -2403,19 +2403,19 @@
                 <p>&#34;Who do they think they&#39;re fooling with this corporate speak?&#34;</p>
                 <p>&#34;What&#39;s Derek Langley&#39;s connection to get William&#39;s personal endorsement?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Did he save Emily&#39;s life or something?&#34;</p>
                 <p>The narrative took a dark turn.</p>
                 <p>Internet sleuths began digging into Derek&#39;s background.</p>
                 <p>&#34;Bombshell! Derek&#39;s sister and brother-in-law are Sophia&#39;s adoptive parents!&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>This revelation exploded across social media.</p>
                 <p>&#34;So Sophia was behind Derek&#39;s appointment?&#34;</p>
                 <p>&#34;Then why is she helping Scarlett?&#34;</p>
                 <p>&#34;This is clearly revenge against the Lowells!&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Public opinion split into opposing camps.</p>
                 <p>Reporters swarmed the neighborhood where Sophia&#39;s adoptive parents lived.</p>
                 <p>An elderly silver-haired woman eyed the journalists warily:</p>
@@ -2425,7 +2425,7 @@
                 <p>The woman snorted and moved to slam the door.</p>
                 <p>But the cameras caught the flicker of disgust in her eyes.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">
@@ -2547,7 +2547,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2563,8 +2563,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

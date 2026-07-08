@@ -2407,7 +2407,7 @@
                 <p>At the mention of Suri, Elspeth’s expression darkened.</p>
                 <p>&#34;Suri isn’t even the Ashbourne family’s legal wife—just a mistress Emeric favors! I tolerate her out of respect for Chairman Emeric, yet she dares disrespect me!&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Exactly! Auntie, you’re Uncle Frederic’s lawful wife. How can she compare?&#34; Acacia quickly flattered Elspeth. She needed her aunt’s support to secure her place in the Abernathy family.</p>
                 <p>Una scoffed internally. Elspeth had no right to criticize Suri. Hadn’t she stolen her position too? If Thaddeus’s birth mother hadn’t been murdered, Elspeth—barren and scheming—would never have become Frederic’s wife.</p>
                 <p>&#34;I won’t let Isabella marry into the Ashbourne family so easily. What good is Suri’s favor if Emeric doesn’t approve?&#34;</p>
@@ -2418,7 +2418,7 @@
                 <p>&#34;I have questions for you.&#34;</p>
                 <p>Her grip tightened on the sheets, her eyes darting to Elspeth for help.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Thaddeus, Acacia just woke up. She’s been through enough. Can’t this wait?&#34; Elspeth interjected smoothly.</p>
                 <p>&#34;Some things need answers now.&#34; His tone left no room for negotiation.</p>
                 <p>&#34;Mr. Abernathy, this is all my fault! Blame me, not my daughter!&#34;</p>
@@ -2429,7 +2429,7 @@
                 <p>He could overlook the betrayal if it was truly for her family’s survival.</p>
                 <p>What he couldn’t forgive was targeting an innocent person.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Did you injure yourself, or did Isabella harm you? Did her bracelet break by accident, or did you snatch it?&#34; His voice was calm, but his eyes were sharp.</p>
                 <p>&#34;Thaddeus, are you accusing me of framing Isabella?&#34; Acacia’s voice cracked. &#34;Does our childhood bond mean nothing compared to your deceitful ex-wife?&#34;</p>
                 <p>Thaddeus frowned. &#34;Mari doesn’t lie. She said she never saw Isabella touch you.&#34;</p>
@@ -2574,7 +2574,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2590,8 +2590,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

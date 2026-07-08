@@ -2393,19 +2393,19 @@
                 <p>The absurdity of the situation nearly made her laugh.</p>
                 <p>Their divorce papers weren&#39;t even finalized, yet here he was, openly doting on his first love right before her eyes.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>A sharp pang twisted in Vivian&#39;s chest as she wondered what place, if any, she still held in Adrian&#39;s life.</p>
                 <p>The wave of emotion that crashed over her was so intense it stole her breath.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Her lips pressed into a thin line, fingers curling into fists as she glared at the vending machine&#39;s glowing buttons.</p>
                 <p>With deliberate force, she punched the selection, listening as two cans clattered noisily into the tray.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>She bent to retrieve the first can, but just as her fingers brushed the second, a larger hand snatched it away.</p>
                 <p>She didn&#39;t need to look to know it was Adrian.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Drawing a steadying breath, she stepped back and fixed him with an icy stare. &#34;Can I help you?&#34; Her voice could have frozen the entire lobby.</p>
                 <p>Adrian turned the can in his hands with that infuriating smirk. &#34;Really, Vivian? You track me down here and pretend it&#39;s coincidence? Living in budget hotels, buying discount sodas - quite the humble lifestyle you&#39;ve adopted.&#34; His mocking tone dripped with false sympathy.</p>
                 <p>Vivian&#39;s eyes widened in disbelief as she took him in. &#34;Are you feeling alright?&#34; she asked, voice laced with sarcasm.</p>
@@ -2414,7 +2414,7 @@
                 <p>Serena&#39;s presence - that subtle air of victorious superiority - made Vivian&#39;s stomach churn.</p>
                 <p>Without another word, Vivian turned on her heel and strode toward the exit, desperate to escape this painful tableau.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -2536,7 +2536,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2552,8 +2552,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

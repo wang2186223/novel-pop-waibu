@@ -2391,13 +2391,13 @@
                 <p>Inside, Vivian swiftly pulled out her makeup kit.</p>
                 <p>With practiced precision, she dotted her face with dense clusters of scars, obscuring her delicate features.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>The mirror reflected a grotesque visage.</p>
                 <p>This was the Vivian Ethan remembered.</p>
                 <p>Gasps filled the air when she emerged.</p>
                 <p>Ethan remained expressionless.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Well, if it isn&#39;t Mr. Roscente after three years,&#34; Vivian sneered. &#34;I thought you&#39;d forgotten all about me.&#34;</p>
                 <p>Ethan glanced at the onlookers before gripping her wrist. &#34;We need to talk.&#34;</p>
                 <p>Lucas moved to follow.</p>
@@ -2409,13 +2409,13 @@
                 <p>The docile Vivian from his memory bore no resemblance to the woman before him.</p>
                 <p>&#34;You know me?&#34; Vivian laughed coldly. &#34;How many times did we even meet?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>The sharpness in her eyes startled Ethan.</p>
                 <p>&#34;I know you resent me,&#34; he said gravely. &#34;Name your price. I&#39;ll compensate you.&#34;</p>
                 <p>Her smirk deepened.</p>
                 <p>&#34;Your money means nothing to me, Mr. Roscente.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The steel in her gaze unsettled him.</p>
                 <p>Where was the timid Vivian from before?</p>
                 <p>&#34;How will you survive without money?&#34; he pressed. &#34;The Valrose family won&#39;t support you.&#34;</p>
@@ -2424,7 +2424,7 @@
                 <p>&#34;Ethan Roscente!&#34; Vivian snapped. &#34;We&#39;re divorced. I&#39;ll see whoever I want!&#34;</p>
                 <p>She turned and walked away without looking back.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">
@@ -2546,7 +2546,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2562,8 +2562,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

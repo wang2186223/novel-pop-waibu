@@ -2390,12 +2390,12 @@
                 <p>This strong stance sobered up many bystanders.</p>
                 <p>But Emily Lowell and Nathan Lowell&#39;s die-hard fans only intensified their attacks.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Sophia Laurent headed straight to Pearl Tower after signing the &#34;We Are Singers&#34; contract.</p>
                 <p>As she entered the office area, she heard the sound of documents being slammed in the CEO&#39;s office.</p>
                 <p>She pushed the door open to find Oliver Granger glaring at his computer screen.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Planning to smash your keyboard, Oliver?&#34;</p>
                 <p>His tense expression softened slightly when he saw Sophia. &#34;Perfect timing.&#34;</p>
                 <p>With a cold smirk, he pulled up the trending page. &#34;Look what your dear sister has done. The entire internet is vilifying you.&#34;</p>
@@ -2410,7 +2410,7 @@
                 <p>The pinned video showed Emily Lowell tearfully saying in a livestream: &#34;It&#39;s all my fault for speaking carelessly... My sister is actually very kind...&#34;</p>
                 <p>Oliver slammed the desk. &#34;Who does this green tea bitch think she&#39;s fooling?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Sophia scoffed. &#34;Just a ridiculous clown performing.&#34;</p>
                 <p>&#34;They&#39;re trying to pressure you into dropping the lawsuit with public opinion,&#34; Oliver realized. &#34;The Lowells want to renege?&#34;</p>
                 <p>&#34;More than that.&#34; Sophia toyed with her phone. &#34;They aim to destroy my comeback.&#34;</p>
@@ -2419,7 +2419,7 @@
                 <p>Oliver exhaled in relief. &#34;I&#39;m glad you&#39;re okay.&#34;</p>
                 <p>What terrified him most was how those vile words might wound her.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">
@@ -2541,7 +2541,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2557,8 +2557,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

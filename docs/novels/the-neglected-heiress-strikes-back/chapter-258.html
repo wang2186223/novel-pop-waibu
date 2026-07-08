@@ -2400,7 +2400,7 @@
                 <p>And Alexander.</p>
                 <p>She remembered fighting beside him on the battlefield, life hanging by a thread.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>She remembered seeing him again at her grandfather’s side, unable to look away.</p>
                 <p>She remembered him sliding divorce papers across the table, his expression ice-cold.</p>
                 <p>A sharp pain tore through her chest, jolting her awake.</p>
@@ -2415,7 +2415,7 @@
                 <p>The branch above her groaned.</p>
                 <p>Isabella froze. One wrong move, and it would snap.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>She dug her fingers into the mud, found two sturdy rocks, and flipped herself onto them just as the branch gave way—plunging into the abyss below.</p>
                 <p>Her heart hammered against her ribs.</p>
                 <p>No time to panic. She had to climb.</p>
@@ -2430,7 +2430,7 @@
                 <p>She hung in midair, nothing but emptiness below.</p>
                 <p>“No! HELP!”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Her eyes flew wide—despair crashed over her.</p>
                 <p>One misstep, and death waited.</p>
                 <p>A tear of defiance slipped free as she shut her eyes.</p>
@@ -2445,7 +2445,7 @@
                 <p>Her pulse roared in her ears.</p>
                 <p>“Don’t be scared. I’ve got you.”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>His voice was raw, his grip iron-tight. Sweat streaked his face, his left hand dug into the mud, his right trembling as he held her.</p>
                 <p>But the ground was giving way beneath him too.</p>
                 <p>They could both die here.</p>
@@ -2460,7 +2460,7 @@
                 <p>“Hurry! It’s collapsing!” he barked.</p>
                 <p>“I KNOW! I’m going as fast as I can!” she snapped back, tears blurring her vision.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Alexander frowned.</p>
                 <p>Terrified—yet somehow even more endearing.</p>
                 <p>Lightning flashed, illuminating her face.</p>
@@ -2475,7 +2475,7 @@
                 <p>She was the girl he’d saved all those years ago.</p>
                 <p>The one who’d nearly died right here.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -2597,7 +2597,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2613,8 +2613,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

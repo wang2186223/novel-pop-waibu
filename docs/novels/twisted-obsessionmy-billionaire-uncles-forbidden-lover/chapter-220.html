@@ -2397,13 +2397,13 @@
                 <p>Vivian pouted. &#34;True. That bastard&#39;s more troublesome than Isabella.&#34;</p>
                 <p>Changing the subject, Sophia recalled the recent phone call.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;What happened?&#34;</p>
                 <p>Vivian&#39;s eyes lit up. &#34;Good news! My agent landed me a reality show.&#34;</p>
                 <p>Sophia&#39;s pulse quickened.</p>
                 <p>&#34;What kind?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;A live family bonding show. Participants bring relatives.&#34; Vivian grabbed her wrist. &#34;Come with me. My siblings are useless.&#34;</p>
                 <p>Sophia hesitated. &#34;We&#39;re not blood-related...&#34;</p>
                 <p>&#34;People bring honorary brothers all the time!&#34; Vivian insisted. &#34;Just two or three days. Dates aren&#39;t set yet.&#34;</p>
@@ -2415,7 +2415,7 @@
                 <p>Vivian clapped. &#34;Perfect! You need the money now. It&#39;ll be harder when your belly shows.&#34;</p>
                 <p>&#34;Worried about scheduling conflicts.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Your show takes priority,&#34; Vivian said breezily. &#34;I&#39;ll just find another honorary relative.&#34;</p>
                 <p>Sophia nodded. &#34;We&#39;ll check the dates.&#34;</p>
                 <p>After seeing Emily back to the Roscente estate, Sophia texted Theodore.</p>
@@ -2425,7 +2425,7 @@
                 <p>Sophia dialed Emily&#39;s number.</p>
                 <p>&#34;How&#39;s your foot feeling?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">
@@ -2547,7 +2547,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2563,8 +2563,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

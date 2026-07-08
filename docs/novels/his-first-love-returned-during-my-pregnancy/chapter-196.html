@@ -2389,30 +2389,30 @@
                 <p>&#34;Don’t mention it,&#34; Peter replied with a warm smile. &#34;My mom said to just treat me like an extra son. Though...&#34; He winked. &#34;Maybe you could repay me with a few good meals?&#34;</p>
                 <p>&#34;Of course! Come over for dinner every day after we move in. Bring your mother too—her cooking hasn’t improved in decades.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Peter chuckled in agreement. &#34;I’ll go get the car then.&#34;</p>
                 <p>Evelyn packed toiletries into boxes, filling three large ones quickly.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The old apartment building had no elevator, and her parents weren’t in the best health.</p>
                 <p>&#34;Emily,&#34; she called to her sister, &#34;help Mom and Dad downstairs.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Ever since her drunken mishap, Emily had been as meek as a quail. She immediately looped her arm through their mother’s.</p>
                 <p>Just as Evelyn rolled up her sleeves, Peter returned. He effortlessly stacked the boxes. &#34;These are the ones?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;The hallway light’s out,&#34; he said to Emily. &#34;Take your parents down first.&#34;</p>
                 <p>Emily held up her phone for light, whispering to her mother, &#34;Mom, what do you think of Peter?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Grace watched the tall figure ahead with fondness. &#34;He’s a good young man.&#34;</p>
                 <p>&#34;Compared to my ex-brother-in-law?&#34; Emily teased, wiggling her eyebrows.</p>
                 <p>Grace sighed. &#34;Someone like Alexander Hamilton would never bother with something as trivial as moving...&#34;</p>
                 <p>Andrew cleared his throat. &#34;What matters is your sister’s feelings. She just got divorced...&#34;</p>
                 <p>Emily grinned slyly. &#34;No rush. We’ll take it slow.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">
@@ -2534,7 +2534,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2550,8 +2550,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

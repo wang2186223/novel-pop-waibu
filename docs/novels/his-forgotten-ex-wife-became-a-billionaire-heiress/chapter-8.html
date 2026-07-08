@@ -2391,7 +2391,7 @@
                 <p>Vivian Laurent parked smoothly and moved to leave. Ethan abandoned his vehicle and caught her wrist.</p>
                 <p>&#34;Come with me.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>He pulled her into a secluded area without explanation.</p>
                 <p>&#34;Dr. Luna, I&#39;m Ethan Roscente.&#34; He cut straight to the point. &#34;I need you to save someone. Name your price.&#34;</p>
                 <p>Vivian froze mid-motion while removing her helmet. She hadn&#39;t expected her racing opponent to be this persistent man.</p>
@@ -2403,13 +2403,13 @@
                 <p>&#34;Your driving outside the hospital. Today&#39;s race. Both prove you&#39;re Dr. Luna.&#34; He stepped closer. &#34;Help me this once, and the Roscente family owes you. Otherwise...&#34;</p>
                 <p>&#34;Otherwise what?&#34; Vivian narrowed her eyes.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>&#34;Just reminding Dr. Luna to consider the consequences.&#34;</p>
                 <p>&#34;I told you, I&#39;m not her.&#34;</p>
                 <p>As she turned to leave, Ethan&#39;s phone rang.</p>
                 <p>&#34;Ethan...&#34; A woman&#39;s anxious voice came through.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Vivian paused.</p>
                 <p>&#34;Sophia?&#34; Ethan&#39;s expression changed instantly. &#34;I&#39;ll be right there.&#34;</p>
                 <p>His hurried departure stabbed at Vivian&#39;s heart. Wasn&#39;t that woman supposed to be abroad?</p>
@@ -2545,7 +2545,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2561,8 +2561,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

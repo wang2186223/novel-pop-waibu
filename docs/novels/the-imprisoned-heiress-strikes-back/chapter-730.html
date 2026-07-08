@@ -2400,7 +2400,7 @@
                 <p>Gratitude swelled in Evelyn&#39;s throat.</p>
                 <p>Orientation began in four weeks—around the time her son would be released from neonatal care.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>But before then, there were mountains to move.</p>
                 <p>Alexander arrived home long after sunset.</p>
                 <p>Evelyn sat at the dining table, sipping Giselle&#39;s delicate bone broth.</p>
@@ -2430,7 +2430,7 @@
                 <p>Yet here he was, lying straight to her face.</p>
                 <p>Evelyn&#39;s lashes fluttered downward. The ache was unbearable.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>She&#39;d loved him. They had a child together.</p>
                 <p>Just days ago, he&#39;d pleaded for their family&#39;s wholeness, and she&#39;d hesitated.</p>
                 <p>Now...</p>
@@ -2445,7 +2445,7 @@
                 <p>Her delicate skin flushed pink from emotion.</p>
                 <p>With her red-rimmed eyes and slight frame, she looked heartbreakingly fragile.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Evelyn shook her head. A single tear escaped.</p>
                 <p>&#34;The piece... it overwhelmed me.&#34;</p>
                 <p>Alexander crushed her against his chest. His thumb brushed away her tears.</p>
@@ -2460,7 +2460,7 @@
                 <p>One missed moment—and she was already climbing the stairs.</p>
                 <p>He had come from the office.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>His hospital visit had been brief before urgent matters demanded his attention.</p>
                 <p>Perhaps the accident had matured Isabella—she&#39;d released him without protest when he mentioned work.</p>
                 <p>Their conversation had been clear. He saw her only as a sister.</p>
@@ -2475,7 +2475,7 @@
                 <p>He finally recalled the piece&#39;s meaning—a swan abandoned by the world.</p>
                 <p>Why had Evelyn chosen that particular song tonight?</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">
@@ -2597,7 +2597,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2613,8 +2613,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

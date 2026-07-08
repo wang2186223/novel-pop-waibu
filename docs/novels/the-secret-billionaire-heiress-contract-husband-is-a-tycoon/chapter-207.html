@@ -2394,7 +2394,7 @@
                 <p>His Evelyn was always so generous.</p>
                 <p>She took her seat effortlessly and began eating the food she&#39;d gathered.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>She was genuinely hungry.</p>
                 <p>Ethan stole glances at her between bites.</p>
                 <p>Evelyn&#39;s beauty was flawless from every angle.</p>
@@ -2403,7 +2403,7 @@
                 <p>Her facial proportions were exquisite, her skin like fresh snow.</p>
                 <p>Even after a decade of rural hardship and manual labor, her complexion remained radiant.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>No one would ever believe she&#39;d once been a country girl.</p>
                 <p>Her hands were soft and smooth, barely a callus in sight.</p>
                 <p>She carried herself like the pampered heiress she was meant to be.</p>
@@ -2412,7 +2412,7 @@
                 <p>The first perfectly cooked slice always went to Evelyn.</p>
                 <p>His movements were graceful and unhurried.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Evelyn didn&#39;t lift a finger the entire meal.</p>
                 <p>Every time she tried to help, Ethan refused.</p>
                 <p>He&#39;d finally found a chance to care for her—why would he give that up?</p>
@@ -2421,7 +2421,7 @@
                 <p>Only after she was satisfied did he focus entirely on serving her.</p>
                 <p>He even refilled her juice twice.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Thankfully, no acquaintances witnessed this.</p>
                 <p>They would&#39;ve been shocked speechless.</p>
                 <p>Since when did Ethan Sullivan dote on anyone?</p>
@@ -2430,7 +2430,7 @@
                 <p>&#34;Ah—&#34;</p>
                 <p>Evelyn drained her glass in one go and exhaled in satisfaction.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Ethan watched her with amusement. &#34;Full?&#34;</p>
                 <p>&#34;Mhm.&#34; She nodded.</p>
                 <p>She&#39;d eaten more than usual today.</p>
@@ -2441,7 +2441,7 @@
                 <p>As they stepped out of the private room, they nearly collided with Margaret and Sophia, who were just leaving.</p>
                 <p>Ethan&#39;s gaze turned icy in an instant.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">
@@ -2563,7 +2563,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2579,8 +2579,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

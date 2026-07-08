@@ -2390,12 +2390,12 @@
                 <p>An excited squeak escaped Nancy’s lips. “A–Are you Linden Lane?”</p>
                 <p>“Yeah, I am.”</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>“Oh my god!! I can’t believe my eyes–my favorite celebrity is standing right before me! Mom, can you pinch me so I know this isn’t a dream? Why didn’t you tell me earlier?”</p>
                 <p>Slightly frustrated, Bethany chided, “Nancy, stop it. Weren’t you praising Mr. Barrett for his looks earlier?”</p>
                 <p>“But Linden is on another level!” Nancy squealed. Staring at him with starstruck eyes, she asked, “Mr. Lane, can I take a photo with you?”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>“Sure, but later.”</p>
                 <p>“Alright!” Exhilarated, Nancy took her phone out to spill the news to her friend. She still couldn’t digest the fact that she met her favorite actor at today’s banquet!</p>
                 <p>Bethany sighed. She intended to make Nancy show up at the banquet to get her connected with Timothy, since he was now divorced. Who knew they might have hit it off?</p>
@@ -2405,17 +2405,17 @@
                 <p>Glancing around at the guests, Laura said, “I had a close call to death because of my sickness. Thus, I organized this banquet to celebrate that I still have more years to live on, and secondly, to express my gratitude for the person who</p>
                 <p>ensured my successful surgery. She’s kind and earnest, though she might have more bad days than good ones in our family, she was still forgiving enough to persuade her family to perform surgery on me.”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Mia’s eyes turned red. As Laura spoke, she sauntered toward her and held her hand. “Mia used to be the lady of the Barrett family. Now that she has become the daughter of the Lane family in Nord City, I’m sincerely happy for her. She’ll always remain as one of our most important guests. Thus, I hope everyone will take care of her for the sake of our family.”</p>
                 <p>A round of applause erupted among the crowd. Someone couldn’t help but jeer, Mrs. Barrett Senior, since you’re so fond of her, why don’t you make her remarry?</p>
                 <p>“Yeah, isn’t that a pleasure for both families? They both share the same status, and it’s splendid to have the most prominent families in Bern City and Nord City to merge as one!”</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Mia didn’t expect those people, who used to mock her, to actually propose for her to remarry Timothy. In fact, Sharon was quite intrigued as well. Pride swelled in her chest once she imagined herself boasting about having the daughter of the Lanes as her daughter–in–law.</p>
                 <p>The tension dripping off the Lane brothers caused the jeers to cease to a palpable silence. Dominic began politely, yet indifferently, “We appreciate Mrs. Barrett Senior’s hospitality toward Mia. I hate to say it, but we’re not particularly fond of forging familial ties with the Barrett family.”</p>
                 <p>Nathan added grimly, “If we had found Mia three years earlier, we wouldn’t have let her marry so soon either.”</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">
@@ -2537,7 +2537,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2553,8 +2553,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

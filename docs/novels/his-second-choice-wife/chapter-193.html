@@ -2392,14 +2392,14 @@
                 <p>She glanced at the dress. &#34;It&#39;s clean and dry now. This will do.&#34;</p>
                 <p>&#34;Change. Into. Something. Else.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Why?&#34;</p>
                 <p>He released her arm, struggling for words as his jaw tightened.</p>
                 <p>Seeing his darkened expression, Evelyn guessed, &#34;Embarrassed to be seen with me dressed like this?&#34;</p>
                 <p>Liam&#39;s eyes flashed with frustration. &#34;That&#39;s not what I—&#34;</p>
                 <p>The military base housed many women - soldiers&#39; wives who wore far more revealing outfits during visits.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Why couldn&#39;t she?</p>
                 <p>Anger flared as she threw the dress onto the bed. &#34;Happy now? I won&#39;t wear it.&#34;</p>
                 <p>&#34;I&#39;ll have clothes delivered,&#34; he said softly.</p>
@@ -2413,14 +2413,14 @@
                 <p>Evelyn didn&#39;t look back as she stormed out. She wandered beyond the base perimeter until reaching a vibrant marketplace.</p>
                 <p>Stalls overflowed with colorful wares as merchants called to passersby. The lively atmosphere lifted her spirits slightly.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>She snapped photos absently as she browsed.</p>
                 <p>At a boutique, she purchased a flowing bohemian dress with intricate embroidery and changed in their fitting room.</p>
                 <p>By midday, her camera roll filled with images of local artisans at work. She&#39;d collected several handmade souvenirs.</p>
                 <p>Then a jewelry stall caught her eye.</p>
                 <p>&#34;Try anything you like!&#34; The vendor beamed as she paused before a display of costume rings.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Her fingers hovered over a faux diamond solitaire. Sliding it onto her ring finger, she held it up to sunlight.</p>
                 <p>The stone glittered despite its humble quality, stirring bittersweet emotions.</p>
                 <p>&#34;These come in pairs - his and hers. Only 20 dollars!&#34; The vendor gestured to matching bands.</p>
@@ -2428,7 +2428,7 @@
                 <p>&#34;15 dollars - my final offer!&#34;</p>
                 <p>She shook her head politely before walking away, the phantom weight of the ring lingering on her finger.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
             </div>
             
             <div class="font-controls">
@@ -2550,7 +2550,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2566,8 +2566,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

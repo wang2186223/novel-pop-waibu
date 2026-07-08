@@ -2390,7 +2390,7 @@
                 <p>Vivian slid the phone forward. &#34;Should I arrange a meeting so you can see for yourself?&#34;</p>
                 <p>&#34;No!&#34; Zoe shrieked, recoiling so violently she nearly toppled from her chair.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>That nightmare of a woman. She&#39;d destroyed everything.</p>
                 <p>Once a medical prodigy, the pride of a century-old pharmaceutical family, now reduced to public enemy number one.</p>
                 <p>&#34;If she&#39;s already caught, why come to me?&#34; Zoe&#39;s voice quivered.</p>
@@ -2405,12 +2405,12 @@
                 <p>The Night codename had once been her shield. Now it was her death warrant.</p>
                 <p>&#34;I won&#39;t go public.&#34; She bit her lip. &#34;The online hate...I can&#39;t take it...&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Vivian&#39;s eyes turned sharp. &#34;The people you poisoned suffered a thousand times worse.&#34;</p>
                 <p>Zoe flinched.</p>
                 <p>&#34;During withdrawal, they felt like ants were gnawing their bones.&#34; Vivian spoke each word deliberately. &#34;Yet you lack even the courage to face your mistakes.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>&#34;It wasn&#39;t my fault!&#34; Zoe clutched her head, sobbing. &#34;Annika forced me—&#34;</p>
                 <p>&#34;Every victim had a family.&#34; Vivian&#39;s voice cut like a blade. &#34;When parents watched their children writhe in agony, who should they blame?&#34;</p>
                 <p>Zoe collapsed against the chair, tears blurring her vision.</p>
@@ -2419,7 +2419,7 @@
                 <p>Vivian suddenly grasped her shaking hand. &#34;She can&#39;t touch you now. My promise stands—testify, and I&#39;ll protect you and your family.&#34;</p>
                 <p>The interrogation room lights cast deep shadows across Zoe&#39;s face.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">
@@ -2541,7 +2541,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2557,8 +2557,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

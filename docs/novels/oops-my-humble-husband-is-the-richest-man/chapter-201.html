@@ -2435,7 +2435,7 @@
                 <p>Margaret wiped her tears.</p>
                 <p>&#34;Who could have guessed?&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Isabella&#39;s schemes run so deep. Not just us, you didn&#39;t see through her either!&#34;</p>
                 <p>&#34;Why blame only us?&#34;</p>
                 <p>Richard laughed coldly.</p>
@@ -2460,7 +2460,7 @@
                 <p>&#34;You worked so hard to get your father to come home and live.&#34;</p>
                 <p>&#34;Now it&#39;s all over. He definitely won&#39;t come back now!&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Julian, why are you so unlucky?&#34;</p>
                 <p>&#34;Nothing you do can ever satisfy him…&#34;</p>
                 <p>Julian&#39;s eyes were red.</p>
@@ -2510,7 +2510,7 @@
                 <p>After leaving these cruel words, Margaret strode away.</p>
                 <p>Julian stood alone.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>His fists were clenched.</p>
                 <p>He finally pushed open the stairwell door.</p>
                 <p>As soon as he opened it, he saw Evelyn.</p>
@@ -2661,7 +2661,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2677,8 +2677,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

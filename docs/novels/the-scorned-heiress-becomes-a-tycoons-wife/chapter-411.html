@@ -2392,35 +2392,35 @@
                 <p>Adrian hastily averted his gaze, a sheen of sweat forming on the back of his neck.</p>
                 <p>&#34;Everyone... should pursue their dreams.&#34; The words tumbled out stiffly. He wished he could bite his tongue off.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>The room erupted in good-natured laughter.</p>
                 <p>#AdrianValdemarPublicConfession</p>
                 <p>#EmpressCastVisualPerfection</p>
                 <p>The trending list was instantly flooded.</p>
                 <p>Netizens&#39; comments poured in like a tidal wave:</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;That look from Adrian! Textbook unrequited love!&#34;</p>
                 <p>&#34;Queen Sophia radiating dominance! Obsessed!&#34;</p>
                 <p>&#34;Just for these visuals, I&#39;m locking in &#39;Empress&#39;!&#34;</p>
                 <p>Richard Lowell&#39;s fans immediately retaliated:</p>
                 <p>&#34;Pure publicity stunt!&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;What does &#39;Empress&#39; have besides pretty faces?&#34;</p>
                 <p>&#34;Waiting for &#39;River Banquet&#39; to crush it!&#34;</p>
                 <p>The moment the conference ended, Adrian bolted backstage like a startled rabbit.</p>
                 <p>&#34;Stop.&#34;</p>
                 <p>Sophia&#39;s voice rooted him to the spot.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>She approached slowly, her heels clicking sharply against the floor.</p>
                 <p>&#34;Are you avoiding me?&#34; She tilted her head slightly.</p>
                 <p>Adrian&#39;s lashes fluttered wildly. &#34;N-no...&#34;</p>
                 <p>&#34;Then why won&#39;t you look at me?&#34;</p>
                 <p>Silence thickened the air.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Adrian&#39;s throat moved again.</p>
                 <p>Sophia suddenly placed a hand on his shoulder. &#34;I told you, you can trust me.&#34;</p>
                 <p>His head snapped up, a flicker of hope in his eyes. &#34;What if... what if I did something terrible?&#34;</p>
@@ -2432,7 +2432,7 @@
                 <p>Sophia suddenly laughed. &#34;You don&#39;t mean the Alexander incident, do you?&#34;</p>
                 <p>Adrian&#39;s expression petrified.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">
@@ -2554,7 +2554,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2570,8 +2570,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

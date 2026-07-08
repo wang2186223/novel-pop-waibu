@@ -2391,13 +2391,13 @@
                 <p>Liam&#39;s bitter laugh sent chills down her spine. &#34;You promised if you returned to Aldenria, we&#39;d remain husband and wife.&#34; His voice cracked slightly. &#34;You said you wanted my child, wanted my genes.&#34;</p>
                 <p>The silence between them grew heavy.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Every breath hurt Liam now. &#34;You won&#39;t marry me. Won&#39;t have my child. Yet you work under me, parade yourself before me daily while giving me no chance at all.&#34; His voice dropped to a wounded whisper. &#34;Cassandra Wright, if you never intended to keep those promises, why make them?&#34;</p>
                 <p>He was shaking now, unshed tears making his eyes glisten in the dim light.</p>
                 <p>Evelyn&#39;s resolve wavered seeing his pain. Twenty years of friendship, over a decade of unspoken love - his devotion had always been absolute. And now it was destroying him.</p>
                 <p>After a long moment, she stepped closer. Gently, she pried open his clenched fist and laced her fingers through his.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Liam froze, staring down at their joined hands in confusion. Her skin was cool against his burning palm.</p>
                 <p>&#34;I&#39;m sorry, Liam,&#34; she murmured, staring at their intertwined fingers. &#34;I didn&#39;t lie to you. I just-&#34;</p>
                 <p>&#34;Evelyn!&#34; Rosalind&#39;s voice cut through the night.</p>
@@ -2421,7 +2421,7 @@
                 <p>Rosalind stepped closer. &#34;Evelyn?&#34;</p>
                 <p>With one last pleading look at Liam, Evelyn finally wrenched her hand free. The cold night air rushed between them as she turned away, leaving Liam standing alone under the flickering streetlamp, his outstretched hand slowly falling to his side.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
             </div>
             
             <div class="font-controls">
@@ -2543,7 +2543,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2559,8 +2559,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

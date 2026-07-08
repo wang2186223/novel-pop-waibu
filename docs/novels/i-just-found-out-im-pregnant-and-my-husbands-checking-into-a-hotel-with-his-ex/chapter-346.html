@@ -2397,25 +2397,25 @@
                 <p>Vincent approached the chief surgeon. &#34;Doctor,&#34; he said in a clipped tone, &#34;I want a thorough briefing on Margaret Scott&#39;s state.&#34;</p>
                 <p>Elsewhere, within Erica&#39;s opulent residence, mellow jazz drifted languidly through the air.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Erica, draped in a deep crimson silk robe and barefoot upon a lush rug, moved in a jagged waltz at the center of the lounge with Logan.</p>
                 <p>Her rhythm was erratic and forceful-more like venting than dancing. She clung to Logan&#39;s neck, her figure pressed into his, tilting her face toward the features so uncannily like Vincent&#39;s, eyes glassy, her laugh fractured and unhinged.</p>
                 <p>From a shadowed corner, a subordinate entered without sound. &#34;Miss Stanton. Raymond Scott-dead on the scene. Margaret Scott-sustained critical</p>
                 <p>harm, taken to intensive care. Prospects of survival are minimal. The intoxicated driver we employed has surrendered and admitted all.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Erica froze. She thrust Logan away, a sharp burst of exultant laughter escaping her. &#34;Perfect. Absolutely perfect!&#34;</p>
                 <p>She spun in place, intoxicated with triumph. &#34;Hannah Scott! You tore apart my factory, wrecked my valuable mine, and crippled my trade!&#34; Her gaze burned with hatred and perverse delight. &#34;Now you will learn what it means to lose the ones you treasure most.&#34;</p>
                 <p>She approached the towering pane of glass and tapped twice with fingers lacquered in vivid red.&#34;Two lives... Quite a bargain for you.&#34;</p>
                 <p>With a flick of her hand, she dismissed the subordinate. Yet, before he could vanish, she remembered something and called after him, &#34;Where is Vincent?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>The man inclined his head. &#34;At the hospital.&#34; A dark glint flashed in Erica&#39;s eyes. She pivoted abruptly toward Logan, closing the space between them in long strides.</p>
                 <p>The subordinate departed soundlessly.</p>
                 <p>Erica&#39;s slim fingers rose, tracing the angle of Logan&#39;s jaw, her gaze hazy and fixated. &#34;Vincent, when will there be a place for me beside you?&#34;</p>
                 <p>Her touch drifted downward to his neck, a blend of provocation and possessive claim.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;I&#39;ve waited endlessly. Why... Why can&#39;t you notice me?&#34; Her tone spiked without warning before she surged forward, locking her arms behind his neck and crushing her lips to his.</p>
                 <p>Logan endured it passively.</p>
                 <p>Her kiss grew fierce, forcing him back into the breadth of the sofa.</p>
@@ -2546,7 +2546,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2562,8 +2562,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

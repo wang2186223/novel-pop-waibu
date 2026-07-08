@@ -2389,7 +2389,7 @@
                 <p>Evelyn&#39;s pulse spiked, but she forced herself to stay composed.</p>
                 <p>She met his gaze evenly. &#34;What are you talking about?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Ethan hesitated. The bodyguard had followed the girl and found nothing suspicious—she had acted completely normal. Yet, something still felt off.</p>
                 <p>He had tested Evelyn deliberately, expecting a reaction. But she remained unshaken.</p>
                 <!-- 广告位 2 -->
@@ -2397,11 +2397,11 @@
                 <p>Had he imagined it all?</p>
                 <p>Evelyn knew Ethan hadn&#39;t discovered anything concrete.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>If he had, he would&#39;ve dragged that girl here to face her already.</p>
                 <p>She studied Ethan&#39;s expression carefully, searching for any signs of suspicion. Finding none, she took two deliberate steps back.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>Tears welled up in her eyes, her lower lip trembling with practiced precision. Her shoulders shook with feigned distress.</p>
                 <p>&#34;Ethan,&#34; she whispered, voice breaking, &#34;if you truly wanted a fresh start with me, why can&#39;t you trust me even a little?&#34;</p>
                 <!-- 广告位 5 -->
@@ -2414,7 +2414,7 @@
                 <p>A strong arm yanked her back.</p>
                 <p>Ethan crushed her against his chest, his grip unyielding. His voice was rough with—</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">
@@ -2536,7 +2536,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2552,8 +2552,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

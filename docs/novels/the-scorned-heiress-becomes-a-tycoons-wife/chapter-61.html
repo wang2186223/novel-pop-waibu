@@ -2392,28 +2392,28 @@
                 <p>She&#39;d fought hard for this opportunity.</p>
                 <p>&#34;You fainted earlier,&#34; Nathan said firmly. &#34;Your health comes first.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Emily&#39;s eyes reddened with frustration.</p>
                 <p>&#34;I&#39;m fine, just a little low blood sugar—&#34;</p>
                 <p>&#34;Enough.&#34; Nathan cut her off. &#34;My assistant will take you to the hospital.&#34;</p>
                 <p>As he turned to leave, Emily grabbed his sleeve.</p>
                 <p>&#34;Fourth Brother!&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Nathan frowned and pulled his arm free.</p>
                 <p>&#34;The show&#39;s starting.&#34;</p>
                 <p>He strode toward the studio without looking back.</p>
                 <p>Emily stood rooted to the spot, nails digging into her palms.</p>
                 <p>Her venomous gaze locked onto Sophia across the room.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Why hadn&#39;t that bitch died abroad?</p>
                 <p>Those useless foster parents should&#39;ve smothered her at birth.</p>
                 <p>Her phone vibrated abruptly.</p>
                 <p>Emily&#39;s face paled when she saw the caller ID.</p>
                 <p>She hurried to a secluded corner.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Are you insane?&#34; she hissed. &#34;Why are you calling now?&#34;</p>
                 <p>A raspy chuckle came through the line.</p>
                 <p>&#34;Breaking bridges after crossing the river, Miss Lowell?&#34;</p>
@@ -2430,7 +2430,7 @@
                 <p>This was all Sophia&#39;s fault.</p>
                 <p>Everything would&#39;ve been perfect if she&#39;d never existed.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
             </div>
             
             <div class="font-controls">
@@ -2552,7 +2552,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2568,8 +2568,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

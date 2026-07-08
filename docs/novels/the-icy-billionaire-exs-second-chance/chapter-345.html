@@ -2391,16 +2391,16 @@
                 <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Beaming, the director rushed forward. &#34;Mr. Blackwood—&#34; he began, ready to mention Serena waiting in the green room.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>But Adrian strode right past him, his piercing gaze locked onto the stage.</p>
                 <!-- 广告位 3 -->
                 <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>When Vivian met those obsidian eyes, time seemed to freeze. The intensity in his stare rooted her to the spot. Despite her shock, she knew with terrifying certainty - he&#39;d come for her. Her pulse pounded so violently she feared the mic might pick it up.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>This wasn&#39;t how she&#39;d imagined their reunion. Instead of joy, cold dread pooled in her stomach. Every instinct screamed to run, but fleeing mid-recording would destroy her career. She bit her lip hard enough to taste copper, reminding herself this wasn&#39;t live. Maybe they could edit this entire segment out later.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Julian Montoya, misreading the situation, stepped forward to intercept Adrian, thinking he meant to confront Vivian for Serena&#39;s sake. &#34;Mr. Blackwood—&#34;</p>
                 <p>One glacial glance from Adrian had Julian retreating instantly.</p>
                 <p>Adrian stopped before Vivian, studying her with an unreadable expression. The studio lights caught the subtle silver threads in his navy suit, making him look every inch the untouchable tycoon. &#34;You didn&#39;t tell me you&#39;d be on Spotlight Night.&#34; His voice was deceptively calm, like the eerie stillness before a storm.</p>
@@ -2408,7 +2408,7 @@
                 <p>Vivian focused on Adrian&#39;s tie pin to steady herself. &#34;I didn&#39;t think variety shows were your thing.&#34;</p>
                 <p>&#34;They&#39;re not,&#34; Adrian admitted, his deep voice resonating through the suddenly silent studio. Then, with quiet intensity that made her heart stutter: &#34;But I&#39;ll make an exception for you.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
             </div>
             
             <div class="font-controls">
@@ -2530,7 +2530,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2546,8 +2546,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

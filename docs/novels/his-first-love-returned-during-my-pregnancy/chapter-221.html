@@ -2394,7 +2394,7 @@
                 <p>Evelyn hurried toward the exit. Peter grabbed his coat and followed. &#34;Slow down—it&#39;s dark and slippery outside...&#34;</p>
                 <p>When Olivia Lightfoot returned, only Gregory remained.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;Dr. Wilson, where&#39;s Dr. Carter?&#34;</p>
                 <p>&#34;She left.&#34;</p>
                 <p>&#34;So soon?&#34;</p>
@@ -2430,7 +2430,7 @@
                 <p>The cue ball arced gracefully, leaving a red ball nestled perfectly behind the black.</p>
                 <p>A flawless snooker.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>&#34;Exquisitely hidden,&#34; he murmured in admiration.</p>
                 <p>Alexander turned to Olivia. &#34;Where did Evelyn go?&#34;</p>
                 <p>She rolled her eyes. &#34;Why should I tell you?&#34;</p>
@@ -2439,7 +2439,7 @@
                 <p>A vein pulsed at Alexander&#39;s temple, but he restrained himself.</p>
                 <p>His gaze returned to Gregory. &#34;Where is Evelyn?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">
@@ -2561,7 +2561,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2577,8 +2577,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

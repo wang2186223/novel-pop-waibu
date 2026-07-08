@@ -2397,7 +2397,7 @@
                 <p>&#34;I&#39;m just stating facts.&#34; She took half a step back. &#34;More importantly, why are you here?&#34;</p>
                 <p>&#34;Follow-up appointment.&#34; His expression remained neutral.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>In truth, he&#39;d been monitoring the hospital. He knew Annika Heilbronn&#39;s schemes better than anyone.</p>
                 <p>That patient&#39;s sudden death was no accident. Annika had used illusions to trigger the man&#39;s worst fears, causing cardiac arrest.</p>
                 <p>&#34;Go get checked then.&#34; Vivian nudged him. &#34;I have rounds to make.&#34;</p>
@@ -2409,19 +2409,19 @@
                 <p>Ethan stood at the far end, holding Theo Evans&#39; hand. His gaze turned glacial.</p>
                 <p>Liam smirked and tightened his hold on Vivian.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Let go.&#34; She pushed against his chest. &#34;And call me Vivian from now on. No more Shadow references.&#34;</p>
                 <p>&#34;Fine... Vivian.&#34; He deliberately brushed his lips near her ear.</p>
                 <p>She patted his shoulder like he was just another comrade.</p>
                 <p>As she turned to leave, she met Ethan&#39;s stormy glare.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Theo broke free from his uncle&#39;s grip and sprinted toward her. &#34;Auntie! I memorized all those bad people&#39;s faces! When I grow up—&#34;</p>
                 <p>&#34;It&#39;s &#39;sister.&#39;&#34; Vivian crouched to correct him.</p>
                 <p>Before she could finish, strong arms yanked her into another embrace.</p>
                 <p>Ethan&#39;s grip was like iron—far more possessive than Liam&#39;s had been.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
             </div>
             
             <div class="font-controls">
@@ -2543,7 +2543,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2559,8 +2559,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

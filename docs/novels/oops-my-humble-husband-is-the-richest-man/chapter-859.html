@@ -2427,7 +2427,7 @@
                 <p>Poppy stretched and looked at her.</p>
                 <p>&#34;Where do I stay?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>Evelyn said, &#34;You probably shouldn&#39;t stay here.&#34;</p>
                 <p>&#34;Why not? I&#39;m not afraid you&#39;ll kill me! I trust you!&#34;</p>
                 <p>Evelyn twitched the corner of her mouth.</p>
@@ -2441,7 +2441,7 @@
                 <p>Poppy stood up and walked out.</p>
                 <p>Watching her retreating back, Evelyn looked at Alexander.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;What do you think about that Astrid...&#34;</p>
                 <p>Alexander was silent for a long time before speaking.</p>
                 <p>&#34;Actually, during that week at the Sterling Family, I didn&#39;t hear any resentment from Natalie&#39;s mother towards the other heirs either.&#34;</p>
@@ -2455,7 +2455,7 @@
                 <p>Her phone suddenly rang.</p>
                 <p>She answered.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Joanna&#39;s voice came through.</p>
                 <p>&#34;How did it go? How did it go? Did they try to recruit you?&#34;</p>
                 <p>Evelyn said, &#34;They came.&#34;</p>
@@ -2471,7 +2471,7 @@
                 <p>She asked, &#34;Hello?&#34;</p>
                 <p>&#34;Damn! You went there as an undercover agent. How did you suddenly become their second-in-command? I suddenly feel this offer is very attractive! You&#39;re not going to defect, are you?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">
@@ -2593,7 +2593,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2609,8 +2609,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

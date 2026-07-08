@@ -2405,7 +2405,7 @@
                 <p>Harrison&#39;s eyes glistened with unshed tears. &#34;I only wanted your happiness. I never imagined that fool would throw it all away. Forgive me.&#34;</p>
                 <p>&#34;Please don&#39;t say that. Some things just aren&#39;t meant to be.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Thirteen years of devotion, gone in an instant. Only she knew the depth of that wound.</p>
                 <p>But if Nathan could walk away so decisively, clinging would only strip her of dignity. She refused to become that bitter woman begging for scraps of affection.</p>
                 <p>&#34;Mr. Bennett, bring Bella&#39;s birthday gift!&#34;</p>
@@ -2415,7 +2415,7 @@
                 <p>&#34;Yes, my wife&#39;s favorite. An Abernathy heirloom passed down for generations.&#34;</p>
                 <p>Harrison lifted the bracelet, sunlight catching its facets as his expression softened. &#34;Before she passed, she made me promise to give this to the woman I approved as my granddaughter. Bella, you&#39;re the only one worthy of it.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;Mr. Sinclair, I can&#39;t accept this. Besides, I&#39;m no longer—&#34;</p>
                 <p>&#34;Even if you and Nathan are divorced, you&#39;ll always be the granddaughter I chose!&#34; Harrison&#39;s voice turned steely. &#34;If you refuse, I&#39;ll smash it right now!&#34;</p>
                 <p>&#34;No! I&#39;ll take it!&#34; Isabella caught his wrist in alarm. &#34;Thank you, Mr. Sinclair.&#34;</p>
@@ -2425,7 +2425,7 @@
                 <p>&#34;Mr. Sinclair, Nathan already gave me a gift. One I&#39;ll never forget.&#34;</p>
                 <p>Nathan&#39;s fists clenched.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Her birthday. The day he&#39;d served her divorce papers.</p>
                 <p>Isabella, you cut deep.</p>
                 <p>&#34;Bella, is there truly no hope for you and Nathan?&#34; Harrison pleaded.</p>
@@ -2572,7 +2572,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2588,8 +2588,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

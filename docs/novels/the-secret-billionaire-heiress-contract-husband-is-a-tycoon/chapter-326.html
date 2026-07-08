@@ -2389,11 +2389,11 @@
                 <p>&#34;See how it&#39;s done?&#34; She lifted the spear, sunlight refracting through the droplets clinging to it.</p>
                 <p>Ethan watched the sea breeze tousle her hair, a faint smile curving his lips. &#34;Mm.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Xander Quincy eagerly grabbed the spear and charged into the water.</p>
                 <p>Julian lounged on the sand, smirking. &#34;Good luck with that.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>He knew exactly how difficult spearfishing could be.</p>
                 <p>Evelyn shook her head and turned to gather firewood.</p>
                 <!-- 广告位 3 -->
@@ -2401,11 +2401,11 @@
                 <p>Her combat knife flashed as she swiftly assembled a makeshift grill.</p>
                 <p>&#34;Going to cook the fish?&#34; Julian sidled up.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>&#34;Yes. Everyone&#39;s hungry.&#34; Her hands moved deftly scaling the fish.</p>
                 <p>Julian frowned. &#34;No fire starter.&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;I&#39;ve got it covered.&#34; She didn&#39;t look up.</p>
                 <p>&#34;Beatrice&#39;s team has a lighter,&#34; Julian suggested.</p>
                 <p>Evelyn&#39;s hands stilled. &#34;Send Xander to borrow it.&#34;</p>
@@ -2413,7 +2413,7 @@
                 <p>Julian&#39;s eyes lit up. He called toward the water, &#34;Xander! Evelyn needs you to get a lighter!&#34;</p>
                 <p>The struggling spearfisherman turned with a scowl. &#34;Why don&#39;t you go yourself?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">
@@ -2535,7 +2535,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2551,8 +2551,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

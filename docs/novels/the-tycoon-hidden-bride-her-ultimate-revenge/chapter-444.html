@@ -2389,19 +2389,19 @@
                 <p>Elliana didn’t smile. She quietly opened the door and slid into the passenger seat, her face gloomy and her eyes heavy.</p>
                 <p>Adah glanced at her, surprised. “You okay? You look like someone kicked your puppy.”</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>Elliana exhaled.</p>
                 <p>Adah rolled the window back up and looked at her more closely. “I’ve never seen you like this. Did something happen? Did someone break your heart or something?”</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Elliana nodded. “Exactly.”</p>
                 <p>Adah raised her eyebrows. “Wait—what are you saying?”</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Elliana handed her the divorce papers. “Cole wants a divorce.”</p>
                 <p>Adah grabbed the papers and skimmed through them. She stared at Elliana in disbelief. “What the hell? Weren’t you two all lovey-dovey just yesterday? Now it says irreconcilable differences? Seriously? What kind of differences could you two possibly have?”</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>M ?  gν.</p>
                 <p>Elliana took a deep breath and told her everything that had happened the night before. When she finished, she stared down at her hands. “I don’t get it,” she whispered. “He changed overnight. And it seems he really wants this divorce. He even said he never wants to see me again.”</p>
                 <!-- 广告位 5 -->
@@ -2536,7 +2536,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2552,8 +2552,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

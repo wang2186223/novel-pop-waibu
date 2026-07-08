@@ -2389,29 +2389,29 @@
                 <p>&#34;Vivian, I came in good faith to apologize, yet you resort to violence...&#34; Victoria trembled as she struggled upright, eyes glistening with unshed tears.</p>
                 <p>Vivian observed the theatrics coldly. &#34;I never laid a finger on you.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>Victoria glanced around before lowering her voice. &#34;Beat me all you want if it appeases your anger. Just...don&#39;t sell me to those vile places...&#34;</p>
                 <p>Vivian&#39;s brow furrowed.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
                 <p>What nonsense was this woman spouting now?</p>
                 <p>Without checking, she knew social media would explode. Anyone watching would think Vivian the villain in this performance.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Victoria, get up!&#34; Vivian&#39;s voice cut like ice.</p>
                 <p>&#34;I won&#39;t!&#34; Victoria shrieked hysterically. &#34;Haven&#39;t you ruined my life enough? Must you annihilate every last shred of my dignity?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Her deliberately vague accusations invited wild speculation.</p>
                 <p>Vivian looked down at her. &#34;Since you insist I&#39;ve wronged you, explain clearly—what exactly have I done?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Victoria&#39;s mouth snapped shut.</p>
                 <p>&#34;Shall we call your brother to arbitrate?&#34; Vivian&#39;s lips curled. &#34;Or shall I state plainly—I, Vivian Laurent, conduct myself with integrity. Petty schemes beneath someone like you aren&#39;t worth my attention.&#34;</p>
                 <p>Her gaze swept over both women. &#34;Sophia Evans&#39; death wasn&#39;t my doing. Neither were your parents&#39; deaths. But you...&#34;</p>
                 <p>Vivian lowered her voice. &#34;Before she died, Sophia mentioned someone manipulating her from the shadows. If anyone approaches you...they&#39;re likely your family&#39;s true murderer.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">
@@ -2533,7 +2533,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2549,8 +2549,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();

