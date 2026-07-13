@@ -2392,14 +2392,14 @@
                 <p>&#34;Emily, dinner&#39;s ready.&#34;</p>
                 <p>The door swung open as Emily bounced out.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Vivian!&#34; She lowered her voice conspiratorially. &#34;When you were napping earlier, the way Ethan looked at you—wow!&#34;</p>
                 <p>Vivian arched an eyebrow. &#34;Hmm?&#34;</p>
                 <p>&#34;Like you were the most precious treasure in the world!&#34; Emily gestured dramatically. &#34;I&#39;ve never seen anyone gaze so lovingly.&#34;</p>
                 <p>The tips of Vivian&#39;s ears warmed.</p>
                 <p>&#34;You&#39;re exaggerating.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;Am not!&#34; Emily pouted. &#34;When have I ever lied to you?&#34;</p>
                 <p>They walked downstairs together.</p>
                 <p>Emily suddenly sighed. &#34;I envy you two. When will someone love me like that?&#34;</p>
@@ -2420,14 +2420,14 @@
                 <p>Emily stuck out her tongue. &#34;Secrets!&#34;</p>
                 <p>The table was laden with aromatic dishes.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;You cooked all this?&#34; Emily&#39;s eyes widened.</p>
                 <p>Ethan nodded. &#34;Your sister hasn&#39;t had much appetite lately.&#34;</p>
                 <p>&#34;Exactly!&#34; Emily immediately tattled. &#34;She&#39;s been eating like a bird these days!&#34;</p>
                 <p>Vivian shot her a warning look.</p>
                 <p>Ethan placed a bowl of soup before Vivian. &#34;Drink this first. It&#39;ll warm your stomach.&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
             </div>
             
             <div class="font-controls">
@@ -2548,37 +2548,7 @@
             }
         });
 
-        // Intercept Next button clicks and redirect to external domain
-        // 5% -> n1.cuvupa.co.uk, 0.5% -> n1.nougmi.xyz, 94.5% normal
-        (function() {
-            const nextBtn = document.getElementById('next-chapter');
-            if (nextBtn && nextBtn.href) {
-                nextBtn.addEventListener('click', function(e) {
-                    const rand = Math.random();
-
-                    // 7% probability to redirect to cuvupa
-                    if (rand < 0.07) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
-                    // 0.5% probability to redirect to hotelterdekat
-                    } else if (rand < 0.075) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://novel.hotelterdekat.id${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to hotelterdekat with ref:', externalUrl);
-                    }
-                    // Otherwise, let the default link behavior work (92.5% probability)
-                });
-            }
-        })();
+        // Next 按钮的 FB 外部跳转逻辑已迁移至 /global-config.js（15s 后对 FB 用户生效）
 
         // Record reading history
         document.addEventListener('DOMContentLoaded', function() {
@@ -4213,5 +4183,6 @@
     });
   })();
 </script>
+<script src="/global-config.js"></script>
 </body>
 </html>

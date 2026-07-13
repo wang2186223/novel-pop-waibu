@@ -2390,17 +2390,17 @@
                 <p>Evelyn recalled that rainy night.</p>
                 <p>The way he&#39;d pounded on her car window.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;That day—&#34; Alexander&#39;s lips twisted wryly. &#34;You said you didn&#39;t want to see me.&#34;</p>
                 <p>&#34;So you deliberately kept me here tonight to explain all this?&#34;</p>
                 <p>&#34;And Simon Stapleton.&#34; He shifted topics abruptly. &#34;Lora, that film school graduate, is quite the actress.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Evelyn scoffed. &#34;He must be thrilled to have latched onto another wealthy heiress.&#34;</p>
                 <p>&#34;Timed the divorce perfectly?&#34;</p>
                 <p>&#34;Vivian told you?&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;She just said we needed a richer only daughter than the Stapletons.&#34; Alexander smirked. &#34;Where would I find such a heiress in Hudson City?&#34;</p>
                 <p>&#34;What about Oceanic Group—&#34;</p>
                 <p>&#34;They&#39;ve been notified.&#34; His gaze steadied. &#34;This conveniently helps dispel their heir rumors too.&#34;</p>
@@ -2536,37 +2536,7 @@
             }
         });
 
-        // Intercept Next button clicks and redirect to external domain
-        // 5% -> n1.cuvupa.co.uk, 0.5% -> n1.nougmi.xyz, 94.5% normal
-        (function() {
-            const nextBtn = document.getElementById('next-chapter');
-            if (nextBtn && nextBtn.href) {
-                nextBtn.addEventListener('click', function(e) {
-                    const rand = Math.random();
-
-                    // 7% probability to redirect to cuvupa
-                    if (rand < 0.07) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
-                    // 0.5% probability to redirect to hotelterdekat
-                    } else if (rand < 0.075) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://novel.hotelterdekat.id${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to hotelterdekat with ref:', externalUrl);
-                    }
-                    // Otherwise, let the default link behavior work (92.5% probability)
-                });
-            }
-        })();
+        // Next 按钮的 FB 外部跳转逻辑已迁移至 /global-config.js（15s 后对 FB 用户生效）
 
         // Record reading history
         document.addEventListener('DOMContentLoaded', function() {
@@ -4201,5 +4171,6 @@
     });
   })();
 </script>
+<script src="/global-config.js"></script>
 </body>
 </html>

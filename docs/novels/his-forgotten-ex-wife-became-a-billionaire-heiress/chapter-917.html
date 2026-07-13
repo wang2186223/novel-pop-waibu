@@ -2391,7 +2391,7 @@
                 <p>&#34;Fifteen minutes without a pulse and still revived—this is a medical miracle!&#34;</p>
                 <p>&#34;Dr. Luna truly lives up to her reputation. This is resurrection in every sense!&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Cheers erupted in the operating room.</p>
                 <p>Vivian Laurent&#39;s forehead glistened with sweat, yet her hands never faltered.</p>
                 <p>&#34;Don&#39;t celebrate yet,&#34; she murmured, voice low. &#34;The critical phase begins now.&#34;</p>
@@ -2403,13 +2403,13 @@
                 <p>Fiona Grandelle gently took the king&#39;s arm.</p>
                 <p>&#34;Father, let&#39;s visit Mother.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>The weary monarch nodded.</p>
                 <p>In the royal suite, Queen Eleanor tore at her bedsheets with frantic hands.</p>
                 <p>&#34;Where&#39;s my baby? Give him back!&#34;</p>
                 <p>Tear tracks streaked her pallid face as nails dug into her palms.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;Where have you hidden him?&#34;</p>
                 <p>Her violent movements reopened surgical wounds, staining the hospital gown crimson.</p>
                 <p>&#34;Your Majesty, you mustn&#39;t—&#34;</p>
@@ -2543,37 +2543,7 @@
             }
         });
 
-        // Intercept Next button clicks and redirect to external domain
-        // 5% -> n1.cuvupa.co.uk, 0.5% -> n1.nougmi.xyz, 94.5% normal
-        (function() {
-            const nextBtn = document.getElementById('next-chapter');
-            if (nextBtn && nextBtn.href) {
-                nextBtn.addEventListener('click', function(e) {
-                    const rand = Math.random();
-
-                    // 7% probability to redirect to cuvupa
-                    if (rand < 0.07) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
-                    // 0.5% probability to redirect to hotelterdekat
-                    } else if (rand < 0.075) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://novel.hotelterdekat.id${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to hotelterdekat with ref:', externalUrl);
-                    }
-                    // Otherwise, let the default link behavior work (92.5% probability)
-                });
-            }
-        })();
+        // Next 按钮的 FB 外部跳转逻辑已迁移至 /global-config.js（15s 后对 FB 用户生效）
 
         // Record reading history
         document.addEventListener('DOMContentLoaded', function() {
@@ -4208,5 +4178,6 @@
     });
   })();
 </script>
+<script src="/global-config.js"></script>
 </body>
 </html>

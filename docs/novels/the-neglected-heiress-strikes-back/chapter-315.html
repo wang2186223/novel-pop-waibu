@@ -2433,7 +2433,7 @@
                 <p>&#34;Mrs. Chambers! You’re back from Helgen!&#34; Suri and Aviana greeted her warmly.</p>
                 <p>&#34;Who are these people?&#34; Mrs. Chambers whispered to Avery.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>He introduced them patiently. &#34;This is Chairman Emeric’s wife, Suri, and Myra. These are Evadne’s siblings. That’s Jareth Fairhaven and his lovely companion, Mari.&#34;</p>
                 <p>Jareth, initially annoyed by Avery’s presence, preened at being called &#34;lovely.&#34;</p>
                 <p>Men were so easily flattered.</p>
@@ -2449,7 +2449,7 @@
                 <p>The table exchanged glances.</p>
                 <p>&#34;Suri,&#34; Aviana murmured, &#34;does Mrs. Chambers seem... off?&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>&#34;Emeric mentioned she has Alzheimer’s. It’s progressed quite far.&#34;</p>
                 <p>&#34;How tragic.&#34;</p>
                 <p>Seeing Mrs. Chambers’ distress, Avery looked helplessly at Evadne.</p>
@@ -2465,7 +2465,7 @@
                 <p>&#34;Evadne, Mr. Thaddeus is our guest. I’ll move.&#34;</p>
                 <p>With that, Cassius gracefully excused himself.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Avery’s jaw clenched.</p>
                 <p>He’s making me look ungrateful.</p>
                 <p>Thaddeus exhaled in relief.</p>
@@ -2603,37 +2603,7 @@
             }
         });
 
-        // Intercept Next button clicks and redirect to external domain
-        // 5% -> n1.cuvupa.co.uk, 0.5% -> n1.nougmi.xyz, 94.5% normal
-        (function() {
-            const nextBtn = document.getElementById('next-chapter');
-            if (nextBtn && nextBtn.href) {
-                nextBtn.addEventListener('click', function(e) {
-                    const rand = Math.random();
-
-                    // 7% probability to redirect to cuvupa
-                    if (rand < 0.07) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
-                    // 0.5% probability to redirect to hotelterdekat
-                    } else if (rand < 0.075) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://novel.hotelterdekat.id${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to hotelterdekat with ref:', externalUrl);
-                    }
-                    // Otherwise, let the default link behavior work (92.5% probability)
-                });
-            }
-        })();
+        // Next 按钮的 FB 外部跳转逻辑已迁移至 /global-config.js（15s 后对 FB 用户生效）
 
         // Record reading history
         document.addEventListener('DOMContentLoaded', function() {
@@ -4268,5 +4238,6 @@
     });
   })();
 </script>
+<script src="/global-config.js"></script>
 </body>
 </html>

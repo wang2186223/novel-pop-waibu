@@ -2390,7 +2390,7 @@
                 <p>Alexander Hamilton abandoned his tablet and joined them. Without speaking, he wiped away an escaped tear while Evelyn rubbed soothing circles on their daughter&#39;s back.</p>
                 <p>&#34;Peanut didn&#39;t know it was an accident,&#34; Evelyn explained gently. &#34;Let&#39;s go apologize, okay?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
                 <p>Nodding, Chloe wobbled toward the corner where the cat had retreated. She crouched down and tentatively stroked Peanut&#39;s head, murmuring unintelligible words.</p>
                 <p>Miraculously, the Ragdoll leaned into the touch, nuzzling the small hand.</p>
                 <p>Alexander watched thoughtfully. &#34;We should consider finding her some playmates her own age.&#34;</p>
@@ -2400,7 +2400,7 @@
                 <p>&#34;Mm. No matter how clever Peanut is, she can&#39;t have conversations or play proper games with Chloe.&#34;</p>
                 <p>Evelyn headed for the stairs. &#34;I&#39;ll call the early education center now.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>Upstairs in the study, Evelyn dialed the number.</p>
                 <p>&#34;Mrs. Hamilton! We offer several program options...&#34; The teacher launched into an enthusiastic pitch.</p>
                 <p>Evelyn selected the basic introductory course, but paused when the teacher added, &#34;Many families enroll siblings together, though balancing attention between two children requires—&#34;</p>
@@ -2540,37 +2540,7 @@
             }
         });
 
-        // Intercept Next button clicks and redirect to external domain
-        // 5% -> n1.cuvupa.co.uk, 0.5% -> n1.nougmi.xyz, 94.5% normal
-        (function() {
-            const nextBtn = document.getElementById('next-chapter');
-            if (nextBtn && nextBtn.href) {
-                nextBtn.addEventListener('click', function(e) {
-                    const rand = Math.random();
-
-                    // 7% probability to redirect to cuvupa
-                    if (rand < 0.07) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
-                    // 0.5% probability to redirect to hotelterdekat
-                    } else if (rand < 0.075) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://novel.hotelterdekat.id${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to hotelterdekat with ref:', externalUrl);
-                    }
-                    // Otherwise, let the default link behavior work (92.5% probability)
-                });
-            }
-        })();
+        // Next 按钮的 FB 外部跳转逻辑已迁移至 /global-config.js（15s 后对 FB 用户生效）
 
         // Record reading history
         document.addEventListener('DOMContentLoaded', function() {
@@ -4205,5 +4175,6 @@
     });
   })();
 </script>
+<script src="/global-config.js"></script>
 </body>
 </html>

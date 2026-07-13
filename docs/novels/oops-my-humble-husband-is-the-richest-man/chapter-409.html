@@ -2402,7 +2402,7 @@
                 <p>A roguish smile played on his lips.</p>
                 <p>&#34;Is this Mr. Vance?&#34;</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>&#34;He looks quite young…&#34;</p>
                 <p>&#34;Doesn&#39;t quite match the legends…&#34;</p>
                 <p>Evelyn&#39;s mouth twitched.</p>
@@ -2436,7 +2436,7 @@
                 <p>The dowry gifts were displayed one by one.</p>
                 <p>The guests stopped eating.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>They crowded around for a closer look.</p>
                 <p>Someone called out to Penelope Valentine. &#34;Miss Valentine, come see your dowry!&#34;</p>
                 <p>Penelope blushed and stood up.</p>
@@ -2453,7 +2453,7 @@
                 <p>People around her rushed to flatter:</p>
                 <p>&#34;This dowry is absolutely unmatched in New York!&#34;</p>
                 <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;The Valentine family&#39;s bridal gifts must be equally impressive.&#34;</p>
                 <p>&#34;Miss Valentine benefits the most!&#34;</p>
                 <p>A daughter of the Xu branch family sneered at Grace. &#34;See? This is how the Valentine family marries off daughters! What did Zack Davis give you when you married?&#34;</p>
@@ -2492,7 +2492,7 @@
                 <p>&#34;The position of Madame Vance belongs only to Third Master&#39;s biological daughter!&#34;</p>
                 <p>&#34;What right does an adopted daughter have to marry Mr. Vance?&#34;</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">
@@ -2613,37 +2613,7 @@
             }
         });
 
-        // Intercept Next button clicks and redirect to external domain
-        // 5% -> n1.cuvupa.co.uk, 0.5% -> n1.nougmi.xyz, 94.5% normal
-        (function() {
-            const nextBtn = document.getElementById('next-chapter');
-            if (nextBtn && nextBtn.href) {
-                nextBtn.addEventListener('click', function(e) {
-                    const rand = Math.random();
-
-                    // 7% probability to redirect to cuvupa
-                    if (rand < 0.07) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
-                    // 0.5% probability to redirect to hotelterdekat
-                    } else if (rand < 0.075) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://novel.hotelterdekat.id${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to hotelterdekat with ref:', externalUrl);
-                    }
-                    // Otherwise, let the default link behavior work (92.5% probability)
-                });
-            }
-        })();
+        // Next 按钮的 FB 外部跳转逻辑已迁移至 /global-config.js（15s 后对 FB 用户生效）
 
         // Record reading history
         document.addEventListener('DOMContentLoaded', function() {
@@ -4278,5 +4248,6 @@
     });
   })();
 </script>
+<script src="/global-config.js"></script>
 </body>
 </html>

@@ -2397,7 +2397,7 @@
                 <p>On the day of her prenatal checkup, Sophia went to the hospital alone. Vivian had wanted to accompany her but was tied up with filming.</p>
                 <p>&#34;The baby is healthy, but you’re too thin,&#34; the doctor said, flipping through the report. &#34;Eat more nutritious meals. Exercise will help with a smooth delivery.&#34;</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>Sophia took the ultrasound printout, her expression softening at the blurry little figure.</p>
                 <p>&#34;I’ll take care of it.&#34;</p>
                 <!-- 广告位 4 -->
@@ -2405,7 +2405,7 @@
                 <p>As she stepped out of the examination room, Vivian called.</p>
                 <p>&#34;The doctor says the baby’s healthy, just that I need to eat more,&#34; Sophia said, walking while talking. Suddenly, someone blocked her path.</p>
                 <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
                 <p>She sidestepped left, but the person mirrored her movement. Looking up, she met Isabella’s triumphant smile.</p>
                 <p>&#34;Can I help you?&#34; Sophia ended the call.</p>
                 <p>Isabella crossed her arms, grinning smugly. &#34;Ethan and I are getting married this weekend. You must come.&#34;</p>
@@ -2533,37 +2533,7 @@
             }
         });
 
-        // Intercept Next button clicks and redirect to external domain
-        // 5% -> n1.cuvupa.co.uk, 0.5% -> n1.nougmi.xyz, 94.5% normal
-        (function() {
-            const nextBtn = document.getElementById('next-chapter');
-            if (nextBtn && nextBtn.href) {
-                nextBtn.addEventListener('click', function(e) {
-                    const rand = Math.random();
-
-                    // 7% probability to redirect to cuvupa
-                    if (rand < 0.07) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
-                    // 0.5% probability to redirect to hotelterdekat
-                    } else if (rand < 0.075) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://novel.hotelterdekat.id${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to hotelterdekat with ref:', externalUrl);
-                    }
-                    // Otherwise, let the default link behavior work (92.5% probability)
-                });
-            }
-        })();
+        // Next 按钮的 FB 外部跳转逻辑已迁移至 /global-config.js（15s 后对 FB 用户生效）
 
         // Record reading history
         document.addEventListener('DOMContentLoaded', function() {
@@ -4198,5 +4168,6 @@
     });
   })();
 </script>
+<script src="/global-config.js"></script>
 </body>
 </html>

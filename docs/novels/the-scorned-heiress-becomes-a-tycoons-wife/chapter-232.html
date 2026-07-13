@@ -2392,21 +2392,21 @@
                 <p>What chance did a D-list celebrity like him—already hated online—have except to attract more criticism?</p>
                 <p>Besides...</p>
                 <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
                 <p>&#34;I don&#39;t need charity roles.&#34;</p>
                 <p>Sophia smirked.</p>
                 <p>&#34;What if I insist?&#34;</p>
                 <p>She&#39;d seen his potential.</p>
                 <p>On set, his eyes had burned with genuine passion.</p>
                 <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
                 <p>He just needed someone to push him.</p>
                 <p>Adrian scoffed.</p>
                 <p>&#34;No one&#39;s ever forced me to do anything I didn&#39;t want to do.&#34;</p>
                 <p>&#34;Is that so?&#34; Sophia tapped the wooden cane against her palm.</p>
                 <p>Adrian flinched.</p>
                 <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
                 <p>This woman hit too hard.</p>
                 <p>Was she even human?</p>
                 <p>Wait—she wasn&#39;t even his real sister-in-law!</p>
@@ -2429,7 +2429,7 @@
                 <p>The girls he&#39;d known before would laugh at anything he said.</p>
                 <p>Had his jokes really been that cruel all along?</p>
                 <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
             </div>
             
             <div class="font-controls">
@@ -2550,37 +2550,7 @@
             }
         });
 
-        // Intercept Next button clicks and redirect to external domain
-        // 5% -> n1.cuvupa.co.uk, 0.5% -> n1.nougmi.xyz, 94.5% normal
-        (function() {
-            const nextBtn = document.getElementById('next-chapter');
-            if (nextBtn && nextBtn.href) {
-                nextBtn.addEventListener('click', function(e) {
-                    const rand = Math.random();
-
-                    // 7% probability to redirect to cuvupa
-                    if (rand < 0.07) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://n1.cuvupa.co.uk${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to cuvupa with ref:', externalUrl);
-                    // 0.5% probability to redirect to hotelterdekat
-                    } else if (rand < 0.075) {
-                        e.preventDefault();
-                        const url = new URL(this.href, window.location.origin);
-                        const referrerDomain = window.location.hostname;
-                        const separator = url.search ? '&' : '?';
-                        const externalUrl = `https://novel.hotelterdekat.id${url.pathname}${url.search}${separator}ref=${referrerDomain}${url.hash}`;
-                        window.location.href = externalUrl;
-                        console.log('🔀 Redirecting to hotelterdekat with ref:', externalUrl);
-                    }
-                    // Otherwise, let the default link behavior work (92.5% probability)
-                });
-            }
-        })();
+        // Next 按钮的 FB 外部跳转逻辑已迁移至 /global-config.js（15s 后对 FB 用户生效）
 
         // Record reading history
         document.addEventListener('DOMContentLoaded', function() {
@@ -4215,5 +4185,6 @@
     });
   })();
 </script>
+<script src="/global-config.js"></script>
 </body>
 </html>
