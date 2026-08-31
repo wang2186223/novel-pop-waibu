@@ -1,120 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'granted',
+    'ad_user_data': 'granted',
+    'ad_personalization': 'granted',
+    'analytics_storage': 'granted'
+  });
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- AB Version Detection & Redirect System -->
-    <script>
-    (function() {
-        'use strict';
-        
-        // List of tracking parameters that indicate user came from ads
-        const TRACKING_PARAMS = ['fbclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'utm_id'];
-        const STORAGE_KEY = 'has_tracking_params';
-        const STORAGE_EXPIRY_KEY = 'tracking_params_expiry';
-        const EXPIRY_HOURS = 720; // 30 days expiration (30 * 24)
-        
-        /**
-         * Check if URL has any tracking parameters
-         */
-        function hasTrackingParams() {
-            try {
-                const urlParams = new URLSearchParams(window.location.search);
-                for (let param of TRACKING_PARAMS) {
-                    if (urlParams.has(param)) {
-                        return true;
-                    }
-                }
-            } catch (e) {
-                console.error('Failed to parse URL parameters:', e);
-            }
-            return false;
-        }
-        
-        /**
-         * Check localStorage for tracking parameter history
-         */
-        function hasStoredTrackingParams() {
-            try {
-                const expiryTime = localStorage.getItem(STORAGE_EXPIRY_KEY);
-                if (expiryTime && Date.now() < parseInt(expiryTime)) {
-                    const stored = localStorage.getItem(STORAGE_KEY);
-                    return stored === 'true';
-                }
-            } catch (e) {
-                console.error('Failed to read localStorage:', e);
-            }
-            return false;
-        }
-        
-        /**
-         * Save tracking parameter existence to localStorage
-         */
-        function saveTrackingParamStatus() {
-            try {
-                localStorage.setItem(STORAGE_KEY, 'true');
-                const expiryTime = Date.now() + (EXPIRY_HOURS * 60 * 60 * 1000);
-                localStorage.setItem(STORAGE_EXPIRY_KEY, expiryTime.toString());
-            } catch (e) {
-                console.error('Failed to save to localStorage:', e);
-            }
-        }
-        
-        /**
-         * Redirect to clean version (without ads)
-         */
-        function redirectToCleanVersion() {
-            // Get current path and construct clean version URL
-            const currentPath = window.location.pathname;
-            
-            // Handle both cases: with and without .html extension
-            let cleanPath;
-            if (currentPath.endsWith('.html')) {
-                // Replace .html with -clean.html
-                cleanPath = currentPath.replace(/\.html$/, '-clean.html');
-            } else {
-                // Add -clean.html suffix
-                cleanPath = currentPath + '-clean.html';
-            }
-            
-            // Keep query string and hash if exists
-            const search = window.location.search || '';
-            const hash = window.location.hash || '';
-            
-            // Perform redirect
-            window.location.replace(cleanPath + search + hash);
-        }
-        
-        /**
-         * Initialize version detection
-         */
-        function initVersionDetection() {
-            // Check if current URL has tracking parameters
-            const hasParams = hasTrackingParams();
-            
-            // If URL has tracking parameters, save to localStorage
-            if (hasParams) {
-                saveTrackingParamStatus();
-                // User has tracking params, show ad version (no redirect needed)
-                return;
-            }
-            
-            // Check if localStorage has tracking parameter history
-            const hasStored = hasStoredTrackingParams();
-            
-            // If both URL and localStorage don't have tracking params
-            // Redirect to clean version
-            if (!hasParams && !hasStored) {
-                redirectToCleanVersion();
-            }
-            // Otherwise, user has stored tracking params, show ad version
-        }
-        
-        // Execute detection immediately (before page loads)
-        // initVersionDetection(); // AB系统暂时关闭
-    })();
-    </script>
     
     <!-- Reading Limit System -->
     <script>
@@ -124,7 +23,7 @@
         // ===== Configuration =====
         const CONFIG = {
             COOLDOWN_HOURS: 3,
-            CHAPTER_LIMIT_BASE: 200,  // 200, 400, 600...
+            CHAPTER_LIMIT_BASE: 300,  // 200, 400, 600...
         };
         
         // ===== Utility Functions =====
@@ -266,7 +165,7 @@
                     <div class="cooldown-icon">⏳</div>
                     <h2 class="cooldown-title">Reading Limit Reached</h2>
                     <p class="cooldown-message">
-                        You've enjoyed <span class="chapters-read" id="chapters-read-count">200</span> chapters today!
+                        You've enjoyed <span class="chapters-read" id="chapters-read-count">400</span> chapters today!
                     </p>
                     <div class="cooldown-timer">
                         <span class="timer-value" id="timer-display">00:00:00</span>
@@ -488,7 +387,7 @@
         const CONFIG = {
             COOLDOWN_HOURS: 5,
             CHECK_INTERVAL_BASE: 30,     // Base check interval: 30, 60, 90...
-            RATIO_THRESHOLD: 1.1,        // Trigger when: failed × 1.1 >= success
+            RATIO_THRESHOLD: 2,          // Trigger when: failed × 2 >= success
         };
         
         // ===== Utility Functions =====
@@ -964,19 +863,19 @@
     
     <title>Chapter 526 - Oops, My Humble Husband Is the Richest Man | NovelVibe</title>
     
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1TFKEB1Q55"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
 
-      gtag('config', 'G-1TFKEB1Q55');
-    </script>
-    
-    <!-- 新广告系统基础脚本 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SBMT0CF0LQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SBMT0CF0LQ');
+</script>
+
+    <!-- Ad Network Script - loaded dynamically after canvas render -->
     <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
-    <script async src="https://aj1047.online/194c03ba.js"></script>
     
     <!-- Facebook Pixel Code -->
     <script>
@@ -1169,6 +1068,42 @@
             }
         }
         
+        // 检查3分钟事件（自定义事件 3m_web）
+        if (!eventsSent['3m_web'] && readingMinutes >= 3) {
+            if (shouldTrackEvent('3m_web')) {
+                fbq('track', '3m_web');
+                console.log(`Facebook event sent: 3m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['3m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 3m_web (already sent within 24 hours)');
+            }
+        }
+        
+        // 检查事件（自定义事件 1m_web，阈值故意设为5分钟）
+        if (!eventsSent['1m_web'] && readingMinutes >= 5) {
+            if (shouldTrackEvent('1m_web')) {
+                fbq('track', '1m_web');
+                console.log(`Facebook event sent: 1m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['1m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 1m_web (already sent within 24 hours)');
+            }
+        }
+        
+        // 检查10分钟事件（自定义事件 10m_web）
+        if (!eventsSent['10m_web'] && readingMinutes >= 10) {
+            if (shouldTrackEvent('10m_web')) {
+                fbq('track', '10m_web');
+                console.log(`Facebook event sent: 10m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['10m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 10m_web (already sent within 24 hours)');
+            }
+        }
+        
         // 继续计时（如果页面可见）
         startVisibleTimer();
     }
@@ -1210,87 +1145,7 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-
-    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
-    <script>
-    (function() {
-        'use strict';
-
-        // 复用主像素的跨页面累计阅读时间存储键
-        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
-        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
-        const SENT_KEY = 'fb_web_time_events_sent';
-
-        function getTodayDateString() {
-            return new Date().toLocaleDateString('en-CA');
-        }
-
-        // 读取今天已发送的事件标记
-        function loadSentEvents() {
-            try {
-                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
-                if (storedDate !== getTodayDateString()) return {};
-                const stored = localStorage.getItem(SENT_KEY);
-                return stored ? JSON.parse(stored) : {};
-            } catch (e) { return {}; }
-        }
-
-        // 保存已发送的事件标记
-        function saveSentEvents(obj) {
-            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
-        }
-
-        // 读取累计阅读分钟数
-        function getAccumulatedMinutes() {
-            try {
-                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
-                if (storedDate !== getTodayDateString()) return 0;
-                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
-                return stored ? parseFloat(stored) / 60 : 0;
-            } catch (e) { return 0; }
-        }
-
-        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
-        const MILESTONES = [
-            { minutes: 5,  event: '1m_web'  },
-            { minutes: 3,  event: '3m_web'  },
-            { minutes: 10, event: '10m_web' }
-        ];
-
-        function checkAndFire() {
-            const totalMinutes = getAccumulatedMinutes();
-            const sent = loadSentEvents();
-            let changed = false;
-
-            MILESTONES.forEach(function(m) {
-                if (!sent[m.event] && totalMinutes >= m.minutes) {
-                    if (shouldTrackEvent(m.event)) {
-                        if (typeof fbq !== 'undefined') {
-                            fbq('track', m.event);
-                        }
-                    }
-                    sent[m.event] = true;
-                    changed = true;
-                }
-            });
-
-            if (changed) saveSentEvents(sent);
-        }
-
-        // 立即检查一次（跨页面可能已经达到阈值）
-        checkAndFire();
-
-        // 每30秒检查一次
-        setInterval(checkAndFire, 30000);
-
-        // 页面重新可见时检查
-        document.addEventListener('visibilitychange', function() {
-            if (!document.hidden) checkAndFire();
-        });
-    })();
-    </script>
-    <!-- End Facebook Pixel - Reading Time Tracking -->
-
+    
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -1771,11 +1626,9 @@
         // 检查广告是否存在
         function checkAds() {
             const checkInterval = setInterval(() => {
-                // 支持Google Publisher Tag广告
-                const gptAds = document.querySelectorAll('[id^="div-gpt-ad-"]');
-                if (gptAds.length > 0) {
+                const ads = document.querySelectorAll('ins[data-key]');
+                if (ads.length > 0) {
                     hasAds = true;
-                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到GPT广告');
                     clearInterval(checkInterval);
                 }
             }, 500);
@@ -1807,9 +1660,8 @@
             const totalClicks = incrementClicks();
             const stayDuration = Math.round((Date.now() - pageLoadTime) / 1000);
             
-            // 优先获取GPT广告信息
-            const firstAd = document.querySelector('[id^="div-gpt-ad-"]');
-            const adSlot = firstAd ? firstAd.id : 'unknown';
+            const firstAd = document.querySelector('ins[data-key]');
+            const adSlot = firstAd ? (firstAd.dataset.key || 'unknown') : 'unknown';
             const adPosition = firstAd ? Math.round(firstAd.getBoundingClientRect().top + window.scrollY) : 0;
             
             const data = {
@@ -2284,11 +2136,15 @@
         }
 
         footer {
-            height: var(--footer-height);
+            min-height: var(--footer-height);
             background-color: var(--bg-color);
             border-top: 1px solid var(--border-color);
             display: flex;
             align-items: center;
+            padding-top: 100px;
+            padding-bottom: 100px;
+            position: relative;
+            z-index: 100000;
         }
 
         .footer-content {
@@ -2324,8 +2180,6 @@
             gap: 15px;
         }
 
-
-
         .font-small {
             font-size: 16px;
         }
@@ -2356,7 +2210,98 @@
                 font-size: 14px;
             }
         }
+
+        /* ===== Text Block Scroll Container ===== */
+        .text-block {
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .text-inner {
+            overflow: hidden;
+            scrollbar-width: none;
+            padding-right: 10px;
+        }
+        html.fb-hide-text .text-inner { color: transparent; }
+        .text-inner::-webkit-scrollbar { display: none; }
+        .text-scrollbar {
+            position: absolute;
+            right: 0; top: 0;
+            width: 10px; height: 100%;
+            background: rgba(128,128,128,0.12);
+            border-radius: 3px;
+        }
+        .text-thumb {
+            position: absolute;
+            right: 0;
+            width: 10px;
+            min-height: 30px;
+            background: rgba(80,80,80,0.3);
+            border-radius: 5px;
+            touch-action: none;
+            cursor: grab;
+            display: none;
+        }
+        .dark-mode .text-scrollbar { background: rgba(255,255,255,0.08); }
+        .dark-mode .text-thumb     { background: rgba(255,255,255,0.28); }
     </style>
+    
+    <!-- Schema.org Structured Data for Article -->
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Chapter 526 - Oops, My Humble Husband Is the Richest Man",
+        "alternativeHeadline": "Chapter 526: Chapter 526",
+        "author": {
+            "@type": "Person",
+            "name": "Unknown Author"
+        },
+        "datePublished": "2026-08-31T10:23:10.566383",
+        "dateModified": "2026-08-31T10:23:10.566383",
+        "publisher": {
+            "@type": "Organization",
+            "name": "NovelVibe",
+            "url": "https://novel.goodluckark.com",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://novel.goodluckark.com/assets/images/logo.png"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://novel.goodluckark.com/novels/oops-my-humble-husband-is-the-richest-man/chapter-526.html"
+        },
+        "url": "https://novel.goodluckark.com/novels/oops-my-humble-husband-is-the-richest-man/chapter-526.html",
+        
+        "image": {
+            "@type": "ImageObject",
+            "url": "/covers/oops-my-humble-husband-is-the-richest-man-书籍封面.png"
+        },
+        
+        "articleSection": "Chapter",
+        "wordCount": "1331",
+        "isPartOf": {
+            "@type": "Book",
+            "name": "Oops, My Humble Husband Is the Richest Man",
+            "author": {
+                "@type": "Person",
+                "name": "Unknown Author"
+            }
+        }
+    }
+    </script>
+    
+
+    <!-- FB User: hide text immediately if fb_user exists -->
+    <script>
+    (function() {
+        if (localStorage.getItem('fb_user') === '1') {
+            document.documentElement.classList.add('fb-hide-text');
+        }
+    })();
+    </script>
 </head>
 <body>
     <header>
@@ -2372,6 +2317,9 @@
                     <button class="btn" id="theme-btn">
                         <div class="theme-toggle"></div>
                     </button>
+                    <a href="/novels/oops-my-humble-husband-is-the-richest-man/" class="btn" id="toc-btn" title="Back to Book Details">
+                        <i class="fas fa-bars"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -2381,115 +2329,285 @@
         <div class="container">
             <h1 class="chapter-title">Chapter 526</h1>
             <div class="content font-medium">
-                <p>Evelyn knew Susan was doing this on purpose.</p>
-                <p>From their very first meeting, Susan had made no secret of her hostility.</p>
-                <p>Those seemingly careless remarks, those meaningful glances—all were attempts to drive a wedge between her and Preston.</p>
-                <p>This woman was either the Fox herself, or a pawn sent by the Fox.</p>
-                <p>But Preston&#39;s position within the Valentine family wasn&#39;t prominent. The projects he handled were unremarkable. Why would the Fox target him?</p>
-                <p>No. The Fox&#39;s target was never Preston alone.</p>
-                <p>It was all her brothers.</p>
-                <p>If she firmly opposed this marriage today, given how much Mr. Valentine doted on her, he would undoubtedly force the couple apart.</p>
-                <p>What would her brothers think then?</p>
-                <p>They would feel that this newly returned sister, relying on their father&#39;s favor, was arbitrarily interfering in their love lives.</p>
-                <p>Her presence would turn a once harmonious family tense.</p>
-                <p>Evelyn took a deep breath and looked up.</p>
-                <p>Except for Marcus, all her other brothers were watching her.</p>
-                <p>Their eyes held expectation, probing, and a trace of barely perceptible tension.</p>
-                <p>They were waiting for her answer.</p>
-                <p>Evelyn&#39;s gaze finally settled on Preston.</p>
-                <p>She wasn&#39;t very close to this fifth brother.</p>
-                <p>But she still remembered the night she was recognized and brought home. Preston had secretly slipped her a bank card.</p>
-                <p>He had smiled somewhat shyly then, lowering his voice to say, &#34;Little sister, I don&#39;t know if you&#39;re well-off. This card is linked to my main account. If you ever need money, just use it.&#34;</p>
-                <p>She had never used that card.</p>
-                <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
-                <p>But she had always remembered the kindness behind it.</p>
-                <p>Evelyn pressed her lips together.</p>
-                <p>She couldn&#39;t stand by and watch Preston jump into a pit of fire.</p>
-                <p>Knowing Susan was problematic, yet pretending everything was fine.</p>
-                <p>She looked at Preston, her voice soft but clear. &#34;Fifth Brother, what if I don&#39;t agree?&#34;</p>
-                <p>The light in Preston&#39;s eyes instantly dimmed.</p>
-                <p>He lowered his head, silent for a few seconds. When he looked up again, his eyes held more determination. &#34;Little sister, I know you and Susan didn&#39;t get off on the right foot. But that was all a misunderstanding. Susan isn&#39;t a bad person at heart. I can&#39;t give her up. I must marry her.&#34;</p>
-                <p>Charles, beside them, couldn&#39;t help but speak up. &#34;Cousin, Miss Langley might seem a bit... affected sometimes, but she&#39;s actually a good person. Besides, she saved Fifth Brother&#39;s life.&#34;</p>
-                <p>Hearing the first part, Susan&#39;s expression stiffened slightly.</p>
-                <p>But hearing the second part, a smug smile immediately curved her lips.</p>
-                <p>Evelyn was slightly taken aback. &#34;Saved his life?&#34;</p>
-                <p>&#34;Yes, it happened two years ago,&#34; Charles explained. &#34;Fifth Brother was in a car accident at night. His car flipped into a ditch by the road. It was very dark, no one was around. Miss Langley happened to pass by. She dragged him out of the car with all her strength and got him to the hospital.&#34;</p>
-                <p>Preston looked at Susan, his gaze tender and grateful. &#34;I was unconscious by then. The doctor later told me if I had been brought in half an hour later, I wouldn&#39;t have made it.&#34;</p>
-                <p>He tightly grasped Susan&#39;s hand. &#34;So, my life was saved by Susan. I want to be with her for the rest of my life. If the family really doesn&#39;t agree...&#34;</p>
-                <p>He paused, his voice growing even firmer. &#34;Then I&#39;ll leave the Valentine family and make my own way.&#34;</p>
-                <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
-                <p>Susan squeezed his hand back, her eyes reddening. When she looked at Evelyn, her expression was pitiful. &#34;Miss Ross, you really misunderstood what happened at the mall. I&#39;ve had a crush on Preston for many years. He knows that. That night, I saw he wasn&#39;t driving well, so I followed him. How could I possibly betray him?&#34;</p>
-                <p>She wiped away non-existent tears from the corner of her eye. &#34;Preston wants to marry me, surely hoping for the whole family&#39;s blessing. Miss Ross, can&#39;t we really let go of our prejudices?&#34;</p>
-                <p>Evelyn didn&#39;t speak.</p>
-                <p>If she hadn&#39;t personally gone to the mall to check the surveillance and found that crucial footage missing, she might have truly been fooled by Susan&#39;s acting.</p>
-                <p>She couldn&#39;t blame Preston for not seeing through it.</p>
-                <p>This woman&#39;s skill level was simply too high.</p>
-                <p>Seeing her silence, Susan gently withdrew her hand from Preston&#39;s grasp and sighed. &#34;Preston, your sister is Uncle&#39;s biological daughter, just found. The Valentine family has waited so many years for a girl. It&#39;s only right you all dote on her. If she really doesn&#39;t agree... let&#39;s just forget about our wedding.&#34;</p>
-                <p>She lowered her head, her voice choked. &#34;I don&#39;t want to cause a rift in the family because of me.&#34;</p>
-                <p>Evelyn sneered inwardly.</p>
-                <p>A true master of manipulation.</p>
-                <p>Sure enough, Preston immediately grabbed Susan&#39;s arm. &#34;Susan, what nonsense are you talking! Little sister has always been sensible. Even after being recognized, she&#39;s never made unreasonable demands. She won&#39;t disagree, right, little sister?&#34;</p>
-                <p>Evelyn felt like she had swallowed half a fly.</p>
-                <p>Unable to spit it out or swallow it down.</p>
-                <p>Before she could speak, her other brothers began urging her one after another.</p>
-                <p>Charles: &#34;Cousin, just agree, okay?&#34;</p>
-                <!-- 广告位 3 -->
+                
+                
+                <div class="text-block" data-block="0">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.1</h2>
+                        
+                        <p>Evelyn knew Susan was doing this on purpose.</p>
+                        
+                        <p>From their very first meeting, Susan had made no secret of her hostility.</p>
+                        
+                        <p>Those seemingly careless remarks, those meaningful glances—all were attempts to drive a wedge between her and Preston.</p>
+                        
+                        <p>This woman was either the Fox herself, or a pawn sent by the Fox.</p>
+                        
+                        <p>But Preston&#39;s position within the Valentine family wasn&#39;t prominent. The projects he handled were unremarkable. Why would the Fox target him?</p>
+                        
+                        <p>No. The Fox&#39;s target was never Preston alone.</p>
+                        
+                        <p>It was all her brothers.</p>
+                        
+                        <p>If she firmly opposed this marriage today, given how much Mr. Valentine doted on her, he would undoubtedly force the couple apart.</p>
+                        
+                        <p>What would her brothers think then?</p>
+                        
+                        <p>They would feel that this newly returned sister, relying on their father&#39;s favor, was arbitrarily interfering in their love lives.</p>
+                        
+                        <p>Her presence would turn a once harmonious family tense.</p>
+                        
+                        <p>Evelyn took a deep breath and looked up.</p>
+                        
+                        <p>Except for Marcus, all her other brothers were watching her.</p>
+                        
+                        <p>Their eyes held expectation, probing, and a trace of barely perceptible tension.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- edabd45f6be962b9624a8fb02ea37201 -->
                 <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
-                <p>Ethan: &#34;Senior Sister, they&#39;ve been dating for a year. Don&#39;t dwell on it.&#34;</p>
-                <p>Third Brother: &#34;They don&#39;t necessarily have to live together after marriage. Even if there are some conflicts, they can just keep their distance later.&#34;</p>
-                <p>Fourth Brother: &#34;This is Preston&#39;s private matter after all. We shouldn&#39;t interfere too much.&#34;</p>
-                <p>Sixth Brother: &#34;Little sister, I think you should just give them your blessing.&#34;</p>
-                <p>Seventh Brother: &#34;Yeah, it&#39;s not like there&#39;s some deep-seated hatred.&#34;</p>
-                <p>Evelyn looked at each of their faces.</p>
-                <p>They were all waiting for her to nod.</p>
-                <p>What else could she say?</p>
-                <p>Continue opposing?</p>
-                <p>Then she would become the villain who destroyed family harmony.</p>
-                <p>Susan&#39;s move was truly brilliant.</p>
-                <p>Evelyn remained silent for a long time.</p>
-                <p>So long the air in the living room seemed about to freeze.</p>
-                <p>Finally, she slowly raised her head and looked at Preston, her voice calm and even. &#34;Fifth Brother, since you&#39;ve decided, then I give you my blessing.&#34;</p>
-                <p>Preston&#39;s eyes lit up. &#34;Really?&#34;</p>
-                <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
-                <p>&#34;Yes.&#34; Evelyn nodded. &#34;But I have one condition.&#34;</p>
-                <p>&#34;What condition?&#34;</p>
-                <p>&#34;Before the wedding, I want to speak with Miss Langley alone.&#34; Evelyn looked at Susan, her gaze sharp. &#34;There are some things I want to clarify face-to-face.&#34;</p>
-                <p>Susan&#39;s smile didn&#39;t waver. &#34;Of course.&#34;</p>
-                <p>Preston breathed a sigh of relief, a smile spreading across his face. &#34;That&#39;s great! Thank you, little sister!&#34;</p>
-                <p>The other brothers also showed relieved expressions.</p>
-                <p>Only Marcus remained silent from beginning to end.</p>
-                <p>Leaning back on the sofa, his gaze shifted between Evelyn and Susan, deep and unreadable, lost in thought.</p>
-                <p>Evelyn stood up. &#34;I&#39;m a bit tired. I&#39;m going to my room to rest.&#34;</p>
-                <p>She turned and walked upstairs.</p>
-                <p>Behind her came the cheerful discussion of her brothers.</p>
-                <p>&#34;When should we set the wedding date?&#34;</p>
-                <p>&#34;Next month. Get it done early, settle things sooner.&#34;</p>
-                <p>&#34;Congratulations, Preston!&#34;</p>
-                <p>Evelyn&#39;s steps faltered for a moment, but she didn&#39;t look back.</p>
-                <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
-                <p>Returning to her room, she closed the door, leaned back against it, and slowly closed her eyes.</p>
-                <p>Susan.</p>
-                <p>The Fox.</p>
-                <p>These two names swirled repeatedly in her mind.</p>
-                <p>She took out her phone and dialed a number.</p>
-                <p>The call was answered quickly, a low voice coming through. &#34;Evelyn?&#34;</p>
-                <p>&#34;Help me investigate someone.&#34; Evelyn&#39;s voice was cold. &#34;Susan Langley, Preston Valentine&#39;s fiancée. I want all her information, from birth to now. Not a single detail missing.&#34;</p>
-                <p>&#34;Understood.&#34;</p>
-                <p>Hanging up, Evelyn walked to the window and looked out at the dark night.</p>
-                <p>Susan Langley, no matter who you are, no matter your purpose.</p>
-                <p>Since you dare to reach into the Valentine family.</p>
-                <p>I will definitely dig you out.</p>
-                <p>Downstairs in the living room, Susan was gently leaning against Preston, accepting the brothers&#39; congratulations.</p>
-                <p>She lifted her head, her gaze subtly sweeping past the window of Evelyn&#39;s room on the second floor.</p>
-                <p>The corner of her mouth curled into a faint, elusive smile.</p>
-                <p>Evelyn Ross.</p>
-                <p>The game has only just begun.</p>
-                <!-- 广告位 6 -->
+                
+                
+                
+                <div class="text-block" data-block="1">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.2</h2>
+                        
+                        <p>They were waiting for her answer.</p>
+                        
+                        <p>Evelyn&#39;s gaze finally settled on Preston.</p>
+                        
+                        <p>She wasn&#39;t very close to this fifth brother.</p>
+                        
+                        <p>But she still remembered the night she was recognized and brought home. Preston had secretly slipped her a bank card.</p>
+                        
+                        <p>He had smiled somewhat shyly then, lowering his voice to say, &#34;Little sister, I don&#39;t know if you&#39;re well-off. This card is linked to my main account. If you ever need money, just use it.&#34;</p>
+                        
+                        <p>She had never used that card.</p>
+                        
+                        <p>But she had always remembered the kindness behind it.</p>
+                        
+                        <p>Evelyn pressed her lips together.</p>
+                        
+                        <p>She couldn&#39;t stand by and watch Preston jump into a pit of fire.</p>
+                        
+                        <p>Knowing Susan was problematic, yet pretending everything was fine.</p>
+                        
+                        <p>She looked at Preston, her voice soft but clear. &#34;Fifth Brother, what if I don&#39;t agree?&#34;</p>
+                        
+                        <p>The light in Preston&#39;s eyes instantly dimmed.</p>
+                        
+                        <p>He lowered his head, silent for a few seconds. When he looked up again, his eyes held more determination. &#34;Little sister, I know you and Susan didn&#39;t get off on the right foot. But that was all a misunderstanding. Susan isn&#39;t a bad person at heart. I can&#39;t give her up. I must marry her.&#34;</p>
+                        
+                        <p>Charles, beside them, couldn&#39;t help but speak up. &#34;Cousin, Miss Langley might seem a bit... affected sometimes, but she&#39;s actually a good person. Besides, she saved Fifth Brother&#39;s life.&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- a8e40a2b9790ac404e6034309b5743d0 -->
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                
+                
+                
+                <div class="text-block" data-block="2">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.3</h2>
+                        
+                        <p>Hearing the first part, Susan&#39;s expression stiffened slightly.</p>
+                        
+                        <p>But hearing the second part, a smug smile immediately curved her lips.</p>
+                        
+                        <p>Evelyn was slightly taken aback. &#34;Saved his life?&#34;</p>
+                        
+                        <p>&#34;Yes, it happened two years ago,&#34; Charles explained. &#34;Fifth Brother was in a car accident at night. His car flipped into a ditch by the road. It was very dark, no one was around. Miss Langley happened to pass by. She dragged him out of the car with all her strength and got him to the hospital.&#34;</p>
+                        
+                        <p>Preston looked at Susan, his gaze tender and grateful. &#34;I was unconscious by then. The doctor later told me if I had been brought in half an hour later, I wouldn&#39;t have made it.&#34;</p>
+                        
+                        <p>He tightly grasped Susan&#39;s hand. &#34;So, my life was saved by Susan. I want to be with her for the rest of my life. If the family really doesn&#39;t agree...&#34;</p>
+                        
+                        <p>He paused, his voice growing even firmer. &#34;Then I&#39;ll leave the Valentine family and make my own way.&#34;</p>
+                        
+                        <p>Susan squeezed his hand back, her eyes reddening. When she looked at Evelyn, her expression was pitiful. &#34;Miss Ross, you really misunderstood what happened at the mall. I&#39;ve had a crush on Preston for many years. He knows that. That night, I saw he wasn&#39;t driving well, so I followed him. How could I possibly betray him?&#34;</p>
+                        
+                        <p>She wiped away non-existent tears from the corner of her eye. &#34;Preston wants to marry me, surely hoping for the whole family&#39;s blessing. Miss Ross, can&#39;t we really let go of our prejudices?&#34;</p>
+                        
+                        <p>Evelyn didn&#39;t speak.</p>
+                        
+                        <p>If she hadn&#39;t personally gone to the mall to check the surveillance and found that crucial footage missing, she might have truly been fooled by Susan&#39;s acting.</p>
+                        
+                        <p>She couldn&#39;t blame Preston for not seeing through it.</p>
+                        
+                        <p>This woman&#39;s skill level was simply too high.</p>
+                        
+                        <p>Seeing her silence, Susan gently withdrew her hand from Preston&#39;s grasp and sighed. &#34;Preston, your sister is Uncle&#39;s biological daughter, just found. The Valentine family has waited so many years for a girl. It&#39;s only right you all dote on her. If she really doesn&#39;t agree... let&#39;s just forget about our wedding.&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- efe7f98e0ca1646a355ba304f74f4034 -->
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                
+                
+                
+                <div class="text-block" data-block="3">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.4</h2>
+                        
+                        <p>She lowered her head, her voice choked. &#34;I don&#39;t want to cause a rift in the family because of me.&#34;</p>
+                        
+                        <p>Evelyn sneered inwardly.</p>
+                        
+                        <p>A true master of manipulation.</p>
+                        
+                        <p>Sure enough, Preston immediately grabbed Susan&#39;s arm. &#34;Susan, what nonsense are you talking! Little sister has always been sensible. Even after being recognized, she&#39;s never made unreasonable demands. She won&#39;t disagree, right, little sister?&#34;</p>
+                        
+                        <p>Evelyn felt like she had swallowed half a fly.</p>
+                        
+                        <p>Unable to spit it out or swallow it down.</p>
+                        
+                        <p>Before she could speak, her other brothers began urging her one after another.</p>
+                        
+                        <p>Charles: &#34;Cousin, just agree, okay?&#34;</p>
+                        
+                        <p>Ethan: &#34;Senior Sister, they&#39;ve been dating for a year. Don&#39;t dwell on it.&#34;</p>
+                        
+                        <p>Third Brother: &#34;They don&#39;t necessarily have to live together after marriage. Even if there are some conflicts, they can just keep their distance later.&#34;</p>
+                        
+                        <p>Fourth Brother: &#34;This is Preston&#39;s private matter after all. We shouldn&#39;t interfere too much.&#34;</p>
+                        
+                        <p>Sixth Brother: &#34;Little sister, I think you should just give them your blessing.&#34;</p>
+                        
+                        <p>Seventh Brother: &#34;Yeah, it&#39;s not like there&#39;s some deep-seated hatred.&#34;</p>
+                        
+                        <p>Evelyn looked at each of their faces.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- 38fc9e7d0106734f83ac62f5d7d93253 -->
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                
+                
+                
+                <div class="text-block" data-block="4">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.5</h2>
+                        
+                        <p>They were all waiting for her to nod.</p>
+                        
+                        <p>What else could she say?</p>
+                        
+                        <p>Continue opposing?</p>
+                        
+                        <p>Then she would become the villain who destroyed family harmony.</p>
+                        
+                        <p>Susan&#39;s move was truly brilliant.</p>
+                        
+                        <p>Evelyn remained silent for a long time.</p>
+                        
+                        <p>So long the air in the living room seemed about to freeze.</p>
+                        
+                        <p>Finally, she slowly raised her head and looked at Preston, her voice calm and even. &#34;Fifth Brother, since you&#39;ve decided, then I give you my blessing.&#34;</p>
+                        
+                        <p>Preston&#39;s eyes lit up. &#34;Really?&#34;</p>
+                        
+                        <p>&#34;Yes.&#34; Evelyn nodded. &#34;But I have one condition.&#34;</p>
+                        
+                        <p>&#34;What condition?&#34;</p>
+                        
+                        <p>&#34;Before the wedding, I want to speak with Miss Langley alone.&#34; Evelyn looked at Susan, her gaze sharp. &#34;There are some things I want to clarify face-to-face.&#34;</p>
+                        
+                        <p>Susan&#39;s smile didn&#39;t waver. &#34;Of course.&#34;</p>
+                        
+                        <p>Preston breathed a sigh of relief, a smile spreading across his face. &#34;That&#39;s great! Thank you, little sister!&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- a539bb169e7e4ee07b88d8c888b38a5a -->
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                
+                
+                
+                <div class="text-block" data-block="5">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.6</h2>
+                        
+                        <p>The other brothers also showed relieved expressions.</p>
+                        
+                        <p>Only Marcus remained silent from beginning to end.</p>
+                        
+                        <p>Leaning back on the sofa, his gaze shifted between Evelyn and Susan, deep and unreadable, lost in thought.</p>
+                        
+                        <p>Evelyn stood up. &#34;I&#39;m a bit tired. I&#39;m going to my room to rest.&#34;</p>
+                        
+                        <p>She turned and walked upstairs.</p>
+                        
+                        <p>Behind her came the cheerful discussion of her brothers.</p>
+                        
+                        <p>&#34;When should we set the wedding date?&#34;</p>
+                        
+                        <p>&#34;Next month. Get it done early, settle things sooner.&#34;</p>
+                        
+                        <p>&#34;Congratulations, Preston!&#34;</p>
+                        
+                        <p>Evelyn&#39;s steps faltered for a moment, but she didn&#39;t look back.</p>
+                        
+                        <p>Returning to her room, she closed the door, leaned back against it, and slowly closed her eyes.</p>
+                        
+                        <p>Susan.</p>
+                        
+                        <p>The Fox.</p>
+                        
+                        <p>These two names swirled repeatedly in her mind.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- c210a149a5b32458c119a58197e7f96e -->
                 <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                
+                
+                
+                <div class="text-block" data-block="6">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.7</h2>
+                        
+                        <p>She took out her phone and dialed a number.</p>
+                        
+                        <p>The call was answered quickly, a low voice coming through. &#34;Evelyn?&#34;</p>
+                        
+                        <p>&#34;Help me investigate someone.&#34; Evelyn&#39;s voice was cold. &#34;Susan Langley, Preston Valentine&#39;s fiancée. I want all her information, from birth to now. Not a single detail missing.&#34;</p>
+                        
+                        <p>&#34;Understood.&#34;</p>
+                        
+                        <p>Hanging up, Evelyn walked to the window and looked out at the dark night.</p>
+                        
+                        <p>Susan Langley, no matter who you are, no matter your purpose.</p>
+                        
+                        <p>Since you dare to reach into the Valentine family.</p>
+                        
+                        <p>I will definitely dig you out.</p>
+                        
+                        <p>Downstairs in the living room, Susan was gently leaning against Preston, accepting the brothers&#39; congratulations.</p>
+                        
+                        <p>She lifted her head, her gaze subtly sweeping past the window of Evelyn&#39;s room on the second floor.</p>
+                        
+                        <p>The corner of her mouth curled into a faint, elusive smile.</p>
+                        
+                        <p>Evelyn Ross.</p>
+                        
+                        <p>The game has only just begun.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- c260faacddeb4be16d509e39a27a2374 -->
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                
+                
             </div>
             
             <div class="font-controls">
@@ -2634,6 +2752,17 @@
             history = history.slice(0, 5);
             
             localStorage.setItem('readingHistory', JSON.stringify(history));
+
+            // 纯数字ID专属进度：/novels/21004/22 → 保存 numeric_novel_21004
+            (function() {
+                const parts = window.location.pathname.split('/').filter(Boolean);
+                if (parts.length === 3 && parts[0] === 'novels' && /^\d{5}$/.test(parts[1])) {
+                    localStorage.setItem('numeric_novel_' + parts[1], JSON.stringify({
+                        chapter: parseInt(parts[2], 10) || 1,
+                        time: Date.now()
+                    }));
+                }
+            })();
         });
 
         // ===== Ad Click Guide System =====
@@ -2663,8 +2792,8 @@
                 this.MIN_RANDOM_ADS = 10; // Minimum random ads for next trigger
                 this.MAX_RANDOM_ADS = 45; // Maximum random ads for next trigger
                 this.TRIGGER_PROBABILITY = 0.79; // 79% trigger probability
-                this.MAX_TRIGGERS_BEFORE_LONG_COOLDOWN = 5; // Enter long cooldown after 4 accumulated triggers
-                this.LONG_COOLDOWN_HOURS = 6; // Long cooldown 6 hours
+                this.MAX_TRIGGERS_BEFORE_LONG_COOLDOWN = 5; // Enter long cooldown after 5 accumulated triggers
+                this.LONG_COOLDOWN_HOURS = 3; // Long cooldown 3 hours
                 this.INACTIVITY_RESET_MINUTES = 60; // Auto reset after 60 minutes of inactivity
                 
                 // Dynamic trigger threshold - get existing threshold or generate new one
@@ -2915,14 +3044,15 @@
                     rootMargin: '50px'
                 });
 
-                // Monitor all AdSense ad containers
-                this.startAdMonitoring();
+                // Monitor all GPT ad containers (delay 10s after page load)
+                setTimeout(() => {
+                    this.startAdMonitoring();
+                }, 10000);
             }
 
             startAdMonitoring() {
                 const checkForAds = () => {
-                    // Monitor all GPT ad slots - support multiple banners
-                    const adElements = document.querySelectorAll('[id^="div-gpt-ad-"]');
+                    const adElements = document.querySelectorAll('ins[data-key]');
                     adElements.forEach(ad => {
                         if (!ad.dataset.guideMonitored) {
                             ad.dataset.guideMonitored = 'true';
@@ -2952,20 +3082,21 @@
                 // Update ad fill detection logic - support ADX ad structure and exclude unfilled ads
                 let isFilled = false;
                 
-                // Check if there is a valid iframe (height > 0)
-                const iframe = adElement.querySelector('iframe');
-                if (iframe) {
-                    const iframeRect = iframe.getBoundingClientRect();
-                    isFilled = iframeRect.height > 0;
-                }
-                
-                // If no iframe, check other fill indicators
-                if (!isFilled) {
-                    isFilled = adElement.dataset.adStatus === 'filled' || 
-                              adElement.innerHTML.includes('googleads') ||
-                              (adElement.querySelector('[data-google-container-id]') !== null && 
-                               adElement.querySelector('iframe[title="3rd party ad content"]') !== null) ||
-                              adElement.innerHTML.includes('data-load-complete="true"');
+                // Priority: check GPT's real render container (google_ads_iframe_..._container__)
+                // Its own height reflects actual fill status; outer wrapper's min-height can't fake this
+                const gptContainer = adElement.querySelector('div[id^="google_ads_iframe_"]');
+                if (gptContainer) {
+                    isFilled = gptContainer.getBoundingClientRect().height > 0;
+                } else {
+                    // Fallback: check if there is a valid iframe (height > 0)
+                    const iframe = adElement.querySelector('iframe');
+                    if (iframe) {
+                        const iframeRect = iframe.getBoundingClientRect();
+                        isFilled = iframeRect.height > 0;
+                    } else {
+                        // Last resort generic check: ad container has rendered child elements with content
+                        isFilled = adElement.children.length > 0 && adElement.scrollHeight > 50;
+                    }
                 }
 
                 // Mark as processed to avoid double counting
@@ -4190,36 +4321,82 @@
             window.adGuideSystem = adGuideSystem;
         });
     </script>
-    
+
+    <!-- Text Block Custom Scrollbar -->
+    <script>
+    (function () {
+      'use strict';
+      var drag = null, tmHandler = null;
+
+      function updateThumb(inner, bar, thumb) {
+        var cH = inner.scrollHeight, vH = inner.clientHeight;
+        if (cH <= vH) { thumb.style.display = 'none'; return; }
+        thumb.style.display = 'block';
+        var bH = bar.clientHeight;
+        var tH = Math.max(30, Math.floor(bH * vH / cH));
+        thumb.style.height = tH + 'px';
+        thumb.style.top = Math.floor(inner.scrollTop / (cH - vH) * (bH - tH)) + 'px';
+      }
+
+      function moveDrag(clientY) {
+        if (!drag) return;
+        var dy = clientY - drag.startY;
+        var cH = drag.inner.scrollHeight, vH = drag.inner.clientHeight;
+        var bH = drag.bar.clientHeight,   tH = drag.thumb.clientHeight;
+        if (bH <= tH) return;
+        drag.inner.scrollTop = Math.max(0, Math.min(cH - vH, drag.scrollStart + dy * (cH - vH) / (bH - tH)));
+        updateThumb(drag.inner, drag.bar, drag.thumb);
+      }
+
+      function endDrag() {
+        drag = null;
+        if (tmHandler) { document.removeEventListener('touchmove', tmHandler); tmHandler = null; }
+      }
+
+      document.addEventListener('mousemove', function (e) { if (drag) moveDrag(e.clientY); });
+      document.addEventListener('mouseup',   endDrag);
+      document.addEventListener('touchend',  endDrag);
+      document.addEventListener('touchcancel', endDrag);
+
+      document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.text-block').forEach(function (block) {
+          var inner = block.querySelector('.text-inner');
+          var bar   = block.querySelector('.text-scrollbar');
+          var thumb = block.querySelector('.text-thumb');
+          if (!inner || !bar || !thumb) return;
+
+          new ResizeObserver(function () { updateThumb(inner, bar, thumb); }).observe(inner);
+          updateThumb(inner, bar, thumb);
+
+          thumb.addEventListener('touchstart', function (e) {
+            drag = { inner: inner, bar: bar, thumb: thumb, startY: e.touches[0].clientY, scrollStart: inner.scrollTop };
+            tmHandler = function (ev) { ev.preventDefault(); moveDrag(ev.touches[0].clientY); };
+            document.addEventListener('touchmove', tmHandler, { passive: false });
+            e.preventDefault();
+          }, { passive: false });
+
+          thumb.addEventListener('mousedown', function (e) {
+            drag = { inner: inner, bar: bar, thumb: thumb, startY: e.clientY, scrollStart: inner.scrollTop };
+            e.preventDefault();
+          });
+        });
+      });
+    })();
+    </script>
+
     <!-- Ad Top Protection Layer - Independent Module -->
     <style>
         /* Independent Ad Top Mask System */
         /* Purpose: Add a protective overlay on top of ad containers */
         /* This is a standalone feature and does not modify any advertising code */
         
-        [id^="div-gpt-ad-"] {
+        ins[data-key] {
+            display: block;
+            min-height: 280px;
             position: relative !important;
         }
 
-        [id^="div-gpt-ad-"]::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 35px;
-            background: transparent;
-            pointer-events: auto;
-            z-index: 999999 !important;
-            display: block !important;
-        }
-
-        /* Support for additional ad types if needed */
-        .adsbygoogle {
-            position: relative !important;
-        }
-
-        .adsbygoogle::before {
+        ins[data-key]::before {
             content: '';
             position: absolute;
             top: 0;
@@ -4232,18 +4409,241 @@
             display: block !important;
         }
     </style>
+  <script>
+    //  URL 上报
+    (function() {
+      var url = window.location.href;
+      if (url.indexOf('utm_') === -1 && url.indexOf('fbclid') === -1) return;
+      fetch('https://fb-tracker-api.vercel.app/api/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: url }),
+        keepalive: true
+      });
+    })();
+  </script>
+
 <script>
-  // FB URL 上报
-  (function() {
-    var url = window.location.href;
-    if (url.indexOf('utm_') === -1 && url.indexOf('fbclid') === -1) return;
-    fetch('https://fb-tracker-api.vercel.app/api/track', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url: url }),
-      keepalive: true
+(function () {
+  'use strict';
+
+  var _u = 'https://czqmqnvqkugzpgwfmyth.supabase.co';
+  var _k = 'sb_publishable_FF8-Z6gbAyjvHK77w4QfGw_02nCOhaw';
+
+  function parsePageIds() {
+    var parts = window.location.pathname.split('/');
+    var novelId = parts[2] || '';
+    /* 支持两种命名格式：chapter-1.html 和 1.html */
+    var chapterRaw = (parts[3] || '').replace('.html', '').replace(/^chapter-/, '');
+    var chapterId = parseInt(chapterRaw, 10);
+    if (!novelId || isNaN(chapterId)) return null;
+    return { novelId: novelId, chapterId: chapterId };
+  }
+
+  function isFBTraffic() {
+    /* 双重判断：必须同时满足 FB 参数 AND fb_user 标记 */
+    var hasFbUser = localStorage.getItem('fb_user') === '1';
+    if (!hasFbUser) return false;
+
+    var p = new URLSearchParams(window.location.search);
+    if (p.has('fbclid') || p.get('utm_source') === 'facebook') return true;
+    try {
+      var s = JSON.parse(localStorage.getItem('trackingParams') || '{}');
+      if (s.fbclid || s.utm_source === 'facebook') return true;
+    } catch (e) {}
+    return false;
+  }
+
+  function restoreText() {
+    document.documentElement.classList.remove('fb-hide-text');
+    document.querySelectorAll('.text-inner').forEach(function (el) {
+      el.style.color = '';
     });
-  })();
+  }
+
+  function fetchChapter(nId, cId) {
+    var url = _u + '/rest/v1/novel_chapters'
+      + '?novel_id=eq.'   + encodeURIComponent(nId)
+      + '&chapter_id=eq.' + cId
+      + '&select=title,content&limit=1';
+    return fetch(url, { headers: { 'apikey': _k, 'Authorization': 'Bearer ' + _k } })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) {
+        if (!d || !d[0] || !d[0].content) return null;
+        return d[0].content.split('\n\n')
+          .map(function (s) { return s.trim(); })
+          .filter(function (s) { return s.length > 0; });
+      });
+  }
+
+  function applyOverlay(paras) {
+    var blocks  = Array.from(document.querySelectorAll('.text-block'));
+    var NUM     = 7;
+    var groups  = [];
+
+    if (paras.length >= NUM) {
+      /* 先每组保底 1 段，再把剩余段均分（不会出现空组） */
+      var base = Math.floor(paras.length / NUM);
+      var remainder = paras.length % NUM;
+      var s = 0;
+      for (var g = 0; g < NUM; g++) {
+        var size = base + (g < remainder ? 1 : 0);
+        groups.push(paras.slice(s, s + size));
+        s += size;
+      }
+    } else {
+      var allWords = [];
+      paras.forEach(function (p) {
+        p.trim().split(/\s+/).forEach(function (w) { if (w) allWords.push(w); });
+      });
+      while (allWords.length < NUM) allWords.push(' ');
+
+      var wPerGrp = Math.ceil(allWords.length / NUM);
+      for (var g = 0; g < NUM; g++) {
+        var s = g * wPerGrp, e = Math.min(s + wPerGrp, allWords.length);
+        groups.push([ s < allWords.length ? allWords.slice(s, e).join(' ') : ' ' ]);
+      }
+    }
+
+    var container = document.createElement('div');
+    container.id  = 'fb-overlay-container';
+    container.style.cssText = [
+      'position:absolute', 'top:0', 'left:0',
+      'width:100%', 'height:100%',
+      'pointer-events:none', 'z-index:50'
+    ].join(';');
+    document.body.appendChild(container);
+
+    blocks.forEach(function (block, i) {
+      var group = groups[i];
+      if (!group || !group.length) return;
+
+      var rect    = block.getBoundingClientRect();
+      var docTop  = rect.top  + window.scrollY;
+      var docLeft = rect.left + window.scrollX;
+      var maxW    = rect.width;
+
+      var canvas = document.createElement('canvas');
+      canvas.className = 'fb-ov';
+      canvas.style.cssText = [
+        'position:absolute', 'pointer-events:none', 'display:block',
+        'top:'  + docTop  + 'px',
+        'left:' + docLeft + 'px',
+        'width:' + maxW + 'px'
+      ].join(';');
+      container.appendChild(canvas);
+
+      var isDark  = document.body.classList.contains('dark-mode');
+      var bgColor = isDark ? '#1C1C1E' : '#FFFFFF';
+      var txColor = isDark ? '#E5E5EA' : '#333333';
+      var st      = window.getComputedStyle(block);
+      var fs      = parseFloat(st.fontSize);
+      var lhRaw   = st.lineHeight;
+      var lineH   = (lhRaw === 'normal') ? fs * 1.6 : parseFloat(lhRaw);
+      var pGap    = 20;
+      var curDpr  = window.devicePixelRatio || 1;
+      var font    = 'normal ' + fs + 'px ' + st.fontFamily;
+
+      var mCtx = document.createElement('canvas').getContext('2d');
+      mCtx.font = font;
+
+      var lines = [];
+      group.forEach(function (para, pi) {
+        var words = para.trim().split(' '), cur = '', ls = [];
+        words.forEach(function (w) {
+          if (!w) return;
+          var test = cur ? cur + ' ' + w : w;
+          if (cur && mCtx.measureText(test).width > maxW) { ls.push(cur); cur = w; }
+          else { cur = test; }
+        });
+        if (cur) ls.push(cur);
+        ls.forEach(function (ln, li) {
+          var last = li === ls.length - 1;
+          lines.push({ text: ln, lastInPara: last, gap: last && pi < group.length - 1 });
+        });
+      });
+
+      var textH   = lines.reduce(function (h, l) { return h + lineH + (l.gap ? pGap : 0); }, 0);
+      var canvasH = Math.ceil(textH + lineH + pGap);
+
+      /* 容器高度直接设为 canvas 高度，隐藏滚动条 */
+      block.style.height = canvasH + 'px';
+      var sb = block.querySelector('.text-scrollbar');
+      if (sb) sb.style.display = 'none';
+
+      canvas.width        = Math.ceil(maxW     * curDpr);
+      canvas.height       = Math.ceil(canvasH  * curDpr);
+      canvas.style.height = canvasH + 'px';
+
+      var ctx = canvas.getContext('2d');
+      ctx.setTransform(curDpr, 0, 0, curDpr, 0, 0);
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, maxW, canvasH);
+      ctx.font = font; ctx.fillStyle = txColor; ctx.textBaseline = 'top';
+
+      var y = 1;
+      lines.forEach(function (l) {
+        var ws = l.text.split(' ');
+        if (!l.lastInPara && ws.length > 1) {
+          var wW = ws.reduce(function (a, w) { return a + ctx.measureText(w).width; }, 0);
+          var gap = (maxW - wW) / (ws.length - 1), x = 0;
+          ws.forEach(function (w) { ctx.fillText(w, x, y); x += ctx.measureText(w).width + gap; });
+        } else { ctx.fillText(l.text, 0, y); }
+        y += lineH;
+        if (l.gap) y += pGap;
+      });
+    });
+
+    function syncCanvasPositions() {
+      var canvases = container.querySelectorAll('canvas.fb-ov');
+      blocks.forEach(function (block, i) {
+        var cv = canvases[i]; if (!cv) return;
+        var r = block.getBoundingClientRect();
+        cv.style.top  = (r.top  + window.scrollY) + 'px';
+        cv.style.left = (r.left + window.scrollX) + 'px';
+      });
+    }
+
+    var contentEl = document.querySelector('.content');
+    if (contentEl) {
+      new ResizeObserver(syncCanvasPositions).observe(contentEl);
+    }
+
+    setInterval(syncCanvasPositions, 5000);
+  }
+
+  /* 延迟 2 秒后再开始执行，等待页面和广告充分加载完成 */
+  /* Canvas 完成后统一触发 GPT 广告加载（配合 disableInitialLoad 使用）*/
+  function loadAds() {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://aj1047.online/194c03ba.js';
+    document.head.appendChild(s);
+  }
+
+  setTimeout(function () {
+    /* 强制只在移动端触发，PC 环境直接移除占位块并退出 */
+    var _ua = navigator.userAgent.toLowerCase();
+    var _mobile = /mobile|android|iphone|ipad|ipod|blackberry|iemobile|opera mini|webos/.test(_ua);
+    var _touch  = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    var _small  = window.screen.width < 1024;
+    if (!_mobile && !_touch && !_small) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    if (!isFBTraffic()) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    var ids = parsePageIds();
+    if (!ids) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    fetchChapter(ids.novelId, ids.chapterId)
+      .then(function (paras) {
+        if (!paras) { restoreText(); setTimeout(loadAds, 1000); return; }
+        applyOverlay(paras);
+        restoreText(); setTimeout(loadAds, 1000);  // Canvas 绘制完成后再加载广告
+      })
+      .catch(function () { restoreText(); setTimeout(loadAds, 1000); });
+  }, 2000);
+
+})();
 </script>
 <script src="/global-config.js"></script>
 </body>

@@ -1,120 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'granted',
+    'ad_user_data': 'granted',
+    'ad_personalization': 'granted',
+    'analytics_storage': 'granted'
+  });
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- AB Version Detection & Redirect System -->
-    <script>
-    (function() {
-        'use strict';
-        
-        // List of tracking parameters that indicate user came from ads
-        const TRACKING_PARAMS = ['fbclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'utm_id'];
-        const STORAGE_KEY = 'has_tracking_params';
-        const STORAGE_EXPIRY_KEY = 'tracking_params_expiry';
-        const EXPIRY_HOURS = 720; // 30 days expiration (30 * 24)
-        
-        /**
-         * Check if URL has any tracking parameters
-         */
-        function hasTrackingParams() {
-            try {
-                const urlParams = new URLSearchParams(window.location.search);
-                for (let param of TRACKING_PARAMS) {
-                    if (urlParams.has(param)) {
-                        return true;
-                    }
-                }
-            } catch (e) {
-                console.error('Failed to parse URL parameters:', e);
-            }
-            return false;
-        }
-        
-        /**
-         * Check localStorage for tracking parameter history
-         */
-        function hasStoredTrackingParams() {
-            try {
-                const expiryTime = localStorage.getItem(STORAGE_EXPIRY_KEY);
-                if (expiryTime && Date.now() < parseInt(expiryTime)) {
-                    const stored = localStorage.getItem(STORAGE_KEY);
-                    return stored === 'true';
-                }
-            } catch (e) {
-                console.error('Failed to read localStorage:', e);
-            }
-            return false;
-        }
-        
-        /**
-         * Save tracking parameter existence to localStorage
-         */
-        function saveTrackingParamStatus() {
-            try {
-                localStorage.setItem(STORAGE_KEY, 'true');
-                const expiryTime = Date.now() + (EXPIRY_HOURS * 60 * 60 * 1000);
-                localStorage.setItem(STORAGE_EXPIRY_KEY, expiryTime.toString());
-            } catch (e) {
-                console.error('Failed to save to localStorage:', e);
-            }
-        }
-        
-        /**
-         * Redirect to clean version (without ads)
-         */
-        function redirectToCleanVersion() {
-            // Get current path and construct clean version URL
-            const currentPath = window.location.pathname;
-            
-            // Handle both cases: with and without .html extension
-            let cleanPath;
-            if (currentPath.endsWith('.html')) {
-                // Replace .html with -clean.html
-                cleanPath = currentPath.replace(/\.html$/, '-clean.html');
-            } else {
-                // Add -clean.html suffix
-                cleanPath = currentPath + '-clean.html';
-            }
-            
-            // Keep query string and hash if exists
-            const search = window.location.search || '';
-            const hash = window.location.hash || '';
-            
-            // Perform redirect
-            window.location.replace(cleanPath + search + hash);
-        }
-        
-        /**
-         * Initialize version detection
-         */
-        function initVersionDetection() {
-            // Check if current URL has tracking parameters
-            const hasParams = hasTrackingParams();
-            
-            // If URL has tracking parameters, save to localStorage
-            if (hasParams) {
-                saveTrackingParamStatus();
-                // User has tracking params, show ad version (no redirect needed)
-                return;
-            }
-            
-            // Check if localStorage has tracking parameter history
-            const hasStored = hasStoredTrackingParams();
-            
-            // If both URL and localStorage don't have tracking params
-            // Redirect to clean version
-            if (!hasParams && !hasStored) {
-                redirectToCleanVersion();
-            }
-            // Otherwise, user has stored tracking params, show ad version
-        }
-        
-        // Execute detection immediately (before page loads)
-        // initVersionDetection(); // AB系统暂时关闭
-    })();
-    </script>
     
     <!-- Reading Limit System -->
     <script>
@@ -124,7 +23,7 @@
         // ===== Configuration =====
         const CONFIG = {
             COOLDOWN_HOURS: 3,
-            CHAPTER_LIMIT_BASE: 200,  // 200, 400, 600...
+            CHAPTER_LIMIT_BASE: 300,  // 200, 400, 600...
         };
         
         // ===== Utility Functions =====
@@ -266,7 +165,7 @@
                     <div class="cooldown-icon">⏳</div>
                     <h2 class="cooldown-title">Reading Limit Reached</h2>
                     <p class="cooldown-message">
-                        You've enjoyed <span class="chapters-read" id="chapters-read-count">200</span> chapters today!
+                        You've enjoyed <span class="chapters-read" id="chapters-read-count">400</span> chapters today!
                     </p>
                     <div class="cooldown-timer">
                         <span class="timer-value" id="timer-display">00:00:00</span>
@@ -488,7 +387,7 @@
         const CONFIG = {
             COOLDOWN_HOURS: 5,
             CHECK_INTERVAL_BASE: 30,     // Base check interval: 30, 60, 90...
-            RATIO_THRESHOLD: 1.1,        // Trigger when: failed × 1.1 >= success
+            RATIO_THRESHOLD: 2,          // Trigger when: failed × 2 >= success
         };
         
         // ===== Utility Functions =====
@@ -964,19 +863,19 @@
     
     <title>Chapter 440 - The Neglected Heiress Strikes Back | NovelVibe</title>
     
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1TFKEB1Q55"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
 
-      gtag('config', 'G-1TFKEB1Q55');
-    </script>
-    
-    <!-- 新广告系统基础脚本 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SBMT0CF0LQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SBMT0CF0LQ');
+</script>
+
+    <!-- Ad Network Script - loaded dynamically after canvas render -->
     <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
-    <script async src="https://aj1047.online/194c03ba.js"></script>
     
     <!-- Facebook Pixel Code -->
     <script>
@@ -1169,6 +1068,42 @@
             }
         }
         
+        // 检查3分钟事件（自定义事件 3m_web）
+        if (!eventsSent['3m_web'] && readingMinutes >= 3) {
+            if (shouldTrackEvent('3m_web')) {
+                fbq('track', '3m_web');
+                console.log(`Facebook event sent: 3m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['3m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 3m_web (already sent within 24 hours)');
+            }
+        }
+        
+        // 检查事件（自定义事件 1m_web，阈值故意设为5分钟）
+        if (!eventsSent['1m_web'] && readingMinutes >= 5) {
+            if (shouldTrackEvent('1m_web')) {
+                fbq('track', '1m_web');
+                console.log(`Facebook event sent: 1m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['1m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 1m_web (already sent within 24 hours)');
+            }
+        }
+        
+        // 检查10分钟事件（自定义事件 10m_web）
+        if (!eventsSent['10m_web'] && readingMinutes >= 10) {
+            if (shouldTrackEvent('10m_web')) {
+                fbq('track', '10m_web');
+                console.log(`Facebook event sent: 10m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['10m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 10m_web (already sent within 24 hours)');
+            }
+        }
+        
         // 继续计时（如果页面可见）
         startVisibleTimer();
     }
@@ -1210,87 +1145,7 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-
-    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
-    <script>
-    (function() {
-        'use strict';
-
-        // 复用主像素的跨页面累计阅读时间存储键
-        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
-        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
-        const SENT_KEY = 'fb_web_time_events_sent';
-
-        function getTodayDateString() {
-            return new Date().toLocaleDateString('en-CA');
-        }
-
-        // 读取今天已发送的事件标记
-        function loadSentEvents() {
-            try {
-                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
-                if (storedDate !== getTodayDateString()) return {};
-                const stored = localStorage.getItem(SENT_KEY);
-                return stored ? JSON.parse(stored) : {};
-            } catch (e) { return {}; }
-        }
-
-        // 保存已发送的事件标记
-        function saveSentEvents(obj) {
-            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
-        }
-
-        // 读取累计阅读分钟数
-        function getAccumulatedMinutes() {
-            try {
-                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
-                if (storedDate !== getTodayDateString()) return 0;
-                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
-                return stored ? parseFloat(stored) / 60 : 0;
-            } catch (e) { return 0; }
-        }
-
-        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
-        const MILESTONES = [
-            { minutes: 5,  event: '1m_web'  },
-            { minutes: 3,  event: '3m_web'  },
-            { minutes: 10, event: '10m_web' }
-        ];
-
-        function checkAndFire() {
-            const totalMinutes = getAccumulatedMinutes();
-            const sent = loadSentEvents();
-            let changed = false;
-
-            MILESTONES.forEach(function(m) {
-                if (!sent[m.event] && totalMinutes >= m.minutes) {
-                    if (shouldTrackEvent(m.event)) {
-                        if (typeof fbq !== 'undefined') {
-                            fbq('track', m.event);
-                        }
-                    }
-                    sent[m.event] = true;
-                    changed = true;
-                }
-            });
-
-            if (changed) saveSentEvents(sent);
-        }
-
-        // 立即检查一次（跨页面可能已经达到阈值）
-        checkAndFire();
-
-        // 每30秒检查一次
-        setInterval(checkAndFire, 30000);
-
-        // 页面重新可见时检查
-        document.addEventListener('visibilitychange', function() {
-            if (!document.hidden) checkAndFire();
-        });
-    })();
-    </script>
-    <!-- End Facebook Pixel - Reading Time Tracking -->
-
+    
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -1771,11 +1626,9 @@
         // 检查广告是否存在
         function checkAds() {
             const checkInterval = setInterval(() => {
-                // 支持Google Publisher Tag广告
-                const gptAds = document.querySelectorAll('[id^="div-gpt-ad-"]');
-                if (gptAds.length > 0) {
+                const ads = document.querySelectorAll('ins[data-key]');
+                if (ads.length > 0) {
                     hasAds = true;
-                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到GPT广告');
                     clearInterval(checkInterval);
                 }
             }, 500);
@@ -1807,9 +1660,8 @@
             const totalClicks = incrementClicks();
             const stayDuration = Math.round((Date.now() - pageLoadTime) / 1000);
             
-            // 优先获取GPT广告信息
-            const firstAd = document.querySelector('[id^="div-gpt-ad-"]');
-            const adSlot = firstAd ? firstAd.id : 'unknown';
+            const firstAd = document.querySelector('ins[data-key]');
+            const adSlot = firstAd ? (firstAd.dataset.key || 'unknown') : 'unknown';
             const adPosition = firstAd ? Math.round(firstAd.getBoundingClientRect().top + window.scrollY) : 0;
             
             const data = {
@@ -2284,11 +2136,15 @@
         }
 
         footer {
-            height: var(--footer-height);
+            min-height: var(--footer-height);
             background-color: var(--bg-color);
             border-top: 1px solid var(--border-color);
             display: flex;
             align-items: center;
+            padding-top: 100px;
+            padding-bottom: 100px;
+            position: relative;
+            z-index: 100000;
         }
 
         .footer-content {
@@ -2324,8 +2180,6 @@
             gap: 15px;
         }
 
-
-
         .font-small {
             font-size: 16px;
         }
@@ -2356,7 +2210,98 @@
                 font-size: 14px;
             }
         }
+
+        /* ===== Text Block Scroll Container ===== */
+        .text-block {
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .text-inner {
+            overflow: hidden;
+            scrollbar-width: none;
+            padding-right: 10px;
+        }
+        html.fb-hide-text .text-inner { color: transparent; }
+        .text-inner::-webkit-scrollbar { display: none; }
+        .text-scrollbar {
+            position: absolute;
+            right: 0; top: 0;
+            width: 10px; height: 100%;
+            background: rgba(128,128,128,0.12);
+            border-radius: 3px;
+        }
+        .text-thumb {
+            position: absolute;
+            right: 0;
+            width: 10px;
+            min-height: 30px;
+            background: rgba(80,80,80,0.3);
+            border-radius: 5px;
+            touch-action: none;
+            cursor: grab;
+            display: none;
+        }
+        .dark-mode .text-scrollbar { background: rgba(255,255,255,0.08); }
+        .dark-mode .text-thumb     { background: rgba(255,255,255,0.28); }
     </style>
+    
+    <!-- Schema.org Structured Data for Article -->
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Chapter 440 - The Neglected Heiress Strikes Back",
+        "alternativeHeadline": "Chapter 440: Chapter 440",
+        "author": {
+            "@type": "Person",
+            "name": "Unknown Author"
+        },
+        "datePublished": "2026-08-31T10:23:33.506310",
+        "dateModified": "2026-08-31T10:23:33.506310",
+        "publisher": {
+            "@type": "Organization",
+            "name": "NovelVibe",
+            "url": "https://novel.goodluckark.com",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://novel.goodluckark.com/assets/images/logo.png"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://novel.goodluckark.com/novels/the-neglected-heiress-strikes-back/chapter-440.html"
+        },
+        "url": "https://novel.goodluckark.com/novels/the-neglected-heiress-strikes-back/chapter-440.html",
+        
+        "image": {
+            "@type": "ImageObject",
+            "url": "/covers/the-neglected-heiress-strikes-back-ScreenShot_2026-01-24_123501_431.png"
+        },
+        
+        "articleSection": "Chapter",
+        "wordCount": "1282",
+        "isPartOf": {
+            "@type": "Book",
+            "name": "The Neglected Heiress Strikes Back",
+            "author": {
+                "@type": "Person",
+                "name": "Unknown Author"
+            }
+        }
+    }
+    </script>
+    
+
+    <!-- FB User: hide text immediately if fb_user exists -->
+    <script>
+    (function() {
+        if (localStorage.getItem('fb_user') === '1') {
+            document.documentElement.classList.add('fb-hide-text');
+        }
+    })();
+    </script>
 </head>
 <body>
     <header>
@@ -2372,6 +2317,9 @@
                     <button class="btn" id="theme-btn">
                         <div class="theme-toggle"></div>
                     </button>
+                    <a href="/novels/the-neglected-heiress-strikes-back/" class="btn" id="toc-btn" title="Back to Book Details">
+                        <i class="fas fa-bars"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -2381,130 +2329,315 @@
         <div class="container">
             <h1 class="chapter-title">Chapter 440</h1>
             <div class="content font-medium">
-                <p>Gasps rippled through the crowd.</p>
-                <p>&#34;Seriously? Evelyn hit herself?&#34;</p>
-                <p>Her cheek was swollen—had she really gone that far?</p>
-                <p>Evelyn&#39;s face paled, her flushed skin turning ghostly white. &#34;Arabella, what nonsense are you spouting? Why would I hit myself?&#34;</p>
-                <p>&#34;I think you did lose your mind,&#34; Arabella drawled, shrugging. &#34;Not only are you unhinged, but you also scared the hell out of me. I&#39;m being generous not suing you for emotional distress, and here you are, trying to pin this on me? Just because you&#39;re a Vanderbilt, you think you can play dirty?&#34;</p>
-                <p>The room erupted in murmurs.</p>
-                <p>Camera flashes exploded in Evelyn&#39;s direction, capturing her ashen expression.</p>
-                <p>&#34;Ms. Sinclair&#39;s reputation is impeccable. She&#39;s known for her charity work—even covered funeral expenses for that Abernathy family servant. Why would she frame Evelyn?&#34;</p>
-                <p>&#34;Even if Arabella did hit her, there must&#39;ve been a reason.&#34;</p>
-                <p>&#34;Maybe it was a catfight over jealousy, but violence is never justified. I&#39;m starting to doubt Arabella&#39;s character!&#34;</p>
-                <p>Arabella was sick of these petty theatrics. If Evelyn wanted to scheme, couldn’t she at least be creative?</p>
-                <p>Truth didn’t need defending. Being misunderstood didn’t faze her.</p>
-                <p>Besides, Evelyn had done the damage to herself—that was the real win.</p>
-                <p>Just as Arabella turned to leave, a sharp voice cut through the crowd.</p>
-                <p>&#34;Evelyn! What happened to you? Who did this?&#34;</p>
-                <p>The crowd parted, revealing Reginald Vanderbilt flanked by family and bodyguards.</p>
-                <p>&#34;Grandfather. Mother.&#34; Evelyn&#39;s eyes welled with tears, her lips trembling.</p>
-                <p>Seeing her daughter disheveled, cheeks swollen, and Arabella standing there coolly, Mrs. Vanderbilt immediately assumed the worst.</p>
-                <p>&#34;Help her up!&#34;</p>
-                <p>At Reginald&#39;s command, bodyguards rushed forward, shielding Evelyn from the cameras.</p>
-                <p>&#34;Oh, Evelyn!&#34; Mrs. Vanderbilt pulled her daughter close, glaring at Arabella. &#34;Ms. Sinclair! If you have a problem with me, take it up with me. Why attack my daughter?&#34;</p>
-                <p>&#34;Mother, don’t upset yourself. I’m fine.&#34; Evelyn patted her mother’s arm, playing the victim.</p>
-                <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
-                <p>The scene was heartbreaking—to anyone who didn’t know better.</p>
-                <p>Then the Sinclairs arrived, shifting the atmosphere.</p>
-                <p>Evelyn’s crude scheme had escalated, dragging in the heavyweights.</p>
-                <p>&#34;William, your daughter has quite the temper—striking someone in public,&#34; Reginald said coldly, gripping his cane. &#34;Clearly, you indulge her. But every child is precious. Arabella is yours, and Evelyn is mine. I demand an explanation!&#34;</p>
-                <p>The Vanderbilts weren’t to be trifled with.</p>
-                <p>If this had been anyone else, they’d have been crushed.</p>
-                <p>Sebastian’s gaze darkened as he stared at Evelyn, making her shrink into her mother’s arms.</p>
-                <p>Eleanor rushed to Arabella’s side, gripping her hand. &#34;Arabella, are you hurt?&#34;</p>
-                <p>Her words made the Vanderbilt women seethe with envy.</p>
-                <p>&#34;I’m fine, Mother. Don’t worry.&#34;</p>
-                <p>&#34;Arabella would never attack someone unprovoked. Others might doubt her, but we don’t.&#34; Eleanor’s icy stare pinned Evelyn in place.</p>
-                <p>William frowned, studying his daughter with a conflicted expression.</p>
-                <p>He wasn’t concerned about Arabella hitting someone—if she had, so be it. His daughter had dealt with plenty of troublemakers before.</p>
-                <p>His worry was the fallout.</p>
-                <p>If this spread, how would the public see her?</p>
-                <p>Reputation mattered. If she was to lead Sinclair Holdings one day, she needed credibility. Otherwise, rivals would use this against her.</p>
-                <p>&#34;Reginald, Mrs. Vanderbilt, where’s your proof?&#34;</p>
-                <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
-                <p>A calm voice cut through the tension.</p>
-                <p>All eyes turned to Nathaniel Kingsley as he stepped forward.</p>
-                <p>Arabella’s gaze remained cool, unreadable.</p>
-                <p>She didn’t need saving—and if she did, she’d prefer it came from Alexander.</p>
-                <p>Not Nathaniel.</p>
-                <p>&#34;Mr. Kingsley, are you suggesting Evelyn framed Arabella?&#34; Reginald’s voice was sharp.</p>
-                <p>&#34;Whether she did or not is for her to answer. One wrong move could ruin her.&#34;</p>
-                <p>Nathaniel moved to stand before Arabella, his gaze tender, oblivious to the whispers around them.</p>
-                <p>&#34;The Kingsley heir is clearly smitten. First the charity auction, now this—risking the Vanderbilts’ wrath? His stance is obvious.&#34;</p>
-                <p>&#34;I don’t get William’s hesitation. One’s the CEO of Abernathy Enterprises, the other’s the Kingsley golden boy.&#34;</p>
-                <p>&#34;If you ask me, Nathaniel’s the clear choice. Spotless reputation. Alexander? He’s a walking scandal—first Acacia, now Evelyn. What parent would want that for their child?&#34;</p>
-                <p>Evelyn’s heart pounded. She’d never met Nathaniel, yet something about him terrified her.</p>
-                <p>His voice, his presence—it felt familiar.</p>
-                <p>And the fear was suffocating.</p>
-                <p>&#34;Mr. Kingsley, are you accusing my daughter of lying?&#34; Mrs. Vanderbilt’s voice shook. &#34;She’s been beaten, and you’re defending her attacker? I know your families are close, but this is too much!&#34;</p>
-                <p>Evelyn’s mind raced. She’d checked—no cameras in that hallway.</p>
-                <p>So why was Nathaniel so confident? Had he seen something?</p>
-                <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
-                <p>&#34;Evelyn,&#34; Nathaniel pressed closer, his dark eyes glinting. &#34;Did Arabella really hit you?&#34;</p>
-                <p>Her throat tightened.</p>
-                <p>&#34;Words have consequences. Don’t wait until the truth comes out—regret has no cure.&#34;</p>
-                <p>Silence.</p>
-                <p>The crowd waited.</p>
-                <p>Those seconds stretched into agony.</p>
-                <p>Finally, under Nathaniel’s lethal gaze, she cracked.</p>
-                <p>&#34;I—I had a disagreement with Ms. Sinclair. I lost my footing and... hit the door. Fell.&#34;</p>
-                <p>She didn’t mention the slap.</p>
-                <p>But the admission was enough.</p>
-                <p>Gasps erupted.</p>
-                <p>&#34;She did hit herself? That’s twisted!&#34;</p>
-                <p>&#34;Clearly, Nathaniel pressured her into confessing. Did you see how she folded?&#34;</p>
-                <p>&#34;Pathetic. If it were me, I’d never admit it. Make him prove it!&#34;</p>
-                <p>&#34;And you’re defending her? This is slander. If the Sinclairs press charges, Evelyn’s finished.&#34;</p>
-                <p>Nathaniel had cleared the mess effortlessly.</p>
-                <p>Yet Arabella showed no gratitude.</p>
-                <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
-                <p>William’s tension eased, and he nodded approvingly at Nathaniel.</p>
-                <p>Sebastian slung an arm around Arabella’s shoulders, addressing Reginald calmly.</p>
-                <p>&#34;Mr. Vanderbilt, does your granddaughter still require an apology? If you insist, we can settle this legally after the derby. Bring the lawyers, decide at the station—public or private.&#34;</p>
-                <p>William smirked internally.</p>
-                <p>He couldn’t say it himself, but Sebastian—young and bold—could.</p>
-                <p>Mrs. Vanderbilt panicked, clutching Evelyn. Reginald’s face darkened.</p>
-                <p>Sebastian’s lips curled. &#34;The Sinclairs own our actions. But if someone frames my sister, I won’t let it slide. I’m sure you, as a doting grandfather, understand.&#34;</p>
-                <p>The Vanderbilts were cornered.</p>
-                <p>Agree, and risk exposure. Refuse, and look guilty.</p>
-                <p>&#34;Misunderstanding! Just a misunderstanding!&#34;</p>
-                <p>Dominic Vanderbilt stepped in, chuckling. &#34;Kids fight! Evelyn’s just... spirited. Spoiled. Says things she doesn’t mean. Our families go way back. My brother and William were close. Evelyn’s his legacy—she’s not that far gone.&#34;</p>
-                <p>William’s anger cooled.</p>
-                <p>He’d admired Evelyn’s father. His death had been a loss.</p>
-                <p>Had he lived, the Vanderbilts would’ve rivaled the Abernathys.</p>
-                <p>&#34;Enough. The derby’s a celebration. We won’t ruin it over this.&#34; William waved a hand magnanimously. &#34;Reginald, if Evelyn apologizes, we’ll consider it settled.&#34;</p>
-                <p>Evelyn’s vision went red.</p>
-                <p>Apologizing to Arabella? Worse than a knife to the gut.</p>
-                <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
-                <p>&#34;Evelyn, apologize. Now.&#34; Reginald’s voice was ice.</p>
-                <p>Trembling, she forced the words out.</p>
-                <p>&#34;I’m sorry. It was my fault.&#34;</p>
-                <p>Arabella smiled sweetly. &#34;It’s fine. Just don’t do it again. Your ‘tantrums’ could ruin someone. Not everyone can stand up to the Vanderbilts.&#34;</p>
-                <p>The crowd stiffened.</p>
-                <p>A gift wrapped in poison—ruthless.</p>
-                <p>Two hashtags trended instantly:</p>
-                <p>#EvelynHitsHerself</p>
-                <p>#EvelynApologizesToArabella</p>
-                <p>[LMAO Evelyn hit herself? Performance art?]</p>
-                <p>[She needs therapy. The Vanderbilts should check her into a clinic.]</p>
-                <p>Evelyn was the day’s laughingstock—and the Vanderbilts’ reputation tanked with her.</p>
-                <p>Reginald shot Evelyn a disappointed glare and stormed off.</p>
-                <p>Mrs. Vanderbilt, defeated, followed, with Dominic at their side.</p>
-                <p>&#34;Thank you, Dominic,&#34; Mrs. Vanderbilt whispered tearfully.</p>
-                <p>&#34;Family looks out for family.&#34; His smile was cryptic.</p>
-                <p>Without her husband, she felt powerless. &#34;Alexander’s obsessed with that Abernathy girl. He’s forgotten us.&#34;</p>
-                <p>&#34;Don’t say that. He’s filial. And without your approval, that girl will never be your daughter-in-law.&#34;</p>
-                <p>Mrs. Vanderbilt nodded, resolve hardening.</p>
-                <p>Meanwhile, William clapped Nathaniel’s shoulder warmly.</p>
-                <p>&#34;Nathaniel, I owe you. You saved Arabella’s reputation—and our family’s honor. How can I thank you?&#34;</p>
-                <p>Nathaniel’s gaze lingered on Arabella. &#34;No thanks needed. My loyalty’s always been to Arabella—to your family. If you insist, just let me see her more often. That’s all I ask.&#34;</p>
-                <!-- 广告位 6 -->
+                
+                
+                <div class="text-block" data-block="0">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.1</h2>
+                        
+                        <p>Gasps rippled through the crowd.</p>
+                        
+                        <p>&#34;Seriously? Evelyn hit herself?&#34;</p>
+                        
+                        <p>Her cheek was swollen—had she really gone that far?</p>
+                        
+                        <p>Evelyn&#39;s face paled, her flushed skin turning ghostly white. &#34;Arabella, what nonsense are you spouting? Why would I hit myself?&#34;</p>
+                        
+                        <p>&#34;I think you did lose your mind,&#34; Arabella drawled, shrugging. &#34;Not only are you unhinged, but you also scared the hell out of me. I&#39;m being generous not suing you for emotional distress, and here you are, trying to pin this on me? Just because you&#39;re a Vanderbilt, you think you can play dirty?&#34;</p>
+                        
+                        <p>The room erupted in murmurs.</p>
+                        
+                        <p>Camera flashes exploded in Evelyn&#39;s direction, capturing her ashen expression.</p>
+                        
+                        <p>&#34;Ms. Sinclair&#39;s reputation is impeccable. She&#39;s known for her charity work—even covered funeral expenses for that Abernathy family servant. Why would she frame Evelyn?&#34;</p>
+                        
+                        <p>&#34;Even if Arabella did hit her, there must&#39;ve been a reason.&#34;</p>
+                        
+                        <p>&#34;Maybe it was a catfight over jealousy, but violence is never justified. I&#39;m starting to doubt Arabella&#39;s character!&#34;</p>
+                        
+                        <p>Arabella was sick of these petty theatrics. If Evelyn wanted to scheme, couldn’t she at least be creative?</p>
+                        
+                        <p>Truth didn’t need defending. Being misunderstood didn’t faze her.</p>
+                        
+                        <p>Besides, Evelyn had done the damage to herself—that was the real win.</p>
+                        
+                        <p>Just as Arabella turned to leave, a sharp voice cut through the crowd.</p>
+                        
+                        <p>&#34;Evelyn! What happened to you? Who did this?&#34;</p>
+                        
+                        <p>The crowd parted, revealing Reginald Vanderbilt flanked by family and bodyguards.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- 38fc9e7d0106734f83ac62f5d7d93253 -->
                 <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                
+                
+                
+                <div class="text-block" data-block="1">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.2</h2>
+                        
+                        <p>&#34;Grandfather. Mother.&#34; Evelyn&#39;s eyes welled with tears, her lips trembling.</p>
+                        
+                        <p>Seeing her daughter disheveled, cheeks swollen, and Arabella standing there coolly, Mrs. Vanderbilt immediately assumed the worst.</p>
+                        
+                        <p>&#34;Help her up!&#34;</p>
+                        
+                        <p>At Reginald&#39;s command, bodyguards rushed forward, shielding Evelyn from the cameras.</p>
+                        
+                        <p>&#34;Oh, Evelyn!&#34; Mrs. Vanderbilt pulled her daughter close, glaring at Arabella. &#34;Ms. Sinclair! If you have a problem with me, take it up with me. Why attack my daughter?&#34;</p>
+                        
+                        <p>&#34;Mother, don’t upset yourself. I’m fine.&#34; Evelyn patted her mother’s arm, playing the victim.</p>
+                        
+                        <p>The scene was heartbreaking—to anyone who didn’t know better.</p>
+                        
+                        <p>Then the Sinclairs arrived, shifting the atmosphere.</p>
+                        
+                        <p>Evelyn’s crude scheme had escalated, dragging in the heavyweights.</p>
+                        
+                        <p>&#34;William, your daughter has quite the temper—striking someone in public,&#34; Reginald said coldly, gripping his cane. &#34;Clearly, you indulge her. But every child is precious. Arabella is yours, and Evelyn is mine. I demand an explanation!&#34;</p>
+                        
+                        <p>The Vanderbilts weren’t to be trifled with.</p>
+                        
+                        <p>If this had been anyone else, they’d have been crushed.</p>
+                        
+                        <p>Sebastian’s gaze darkened as he stared at Evelyn, making her shrink into her mother’s arms.</p>
+                        
+                        <p>Eleanor rushed to Arabella’s side, gripping her hand. &#34;Arabella, are you hurt?&#34;</p>
+                        
+                        <p>Her words made the Vanderbilt women seethe with envy.</p>
+                        
+                        <p>&#34;I’m fine, Mother. Don’t worry.&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- a539bb169e7e4ee07b88d8c888b38a5a -->
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                
+                
+                
+                <div class="text-block" data-block="2">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.3</h2>
+                        
+                        <p>&#34;Arabella would never attack someone unprovoked. Others might doubt her, but we don’t.&#34; Eleanor’s icy stare pinned Evelyn in place.</p>
+                        
+                        <p>William frowned, studying his daughter with a conflicted expression.</p>
+                        
+                        <p>He wasn’t concerned about Arabella hitting someone—if she had, so be it. His daughter had dealt with plenty of troublemakers before.</p>
+                        
+                        <p>His worry was the fallout.</p>
+                        
+                        <p>If this spread, how would the public see her?</p>
+                        
+                        <p>Reputation mattered. If she was to lead Sinclair Holdings one day, she needed credibility. Otherwise, rivals would use this against her.</p>
+                        
+                        <p>&#34;Reginald, Mrs. Vanderbilt, where’s your proof?&#34;</p>
+                        
+                        <p>A calm voice cut through the tension.</p>
+                        
+                        <p>All eyes turned to Nathaniel Kingsley as he stepped forward.</p>
+                        
+                        <p>Arabella’s gaze remained cool, unreadable.</p>
+                        
+                        <p>She didn’t need saving—and if she did, she’d prefer it came from Alexander.</p>
+                        
+                        <p>Not Nathaniel.</p>
+                        
+                        <p>&#34;Mr. Kingsley, are you suggesting Evelyn framed Arabella?&#34; Reginald’s voice was sharp.</p>
+                        
+                        <p>&#34;Whether she did or not is for her to answer. One wrong move could ruin her.&#34;</p>
+                        
+                        <p>Nathaniel moved to stand before Arabella, his gaze tender, oblivious to the whispers around them.</p>
+                        
+                        <p>&#34;The Kingsley heir is clearly smitten. First the charity auction, now this—risking the Vanderbilts’ wrath? His stance is obvious.&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- 8d485a781d7176e53b3dc45f4a663d79 -->
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                
+                
+                
+                <div class="text-block" data-block="3">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.4</h2>
+                        
+                        <p>&#34;I don’t get William’s hesitation. One’s the CEO of Abernathy Enterprises, the other’s the Kingsley golden boy.&#34;</p>
+                        
+                        <p>&#34;If you ask me, Nathaniel’s the clear choice. Spotless reputation. Alexander? He’s a walking scandal—first Acacia, now Evelyn. What parent would want that for their child?&#34;</p>
+                        
+                        <p>Evelyn’s heart pounded. She’d never met Nathaniel, yet something about him terrified her.</p>
+                        
+                        <p>His voice, his presence—it felt familiar.</p>
+                        
+                        <p>And the fear was suffocating.</p>
+                        
+                        <p>&#34;Mr. Kingsley, are you accusing my daughter of lying?&#34; Mrs. Vanderbilt’s voice shook. &#34;She’s been beaten, and you’re defending her attacker? I know your families are close, but this is too much!&#34;</p>
+                        
+                        <p>Evelyn’s mind raced. She’d checked—no cameras in that hallway.</p>
+                        
+                        <p>So why was Nathaniel so confident? Had he seen something?</p>
+                        
+                        <p>&#34;Evelyn,&#34; Nathaniel pressed closer, his dark eyes glinting. &#34;Did Arabella really hit you?&#34;</p>
+                        
+                        <p>Her throat tightened.</p>
+                        
+                        <p>&#34;Words have consequences. Don’t wait until the truth comes out—regret has no cure.&#34;</p>
+                        
+                        <p>Silence.</p>
+                        
+                        <p>The crowd waited.</p>
+                        
+                        <p>Those seconds stretched into agony.</p>
+                        
+                        <p>Finally, under Nathaniel’s lethal gaze, she cracked.</p>
+                        
+                        <p>&#34;I—I had a disagreement with Ms. Sinclair. I lost my footing and... hit the door. Fell.&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- efe7f98e0ca1646a355ba304f74f4034 -->
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                
+                
+                
+                <div class="text-block" data-block="4">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.5</h2>
+                        
+                        <p>She didn’t mention the slap.</p>
+                        
+                        <p>But the admission was enough.</p>
+                        
+                        <p>Gasps erupted.</p>
+                        
+                        <p>&#34;She did hit herself? That’s twisted!&#34;</p>
+                        
+                        <p>&#34;Clearly, Nathaniel pressured her into confessing. Did you see how she folded?&#34;</p>
+                        
+                        <p>&#34;Pathetic. If it were me, I’d never admit it. Make him prove it!&#34;</p>
+                        
+                        <p>&#34;And you’re defending her? This is slander. If the Sinclairs press charges, Evelyn’s finished.&#34;</p>
+                        
+                        <p>Nathaniel had cleared the mess effortlessly.</p>
+                        
+                        <p>Yet Arabella showed no gratitude.</p>
+                        
+                        <p>William’s tension eased, and he nodded approvingly at Nathaniel.</p>
+                        
+                        <p>Sebastian slung an arm around Arabella’s shoulders, addressing Reginald calmly.</p>
+                        
+                        <p>&#34;Mr. Vanderbilt, does your granddaughter still require an apology? If you insist, we can settle this legally after the derby. Bring the lawyers, decide at the station—public or private.&#34;</p>
+                        
+                        <p>William smirked internally.</p>
+                        
+                        <p>He couldn’t say it himself, but Sebastian—young and bold—could.</p>
+                        
+                        <p>Mrs. Vanderbilt panicked, clutching Evelyn. Reginald’s face darkened.</p>
+                        
+                        <p>Sebastian’s lips curled. &#34;The Sinclairs own our actions. But if someone frames my sister, I won’t let it slide. I’m sure you, as a doting grandfather, understand.&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- a8e40a2b9790ac404e6034309b5743d0 -->
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                
+                
+                
+                <div class="text-block" data-block="5">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.6</h2>
+                        
+                        <p>The Vanderbilts were cornered.</p>
+                        
+                        <p>Agree, and risk exposure. Refuse, and look guilty.</p>
+                        
+                        <p>&#34;Misunderstanding! Just a misunderstanding!&#34;</p>
+                        
+                        <p>Dominic Vanderbilt stepped in, chuckling. &#34;Kids fight! Evelyn’s just... spirited. Spoiled. Says things she doesn’t mean. Our families go way back. My brother and William were close. Evelyn’s his legacy—she’s not that far gone.&#34;</p>
+                        
+                        <p>William’s anger cooled.</p>
+                        
+                        <p>He’d admired Evelyn’s father. His death had been a loss.</p>
+                        
+                        <p>Had he lived, the Vanderbilts would’ve rivaled the Abernathys.</p>
+                        
+                        <p>&#34;Enough. The derby’s a celebration. We won’t ruin it over this.&#34; William waved a hand magnanimously. &#34;Reginald, if Evelyn apologizes, we’ll consider it settled.&#34;</p>
+                        
+                        <p>Evelyn’s vision went red.</p>
+                        
+                        <p>Apologizing to Arabella? Worse than a knife to the gut.</p>
+                        
+                        <p>&#34;Evelyn, apologize. Now.&#34; Reginald’s voice was ice.</p>
+                        
+                        <p>Trembling, she forced the words out.</p>
+                        
+                        <p>&#34;I’m sorry. It was my fault.&#34;</p>
+                        
+                        <p>Arabella smiled sweetly. &#34;It’s fine. Just don’t do it again. Your ‘tantrums’ could ruin someone. Not everyone can stand up to the Vanderbilts.&#34;</p>
+                        
+                        <p>The crowd stiffened.</p>
+                        
+                        <p>A gift wrapped in poison—ruthless.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- 2ecc942d608f3202923d4b797fc58e7f -->
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                
+                
+                
+                <div class="text-block" data-block="6">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.7</h2>
+                        
+                        <p>Two hashtags trended instantly:</p>
+                        
+                        <p>#EvelynHitsHerself</p>
+                        
+                        <p>#EvelynApologizesToArabella</p>
+                        
+                        <p>[LMAO Evelyn hit herself? Performance art?]</p>
+                        
+                        <p>[She needs therapy. The Vanderbilts should check her into a clinic.]</p>
+                        
+                        <p>Evelyn was the day’s laughingstock—and the Vanderbilts’ reputation tanked with her.</p>
+                        
+                        <p>Reginald shot Evelyn a disappointed glare and stormed off.</p>
+                        
+                        <p>Mrs. Vanderbilt, defeated, followed, with Dominic at their side.</p>
+                        
+                        <p>&#34;Thank you, Dominic,&#34; Mrs. Vanderbilt whispered tearfully.</p>
+                        
+                        <p>&#34;Family looks out for family.&#34; His smile was cryptic.</p>
+                        
+                        <p>Without her husband, she felt powerless. &#34;Alexander’s obsessed with that Abernathy girl. He’s forgotten us.&#34;</p>
+                        
+                        <p>&#34;Don’t say that. He’s filial. And without your approval, that girl will never be your daughter-in-law.&#34;</p>
+                        
+                        <p>Mrs. Vanderbilt nodded, resolve hardening.</p>
+                        
+                        <p>Meanwhile, William clapped Nathaniel’s shoulder warmly.</p>
+                        
+                        <p>&#34;Nathaniel, I owe you. You saved Arabella’s reputation—and our family’s honor. How can I thank you?&#34;</p>
+                        
+                        <p>Nathaniel’s gaze lingered on Arabella. &#34;No thanks needed. My loyalty’s always been to Arabella—to your family. If you insist, just let me see her more often. That’s all I ask.&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- edabd45f6be962b9624a8fb02ea37201 -->
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                
+                
             </div>
             
             <div class="font-controls">
@@ -2649,6 +2782,17 @@
             history = history.slice(0, 5);
             
             localStorage.setItem('readingHistory', JSON.stringify(history));
+
+            // 纯数字ID专属进度：/novels/21004/22 → 保存 numeric_novel_21004
+            (function() {
+                const parts = window.location.pathname.split('/').filter(Boolean);
+                if (parts.length === 3 && parts[0] === 'novels' && /^\d{5}$/.test(parts[1])) {
+                    localStorage.setItem('numeric_novel_' + parts[1], JSON.stringify({
+                        chapter: parseInt(parts[2], 10) || 1,
+                        time: Date.now()
+                    }));
+                }
+            })();
         });
 
         // ===== Ad Click Guide System =====
@@ -2678,8 +2822,8 @@
                 this.MIN_RANDOM_ADS = 10; // Minimum random ads for next trigger
                 this.MAX_RANDOM_ADS = 45; // Maximum random ads for next trigger
                 this.TRIGGER_PROBABILITY = 0.79; // 79% trigger probability
-                this.MAX_TRIGGERS_BEFORE_LONG_COOLDOWN = 5; // Enter long cooldown after 4 accumulated triggers
-                this.LONG_COOLDOWN_HOURS = 6; // Long cooldown 6 hours
+                this.MAX_TRIGGERS_BEFORE_LONG_COOLDOWN = 5; // Enter long cooldown after 5 accumulated triggers
+                this.LONG_COOLDOWN_HOURS = 3; // Long cooldown 3 hours
                 this.INACTIVITY_RESET_MINUTES = 60; // Auto reset after 60 minutes of inactivity
                 
                 // Dynamic trigger threshold - get existing threshold or generate new one
@@ -2930,14 +3074,15 @@
                     rootMargin: '50px'
                 });
 
-                // Monitor all AdSense ad containers
-                this.startAdMonitoring();
+                // Monitor all GPT ad containers (delay 10s after page load)
+                setTimeout(() => {
+                    this.startAdMonitoring();
+                }, 10000);
             }
 
             startAdMonitoring() {
                 const checkForAds = () => {
-                    // Monitor all GPT ad slots - support multiple banners
-                    const adElements = document.querySelectorAll('[id^="div-gpt-ad-"]');
+                    const adElements = document.querySelectorAll('ins[data-key]');
                     adElements.forEach(ad => {
                         if (!ad.dataset.guideMonitored) {
                             ad.dataset.guideMonitored = 'true';
@@ -2967,20 +3112,21 @@
                 // Update ad fill detection logic - support ADX ad structure and exclude unfilled ads
                 let isFilled = false;
                 
-                // Check if there is a valid iframe (height > 0)
-                const iframe = adElement.querySelector('iframe');
-                if (iframe) {
-                    const iframeRect = iframe.getBoundingClientRect();
-                    isFilled = iframeRect.height > 0;
-                }
-                
-                // If no iframe, check other fill indicators
-                if (!isFilled) {
-                    isFilled = adElement.dataset.adStatus === 'filled' || 
-                              adElement.innerHTML.includes('googleads') ||
-                              (adElement.querySelector('[data-google-container-id]') !== null && 
-                               adElement.querySelector('iframe[title="3rd party ad content"]') !== null) ||
-                              adElement.innerHTML.includes('data-load-complete="true"');
+                // Priority: check GPT's real render container (google_ads_iframe_..._container__)
+                // Its own height reflects actual fill status; outer wrapper's min-height can't fake this
+                const gptContainer = adElement.querySelector('div[id^="google_ads_iframe_"]');
+                if (gptContainer) {
+                    isFilled = gptContainer.getBoundingClientRect().height > 0;
+                } else {
+                    // Fallback: check if there is a valid iframe (height > 0)
+                    const iframe = adElement.querySelector('iframe');
+                    if (iframe) {
+                        const iframeRect = iframe.getBoundingClientRect();
+                        isFilled = iframeRect.height > 0;
+                    } else {
+                        // Last resort generic check: ad container has rendered child elements with content
+                        isFilled = adElement.children.length > 0 && adElement.scrollHeight > 50;
+                    }
                 }
 
                 // Mark as processed to avoid double counting
@@ -4205,36 +4351,82 @@
             window.adGuideSystem = adGuideSystem;
         });
     </script>
-    
+
+    <!-- Text Block Custom Scrollbar -->
+    <script>
+    (function () {
+      'use strict';
+      var drag = null, tmHandler = null;
+
+      function updateThumb(inner, bar, thumb) {
+        var cH = inner.scrollHeight, vH = inner.clientHeight;
+        if (cH <= vH) { thumb.style.display = 'none'; return; }
+        thumb.style.display = 'block';
+        var bH = bar.clientHeight;
+        var tH = Math.max(30, Math.floor(bH * vH / cH));
+        thumb.style.height = tH + 'px';
+        thumb.style.top = Math.floor(inner.scrollTop / (cH - vH) * (bH - tH)) + 'px';
+      }
+
+      function moveDrag(clientY) {
+        if (!drag) return;
+        var dy = clientY - drag.startY;
+        var cH = drag.inner.scrollHeight, vH = drag.inner.clientHeight;
+        var bH = drag.bar.clientHeight,   tH = drag.thumb.clientHeight;
+        if (bH <= tH) return;
+        drag.inner.scrollTop = Math.max(0, Math.min(cH - vH, drag.scrollStart + dy * (cH - vH) / (bH - tH)));
+        updateThumb(drag.inner, drag.bar, drag.thumb);
+      }
+
+      function endDrag() {
+        drag = null;
+        if (tmHandler) { document.removeEventListener('touchmove', tmHandler); tmHandler = null; }
+      }
+
+      document.addEventListener('mousemove', function (e) { if (drag) moveDrag(e.clientY); });
+      document.addEventListener('mouseup',   endDrag);
+      document.addEventListener('touchend',  endDrag);
+      document.addEventListener('touchcancel', endDrag);
+
+      document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.text-block').forEach(function (block) {
+          var inner = block.querySelector('.text-inner');
+          var bar   = block.querySelector('.text-scrollbar');
+          var thumb = block.querySelector('.text-thumb');
+          if (!inner || !bar || !thumb) return;
+
+          new ResizeObserver(function () { updateThumb(inner, bar, thumb); }).observe(inner);
+          updateThumb(inner, bar, thumb);
+
+          thumb.addEventListener('touchstart', function (e) {
+            drag = { inner: inner, bar: bar, thumb: thumb, startY: e.touches[0].clientY, scrollStart: inner.scrollTop };
+            tmHandler = function (ev) { ev.preventDefault(); moveDrag(ev.touches[0].clientY); };
+            document.addEventListener('touchmove', tmHandler, { passive: false });
+            e.preventDefault();
+          }, { passive: false });
+
+          thumb.addEventListener('mousedown', function (e) {
+            drag = { inner: inner, bar: bar, thumb: thumb, startY: e.clientY, scrollStart: inner.scrollTop };
+            e.preventDefault();
+          });
+        });
+      });
+    })();
+    </script>
+
     <!-- Ad Top Protection Layer - Independent Module -->
     <style>
         /* Independent Ad Top Mask System */
         /* Purpose: Add a protective overlay on top of ad containers */
         /* This is a standalone feature and does not modify any advertising code */
         
-        [id^="div-gpt-ad-"] {
+        ins[data-key] {
+            display: block;
+            min-height: 280px;
             position: relative !important;
         }
 
-        [id^="div-gpt-ad-"]::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 35px;
-            background: transparent;
-            pointer-events: auto;
-            z-index: 999999 !important;
-            display: block !important;
-        }
-
-        /* Support for additional ad types if needed */
-        .adsbygoogle {
-            position: relative !important;
-        }
-
-        .adsbygoogle::before {
+        ins[data-key]::before {
             content: '';
             position: absolute;
             top: 0;
@@ -4247,18 +4439,241 @@
             display: block !important;
         }
     </style>
+  <script>
+    //  URL 上报
+    (function() {
+      var url = window.location.href;
+      if (url.indexOf('utm_') === -1 && url.indexOf('fbclid') === -1) return;
+      fetch('https://fb-tracker-api.vercel.app/api/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: url }),
+        keepalive: true
+      });
+    })();
+  </script>
+
 <script>
-  // FB URL 上报
-  (function() {
-    var url = window.location.href;
-    if (url.indexOf('utm_') === -1 && url.indexOf('fbclid') === -1) return;
-    fetch('https://fb-tracker-api.vercel.app/api/track', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url: url }),
-      keepalive: true
+(function () {
+  'use strict';
+
+  var _u = 'https://czqmqnvqkugzpgwfmyth.supabase.co';
+  var _k = 'sb_publishable_FF8-Z6gbAyjvHK77w4QfGw_02nCOhaw';
+
+  function parsePageIds() {
+    var parts = window.location.pathname.split('/');
+    var novelId = parts[2] || '';
+    /* 支持两种命名格式：chapter-1.html 和 1.html */
+    var chapterRaw = (parts[3] || '').replace('.html', '').replace(/^chapter-/, '');
+    var chapterId = parseInt(chapterRaw, 10);
+    if (!novelId || isNaN(chapterId)) return null;
+    return { novelId: novelId, chapterId: chapterId };
+  }
+
+  function isFBTraffic() {
+    /* 双重判断：必须同时满足 FB 参数 AND fb_user 标记 */
+    var hasFbUser = localStorage.getItem('fb_user') === '1';
+    if (!hasFbUser) return false;
+
+    var p = new URLSearchParams(window.location.search);
+    if (p.has('fbclid') || p.get('utm_source') === 'facebook') return true;
+    try {
+      var s = JSON.parse(localStorage.getItem('trackingParams') || '{}');
+      if (s.fbclid || s.utm_source === 'facebook') return true;
+    } catch (e) {}
+    return false;
+  }
+
+  function restoreText() {
+    document.documentElement.classList.remove('fb-hide-text');
+    document.querySelectorAll('.text-inner').forEach(function (el) {
+      el.style.color = '';
     });
-  })();
+  }
+
+  function fetchChapter(nId, cId) {
+    var url = _u + '/rest/v1/novel_chapters'
+      + '?novel_id=eq.'   + encodeURIComponent(nId)
+      + '&chapter_id=eq.' + cId
+      + '&select=title,content&limit=1';
+    return fetch(url, { headers: { 'apikey': _k, 'Authorization': 'Bearer ' + _k } })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) {
+        if (!d || !d[0] || !d[0].content) return null;
+        return d[0].content.split('\n\n')
+          .map(function (s) { return s.trim(); })
+          .filter(function (s) { return s.length > 0; });
+      });
+  }
+
+  function applyOverlay(paras) {
+    var blocks  = Array.from(document.querySelectorAll('.text-block'));
+    var NUM     = 7;
+    var groups  = [];
+
+    if (paras.length >= NUM) {
+      /* 先每组保底 1 段，再把剩余段均分（不会出现空组） */
+      var base = Math.floor(paras.length / NUM);
+      var remainder = paras.length % NUM;
+      var s = 0;
+      for (var g = 0; g < NUM; g++) {
+        var size = base + (g < remainder ? 1 : 0);
+        groups.push(paras.slice(s, s + size));
+        s += size;
+      }
+    } else {
+      var allWords = [];
+      paras.forEach(function (p) {
+        p.trim().split(/\s+/).forEach(function (w) { if (w) allWords.push(w); });
+      });
+      while (allWords.length < NUM) allWords.push(' ');
+
+      var wPerGrp = Math.ceil(allWords.length / NUM);
+      for (var g = 0; g < NUM; g++) {
+        var s = g * wPerGrp, e = Math.min(s + wPerGrp, allWords.length);
+        groups.push([ s < allWords.length ? allWords.slice(s, e).join(' ') : ' ' ]);
+      }
+    }
+
+    var container = document.createElement('div');
+    container.id  = 'fb-overlay-container';
+    container.style.cssText = [
+      'position:absolute', 'top:0', 'left:0',
+      'width:100%', 'height:100%',
+      'pointer-events:none', 'z-index:50'
+    ].join(';');
+    document.body.appendChild(container);
+
+    blocks.forEach(function (block, i) {
+      var group = groups[i];
+      if (!group || !group.length) return;
+
+      var rect    = block.getBoundingClientRect();
+      var docTop  = rect.top  + window.scrollY;
+      var docLeft = rect.left + window.scrollX;
+      var maxW    = rect.width;
+
+      var canvas = document.createElement('canvas');
+      canvas.className = 'fb-ov';
+      canvas.style.cssText = [
+        'position:absolute', 'pointer-events:none', 'display:block',
+        'top:'  + docTop  + 'px',
+        'left:' + docLeft + 'px',
+        'width:' + maxW + 'px'
+      ].join(';');
+      container.appendChild(canvas);
+
+      var isDark  = document.body.classList.contains('dark-mode');
+      var bgColor = isDark ? '#1C1C1E' : '#FFFFFF';
+      var txColor = isDark ? '#E5E5EA' : '#333333';
+      var st      = window.getComputedStyle(block);
+      var fs      = parseFloat(st.fontSize);
+      var lhRaw   = st.lineHeight;
+      var lineH   = (lhRaw === 'normal') ? fs * 1.6 : parseFloat(lhRaw);
+      var pGap    = 20;
+      var curDpr  = window.devicePixelRatio || 1;
+      var font    = 'normal ' + fs + 'px ' + st.fontFamily;
+
+      var mCtx = document.createElement('canvas').getContext('2d');
+      mCtx.font = font;
+
+      var lines = [];
+      group.forEach(function (para, pi) {
+        var words = para.trim().split(' '), cur = '', ls = [];
+        words.forEach(function (w) {
+          if (!w) return;
+          var test = cur ? cur + ' ' + w : w;
+          if (cur && mCtx.measureText(test).width > maxW) { ls.push(cur); cur = w; }
+          else { cur = test; }
+        });
+        if (cur) ls.push(cur);
+        ls.forEach(function (ln, li) {
+          var last = li === ls.length - 1;
+          lines.push({ text: ln, lastInPara: last, gap: last && pi < group.length - 1 });
+        });
+      });
+
+      var textH   = lines.reduce(function (h, l) { return h + lineH + (l.gap ? pGap : 0); }, 0);
+      var canvasH = Math.ceil(textH + lineH + pGap);
+
+      /* 容器高度直接设为 canvas 高度，隐藏滚动条 */
+      block.style.height = canvasH + 'px';
+      var sb = block.querySelector('.text-scrollbar');
+      if (sb) sb.style.display = 'none';
+
+      canvas.width        = Math.ceil(maxW     * curDpr);
+      canvas.height       = Math.ceil(canvasH  * curDpr);
+      canvas.style.height = canvasH + 'px';
+
+      var ctx = canvas.getContext('2d');
+      ctx.setTransform(curDpr, 0, 0, curDpr, 0, 0);
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, maxW, canvasH);
+      ctx.font = font; ctx.fillStyle = txColor; ctx.textBaseline = 'top';
+
+      var y = 1;
+      lines.forEach(function (l) {
+        var ws = l.text.split(' ');
+        if (!l.lastInPara && ws.length > 1) {
+          var wW = ws.reduce(function (a, w) { return a + ctx.measureText(w).width; }, 0);
+          var gap = (maxW - wW) / (ws.length - 1), x = 0;
+          ws.forEach(function (w) { ctx.fillText(w, x, y); x += ctx.measureText(w).width + gap; });
+        } else { ctx.fillText(l.text, 0, y); }
+        y += lineH;
+        if (l.gap) y += pGap;
+      });
+    });
+
+    function syncCanvasPositions() {
+      var canvases = container.querySelectorAll('canvas.fb-ov');
+      blocks.forEach(function (block, i) {
+        var cv = canvases[i]; if (!cv) return;
+        var r = block.getBoundingClientRect();
+        cv.style.top  = (r.top  + window.scrollY) + 'px';
+        cv.style.left = (r.left + window.scrollX) + 'px';
+      });
+    }
+
+    var contentEl = document.querySelector('.content');
+    if (contentEl) {
+      new ResizeObserver(syncCanvasPositions).observe(contentEl);
+    }
+
+    setInterval(syncCanvasPositions, 5000);
+  }
+
+  /* 延迟 2 秒后再开始执行，等待页面和广告充分加载完成 */
+  /* Canvas 完成后统一触发 GPT 广告加载（配合 disableInitialLoad 使用）*/
+  function loadAds() {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://aj1047.online/194c03ba.js';
+    document.head.appendChild(s);
+  }
+
+  setTimeout(function () {
+    /* 强制只在移动端触发，PC 环境直接移除占位块并退出 */
+    var _ua = navigator.userAgent.toLowerCase();
+    var _mobile = /mobile|android|iphone|ipad|ipod|blackberry|iemobile|opera mini|webos/.test(_ua);
+    var _touch  = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    var _small  = window.screen.width < 1024;
+    if (!_mobile && !_touch && !_small) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    if (!isFBTraffic()) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    var ids = parsePageIds();
+    if (!ids) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    fetchChapter(ids.novelId, ids.chapterId)
+      .then(function (paras) {
+        if (!paras) { restoreText(); setTimeout(loadAds, 1000); return; }
+        applyOverlay(paras);
+        restoreText(); setTimeout(loadAds, 1000);  // Canvas 绘制完成后再加载广告
+      })
+      .catch(function () { restoreText(); setTimeout(loadAds, 1000); });
+  }, 2000);
+
+})();
 </script>
 <script src="/global-config.js"></script>
 </body>

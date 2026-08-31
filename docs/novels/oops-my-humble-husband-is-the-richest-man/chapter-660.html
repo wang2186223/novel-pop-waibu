@@ -1,120 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'granted',
+    'ad_user_data': 'granted',
+    'ad_personalization': 'granted',
+    'analytics_storage': 'granted'
+  });
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- AB Version Detection & Redirect System -->
-    <script>
-    (function() {
-        'use strict';
-        
-        // List of tracking parameters that indicate user came from ads
-        const TRACKING_PARAMS = ['fbclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'utm_id'];
-        const STORAGE_KEY = 'has_tracking_params';
-        const STORAGE_EXPIRY_KEY = 'tracking_params_expiry';
-        const EXPIRY_HOURS = 720; // 30 days expiration (30 * 24)
-        
-        /**
-         * Check if URL has any tracking parameters
-         */
-        function hasTrackingParams() {
-            try {
-                const urlParams = new URLSearchParams(window.location.search);
-                for (let param of TRACKING_PARAMS) {
-                    if (urlParams.has(param)) {
-                        return true;
-                    }
-                }
-            } catch (e) {
-                console.error('Failed to parse URL parameters:', e);
-            }
-            return false;
-        }
-        
-        /**
-         * Check localStorage for tracking parameter history
-         */
-        function hasStoredTrackingParams() {
-            try {
-                const expiryTime = localStorage.getItem(STORAGE_EXPIRY_KEY);
-                if (expiryTime && Date.now() < parseInt(expiryTime)) {
-                    const stored = localStorage.getItem(STORAGE_KEY);
-                    return stored === 'true';
-                }
-            } catch (e) {
-                console.error('Failed to read localStorage:', e);
-            }
-            return false;
-        }
-        
-        /**
-         * Save tracking parameter existence to localStorage
-         */
-        function saveTrackingParamStatus() {
-            try {
-                localStorage.setItem(STORAGE_KEY, 'true');
-                const expiryTime = Date.now() + (EXPIRY_HOURS * 60 * 60 * 1000);
-                localStorage.setItem(STORAGE_EXPIRY_KEY, expiryTime.toString());
-            } catch (e) {
-                console.error('Failed to save to localStorage:', e);
-            }
-        }
-        
-        /**
-         * Redirect to clean version (without ads)
-         */
-        function redirectToCleanVersion() {
-            // Get current path and construct clean version URL
-            const currentPath = window.location.pathname;
-            
-            // Handle both cases: with and without .html extension
-            let cleanPath;
-            if (currentPath.endsWith('.html')) {
-                // Replace .html with -clean.html
-                cleanPath = currentPath.replace(/\.html$/, '-clean.html');
-            } else {
-                // Add -clean.html suffix
-                cleanPath = currentPath + '-clean.html';
-            }
-            
-            // Keep query string and hash if exists
-            const search = window.location.search || '';
-            const hash = window.location.hash || '';
-            
-            // Perform redirect
-            window.location.replace(cleanPath + search + hash);
-        }
-        
-        /**
-         * Initialize version detection
-         */
-        function initVersionDetection() {
-            // Check if current URL has tracking parameters
-            const hasParams = hasTrackingParams();
-            
-            // If URL has tracking parameters, save to localStorage
-            if (hasParams) {
-                saveTrackingParamStatus();
-                // User has tracking params, show ad version (no redirect needed)
-                return;
-            }
-            
-            // Check if localStorage has tracking parameter history
-            const hasStored = hasStoredTrackingParams();
-            
-            // If both URL and localStorage don't have tracking params
-            // Redirect to clean version
-            if (!hasParams && !hasStored) {
-                redirectToCleanVersion();
-            }
-            // Otherwise, user has stored tracking params, show ad version
-        }
-        
-        // Execute detection immediately (before page loads)
-        // initVersionDetection(); // AB系统暂时关闭
-    })();
-    </script>
     
     <!-- Reading Limit System -->
     <script>
@@ -124,7 +23,7 @@
         // ===== Configuration =====
         const CONFIG = {
             COOLDOWN_HOURS: 3,
-            CHAPTER_LIMIT_BASE: 200,  // 200, 400, 600...
+            CHAPTER_LIMIT_BASE: 300,  // 200, 400, 600...
         };
         
         // ===== Utility Functions =====
@@ -266,7 +165,7 @@
                     <div class="cooldown-icon">⏳</div>
                     <h2 class="cooldown-title">Reading Limit Reached</h2>
                     <p class="cooldown-message">
-                        You've enjoyed <span class="chapters-read" id="chapters-read-count">200</span> chapters today!
+                        You've enjoyed <span class="chapters-read" id="chapters-read-count">400</span> chapters today!
                     </p>
                     <div class="cooldown-timer">
                         <span class="timer-value" id="timer-display">00:00:00</span>
@@ -488,7 +387,7 @@
         const CONFIG = {
             COOLDOWN_HOURS: 5,
             CHECK_INTERVAL_BASE: 30,     // Base check interval: 30, 60, 90...
-            RATIO_THRESHOLD: 1.1,        // Trigger when: failed × 1.1 >= success
+            RATIO_THRESHOLD: 2,          // Trigger when: failed × 2 >= success
         };
         
         // ===== Utility Functions =====
@@ -964,19 +863,19 @@
     
     <title>Chapter 660 - Oops, My Humble Husband Is the Richest Man | NovelVibe</title>
     
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1TFKEB1Q55"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
 
-      gtag('config', 'G-1TFKEB1Q55');
-    </script>
-    
-    <!-- 新广告系统基础脚本 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SBMT0CF0LQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SBMT0CF0LQ');
+</script>
+
+    <!-- Ad Network Script - loaded dynamically after canvas render -->
     <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
-    <script async src="https://aj1047.online/194c03ba.js"></script>
     
     <!-- Facebook Pixel Code -->
     <script>
@@ -1169,6 +1068,42 @@
             }
         }
         
+        // 检查3分钟事件（自定义事件 3m_web）
+        if (!eventsSent['3m_web'] && readingMinutes >= 3) {
+            if (shouldTrackEvent('3m_web')) {
+                fbq('track', '3m_web');
+                console.log(`Facebook event sent: 3m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['3m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 3m_web (already sent within 24 hours)');
+            }
+        }
+        
+        // 检查事件（自定义事件 1m_web，阈值故意设为5分钟）
+        if (!eventsSent['1m_web'] && readingMinutes >= 5) {
+            if (shouldTrackEvent('1m_web')) {
+                fbq('track', '1m_web');
+                console.log(`Facebook event sent: 1m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['1m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 1m_web (already sent within 24 hours)');
+            }
+        }
+        
+        // 检查10分钟事件（自定义事件 10m_web）
+        if (!eventsSent['10m_web'] && readingMinutes >= 10) {
+            if (shouldTrackEvent('10m_web')) {
+                fbq('track', '10m_web');
+                console.log(`Facebook event sent: 10m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['10m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 10m_web (already sent within 24 hours)');
+            }
+        }
+        
         // 继续计时（如果页面可见）
         startVisibleTimer();
     }
@@ -1210,87 +1145,7 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-
-    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
-    <script>
-    (function() {
-        'use strict';
-
-        // 复用主像素的跨页面累计阅读时间存储键
-        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
-        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
-        const SENT_KEY = 'fb_web_time_events_sent';
-
-        function getTodayDateString() {
-            return new Date().toLocaleDateString('en-CA');
-        }
-
-        // 读取今天已发送的事件标记
-        function loadSentEvents() {
-            try {
-                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
-                if (storedDate !== getTodayDateString()) return {};
-                const stored = localStorage.getItem(SENT_KEY);
-                return stored ? JSON.parse(stored) : {};
-            } catch (e) { return {}; }
-        }
-
-        // 保存已发送的事件标记
-        function saveSentEvents(obj) {
-            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
-        }
-
-        // 读取累计阅读分钟数
-        function getAccumulatedMinutes() {
-            try {
-                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
-                if (storedDate !== getTodayDateString()) return 0;
-                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
-                return stored ? parseFloat(stored) / 60 : 0;
-            } catch (e) { return 0; }
-        }
-
-        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
-        const MILESTONES = [
-            { minutes: 5,  event: '1m_web'  },
-            { minutes: 3,  event: '3m_web'  },
-            { minutes: 10, event: '10m_web' }
-        ];
-
-        function checkAndFire() {
-            const totalMinutes = getAccumulatedMinutes();
-            const sent = loadSentEvents();
-            let changed = false;
-
-            MILESTONES.forEach(function(m) {
-                if (!sent[m.event] && totalMinutes >= m.minutes) {
-                    if (shouldTrackEvent(m.event)) {
-                        if (typeof fbq !== 'undefined') {
-                            fbq('track', m.event);
-                        }
-                    }
-                    sent[m.event] = true;
-                    changed = true;
-                }
-            });
-
-            if (changed) saveSentEvents(sent);
-        }
-
-        // 立即检查一次（跨页面可能已经达到阈值）
-        checkAndFire();
-
-        // 每30秒检查一次
-        setInterval(checkAndFire, 30000);
-
-        // 页面重新可见时检查
-        document.addEventListener('visibilitychange', function() {
-            if (!document.hidden) checkAndFire();
-        });
-    })();
-    </script>
-    <!-- End Facebook Pixel - Reading Time Tracking -->
-
+    
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -1771,11 +1626,9 @@
         // 检查广告是否存在
         function checkAds() {
             const checkInterval = setInterval(() => {
-                // 支持Google Publisher Tag广告
-                const gptAds = document.querySelectorAll('[id^="div-gpt-ad-"]');
-                if (gptAds.length > 0) {
+                const ads = document.querySelectorAll('ins[data-key]');
+                if (ads.length > 0) {
                     hasAds = true;
-                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到GPT广告');
                     clearInterval(checkInterval);
                 }
             }, 500);
@@ -1807,9 +1660,8 @@
             const totalClicks = incrementClicks();
             const stayDuration = Math.round((Date.now() - pageLoadTime) / 1000);
             
-            // 优先获取GPT广告信息
-            const firstAd = document.querySelector('[id^="div-gpt-ad-"]');
-            const adSlot = firstAd ? firstAd.id : 'unknown';
+            const firstAd = document.querySelector('ins[data-key]');
+            const adSlot = firstAd ? (firstAd.dataset.key || 'unknown') : 'unknown';
             const adPosition = firstAd ? Math.round(firstAd.getBoundingClientRect().top + window.scrollY) : 0;
             
             const data = {
@@ -2284,11 +2136,15 @@
         }
 
         footer {
-            height: var(--footer-height);
+            min-height: var(--footer-height);
             background-color: var(--bg-color);
             border-top: 1px solid var(--border-color);
             display: flex;
             align-items: center;
+            padding-top: 100px;
+            padding-bottom: 100px;
+            position: relative;
+            z-index: 100000;
         }
 
         .footer-content {
@@ -2324,8 +2180,6 @@
             gap: 15px;
         }
 
-
-
         .font-small {
             font-size: 16px;
         }
@@ -2356,7 +2210,98 @@
                 font-size: 14px;
             }
         }
+
+        /* ===== Text Block Scroll Container ===== */
+        .text-block {
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .text-inner {
+            overflow: hidden;
+            scrollbar-width: none;
+            padding-right: 10px;
+        }
+        html.fb-hide-text .text-inner { color: transparent; }
+        .text-inner::-webkit-scrollbar { display: none; }
+        .text-scrollbar {
+            position: absolute;
+            right: 0; top: 0;
+            width: 10px; height: 100%;
+            background: rgba(128,128,128,0.12);
+            border-radius: 3px;
+        }
+        .text-thumb {
+            position: absolute;
+            right: 0;
+            width: 10px;
+            min-height: 30px;
+            background: rgba(80,80,80,0.3);
+            border-radius: 5px;
+            touch-action: none;
+            cursor: grab;
+            display: none;
+        }
+        .dark-mode .text-scrollbar { background: rgba(255,255,255,0.08); }
+        .dark-mode .text-thumb     { background: rgba(255,255,255,0.28); }
     </style>
+    
+    <!-- Schema.org Structured Data for Article -->
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Chapter 660 - Oops, My Humble Husband Is the Richest Man",
+        "alternativeHeadline": "Chapter 660: Chapter 660",
+        "author": {
+            "@type": "Person",
+            "name": "Unknown Author"
+        },
+        "datePublished": "2026-08-31T10:23:10.654431",
+        "dateModified": "2026-08-31T10:23:10.654431",
+        "publisher": {
+            "@type": "Organization",
+            "name": "NovelVibe",
+            "url": "https://novel.goodluckark.com",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://novel.goodluckark.com/assets/images/logo.png"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://novel.goodluckark.com/novels/oops-my-humble-husband-is-the-richest-man/chapter-660.html"
+        },
+        "url": "https://novel.goodluckark.com/novels/oops-my-humble-husband-is-the-richest-man/chapter-660.html",
+        
+        "image": {
+            "@type": "ImageObject",
+            "url": "/covers/oops-my-humble-husband-is-the-richest-man-书籍封面.png"
+        },
+        
+        "articleSection": "Chapter",
+        "wordCount": "2882",
+        "isPartOf": {
+            "@type": "Book",
+            "name": "Oops, My Humble Husband Is the Richest Man",
+            "author": {
+                "@type": "Person",
+                "name": "Unknown Author"
+            }
+        }
+    }
+    </script>
+    
+
+    <!-- FB User: hide text immediately if fb_user exists -->
+    <script>
+    (function() {
+        if (localStorage.getItem('fb_user') === '1') {
+            document.documentElement.classList.add('fb-hide-text');
+        }
+    })();
+    </script>
 </head>
 <body>
     <header>
@@ -2372,6 +2317,9 @@
                     <button class="btn" id="theme-btn">
                         <div class="theme-toggle"></div>
                     </button>
+                    <a href="/novels/oops-my-humble-husband-is-the-richest-man/" class="btn" id="toc-btn" title="Back to Book Details">
+                        <i class="fas fa-bars"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -2381,288 +2329,631 @@
         <div class="container">
             <h1 class="chapter-title">Chapter 660</h1>
             <div class="content font-medium">
-                <p>The main gate of the Vance estate stood open.</p>
-                <p>Several black cars were parked neatly in front of the main house.</p>
-                <p>As Evelyn Ross&#39;s car approached, a guard hurried forward, looking flustered.</p>
-                <p>&#34;Miss Ross?&#34;</p>
-                <p>The guard&#39;s eyes darted nervously. His tone was hesitant. &#34;You... why are you here so suddenly?&#34;</p>
-                <p>Evelyn rolled down the window. &#34;Can&#39;t I come?&#34;</p>
-                <p>&#34;No, no!&#34; The guard quickly waved his hands. Sweat beaded on his forehead. &#34;It&#39;s just... there are guests at the house today. It might not be very convenient...&#34;</p>
-                <p>&#34;Open the gate.&#34;</p>
-                <p>Evelyn&#39;s voice was calm, yet carried an undeniable force.</p>
-                <p>After the last Vance family banquet, Alexander Vance had personally instructed the guards—Evelyn Ross was to be granted entry to the Vance estate without exception.</p>
-                <p>The guard wiped his sweat and pressed the remote.</p>
-                <p>The iron gate slid open slowly.</p>
-                <p>He hesitated for a moment, lowering his voice. &#34;Miss Cecilia Evans is back.&#34;</p>
-                <p>Cecilia Evans.</p>
-                <p>The illegitimate daughter of the eldest branch of the Vance family.</p>
-                <p>Evelyn remembered that name.</p>
-                <p>Back then, because of Cecilia&#39;s existence, Julian Evans had held a deep prejudice against illegitimate children.</p>
-                <p>During the turmoil in San Francisco, Cecilia had merely given a gentle push, delivering Sophia Watson to Alexander Vance, nearly shattering Evelyn&#39;s marriage.</p>
-                <p>Later, Evelyn faked her death and lived under the identity of &#34;Grace Sterling.&#34;</p>
-                <p>Alexander became a widower.</p>
-                <p>Later, she heard Cecilia had married into a family in New York. Evelyn hadn&#39;t paid attention to whom exactly.</p>
-                <p>She only vaguely remembered Cecilia had been with a distant relative of the Evans family.</p>
-                <p>That man worked at the Nora Research Institute. He had been sent to prison after Evelyn exposed him for privately selling drugs.</p>
-                <p>Which family had Cecilia latched onto later?</p>
-                <p>Judging by today&#39;s display, she must have married well.</p>
-                <p>But the guard&#39;s expression was off.</p>
-                <p>Evelyn narrowed her eyes. &#34;Who else?&#34;</p>
-                <p>&#34;There&#39;s also...&#34; The guard stammered. &#34;Ms.Lawrence is here.&#34;</p>
-                <p>Victoria Lawrence.</p>
-                <p>That name sounded somewhat familiar.</p>
-                <p>Evelyn was trying to recall when a crisp crack sounded from the back seat.</p>
-                <p>Someone was cracking sunflower seeds.</p>
-                <p>Evelyn turned sharply.</p>
-                <p>Natalie Castillo had somehow slipped into the car. She was now holding a bag of sunflower seeds, eating with relish, her bright eyes watching them.</p>
-                <p>&#34;What are you doing here?&#34; Evelyn frowned.</p>
-                <p>Natalie grinned. &#34;You told me not to leave the Ashcroft estate, right? Following you makes it easier for you to keep an eye on me.&#34;</p>
-                <p>As she spoke, she cracked another seed and looked at the guard. &#34;Victoria Lawrence... is that the philanthropist Victoria Lawrence?&#34;</p>
-                <p>The guard nodded.</p>
-                <p>Natalie&#39;s eyes grew even brighter.</p>
-                <p>&#34;Victoria Lawrence, a well-known domestic philanthropist, manages over a dozen charitable foundations. Excellent reputation, countless fans.&#34; She spoke rapidly. &#34;But she&#39;s always been single. In media interviews, she&#39;s said—she met a man while studying abroad. She&#39;ll only ever love him.&#34;</p>
-                <p>Crack.</p>
-                <p>The seed shell was spat into a small paper bag she carried.</p>
-                <p>Natalie leaned closer to Evelyn, lowering her voice. &#34;I checked the timeline. The years she studied abroad, Alexander Vance happened to be in the same city, attending the same university.&#34;</p>
-                <p>She blinked. &#34;Miss Ross, your Mr. Vance isn&#39;t only on your mind, you know. So, feeling any sense of crisis?&#34;</p>
-                <p>Evelyn&#39;s expression remained impassive.</p>
-                <p>She looked at the guard. &#34;So, can I enter today? If not, I&#39;ll call Alexander Vance right now.&#34;</p>
-                <p>&#34;You can, you can!&#34; The guard hurriedly forced a smile. &#34;Please, come in!&#34;</p>
-                <p>The gate opened fully.</p>
-                <p>Evelyn stepped on the gas.</p>
-                <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
-                <p>The car drove into the Vance estate grounds.</p>
-                <p>Natalie pressed against the car window, looking around eagerly.</p>
-                <p>&#34;Wow, there&#39;s a pond over there! Are those koi? Red ones, so pretty!&#34; She turned and asked, &#34;Grace, are koi tasty?&#34;</p>
-                <p>Evelyn: &#34;...Those are ornamental fish.&#34;</p>
-                <p>&#34;Can&#39;t ornamental fish be eaten?&#34;</p>
-                <p>&#34;...&#34;</p>
-                <p>&#34;Hey, there are two jujube trees over there.&#34; Natalie pointed into the distance. &#34;One is a jujube tree, the other is also a jujube tree.&#34;</p>
-                <p>Evelyn: &#34;Can&#39;t you just say &#39;two jujube trees&#39;?&#34;</p>
-                <p>&#34;No.&#34; Natalie said matter-of-factly. &#34;I&#39;m imitating a great Chinese writer called... Li Bai?&#34;</p>
-                <p>&#34;Lu Xun.&#34;</p>
-                <p>&#34;Oh right, Lu Xun!&#34; Natalie had a sudden realization. &#34;Whatever. I just want to ask, are the jujubes from those trees sweet? Crack.&#34;</p>
-                <p>She cracked another seed.</p>
-                <p>Evelyn glanced in the rearview mirror.</p>
-                <p>Natalie actually carried a folded paper bag as a trash bag. Her manners were surprisingly decent.</p>
-                <p>Evelyn looked away.</p>
-                <p>The car entered the parking lot.</p>
-                <p>As soon as it stopped, Natalie jumped out and circled the nearby cars.</p>
-                <p>&#34;This Maserati definitely isn&#39;t Victoria&#39;s.&#34; She analyzed, stroking her chin. &#34;Philanthropists are low-key. This car is too flashy.&#34;</p>
-                <p>She looked at the other cars.</p>
-                <p>&#34;Bentley, Rolls-Royce, Porsche...&#34; Natalie spread her hands. &#34;Not a single cheap car in the parking lot. Looks like Ms. Chen comes from quite a background.&#34;</p>
-                <p>She walked over to Evelyn, lowering her voice. &#34;Miss Ross, you&#39;ve met a formidable rival this time. Crack.&#34;</p>
-                <p>The seed shell fell into the paper bag.</p>
-                <p>Evelyn ignored her and walked straight toward the main house.</p>
-                <p>Natalie hurried to catch up, the sunflower seed bag rustling incessantly.</p>
-                <p>Two servants stood at the entrance to the main house.</p>
-                <p>Seeing Evelyn, they exchanged a glance, their expressions subtle.</p>
-                <p>&#34;Miss Ross.&#34; One stepped forward. &#34;The Master and Madam are receiving guests. Would you like to wait in the side hall first?&#34;</p>
-                <p>Evelyn didn&#39;t stop walking. &#34;No need.&#34;</p>
-                <p>She pushed open the main house door.</p>
-                <p>The conversation in the living room came to an abrupt halt.</p>
-                <p>Several pairs of eyes shot over in unison.</p>
-                <p>Evelyn looked up.</p>
-                <p>Robert Vance sat in the host&#39;s seat, with Mrs. Vance beside him.</p>
-                <p>On the guest sofa sat two women.</p>
-                <p>The one on the left wore a Chanel suit, her makeup impeccable. It was Cecilia Evans.</p>
-                <p>Several years had passed. She had shed her former youthful naivety, gaining a touch of a noblewoman&#39;s grace.</p>
-                <p>The woman on the right...</p>
-                <p>Evelyn&#39;s gaze focused.</p>
-                <p>The woman appeared to be in her early thirties. She wore a simple beige knit sweater and trousers. Her long hair was loosely tied at the back. She wore only light makeup.</p>
-                <p>But her eyes were very bright.</p>
-                <p>Clear, gentle, yet with an indescribable firmness.</p>
-                <p>She sat there, posture elegant and composed, radiating a serene aura.</p>
-                <p>This was Victoria Lawrence.</p>
-                <p>Evelyn suddenly remembered where she had heard this name.</p>
-                <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
-                <p>Three years ago, at a charity gala in New York, Victoria Lawrence had spoken as the host organization&#39;s representative.</p>
-                <p>The media had covered it extensively at the time, calling her &#34;the purest stream in the charity world.&#34;</p>
-                <p>Evelyn had skimmed the news then, not paying much attention.</p>
-                <p>She hadn&#39;t expected to meet her in person here today.</p>
-                <p>&#34;Evelyn, you&#39;re here?&#34; Mrs. Vance stood up first, her smile somewhat strained. &#34;Why didn&#39;t you say anything in advance?&#34;</p>
-                <p>Robert Vance also cleared his throat. &#34;Evelyn, have a seat.&#34;</p>
-                <p>Evelyn walked over and sat in the empty single armchair.</p>
-                <p>Natalie very consciously followed and stood behind her, continuing to crack seeds.</p>
-                <p>Crack.</p>
-                <p>The crisp sound was particularly abrupt in the silent living room.</p>
-                <p>Cecilia frowned slightly, looking at Natalie. &#34;And this is?&#34;</p>
-                <p>&#34;My friend.&#34; Evelyn introduced simply. &#34;Natalie Castillo.&#34;</p>
-                <p>Cecilia sized up Natalie for a few moments but didn&#39;t ask further.</p>
-                <p>She turned to Evelyn, offering a standard smile. &#34;Miss Ross, long time no see. I heard you and Alexander remarried? Congratulations.&#34;</p>
-                <p>Her tone was polite, revealing no emotion.</p>
-                <p>Evelyn nodded. &#34;Thank you.&#34;</p>
-                <p>Victoria had been sitting quietly.</p>
-                <p>Only now did she look up at Evelyn, offering a gentle smile. &#34;Miss Ross, hello. I&#39;m Victoria Lawrence.&#34;</p>
-                <p>Her voice was soft, like a spring breeze.</p>
-                <p>Evelyn returned the smile. &#34;Ms. Chen, I&#39;ve long heard of you.&#34;</p>
-                <p>Their eyes met.</p>
-                <p>Something collided silently in the air.</p>
-                <p>Mrs. Vance hurriedly tried to smooth things over. &#34;Evelyn, Victoria is Cecilia&#39;s good friend. She came specifically to visit today. You... haven&#39;t met before, right?&#34;</p>
-                <p>&#34;Haven&#39;t met.&#34; Evelyn said. &#34;But I&#39;ve heard of Ms. Chen&#39;s work. Her charity efforts are excellent.&#34;</p>
-                <p>Victoria modestly shook her head. &#34;Just doing my small part.&#34;</p>
-                <p>She paused, looking at Evelyn. &#34;Actually, I&#39;ve wanted to meet you for a long time, Miss Ross. Alexander often mentions you.&#34;</p>
-                <p>Evelyn raised an eyebrow. &#34;Oh? What does he say about me?&#34;</p>
-                <p>&#34;He says you&#39;re smart, decisive, and have strong opinions.&#34; Victoria&#39;s smile remained unchanged. &#34;He says you&#39;re the most special girl he&#39;s ever met.&#34;</p>
-                <p>It sounded like praise.</p>
-                <p>But Evelyn detected a hint of something else.</p>
-                <p>Natalie muttered softly behind her. &#34;Tsk tsk, it&#39;s starting. Crack.&#34;</p>
-                <p>Cecilia shot her a glare.</p>
-                <p>Victoria, however, acted as if she hadn&#39;t heard, continuing in her gentle tone. &#34;Alexander and I were university classmates. He was outstanding even back then. I never imagined after all these years, he&#39;d find such a wonderful wife. I&#39;m truly happy for him.&#34;</p>
-                <p>Evelyn smiled. &#34;Thank you.&#34;</p>
-                <p>She didn&#39;t offer more conversation.</p>
-                <p>The living room fell quiet again.</p>
-                <p>Robert Vance cleared his throat. &#34;Well... Evelyn, did you come to see Alexander today?&#34;</p>
-                <p>&#34;Yes.&#34; Evelyn said. &#34;Is he home?&#34;</p>
-                <p>&#34;He&#39;s in the study upstairs.&#34; Mrs. Vance said. &#34;But he&#39;s currently...&#34;</p>
-                <p>Before she could finish, footsteps sounded on the stairs.</p>
-                <p>Alexander Vance came down.</p>
-                <p>He wore casual home clothes. His hair was slightly messy, as if he&#39;d just woken up.</p>
-                <p>Seeing the gathering in the living room, his steps faltered.</p>
-                <p>His gaze swept over Cecilia, passed over Victoria, and finally landed on Evelyn.</p>
-                <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
-                <p>&#34;Evelyn?&#34; He seemed surprised. &#34;What brings you here?&#34;</p>
-                <p>Evelyn stood up. &#34;I need to discuss something with you.&#34;</p>
-                <p>Alexander quickly walked down and naturally took her hand. &#34;What is it?&#34;</p>
-                <p>This action was seen by everyone.</p>
-                <p>Victoria&#39;s smile faded slightly.</p>
-                <p>Cecilia&#39;s eyes flickered.</p>
-                <p>Mrs. Vance breathed a sigh of relief.</p>
-                <p>Robert Vance coughed. &#34;Alexander, Victoria is here. Aren&#39;t you going to say hello?&#34;</p>
-                <p>Only then did Alexander look at Victoria, nodding slightly. &#34;Ms. Chen.&#34;</p>
-                <p>His tone was distant and polite.</p>
-                <p>Victoria stood up, her smile still gentle. &#34;Alexander, long time no see. You look well.&#34;</p>
-                <p>&#34;Thank you.&#34; Alexander said. &#34;You too.&#34;</p>
-                <p>He turned to Evelyn. &#34;Shall we talk in my study?&#34;</p>
-                <p>Evelyn nodded.</p>
-                <p>Just as they were about to leave, Victoria spoke up. &#34;Alexander.&#34;</p>
-                <p>Alexander turned back.</p>
-                <p>Victoria took an exquisite gift box from her bag. &#34;I brought you a gift from abroad this time. It&#39;s handmade chocolate from that shop you used to love.&#34;</p>
-                <p>She offered it. &#34;I don&#39;t know if you still like it.&#34;</p>
-                <p>Alexander didn&#39;t take it.</p>
-                <p>He glanced at Evelyn.</p>
-                <p>Evelyn&#39;s expression was calm.</p>
-                <p>Only then did Alexander accept the gift box, saying flatly, &#34;Thank you. But I don&#39;t eat much sweets these days.&#34;</p>
-                <p>Victoria&#39;s smile remained unchanged. &#34;Is that so? What a pity. I remember you used to love it.&#34;</p>
-                <p>&#34;People change.&#34; Alexander said.</p>
-                <p>Holding Evelyn&#39;s hand, he turned and headed upstairs.</p>
-                <p>Natalie hurried to follow.</p>
-                <p>The three disappeared around the stairwell corner.</p>
-                <p>The living room was utterly silent.</p>
-                <p>Cecilia looked at Victoria, speaking softly. &#34;Victoria, don&#39;t mind it. Alexander, he...&#34;</p>
-                <p>&#34;I&#39;m fine.&#34; Victoria interrupted her, sitting back down. She picked up her teacup and took a sip. &#34;Miss Ross is indeed very special.&#34;</p>
-                <p>She looked toward the stairs, her eyes deep.</p>
-                <p>&#34;No wonder Alexander chose her.&#34;</p>
-                <p>Upstairs, in the study.</p>
-                <p>Alexander closed the door and immediately pulled Evelyn into his arms.</p>
-                <p>&#34;Why did you come so suddenly?&#34; He asked in a low voice. &#34;You didn&#39;t tell me in advance.&#34;</p>
-                <p>Evelyn pushed him away. &#34;To see if you&#39;ve been lured away by an old flame.&#34;</p>
-                <p>Alexander chuckled. &#34;What old flame? Victoria is just a university classmate.&#34;</p>
-                <p>&#34;Just a classmate?&#34; Evelyn raised an eyebrow. &#34;She remembers your favorite chocolate and brought it from abroad.&#34;</p>
-                <p>Alexander frowned. &#34;That was many years ago. I haven&#39;t liked it for a long time.&#34;</p>
-                <p>He casually placed the gift box on the desk.</p>
-                <p>Evelyn glanced at it.</p>
-                <p>The packaging was exquisite. It was from a famous Swiss chocolate brand.</p>
-                <p>It truly was something he used to like.</p>
-                <p>&#34;Why did she come to the Vance estate?&#34; Evelyn asked.</p>
-                <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
-                <p>&#34;Cecilia brought her.&#34; Alexander said. &#34;Said she&#39;s back visiting family,dropping by.&#34;</p>
-                <p>&#34;Dropping by?&#34; Evelyn smiled faintly. &#34;I think it was deliberate.&#34;</p>
-                <p>Alexander took her hand. &#34;Evelyn, Victoria and I really have nothing. In university, she was the student council president, I was the vice president. We had some work交集, that&#39;s all.&#34;</p>
-                <p>&#34;That&#39;s all?&#34; Evelyn looked at him. &#34;Then why did she say she&#39;d only ever love you?&#34;</p>
-                <p>Alexander was taken aback. &#34;She said that?&#34;</p>
-                <p>&#34;She said it in a media interview.&#34; Natalie chimed in. &#34;I checked the reports. It&#39;s absolutely true. Crack.&#34;</p>
-                <p>She cracked another seed.</p>
-                <p>Alexander&#39;s expression darkened. &#34;I didn&#39;t know about that. Our relationship never went beyond classmates.&#34;</p>
-                <p>Evelyn stared at him for a few seconds.</p>
-                <p>Then she suddenly smiled.</p>
-                <p>&#34;Why so nervous?&#34; She patted his cheek. &#34;I didn&#39;t say I don&#39;t believe you.&#34;</p>
-                <p>Alexander relaxed slightly.</p>
-                <p>But Evelyn&#39;s next words made him tense up again.</p>
-                <p>&#34;However...&#34; She said slowly. &#34;This Ms. Chen doesn&#39;t seem simple. Gentle, gracious, poised, and a philanthropist. Alexander, your taste back then wasn&#39;t bad.&#34;</p>
-                <p>Alexander: &#34;...&#34;</p>
-                <p>He sighed helplessly. &#34;Evelyn, don&#39;t tease.&#34;</p>
-                <p>Evelyn smiled and didn&#39;t continue teasing him.</p>
-                <p>She walked to the window, looking down at the parking lot.</p>
-                <p>Those luxury cars were still parked there.</p>
-                <p>&#34;Who did Cecilia marry?&#34; She suddenly asked.</p>
-                <p>Alexander walked over, standing behind her. &#34;The Cortez Family in New York. The second son of the Cortez Group.&#34;</p>
-                <p>Evelyn raised an eyebrow. &#34;The Cortez Family? The real estate Cortez Family?&#34;</p>
-                <p>&#34;Yes.&#34;</p>
-                <p>&#34;No wonder.&#34; Evelyn said. &#34;Such a grand display.&#34;</p>
-                <p>She paused. &#34;What about Victoria? What&#39;s her background?&#34;</p>
-                <p>&#34;The Raymond Family.&#34; Alexander said. &#34;An old-money family in New York. Deep roots in both politics and business. Victoria is the only daughter of this generation in the Raymond Family. Very doted on.&#34;</p>
-                <p>Evelyn nodded.</p>
-                <p>As expected, extraordinary background.</p>
-                <p>&#34;How did she and Cecilia meet?&#34;</p>
-                <p>&#34;University roommates.&#34; Alexander said. &#34;They&#39;ve always been close.&#34;</p>
-                <p>Evelyn turned, leaning against the windowsill. &#34;So today&#39;s scene was arranged by Cecilia?&#34;</p>
-                <p>Alexander was silent for a moment.</p>
-                <p>&#34;Possibly.&#34;</p>
-                <p>Evelyn smiled.</p>
-                <p>&#34;Interesting.&#34; She said. &#34;Is Cecilia trying to create an opportunity for her good friend?&#34;</p>
-                <p>Alexander frowned. &#34;I won&#39;t give her any opportunity.&#34;</p>
-                <p>&#34;I know.&#34; Evelyn said. &#34;But she might not give up.&#34;</p>
-                <p>She walked to the desk and picked up the chocolate gift box.</p>
-                <p>Opened it.</p>
-                <p>Inside were twelve pieces of handmade chocolate, each with a different shape.</p>
-                <p>As exquisite as works of art.</p>
-                <p>Evelyn picked one up, looked at it, and put it back.</p>
-                <p>&#34;Quite thoughtful.&#34; She said.</p>
-                <p>Alexander walked over and directly threw the entire gift box into the trash bin.</p>
-                <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
-                <p>&#34;I don&#39;t need it.&#34; He said.</p>
-                <p>Evelyn raised an eyebrow. &#34;Wasteful.&#34;</p>
-                <p>&#34;Then you eat it?&#34; Alexander looked at her.</p>
-                <p>Evelyn shook her head. &#34;I don&#39;t eat things others give you.&#34;</p>
-                <p>Alexander smiled.</p>
-                <p>He wrapped his arms around her waist, lowering his head to whisper in her ear. &#34;Jealous?&#34;</p>
-                <p>&#34;No.&#34; Evelyn pushed him away. &#34;I just don&#39;t like people coveting what&#39;s mine.&#34;</p>
-                <p>Alexander&#39;s gaze softened. &#34;Don&#39;t worry. I only belong to you.&#34;</p>
-                <p>As they spoke, the study door was knocked.</p>
-                <p>A servant&#39;s voice came through. &#34;Young Master, Young Madam, the Master asks you to come down. Lunch is ready.&#34;</p>
-                <p>Alexander acknowledged.</p>
-                <p>He looked at Evelyn. &#34;Staying for lunch?&#34;</p>
-                <p>Evelyn thought for a moment. &#34;Yes.&#34;</p>
-                <p>She wanted to see exactly what this Ms. Chen was up to.</p>
-                <p>Natalie rubbed her hands excitedly. &#34;A good show to watch! Crack.&#34;</p>
-                <p>The three went downstairs.</p>
-                <p>The dining room already had a long table set.</p>
-                <p>Robert Vance sat at the head.</p>
-                <p>On the left were Mrs. Vance and Cecilia.</p>
-                <p>On the right were three empty seats, clearly reserved for Alexander, Evelyn, and Natalie.</p>
-                <p>Victoria sat beside Cecilia.</p>
-                <p>Seeing them descend, Victoria stood up, speaking softly. &#34;Alexander, Miss Ross, please sit.&#34;</p>
-                <p>Her manner was decent,like a hostess.</p>
-                <p>Evelyn didn&#39;t speak, sitting beside Alexander.</p>
-                <p>Natalie very consciously sat on Evelyn&#39;s other side.</p>
-                <p>Lunch began.</p>
-                <p>Servants brought out dishes one after another.</p>
-                <p>Robert Vance spoke. &#34;Victoria, I heard you&#39;re planning to stay in the country long-term this time?&#34;</p>
-                <p>Victoria smiled. &#34;Yes, Uncle Vance. I&#39;ve handed over all my projects abroad. From now on, I&#39;ll stay in the country and focus on charity work.&#34;</p>
-                <p>&#34;Good, good.&#34; Robert Vance nodded. &#34;Your charity foundation does excellent work. Helped many people.&#34;</p>
-                <p>&#34;You flatter me.&#34; Victoria said modestly. &#34;Just doing my small part.&#34;</p>
-                <p>She paused, looking at Alexander. &#34;Alexander, I remember you were also very interested in charity back then. In university, we even organized fundraising activities together.&#34;</p>
-                <p>Alexander made a noncommittal sound, not engaging.</p>
-                <p>He picked up a piece of spare rib and placed it in Evelyn&#39;s bowl. &#34;Eat more.&#34;</p>
-                <p>Evelyn lowered her head to eat.</p>
-                <p>Victoria&#39;s eyes dimmed slightly, but her smile remained unchanged. &#34;Miss Ross, what do you do for work?&#34;</p>
-                <p>Evelyn looked up. &#34;At the Nora Research Institute.&#34;</p>
-                <p>&#34;The Nora Research Institute?&#34; Victoria&#39;s eyes lit up. &#34;I know of it. A very impressive research institution. Miss Ross is a researcher?&#34;</p>
-                <p>&#34;Something like that.&#34;</p>
-                <p>&#34;Truly remarkable.&#34; Victoria said sincerely. &#34;Few women work in scientific research. Miss Ross must be very优秀.&#34;</p>
-                <p>Evelyn smiled. &#34;Thank you.&#34;</p>
-                <p>Cecilia interjected. &#34;Victoria, you&#39;re also outstanding. Your charity foundation keeps growing. Last year, you even won an international charity award.&#34;</p>
-                <p>Victoria shook her head. &#34;That&#39;s nothing. Compared to Miss Ross&#39;s scientific work, my job is too simple.&#34;</p>
-                <p>She looked at Evelyn, her eyes sincere. &#34;Miss Ross, I&#39;ve always admired researchers. The contributions you make to human progress cannot be measured by money.&#34;</p>
-                <p>The words</p>
-                <!-- 广告位 6 -->
+                
+                
+                <div class="text-block" data-block="0">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.1</h2>
+                        
+                        <p>The main gate of the Vance estate stood open.</p>
+                        
+                        <p>Several black cars were parked neatly in front of the main house.</p>
+                        
+                        <p>As Evelyn Ross&#39;s car approached, a guard hurried forward, looking flustered.</p>
+                        
+                        <p>&#34;Miss Ross?&#34;</p>
+                        
+                        <p>The guard&#39;s eyes darted nervously. His tone was hesitant. &#34;You... why are you here so suddenly?&#34;</p>
+                        
+                        <p>Evelyn rolled down the window. &#34;Can&#39;t I come?&#34;</p>
+                        
+                        <p>&#34;No, no!&#34; The guard quickly waved his hands. Sweat beaded on his forehead. &#34;It&#39;s just... there are guests at the house today. It might not be very convenient...&#34;</p>
+                        
+                        <p>&#34;Open the gate.&#34;</p>
+                        
+                        <p>Evelyn&#39;s voice was calm, yet carried an undeniable force.</p>
+                        
+                        <p>After the last Vance family banquet, Alexander Vance had personally instructed the guards—Evelyn Ross was to be granted entry to the Vance estate without exception.</p>
+                        
+                        <p>The guard wiped his sweat and pressed the remote.</p>
+                        
+                        <p>The iron gate slid open slowly.</p>
+                        
+                        <p>He hesitated for a moment, lowering his voice. &#34;Miss Cecilia Evans is back.&#34;</p>
+                        
+                        <p>Cecilia Evans.</p>
+                        
+                        <p>The illegitimate daughter of the eldest branch of the Vance family.</p>
+                        
+                        <p>Evelyn remembered that name.</p>
+                        
+                        <p>Back then, because of Cecilia&#39;s existence, Julian Evans had held a deep prejudice against illegitimate children.</p>
+                        
+                        <p>During the turmoil in San Francisco, Cecilia had merely given a gentle push, delivering Sophia Watson to Alexander Vance, nearly shattering Evelyn&#39;s marriage.</p>
+                        
+                        <p>Later, Evelyn faked her death and lived under the identity of &#34;Grace Sterling.&#34;</p>
+                        
+                        <p>Alexander became a widower.</p>
+                        
+                        <p>Later, she heard Cecilia had married into a family in New York. Evelyn hadn&#39;t paid attention to whom exactly.</p>
+                        
+                        <p>She only vaguely remembered Cecilia had been with a distant relative of the Evans family.</p>
+                        
+                        <p>That man worked at the Nora Research Institute. He had been sent to prison after Evelyn exposed him for privately selling drugs.</p>
+                        
+                        <p>Which family had Cecilia latched onto later?</p>
+                        
+                        <p>Judging by today&#39;s display, she must have married well.</p>
+                        
+                        <p>But the guard&#39;s expression was off.</p>
+                        
+                        <p>Evelyn narrowed her eyes. &#34;Who else?&#34;</p>
+                        
+                        <p>&#34;There&#39;s also...&#34; The guard stammered. &#34;Ms.Lawrence is here.&#34;</p>
+                        
+                        <p>Victoria Lawrence.</p>
+                        
+                        <p>That name sounded somewhat familiar.</p>
+                        
+                        <p>Evelyn was trying to recall when a crisp crack sounded from the back seat.</p>
+                        
+                        <p>Someone was cracking sunflower seeds.</p>
+                        
+                        <p>Evelyn turned sharply.</p>
+                        
+                        <p>Natalie Castillo had somehow slipped into the car. She was now holding a bag of sunflower seeds, eating with relish, her bright eyes watching them.</p>
+                        
+                        <p>&#34;What are you doing here?&#34; Evelyn frowned.</p>
+                        
+                        <p>Natalie grinned. &#34;You told me not to leave the Ashcroft estate, right? Following you makes it easier for you to keep an eye on me.&#34;</p>
+                        
+                        <p>As she spoke, she cracked another seed and looked at the guard. &#34;Victoria Lawrence... is that the philanthropist Victoria Lawrence?&#34;</p>
+                        
+                        <p>The guard nodded.</p>
+                        
+                        <p>Natalie&#39;s eyes grew even brighter.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- 38fc9e7d0106734f83ac62f5d7d93253 -->
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                
+                
+                
+                <div class="text-block" data-block="1">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.2</h2>
+                        
+                        <p>&#34;Victoria Lawrence, a well-known domestic philanthropist, manages over a dozen charitable foundations. Excellent reputation, countless fans.&#34; She spoke rapidly. &#34;But she&#39;s always been single. In media interviews, she&#39;s said—she met a man while studying abroad. She&#39;ll only ever love him.&#34;</p>
+                        
+                        <p>Crack.</p>
+                        
+                        <p>The seed shell was spat into a small paper bag she carried.</p>
+                        
+                        <p>Natalie leaned closer to Evelyn, lowering her voice. &#34;I checked the timeline. The years she studied abroad, Alexander Vance happened to be in the same city, attending the same university.&#34;</p>
+                        
+                        <p>She blinked. &#34;Miss Ross, your Mr. Vance isn&#39;t only on your mind, you know. So, feeling any sense of crisis?&#34;</p>
+                        
+                        <p>Evelyn&#39;s expression remained impassive.</p>
+                        
+                        <p>She looked at the guard. &#34;So, can I enter today? If not, I&#39;ll call Alexander Vance right now.&#34;</p>
+                        
+                        <p>&#34;You can, you can!&#34; The guard hurriedly forced a smile. &#34;Please, come in!&#34;</p>
+                        
+                        <p>The gate opened fully.</p>
+                        
+                        <p>Evelyn stepped on the gas.</p>
+                        
+                        <p>The car drove into the Vance estate grounds.</p>
+                        
+                        <p>Natalie pressed against the car window, looking around eagerly.</p>
+                        
+                        <p>&#34;Wow, there&#39;s a pond over there! Are those koi? Red ones, so pretty!&#34; She turned and asked, &#34;Grace, are koi tasty?&#34;</p>
+                        
+                        <p>Evelyn: &#34;...Those are ornamental fish.&#34;</p>
+                        
+                        <p>&#34;Can&#39;t ornamental fish be eaten?&#34;</p>
+                        
+                        <p>&#34;...&#34;</p>
+                        
+                        <p>&#34;Hey, there are two jujube trees over there.&#34; Natalie pointed into the distance. &#34;One is a jujube tree, the other is also a jujube tree.&#34;</p>
+                        
+                        <p>Evelyn: &#34;Can&#39;t you just say &#39;two jujube trees&#39;?&#34;</p>
+                        
+                        <p>&#34;No.&#34; Natalie said matter-of-factly. &#34;I&#39;m imitating a great Chinese writer called... Li Bai?&#34;</p>
+                        
+                        <p>&#34;Lu Xun.&#34;</p>
+                        
+                        <p>&#34;Oh right, Lu Xun!&#34; Natalie had a sudden realization. &#34;Whatever. I just want to ask, are the jujubes from those trees sweet? Crack.&#34;</p>
+                        
+                        <p>She cracked another seed.</p>
+                        
+                        <p>Evelyn glanced in the rearview mirror.</p>
+                        
+                        <p>Natalie actually carried a folded paper bag as a trash bag. Her manners were surprisingly decent.</p>
+                        
+                        <p>Evelyn looked away.</p>
+                        
+                        <p>The car entered the parking lot.</p>
+                        
+                        <p>As soon as it stopped, Natalie jumped out and circled the nearby cars.</p>
+                        
+                        <p>&#34;This Maserati definitely isn&#39;t Victoria&#39;s.&#34; She analyzed, stroking her chin. &#34;Philanthropists are low-key. This car is too flashy.&#34;</p>
+                        
+                        <p>She looked at the other cars.</p>
+                        
+                        <p>&#34;Bentley, Rolls-Royce, Porsche...&#34; Natalie spread her hands. &#34;Not a single cheap car in the parking lot. Looks like Ms. Chen comes from quite a background.&#34;</p>
+                        
+                        <p>She walked over to Evelyn, lowering her voice. &#34;Miss Ross, you&#39;ve met a formidable rival this time. Crack.&#34;</p>
+                        
+                        <p>The seed shell fell into the paper bag.</p>
+                        
+                        <p>Evelyn ignored her and walked straight toward the main house.</p>
+                        
+                        <p>Natalie hurried to catch up, the sunflower seed bag rustling incessantly.</p>
+                        
+                        <p>Two servants stood at the entrance to the main house.</p>
+                        
+                        <p>Seeing Evelyn, they exchanged a glance, their expressions subtle.</p>
+                        
+                        <p>&#34;Miss Ross.&#34; One stepped forward. &#34;The Master and Madam are receiving guests. Would you like to wait in the side hall first?&#34;</p>
+                        
+                        <p>Evelyn didn&#39;t stop walking. &#34;No need.&#34;</p>
+                        
+                        <p>She pushed open the main house door.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- a8e40a2b9790ac404e6034309b5743d0 -->
                 <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                
+                
+                
+                <div class="text-block" data-block="2">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.3</h2>
+                        
+                        <p>The conversation in the living room came to an abrupt halt.</p>
+                        
+                        <p>Several pairs of eyes shot over in unison.</p>
+                        
+                        <p>Evelyn looked up.</p>
+                        
+                        <p>Robert Vance sat in the host&#39;s seat, with Mrs. Vance beside him.</p>
+                        
+                        <p>On the guest sofa sat two women.</p>
+                        
+                        <p>The one on the left wore a Chanel suit, her makeup impeccable. It was Cecilia Evans.</p>
+                        
+                        <p>Several years had passed. She had shed her former youthful naivety, gaining a touch of a noblewoman&#39;s grace.</p>
+                        
+                        <p>The woman on the right...</p>
+                        
+                        <p>Evelyn&#39;s gaze focused.</p>
+                        
+                        <p>The woman appeared to be in her early thirties. She wore a simple beige knit sweater and trousers. Her long hair was loosely tied at the back. She wore only light makeup.</p>
+                        
+                        <p>But her eyes were very bright.</p>
+                        
+                        <p>Clear, gentle, yet with an indescribable firmness.</p>
+                        
+                        <p>She sat there, posture elegant and composed, radiating a serene aura.</p>
+                        
+                        <p>This was Victoria Lawrence.</p>
+                        
+                        <p>Evelyn suddenly remembered where she had heard this name.</p>
+                        
+                        <p>Three years ago, at a charity gala in New York, Victoria Lawrence had spoken as the host organization&#39;s representative.</p>
+                        
+                        <p>The media had covered it extensively at the time, calling her &#34;the purest stream in the charity world.&#34;</p>
+                        
+                        <p>Evelyn had skimmed the news then, not paying much attention.</p>
+                        
+                        <p>She hadn&#39;t expected to meet her in person here today.</p>
+                        
+                        <p>&#34;Evelyn, you&#39;re here?&#34; Mrs. Vance stood up first, her smile somewhat strained. &#34;Why didn&#39;t you say anything in advance?&#34;</p>
+                        
+                        <p>Robert Vance also cleared his throat. &#34;Evelyn, have a seat.&#34;</p>
+                        
+                        <p>Evelyn walked over and sat in the empty single armchair.</p>
+                        
+                        <p>Natalie very consciously followed and stood behind her, continuing to crack seeds.</p>
+                        
+                        <p>Crack.</p>
+                        
+                        <p>The crisp sound was particularly abrupt in the silent living room.</p>
+                        
+                        <p>Cecilia frowned slightly, looking at Natalie. &#34;And this is?&#34;</p>
+                        
+                        <p>&#34;My friend.&#34; Evelyn introduced simply. &#34;Natalie Castillo.&#34;</p>
+                        
+                        <p>Cecilia sized up Natalie for a few moments but didn&#39;t ask further.</p>
+                        
+                        <p>She turned to Evelyn, offering a standard smile. &#34;Miss Ross, long time no see. I heard you and Alexander remarried? Congratulations.&#34;</p>
+                        
+                        <p>Her tone was polite, revealing no emotion.</p>
+                        
+                        <p>Evelyn nodded. &#34;Thank you.&#34;</p>
+                        
+                        <p>Victoria had been sitting quietly.</p>
+                        
+                        <p>Only now did she look up at Evelyn, offering a gentle smile. &#34;Miss Ross, hello. I&#39;m Victoria Lawrence.&#34;</p>
+                        
+                        <p>Her voice was soft, like a spring breeze.</p>
+                        
+                        <p>Evelyn returned the smile. &#34;Ms. Chen, I&#39;ve long heard of you.&#34;</p>
+                        
+                        <p>Their eyes met.</p>
+                        
+                        <p>Something collided silently in the air.</p>
+                        
+                        <p>Mrs. Vance hurriedly tried to smooth things over. &#34;Evelyn, Victoria is Cecilia&#39;s good friend. She came specifically to visit today. You... haven&#39;t met before, right?&#34;</p>
+                        
+                        <p>&#34;Haven&#39;t met.&#34; Evelyn said. &#34;But I&#39;ve heard of Ms. Chen&#39;s work. Her charity efforts are excellent.&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- 8d485a781d7176e53b3dc45f4a663d79 -->
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                
+                
+                
+                <div class="text-block" data-block="3">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.4</h2>
+                        
+                        <p>Victoria modestly shook her head. &#34;Just doing my small part.&#34;</p>
+                        
+                        <p>She paused, looking at Evelyn. &#34;Actually, I&#39;ve wanted to meet you for a long time, Miss Ross. Alexander often mentions you.&#34;</p>
+                        
+                        <p>Evelyn raised an eyebrow. &#34;Oh? What does he say about me?&#34;</p>
+                        
+                        <p>&#34;He says you&#39;re smart, decisive, and have strong opinions.&#34; Victoria&#39;s smile remained unchanged. &#34;He says you&#39;re the most special girl he&#39;s ever met.&#34;</p>
+                        
+                        <p>It sounded like praise.</p>
+                        
+                        <p>But Evelyn detected a hint of something else.</p>
+                        
+                        <p>Natalie muttered softly behind her. &#34;Tsk tsk, it&#39;s starting. Crack.&#34;</p>
+                        
+                        <p>Cecilia shot her a glare.</p>
+                        
+                        <p>Victoria, however, acted as if she hadn&#39;t heard, continuing in her gentle tone. &#34;Alexander and I were university classmates. He was outstanding even back then. I never imagined after all these years, he&#39;d find such a wonderful wife. I&#39;m truly happy for him.&#34;</p>
+                        
+                        <p>Evelyn smiled. &#34;Thank you.&#34;</p>
+                        
+                        <p>She didn&#39;t offer more conversation.</p>
+                        
+                        <p>The living room fell quiet again.</p>
+                        
+                        <p>Robert Vance cleared his throat. &#34;Well... Evelyn, did you come to see Alexander today?&#34;</p>
+                        
+                        <p>&#34;Yes.&#34; Evelyn said. &#34;Is he home?&#34;</p>
+                        
+                        <p>&#34;He&#39;s in the study upstairs.&#34; Mrs. Vance said. &#34;But he&#39;s currently...&#34;</p>
+                        
+                        <p>Before she could finish, footsteps sounded on the stairs.</p>
+                        
+                        <p>Alexander Vance came down.</p>
+                        
+                        <p>He wore casual home clothes. His hair was slightly messy, as if he&#39;d just woken up.</p>
+                        
+                        <p>Seeing the gathering in the living room, his steps faltered.</p>
+                        
+                        <p>His gaze swept over Cecilia, passed over Victoria, and finally landed on Evelyn.</p>
+                        
+                        <p>&#34;Evelyn?&#34; He seemed surprised. &#34;What brings you here?&#34;</p>
+                        
+                        <p>Evelyn stood up. &#34;I need to discuss something with you.&#34;</p>
+                        
+                        <p>Alexander quickly walked down and naturally took her hand. &#34;What is it?&#34;</p>
+                        
+                        <p>This action was seen by everyone.</p>
+                        
+                        <p>Victoria&#39;s smile faded slightly.</p>
+                        
+                        <p>Cecilia&#39;s eyes flickered.</p>
+                        
+                        <p>Mrs. Vance breathed a sigh of relief.</p>
+                        
+                        <p>Robert Vance coughed. &#34;Alexander, Victoria is here. Aren&#39;t you going to say hello?&#34;</p>
+                        
+                        <p>Only then did Alexander look at Victoria, nodding slightly. &#34;Ms. Chen.&#34;</p>
+                        
+                        <p>His tone was distant and polite.</p>
+                        
+                        <p>Victoria stood up, her smile still gentle. &#34;Alexander, long time no see. You look well.&#34;</p>
+                        
+                        <p>&#34;Thank you.&#34; Alexander said. &#34;You too.&#34;</p>
+                        
+                        <p>He turned to Evelyn. &#34;Shall we talk in my study?&#34;</p>
+                        
+                        <p>Evelyn nodded.</p>
+                        
+                        <p>Just as they were about to leave, Victoria spoke up. &#34;Alexander.&#34;</p>
+                        
+                        <p>Alexander turned back.</p>
+                        
+                        <p>Victoria took an exquisite gift box from her bag. &#34;I brought you a gift from abroad this time. It&#39;s handmade chocolate from that shop you used to love.&#34;</p>
+                        
+                        <p>She offered it. &#34;I don&#39;t know if you still like it.&#34;</p>
+                        
+                        <p>Alexander didn&#39;t take it.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- c260faacddeb4be16d509e39a27a2374 -->
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                
+                
+                
+                <div class="text-block" data-block="4">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.5</h2>
+                        
+                        <p>He glanced at Evelyn.</p>
+                        
+                        <p>Evelyn&#39;s expression was calm.</p>
+                        
+                        <p>Only then did Alexander accept the gift box, saying flatly, &#34;Thank you. But I don&#39;t eat much sweets these days.&#34;</p>
+                        
+                        <p>Victoria&#39;s smile remained unchanged. &#34;Is that so? What a pity. I remember you used to love it.&#34;</p>
+                        
+                        <p>&#34;People change.&#34; Alexander said.</p>
+                        
+                        <p>Holding Evelyn&#39;s hand, he turned and headed upstairs.</p>
+                        
+                        <p>Natalie hurried to follow.</p>
+                        
+                        <p>The three disappeared around the stairwell corner.</p>
+                        
+                        <p>The living room was utterly silent.</p>
+                        
+                        <p>Cecilia looked at Victoria, speaking softly. &#34;Victoria, don&#39;t mind it. Alexander, he...&#34;</p>
+                        
+                        <p>&#34;I&#39;m fine.&#34; Victoria interrupted her, sitting back down. She picked up her teacup and took a sip. &#34;Miss Ross is indeed very special.&#34;</p>
+                        
+                        <p>She looked toward the stairs, her eyes deep.</p>
+                        
+                        <p>&#34;No wonder Alexander chose her.&#34;</p>
+                        
+                        <p>Upstairs, in the study.</p>
+                        
+                        <p>Alexander closed the door and immediately pulled Evelyn into his arms.</p>
+                        
+                        <p>&#34;Why did you come so suddenly?&#34; He asked in a low voice. &#34;You didn&#39;t tell me in advance.&#34;</p>
+                        
+                        <p>Evelyn pushed him away. &#34;To see if you&#39;ve been lured away by an old flame.&#34;</p>
+                        
+                        <p>Alexander chuckled. &#34;What old flame? Victoria is just a university classmate.&#34;</p>
+                        
+                        <p>&#34;Just a classmate?&#34; Evelyn raised an eyebrow. &#34;She remembers your favorite chocolate and brought it from abroad.&#34;</p>
+                        
+                        <p>Alexander frowned. &#34;That was many years ago. I haven&#39;t liked it for a long time.&#34;</p>
+                        
+                        <p>He casually placed the gift box on the desk.</p>
+                        
+                        <p>Evelyn glanced at it.</p>
+                        
+                        <p>The packaging was exquisite. It was from a famous Swiss chocolate brand.</p>
+                        
+                        <p>It truly was something he used to like.</p>
+                        
+                        <p>&#34;Why did she come to the Vance estate?&#34; Evelyn asked.</p>
+                        
+                        <p>&#34;Cecilia brought her.&#34; Alexander said. &#34;Said she&#39;s back visiting family,dropping by.&#34;</p>
+                        
+                        <p>&#34;Dropping by?&#34; Evelyn smiled faintly. &#34;I think it was deliberate.&#34;</p>
+                        
+                        <p>Alexander took her hand. &#34;Evelyn, Victoria and I really have nothing. In university, she was the student council president, I was the vice president. We had some work交集, that&#39;s all.&#34;</p>
+                        
+                        <p>&#34;That&#39;s all?&#34; Evelyn looked at him. &#34;Then why did she say she&#39;d only ever love you?&#34;</p>
+                        
+                        <p>Alexander was taken aback. &#34;She said that?&#34;</p>
+                        
+                        <p>&#34;She said it in a media interview.&#34; Natalie chimed in. &#34;I checked the reports. It&#39;s absolutely true. Crack.&#34;</p>
+                        
+                        <p>She cracked another seed.</p>
+                        
+                        <p>Alexander&#39;s expression darkened. &#34;I didn&#39;t know about that. Our relationship never went beyond classmates.&#34;</p>
+                        
+                        <p>Evelyn stared at him for a few seconds.</p>
+                        
+                        <p>Then she suddenly smiled.</p>
+                        
+                        <p>&#34;Why so nervous?&#34; She patted his cheek. &#34;I didn&#39;t say I don&#39;t believe you.&#34;</p>
+                        
+                        <p>Alexander relaxed slightly.</p>
+                        
+                        <p>But Evelyn&#39;s next words made him tense up again.</p>
+                        
+                        <p>&#34;However...&#34; She said slowly. &#34;This Ms. Chen doesn&#39;t seem simple. Gentle, gracious, poised, and a philanthropist. Alexander, your taste back then wasn&#39;t bad.&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- 227ac8063260b67e15d106b1d1faf5da -->
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                
+                
+                
+                <div class="text-block" data-block="5">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.6</h2>
+                        
+                        <p>Alexander: &#34;...&#34;</p>
+                        
+                        <p>He sighed helplessly. &#34;Evelyn, don&#39;t tease.&#34;</p>
+                        
+                        <p>Evelyn smiled and didn&#39;t continue teasing him.</p>
+                        
+                        <p>She walked to the window, looking down at the parking lot.</p>
+                        
+                        <p>Those luxury cars were still parked there.</p>
+                        
+                        <p>&#34;Who did Cecilia marry?&#34; She suddenly asked.</p>
+                        
+                        <p>Alexander walked over, standing behind her. &#34;The Cortez Family in New York. The second son of the Cortez Group.&#34;</p>
+                        
+                        <p>Evelyn raised an eyebrow. &#34;The Cortez Family? The real estate Cortez Family?&#34;</p>
+                        
+                        <p>&#34;Yes.&#34;</p>
+                        
+                        <p>&#34;No wonder.&#34; Evelyn said. &#34;Such a grand display.&#34;</p>
+                        
+                        <p>She paused. &#34;What about Victoria? What&#39;s her background?&#34;</p>
+                        
+                        <p>&#34;The Raymond Family.&#34; Alexander said. &#34;An old-money family in New York. Deep roots in both politics and business. Victoria is the only daughter of this generation in the Raymond Family. Very doted on.&#34;</p>
+                        
+                        <p>Evelyn nodded.</p>
+                        
+                        <p>As expected, extraordinary background.</p>
+                        
+                        <p>&#34;How did she and Cecilia meet?&#34;</p>
+                        
+                        <p>&#34;University roommates.&#34; Alexander said. &#34;They&#39;ve always been close.&#34;</p>
+                        
+                        <p>Evelyn turned, leaning against the windowsill. &#34;So today&#39;s scene was arranged by Cecilia?&#34;</p>
+                        
+                        <p>Alexander was silent for a moment.</p>
+                        
+                        <p>&#34;Possibly.&#34;</p>
+                        
+                        <p>Evelyn smiled.</p>
+                        
+                        <p>&#34;Interesting.&#34; She said. &#34;Is Cecilia trying to create an opportunity for her good friend?&#34;</p>
+                        
+                        <p>Alexander frowned. &#34;I won&#39;t give her any opportunity.&#34;</p>
+                        
+                        <p>&#34;I know.&#34; Evelyn said. &#34;But she might not give up.&#34;</p>
+                        
+                        <p>She walked to the desk and picked up the chocolate gift box.</p>
+                        
+                        <p>Opened it.</p>
+                        
+                        <p>Inside were twelve pieces of handmade chocolate, each with a different shape.</p>
+                        
+                        <p>As exquisite as works of art.</p>
+                        
+                        <p>Evelyn picked one up, looked at it, and put it back.</p>
+                        
+                        <p>&#34;Quite thoughtful.&#34; She said.</p>
+                        
+                        <p>Alexander walked over and directly threw the entire gift box into the trash bin.</p>
+                        
+                        <p>&#34;I don&#39;t need it.&#34; He said.</p>
+                        
+                        <p>Evelyn raised an eyebrow. &#34;Wasteful.&#34;</p>
+                        
+                        <p>&#34;Then you eat it?&#34; Alexander looked at her.</p>
+                        
+                        <p>Evelyn shook her head. &#34;I don&#39;t eat things others give you.&#34;</p>
+                        
+                        <p>Alexander smiled.</p>
+                        
+                        <p>He wrapped his arms around her waist, lowering his head to whisper in her ear. &#34;Jealous?&#34;</p>
+                        
+                        <p>&#34;No.&#34; Evelyn pushed him away. &#34;I just don&#39;t like people coveting what&#39;s mine.&#34;</p>
+                        
+                        <p>Alexander&#39;s gaze softened. &#34;Don&#39;t worry. I only belong to you.&#34;</p>
+                        
+                        <p>As they spoke, the study door was knocked.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- efe7f98e0ca1646a355ba304f74f4034 -->
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                
+                
+                
+                <div class="text-block" data-block="6">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.7</h2>
+                        
+                        <p>A servant&#39;s voice came through. &#34;Young Master, Young Madam, the Master asks you to come down. Lunch is ready.&#34;</p>
+                        
+                        <p>Alexander acknowledged.</p>
+                        
+                        <p>He looked at Evelyn. &#34;Staying for lunch?&#34;</p>
+                        
+                        <p>Evelyn thought for a moment. &#34;Yes.&#34;</p>
+                        
+                        <p>She wanted to see exactly what this Ms. Chen was up to.</p>
+                        
+                        <p>Natalie rubbed her hands excitedly. &#34;A good show to watch! Crack.&#34;</p>
+                        
+                        <p>The three went downstairs.</p>
+                        
+                        <p>The dining room already had a long table set.</p>
+                        
+                        <p>Robert Vance sat at the head.</p>
+                        
+                        <p>On the left were Mrs. Vance and Cecilia.</p>
+                        
+                        <p>On the right were three empty seats, clearly reserved for Alexander, Evelyn, and Natalie.</p>
+                        
+                        <p>Victoria sat beside Cecilia.</p>
+                        
+                        <p>Seeing them descend, Victoria stood up, speaking softly. &#34;Alexander, Miss Ross, please sit.&#34;</p>
+                        
+                        <p>Her manner was decent,like a hostess.</p>
+                        
+                        <p>Evelyn didn&#39;t speak, sitting beside Alexander.</p>
+                        
+                        <p>Natalie very consciously sat on Evelyn&#39;s other side.</p>
+                        
+                        <p>Lunch began.</p>
+                        
+                        <p>Servants brought out dishes one after another.</p>
+                        
+                        <p>Robert Vance spoke. &#34;Victoria, I heard you&#39;re planning to stay in the country long-term this time?&#34;</p>
+                        
+                        <p>Victoria smiled. &#34;Yes, Uncle Vance. I&#39;ve handed over all my projects abroad. From now on, I&#39;ll stay in the country and focus on charity work.&#34;</p>
+                        
+                        <p>&#34;Good, good.&#34; Robert Vance nodded. &#34;Your charity foundation does excellent work. Helped many people.&#34;</p>
+                        
+                        <p>&#34;You flatter me.&#34; Victoria said modestly. &#34;Just doing my small part.&#34;</p>
+                        
+                        <p>She paused, looking at Alexander. &#34;Alexander, I remember you were also very interested in charity back then. In university, we even organized fundraising activities together.&#34;</p>
+                        
+                        <p>Alexander made a noncommittal sound, not engaging.</p>
+                        
+                        <p>He picked up a piece of spare rib and placed it in Evelyn&#39;s bowl. &#34;Eat more.&#34;</p>
+                        
+                        <p>Evelyn lowered her head to eat.</p>
+                        
+                        <p>Victoria&#39;s eyes dimmed slightly, but her smile remained unchanged. &#34;Miss Ross, what do you do for work?&#34;</p>
+                        
+                        <p>Evelyn looked up. &#34;At the Nora Research Institute.&#34;</p>
+                        
+                        <p>&#34;The Nora Research Institute?&#34; Victoria&#39;s eyes lit up. &#34;I know of it. A very impressive research institution. Miss Ross is a researcher?&#34;</p>
+                        
+                        <p>&#34;Something like that.&#34;</p>
+                        
+                        <p>&#34;Truly remarkable.&#34; Victoria said sincerely. &#34;Few women work in scientific research. Miss Ross must be very优秀.&#34;</p>
+                        
+                        <p>Evelyn smiled. &#34;Thank you.&#34;</p>
+                        
+                        <p>Cecilia interjected. &#34;Victoria, you&#39;re also outstanding. Your charity foundation keeps growing. Last year, you even won an international charity award.&#34;</p>
+                        
+                        <p>Victoria shook her head. &#34;That&#39;s nothing. Compared to Miss Ross&#39;s scientific work, my job is too simple.&#34;</p>
+                        
+                        <p>She looked at Evelyn, her eyes sincere. &#34;Miss Ross, I&#39;ve always admired researchers. The contributions you make to human progress cannot be measured by money.&#34;</p>
+                        
+                        <p>The words</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- a539bb169e7e4ee07b88d8c888b38a5a -->
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                
+                
             </div>
             
             <div class="font-controls">
@@ -2807,6 +3098,17 @@
             history = history.slice(0, 5);
             
             localStorage.setItem('readingHistory', JSON.stringify(history));
+
+            // 纯数字ID专属进度：/novels/21004/22 → 保存 numeric_novel_21004
+            (function() {
+                const parts = window.location.pathname.split('/').filter(Boolean);
+                if (parts.length === 3 && parts[0] === 'novels' && /^\d{5}$/.test(parts[1])) {
+                    localStorage.setItem('numeric_novel_' + parts[1], JSON.stringify({
+                        chapter: parseInt(parts[2], 10) || 1,
+                        time: Date.now()
+                    }));
+                }
+            })();
         });
 
         // ===== Ad Click Guide System =====
@@ -2836,8 +3138,8 @@
                 this.MIN_RANDOM_ADS = 10; // Minimum random ads for next trigger
                 this.MAX_RANDOM_ADS = 45; // Maximum random ads for next trigger
                 this.TRIGGER_PROBABILITY = 0.79; // 79% trigger probability
-                this.MAX_TRIGGERS_BEFORE_LONG_COOLDOWN = 5; // Enter long cooldown after 4 accumulated triggers
-                this.LONG_COOLDOWN_HOURS = 6; // Long cooldown 6 hours
+                this.MAX_TRIGGERS_BEFORE_LONG_COOLDOWN = 5; // Enter long cooldown after 5 accumulated triggers
+                this.LONG_COOLDOWN_HOURS = 3; // Long cooldown 3 hours
                 this.INACTIVITY_RESET_MINUTES = 60; // Auto reset after 60 minutes of inactivity
                 
                 // Dynamic trigger threshold - get existing threshold or generate new one
@@ -3088,14 +3390,15 @@
                     rootMargin: '50px'
                 });
 
-                // Monitor all AdSense ad containers
-                this.startAdMonitoring();
+                // Monitor all GPT ad containers (delay 10s after page load)
+                setTimeout(() => {
+                    this.startAdMonitoring();
+                }, 10000);
             }
 
             startAdMonitoring() {
                 const checkForAds = () => {
-                    // Monitor all GPT ad slots - support multiple banners
-                    const adElements = document.querySelectorAll('[id^="div-gpt-ad-"]');
+                    const adElements = document.querySelectorAll('ins[data-key]');
                     adElements.forEach(ad => {
                         if (!ad.dataset.guideMonitored) {
                             ad.dataset.guideMonitored = 'true';
@@ -3125,20 +3428,21 @@
                 // Update ad fill detection logic - support ADX ad structure and exclude unfilled ads
                 let isFilled = false;
                 
-                // Check if there is a valid iframe (height > 0)
-                const iframe = adElement.querySelector('iframe');
-                if (iframe) {
-                    const iframeRect = iframe.getBoundingClientRect();
-                    isFilled = iframeRect.height > 0;
-                }
-                
-                // If no iframe, check other fill indicators
-                if (!isFilled) {
-                    isFilled = adElement.dataset.adStatus === 'filled' || 
-                              adElement.innerHTML.includes('googleads') ||
-                              (adElement.querySelector('[data-google-container-id]') !== null && 
-                               adElement.querySelector('iframe[title="3rd party ad content"]') !== null) ||
-                              adElement.innerHTML.includes('data-load-complete="true"');
+                // Priority: check GPT's real render container (google_ads_iframe_..._container__)
+                // Its own height reflects actual fill status; outer wrapper's min-height can't fake this
+                const gptContainer = adElement.querySelector('div[id^="google_ads_iframe_"]');
+                if (gptContainer) {
+                    isFilled = gptContainer.getBoundingClientRect().height > 0;
+                } else {
+                    // Fallback: check if there is a valid iframe (height > 0)
+                    const iframe = adElement.querySelector('iframe');
+                    if (iframe) {
+                        const iframeRect = iframe.getBoundingClientRect();
+                        isFilled = iframeRect.height > 0;
+                    } else {
+                        // Last resort generic check: ad container has rendered child elements with content
+                        isFilled = adElement.children.length > 0 && adElement.scrollHeight > 50;
+                    }
                 }
 
                 // Mark as processed to avoid double counting
@@ -4363,36 +4667,82 @@
             window.adGuideSystem = adGuideSystem;
         });
     </script>
-    
+
+    <!-- Text Block Custom Scrollbar -->
+    <script>
+    (function () {
+      'use strict';
+      var drag = null, tmHandler = null;
+
+      function updateThumb(inner, bar, thumb) {
+        var cH = inner.scrollHeight, vH = inner.clientHeight;
+        if (cH <= vH) { thumb.style.display = 'none'; return; }
+        thumb.style.display = 'block';
+        var bH = bar.clientHeight;
+        var tH = Math.max(30, Math.floor(bH * vH / cH));
+        thumb.style.height = tH + 'px';
+        thumb.style.top = Math.floor(inner.scrollTop / (cH - vH) * (bH - tH)) + 'px';
+      }
+
+      function moveDrag(clientY) {
+        if (!drag) return;
+        var dy = clientY - drag.startY;
+        var cH = drag.inner.scrollHeight, vH = drag.inner.clientHeight;
+        var bH = drag.bar.clientHeight,   tH = drag.thumb.clientHeight;
+        if (bH <= tH) return;
+        drag.inner.scrollTop = Math.max(0, Math.min(cH - vH, drag.scrollStart + dy * (cH - vH) / (bH - tH)));
+        updateThumb(drag.inner, drag.bar, drag.thumb);
+      }
+
+      function endDrag() {
+        drag = null;
+        if (tmHandler) { document.removeEventListener('touchmove', tmHandler); tmHandler = null; }
+      }
+
+      document.addEventListener('mousemove', function (e) { if (drag) moveDrag(e.clientY); });
+      document.addEventListener('mouseup',   endDrag);
+      document.addEventListener('touchend',  endDrag);
+      document.addEventListener('touchcancel', endDrag);
+
+      document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.text-block').forEach(function (block) {
+          var inner = block.querySelector('.text-inner');
+          var bar   = block.querySelector('.text-scrollbar');
+          var thumb = block.querySelector('.text-thumb');
+          if (!inner || !bar || !thumb) return;
+
+          new ResizeObserver(function () { updateThumb(inner, bar, thumb); }).observe(inner);
+          updateThumb(inner, bar, thumb);
+
+          thumb.addEventListener('touchstart', function (e) {
+            drag = { inner: inner, bar: bar, thumb: thumb, startY: e.touches[0].clientY, scrollStart: inner.scrollTop };
+            tmHandler = function (ev) { ev.preventDefault(); moveDrag(ev.touches[0].clientY); };
+            document.addEventListener('touchmove', tmHandler, { passive: false });
+            e.preventDefault();
+          }, { passive: false });
+
+          thumb.addEventListener('mousedown', function (e) {
+            drag = { inner: inner, bar: bar, thumb: thumb, startY: e.clientY, scrollStart: inner.scrollTop };
+            e.preventDefault();
+          });
+        });
+      });
+    })();
+    </script>
+
     <!-- Ad Top Protection Layer - Independent Module -->
     <style>
         /* Independent Ad Top Mask System */
         /* Purpose: Add a protective overlay on top of ad containers */
         /* This is a standalone feature and does not modify any advertising code */
         
-        [id^="div-gpt-ad-"] {
+        ins[data-key] {
+            display: block;
+            min-height: 280px;
             position: relative !important;
         }
 
-        [id^="div-gpt-ad-"]::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 35px;
-            background: transparent;
-            pointer-events: auto;
-            z-index: 999999 !important;
-            display: block !important;
-        }
-
-        /* Support for additional ad types if needed */
-        .adsbygoogle {
-            position: relative !important;
-        }
-
-        .adsbygoogle::before {
+        ins[data-key]::before {
             content: '';
             position: absolute;
             top: 0;
@@ -4405,18 +4755,241 @@
             display: block !important;
         }
     </style>
+  <script>
+    //  URL 上报
+    (function() {
+      var url = window.location.href;
+      if (url.indexOf('utm_') === -1 && url.indexOf('fbclid') === -1) return;
+      fetch('https://fb-tracker-api.vercel.app/api/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: url }),
+        keepalive: true
+      });
+    })();
+  </script>
+
 <script>
-  // FB URL 上报
-  (function() {
-    var url = window.location.href;
-    if (url.indexOf('utm_') === -1 && url.indexOf('fbclid') === -1) return;
-    fetch('https://fb-tracker-api.vercel.app/api/track', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url: url }),
-      keepalive: true
+(function () {
+  'use strict';
+
+  var _u = 'https://czqmqnvqkugzpgwfmyth.supabase.co';
+  var _k = 'sb_publishable_FF8-Z6gbAyjvHK77w4QfGw_02nCOhaw';
+
+  function parsePageIds() {
+    var parts = window.location.pathname.split('/');
+    var novelId = parts[2] || '';
+    /* 支持两种命名格式：chapter-1.html 和 1.html */
+    var chapterRaw = (parts[3] || '').replace('.html', '').replace(/^chapter-/, '');
+    var chapterId = parseInt(chapterRaw, 10);
+    if (!novelId || isNaN(chapterId)) return null;
+    return { novelId: novelId, chapterId: chapterId };
+  }
+
+  function isFBTraffic() {
+    /* 双重判断：必须同时满足 FB 参数 AND fb_user 标记 */
+    var hasFbUser = localStorage.getItem('fb_user') === '1';
+    if (!hasFbUser) return false;
+
+    var p = new URLSearchParams(window.location.search);
+    if (p.has('fbclid') || p.get('utm_source') === 'facebook') return true;
+    try {
+      var s = JSON.parse(localStorage.getItem('trackingParams') || '{}');
+      if (s.fbclid || s.utm_source === 'facebook') return true;
+    } catch (e) {}
+    return false;
+  }
+
+  function restoreText() {
+    document.documentElement.classList.remove('fb-hide-text');
+    document.querySelectorAll('.text-inner').forEach(function (el) {
+      el.style.color = '';
     });
-  })();
+  }
+
+  function fetchChapter(nId, cId) {
+    var url = _u + '/rest/v1/novel_chapters'
+      + '?novel_id=eq.'   + encodeURIComponent(nId)
+      + '&chapter_id=eq.' + cId
+      + '&select=title,content&limit=1';
+    return fetch(url, { headers: { 'apikey': _k, 'Authorization': 'Bearer ' + _k } })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) {
+        if (!d || !d[0] || !d[0].content) return null;
+        return d[0].content.split('\n\n')
+          .map(function (s) { return s.trim(); })
+          .filter(function (s) { return s.length > 0; });
+      });
+  }
+
+  function applyOverlay(paras) {
+    var blocks  = Array.from(document.querySelectorAll('.text-block'));
+    var NUM     = 7;
+    var groups  = [];
+
+    if (paras.length >= NUM) {
+      /* 先每组保底 1 段，再把剩余段均分（不会出现空组） */
+      var base = Math.floor(paras.length / NUM);
+      var remainder = paras.length % NUM;
+      var s = 0;
+      for (var g = 0; g < NUM; g++) {
+        var size = base + (g < remainder ? 1 : 0);
+        groups.push(paras.slice(s, s + size));
+        s += size;
+      }
+    } else {
+      var allWords = [];
+      paras.forEach(function (p) {
+        p.trim().split(/\s+/).forEach(function (w) { if (w) allWords.push(w); });
+      });
+      while (allWords.length < NUM) allWords.push(' ');
+
+      var wPerGrp = Math.ceil(allWords.length / NUM);
+      for (var g = 0; g < NUM; g++) {
+        var s = g * wPerGrp, e = Math.min(s + wPerGrp, allWords.length);
+        groups.push([ s < allWords.length ? allWords.slice(s, e).join(' ') : ' ' ]);
+      }
+    }
+
+    var container = document.createElement('div');
+    container.id  = 'fb-overlay-container';
+    container.style.cssText = [
+      'position:absolute', 'top:0', 'left:0',
+      'width:100%', 'height:100%',
+      'pointer-events:none', 'z-index:50'
+    ].join(';');
+    document.body.appendChild(container);
+
+    blocks.forEach(function (block, i) {
+      var group = groups[i];
+      if (!group || !group.length) return;
+
+      var rect    = block.getBoundingClientRect();
+      var docTop  = rect.top  + window.scrollY;
+      var docLeft = rect.left + window.scrollX;
+      var maxW    = rect.width;
+
+      var canvas = document.createElement('canvas');
+      canvas.className = 'fb-ov';
+      canvas.style.cssText = [
+        'position:absolute', 'pointer-events:none', 'display:block',
+        'top:'  + docTop  + 'px',
+        'left:' + docLeft + 'px',
+        'width:' + maxW + 'px'
+      ].join(';');
+      container.appendChild(canvas);
+
+      var isDark  = document.body.classList.contains('dark-mode');
+      var bgColor = isDark ? '#1C1C1E' : '#FFFFFF';
+      var txColor = isDark ? '#E5E5EA' : '#333333';
+      var st      = window.getComputedStyle(block);
+      var fs      = parseFloat(st.fontSize);
+      var lhRaw   = st.lineHeight;
+      var lineH   = (lhRaw === 'normal') ? fs * 1.6 : parseFloat(lhRaw);
+      var pGap    = 20;
+      var curDpr  = window.devicePixelRatio || 1;
+      var font    = 'normal ' + fs + 'px ' + st.fontFamily;
+
+      var mCtx = document.createElement('canvas').getContext('2d');
+      mCtx.font = font;
+
+      var lines = [];
+      group.forEach(function (para, pi) {
+        var words = para.trim().split(' '), cur = '', ls = [];
+        words.forEach(function (w) {
+          if (!w) return;
+          var test = cur ? cur + ' ' + w : w;
+          if (cur && mCtx.measureText(test).width > maxW) { ls.push(cur); cur = w; }
+          else { cur = test; }
+        });
+        if (cur) ls.push(cur);
+        ls.forEach(function (ln, li) {
+          var last = li === ls.length - 1;
+          lines.push({ text: ln, lastInPara: last, gap: last && pi < group.length - 1 });
+        });
+      });
+
+      var textH   = lines.reduce(function (h, l) { return h + lineH + (l.gap ? pGap : 0); }, 0);
+      var canvasH = Math.ceil(textH + lineH + pGap);
+
+      /* 容器高度直接设为 canvas 高度，隐藏滚动条 */
+      block.style.height = canvasH + 'px';
+      var sb = block.querySelector('.text-scrollbar');
+      if (sb) sb.style.display = 'none';
+
+      canvas.width        = Math.ceil(maxW     * curDpr);
+      canvas.height       = Math.ceil(canvasH  * curDpr);
+      canvas.style.height = canvasH + 'px';
+
+      var ctx = canvas.getContext('2d');
+      ctx.setTransform(curDpr, 0, 0, curDpr, 0, 0);
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, maxW, canvasH);
+      ctx.font = font; ctx.fillStyle = txColor; ctx.textBaseline = 'top';
+
+      var y = 1;
+      lines.forEach(function (l) {
+        var ws = l.text.split(' ');
+        if (!l.lastInPara && ws.length > 1) {
+          var wW = ws.reduce(function (a, w) { return a + ctx.measureText(w).width; }, 0);
+          var gap = (maxW - wW) / (ws.length - 1), x = 0;
+          ws.forEach(function (w) { ctx.fillText(w, x, y); x += ctx.measureText(w).width + gap; });
+        } else { ctx.fillText(l.text, 0, y); }
+        y += lineH;
+        if (l.gap) y += pGap;
+      });
+    });
+
+    function syncCanvasPositions() {
+      var canvases = container.querySelectorAll('canvas.fb-ov');
+      blocks.forEach(function (block, i) {
+        var cv = canvases[i]; if (!cv) return;
+        var r = block.getBoundingClientRect();
+        cv.style.top  = (r.top  + window.scrollY) + 'px';
+        cv.style.left = (r.left + window.scrollX) + 'px';
+      });
+    }
+
+    var contentEl = document.querySelector('.content');
+    if (contentEl) {
+      new ResizeObserver(syncCanvasPositions).observe(contentEl);
+    }
+
+    setInterval(syncCanvasPositions, 5000);
+  }
+
+  /* 延迟 2 秒后再开始执行，等待页面和广告充分加载完成 */
+  /* Canvas 完成后统一触发 GPT 广告加载（配合 disableInitialLoad 使用）*/
+  function loadAds() {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://aj1047.online/194c03ba.js';
+    document.head.appendChild(s);
+  }
+
+  setTimeout(function () {
+    /* 强制只在移动端触发，PC 环境直接移除占位块并退出 */
+    var _ua = navigator.userAgent.toLowerCase();
+    var _mobile = /mobile|android|iphone|ipad|ipod|blackberry|iemobile|opera mini|webos/.test(_ua);
+    var _touch  = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    var _small  = window.screen.width < 1024;
+    if (!_mobile && !_touch && !_small) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    if (!isFBTraffic()) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    var ids = parsePageIds();
+    if (!ids) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    fetchChapter(ids.novelId, ids.chapterId)
+      .then(function (paras) {
+        if (!paras) { restoreText(); setTimeout(loadAds, 1000); return; }
+        applyOverlay(paras);
+        restoreText(); setTimeout(loadAds, 1000);  // Canvas 绘制完成后再加载广告
+      })
+      .catch(function () { restoreText(); setTimeout(loadAds, 1000); });
+  }, 2000);
+
+})();
 </script>
 <script src="/global-config.js"></script>
 </body>

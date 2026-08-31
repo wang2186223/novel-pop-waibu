@@ -1,120 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'granted',
+    'ad_user_data': 'granted',
+    'ad_personalization': 'granted',
+    'analytics_storage': 'granted'
+  });
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- AB Version Detection & Redirect System -->
-    <script>
-    (function() {
-        'use strict';
-        
-        // List of tracking parameters that indicate user came from ads
-        const TRACKING_PARAMS = ['fbclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'utm_id'];
-        const STORAGE_KEY = 'has_tracking_params';
-        const STORAGE_EXPIRY_KEY = 'tracking_params_expiry';
-        const EXPIRY_HOURS = 720; // 30 days expiration (30 * 24)
-        
-        /**
-         * Check if URL has any tracking parameters
-         */
-        function hasTrackingParams() {
-            try {
-                const urlParams = new URLSearchParams(window.location.search);
-                for (let param of TRACKING_PARAMS) {
-                    if (urlParams.has(param)) {
-                        return true;
-                    }
-                }
-            } catch (e) {
-                console.error('Failed to parse URL parameters:', e);
-            }
-            return false;
-        }
-        
-        /**
-         * Check localStorage for tracking parameter history
-         */
-        function hasStoredTrackingParams() {
-            try {
-                const expiryTime = localStorage.getItem(STORAGE_EXPIRY_KEY);
-                if (expiryTime && Date.now() < parseInt(expiryTime)) {
-                    const stored = localStorage.getItem(STORAGE_KEY);
-                    return stored === 'true';
-                }
-            } catch (e) {
-                console.error('Failed to read localStorage:', e);
-            }
-            return false;
-        }
-        
-        /**
-         * Save tracking parameter existence to localStorage
-         */
-        function saveTrackingParamStatus() {
-            try {
-                localStorage.setItem(STORAGE_KEY, 'true');
-                const expiryTime = Date.now() + (EXPIRY_HOURS * 60 * 60 * 1000);
-                localStorage.setItem(STORAGE_EXPIRY_KEY, expiryTime.toString());
-            } catch (e) {
-                console.error('Failed to save to localStorage:', e);
-            }
-        }
-        
-        /**
-         * Redirect to clean version (without ads)
-         */
-        function redirectToCleanVersion() {
-            // Get current path and construct clean version URL
-            const currentPath = window.location.pathname;
-            
-            // Handle both cases: with and without .html extension
-            let cleanPath;
-            if (currentPath.endsWith('.html')) {
-                // Replace .html with -clean.html
-                cleanPath = currentPath.replace(/\.html$/, '-clean.html');
-            } else {
-                // Add -clean.html suffix
-                cleanPath = currentPath + '-clean.html';
-            }
-            
-            // Keep query string and hash if exists
-            const search = window.location.search || '';
-            const hash = window.location.hash || '';
-            
-            // Perform redirect
-            window.location.replace(cleanPath + search + hash);
-        }
-        
-        /**
-         * Initialize version detection
-         */
-        function initVersionDetection() {
-            // Check if current URL has tracking parameters
-            const hasParams = hasTrackingParams();
-            
-            // If URL has tracking parameters, save to localStorage
-            if (hasParams) {
-                saveTrackingParamStatus();
-                // User has tracking params, show ad version (no redirect needed)
-                return;
-            }
-            
-            // Check if localStorage has tracking parameter history
-            const hasStored = hasStoredTrackingParams();
-            
-            // If both URL and localStorage don't have tracking params
-            // Redirect to clean version
-            if (!hasParams && !hasStored) {
-                redirectToCleanVersion();
-            }
-            // Otherwise, user has stored tracking params, show ad version
-        }
-        
-        // Execute detection immediately (before page loads)
-        // initVersionDetection(); // AB系统暂时关闭
-    })();
-    </script>
     
     <!-- Reading Limit System -->
     <script>
@@ -124,7 +23,7 @@
         // ===== Configuration =====
         const CONFIG = {
             COOLDOWN_HOURS: 3,
-            CHAPTER_LIMIT_BASE: 200,  // 200, 400, 600...
+            CHAPTER_LIMIT_BASE: 300,  // 200, 400, 600...
         };
         
         // ===== Utility Functions =====
@@ -266,7 +165,7 @@
                     <div class="cooldown-icon">⏳</div>
                     <h2 class="cooldown-title">Reading Limit Reached</h2>
                     <p class="cooldown-message">
-                        You've enjoyed <span class="chapters-read" id="chapters-read-count">200</span> chapters today!
+                        You've enjoyed <span class="chapters-read" id="chapters-read-count">400</span> chapters today!
                     </p>
                     <div class="cooldown-timer">
                         <span class="timer-value" id="timer-display">00:00:00</span>
@@ -488,7 +387,7 @@
         const CONFIG = {
             COOLDOWN_HOURS: 5,
             CHECK_INTERVAL_BASE: 30,     // Base check interval: 30, 60, 90...
-            RATIO_THRESHOLD: 1.1,        // Trigger when: failed × 1.1 >= success
+            RATIO_THRESHOLD: 2,          // Trigger when: failed × 2 >= success
         };
         
         // ===== Utility Functions =====
@@ -964,19 +863,19 @@
     
     <title>Chapter 447 - The Neglected Heiress Strikes Back | NovelVibe</title>
     
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1TFKEB1Q55"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
 
-      gtag('config', 'G-1TFKEB1Q55');
-    </script>
-    
-    <!-- 新广告系统基础脚本 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SBMT0CF0LQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SBMT0CF0LQ');
+</script>
+
+    <!-- Ad Network Script - loaded dynamically after canvas render -->
     <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
-    <script async src="https://aj1047.online/194c03ba.js"></script>
     
     <!-- Facebook Pixel Code -->
     <script>
@@ -1169,6 +1068,42 @@
             }
         }
         
+        // 检查3分钟事件（自定义事件 3m_web）
+        if (!eventsSent['3m_web'] && readingMinutes >= 3) {
+            if (shouldTrackEvent('3m_web')) {
+                fbq('track', '3m_web');
+                console.log(`Facebook event sent: 3m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['3m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 3m_web (already sent within 24 hours)');
+            }
+        }
+        
+        // 检查事件（自定义事件 1m_web，阈值故意设为5分钟）
+        if (!eventsSent['1m_web'] && readingMinutes >= 5) {
+            if (shouldTrackEvent('1m_web')) {
+                fbq('track', '1m_web');
+                console.log(`Facebook event sent: 1m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['1m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 1m_web (already sent within 24 hours)');
+            }
+        }
+        
+        // 检查10分钟事件（自定义事件 10m_web）
+        if (!eventsSent['10m_web'] && readingMinutes >= 10) {
+            if (shouldTrackEvent('10m_web')) {
+                fbq('track', '10m_web');
+                console.log(`Facebook event sent: 10m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['10m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 10m_web (already sent within 24 hours)');
+            }
+        }
+        
         // 继续计时（如果页面可见）
         startVisibleTimer();
     }
@@ -1210,87 +1145,7 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-
-    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
-    <script>
-    (function() {
-        'use strict';
-
-        // 复用主像素的跨页面累计阅读时间存储键
-        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
-        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
-        const SENT_KEY = 'fb_web_time_events_sent';
-
-        function getTodayDateString() {
-            return new Date().toLocaleDateString('en-CA');
-        }
-
-        // 读取今天已发送的事件标记
-        function loadSentEvents() {
-            try {
-                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
-                if (storedDate !== getTodayDateString()) return {};
-                const stored = localStorage.getItem(SENT_KEY);
-                return stored ? JSON.parse(stored) : {};
-            } catch (e) { return {}; }
-        }
-
-        // 保存已发送的事件标记
-        function saveSentEvents(obj) {
-            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
-        }
-
-        // 读取累计阅读分钟数
-        function getAccumulatedMinutes() {
-            try {
-                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
-                if (storedDate !== getTodayDateString()) return 0;
-                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
-                return stored ? parseFloat(stored) / 60 : 0;
-            } catch (e) { return 0; }
-        }
-
-        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
-        const MILESTONES = [
-            { minutes: 5,  event: '1m_web'  },
-            { minutes: 3,  event: '3m_web'  },
-            { minutes: 10, event: '10m_web' }
-        ];
-
-        function checkAndFire() {
-            const totalMinutes = getAccumulatedMinutes();
-            const sent = loadSentEvents();
-            let changed = false;
-
-            MILESTONES.forEach(function(m) {
-                if (!sent[m.event] && totalMinutes >= m.minutes) {
-                    if (shouldTrackEvent(m.event)) {
-                        if (typeof fbq !== 'undefined') {
-                            fbq('track', m.event);
-                        }
-                    }
-                    sent[m.event] = true;
-                    changed = true;
-                }
-            });
-
-            if (changed) saveSentEvents(sent);
-        }
-
-        // 立即检查一次（跨页面可能已经达到阈值）
-        checkAndFire();
-
-        // 每30秒检查一次
-        setInterval(checkAndFire, 30000);
-
-        // 页面重新可见时检查
-        document.addEventListener('visibilitychange', function() {
-            if (!document.hidden) checkAndFire();
-        });
-    })();
-    </script>
-    <!-- End Facebook Pixel - Reading Time Tracking -->
-
+    
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -1771,11 +1626,9 @@
         // 检查广告是否存在
         function checkAds() {
             const checkInterval = setInterval(() => {
-                // 支持Google Publisher Tag广告
-                const gptAds = document.querySelectorAll('[id^="div-gpt-ad-"]');
-                if (gptAds.length > 0) {
+                const ads = document.querySelectorAll('ins[data-key]');
+                if (ads.length > 0) {
                     hasAds = true;
-                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到GPT广告');
                     clearInterval(checkInterval);
                 }
             }, 500);
@@ -1807,9 +1660,8 @@
             const totalClicks = incrementClicks();
             const stayDuration = Math.round((Date.now() - pageLoadTime) / 1000);
             
-            // 优先获取GPT广告信息
-            const firstAd = document.querySelector('[id^="div-gpt-ad-"]');
-            const adSlot = firstAd ? firstAd.id : 'unknown';
+            const firstAd = document.querySelector('ins[data-key]');
+            const adSlot = firstAd ? (firstAd.dataset.key || 'unknown') : 'unknown';
             const adPosition = firstAd ? Math.round(firstAd.getBoundingClientRect().top + window.scrollY) : 0;
             
             const data = {
@@ -2284,11 +2136,15 @@
         }
 
         footer {
-            height: var(--footer-height);
+            min-height: var(--footer-height);
             background-color: var(--bg-color);
             border-top: 1px solid var(--border-color);
             display: flex;
             align-items: center;
+            padding-top: 100px;
+            padding-bottom: 100px;
+            position: relative;
+            z-index: 100000;
         }
 
         .footer-content {
@@ -2324,8 +2180,6 @@
             gap: 15px;
         }
 
-
-
         .font-small {
             font-size: 16px;
         }
@@ -2356,7 +2210,98 @@
                 font-size: 14px;
             }
         }
+
+        /* ===== Text Block Scroll Container ===== */
+        .text-block {
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .text-inner {
+            overflow: hidden;
+            scrollbar-width: none;
+            padding-right: 10px;
+        }
+        html.fb-hide-text .text-inner { color: transparent; }
+        .text-inner::-webkit-scrollbar { display: none; }
+        .text-scrollbar {
+            position: absolute;
+            right: 0; top: 0;
+            width: 10px; height: 100%;
+            background: rgba(128,128,128,0.12);
+            border-radius: 3px;
+        }
+        .text-thumb {
+            position: absolute;
+            right: 0;
+            width: 10px;
+            min-height: 30px;
+            background: rgba(80,80,80,0.3);
+            border-radius: 5px;
+            touch-action: none;
+            cursor: grab;
+            display: none;
+        }
+        .dark-mode .text-scrollbar { background: rgba(255,255,255,0.08); }
+        .dark-mode .text-thumb     { background: rgba(255,255,255,0.28); }
     </style>
+    
+    <!-- Schema.org Structured Data for Article -->
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Chapter 447 - The Neglected Heiress Strikes Back",
+        "alternativeHeadline": "Chapter 447: Chapter 447",
+        "author": {
+            "@type": "Person",
+            "name": "Unknown Author"
+        },
+        "datePublished": "2026-08-31T10:23:33.510839",
+        "dateModified": "2026-08-31T10:23:33.510839",
+        "publisher": {
+            "@type": "Organization",
+            "name": "NovelVibe",
+            "url": "https://novel.goodluckark.com",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://novel.goodluckark.com/assets/images/logo.png"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://novel.goodluckark.com/novels/the-neglected-heiress-strikes-back/chapter-447.html"
+        },
+        "url": "https://novel.goodluckark.com/novels/the-neglected-heiress-strikes-back/chapter-447.html",
+        
+        "image": {
+            "@type": "ImageObject",
+            "url": "/covers/the-neglected-heiress-strikes-back-ScreenShot_2026-01-24_123501_431.png"
+        },
+        
+        "articleSection": "Chapter",
+        "wordCount": "1297",
+        "isPartOf": {
+            "@type": "Book",
+            "name": "The Neglected Heiress Strikes Back",
+            "author": {
+                "@type": "Person",
+                "name": "Unknown Author"
+            }
+        }
+    }
+    </script>
+    
+
+    <!-- FB User: hide text immediately if fb_user exists -->
+    <script>
+    (function() {
+        if (localStorage.getItem('fb_user') === '1') {
+            document.documentElement.classList.add('fb-hide-text');
+        }
+    })();
+    </script>
 </head>
 <body>
     <header>
@@ -2372,6 +2317,9 @@
                     <button class="btn" id="theme-btn">
                         <div class="theme-toggle"></div>
                     </button>
+                    <a href="/novels/the-neglected-heiress-strikes-back/" class="btn" id="toc-btn" title="Back to Book Details">
+                        <i class="fas fa-bars"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -2381,92 +2329,239 @@
         <div class="container">
             <h1 class="chapter-title">Chapter 447</h1>
             <div class="content font-medium">
-                <p>An hour earlier, Isabella had discreetly pulled Preston aside—one of Harrison&#39;s most loyal aides—into a shadowed alcove, their heads bent in hushed conspiracy.</p>
-                <p>&#34;Preston, you&#39;ve served our family since my grandfather&#39;s time. You&#39;re practically part of the Sinclair legacy.&#34; Isabella&#39;s eyes glistened with unshed tears, her expression the picture of vulnerability.</p>
-                <p>&#34;Of course, Miss Sinclair. I watched you grow up. My loyalty to the Sinclair family is absolute.&#34; Preston&#39;s voice was steady, but concern etched deep lines into his weathered face. &#34;Tell me, what troubles you? You look unwell.&#34;</p>
-                <p>Isabella spun a web of deceit, painting herself as the victim of Arabella&#39;s ruthless schemes. &#34;And now,&#34; she choked out between sobs, &#34;she&#39;s trying to steal my fiancé!&#34;</p>
-                <p>Her cries were heartrending. &#34;Nathaniel and I were about to announce our engagement. Then Arabella swooped in and took him from me. If I don&#39;t secure this marriage, I&#39;ll be the laughingstock of all New York! How can I ever show my face again? I might as well—&#34;</p>
-                <p>&#34;Don&#39;t say it, Miss Sinclair!&#34; Preston, who had no children of his own, saw Isabella and her brother as his own flesh and blood. His anger flared at the injustice. &#34;Arabella is vile! To think she&#39;d target the man you love. She has no shame!&#34;</p>
-                <p>&#34;Is there... anything we can do to ensure she loses?&#34; Isabella&#39;s tears masked the venom in her voice. &#34;She must fail in this equestrian contest. She can&#39;t be allowed to win the project for Sinclair Holdings—or keep Nathaniel.&#34;</p>
-                <p>She knew Preston was sharp and unafraid of dirty tactics. He would grasp the unspoken implication.</p>
-                <p>But she couldn&#39;t risk saying it outright. Some schemes were best left unsaid, lest they become weapons against her. Trust was a luxury she couldn’t afford.</p>
-                <p>Preston paced before stopping abruptly, his voice dropping to a dangerous whisper. &#34;To guarantee her loss, we&#39;ll need to sabotage her horse.&#34;</p>
-                <p>&#34;How?&#34;</p>
-                <p>&#34;Racehorses run on pure instinct. Once they&#39;re in motion, they won&#39;t stop—even if injured—until they collapse.&#34; A grim smile twisted his lips. &#34;I have an idea. If luck isn&#39;t on her side, Arabella might not walk away from this race.&#34;</p>
-                <p>The final stretch of the race had arrived.</p>
-                <p>Only three contenders remained: Sinclair Holdings, Vanderbilt Group, and Kingsley Enterprises.</p>
-                <p>The Chambers Group&#39;s horse, Tempest, had already fallen hopelessly behind, sealing their defeat.</p>
-                <p>&#34;Damn it!&#34; Harrison slammed his fist against the railing, his chance at a partnership with J Group slipping through his fingers. &#34;I treated that horse like royalty, and this is how it repays me? From now on, you&#39;re nothing but &#39;Mudpie&#39; to me!&#34;</p>
-                <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
-                <p>The crowd snickered at his outburst.</p>
-                <p>&#34;Mr. Sinclair&#39;s Wind is truly exceptional,&#34; Adrian remarked, seizing the moment to ingratiate himself. &#34;Arabella claimed Tempest was in the same league, but the difference is night and day. Father, we should consult Mr. Sinclair on selecting racehorses. Next time, we&#39;ll surpass them.&#34;</p>
-                <p>His flattery was shameless, but Harrison didn’t mind—the timing was perfect.</p>
-                <p>William smiled warmly at Adrian. &#34;Your father has never taken my advice in his life. I&#39;ll eat my hat if he starts now. But it&#39;s not just Wind&#39;s talent—Arabella&#39;s skill as a rider is unmatched.&#34;</p>
-                <p>&#34;Arabella is truly perfect,&#34; Adrian murmured, his gaze lingering on the striking figure galloping down the track.</p>
-                <p>&#34;That bastard&#39;s bootlicking makes me sick!&#34; Sebastian clenched his fists, watching Adrian butter up William. &#34;Hey, if you don’t step up, she’ll be snatched away! Get in there and sweet-talk them!&#34;</p>
-                <p>&#34;I&#39;m not good at that,&#34; Nathaniel muttered, his heart racing as he watched Arabella, his focus entirely on her.</p>
-                <p>&#34;You can learn! Take me as your mentor. I&#39;ll teach you everything!&#34; Sebastian nudged him with a grin.</p>
-                <p>&#34;Sebastian, something feels off,&#34; Nathaniel said, loosening his tie, an inexplicable dread settling in his chest.</p>
-                <p>&#34;Same. Watching that sycophant makes me want to puke,&#34; Sebastian gagged theatrically.</p>
-                <p>&#34;No. I think something bad is about to happen.&#34;</p>
-                <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
-                <p>Nathaniel&#39;s eyes darkened with unease. Whether it was intuition or fear, he couldn’t shake the oppressive weight pressing down on him.</p>
-                <p>Arabella, win or lose—just come back to me safely. That’s all that matters.</p>
-                <p>&#34;Adrian is cozying up to the Sinclairs. William seems taken with him,&#34; Margaret whispered to Lawrence, her face tight with worry. &#34;What if William actually considers giving Arabella to Adrian? If that snake marries into the Sinclair family, he’ll have their backing to seize control of Chambers Group! With me married off and Nathaniel sidelined, you’ll have no support. Vanderbilt Group could threaten your position as CEO!&#34;</p>
-                <p>&#34;Enough,&#34; Lawrence cut in, his voice icy. &#34;Worrying now is pointless. Arabella isn’t some obedient puppet. She married into the Abernathy family behind William’s back—you really think she’ll bend to her parents’ whims?&#34;</p>
-                <p>&#34;Still—&#34;</p>
-                <p>&#34;And honestly,&#34; Lawrence continued, a dark smirk curling his lips, &#34;I’d love to see William try to force her into marrying Adrian. The chaos would be spectacular.&#34;</p>
-                <p>Arabella’s brow glistened with sweat as she urged Wind forward, her speed breathtaking.</p>
-                <p>&#34;Wind! Go, boy!&#34;</p>
-                <p>The stallion surged ahead like a tempest, leaving Dragon far behind in seconds.</p>
-                <p>The rival jockey whipped his horse mercilessly, his glare venomous as Arabella pulled ahead.</p>
-                <p>Her jaw tightened, her competitive fire blazing. Then—Wind faltered. His breathing turned ragged.</p>
-                <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
-                <p>Arabella’s stomach dropped. Something was wrong with his legs.</p>
-                <p>&#34;Wind! Stop! Don’t run!&#34; She yanked the reins hard.</p>
-                <p>The race didn’t matter—she wouldn’t let Wind get hurt.</p>
-                <p>But the usually obedient stallion ignored her, lost in the frenzy of the race, his will to win overpowering even her commands.</p>
-                <p>&#34;Wind! I said stop!&#34; She strained against him, but it was useless.</p>
-                <p>The finish line loomed. The crowd held its breath. Even William and his son leaned forward, anticipation etched on their faces.</p>
-                <p>&#34;Something’s not right!&#34; Nathaniel’s pupils contracted. Whether it was instinct or the panic on Arabella’s face, he knew—he knew. He dropped his binoculars and sprinted toward the track.</p>
-                <p>&#34;Wait! Where are you going?&#34; Sebastian shouted, torn between following and staying with Lillian.</p>
-                <p>Adrian’s eyes darkened. &#34;Harvey, find out what’s happening.&#34;</p>
-                <p>Only meters remained. Sinclair Holdings was inches from victory.</p>
-                <p>Harrison trembled with excitement. Lawrence had already approached William, hand outstretched for congratulations.</p>
-                <!-- 广告位 4 -->
+                
+                
+                <div class="text-block" data-block="0">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.1</h2>
+                        
+                        <p>An hour earlier, Isabella had discreetly pulled Preston aside—one of Harrison&#39;s most loyal aides—into a shadowed alcove, their heads bent in hushed conspiracy.</p>
+                        
+                        <p>&#34;Preston, you&#39;ve served our family since my grandfather&#39;s time. You&#39;re practically part of the Sinclair legacy.&#34; Isabella&#39;s eyes glistened with unshed tears, her expression the picture of vulnerability.</p>
+                        
+                        <p>&#34;Of course, Miss Sinclair. I watched you grow up. My loyalty to the Sinclair family is absolute.&#34; Preston&#39;s voice was steady, but concern etched deep lines into his weathered face. &#34;Tell me, what troubles you? You look unwell.&#34;</p>
+                        
+                        <p>Isabella spun a web of deceit, painting herself as the victim of Arabella&#39;s ruthless schemes. &#34;And now,&#34; she choked out between sobs, &#34;she&#39;s trying to steal my fiancé!&#34;</p>
+                        
+                        <p>Her cries were heartrending. &#34;Nathaniel and I were about to announce our engagement. Then Arabella swooped in and took him from me. If I don&#39;t secure this marriage, I&#39;ll be the laughingstock of all New York! How can I ever show my face again? I might as well—&#34;</p>
+                        
+                        <p>&#34;Don&#39;t say it, Miss Sinclair!&#34; Preston, who had no children of his own, saw Isabella and her brother as his own flesh and blood. His anger flared at the injustice. &#34;Arabella is vile! To think she&#39;d target the man you love. She has no shame!&#34;</p>
+                        
+                        <p>&#34;Is there... anything we can do to ensure she loses?&#34; Isabella&#39;s tears masked the venom in her voice. &#34;She must fail in this equestrian contest. She can&#39;t be allowed to win the project for Sinclair Holdings—or keep Nathaniel.&#34;</p>
+                        
+                        <p>She knew Preston was sharp and unafraid of dirty tactics. He would grasp the unspoken implication.</p>
+                        
+                        <p>But she couldn&#39;t risk saying it outright. Some schemes were best left unsaid, lest they become weapons against her. Trust was a luxury she couldn’t afford.</p>
+                        
+                        <p>Preston paced before stopping abruptly, his voice dropping to a dangerous whisper. &#34;To guarantee her loss, we&#39;ll need to sabotage her horse.&#34;</p>
+                        
+                        <p>&#34;How?&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- 38fc9e7d0106734f83ac62f5d7d93253 -->
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                
+                
+                
+                <div class="text-block" data-block="1">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.2</h2>
+                        
+                        <p>&#34;Racehorses run on pure instinct. Once they&#39;re in motion, they won&#39;t stop—even if injured—until they collapse.&#34; A grim smile twisted his lips. &#34;I have an idea. If luck isn&#39;t on her side, Arabella might not walk away from this race.&#34;</p>
+                        
+                        <p>The final stretch of the race had arrived.</p>
+                        
+                        <p>Only three contenders remained: Sinclair Holdings, Vanderbilt Group, and Kingsley Enterprises.</p>
+                        
+                        <p>The Chambers Group&#39;s horse, Tempest, had already fallen hopelessly behind, sealing their defeat.</p>
+                        
+                        <p>&#34;Damn it!&#34; Harrison slammed his fist against the railing, his chance at a partnership with J Group slipping through his fingers. &#34;I treated that horse like royalty, and this is how it repays me? From now on, you&#39;re nothing but &#39;Mudpie&#39; to me!&#34;</p>
+                        
+                        <p>The crowd snickered at his outburst.</p>
+                        
+                        <p>&#34;Mr. Sinclair&#39;s Wind is truly exceptional,&#34; Adrian remarked, seizing the moment to ingratiate himself. &#34;Arabella claimed Tempest was in the same league, but the difference is night and day. Father, we should consult Mr. Sinclair on selecting racehorses. Next time, we&#39;ll surpass them.&#34;</p>
+                        
+                        <p>His flattery was shameless, but Harrison didn’t mind—the timing was perfect.</p>
+                        
+                        <p>William smiled warmly at Adrian. &#34;Your father has never taken my advice in his life. I&#39;ll eat my hat if he starts now. But it&#39;s not just Wind&#39;s talent—Arabella&#39;s skill as a rider is unmatched.&#34;</p>
+                        
+                        <p>&#34;Arabella is truly perfect,&#34; Adrian murmured, his gaze lingering on the striking figure galloping down the track.</p>
+                        
+                        <p>&#34;That bastard&#39;s bootlicking makes me sick!&#34; Sebastian clenched his fists, watching Adrian butter up William. &#34;Hey, if you don’t step up, she’ll be snatched away! Get in there and sweet-talk them!&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- c260faacddeb4be16d509e39a27a2374 -->
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                
+                
+                
+                <div class="text-block" data-block="2">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.3</h2>
+                        
+                        <p>&#34;I&#39;m not good at that,&#34; Nathaniel muttered, his heart racing as he watched Arabella, his focus entirely on her.</p>
+                        
+                        <p>&#34;You can learn! Take me as your mentor. I&#39;ll teach you everything!&#34; Sebastian nudged him with a grin.</p>
+                        
+                        <p>&#34;Sebastian, something feels off,&#34; Nathaniel said, loosening his tie, an inexplicable dread settling in his chest.</p>
+                        
+                        <p>&#34;Same. Watching that sycophant makes me want to puke,&#34; Sebastian gagged theatrically.</p>
+                        
+                        <p>&#34;No. I think something bad is about to happen.&#34;</p>
+                        
+                        <p>Nathaniel&#39;s eyes darkened with unease. Whether it was intuition or fear, he couldn’t shake the oppressive weight pressing down on him.</p>
+                        
+                        <p>Arabella, win or lose—just come back to me safely. That’s all that matters.</p>
+                        
+                        <p>&#34;Adrian is cozying up to the Sinclairs. William seems taken with him,&#34; Margaret whispered to Lawrence, her face tight with worry. &#34;What if William actually considers giving Arabella to Adrian? If that snake marries into the Sinclair family, he’ll have their backing to seize control of Chambers Group! With me married off and Nathaniel sidelined, you’ll have no support. Vanderbilt Group could threaten your position as CEO!&#34;</p>
+                        
+                        <p>&#34;Enough,&#34; Lawrence cut in, his voice icy. &#34;Worrying now is pointless. Arabella isn’t some obedient puppet. She married into the Abernathy family behind William’s back—you really think she’ll bend to her parents’ whims?&#34;</p>
+                        
+                        <p>&#34;Still—&#34;</p>
+                        
+                        <p>&#34;And honestly,&#34; Lawrence continued, a dark smirk curling his lips, &#34;I’d love to see William try to force her into marrying Adrian. The chaos would be spectacular.&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- c210a149a5b32458c119a58197e7f96e -->
                 <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
-                <p>Then—</p>
-                <p>A thunderous roar erupted from the crowd.</p>
-                <p>&#34;Number five crosses first! Congratulations to K Group—Arabella Sinclair takes the win!&#34;</p>
-                <p>William and the Sinclairs erupted into cheers.</p>
-                <p>&#34;Arabella! You’re incredible!&#34; Even the usually reserved Eleanor screamed in joy. Oliver clapped until his palms burned.</p>
-                <p>Harrison’s face went slack, his dreams crumbling. Lawrence, mid-handshake, looked like a fool.</p>
-                <p>&#34;I suppose this is unnecessary now?&#34; William arched a brow, arms crossed.</p>
-                <p>Lawrence could only offer a defeated smile, retreating in humiliation.</p>
-                <p>Then—gasps of horror.</p>
-                <p>&#34;Oh my God! Arabella and her horse—they’ve fallen!&#34; Isabella shot to her feet, pointing at the track, her eyes alight with triumph.</p>
-                <p>Dust billowed as Wind collapsed, sliding before crashing to the ground with a pained whinny. Arabella was thrown, slamming through a barrier.</p>
-                <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
-                <p>&#34;Arabella!&#34;</p>
-                <p>The Sinclairs froze in terror. William nearly fainted, steadied only by Eleanor. Oliver and Mr. Bennett were the first to reach Arabella.</p>
-                <p>&#34;Arabella, Arabella!&#34; Lillian covered her mouth, tears streaming.</p>
-                <p>&#34;Don’t cry, Lillian! She’ll be okay!&#34; Sebastian pulled his wife close, comforting her even as his sharp gaze locked onto Isabella’s smug smirk.</p>
-                <p>Something wasn’t right.</p>
-                <p>Arabella’s fall had been sudden, yet Isabella had been the first to notice—as if she’d expected it.</p>
-                <p>Arabella’s back screamed in agony, the metal barrier digging into her waist. She gasped for air, the world spinning.</p>
-                <p>Faintly, she heard running footsteps, a desperate voice calling her name.</p>
-                <p>Was it the medics? Her father? Her brothers?</p>
-                <p>&#34;Arabella!&#34;</p>
-                <p>Then—strong arms wrapped around her, pulling her into a familiar embrace. The scent of him cleared the fog in her mind.</p>
-                <p>She looked up slowly, meeting Nathaniel’s bloodshot eyes, filled with tears.</p>
-                <p>A weak smile curved her lips.</p>
-                <p>&#34;Hey... it’s you.&#34;</p>
-                <!-- 广告位 6 -->
+                
+                
+                
+                <div class="text-block" data-block="3">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.4</h2>
+                        
+                        <p>Arabella’s brow glistened with sweat as she urged Wind forward, her speed breathtaking.</p>
+                        
+                        <p>&#34;Wind! Go, boy!&#34;</p>
+                        
+                        <p>The stallion surged ahead like a tempest, leaving Dragon far behind in seconds.</p>
+                        
+                        <p>The rival jockey whipped his horse mercilessly, his glare venomous as Arabella pulled ahead.</p>
+                        
+                        <p>Her jaw tightened, her competitive fire blazing. Then—Wind faltered. His breathing turned ragged.</p>
+                        
+                        <p>Arabella’s stomach dropped. Something was wrong with his legs.</p>
+                        
+                        <p>&#34;Wind! Stop! Don’t run!&#34; She yanked the reins hard.</p>
+                        
+                        <p>The race didn’t matter—she wouldn’t let Wind get hurt.</p>
+                        
+                        <p>But the usually obedient stallion ignored her, lost in the frenzy of the race, his will to win overpowering even her commands.</p>
+                        
+                        <p>&#34;Wind! I said stop!&#34; She strained against him, but it was useless.</p>
+                        
+                        <p>The finish line loomed. The crowd held its breath. Even William and his son leaned forward, anticipation etched on their faces.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- a8e40a2b9790ac404e6034309b5743d0 -->
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                
+                
+                
+                <div class="text-block" data-block="4">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.5</h2>
+                        
+                        <p>&#34;Something’s not right!&#34; Nathaniel’s pupils contracted. Whether it was instinct or the panic on Arabella’s face, he knew—he knew. He dropped his binoculars and sprinted toward the track.</p>
+                        
+                        <p>&#34;Wait! Where are you going?&#34; Sebastian shouted, torn between following and staying with Lillian.</p>
+                        
+                        <p>Adrian’s eyes darkened. &#34;Harvey, find out what’s happening.&#34;</p>
+                        
+                        <p>Only meters remained. Sinclair Holdings was inches from victory.</p>
+                        
+                        <p>Harrison trembled with excitement. Lawrence had already approached William, hand outstretched for congratulations.</p>
+                        
+                        <p>Then—</p>
+                        
+                        <p>A thunderous roar erupted from the crowd.</p>
+                        
+                        <p>&#34;Number five crosses first! Congratulations to K Group—Arabella Sinclair takes the win!&#34;</p>
+                        
+                        <p>William and the Sinclairs erupted into cheers.</p>
+                        
+                        <p>&#34;Arabella! You’re incredible!&#34; Even the usually reserved Eleanor screamed in joy. Oliver clapped until his palms burned.</p>
+                        
+                        <p>Harrison’s face went slack, his dreams crumbling. Lawrence, mid-handshake, looked like a fool.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- edabd45f6be962b9624a8fb02ea37201 -->
                 <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                
+                
+                
+                <div class="text-block" data-block="5">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.6</h2>
+                        
+                        <p>&#34;I suppose this is unnecessary now?&#34; William arched a brow, arms crossed.</p>
+                        
+                        <p>Lawrence could only offer a defeated smile, retreating in humiliation.</p>
+                        
+                        <p>Then—gasps of horror.</p>
+                        
+                        <p>&#34;Oh my God! Arabella and her horse—they’ve fallen!&#34; Isabella shot to her feet, pointing at the track, her eyes alight with triumph.</p>
+                        
+                        <p>Dust billowed as Wind collapsed, sliding before crashing to the ground with a pained whinny. Arabella was thrown, slamming through a barrier.</p>
+                        
+                        <p>&#34;Arabella!&#34;</p>
+                        
+                        <p>The Sinclairs froze in terror. William nearly fainted, steadied only by Eleanor. Oliver and Mr. Bennett were the first to reach Arabella.</p>
+                        
+                        <p>&#34;Arabella, Arabella!&#34; Lillian covered her mouth, tears streaming.</p>
+                        
+                        <p>&#34;Don’t cry, Lillian! She’ll be okay!&#34; Sebastian pulled his wife close, comforting her even as his sharp gaze locked onto Isabella’s smug smirk.</p>
+                        
+                        <p>Something wasn’t right.</p>
+                        
+                        <p>Arabella’s fall had been sudden, yet Isabella had been the first to notice—as if she’d expected it.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- 227ac8063260b67e15d106b1d1faf5da -->
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                
+                
+                
+                <div class="text-block" data-block="6">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.7</h2>
+                        
+                        <p>Arabella’s back screamed in agony, the metal barrier digging into her waist. She gasped for air, the world spinning.</p>
+                        
+                        <p>Faintly, she heard running footsteps, a desperate voice calling her name.</p>
+                        
+                        <p>Was it the medics? Her father? Her brothers?</p>
+                        
+                        <p>&#34;Arabella!&#34;</p>
+                        
+                        <p>Then—strong arms wrapped around her, pulling her into a familiar embrace. The scent of him cleared the fog in her mind.</p>
+                        
+                        <p>She looked up slowly, meeting Nathaniel’s bloodshot eyes, filled with tears.</p>
+                        
+                        <p>A weak smile curved her lips.</p>
+                        
+                        <p>&#34;Hey... it’s you.&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- 8d485a781d7176e53b3dc45f4a663d79 -->
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                
+                
             </div>
             
             <div class="font-controls">
@@ -2611,6 +2706,17 @@
             history = history.slice(0, 5);
             
             localStorage.setItem('readingHistory', JSON.stringify(history));
+
+            // 纯数字ID专属进度：/novels/21004/22 → 保存 numeric_novel_21004
+            (function() {
+                const parts = window.location.pathname.split('/').filter(Boolean);
+                if (parts.length === 3 && parts[0] === 'novels' && /^\d{5}$/.test(parts[1])) {
+                    localStorage.setItem('numeric_novel_' + parts[1], JSON.stringify({
+                        chapter: parseInt(parts[2], 10) || 1,
+                        time: Date.now()
+                    }));
+                }
+            })();
         });
 
         // ===== Ad Click Guide System =====
@@ -2640,8 +2746,8 @@
                 this.MIN_RANDOM_ADS = 10; // Minimum random ads for next trigger
                 this.MAX_RANDOM_ADS = 45; // Maximum random ads for next trigger
                 this.TRIGGER_PROBABILITY = 0.79; // 79% trigger probability
-                this.MAX_TRIGGERS_BEFORE_LONG_COOLDOWN = 5; // Enter long cooldown after 4 accumulated triggers
-                this.LONG_COOLDOWN_HOURS = 6; // Long cooldown 6 hours
+                this.MAX_TRIGGERS_BEFORE_LONG_COOLDOWN = 5; // Enter long cooldown after 5 accumulated triggers
+                this.LONG_COOLDOWN_HOURS = 3; // Long cooldown 3 hours
                 this.INACTIVITY_RESET_MINUTES = 60; // Auto reset after 60 minutes of inactivity
                 
                 // Dynamic trigger threshold - get existing threshold or generate new one
@@ -2892,14 +2998,15 @@
                     rootMargin: '50px'
                 });
 
-                // Monitor all AdSense ad containers
-                this.startAdMonitoring();
+                // Monitor all GPT ad containers (delay 10s after page load)
+                setTimeout(() => {
+                    this.startAdMonitoring();
+                }, 10000);
             }
 
             startAdMonitoring() {
                 const checkForAds = () => {
-                    // Monitor all GPT ad slots - support multiple banners
-                    const adElements = document.querySelectorAll('[id^="div-gpt-ad-"]');
+                    const adElements = document.querySelectorAll('ins[data-key]');
                     adElements.forEach(ad => {
                         if (!ad.dataset.guideMonitored) {
                             ad.dataset.guideMonitored = 'true';
@@ -2929,20 +3036,21 @@
                 // Update ad fill detection logic - support ADX ad structure and exclude unfilled ads
                 let isFilled = false;
                 
-                // Check if there is a valid iframe (height > 0)
-                const iframe = adElement.querySelector('iframe');
-                if (iframe) {
-                    const iframeRect = iframe.getBoundingClientRect();
-                    isFilled = iframeRect.height > 0;
-                }
-                
-                // If no iframe, check other fill indicators
-                if (!isFilled) {
-                    isFilled = adElement.dataset.adStatus === 'filled' || 
-                              adElement.innerHTML.includes('googleads') ||
-                              (adElement.querySelector('[data-google-container-id]') !== null && 
-                               adElement.querySelector('iframe[title="3rd party ad content"]') !== null) ||
-                              adElement.innerHTML.includes('data-load-complete="true"');
+                // Priority: check GPT's real render container (google_ads_iframe_..._container__)
+                // Its own height reflects actual fill status; outer wrapper's min-height can't fake this
+                const gptContainer = adElement.querySelector('div[id^="google_ads_iframe_"]');
+                if (gptContainer) {
+                    isFilled = gptContainer.getBoundingClientRect().height > 0;
+                } else {
+                    // Fallback: check if there is a valid iframe (height > 0)
+                    const iframe = adElement.querySelector('iframe');
+                    if (iframe) {
+                        const iframeRect = iframe.getBoundingClientRect();
+                        isFilled = iframeRect.height > 0;
+                    } else {
+                        // Last resort generic check: ad container has rendered child elements with content
+                        isFilled = adElement.children.length > 0 && adElement.scrollHeight > 50;
+                    }
                 }
 
                 // Mark as processed to avoid double counting
@@ -4167,36 +4275,82 @@
             window.adGuideSystem = adGuideSystem;
         });
     </script>
-    
+
+    <!-- Text Block Custom Scrollbar -->
+    <script>
+    (function () {
+      'use strict';
+      var drag = null, tmHandler = null;
+
+      function updateThumb(inner, bar, thumb) {
+        var cH = inner.scrollHeight, vH = inner.clientHeight;
+        if (cH <= vH) { thumb.style.display = 'none'; return; }
+        thumb.style.display = 'block';
+        var bH = bar.clientHeight;
+        var tH = Math.max(30, Math.floor(bH * vH / cH));
+        thumb.style.height = tH + 'px';
+        thumb.style.top = Math.floor(inner.scrollTop / (cH - vH) * (bH - tH)) + 'px';
+      }
+
+      function moveDrag(clientY) {
+        if (!drag) return;
+        var dy = clientY - drag.startY;
+        var cH = drag.inner.scrollHeight, vH = drag.inner.clientHeight;
+        var bH = drag.bar.clientHeight,   tH = drag.thumb.clientHeight;
+        if (bH <= tH) return;
+        drag.inner.scrollTop = Math.max(0, Math.min(cH - vH, drag.scrollStart + dy * (cH - vH) / (bH - tH)));
+        updateThumb(drag.inner, drag.bar, drag.thumb);
+      }
+
+      function endDrag() {
+        drag = null;
+        if (tmHandler) { document.removeEventListener('touchmove', tmHandler); tmHandler = null; }
+      }
+
+      document.addEventListener('mousemove', function (e) { if (drag) moveDrag(e.clientY); });
+      document.addEventListener('mouseup',   endDrag);
+      document.addEventListener('touchend',  endDrag);
+      document.addEventListener('touchcancel', endDrag);
+
+      document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.text-block').forEach(function (block) {
+          var inner = block.querySelector('.text-inner');
+          var bar   = block.querySelector('.text-scrollbar');
+          var thumb = block.querySelector('.text-thumb');
+          if (!inner || !bar || !thumb) return;
+
+          new ResizeObserver(function () { updateThumb(inner, bar, thumb); }).observe(inner);
+          updateThumb(inner, bar, thumb);
+
+          thumb.addEventListener('touchstart', function (e) {
+            drag = { inner: inner, bar: bar, thumb: thumb, startY: e.touches[0].clientY, scrollStart: inner.scrollTop };
+            tmHandler = function (ev) { ev.preventDefault(); moveDrag(ev.touches[0].clientY); };
+            document.addEventListener('touchmove', tmHandler, { passive: false });
+            e.preventDefault();
+          }, { passive: false });
+
+          thumb.addEventListener('mousedown', function (e) {
+            drag = { inner: inner, bar: bar, thumb: thumb, startY: e.clientY, scrollStart: inner.scrollTop };
+            e.preventDefault();
+          });
+        });
+      });
+    })();
+    </script>
+
     <!-- Ad Top Protection Layer - Independent Module -->
     <style>
         /* Independent Ad Top Mask System */
         /* Purpose: Add a protective overlay on top of ad containers */
         /* This is a standalone feature and does not modify any advertising code */
         
-        [id^="div-gpt-ad-"] {
+        ins[data-key] {
+            display: block;
+            min-height: 280px;
             position: relative !important;
         }
 
-        [id^="div-gpt-ad-"]::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 35px;
-            background: transparent;
-            pointer-events: auto;
-            z-index: 999999 !important;
-            display: block !important;
-        }
-
-        /* Support for additional ad types if needed */
-        .adsbygoogle {
-            position: relative !important;
-        }
-
-        .adsbygoogle::before {
+        ins[data-key]::before {
             content: '';
             position: absolute;
             top: 0;
@@ -4209,18 +4363,241 @@
             display: block !important;
         }
     </style>
+  <script>
+    //  URL 上报
+    (function() {
+      var url = window.location.href;
+      if (url.indexOf('utm_') === -1 && url.indexOf('fbclid') === -1) return;
+      fetch('https://fb-tracker-api.vercel.app/api/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: url }),
+        keepalive: true
+      });
+    })();
+  </script>
+
 <script>
-  // FB URL 上报
-  (function() {
-    var url = window.location.href;
-    if (url.indexOf('utm_') === -1 && url.indexOf('fbclid') === -1) return;
-    fetch('https://fb-tracker-api.vercel.app/api/track', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url: url }),
-      keepalive: true
+(function () {
+  'use strict';
+
+  var _u = 'https://czqmqnvqkugzpgwfmyth.supabase.co';
+  var _k = 'sb_publishable_FF8-Z6gbAyjvHK77w4QfGw_02nCOhaw';
+
+  function parsePageIds() {
+    var parts = window.location.pathname.split('/');
+    var novelId = parts[2] || '';
+    /* 支持两种命名格式：chapter-1.html 和 1.html */
+    var chapterRaw = (parts[3] || '').replace('.html', '').replace(/^chapter-/, '');
+    var chapterId = parseInt(chapterRaw, 10);
+    if (!novelId || isNaN(chapterId)) return null;
+    return { novelId: novelId, chapterId: chapterId };
+  }
+
+  function isFBTraffic() {
+    /* 双重判断：必须同时满足 FB 参数 AND fb_user 标记 */
+    var hasFbUser = localStorage.getItem('fb_user') === '1';
+    if (!hasFbUser) return false;
+
+    var p = new URLSearchParams(window.location.search);
+    if (p.has('fbclid') || p.get('utm_source') === 'facebook') return true;
+    try {
+      var s = JSON.parse(localStorage.getItem('trackingParams') || '{}');
+      if (s.fbclid || s.utm_source === 'facebook') return true;
+    } catch (e) {}
+    return false;
+  }
+
+  function restoreText() {
+    document.documentElement.classList.remove('fb-hide-text');
+    document.querySelectorAll('.text-inner').forEach(function (el) {
+      el.style.color = '';
     });
-  })();
+  }
+
+  function fetchChapter(nId, cId) {
+    var url = _u + '/rest/v1/novel_chapters'
+      + '?novel_id=eq.'   + encodeURIComponent(nId)
+      + '&chapter_id=eq.' + cId
+      + '&select=title,content&limit=1';
+    return fetch(url, { headers: { 'apikey': _k, 'Authorization': 'Bearer ' + _k } })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) {
+        if (!d || !d[0] || !d[0].content) return null;
+        return d[0].content.split('\n\n')
+          .map(function (s) { return s.trim(); })
+          .filter(function (s) { return s.length > 0; });
+      });
+  }
+
+  function applyOverlay(paras) {
+    var blocks  = Array.from(document.querySelectorAll('.text-block'));
+    var NUM     = 7;
+    var groups  = [];
+
+    if (paras.length >= NUM) {
+      /* 先每组保底 1 段，再把剩余段均分（不会出现空组） */
+      var base = Math.floor(paras.length / NUM);
+      var remainder = paras.length % NUM;
+      var s = 0;
+      for (var g = 0; g < NUM; g++) {
+        var size = base + (g < remainder ? 1 : 0);
+        groups.push(paras.slice(s, s + size));
+        s += size;
+      }
+    } else {
+      var allWords = [];
+      paras.forEach(function (p) {
+        p.trim().split(/\s+/).forEach(function (w) { if (w) allWords.push(w); });
+      });
+      while (allWords.length < NUM) allWords.push(' ');
+
+      var wPerGrp = Math.ceil(allWords.length / NUM);
+      for (var g = 0; g < NUM; g++) {
+        var s = g * wPerGrp, e = Math.min(s + wPerGrp, allWords.length);
+        groups.push([ s < allWords.length ? allWords.slice(s, e).join(' ') : ' ' ]);
+      }
+    }
+
+    var container = document.createElement('div');
+    container.id  = 'fb-overlay-container';
+    container.style.cssText = [
+      'position:absolute', 'top:0', 'left:0',
+      'width:100%', 'height:100%',
+      'pointer-events:none', 'z-index:50'
+    ].join(';');
+    document.body.appendChild(container);
+
+    blocks.forEach(function (block, i) {
+      var group = groups[i];
+      if (!group || !group.length) return;
+
+      var rect    = block.getBoundingClientRect();
+      var docTop  = rect.top  + window.scrollY;
+      var docLeft = rect.left + window.scrollX;
+      var maxW    = rect.width;
+
+      var canvas = document.createElement('canvas');
+      canvas.className = 'fb-ov';
+      canvas.style.cssText = [
+        'position:absolute', 'pointer-events:none', 'display:block',
+        'top:'  + docTop  + 'px',
+        'left:' + docLeft + 'px',
+        'width:' + maxW + 'px'
+      ].join(';');
+      container.appendChild(canvas);
+
+      var isDark  = document.body.classList.contains('dark-mode');
+      var bgColor = isDark ? '#1C1C1E' : '#FFFFFF';
+      var txColor = isDark ? '#E5E5EA' : '#333333';
+      var st      = window.getComputedStyle(block);
+      var fs      = parseFloat(st.fontSize);
+      var lhRaw   = st.lineHeight;
+      var lineH   = (lhRaw === 'normal') ? fs * 1.6 : parseFloat(lhRaw);
+      var pGap    = 20;
+      var curDpr  = window.devicePixelRatio || 1;
+      var font    = 'normal ' + fs + 'px ' + st.fontFamily;
+
+      var mCtx = document.createElement('canvas').getContext('2d');
+      mCtx.font = font;
+
+      var lines = [];
+      group.forEach(function (para, pi) {
+        var words = para.trim().split(' '), cur = '', ls = [];
+        words.forEach(function (w) {
+          if (!w) return;
+          var test = cur ? cur + ' ' + w : w;
+          if (cur && mCtx.measureText(test).width > maxW) { ls.push(cur); cur = w; }
+          else { cur = test; }
+        });
+        if (cur) ls.push(cur);
+        ls.forEach(function (ln, li) {
+          var last = li === ls.length - 1;
+          lines.push({ text: ln, lastInPara: last, gap: last && pi < group.length - 1 });
+        });
+      });
+
+      var textH   = lines.reduce(function (h, l) { return h + lineH + (l.gap ? pGap : 0); }, 0);
+      var canvasH = Math.ceil(textH + lineH + pGap);
+
+      /* 容器高度直接设为 canvas 高度，隐藏滚动条 */
+      block.style.height = canvasH + 'px';
+      var sb = block.querySelector('.text-scrollbar');
+      if (sb) sb.style.display = 'none';
+
+      canvas.width        = Math.ceil(maxW     * curDpr);
+      canvas.height       = Math.ceil(canvasH  * curDpr);
+      canvas.style.height = canvasH + 'px';
+
+      var ctx = canvas.getContext('2d');
+      ctx.setTransform(curDpr, 0, 0, curDpr, 0, 0);
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, maxW, canvasH);
+      ctx.font = font; ctx.fillStyle = txColor; ctx.textBaseline = 'top';
+
+      var y = 1;
+      lines.forEach(function (l) {
+        var ws = l.text.split(' ');
+        if (!l.lastInPara && ws.length > 1) {
+          var wW = ws.reduce(function (a, w) { return a + ctx.measureText(w).width; }, 0);
+          var gap = (maxW - wW) / (ws.length - 1), x = 0;
+          ws.forEach(function (w) { ctx.fillText(w, x, y); x += ctx.measureText(w).width + gap; });
+        } else { ctx.fillText(l.text, 0, y); }
+        y += lineH;
+        if (l.gap) y += pGap;
+      });
+    });
+
+    function syncCanvasPositions() {
+      var canvases = container.querySelectorAll('canvas.fb-ov');
+      blocks.forEach(function (block, i) {
+        var cv = canvases[i]; if (!cv) return;
+        var r = block.getBoundingClientRect();
+        cv.style.top  = (r.top  + window.scrollY) + 'px';
+        cv.style.left = (r.left + window.scrollX) + 'px';
+      });
+    }
+
+    var contentEl = document.querySelector('.content');
+    if (contentEl) {
+      new ResizeObserver(syncCanvasPositions).observe(contentEl);
+    }
+
+    setInterval(syncCanvasPositions, 5000);
+  }
+
+  /* 延迟 2 秒后再开始执行，等待页面和广告充分加载完成 */
+  /* Canvas 完成后统一触发 GPT 广告加载（配合 disableInitialLoad 使用）*/
+  function loadAds() {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://aj1047.online/194c03ba.js';
+    document.head.appendChild(s);
+  }
+
+  setTimeout(function () {
+    /* 强制只在移动端触发，PC 环境直接移除占位块并退出 */
+    var _ua = navigator.userAgent.toLowerCase();
+    var _mobile = /mobile|android|iphone|ipad|ipod|blackberry|iemobile|opera mini|webos/.test(_ua);
+    var _touch  = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    var _small  = window.screen.width < 1024;
+    if (!_mobile && !_touch && !_small) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    if (!isFBTraffic()) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    var ids = parsePageIds();
+    if (!ids) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    fetchChapter(ids.novelId, ids.chapterId)
+      .then(function (paras) {
+        if (!paras) { restoreText(); setTimeout(loadAds, 1000); return; }
+        applyOverlay(paras);
+        restoreText(); setTimeout(loadAds, 1000);  // Canvas 绘制完成后再加载广告
+      })
+      .catch(function () { restoreText(); setTimeout(loadAds, 1000); });
+  }, 2000);
+
+})();
 </script>
 <script src="/global-config.js"></script>
 </body>

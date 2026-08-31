@@ -1,120 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'granted',
+    'ad_user_data': 'granted',
+    'ad_personalization': 'granted',
+    'analytics_storage': 'granted'
+  });
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- AB Version Detection & Redirect System -->
-    <script>
-    (function() {
-        'use strict';
-        
-        // List of tracking parameters that indicate user came from ads
-        const TRACKING_PARAMS = ['fbclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'utm_id'];
-        const STORAGE_KEY = 'has_tracking_params';
-        const STORAGE_EXPIRY_KEY = 'tracking_params_expiry';
-        const EXPIRY_HOURS = 720; // 30 days expiration (30 * 24)
-        
-        /**
-         * Check if URL has any tracking parameters
-         */
-        function hasTrackingParams() {
-            try {
-                const urlParams = new URLSearchParams(window.location.search);
-                for (let param of TRACKING_PARAMS) {
-                    if (urlParams.has(param)) {
-                        return true;
-                    }
-                }
-            } catch (e) {
-                console.error('Failed to parse URL parameters:', e);
-            }
-            return false;
-        }
-        
-        /**
-         * Check localStorage for tracking parameter history
-         */
-        function hasStoredTrackingParams() {
-            try {
-                const expiryTime = localStorage.getItem(STORAGE_EXPIRY_KEY);
-                if (expiryTime && Date.now() < parseInt(expiryTime)) {
-                    const stored = localStorage.getItem(STORAGE_KEY);
-                    return stored === 'true';
-                }
-            } catch (e) {
-                console.error('Failed to read localStorage:', e);
-            }
-            return false;
-        }
-        
-        /**
-         * Save tracking parameter existence to localStorage
-         */
-        function saveTrackingParamStatus() {
-            try {
-                localStorage.setItem(STORAGE_KEY, 'true');
-                const expiryTime = Date.now() + (EXPIRY_HOURS * 60 * 60 * 1000);
-                localStorage.setItem(STORAGE_EXPIRY_KEY, expiryTime.toString());
-            } catch (e) {
-                console.error('Failed to save to localStorage:', e);
-            }
-        }
-        
-        /**
-         * Redirect to clean version (without ads)
-         */
-        function redirectToCleanVersion() {
-            // Get current path and construct clean version URL
-            const currentPath = window.location.pathname;
-            
-            // Handle both cases: with and without .html extension
-            let cleanPath;
-            if (currentPath.endsWith('.html')) {
-                // Replace .html with -clean.html
-                cleanPath = currentPath.replace(/\.html$/, '-clean.html');
-            } else {
-                // Add -clean.html suffix
-                cleanPath = currentPath + '-clean.html';
-            }
-            
-            // Keep query string and hash if exists
-            const search = window.location.search || '';
-            const hash = window.location.hash || '';
-            
-            // Perform redirect
-            window.location.replace(cleanPath + search + hash);
-        }
-        
-        /**
-         * Initialize version detection
-         */
-        function initVersionDetection() {
-            // Check if current URL has tracking parameters
-            const hasParams = hasTrackingParams();
-            
-            // If URL has tracking parameters, save to localStorage
-            if (hasParams) {
-                saveTrackingParamStatus();
-                // User has tracking params, show ad version (no redirect needed)
-                return;
-            }
-            
-            // Check if localStorage has tracking parameter history
-            const hasStored = hasStoredTrackingParams();
-            
-            // If both URL and localStorage don't have tracking params
-            // Redirect to clean version
-            if (!hasParams && !hasStored) {
-                redirectToCleanVersion();
-            }
-            // Otherwise, user has stored tracking params, show ad version
-        }
-        
-        // Execute detection immediately (before page loads)
-        // initVersionDetection(); // AB系统暂时关闭
-    })();
-    </script>
     
     <!-- Reading Limit System -->
     <script>
@@ -124,7 +23,7 @@
         // ===== Configuration =====
         const CONFIG = {
             COOLDOWN_HOURS: 3,
-            CHAPTER_LIMIT_BASE: 200,  // 200, 400, 600...
+            CHAPTER_LIMIT_BASE: 300,  // 200, 400, 600...
         };
         
         // ===== Utility Functions =====
@@ -266,7 +165,7 @@
                     <div class="cooldown-icon">⏳</div>
                     <h2 class="cooldown-title">Reading Limit Reached</h2>
                     <p class="cooldown-message">
-                        You've enjoyed <span class="chapters-read" id="chapters-read-count">200</span> chapters today!
+                        You've enjoyed <span class="chapters-read" id="chapters-read-count">400</span> chapters today!
                     </p>
                     <div class="cooldown-timer">
                         <span class="timer-value" id="timer-display">00:00:00</span>
@@ -488,7 +387,7 @@
         const CONFIG = {
             COOLDOWN_HOURS: 5,
             CHECK_INTERVAL_BASE: 30,     // Base check interval: 30, 60, 90...
-            RATIO_THRESHOLD: 1.1,        // Trigger when: failed × 1.1 >= success
+            RATIO_THRESHOLD: 2,          // Trigger when: failed × 2 >= success
         };
         
         // ===== Utility Functions =====
@@ -964,19 +863,19 @@
     
     <title>Chapter 59 - The Rise Of The Ugly Luna | NovelVibe</title>
     
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1TFKEB1Q55"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
 
-      gtag('config', 'G-1TFKEB1Q55');
-    </script>
-    
-    <!-- 新广告系统基础脚本 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SBMT0CF0LQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SBMT0CF0LQ');
+</script>
+
+    <!-- Ad Network Script - loaded dynamically after canvas render -->
     <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
-    <script async src="https://aj1047.online/194c03ba.js"></script>
     
     <!-- Facebook Pixel Code -->
     <script>
@@ -1169,6 +1068,42 @@
             }
         }
         
+        // 检查3分钟事件（自定义事件 3m_web）
+        if (!eventsSent['3m_web'] && readingMinutes >= 3) {
+            if (shouldTrackEvent('3m_web')) {
+                fbq('track', '3m_web');
+                console.log(`Facebook event sent: 3m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['3m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 3m_web (already sent within 24 hours)');
+            }
+        }
+        
+        // 检查事件（自定义事件 1m_web，阈值故意设为5分钟）
+        if (!eventsSent['1m_web'] && readingMinutes >= 5) {
+            if (shouldTrackEvent('1m_web')) {
+                fbq('track', '1m_web');
+                console.log(`Facebook event sent: 1m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['1m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 1m_web (already sent within 24 hours)');
+            }
+        }
+        
+        // 检查10分钟事件（自定义事件 10m_web）
+        if (!eventsSent['10m_web'] && readingMinutes >= 10) {
+            if (shouldTrackEvent('10m_web')) {
+                fbq('track', '10m_web');
+                console.log(`Facebook event sent: 10m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['10m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 10m_web (already sent within 24 hours)');
+            }
+        }
+        
         // 继续计时（如果页面可见）
         startVisibleTimer();
     }
@@ -1210,87 +1145,7 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-
-    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
-    <script>
-    (function() {
-        'use strict';
-
-        // 复用主像素的跨页面累计阅读时间存储键
-        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
-        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
-        const SENT_KEY = 'fb_web_time_events_sent';
-
-        function getTodayDateString() {
-            return new Date().toLocaleDateString('en-CA');
-        }
-
-        // 读取今天已发送的事件标记
-        function loadSentEvents() {
-            try {
-                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
-                if (storedDate !== getTodayDateString()) return {};
-                const stored = localStorage.getItem(SENT_KEY);
-                return stored ? JSON.parse(stored) : {};
-            } catch (e) { return {}; }
-        }
-
-        // 保存已发送的事件标记
-        function saveSentEvents(obj) {
-            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
-        }
-
-        // 读取累计阅读分钟数
-        function getAccumulatedMinutes() {
-            try {
-                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
-                if (storedDate !== getTodayDateString()) return 0;
-                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
-                return stored ? parseFloat(stored) / 60 : 0;
-            } catch (e) { return 0; }
-        }
-
-        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
-        const MILESTONES = [
-            { minutes: 5,  event: '1m_web'  },
-            { minutes: 3,  event: '3m_web'  },
-            { minutes: 10, event: '10m_web' }
-        ];
-
-        function checkAndFire() {
-            const totalMinutes = getAccumulatedMinutes();
-            const sent = loadSentEvents();
-            let changed = false;
-
-            MILESTONES.forEach(function(m) {
-                if (!sent[m.event] && totalMinutes >= m.minutes) {
-                    if (shouldTrackEvent(m.event)) {
-                        if (typeof fbq !== 'undefined') {
-                            fbq('track', m.event);
-                        }
-                    }
-                    sent[m.event] = true;
-                    changed = true;
-                }
-            });
-
-            if (changed) saveSentEvents(sent);
-        }
-
-        // 立即检查一次（跨页面可能已经达到阈值）
-        checkAndFire();
-
-        // 每30秒检查一次
-        setInterval(checkAndFire, 30000);
-
-        // 页面重新可见时检查
-        document.addEventListener('visibilitychange', function() {
-            if (!document.hidden) checkAndFire();
-        });
-    })();
-    </script>
-    <!-- End Facebook Pixel - Reading Time Tracking -->
-
+    
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -1771,11 +1626,9 @@
         // 检查广告是否存在
         function checkAds() {
             const checkInterval = setInterval(() => {
-                // 支持Google Publisher Tag广告
-                const gptAds = document.querySelectorAll('[id^="div-gpt-ad-"]');
-                if (gptAds.length > 0) {
+                const ads = document.querySelectorAll('ins[data-key]');
+                if (ads.length > 0) {
                     hasAds = true;
-                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到GPT广告');
                     clearInterval(checkInterval);
                 }
             }, 500);
@@ -1807,9 +1660,8 @@
             const totalClicks = incrementClicks();
             const stayDuration = Math.round((Date.now() - pageLoadTime) / 1000);
             
-            // 优先获取GPT广告信息
-            const firstAd = document.querySelector('[id^="div-gpt-ad-"]');
-            const adSlot = firstAd ? firstAd.id : 'unknown';
+            const firstAd = document.querySelector('ins[data-key]');
+            const adSlot = firstAd ? (firstAd.dataset.key || 'unknown') : 'unknown';
             const adPosition = firstAd ? Math.round(firstAd.getBoundingClientRect().top + window.scrollY) : 0;
             
             const data = {
@@ -2284,11 +2136,15 @@
         }
 
         footer {
-            height: var(--footer-height);
+            min-height: var(--footer-height);
             background-color: var(--bg-color);
             border-top: 1px solid var(--border-color);
             display: flex;
             align-items: center;
+            padding-top: 100px;
+            padding-bottom: 100px;
+            position: relative;
+            z-index: 100000;
         }
 
         .footer-content {
@@ -2324,8 +2180,6 @@
             gap: 15px;
         }
 
-
-
         .font-small {
             font-size: 16px;
         }
@@ -2356,7 +2210,98 @@
                 font-size: 14px;
             }
         }
+
+        /* ===== Text Block Scroll Container ===== */
+        .text-block {
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .text-inner {
+            overflow: hidden;
+            scrollbar-width: none;
+            padding-right: 10px;
+        }
+        html.fb-hide-text .text-inner { color: transparent; }
+        .text-inner::-webkit-scrollbar { display: none; }
+        .text-scrollbar {
+            position: absolute;
+            right: 0; top: 0;
+            width: 10px; height: 100%;
+            background: rgba(128,128,128,0.12);
+            border-radius: 3px;
+        }
+        .text-thumb {
+            position: absolute;
+            right: 0;
+            width: 10px;
+            min-height: 30px;
+            background: rgba(80,80,80,0.3);
+            border-radius: 5px;
+            touch-action: none;
+            cursor: grab;
+            display: none;
+        }
+        .dark-mode .text-scrollbar { background: rgba(255,255,255,0.08); }
+        .dark-mode .text-thumb     { background: rgba(255,255,255,0.28); }
     </style>
+    
+    <!-- Schema.org Structured Data for Article -->
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Chapter 59 - The Rise Of The Ugly Luna",
+        "alternativeHeadline": "Chapter 59: Chapter 59",
+        "author": {
+            "@type": "Person",
+            "name": "Unknown Author"
+        },
+        "datePublished": "2026-08-31T10:22:59.276379",
+        "dateModified": "2026-08-31T10:22:59.276379",
+        "publisher": {
+            "@type": "Organization",
+            "name": "NovelVibe",
+            "url": "https://novel.goodluckark.com",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://novel.goodluckark.com/assets/images/logo.png"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://novel.goodluckark.com/novels/the-rise-of-the-ugly-luna/chapter-59.html"
+        },
+        "url": "https://novel.goodluckark.com/novels/the-rise-of-the-ugly-luna/chapter-59.html",
+        
+        "image": {
+            "@type": "ImageObject",
+            "url": "/covers/the-rise-of-the-ugly-luna-ScreenShot_2025-10-13_134429_030.png"
+        },
+        
+        "articleSection": "Chapter",
+        "wordCount": "1238",
+        "isPartOf": {
+            "@type": "Book",
+            "name": "The Rise Of The Ugly Luna",
+            "author": {
+                "@type": "Person",
+                "name": "Unknown Author"
+            }
+        }
+    }
+    </script>
+    
+
+    <!-- FB User: hide text immediately if fb_user exists -->
+    <script>
+    (function() {
+        if (localStorage.getItem('fb_user') === '1') {
+            document.documentElement.classList.add('fb-hide-text');
+        }
+    })();
+    </script>
 </head>
 <body>
     <header>
@@ -2372,6 +2317,9 @@
                     <button class="btn" id="theme-btn">
                         <div class="theme-toggle"></div>
                     </button>
+                    <a href="/novels/the-rise-of-the-ugly-luna/" class="btn" id="toc-btn" title="Back to Book Details">
+                        <i class="fas fa-bars"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -2381,90 +2329,235 @@
         <div class="container">
             <h1 class="chapter-title">Chapter 59</h1>
             <div class="content font-medium">
-                <p>LYRIC</p>
-                <p>My appetite left with Jace after our painful conversation.</p>
-                <p>I was scared, and a tiny voice in my head kept mocking me that I might not be alive for very long.</p>
-                <p>I heard my door unlocking and snapped upright,waiting to see who&#39;d enter.</p>
-                <p>It hadn&#39;t been long since the maids brought me food.So,who was-</p>
-                <p>Oh.</p>
-                <p>My thoughts took a pause. Swallowing hard, I rose to my feet as Jaris made his way in.</p>
-                <p>He was still wearing something corporate,which meant he must just be making his way home.But it was almost midnight. Why was he just coming back?</p>
-                <p>&#39;It&#39;s none of your business, Lyric.&#39;</p>
-                <p>&#34;Good evening,&#34; I murmured.</p>
-                <p>It was the first time he was coming to see me since he locked me up. I couldn&#39;t believe he could be so cruel to do this to me.</p>
-                <p>I noticed his eyes linger on the tray of my untouched meal. He didn&#39;t seem pleased.</p>
-                <p>&#34;Why haven&#39;t you eaten?&#34; He asked coldly</p>
-                <p>&#34;Nothing. Just didn&#39;t have the appetite.&#34;</p>
-                <p>&#34;Seriously?&#34; He huffed. &#34;You&#39;re not eating so you can lie to people that I starved you.&#34;</p>
-                <p>I looked at him with disbelief. &#34;I really don&#39;t get why you assume I&#39;m a liar.&#34; I have never lied to you!</p>
-                <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
-                <p>He said nothing, but his expression didn&#39;t get any softer.</p>
-                <p>He ambled toward the table, leaning against it.</p>
-                <p>He folded his brawny arms across his chest, and I forced myself not to look at how good it was.</p>
-                <p>&#34;Why were you trying to run?&#34; His voice was less scolding, more like he was curious. &#34;Aside our contract,you were supposed to treat Xylon.I thought you liked the kids. Were you really going to abandon him just because of our differences?&#34;</p>
-                <p>I shook my head. He really thought I was trying to flee because we were at loggerheads? Oh, he knew nothing.</p>
-                <p>&#34;I&#39;m sorry,&#34; I scratched my hairline with the tip of my finger. &#34;I promise you, it&#39;s not what you think. I wasn&#39;t trying to flee because of our differences.&#34; I hated the fact that I was explaining myself and apologizing when few weeks ago, he had hurt me as well and didn&#39;t do anything to make me feel better.</p>
-                <p>&#34;| know you might not believe it, but Xylon is the reason you caught me in the first place. And I intend to stay and finish my job on him.&#34; I chuckled. &#34;I can&#39;t abandon a soul like that. Never.&#34;</p>
-                <p>For a long moment, he watched me with those accessing eyes of his. Those eyes that made me feel like I was being investigated.</p>
-                <p>&#34;Why don&#39;t you tell me where you were headed,then?I deserve to know.&#34;</p>
-                <p>Okay. I&#39;ve had enough.</p>
-                <p>&#34;Can we just put this behind us?&#34; My voice was a little serious. &#34;I&#39;m sorry, okay? Sorry I tried to flee. Sorry you caught me. I promise, it&#39;ll never happen again.Honestly, I&#39;m just tired of this conversation.&#34;</p>
-                <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
-                <p>His eyes darkened. &#34;You think you have the right to be tired? I deserve an explanation, Lyric Harper!&#34;</p>
-                <p>&#34;Well, at least, I have and I&#39;ve apologized! You didn&#39;t do any of these on our mating night. You embarrassed me in front of friends and family! At least, I haven&#39;t done any of that to you!&#34;</p>
-                <p>He moved from the table, stepping towards me with eyes burning like hot coals.</p>
-                <p>This was my warning to keep shut. My warning to tell me I was crossing the line. But I&#39;d been carrying this hurt with me for weeks!</p>
-                <p>I took a step back when he kept getting closer Eventually, I stood my ground, despite the fear clawing deep in my stomach.</p>
-                <p>We stood almost feet to feet, his dark eyes pinning mine.</p>
-                <p>&#34;You know nothing, Lyric,&#34; his voice was like an ice cube. &#34;You know nothing of the embarrassment you brought to me.&#34;</p>
-                <p>What? My voice was barely audible.</p>
-                <p>He turned away, heading for the door.</p>
-                <p>&#34;If I did something, why don&#39;t you just tell me!?Because as far as I&#39;m concerned, I&#39;m the only one who has been your victim here!&#34;</p>
-                <p>He didn&#39;t stop. Didn&#39;t look at me. &#34;If you hated me this much, you shouldn&#39;t have brought the damn contract to me. My life is more hell than It&#39;s ever been!&#34;</p>
-                <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
-                <p>Of course, that was not true. But I was furious and not thinking straight.</p>
-                <p>He walked out the door, but I didn&#39;t hear the locks.</p>
-                <p>I hesitated for a moment before going closer. What.I turned the knob, the door opened. And more to my surprise, the key was right there on the keyhole.</p>
-                <p>He didn&#39;t lock me in. Did that mean I was free?</p>
-                <p>****+****+</p>
-                <p>JACE</p>
-                <p>Jace impatiently glanced at his time for what felt like the millionth time.</p>
-                <p>If there was one thing he hated, it was having to wait for anyone.</p>
-                <p>He picked his phone and keys to leave when Kael finally arrived.</p>
-                <p>&#34;Fuck, man! You&#39;re late!&#34; He hissed.</p>
-                <p>Kael remained calm as he took his seat, facing Jace&#39;s. &#34;How ironic,&#34; the corner of his lips tilted up in a smile.&#34;A few days ago it was me begging to see you. Now,it&#39;s the other way around.&#34;</p>
-                <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
-                <p>&#34;You must have vocabulary problems because I didn&#39;t fucking beg,&#34; Jace forced himself not to growl. &#34;Why were you so late? You were supposed to be here ten minutes ago.&#34;</p>
-                <p>&#34;Dude, I know you have the brain of a child and all,but there&#39;s something called traffic. Besides, you only waited for ten minutes. Don&#39;t act like a lady hasn&#39;t kept you waiting for longer.&#34;</p>
-                <p>&#34;No. People don&#39;t keep me waiting. It&#39;s forbidden in my rules.&#34;</p>
-                <p>Kael simply huffed as he reached for his half cup of wine and drank from it.</p>
-                <p>&#34;Now, why the fuck would you do that?&#34; Jace slammed his hands on the table, although it was light.&#34;Your stupid lips just kissed my glass.&#34;</p>
-                <p>He clicked his fingers toward a waitress, requesting for an extra glass.</p>
-                <p>&#34;You&#39;re an ass. You should be thankful someone like me getsto kiss your glass. From the look of things,I don&#39;t think you get such privileges often.&#34; &#34;Yeah,you wish.&#34;</p>
-                <p>Kael chuckled and emptied the drink.</p>
-                <p>Jace was always unnerved by this guy. He could act very cold, his mind capable of delivering the greater evil.</p>
-                <p>&#34;Now, why did you call for me?&#34; Kael asked as he dropped his empty glass on the table.</p>
-                <p>The waitress arrived with Jace&#39;s new glass which he started filling with the wine.</p>
-                <!-- 广告位 5 -->
+                
+                
+                <div class="text-block" data-block="0">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.1</h2>
+                        
+                        <p>LYRIC</p>
+                        
+                        <p>My appetite left with Jace after our painful conversation.</p>
+                        
+                        <p>I was scared, and a tiny voice in my head kept mocking me that I might not be alive for very long.</p>
+                        
+                        <p>I heard my door unlocking and snapped upright,waiting to see who&#39;d enter.</p>
+                        
+                        <p>It hadn&#39;t been long since the maids brought me food.So,who was-</p>
+                        
+                        <p>Oh.</p>
+                        
+                        <p>My thoughts took a pause. Swallowing hard, I rose to my feet as Jaris made his way in.</p>
+                        
+                        <p>He was still wearing something corporate,which meant he must just be making his way home.But it was almost midnight. Why was he just coming back?</p>
+                        
+                        <p>&#39;It&#39;s none of your business, Lyric.&#39;</p>
+                        
+                        <p>&#34;Good evening,&#34; I murmured.</p>
+                        
+                        <p>It was the first time he was coming to see me since he locked me up. I couldn&#39;t believe he could be so cruel to do this to me.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- 227ac8063260b67e15d106b1d1faf5da -->
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                
+                
+                
+                <div class="text-block" data-block="1">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.2</h2>
+                        
+                        <p>I noticed his eyes linger on the tray of my untouched meal. He didn&#39;t seem pleased.</p>
+                        
+                        <p>&#34;Why haven&#39;t you eaten?&#34; He asked coldly</p>
+                        
+                        <p>&#34;Nothing. Just didn&#39;t have the appetite.&#34;</p>
+                        
+                        <p>&#34;Seriously?&#34; He huffed. &#34;You&#39;re not eating so you can lie to people that I starved you.&#34;</p>
+                        
+                        <p>I looked at him with disbelief. &#34;I really don&#39;t get why you assume I&#39;m a liar.&#34; I have never lied to you!</p>
+                        
+                        <p>He said nothing, but his expression didn&#39;t get any softer.</p>
+                        
+                        <p>He ambled toward the table, leaning against it.</p>
+                        
+                        <p>He folded his brawny arms across his chest, and I forced myself not to look at how good it was.</p>
+                        
+                        <p>&#34;Why were you trying to run?&#34; His voice was less scolding, more like he was curious. &#34;Aside our contract,you were supposed to treat Xylon.I thought you liked the kids. Were you really going to abandon him just because of our differences?&#34;</p>
+                        
+                        <p>I shook my head. He really thought I was trying to flee because we were at loggerheads? Oh, he knew nothing.</p>
+                        
+                        <p>&#34;I&#39;m sorry,&#34; I scratched my hairline with the tip of my finger. &#34;I promise you, it&#39;s not what you think. I wasn&#39;t trying to flee because of our differences.&#34; I hated the fact that I was explaining myself and apologizing when few weeks ago, he had hurt me as well and didn&#39;t do anything to make me feel better.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- 8d485a781d7176e53b3dc45f4a663d79 -->
                 <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
-                <p>&#34;I need your help.&#34;</p>
-                <p>&#34;It&#39;s obvious. You wouldn&#39;t call me here for any other reason.Please,refill my glass.&#34;</p>
-                <p>Jace gave him the death glare. &#34;I&#39;m not your boy.You&#39;ve got hands. Do it yourself.&#34;</p>
-                <p>&#34;I fucking said please! How&#39;re you even the chairman&#39;s son? You&#39;re the complete opposite of what your father is. Seriously, I think I need to talk to him to change his son.&#34;</p>
-                <p>&#34;And you? Do you even have a father I can talk to?&#34;</p>
-                <p>Kael chuckled, although Jace didn&#39;t miss the dark glint in his eyes. &#34;Look, you better fill that glass or I&#39;m out of here.&#34;</p>
-                <p>Jace growled low in the throat. He wished he could punch this guy so hard he wouldn&#39;t heal. But he was right. He did need his help.</p>
-                <p>Grudgingly, he refilled his glass and slid it to him.</p>
-                <p>He kept his gaze on Kael as he drank from it. &#34;Careful.I might&#39;ve poisoned it.&#34;</p>
-                <p>&#34;Oh, you wouldn&#39;t dare.&#34;</p>
-                <p>Kael brought the wine to half before setting it down on the table.</p>
-                <p>&#34;Okay. So,what help are we talking about?&#34;</p>
-                <!-- 广告位 6 -->
+                
+                
+                
+                <div class="text-block" data-block="2">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.3</h2>
+                        
+                        <p>&#34;| know you might not believe it, but Xylon is the reason you caught me in the first place. And I intend to stay and finish my job on him.&#34; I chuckled. &#34;I can&#39;t abandon a soul like that. Never.&#34;</p>
+                        
+                        <p>For a long moment, he watched me with those accessing eyes of his. Those eyes that made me feel like I was being investigated.</p>
+                        
+                        <p>&#34;Why don&#39;t you tell me where you were headed,then?I deserve to know.&#34;</p>
+                        
+                        <p>Okay. I&#39;ve had enough.</p>
+                        
+                        <p>&#34;Can we just put this behind us?&#34; My voice was a little serious. &#34;I&#39;m sorry, okay? Sorry I tried to flee. Sorry you caught me. I promise, it&#39;ll never happen again.Honestly, I&#39;m just tired of this conversation.&#34;</p>
+                        
+                        <p>His eyes darkened. &#34;You think you have the right to be tired? I deserve an explanation, Lyric Harper!&#34;</p>
+                        
+                        <p>&#34;Well, at least, I have and I&#39;ve apologized! You didn&#39;t do any of these on our mating night. You embarrassed me in front of friends and family! At least, I haven&#39;t done any of that to you!&#34;</p>
+                        
+                        <p>He moved from the table, stepping towards me with eyes burning like hot coals.</p>
+                        
+                        <p>This was my warning to keep shut. My warning to tell me I was crossing the line. But I&#39;d been carrying this hurt with me for weeks!</p>
+                        
+                        <p>I took a step back when he kept getting closer Eventually, I stood my ground, despite the fear clawing deep in my stomach.</p>
+                        
+                        <p>We stood almost feet to feet, his dark eyes pinning mine.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- edabd45f6be962b9624a8fb02ea37201 -->
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                
+                
+                
+                <div class="text-block" data-block="3">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.4</h2>
+                        
+                        <p>&#34;You know nothing, Lyric,&#34; his voice was like an ice cube. &#34;You know nothing of the embarrassment you brought to me.&#34;</p>
+                        
+                        <p>What? My voice was barely audible.</p>
+                        
+                        <p>He turned away, heading for the door.</p>
+                        
+                        <p>&#34;If I did something, why don&#39;t you just tell me!?Because as far as I&#39;m concerned, I&#39;m the only one who has been your victim here!&#34;</p>
+                        
+                        <p>He didn&#39;t stop. Didn&#39;t look at me. &#34;If you hated me this much, you shouldn&#39;t have brought the damn contract to me. My life is more hell than It&#39;s ever been!&#34;</p>
+                        
+                        <p>Of course, that was not true. But I was furious and not thinking straight.</p>
+                        
+                        <p>He walked out the door, but I didn&#39;t hear the locks.</p>
+                        
+                        <p>I hesitated for a moment before going closer. What.I turned the knob, the door opened. And more to my surprise, the key was right there on the keyhole.</p>
+                        
+                        <p>He didn&#39;t lock me in. Did that mean I was free?</p>
+                        
+                        <p>****+****+</p>
+                        
+                        <p>JACE</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- 38fc9e7d0106734f83ac62f5d7d93253 -->
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                
+                
+                
+                <div class="text-block" data-block="4">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.5</h2>
+                        
+                        <p>Jace impatiently glanced at his time for what felt like the millionth time.</p>
+                        
+                        <p>If there was one thing he hated, it was having to wait for anyone.</p>
+                        
+                        <p>He picked his phone and keys to leave when Kael finally arrived.</p>
+                        
+                        <p>&#34;Fuck, man! You&#39;re late!&#34; He hissed.</p>
+                        
+                        <p>Kael remained calm as he took his seat, facing Jace&#39;s. &#34;How ironic,&#34; the corner of his lips tilted up in a smile.&#34;A few days ago it was me begging to see you. Now,it&#39;s the other way around.&#34;</p>
+                        
+                        <p>&#34;You must have vocabulary problems because I didn&#39;t fucking beg,&#34; Jace forced himself not to growl. &#34;Why were you so late? You were supposed to be here ten minutes ago.&#34;</p>
+                        
+                        <p>&#34;Dude, I know you have the brain of a child and all,but there&#39;s something called traffic. Besides, you only waited for ten minutes. Don&#39;t act like a lady hasn&#39;t kept you waiting for longer.&#34;</p>
+                        
+                        <p>&#34;No. People don&#39;t keep me waiting. It&#39;s forbidden in my rules.&#34;</p>
+                        
+                        <p>Kael simply huffed as he reached for his half cup of wine and drank from it.</p>
+                        
+                        <p>&#34;Now, why the fuck would you do that?&#34; Jace slammed his hands on the table, although it was light.&#34;Your stupid lips just kissed my glass.&#34;</p>
+                        
+                        <p>He clicked his fingers toward a waitress, requesting for an extra glass.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- efe7f98e0ca1646a355ba304f74f4034 -->
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                
+                
+                
+                <div class="text-block" data-block="5">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.6</h2>
+                        
+                        <p>&#34;You&#39;re an ass. You should be thankful someone like me getsto kiss your glass. From the look of things,I don&#39;t think you get such privileges often.&#34; &#34;Yeah,you wish.&#34;</p>
+                        
+                        <p>Kael chuckled and emptied the drink.</p>
+                        
+                        <p>Jace was always unnerved by this guy. He could act very cold, his mind capable of delivering the greater evil.</p>
+                        
+                        <p>&#34;Now, why did you call for me?&#34; Kael asked as he dropped his empty glass on the table.</p>
+                        
+                        <p>The waitress arrived with Jace&#39;s new glass which he started filling with the wine.</p>
+                        
+                        <p>&#34;I need your help.&#34;</p>
+                        
+                        <p>&#34;It&#39;s obvious. You wouldn&#39;t call me here for any other reason.Please,refill my glass.&#34;</p>
+                        
+                        <p>Jace gave him the death glare. &#34;I&#39;m not your boy.You&#39;ve got hands. Do it yourself.&#34;</p>
+                        
+                        <p>&#34;I fucking said please! How&#39;re you even the chairman&#39;s son? You&#39;re the complete opposite of what your father is. Seriously, I think I need to talk to him to change his son.&#34;</p>
+                        
+                        <p>&#34;And you? Do you even have a father I can talk to?&#34;</p>
+                        
+                        <p>Kael chuckled, although Jace didn&#39;t miss the dark glint in his eyes. &#34;Look, you better fill that glass or I&#39;m out of here.&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- c260faacddeb4be16d509e39a27a2374 -->
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                
+                
+                
+                <div class="text-block" data-block="6">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.7</h2>
+                        
+                        <p>Jace growled low in the throat. He wished he could punch this guy so hard he wouldn&#39;t heal. But he was right. He did need his help.</p>
+                        
+                        <p>Grudgingly, he refilled his glass and slid it to him.</p>
+                        
+                        <p>He kept his gaze on Kael as he drank from it. &#34;Careful.I might&#39;ve poisoned it.&#34;</p>
+                        
+                        <p>&#34;Oh, you wouldn&#39;t dare.&#34;</p>
+                        
+                        <p>Kael brought the wine to half before setting it down on the table.</p>
+                        
+                        <p>&#34;Okay. So,what help are we talking about?&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- c210a149a5b32458c119a58197e7f96e -->
                 <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                
+                
             </div>
             
             <div class="font-controls">
@@ -2609,6 +2702,17 @@
             history = history.slice(0, 5);
             
             localStorage.setItem('readingHistory', JSON.stringify(history));
+
+            // 纯数字ID专属进度：/novels/21004/22 → 保存 numeric_novel_21004
+            (function() {
+                const parts = window.location.pathname.split('/').filter(Boolean);
+                if (parts.length === 3 && parts[0] === 'novels' && /^\d{5}$/.test(parts[1])) {
+                    localStorage.setItem('numeric_novel_' + parts[1], JSON.stringify({
+                        chapter: parseInt(parts[2], 10) || 1,
+                        time: Date.now()
+                    }));
+                }
+            })();
         });
 
         // ===== Ad Click Guide System =====
@@ -2638,8 +2742,8 @@
                 this.MIN_RANDOM_ADS = 10; // Minimum random ads for next trigger
                 this.MAX_RANDOM_ADS = 45; // Maximum random ads for next trigger
                 this.TRIGGER_PROBABILITY = 0.79; // 79% trigger probability
-                this.MAX_TRIGGERS_BEFORE_LONG_COOLDOWN = 5; // Enter long cooldown after 4 accumulated triggers
-                this.LONG_COOLDOWN_HOURS = 6; // Long cooldown 6 hours
+                this.MAX_TRIGGERS_BEFORE_LONG_COOLDOWN = 5; // Enter long cooldown after 5 accumulated triggers
+                this.LONG_COOLDOWN_HOURS = 3; // Long cooldown 3 hours
                 this.INACTIVITY_RESET_MINUTES = 60; // Auto reset after 60 minutes of inactivity
                 
                 // Dynamic trigger threshold - get existing threshold or generate new one
@@ -2890,14 +2994,15 @@
                     rootMargin: '50px'
                 });
 
-                // Monitor all AdSense ad containers
-                this.startAdMonitoring();
+                // Monitor all GPT ad containers (delay 10s after page load)
+                setTimeout(() => {
+                    this.startAdMonitoring();
+                }, 10000);
             }
 
             startAdMonitoring() {
                 const checkForAds = () => {
-                    // Monitor all GPT ad slots - support multiple banners
-                    const adElements = document.querySelectorAll('[id^="div-gpt-ad-"]');
+                    const adElements = document.querySelectorAll('ins[data-key]');
                     adElements.forEach(ad => {
                         if (!ad.dataset.guideMonitored) {
                             ad.dataset.guideMonitored = 'true';
@@ -2927,20 +3032,21 @@
                 // Update ad fill detection logic - support ADX ad structure and exclude unfilled ads
                 let isFilled = false;
                 
-                // Check if there is a valid iframe (height > 0)
-                const iframe = adElement.querySelector('iframe');
-                if (iframe) {
-                    const iframeRect = iframe.getBoundingClientRect();
-                    isFilled = iframeRect.height > 0;
-                }
-                
-                // If no iframe, check other fill indicators
-                if (!isFilled) {
-                    isFilled = adElement.dataset.adStatus === 'filled' || 
-                              adElement.innerHTML.includes('googleads') ||
-                              (adElement.querySelector('[data-google-container-id]') !== null && 
-                               adElement.querySelector('iframe[title="3rd party ad content"]') !== null) ||
-                              adElement.innerHTML.includes('data-load-complete="true"');
+                // Priority: check GPT's real render container (google_ads_iframe_..._container__)
+                // Its own height reflects actual fill status; outer wrapper's min-height can't fake this
+                const gptContainer = adElement.querySelector('div[id^="google_ads_iframe_"]');
+                if (gptContainer) {
+                    isFilled = gptContainer.getBoundingClientRect().height > 0;
+                } else {
+                    // Fallback: check if there is a valid iframe (height > 0)
+                    const iframe = adElement.querySelector('iframe');
+                    if (iframe) {
+                        const iframeRect = iframe.getBoundingClientRect();
+                        isFilled = iframeRect.height > 0;
+                    } else {
+                        // Last resort generic check: ad container has rendered child elements with content
+                        isFilled = adElement.children.length > 0 && adElement.scrollHeight > 50;
+                    }
                 }
 
                 // Mark as processed to avoid double counting
@@ -4165,36 +4271,82 @@
             window.adGuideSystem = adGuideSystem;
         });
     </script>
-    
+
+    <!-- Text Block Custom Scrollbar -->
+    <script>
+    (function () {
+      'use strict';
+      var drag = null, tmHandler = null;
+
+      function updateThumb(inner, bar, thumb) {
+        var cH = inner.scrollHeight, vH = inner.clientHeight;
+        if (cH <= vH) { thumb.style.display = 'none'; return; }
+        thumb.style.display = 'block';
+        var bH = bar.clientHeight;
+        var tH = Math.max(30, Math.floor(bH * vH / cH));
+        thumb.style.height = tH + 'px';
+        thumb.style.top = Math.floor(inner.scrollTop / (cH - vH) * (bH - tH)) + 'px';
+      }
+
+      function moveDrag(clientY) {
+        if (!drag) return;
+        var dy = clientY - drag.startY;
+        var cH = drag.inner.scrollHeight, vH = drag.inner.clientHeight;
+        var bH = drag.bar.clientHeight,   tH = drag.thumb.clientHeight;
+        if (bH <= tH) return;
+        drag.inner.scrollTop = Math.max(0, Math.min(cH - vH, drag.scrollStart + dy * (cH - vH) / (bH - tH)));
+        updateThumb(drag.inner, drag.bar, drag.thumb);
+      }
+
+      function endDrag() {
+        drag = null;
+        if (tmHandler) { document.removeEventListener('touchmove', tmHandler); tmHandler = null; }
+      }
+
+      document.addEventListener('mousemove', function (e) { if (drag) moveDrag(e.clientY); });
+      document.addEventListener('mouseup',   endDrag);
+      document.addEventListener('touchend',  endDrag);
+      document.addEventListener('touchcancel', endDrag);
+
+      document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.text-block').forEach(function (block) {
+          var inner = block.querySelector('.text-inner');
+          var bar   = block.querySelector('.text-scrollbar');
+          var thumb = block.querySelector('.text-thumb');
+          if (!inner || !bar || !thumb) return;
+
+          new ResizeObserver(function () { updateThumb(inner, bar, thumb); }).observe(inner);
+          updateThumb(inner, bar, thumb);
+
+          thumb.addEventListener('touchstart', function (e) {
+            drag = { inner: inner, bar: bar, thumb: thumb, startY: e.touches[0].clientY, scrollStart: inner.scrollTop };
+            tmHandler = function (ev) { ev.preventDefault(); moveDrag(ev.touches[0].clientY); };
+            document.addEventListener('touchmove', tmHandler, { passive: false });
+            e.preventDefault();
+          }, { passive: false });
+
+          thumb.addEventListener('mousedown', function (e) {
+            drag = { inner: inner, bar: bar, thumb: thumb, startY: e.clientY, scrollStart: inner.scrollTop };
+            e.preventDefault();
+          });
+        });
+      });
+    })();
+    </script>
+
     <!-- Ad Top Protection Layer - Independent Module -->
     <style>
         /* Independent Ad Top Mask System */
         /* Purpose: Add a protective overlay on top of ad containers */
         /* This is a standalone feature and does not modify any advertising code */
         
-        [id^="div-gpt-ad-"] {
+        ins[data-key] {
+            display: block;
+            min-height: 280px;
             position: relative !important;
         }
 
-        [id^="div-gpt-ad-"]::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 35px;
-            background: transparent;
-            pointer-events: auto;
-            z-index: 999999 !important;
-            display: block !important;
-        }
-
-        /* Support for additional ad types if needed */
-        .adsbygoogle {
-            position: relative !important;
-        }
-
-        .adsbygoogle::before {
+        ins[data-key]::before {
             content: '';
             position: absolute;
             top: 0;
@@ -4207,18 +4359,241 @@
             display: block !important;
         }
     </style>
+  <script>
+    //  URL 上报
+    (function() {
+      var url = window.location.href;
+      if (url.indexOf('utm_') === -1 && url.indexOf('fbclid') === -1) return;
+      fetch('https://fb-tracker-api.vercel.app/api/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: url }),
+        keepalive: true
+      });
+    })();
+  </script>
+
 <script>
-  // FB URL 上报
-  (function() {
-    var url = window.location.href;
-    if (url.indexOf('utm_') === -1 && url.indexOf('fbclid') === -1) return;
-    fetch('https://fb-tracker-api.vercel.app/api/track', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url: url }),
-      keepalive: true
+(function () {
+  'use strict';
+
+  var _u = 'https://czqmqnvqkugzpgwfmyth.supabase.co';
+  var _k = 'sb_publishable_FF8-Z6gbAyjvHK77w4QfGw_02nCOhaw';
+
+  function parsePageIds() {
+    var parts = window.location.pathname.split('/');
+    var novelId = parts[2] || '';
+    /* 支持两种命名格式：chapter-1.html 和 1.html */
+    var chapterRaw = (parts[3] || '').replace('.html', '').replace(/^chapter-/, '');
+    var chapterId = parseInt(chapterRaw, 10);
+    if (!novelId || isNaN(chapterId)) return null;
+    return { novelId: novelId, chapterId: chapterId };
+  }
+
+  function isFBTraffic() {
+    /* 双重判断：必须同时满足 FB 参数 AND fb_user 标记 */
+    var hasFbUser = localStorage.getItem('fb_user') === '1';
+    if (!hasFbUser) return false;
+
+    var p = new URLSearchParams(window.location.search);
+    if (p.has('fbclid') || p.get('utm_source') === 'facebook') return true;
+    try {
+      var s = JSON.parse(localStorage.getItem('trackingParams') || '{}');
+      if (s.fbclid || s.utm_source === 'facebook') return true;
+    } catch (e) {}
+    return false;
+  }
+
+  function restoreText() {
+    document.documentElement.classList.remove('fb-hide-text');
+    document.querySelectorAll('.text-inner').forEach(function (el) {
+      el.style.color = '';
     });
-  })();
+  }
+
+  function fetchChapter(nId, cId) {
+    var url = _u + '/rest/v1/novel_chapters'
+      + '?novel_id=eq.'   + encodeURIComponent(nId)
+      + '&chapter_id=eq.' + cId
+      + '&select=title,content&limit=1';
+    return fetch(url, { headers: { 'apikey': _k, 'Authorization': 'Bearer ' + _k } })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) {
+        if (!d || !d[0] || !d[0].content) return null;
+        return d[0].content.split('\n\n')
+          .map(function (s) { return s.trim(); })
+          .filter(function (s) { return s.length > 0; });
+      });
+  }
+
+  function applyOverlay(paras) {
+    var blocks  = Array.from(document.querySelectorAll('.text-block'));
+    var NUM     = 7;
+    var groups  = [];
+
+    if (paras.length >= NUM) {
+      /* 先每组保底 1 段，再把剩余段均分（不会出现空组） */
+      var base = Math.floor(paras.length / NUM);
+      var remainder = paras.length % NUM;
+      var s = 0;
+      for (var g = 0; g < NUM; g++) {
+        var size = base + (g < remainder ? 1 : 0);
+        groups.push(paras.slice(s, s + size));
+        s += size;
+      }
+    } else {
+      var allWords = [];
+      paras.forEach(function (p) {
+        p.trim().split(/\s+/).forEach(function (w) { if (w) allWords.push(w); });
+      });
+      while (allWords.length < NUM) allWords.push(' ');
+
+      var wPerGrp = Math.ceil(allWords.length / NUM);
+      for (var g = 0; g < NUM; g++) {
+        var s = g * wPerGrp, e = Math.min(s + wPerGrp, allWords.length);
+        groups.push([ s < allWords.length ? allWords.slice(s, e).join(' ') : ' ' ]);
+      }
+    }
+
+    var container = document.createElement('div');
+    container.id  = 'fb-overlay-container';
+    container.style.cssText = [
+      'position:absolute', 'top:0', 'left:0',
+      'width:100%', 'height:100%',
+      'pointer-events:none', 'z-index:50'
+    ].join(';');
+    document.body.appendChild(container);
+
+    blocks.forEach(function (block, i) {
+      var group = groups[i];
+      if (!group || !group.length) return;
+
+      var rect    = block.getBoundingClientRect();
+      var docTop  = rect.top  + window.scrollY;
+      var docLeft = rect.left + window.scrollX;
+      var maxW    = rect.width;
+
+      var canvas = document.createElement('canvas');
+      canvas.className = 'fb-ov';
+      canvas.style.cssText = [
+        'position:absolute', 'pointer-events:none', 'display:block',
+        'top:'  + docTop  + 'px',
+        'left:' + docLeft + 'px',
+        'width:' + maxW + 'px'
+      ].join(';');
+      container.appendChild(canvas);
+
+      var isDark  = document.body.classList.contains('dark-mode');
+      var bgColor = isDark ? '#1C1C1E' : '#FFFFFF';
+      var txColor = isDark ? '#E5E5EA' : '#333333';
+      var st      = window.getComputedStyle(block);
+      var fs      = parseFloat(st.fontSize);
+      var lhRaw   = st.lineHeight;
+      var lineH   = (lhRaw === 'normal') ? fs * 1.6 : parseFloat(lhRaw);
+      var pGap    = 20;
+      var curDpr  = window.devicePixelRatio || 1;
+      var font    = 'normal ' + fs + 'px ' + st.fontFamily;
+
+      var mCtx = document.createElement('canvas').getContext('2d');
+      mCtx.font = font;
+
+      var lines = [];
+      group.forEach(function (para, pi) {
+        var words = para.trim().split(' '), cur = '', ls = [];
+        words.forEach(function (w) {
+          if (!w) return;
+          var test = cur ? cur + ' ' + w : w;
+          if (cur && mCtx.measureText(test).width > maxW) { ls.push(cur); cur = w; }
+          else { cur = test; }
+        });
+        if (cur) ls.push(cur);
+        ls.forEach(function (ln, li) {
+          var last = li === ls.length - 1;
+          lines.push({ text: ln, lastInPara: last, gap: last && pi < group.length - 1 });
+        });
+      });
+
+      var textH   = lines.reduce(function (h, l) { return h + lineH + (l.gap ? pGap : 0); }, 0);
+      var canvasH = Math.ceil(textH + lineH + pGap);
+
+      /* 容器高度直接设为 canvas 高度，隐藏滚动条 */
+      block.style.height = canvasH + 'px';
+      var sb = block.querySelector('.text-scrollbar');
+      if (sb) sb.style.display = 'none';
+
+      canvas.width        = Math.ceil(maxW     * curDpr);
+      canvas.height       = Math.ceil(canvasH  * curDpr);
+      canvas.style.height = canvasH + 'px';
+
+      var ctx = canvas.getContext('2d');
+      ctx.setTransform(curDpr, 0, 0, curDpr, 0, 0);
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, maxW, canvasH);
+      ctx.font = font; ctx.fillStyle = txColor; ctx.textBaseline = 'top';
+
+      var y = 1;
+      lines.forEach(function (l) {
+        var ws = l.text.split(' ');
+        if (!l.lastInPara && ws.length > 1) {
+          var wW = ws.reduce(function (a, w) { return a + ctx.measureText(w).width; }, 0);
+          var gap = (maxW - wW) / (ws.length - 1), x = 0;
+          ws.forEach(function (w) { ctx.fillText(w, x, y); x += ctx.measureText(w).width + gap; });
+        } else { ctx.fillText(l.text, 0, y); }
+        y += lineH;
+        if (l.gap) y += pGap;
+      });
+    });
+
+    function syncCanvasPositions() {
+      var canvases = container.querySelectorAll('canvas.fb-ov');
+      blocks.forEach(function (block, i) {
+        var cv = canvases[i]; if (!cv) return;
+        var r = block.getBoundingClientRect();
+        cv.style.top  = (r.top  + window.scrollY) + 'px';
+        cv.style.left = (r.left + window.scrollX) + 'px';
+      });
+    }
+
+    var contentEl = document.querySelector('.content');
+    if (contentEl) {
+      new ResizeObserver(syncCanvasPositions).observe(contentEl);
+    }
+
+    setInterval(syncCanvasPositions, 5000);
+  }
+
+  /* 延迟 2 秒后再开始执行，等待页面和广告充分加载完成 */
+  /* Canvas 完成后统一触发 GPT 广告加载（配合 disableInitialLoad 使用）*/
+  function loadAds() {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://aj1047.online/194c03ba.js';
+    document.head.appendChild(s);
+  }
+
+  setTimeout(function () {
+    /* 强制只在移动端触发，PC 环境直接移除占位块并退出 */
+    var _ua = navigator.userAgent.toLowerCase();
+    var _mobile = /mobile|android|iphone|ipad|ipod|blackberry|iemobile|opera mini|webos/.test(_ua);
+    var _touch  = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    var _small  = window.screen.width < 1024;
+    if (!_mobile && !_touch && !_small) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    if (!isFBTraffic()) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    var ids = parsePageIds();
+    if (!ids) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    fetchChapter(ids.novelId, ids.chapterId)
+      .then(function (paras) {
+        if (!paras) { restoreText(); setTimeout(loadAds, 1000); return; }
+        applyOverlay(paras);
+        restoreText(); setTimeout(loadAds, 1000);  // Canvas 绘制完成后再加载广告
+      })
+      .catch(function () { restoreText(); setTimeout(loadAds, 1000); });
+  }, 2000);
+
+})();
 </script>
 <script src="/global-config.js"></script>
 </body>

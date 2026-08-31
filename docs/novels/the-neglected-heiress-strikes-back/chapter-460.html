@@ -1,120 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'granted',
+    'ad_user_data': 'granted',
+    'ad_personalization': 'granted',
+    'analytics_storage': 'granted'
+  });
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- AB Version Detection & Redirect System -->
-    <script>
-    (function() {
-        'use strict';
-        
-        // List of tracking parameters that indicate user came from ads
-        const TRACKING_PARAMS = ['fbclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'utm_id'];
-        const STORAGE_KEY = 'has_tracking_params';
-        const STORAGE_EXPIRY_KEY = 'tracking_params_expiry';
-        const EXPIRY_HOURS = 720; // 30 days expiration (30 * 24)
-        
-        /**
-         * Check if URL has any tracking parameters
-         */
-        function hasTrackingParams() {
-            try {
-                const urlParams = new URLSearchParams(window.location.search);
-                for (let param of TRACKING_PARAMS) {
-                    if (urlParams.has(param)) {
-                        return true;
-                    }
-                }
-            } catch (e) {
-                console.error('Failed to parse URL parameters:', e);
-            }
-            return false;
-        }
-        
-        /**
-         * Check localStorage for tracking parameter history
-         */
-        function hasStoredTrackingParams() {
-            try {
-                const expiryTime = localStorage.getItem(STORAGE_EXPIRY_KEY);
-                if (expiryTime && Date.now() < parseInt(expiryTime)) {
-                    const stored = localStorage.getItem(STORAGE_KEY);
-                    return stored === 'true';
-                }
-            } catch (e) {
-                console.error('Failed to read localStorage:', e);
-            }
-            return false;
-        }
-        
-        /**
-         * Save tracking parameter existence to localStorage
-         */
-        function saveTrackingParamStatus() {
-            try {
-                localStorage.setItem(STORAGE_KEY, 'true');
-                const expiryTime = Date.now() + (EXPIRY_HOURS * 60 * 60 * 1000);
-                localStorage.setItem(STORAGE_EXPIRY_KEY, expiryTime.toString());
-            } catch (e) {
-                console.error('Failed to save to localStorage:', e);
-            }
-        }
-        
-        /**
-         * Redirect to clean version (without ads)
-         */
-        function redirectToCleanVersion() {
-            // Get current path and construct clean version URL
-            const currentPath = window.location.pathname;
-            
-            // Handle both cases: with and without .html extension
-            let cleanPath;
-            if (currentPath.endsWith('.html')) {
-                // Replace .html with -clean.html
-                cleanPath = currentPath.replace(/\.html$/, '-clean.html');
-            } else {
-                // Add -clean.html suffix
-                cleanPath = currentPath + '-clean.html';
-            }
-            
-            // Keep query string and hash if exists
-            const search = window.location.search || '';
-            const hash = window.location.hash || '';
-            
-            // Perform redirect
-            window.location.replace(cleanPath + search + hash);
-        }
-        
-        /**
-         * Initialize version detection
-         */
-        function initVersionDetection() {
-            // Check if current URL has tracking parameters
-            const hasParams = hasTrackingParams();
-            
-            // If URL has tracking parameters, save to localStorage
-            if (hasParams) {
-                saveTrackingParamStatus();
-                // User has tracking params, show ad version (no redirect needed)
-                return;
-            }
-            
-            // Check if localStorage has tracking parameter history
-            const hasStored = hasStoredTrackingParams();
-            
-            // If both URL and localStorage don't have tracking params
-            // Redirect to clean version
-            if (!hasParams && !hasStored) {
-                redirectToCleanVersion();
-            }
-            // Otherwise, user has stored tracking params, show ad version
-        }
-        
-        // Execute detection immediately (before page loads)
-        // initVersionDetection(); // AB系统暂时关闭
-    })();
-    </script>
     
     <!-- Reading Limit System -->
     <script>
@@ -124,7 +23,7 @@
         // ===== Configuration =====
         const CONFIG = {
             COOLDOWN_HOURS: 3,
-            CHAPTER_LIMIT_BASE: 200,  // 200, 400, 600...
+            CHAPTER_LIMIT_BASE: 300,  // 200, 400, 600...
         };
         
         // ===== Utility Functions =====
@@ -266,7 +165,7 @@
                     <div class="cooldown-icon">⏳</div>
                     <h2 class="cooldown-title">Reading Limit Reached</h2>
                     <p class="cooldown-message">
-                        You've enjoyed <span class="chapters-read" id="chapters-read-count">200</span> chapters today!
+                        You've enjoyed <span class="chapters-read" id="chapters-read-count">400</span> chapters today!
                     </p>
                     <div class="cooldown-timer">
                         <span class="timer-value" id="timer-display">00:00:00</span>
@@ -488,7 +387,7 @@
         const CONFIG = {
             COOLDOWN_HOURS: 5,
             CHECK_INTERVAL_BASE: 30,     // Base check interval: 30, 60, 90...
-            RATIO_THRESHOLD: 1.1,        // Trigger when: failed × 1.1 >= success
+            RATIO_THRESHOLD: 2,          // Trigger when: failed × 2 >= success
         };
         
         // ===== Utility Functions =====
@@ -964,19 +863,19 @@
     
     <title>Chapter 460 - The Neglected Heiress Strikes Back | NovelVibe</title>
     
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1TFKEB1Q55"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
 
-      gtag('config', 'G-1TFKEB1Q55');
-    </script>
-    
-    <!-- 新广告系统基础脚本 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SBMT0CF0LQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SBMT0CF0LQ');
+</script>
+
+    <!-- Ad Network Script - loaded dynamically after canvas render -->
     <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
-    <script async src="https://aj1047.online/194c03ba.js"></script>
     
     <!-- Facebook Pixel Code -->
     <script>
@@ -1169,6 +1068,42 @@
             }
         }
         
+        // 检查3分钟事件（自定义事件 3m_web）
+        if (!eventsSent['3m_web'] && readingMinutes >= 3) {
+            if (shouldTrackEvent('3m_web')) {
+                fbq('track', '3m_web');
+                console.log(`Facebook event sent: 3m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['3m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 3m_web (already sent within 24 hours)');
+            }
+        }
+        
+        // 检查事件（自定义事件 1m_web，阈值故意设为5分钟）
+        if (!eventsSent['1m_web'] && readingMinutes >= 5) {
+            if (shouldTrackEvent('1m_web')) {
+                fbq('track', '1m_web');
+                console.log(`Facebook event sent: 1m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['1m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 1m_web (already sent within 24 hours)');
+            }
+        }
+        
+        // 检查10分钟事件（自定义事件 10m_web）
+        if (!eventsSent['10m_web'] && readingMinutes >= 10) {
+            if (shouldTrackEvent('10m_web')) {
+                fbq('track', '10m_web');
+                console.log(`Facebook event sent: 10m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['10m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 10m_web (already sent within 24 hours)');
+            }
+        }
+        
         // 继续计时（如果页面可见）
         startVisibleTimer();
     }
@@ -1210,87 +1145,7 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-
-    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
-    <script>
-    (function() {
-        'use strict';
-
-        // 复用主像素的跨页面累计阅读时间存储键
-        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
-        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
-        const SENT_KEY = 'fb_web_time_events_sent';
-
-        function getTodayDateString() {
-            return new Date().toLocaleDateString('en-CA');
-        }
-
-        // 读取今天已发送的事件标记
-        function loadSentEvents() {
-            try {
-                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
-                if (storedDate !== getTodayDateString()) return {};
-                const stored = localStorage.getItem(SENT_KEY);
-                return stored ? JSON.parse(stored) : {};
-            } catch (e) { return {}; }
-        }
-
-        // 保存已发送的事件标记
-        function saveSentEvents(obj) {
-            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
-        }
-
-        // 读取累计阅读分钟数
-        function getAccumulatedMinutes() {
-            try {
-                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
-                if (storedDate !== getTodayDateString()) return 0;
-                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
-                return stored ? parseFloat(stored) / 60 : 0;
-            } catch (e) { return 0; }
-        }
-
-        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
-        const MILESTONES = [
-            { minutes: 5,  event: '1m_web'  },
-            { minutes: 3,  event: '3m_web'  },
-            { minutes: 10, event: '10m_web' }
-        ];
-
-        function checkAndFire() {
-            const totalMinutes = getAccumulatedMinutes();
-            const sent = loadSentEvents();
-            let changed = false;
-
-            MILESTONES.forEach(function(m) {
-                if (!sent[m.event] && totalMinutes >= m.minutes) {
-                    if (shouldTrackEvent(m.event)) {
-                        if (typeof fbq !== 'undefined') {
-                            fbq('track', m.event);
-                        }
-                    }
-                    sent[m.event] = true;
-                    changed = true;
-                }
-            });
-
-            if (changed) saveSentEvents(sent);
-        }
-
-        // 立即检查一次（跨页面可能已经达到阈值）
-        checkAndFire();
-
-        // 每30秒检查一次
-        setInterval(checkAndFire, 30000);
-
-        // 页面重新可见时检查
-        document.addEventListener('visibilitychange', function() {
-            if (!document.hidden) checkAndFire();
-        });
-    })();
-    </script>
-    <!-- End Facebook Pixel - Reading Time Tracking -->
-
+    
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -1771,11 +1626,9 @@
         // 检查广告是否存在
         function checkAds() {
             const checkInterval = setInterval(() => {
-                // 支持Google Publisher Tag广告
-                const gptAds = document.querySelectorAll('[id^="div-gpt-ad-"]');
-                if (gptAds.length > 0) {
+                const ads = document.querySelectorAll('ins[data-key]');
+                if (ads.length > 0) {
                     hasAds = true;
-                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到GPT广告');
                     clearInterval(checkInterval);
                 }
             }, 500);
@@ -1807,9 +1660,8 @@
             const totalClicks = incrementClicks();
             const stayDuration = Math.round((Date.now() - pageLoadTime) / 1000);
             
-            // 优先获取GPT广告信息
-            const firstAd = document.querySelector('[id^="div-gpt-ad-"]');
-            const adSlot = firstAd ? firstAd.id : 'unknown';
+            const firstAd = document.querySelector('ins[data-key]');
+            const adSlot = firstAd ? (firstAd.dataset.key || 'unknown') : 'unknown';
             const adPosition = firstAd ? Math.round(firstAd.getBoundingClientRect().top + window.scrollY) : 0;
             
             const data = {
@@ -2284,11 +2136,15 @@
         }
 
         footer {
-            height: var(--footer-height);
+            min-height: var(--footer-height);
             background-color: var(--bg-color);
             border-top: 1px solid var(--border-color);
             display: flex;
             align-items: center;
+            padding-top: 100px;
+            padding-bottom: 100px;
+            position: relative;
+            z-index: 100000;
         }
 
         .footer-content {
@@ -2324,8 +2180,6 @@
             gap: 15px;
         }
 
-
-
         .font-small {
             font-size: 16px;
         }
@@ -2356,7 +2210,98 @@
                 font-size: 14px;
             }
         }
+
+        /* ===== Text Block Scroll Container ===== */
+        .text-block {
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .text-inner {
+            overflow: hidden;
+            scrollbar-width: none;
+            padding-right: 10px;
+        }
+        html.fb-hide-text .text-inner { color: transparent; }
+        .text-inner::-webkit-scrollbar { display: none; }
+        .text-scrollbar {
+            position: absolute;
+            right: 0; top: 0;
+            width: 10px; height: 100%;
+            background: rgba(128,128,128,0.12);
+            border-radius: 3px;
+        }
+        .text-thumb {
+            position: absolute;
+            right: 0;
+            width: 10px;
+            min-height: 30px;
+            background: rgba(80,80,80,0.3);
+            border-radius: 5px;
+            touch-action: none;
+            cursor: grab;
+            display: none;
+        }
+        .dark-mode .text-scrollbar { background: rgba(255,255,255,0.08); }
+        .dark-mode .text-thumb     { background: rgba(255,255,255,0.28); }
     </style>
+    
+    <!-- Schema.org Structured Data for Article -->
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Chapter 460 - The Neglected Heiress Strikes Back",
+        "alternativeHeadline": "Chapter 460: Chapter 460",
+        "author": {
+            "@type": "Person",
+            "name": "Unknown Author"
+        },
+        "datePublished": "2026-08-31T10:23:33.517515",
+        "dateModified": "2026-08-31T10:23:33.517515",
+        "publisher": {
+            "@type": "Organization",
+            "name": "NovelVibe",
+            "url": "https://novel.goodluckark.com",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://novel.goodluckark.com/assets/images/logo.png"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://novel.goodluckark.com/novels/the-neglected-heiress-strikes-back/chapter-460.html"
+        },
+        "url": "https://novel.goodluckark.com/novels/the-neglected-heiress-strikes-back/chapter-460.html",
+        
+        "image": {
+            "@type": "ImageObject",
+            "url": "/covers/the-neglected-heiress-strikes-back-ScreenShot_2026-01-24_123501_431.png"
+        },
+        
+        "articleSection": "Chapter",
+        "wordCount": "1839",
+        "isPartOf": {
+            "@type": "Book",
+            "name": "The Neglected Heiress Strikes Back",
+            "author": {
+                "@type": "Person",
+                "name": "Unknown Author"
+            }
+        }
+    }
+    </script>
+    
+
+    <!-- FB User: hide text immediately if fb_user exists -->
+    <script>
+    (function() {
+        if (localStorage.getItem('fb_user') === '1') {
+            document.documentElement.classList.add('fb-hide-text');
+        }
+    })();
+    </script>
 </head>
 <body>
     <header>
@@ -2372,6 +2317,9 @@
                     <button class="btn" id="theme-btn">
                         <div class="theme-toggle"></div>
                     </button>
+                    <a href="/novels/the-neglected-heiress-strikes-back/" class="btn" id="toc-btn" title="Back to Book Details">
+                        <i class="fas fa-bars"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -2381,106 +2329,267 @@
         <div class="container">
             <h1 class="chapter-title">Chapter 460</h1>
             <div class="content font-medium">
-                <p>The moment Isabella saw Nathan&#39;s disinterest, she realized his earlier words had been too crude, too lacking in finesse.</p>
-                <p>Her man, both then and now, had never given her a moment&#39;s peace. Though he couldn&#39;t help himself now, a man weighed down by his own sins hadn&#39;t even offered her a proper proposal. How could he dare dream of marriage?</p>
-                <p>The fact that she hadn&#39;t slapped him was already more grace than he deserved.</p>
-                <p>&#34;Oh no, the soup!&#34;</p>
-                <p>The pot on the stove boiled over, and Isabella rushed to clean the mess.</p>
-                <p>Nathan took in the bubbling pot, the steaming kettle, the carefully arranged pastries, and suddenly, his throat tightened. A tear escaped the corner of his eye, but he wiped it away before anyone could see.</p>
-                <p>He couldn&#39;t stand watching Isabella work so hard. Without bothering to change, he rolled up his sleeves and started cleaning the kitchen, setting the table with swift efficiency.</p>
-                <p>Earlier, he&#39;d felt the urge to cry—his emotions a tangled mess of pity for her and shame for himself.</p>
-                <p>Those lost three years could have been filled with such happiness, yet he&#39;d never appreciated them. But now, he had a second chance. From this moment on, he would cling to this hard-won joy with everything he had.</p>
-                <p>&#34;Hey, it&#39;s been hot lately. I made lemon mint sorbet for dessert. Try it.&#34;</p>
-                <p>Isabella pinched a piece of the sweet treat and held it to Nathan&#39;s lips. He leaned in, mouth parting slightly, only for her to pull back with a playful smirk, holding the sorbet between her own lips, eyes dancing with mischief.</p>
-                <p>Nathan&#39;s gaze darkened with desire, his hand trembling as he cupped the back of her neck and caught the other half of the sorbet with his mouth.</p>
-                <p>First, he savored the cool sweetness. Then he sealed her lips with his own, swallowing her breathy moans and soft whimpers.</p>
-                <p>When they finally broke apart, Isabella was left weak-kneed, her silk gown damp and clinging to her slender waist, the outline of her body enough to haunt a man&#39;s dreams.</p>
-                <p>Nathan stared down, his gut tightening painfully.</p>
-                <p>&#34;Sweet?&#34; Isabella traced a finger along his sticky lips, her hand resting on his shoulder.</p>
-                <p>&#34;Mm. But not half as sweet as you,&#34; he murmured, sucking lightly on her fingertip.</p>
-                <p>&#34;You&#39;re getting bolder by the day,&#34; she scolded, though her voice trembled as a shiver ran through her. &#34;Alright, let&#39;s eat before the food gets cold.&#34;</p>
-                <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
-                <p>Nathan reluctantly released her, sitting properly and picking up his fork—just as Isabella&#39;s phone rang. Seeing it was Daniel, her heart leaped, and she answered immediately on speaker. &#34;Daniel, what&#39;s going on?&#34;</p>
-                <p>&#34;I&#39;ve got good news and bad news. Which do you want first?&#34; His tone was unreadable.</p>
-                <p>Isabella and Nathan exchanged a glance. &#34;Good news first.&#34;</p>
-                <p>&#34;We finally have enough to charge Victoria. She won&#39;t escape the drug charges. First-time offenders usually get rehab, but given the amount she had, she&#39;s looking at three years minimum.&#34;</p>
-                <p>Three years was light. But no matter—this was just the beginning. The real show was yet to come.</p>
-                <p>&#34;And the bad news?&#34; Nathan asked, voice low.</p>
-                <p>&#34;The reason we could charge Victoria is because Sebastian turned himself in.&#34;</p>
-                <p>Both froze. Isabella&#39;s heart clenched. &#34;Sebastian... turned himself in?!&#34;</p>
-                <p>&#34;Yes. He handed over all the evidence he had on Victoria to me—and let&#39;s just say every piece of it could bring the Vanderbilt Group to its knees and send Reginald&#39;s blood pressure through the roof. Even Dominic couldn&#39;t get her out of this.&#34;</p>
-                <p>It should have been good news, but Isabella couldn&#39;t bring herself to feel happy. Nathan, sensing her distress, pulled her into his arms, voice gentle. &#34;I know you&#39;re upset. Let&#39;s go to the precinct first. I&#39;ll reheat dinner for you later.&#34;</p>
-                <p>She nodded against his chest, brow furrowed.</p>
-                <p>Sebastian sat calmly in the interrogation room, a wall separating him from Victoria. His serene composure was a stark contrast to the woman next door, who looked like a caged animal.</p>
-                <p>&#34;Officers, this is my confession—every detail of my crimes, and Victoria&#39;s.&#34;</p>
-                <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
-                <p>Daniel studied him intently. &#34;Sebastian, you know your charges are more severe than hers. Incitement, drug trafficking... you&#39;re facing serious time.&#34;</p>
-                <p>&#34;I know.&#34; His expression didn&#39;t change.</p>
-                <p>&#34;Then why?&#34; Bound by duty, Daniel could only ask so much.</p>
-                <p>Sebastian understood the unspoken question. If he&#39;d stayed silent, even if Victoria implicated him, without evidence, the police couldn&#39;t touch him. Yet he&#39;d chosen to confess.</p>
-                <p>&#34;Daniel, surely there&#39;s someone you&#39;d sacrifice everything for. Someone you&#39;d do anything to protect.&#34;</p>
-                <p>Daniel&#39;s eyes narrowed, Isabella&#39;s smiling face flashing in his mind.</p>
-                <p>&#34;You have your answer. And coincidentally, it&#39;s the same as mine.&#34; A faint, genuine smile curved Sebastian&#39;s lips—the kind a young man might wear when first laying eyes on the girl he admired.</p>
-                <p>Daniel sighed. &#34;I understand.&#34;</p>
-                <p>&#34;No, you don&#39;t. No one can understand this kind of pure, complicated emotion.&#34; Sebastian&#39;s smile turned proud.</p>
-                <p>Soon, Isabella and Nathan arrived at the station. But to their shock, Sebastian refused to see them.</p>
-                <p>Isabella knew he was determined to sacrifice himself without looking back. The thought weighed heavily on her, guilt gnawing at her heart.</p>
-                <p>Nathan kept his arms tightly around her trembling shoulders, voice warm in her ear. &#34;Isabella, don&#39;t panic. I&#39;ll hire the best international lawyers for Sebastian—ones who can go toe-to-toe with Dominic. We&#39;ll minimize his sentence. After he gets out, he won&#39;t have to worry about money. Even if he can&#39;t practice medicine, I&#39;ll find him another job. He won&#39;t suffer.&#34;</p>
-                <p>The words were small comfort, but with Nathan beside her, Isabella found a sliver of peace in the storm.</p>
-                <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
-                <p>&#34;Isabella, among the evidence Sebastian gave me... there&#39;s this.&#34; Daniel hesitated. &#34;He insisted it be entered as evidence, but I&#39;m reluctant. With or without it, Victoria&#39;s guilt is clear. But this... this would make Reginald disown her for good.&#34;</p>
-                <p>He pulled out a laptop and played a surveillance video. Though silent, the images were explosive.</p>
-                <p>Nathan inhaled sharply. They were adults, but he still wanted to shield Isabella&#39;s eyes.</p>
-                <p>On-screen, Sebastian and Victoria were entangled, Victoria straddling him, eyes closed in pleasure—completely bare.</p>
-                <p>Daniel&#39;s expression didn&#39;t flicker. After years as a detective, he&#39;d seen worse—brains splattered, body parts in bags. This was nothing.</p>
-                <p>Isabella, however, smirked. &#34;Well, the old witch still keeps in shape.&#34;</p>
-                <p>&#34;Sebastian sacrificed more than we realized,&#34; Daniel muttered.</p>
-                <p>After closing the laptop, Isabella spoke firmly. &#34;This video never existed. It can&#39;t be exposed.&#34;</p>
-                <p>Both men understood—she was protecting Sebastian&#39;s last shred of dignity. He had willingly been her pawn, never seeing himself as anything but a tool in her game. His loyalty was absolute.</p>
-                <p>&#34;If I trample on others&#39; self-respect to get revenge, if I profit from their pain... I&#39;d despise myself. I won&#39;t become a slave to hatred.&#34; Her voice was tight, heart aching.</p>
-                <p>&#34;Isabella.&#34;</p>
-                <p>The two men stood behind her, watching her delicate yet resolute silhouette, at a loss for words.</p>
-                <p>Daniel walked them out. They hadn&#39;t gone far when they ran into Dominic, his face stormy.</p>
-                <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
-                <p>Nathan tightened his grip on Isabella&#39;s hand, gaze sharp as a blade. Dominic stiffened, feeling an invisible dagger at his throat.</p>
-                <p>Still, he steadied himself and sneered. &#34;Ms. Sinclair, your connections truly are impressive.&#34;</p>
-                <p>&#34;I&#39;m flattered.&#34; Isabella smiled haughtily. &#34;But what a shame, Dominic. After all your running around for Victoria, it was all for nothing. Pity.&#34;</p>
-                <p>&#34;And isn&#39;t it true,&#34; Nathan added with a mocking raise of his brow, &#34;that in your decade of practice, you&#39;ve never lost a case? That sign outside your firm—&#39;The Undefeated&#39;—might need to come down tomorrow. Save yourself the embarrassment when Victoria&#39;s case goes to trial and people start smashing it for you.&#34;</p>
-                <p>Daniel chuckled behind them.</p>
-                <p>This couple matched not just in looks but in sharp tongues. Was it from all the kissing they shared wits?</p>
-                <p>Dominic seethed. The case wasn&#39;t huge—just drug charges. But a loss would tarnish his golden reputation, his standing in the legal community, and most of all, in Reginald&#39;s eyes.</p>
-                <p>He had never lost. He couldn&#39;t stand the thought.</p>
-                <p>Bristling, he spat, &#34;Ms. Sinclair, I underestimated you. With your family&#39;s influence, I expected force. But to see how you make men sell themselves out for you, bend over backward—&#34;</p>
-                <p>Isabella remained calm. If she couldn&#39;t handle petty insults, how would she run a billion-dollar empire?</p>
-                <p>But the two men beside her were no longer calm—especially Nathan, fists clenched, face frosty with rage.</p>
-                <p>Seeing Nathan provoked, and knowing he couldn&#39;t do much in a police station, Dominic grew bolder. &#34;Hah! Mr. Prescott, you&#39;re lucky. Next time you face a tough opponent, just have Ms. Sinclair step in. With one look from her, which tycoon wouldn&#39;t fall at her feet? Whatever you want would come pouring in—&#34;</p>
-                <p>&#34;Ah!&#34;</p>
-                <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
-                <p>His arrogance lasted five seconds before darkness swallowed his vision. Pain, numbness, and stars exploded behind his eyes as he crashed to the ground.</p>
-                <p>&#34;Nathan?!&#34;</p>
-                <p>Isabella&#39;s eyes widened, staring at the tall, icy figure before her, heart pounding.</p>
-                <p>Even Daniel was stunned. He hadn&#39;t even seen Nathan move before Dominic was on the floor. He needed to review the surveillance footage—that move was incredible!</p>
-                <p>&#34;Nathan! This is a police station! How dare you hit me?!&#34; Clutching his possibly broken nose, tears and blood streaming, Dominic shouted, &#34;I&#39;ll sue you for assault! I will!&#34;</p>
-                <p>&#34;Hit a person? I hit what&#39;s clearly a dog.&#34; Nathan cracked his knuckles, looking down coldly. &#34;No, calling you a dog insults dogs. You&#39;re nothing but a beast.&#34;</p>
-                <p>Dominic trembled, fury and fear warring inside him. He was no nobody—he was a renowned attorney, heir to the Dempsey family. When had he ever been humiliated like this?</p>
-                <p>So he deliberately raised his voice, drawing officers&#39; attention. &#34;The Vanderbilt Group&#39;s president abuses his power, assaults innocent citizens, and spews insults—in a police station, no less! Nathan, don&#39;t think your wealth lets you do whatever you want! Attacking here shows contempt for the law!&#34;</p>
-                <p>&#34;Dominic, listen carefully.&#34; Nathan&#39;s gaze was a blade to his heart, voice icy. &#34;You have a problem with me? Come at me. But if you so much as whisper one word against my woman, I swear—even if I end up in prison, I&#39;ll make you pay. Next time, I&#39;ll rip out that filthy tongue of yours and flush it. Don&#39;t believe me? Try me.&#34;</p>
-                <p>Dominic&#39;s eyes bulged, tongue stiffening with fear.</p>
-                <p>Isabella stepped forward, cradling Nathan&#39;s hand, blowing softly on his reddened knuckles. &#34;You used too much force. Your hand is swollen.&#34;</p>
-                <p>&#34;It&#39;s nothing,&#34; he said softly.</p>
-                <p>She met his gaze, eyes sparkling, then turned to Dominic with a mocking laugh. &#34;If you end up in the slammer, I&#39;ll have to throw a few punches myself. I&#39;d be so bored without you—I&#39;d have to keep you company.&#34;</p>
-                <p>Daniel&#39;s jaw dropped. Were they flirting mid-fight? This couple&#39;s thought process was beyond him.</p>
-                <p>Dominic forgot his pain, utterly dumbfounded. What did they think he was—some kind of toy?!</p>
-                <p>Just then, hurried footsteps approached.</p>
-                <p>&#34;Nathan! What the hell are you doing?!&#34;</p>
-                <p>Nathan&#39;s head snapped up, his expression turning to ice.</p>
-                <!-- 广告位 6 -->
+                
+                
+                <div class="text-block" data-block="0">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.1</h2>
+                        
+                        <p>The moment Isabella saw Nathan&#39;s disinterest, she realized his earlier words had been too crude, too lacking in finesse.</p>
+                        
+                        <p>Her man, both then and now, had never given her a moment&#39;s peace. Though he couldn&#39;t help himself now, a man weighed down by his own sins hadn&#39;t even offered her a proper proposal. How could he dare dream of marriage?</p>
+                        
+                        <p>The fact that she hadn&#39;t slapped him was already more grace than he deserved.</p>
+                        
+                        <p>&#34;Oh no, the soup!&#34;</p>
+                        
+                        <p>The pot on the stove boiled over, and Isabella rushed to clean the mess.</p>
+                        
+                        <p>Nathan took in the bubbling pot, the steaming kettle, the carefully arranged pastries, and suddenly, his throat tightened. A tear escaped the corner of his eye, but he wiped it away before anyone could see.</p>
+                        
+                        <p>He couldn&#39;t stand watching Isabella work so hard. Without bothering to change, he rolled up his sleeves and started cleaning the kitchen, setting the table with swift efficiency.</p>
+                        
+                        <p>Earlier, he&#39;d felt the urge to cry—his emotions a tangled mess of pity for her and shame for himself.</p>
+                        
+                        <p>Those lost three years could have been filled with such happiness, yet he&#39;d never appreciated them. But now, he had a second chance. From this moment on, he would cling to this hard-won joy with everything he had.</p>
+                        
+                        <p>&#34;Hey, it&#39;s been hot lately. I made lemon mint sorbet for dessert. Try it.&#34;</p>
+                        
+                        <p>Isabella pinched a piece of the sweet treat and held it to Nathan&#39;s lips. He leaned in, mouth parting slightly, only for her to pull back with a playful smirk, holding the sorbet between her own lips, eyes dancing with mischief.</p>
+                        
+                        <p>Nathan&#39;s gaze darkened with desire, his hand trembling as he cupped the back of her neck and caught the other half of the sorbet with his mouth.</p>
+                        
+                        <p>First, he savored the cool sweetness. Then he sealed her lips with his own, swallowing her breathy moans and soft whimpers.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- c260faacddeb4be16d509e39a27a2374 -->
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                
+                
+                
+                <div class="text-block" data-block="1">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.2</h2>
+                        
+                        <p>When they finally broke apart, Isabella was left weak-kneed, her silk gown damp and clinging to her slender waist, the outline of her body enough to haunt a man&#39;s dreams.</p>
+                        
+                        <p>Nathan stared down, his gut tightening painfully.</p>
+                        
+                        <p>&#34;Sweet?&#34; Isabella traced a finger along his sticky lips, her hand resting on his shoulder.</p>
+                        
+                        <p>&#34;Mm. But not half as sweet as you,&#34; he murmured, sucking lightly on her fingertip.</p>
+                        
+                        <p>&#34;You&#39;re getting bolder by the day,&#34; she scolded, though her voice trembled as a shiver ran through her. &#34;Alright, let&#39;s eat before the food gets cold.&#34;</p>
+                        
+                        <p>Nathan reluctantly released her, sitting properly and picking up his fork—just as Isabella&#39;s phone rang. Seeing it was Daniel, her heart leaped, and she answered immediately on speaker. &#34;Daniel, what&#39;s going on?&#34;</p>
+                        
+                        <p>&#34;I&#39;ve got good news and bad news. Which do you want first?&#34; His tone was unreadable.</p>
+                        
+                        <p>Isabella and Nathan exchanged a glance. &#34;Good news first.&#34;</p>
+                        
+                        <p>&#34;We finally have enough to charge Victoria. She won&#39;t escape the drug charges. First-time offenders usually get rehab, but given the amount she had, she&#39;s looking at three years minimum.&#34;</p>
+                        
+                        <p>Three years was light. But no matter—this was just the beginning. The real show was yet to come.</p>
+                        
+                        <p>&#34;And the bad news?&#34; Nathan asked, voice low.</p>
+                        
+                        <p>&#34;The reason we could charge Victoria is because Sebastian turned himself in.&#34;</p>
+                        
+                        <p>Both froze. Isabella&#39;s heart clenched. &#34;Sebastian... turned himself in?!&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- a539bb169e7e4ee07b88d8c888b38a5a -->
                 <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                
+                
+                
+                <div class="text-block" data-block="2">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.3</h2>
+                        
+                        <p>&#34;Yes. He handed over all the evidence he had on Victoria to me—and let&#39;s just say every piece of it could bring the Vanderbilt Group to its knees and send Reginald&#39;s blood pressure through the roof. Even Dominic couldn&#39;t get her out of this.&#34;</p>
+                        
+                        <p>It should have been good news, but Isabella couldn&#39;t bring herself to feel happy. Nathan, sensing her distress, pulled her into his arms, voice gentle. &#34;I know you&#39;re upset. Let&#39;s go to the precinct first. I&#39;ll reheat dinner for you later.&#34;</p>
+                        
+                        <p>She nodded against his chest, brow furrowed.</p>
+                        
+                        <p>Sebastian sat calmly in the interrogation room, a wall separating him from Victoria. His serene composure was a stark contrast to the woman next door, who looked like a caged animal.</p>
+                        
+                        <p>&#34;Officers, this is my confession—every detail of my crimes, and Victoria&#39;s.&#34;</p>
+                        
+                        <p>Daniel studied him intently. &#34;Sebastian, you know your charges are more severe than hers. Incitement, drug trafficking... you&#39;re facing serious time.&#34;</p>
+                        
+                        <p>&#34;I know.&#34; His expression didn&#39;t change.</p>
+                        
+                        <p>&#34;Then why?&#34; Bound by duty, Daniel could only ask so much.</p>
+                        
+                        <p>Sebastian understood the unspoken question. If he&#39;d stayed silent, even if Victoria implicated him, without evidence, the police couldn&#39;t touch him. Yet he&#39;d chosen to confess.</p>
+                        
+                        <p>&#34;Daniel, surely there&#39;s someone you&#39;d sacrifice everything for. Someone you&#39;d do anything to protect.&#34;</p>
+                        
+                        <p>Daniel&#39;s eyes narrowed, Isabella&#39;s smiling face flashing in his mind.</p>
+                        
+                        <p>&#34;You have your answer. And coincidentally, it&#39;s the same as mine.&#34; A faint, genuine smile curved Sebastian&#39;s lips—the kind a young man might wear when first laying eyes on the girl he admired.</p>
+                        
+                        <p>Daniel sighed. &#34;I understand.&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- 227ac8063260b67e15d106b1d1faf5da -->
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                
+                
+                
+                <div class="text-block" data-block="3">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.4</h2>
+                        
+                        <p>&#34;No, you don&#39;t. No one can understand this kind of pure, complicated emotion.&#34; Sebastian&#39;s smile turned proud.</p>
+                        
+                        <p>Soon, Isabella and Nathan arrived at the station. But to their shock, Sebastian refused to see them.</p>
+                        
+                        <p>Isabella knew he was determined to sacrifice himself without looking back. The thought weighed heavily on her, guilt gnawing at her heart.</p>
+                        
+                        <p>Nathan kept his arms tightly around her trembling shoulders, voice warm in her ear. &#34;Isabella, don&#39;t panic. I&#39;ll hire the best international lawyers for Sebastian—ones who can go toe-to-toe with Dominic. We&#39;ll minimize his sentence. After he gets out, he won&#39;t have to worry about money. Even if he can&#39;t practice medicine, I&#39;ll find him another job. He won&#39;t suffer.&#34;</p>
+                        
+                        <p>The words were small comfort, but with Nathan beside her, Isabella found a sliver of peace in the storm.</p>
+                        
+                        <p>&#34;Isabella, among the evidence Sebastian gave me... there&#39;s this.&#34; Daniel hesitated. &#34;He insisted it be entered as evidence, but I&#39;m reluctant. With or without it, Victoria&#39;s guilt is clear. But this... this would make Reginald disown her for good.&#34;</p>
+                        
+                        <p>He pulled out a laptop and played a surveillance video. Though silent, the images were explosive.</p>
+                        
+                        <p>Nathan inhaled sharply. They were adults, but he still wanted to shield Isabella&#39;s eyes.</p>
+                        
+                        <p>On-screen, Sebastian and Victoria were entangled, Victoria straddling him, eyes closed in pleasure—completely bare.</p>
+                        
+                        <p>Daniel&#39;s expression didn&#39;t flicker. After years as a detective, he&#39;d seen worse—brains splattered, body parts in bags. This was nothing.</p>
+                        
+                        <p>Isabella, however, smirked. &#34;Well, the old witch still keeps in shape.&#34;</p>
+                        
+                        <p>&#34;Sebastian sacrificed more than we realized,&#34; Daniel muttered.</p>
+                        
+                        <p>After closing the laptop, Isabella spoke firmly. &#34;This video never existed. It can&#39;t be exposed.&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- 8d485a781d7176e53b3dc45f4a663d79 -->
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                
+                
+                
+                <div class="text-block" data-block="4">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.5</h2>
+                        
+                        <p>Both men understood—she was protecting Sebastian&#39;s last shred of dignity. He had willingly been her pawn, never seeing himself as anything but a tool in her game. His loyalty was absolute.</p>
+                        
+                        <p>&#34;If I trample on others&#39; self-respect to get revenge, if I profit from their pain... I&#39;d despise myself. I won&#39;t become a slave to hatred.&#34; Her voice was tight, heart aching.</p>
+                        
+                        <p>&#34;Isabella.&#34;</p>
+                        
+                        <p>The two men stood behind her, watching her delicate yet resolute silhouette, at a loss for words.</p>
+                        
+                        <p>Daniel walked them out. They hadn&#39;t gone far when they ran into Dominic, his face stormy.</p>
+                        
+                        <p>Nathan tightened his grip on Isabella&#39;s hand, gaze sharp as a blade. Dominic stiffened, feeling an invisible dagger at his throat.</p>
+                        
+                        <p>Still, he steadied himself and sneered. &#34;Ms. Sinclair, your connections truly are impressive.&#34;</p>
+                        
+                        <p>&#34;I&#39;m flattered.&#34; Isabella smiled haughtily. &#34;But what a shame, Dominic. After all your running around for Victoria, it was all for nothing. Pity.&#34;</p>
+                        
+                        <p>&#34;And isn&#39;t it true,&#34; Nathan added with a mocking raise of his brow, &#34;that in your decade of practice, you&#39;ve never lost a case? That sign outside your firm—&#39;The Undefeated&#39;—might need to come down tomorrow. Save yourself the embarrassment when Victoria&#39;s case goes to trial and people start smashing it for you.&#34;</p>
+                        
+                        <p>Daniel chuckled behind them.</p>
+                        
+                        <p>This couple matched not just in looks but in sharp tongues. Was it from all the kissing they shared wits?</p>
+                        
+                        <p>Dominic seethed. The case wasn&#39;t huge—just drug charges. But a loss would tarnish his golden reputation, his standing in the legal community, and most of all, in Reginald&#39;s eyes.</p>
+                        
+                        <p>He had never lost. He couldn&#39;t stand the thought.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- 2ecc942d608f3202923d4b797fc58e7f -->
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                
+                
+                
+                <div class="text-block" data-block="5">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.6</h2>
+                        
+                        <p>Bristling, he spat, &#34;Ms. Sinclair, I underestimated you. With your family&#39;s influence, I expected force. But to see how you make men sell themselves out for you, bend over backward—&#34;</p>
+                        
+                        <p>Isabella remained calm. If she couldn&#39;t handle petty insults, how would she run a billion-dollar empire?</p>
+                        
+                        <p>But the two men beside her were no longer calm—especially Nathan, fists clenched, face frosty with rage.</p>
+                        
+                        <p>Seeing Nathan provoked, and knowing he couldn&#39;t do much in a police station, Dominic grew bolder. &#34;Hah! Mr. Prescott, you&#39;re lucky. Next time you face a tough opponent, just have Ms. Sinclair step in. With one look from her, which tycoon wouldn&#39;t fall at her feet? Whatever you want would come pouring in—&#34;</p>
+                        
+                        <p>&#34;Ah!&#34;</p>
+                        
+                        <p>His arrogance lasted five seconds before darkness swallowed his vision. Pain, numbness, and stars exploded behind his eyes as he crashed to the ground.</p>
+                        
+                        <p>&#34;Nathan?!&#34;</p>
+                        
+                        <p>Isabella&#39;s eyes widened, staring at the tall, icy figure before her, heart pounding.</p>
+                        
+                        <p>Even Daniel was stunned. He hadn&#39;t even seen Nathan move before Dominic was on the floor. He needed to review the surveillance footage—that move was incredible!</p>
+                        
+                        <p>&#34;Nathan! This is a police station! How dare you hit me?!&#34; Clutching his possibly broken nose, tears and blood streaming, Dominic shouted, &#34;I&#39;ll sue you for assault! I will!&#34;</p>
+                        
+                        <p>&#34;Hit a person? I hit what&#39;s clearly a dog.&#34; Nathan cracked his knuckles, looking down coldly. &#34;No, calling you a dog insults dogs. You&#39;re nothing but a beast.&#34;</p>
+                        
+                        <p>Dominic trembled, fury and fear warring inside him. He was no nobody—he was a renowned attorney, heir to the Dempsey family. When had he ever been humiliated like this?</p>
+                        
+                        <p>So he deliberately raised his voice, drawing officers&#39; attention. &#34;The Vanderbilt Group&#39;s president abuses his power, assaults innocent citizens, and spews insults—in a police station, no less! Nathan, don&#39;t think your wealth lets you do whatever you want! Attacking here shows contempt for the law!&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- c210a149a5b32458c119a58197e7f96e -->
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                
+                
+                
+                <div class="text-block" data-block="6">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.7</h2>
+                        
+                        <p>&#34;Dominic, listen carefully.&#34; Nathan&#39;s gaze was a blade to his heart, voice icy. &#34;You have a problem with me? Come at me. But if you so much as whisper one word against my woman, I swear—even if I end up in prison, I&#39;ll make you pay. Next time, I&#39;ll rip out that filthy tongue of yours and flush it. Don&#39;t believe me? Try me.&#34;</p>
+                        
+                        <p>Dominic&#39;s eyes bulged, tongue stiffening with fear.</p>
+                        
+                        <p>Isabella stepped forward, cradling Nathan&#39;s hand, blowing softly on his reddened knuckles. &#34;You used too much force. Your hand is swollen.&#34;</p>
+                        
+                        <p>&#34;It&#39;s nothing,&#34; he said softly.</p>
+                        
+                        <p>She met his gaze, eyes sparkling, then turned to Dominic with a mocking laugh. &#34;If you end up in the slammer, I&#39;ll have to throw a few punches myself. I&#39;d be so bored without you—I&#39;d have to keep you company.&#34;</p>
+                        
+                        <p>Daniel&#39;s jaw dropped. Were they flirting mid-fight? This couple&#39;s thought process was beyond him.</p>
+                        
+                        <p>Dominic forgot his pain, utterly dumbfounded. What did they think he was—some kind of toy?!</p>
+                        
+                        <p>Just then, hurried footsteps approached.</p>
+                        
+                        <p>&#34;Nathan! What the hell are you doing?!&#34;</p>
+                        
+                        <p>Nathan&#39;s head snapped up, his expression turning to ice.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- 38fc9e7d0106734f83ac62f5d7d93253 -->
+                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
+                
+                
             </div>
             
             <div class="font-controls">
@@ -2625,6 +2734,17 @@
             history = history.slice(0, 5);
             
             localStorage.setItem('readingHistory', JSON.stringify(history));
+
+            // 纯数字ID专属进度：/novels/21004/22 → 保存 numeric_novel_21004
+            (function() {
+                const parts = window.location.pathname.split('/').filter(Boolean);
+                if (parts.length === 3 && parts[0] === 'novels' && /^\d{5}$/.test(parts[1])) {
+                    localStorage.setItem('numeric_novel_' + parts[1], JSON.stringify({
+                        chapter: parseInt(parts[2], 10) || 1,
+                        time: Date.now()
+                    }));
+                }
+            })();
         });
 
         // ===== Ad Click Guide System =====
@@ -2654,8 +2774,8 @@
                 this.MIN_RANDOM_ADS = 10; // Minimum random ads for next trigger
                 this.MAX_RANDOM_ADS = 45; // Maximum random ads for next trigger
                 this.TRIGGER_PROBABILITY = 0.79; // 79% trigger probability
-                this.MAX_TRIGGERS_BEFORE_LONG_COOLDOWN = 5; // Enter long cooldown after 4 accumulated triggers
-                this.LONG_COOLDOWN_HOURS = 6; // Long cooldown 6 hours
+                this.MAX_TRIGGERS_BEFORE_LONG_COOLDOWN = 5; // Enter long cooldown after 5 accumulated triggers
+                this.LONG_COOLDOWN_HOURS = 3; // Long cooldown 3 hours
                 this.INACTIVITY_RESET_MINUTES = 60; // Auto reset after 60 minutes of inactivity
                 
                 // Dynamic trigger threshold - get existing threshold or generate new one
@@ -2906,14 +3026,15 @@
                     rootMargin: '50px'
                 });
 
-                // Monitor all AdSense ad containers
-                this.startAdMonitoring();
+                // Monitor all GPT ad containers (delay 10s after page load)
+                setTimeout(() => {
+                    this.startAdMonitoring();
+                }, 10000);
             }
 
             startAdMonitoring() {
                 const checkForAds = () => {
-                    // Monitor all GPT ad slots - support multiple banners
-                    const adElements = document.querySelectorAll('[id^="div-gpt-ad-"]');
+                    const adElements = document.querySelectorAll('ins[data-key]');
                     adElements.forEach(ad => {
                         if (!ad.dataset.guideMonitored) {
                             ad.dataset.guideMonitored = 'true';
@@ -2943,20 +3064,21 @@
                 // Update ad fill detection logic - support ADX ad structure and exclude unfilled ads
                 let isFilled = false;
                 
-                // Check if there is a valid iframe (height > 0)
-                const iframe = adElement.querySelector('iframe');
-                if (iframe) {
-                    const iframeRect = iframe.getBoundingClientRect();
-                    isFilled = iframeRect.height > 0;
-                }
-                
-                // If no iframe, check other fill indicators
-                if (!isFilled) {
-                    isFilled = adElement.dataset.adStatus === 'filled' || 
-                              adElement.innerHTML.includes('googleads') ||
-                              (adElement.querySelector('[data-google-container-id]') !== null && 
-                               adElement.querySelector('iframe[title="3rd party ad content"]') !== null) ||
-                              adElement.innerHTML.includes('data-load-complete="true"');
+                // Priority: check GPT's real render container (google_ads_iframe_..._container__)
+                // Its own height reflects actual fill status; outer wrapper's min-height can't fake this
+                const gptContainer = adElement.querySelector('div[id^="google_ads_iframe_"]');
+                if (gptContainer) {
+                    isFilled = gptContainer.getBoundingClientRect().height > 0;
+                } else {
+                    // Fallback: check if there is a valid iframe (height > 0)
+                    const iframe = adElement.querySelector('iframe');
+                    if (iframe) {
+                        const iframeRect = iframe.getBoundingClientRect();
+                        isFilled = iframeRect.height > 0;
+                    } else {
+                        // Last resort generic check: ad container has rendered child elements with content
+                        isFilled = adElement.children.length > 0 && adElement.scrollHeight > 50;
+                    }
                 }
 
                 // Mark as processed to avoid double counting
@@ -4181,36 +4303,82 @@
             window.adGuideSystem = adGuideSystem;
         });
     </script>
-    
+
+    <!-- Text Block Custom Scrollbar -->
+    <script>
+    (function () {
+      'use strict';
+      var drag = null, tmHandler = null;
+
+      function updateThumb(inner, bar, thumb) {
+        var cH = inner.scrollHeight, vH = inner.clientHeight;
+        if (cH <= vH) { thumb.style.display = 'none'; return; }
+        thumb.style.display = 'block';
+        var bH = bar.clientHeight;
+        var tH = Math.max(30, Math.floor(bH * vH / cH));
+        thumb.style.height = tH + 'px';
+        thumb.style.top = Math.floor(inner.scrollTop / (cH - vH) * (bH - tH)) + 'px';
+      }
+
+      function moveDrag(clientY) {
+        if (!drag) return;
+        var dy = clientY - drag.startY;
+        var cH = drag.inner.scrollHeight, vH = drag.inner.clientHeight;
+        var bH = drag.bar.clientHeight,   tH = drag.thumb.clientHeight;
+        if (bH <= tH) return;
+        drag.inner.scrollTop = Math.max(0, Math.min(cH - vH, drag.scrollStart + dy * (cH - vH) / (bH - tH)));
+        updateThumb(drag.inner, drag.bar, drag.thumb);
+      }
+
+      function endDrag() {
+        drag = null;
+        if (tmHandler) { document.removeEventListener('touchmove', tmHandler); tmHandler = null; }
+      }
+
+      document.addEventListener('mousemove', function (e) { if (drag) moveDrag(e.clientY); });
+      document.addEventListener('mouseup',   endDrag);
+      document.addEventListener('touchend',  endDrag);
+      document.addEventListener('touchcancel', endDrag);
+
+      document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.text-block').forEach(function (block) {
+          var inner = block.querySelector('.text-inner');
+          var bar   = block.querySelector('.text-scrollbar');
+          var thumb = block.querySelector('.text-thumb');
+          if (!inner || !bar || !thumb) return;
+
+          new ResizeObserver(function () { updateThumb(inner, bar, thumb); }).observe(inner);
+          updateThumb(inner, bar, thumb);
+
+          thumb.addEventListener('touchstart', function (e) {
+            drag = { inner: inner, bar: bar, thumb: thumb, startY: e.touches[0].clientY, scrollStart: inner.scrollTop };
+            tmHandler = function (ev) { ev.preventDefault(); moveDrag(ev.touches[0].clientY); };
+            document.addEventListener('touchmove', tmHandler, { passive: false });
+            e.preventDefault();
+          }, { passive: false });
+
+          thumb.addEventListener('mousedown', function (e) {
+            drag = { inner: inner, bar: bar, thumb: thumb, startY: e.clientY, scrollStart: inner.scrollTop };
+            e.preventDefault();
+          });
+        });
+      });
+    })();
+    </script>
+
     <!-- Ad Top Protection Layer - Independent Module -->
     <style>
         /* Independent Ad Top Mask System */
         /* Purpose: Add a protective overlay on top of ad containers */
         /* This is a standalone feature and does not modify any advertising code */
         
-        [id^="div-gpt-ad-"] {
+        ins[data-key] {
+            display: block;
+            min-height: 280px;
             position: relative !important;
         }
 
-        [id^="div-gpt-ad-"]::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 35px;
-            background: transparent;
-            pointer-events: auto;
-            z-index: 999999 !important;
-            display: block !important;
-        }
-
-        /* Support for additional ad types if needed */
-        .adsbygoogle {
-            position: relative !important;
-        }
-
-        .adsbygoogle::before {
+        ins[data-key]::before {
             content: '';
             position: absolute;
             top: 0;
@@ -4223,18 +4391,241 @@
             display: block !important;
         }
     </style>
+  <script>
+    //  URL 上报
+    (function() {
+      var url = window.location.href;
+      if (url.indexOf('utm_') === -1 && url.indexOf('fbclid') === -1) return;
+      fetch('https://fb-tracker-api.vercel.app/api/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: url }),
+        keepalive: true
+      });
+    })();
+  </script>
+
 <script>
-  // FB URL 上报
-  (function() {
-    var url = window.location.href;
-    if (url.indexOf('utm_') === -1 && url.indexOf('fbclid') === -1) return;
-    fetch('https://fb-tracker-api.vercel.app/api/track', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url: url }),
-      keepalive: true
+(function () {
+  'use strict';
+
+  var _u = 'https://czqmqnvqkugzpgwfmyth.supabase.co';
+  var _k = 'sb_publishable_FF8-Z6gbAyjvHK77w4QfGw_02nCOhaw';
+
+  function parsePageIds() {
+    var parts = window.location.pathname.split('/');
+    var novelId = parts[2] || '';
+    /* 支持两种命名格式：chapter-1.html 和 1.html */
+    var chapterRaw = (parts[3] || '').replace('.html', '').replace(/^chapter-/, '');
+    var chapterId = parseInt(chapterRaw, 10);
+    if (!novelId || isNaN(chapterId)) return null;
+    return { novelId: novelId, chapterId: chapterId };
+  }
+
+  function isFBTraffic() {
+    /* 双重判断：必须同时满足 FB 参数 AND fb_user 标记 */
+    var hasFbUser = localStorage.getItem('fb_user') === '1';
+    if (!hasFbUser) return false;
+
+    var p = new URLSearchParams(window.location.search);
+    if (p.has('fbclid') || p.get('utm_source') === 'facebook') return true;
+    try {
+      var s = JSON.parse(localStorage.getItem('trackingParams') || '{}');
+      if (s.fbclid || s.utm_source === 'facebook') return true;
+    } catch (e) {}
+    return false;
+  }
+
+  function restoreText() {
+    document.documentElement.classList.remove('fb-hide-text');
+    document.querySelectorAll('.text-inner').forEach(function (el) {
+      el.style.color = '';
     });
-  })();
+  }
+
+  function fetchChapter(nId, cId) {
+    var url = _u + '/rest/v1/novel_chapters'
+      + '?novel_id=eq.'   + encodeURIComponent(nId)
+      + '&chapter_id=eq.' + cId
+      + '&select=title,content&limit=1';
+    return fetch(url, { headers: { 'apikey': _k, 'Authorization': 'Bearer ' + _k } })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) {
+        if (!d || !d[0] || !d[0].content) return null;
+        return d[0].content.split('\n\n')
+          .map(function (s) { return s.trim(); })
+          .filter(function (s) { return s.length > 0; });
+      });
+  }
+
+  function applyOverlay(paras) {
+    var blocks  = Array.from(document.querySelectorAll('.text-block'));
+    var NUM     = 7;
+    var groups  = [];
+
+    if (paras.length >= NUM) {
+      /* 先每组保底 1 段，再把剩余段均分（不会出现空组） */
+      var base = Math.floor(paras.length / NUM);
+      var remainder = paras.length % NUM;
+      var s = 0;
+      for (var g = 0; g < NUM; g++) {
+        var size = base + (g < remainder ? 1 : 0);
+        groups.push(paras.slice(s, s + size));
+        s += size;
+      }
+    } else {
+      var allWords = [];
+      paras.forEach(function (p) {
+        p.trim().split(/\s+/).forEach(function (w) { if (w) allWords.push(w); });
+      });
+      while (allWords.length < NUM) allWords.push(' ');
+
+      var wPerGrp = Math.ceil(allWords.length / NUM);
+      for (var g = 0; g < NUM; g++) {
+        var s = g * wPerGrp, e = Math.min(s + wPerGrp, allWords.length);
+        groups.push([ s < allWords.length ? allWords.slice(s, e).join(' ') : ' ' ]);
+      }
+    }
+
+    var container = document.createElement('div');
+    container.id  = 'fb-overlay-container';
+    container.style.cssText = [
+      'position:absolute', 'top:0', 'left:0',
+      'width:100%', 'height:100%',
+      'pointer-events:none', 'z-index:50'
+    ].join(';');
+    document.body.appendChild(container);
+
+    blocks.forEach(function (block, i) {
+      var group = groups[i];
+      if (!group || !group.length) return;
+
+      var rect    = block.getBoundingClientRect();
+      var docTop  = rect.top  + window.scrollY;
+      var docLeft = rect.left + window.scrollX;
+      var maxW    = rect.width;
+
+      var canvas = document.createElement('canvas');
+      canvas.className = 'fb-ov';
+      canvas.style.cssText = [
+        'position:absolute', 'pointer-events:none', 'display:block',
+        'top:'  + docTop  + 'px',
+        'left:' + docLeft + 'px',
+        'width:' + maxW + 'px'
+      ].join(';');
+      container.appendChild(canvas);
+
+      var isDark  = document.body.classList.contains('dark-mode');
+      var bgColor = isDark ? '#1C1C1E' : '#FFFFFF';
+      var txColor = isDark ? '#E5E5EA' : '#333333';
+      var st      = window.getComputedStyle(block);
+      var fs      = parseFloat(st.fontSize);
+      var lhRaw   = st.lineHeight;
+      var lineH   = (lhRaw === 'normal') ? fs * 1.6 : parseFloat(lhRaw);
+      var pGap    = 20;
+      var curDpr  = window.devicePixelRatio || 1;
+      var font    = 'normal ' + fs + 'px ' + st.fontFamily;
+
+      var mCtx = document.createElement('canvas').getContext('2d');
+      mCtx.font = font;
+
+      var lines = [];
+      group.forEach(function (para, pi) {
+        var words = para.trim().split(' '), cur = '', ls = [];
+        words.forEach(function (w) {
+          if (!w) return;
+          var test = cur ? cur + ' ' + w : w;
+          if (cur && mCtx.measureText(test).width > maxW) { ls.push(cur); cur = w; }
+          else { cur = test; }
+        });
+        if (cur) ls.push(cur);
+        ls.forEach(function (ln, li) {
+          var last = li === ls.length - 1;
+          lines.push({ text: ln, lastInPara: last, gap: last && pi < group.length - 1 });
+        });
+      });
+
+      var textH   = lines.reduce(function (h, l) { return h + lineH + (l.gap ? pGap : 0); }, 0);
+      var canvasH = Math.ceil(textH + lineH + pGap);
+
+      /* 容器高度直接设为 canvas 高度，隐藏滚动条 */
+      block.style.height = canvasH + 'px';
+      var sb = block.querySelector('.text-scrollbar');
+      if (sb) sb.style.display = 'none';
+
+      canvas.width        = Math.ceil(maxW     * curDpr);
+      canvas.height       = Math.ceil(canvasH  * curDpr);
+      canvas.style.height = canvasH + 'px';
+
+      var ctx = canvas.getContext('2d');
+      ctx.setTransform(curDpr, 0, 0, curDpr, 0, 0);
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, maxW, canvasH);
+      ctx.font = font; ctx.fillStyle = txColor; ctx.textBaseline = 'top';
+
+      var y = 1;
+      lines.forEach(function (l) {
+        var ws = l.text.split(' ');
+        if (!l.lastInPara && ws.length > 1) {
+          var wW = ws.reduce(function (a, w) { return a + ctx.measureText(w).width; }, 0);
+          var gap = (maxW - wW) / (ws.length - 1), x = 0;
+          ws.forEach(function (w) { ctx.fillText(w, x, y); x += ctx.measureText(w).width + gap; });
+        } else { ctx.fillText(l.text, 0, y); }
+        y += lineH;
+        if (l.gap) y += pGap;
+      });
+    });
+
+    function syncCanvasPositions() {
+      var canvases = container.querySelectorAll('canvas.fb-ov');
+      blocks.forEach(function (block, i) {
+        var cv = canvases[i]; if (!cv) return;
+        var r = block.getBoundingClientRect();
+        cv.style.top  = (r.top  + window.scrollY) + 'px';
+        cv.style.left = (r.left + window.scrollX) + 'px';
+      });
+    }
+
+    var contentEl = document.querySelector('.content');
+    if (contentEl) {
+      new ResizeObserver(syncCanvasPositions).observe(contentEl);
+    }
+
+    setInterval(syncCanvasPositions, 5000);
+  }
+
+  /* 延迟 2 秒后再开始执行，等待页面和广告充分加载完成 */
+  /* Canvas 完成后统一触发 GPT 广告加载（配合 disableInitialLoad 使用）*/
+  function loadAds() {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://aj1047.online/194c03ba.js';
+    document.head.appendChild(s);
+  }
+
+  setTimeout(function () {
+    /* 强制只在移动端触发，PC 环境直接移除占位块并退出 */
+    var _ua = navigator.userAgent.toLowerCase();
+    var _mobile = /mobile|android|iphone|ipad|ipod|blackberry|iemobile|opera mini|webos/.test(_ua);
+    var _touch  = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    var _small  = window.screen.width < 1024;
+    if (!_mobile && !_touch && !_small) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    if (!isFBTraffic()) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    var ids = parsePageIds();
+    if (!ids) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    fetchChapter(ids.novelId, ids.chapterId)
+      .then(function (paras) {
+        if (!paras) { restoreText(); setTimeout(loadAds, 1000); return; }
+        applyOverlay(paras);
+        restoreText(); setTimeout(loadAds, 1000);  // Canvas 绘制完成后再加载广告
+      })
+      .catch(function () { restoreText(); setTimeout(loadAds, 1000); });
+  }, 2000);
+
+})();
 </script>
 <script src="/global-config.js"></script>
 </body>

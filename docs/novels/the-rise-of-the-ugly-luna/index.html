@@ -15,15 +15,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Rise Of The Ugly Luna - NovelVibe</title>
     
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-62HR245J7Y"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+    <meta name="robots" content="noindex">
+    
 
-      gtag('config', 'G-62HR245J7Y');
-    </script>
     
     <!-- Google Publisher Tag (GPT) -->
     <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
@@ -36,6 +30,16 @@
       });
     </script>
     
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SBMT0CF0LQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SBMT0CF0LQ');
+</script>
+
     <!-- Facebook Pixel Code -->
     <script>
     !function(f,b,e,v,n,t,s)
@@ -77,171 +81,6 @@
     src="https://www.facebook.com/tr?id=1355356909503023&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    
-    <!-- 追踪参数保持系统 -->
-    <script>
-    (function() {
-        'use strict';
-        
-        // 需要保持的追踪参数列表
-        const TRACKING_PARAMS = ['fbclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'utm_id'];
-        const STORAGE_KEY = 'tracking_params';
-        const STORAGE_EXPIRY_KEY = 'tracking_params_expiry';
-        const EXPIRY_HOURS = 24; // 24小时过期
-        
-        /**
-         * 从URL中提取追踪参数
-         */
-        function extractTrackingParams(url) {
-            const params = {};
-            try {
-                const urlObj = new URL(url);
-                TRACKING_PARAMS.forEach(param => {
-                    const value = urlObj.searchParams.get(param);
-                    if (value) {
-                        params[param] = value;
-                    }
-                });
-            } catch (e) {
-                console.error('URL解析失败:', e);
-            }
-            return params;
-        }
-        
-        /**
-         * 保存追踪参数到 localStorage
-         */
-        function saveTrackingParams(params) {
-            if (Object.keys(params).length === 0) return;
-            
-            try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(params));
-                const expiryTime = Date.now() + (EXPIRY_HOURS * 60 * 60 * 1000);
-                localStorage.setItem(STORAGE_EXPIRY_KEY, expiryTime.toString());
-                console.log('追踪参数已保存:', params);
-            } catch (e) {
-                console.error('保存追踪参数失败:', e);
-            }
-        }
-        
-        /**
-         * 从 localStorage 读取追踪参数
-         */
-        function loadTrackingParams() {
-            try {
-                const expiryTime = localStorage.getItem(STORAGE_EXPIRY_KEY);
-                if (expiryTime && Date.now() > parseInt(expiryTime)) {
-                    // 已过期，清除
-                    localStorage.removeItem(STORAGE_KEY);
-                    localStorage.removeItem(STORAGE_EXPIRY_KEY);
-                    console.log('追踪参数已过期，已清除');
-                    return {};
-                }
-                
-                const stored = localStorage.getItem(STORAGE_KEY);
-                if (stored) {
-                    const params = JSON.parse(stored);
-                    console.log('从存储加载追踪参数:', params);
-                    return params;
-                }
-            } catch (e) {
-                console.error('读取追踪参数失败:', e);
-            }
-            return {};
-        }
-        
-        /**
-         * 为链接添加追踪参数
-         */
-        function addTrackingParamsToUrl(url, params) {
-            if (Object.keys(params).length === 0) return url;
-            
-            try {
-                const urlObj = new URL(url, window.location.origin);
-                
-                // 只处理同域名的链接
-                if (urlObj.origin !== window.location.origin) {
-                    return url;
-                }
-                
-                // 添加参数
-                Object.keys(params).forEach(key => {
-                    if (!urlObj.searchParams.has(key)) {
-                        urlObj.searchParams.set(key, params[key]);
-                    }
-                });
-                
-                return urlObj.toString();
-            } catch (e) {
-                console.error('添加追踪参数失败:', e);
-                return url;
-            }
-        }
-        
-        /**
-         * 处理页面上的所有链接
-         */
-        function processPageLinks(params) {
-            if (Object.keys(params).length === 0) return;
-            
-            // 处理所有 <a> 标签
-            const links = document.querySelectorAll('a[href]');
-            links.forEach(link => {
-                const href = link.getAttribute('href');
-                if (href && !href.startsWith('#') && !href.startsWith('javascript:')) {
-                    const newHref = addTrackingParamsToUrl(href, params);
-                    if (newHref !== href) {
-                        link.setAttribute('href', newHref);
-                    }
-                }
-            });
-            
-            console.log(`已处理 ${links.length} 个链接`);
-        }
-        
-        /**
-         * 初始化追踪参数系统
-         */
-        function initTrackingSystem() {
-            // 1. 检查当前URL是否有新的追踪参数
-            const currentParams = extractTrackingParams(window.location.href);
-            
-            // 2. 如果有新参数，保存它们（新参数优先级更高）
-            if (Object.keys(currentParams).length > 0) {
-                saveTrackingParams(currentParams);
-                console.log('检测到新的追踪参数，已更新存储');
-            }
-            
-            // 3. 加载存储的参数（可能是刚保存的新参数，也可能是之前的旧参数）
-            const storedParams = loadTrackingParams();
-            
-            // 4. 如果有参数需要保持，处理页面上的所有链接
-            if (Object.keys(storedParams).length > 0) {
-                // 等待 DOM 完全加载
-                if (document.readyState === 'loading') {
-                    document.addEventListener('DOMContentLoaded', () => {
-                        processPageLinks(storedParams);
-                    });
-                } else {
-                    processPageLinks(storedParams);
-                }
-                
-                // 监听动态添加的链接
-                const observer = new MutationObserver(() => {
-                    processPageLinks(storedParams);
-                });
-                
-                observer.observe(document.body, {
-                    childList: true,
-                    subtree: true
-                });
-            }
-        }
-        
-        // 立即执行初始化
-        initTrackingSystem();
-    })();
-    </script>
     
     <!-- 页面访问统计代码 -->
     <script>
@@ -793,6 +632,40 @@
     
     <!-- Schema.org Structured Data for Book -->
     
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Book",
+        "name": "The Rise Of The Ugly Luna",
+        "author": {
+            "@type": "Person",
+            "name": "Unknown Author"
+        },
+        "description": "Lyric had spent her life being hated. Bullied for her scarred face and hated by everyone-including her own mate-she was always told she was ugly. Her mate only kept her around to gain territory, and the moment he got what he wanted, he rejected her, leaving her broken and alone. Then, she met him. The first man to call her beautiful. The first man to show her what it felt like to be loved. It was only one night, but it changed everything For Lyric, he was a saint, a savior. For him, she was the only woman that had ever made him cum in bed-a problem he had been battling for years. Lyric thought her life would finally be different, but like everyone else in her life, he lied. And when she found out who he really was, she realized he wasn&#39;t just dangerous-he was the kind of man you don&#39;t escape from. Lyric wanted to run. She wanted freedom. But she desired to navigate her way and take back her respect, to rise above the ashes.
+Eventually,she was forced into a dark world she didn&#39;t wish to get involved with",
+        "genre": "Romance, Werewolf",
+        "url": "https://novel.goodluckark.com/novels/the-rise-of-the-ugly-luna/",
+        
+        "image": "/covers/the-rise-of-the-ugly-luna-ScreenShot_2025-10-13_134429_030.png",
+        
+        "datePublished": "2026-08-31T10:22:59.250689",
+        "dateModified": "2026-08-31T10:22:59.250689",
+        "publisher": {
+            "@type": "Organization",
+            "name": "NovelVibe",
+            "url": "https://novel.goodluckark.com"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.5",
+            "bestRating": "5",
+            "worstRating": "1",
+            "ratingCount": "100"
+        },
+        "numberOfPages": "2410"
+    }
+    </script>
+    
 </head>
 <body>
     <!-- 顶部导航 -->
@@ -824,23 +697,6 @@
             <div class="book-info">
                 <h1 class="book-title">The Rise Of The Ugly Luna</h1>
                 <p class="book-author">By Unknown Author</p>
-                
-                <div class="book-meta">
-                    
-                    <div class="meta-item">Werewolf</div>
-                    
-                    <div class="meta-item">Romance</div>
-                    
-                    
-                    <div class="meta-item">4.5 ★★★★★</div>
-                    
-                    
-                    <div class="meta-item">completed</div>
-                    
-                    
-                    <div class="meta-item">241 Chapters</div>
-                    
-                </div>
                 
                 
                 <p class="description-text">
@@ -890,7 +746,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
         
         <div class="chapters-container">
             <div class="chapters-header">
-                <h2 class="section-title">Chapters (241)</h2>
+                <h2 class="section-title">Chapters</h2>
                 <div class="chapters-filter">
                     <button class="filter-btn active">All</button>
                     <button class="filter-btn">Free</button>
@@ -910,7 +766,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 1</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -924,7 +780,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 2</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -938,7 +794,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 3</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -952,7 +808,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 4</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -966,7 +822,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 5</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -980,7 +836,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 6</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -994,7 +850,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 7</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1008,7 +864,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 8</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1022,7 +878,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 9</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1036,7 +892,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 10</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1050,7 +906,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 11</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1064,7 +920,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 12</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1078,7 +934,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 13</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1092,7 +948,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 14</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1106,7 +962,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 15</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1120,7 +976,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 16</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1134,7 +990,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 17</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1148,7 +1004,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 18</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1162,7 +1018,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 19</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1176,7 +1032,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 20</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1190,7 +1046,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 21</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1204,7 +1060,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 22</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1218,7 +1074,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 23</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1232,7 +1088,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 24</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1246,7 +1102,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 25</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1260,7 +1116,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 26</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1274,7 +1130,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 27</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1288,7 +1144,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 28</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1302,7 +1158,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 29</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1316,7 +1172,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 30</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1330,7 +1186,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 31</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1344,7 +1200,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 32</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1358,7 +1214,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 33</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1372,7 +1228,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 34</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1386,7 +1242,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 35</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1400,7 +1256,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 36</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1414,7 +1270,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 37</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1428,7 +1284,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 38</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1442,7 +1298,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 39</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1456,7 +1312,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 40</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1470,7 +1326,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 41</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1484,7 +1340,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 42</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1498,7 +1354,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 43</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1512,7 +1368,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 44</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1526,7 +1382,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 45</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1540,7 +1396,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 46</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1554,7 +1410,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 47</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1568,7 +1424,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 48</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1582,7 +1438,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 49</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1596,7 +1452,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 50</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1610,7 +1466,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 51</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1624,7 +1480,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 52</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1638,7 +1494,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 53</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1652,7 +1508,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 54</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1666,7 +1522,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 55</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1680,7 +1536,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 56</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1694,7 +1550,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 57</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1708,7 +1564,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 58</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1722,7 +1578,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 59</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1736,7 +1592,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 60</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1750,7 +1606,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 61</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1764,7 +1620,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 62</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1778,7 +1634,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 63</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1792,7 +1648,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 64</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1806,7 +1662,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 65</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1820,7 +1676,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 66</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1834,7 +1690,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 67</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1848,7 +1704,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 68</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1862,7 +1718,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 69</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1876,7 +1732,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 70</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1890,7 +1746,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 71</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1904,7 +1760,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 72</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1918,7 +1774,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 73</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1932,7 +1788,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 74</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1946,7 +1802,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 75</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1960,7 +1816,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 76</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1974,7 +1830,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 77</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -1988,7 +1844,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 78</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2002,7 +1858,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 79</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2016,7 +1872,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 80</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2030,7 +1886,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 81</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2044,7 +1900,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 82</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2058,7 +1914,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 83</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2072,7 +1928,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 84</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2086,7 +1942,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 85</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2100,7 +1956,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 86</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2114,7 +1970,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 87</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2128,7 +1984,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 88</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2142,7 +1998,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 89</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2156,7 +2012,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 90</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2170,7 +2026,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 91</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2184,7 +2040,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 92</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2198,7 +2054,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 93</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2212,7 +2068,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 94</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2226,7 +2082,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 95</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2240,7 +2096,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 96</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2254,7 +2110,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 97</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2268,7 +2124,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 98</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2282,7 +2138,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 99</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2296,7 +2152,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 100</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2310,7 +2166,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 101</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2324,7 +2180,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 102</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2338,7 +2194,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 103</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2352,7 +2208,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 104</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2366,7 +2222,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 105</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2380,7 +2236,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 106</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2394,7 +2250,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 107</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2408,7 +2264,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 108</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2422,7 +2278,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 109</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2436,7 +2292,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 110</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2450,7 +2306,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 111</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2464,7 +2320,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 112</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2478,7 +2334,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 113</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2492,7 +2348,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 114</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2506,7 +2362,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 115</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2520,7 +2376,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 116</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2534,7 +2390,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 117</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2548,7 +2404,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 118</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2562,7 +2418,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 119</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2576,7 +2432,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 120</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2590,7 +2446,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 121</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2604,7 +2460,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 122</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2618,7 +2474,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 123</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2632,7 +2488,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 124</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2646,7 +2502,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 125</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2660,7 +2516,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 126</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2674,7 +2530,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 127</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2688,7 +2544,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 128</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2702,7 +2558,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 129</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2716,7 +2572,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 130</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2730,7 +2586,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 131</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2744,7 +2600,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 132</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2758,7 +2614,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 133</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2772,7 +2628,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 134</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2786,7 +2642,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 135</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2800,7 +2656,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 136</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2814,7 +2670,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 137</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2828,7 +2684,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 138</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2842,7 +2698,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 139</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2856,7 +2712,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 140</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2870,7 +2726,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 141</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2884,7 +2740,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 142</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2898,7 +2754,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 143</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2912,7 +2768,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 144</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2926,7 +2782,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 145</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2940,7 +2796,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 146</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2954,7 +2810,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 147</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2968,7 +2824,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 148</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2982,7 +2838,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 148</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -2996,7 +2852,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 149</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3010,7 +2866,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 150</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3024,7 +2880,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 151</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3038,7 +2894,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 152</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3052,7 +2908,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 153</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3066,7 +2922,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 154</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3080,7 +2936,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 155</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3094,7 +2950,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 156</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3108,7 +2964,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 157</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3122,7 +2978,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 158</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3136,7 +2992,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 159</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3150,7 +3006,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 160</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3164,7 +3020,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 161</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3178,7 +3034,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 162</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3192,7 +3048,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 163</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3206,7 +3062,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 164</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3220,7 +3076,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 165</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3234,7 +3090,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 166</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3248,7 +3104,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 167</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3262,7 +3118,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 168</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3276,7 +3132,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 169</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3290,7 +3146,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 170</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3304,7 +3160,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 171</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3318,7 +3174,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 172</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3332,7 +3188,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 173</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3346,7 +3202,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 174</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3360,7 +3216,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 175</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3374,7 +3230,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 176</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3388,7 +3244,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 177</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3402,7 +3258,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 178</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3416,7 +3272,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 179</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3430,7 +3286,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 180</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3444,7 +3300,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 181</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3458,7 +3314,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 182</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3472,7 +3328,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 183</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3486,7 +3342,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 184</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3500,7 +3356,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 185</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3514,7 +3370,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 186</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3528,7 +3384,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 187</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3542,7 +3398,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 188</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3556,7 +3412,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 189</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3570,7 +3426,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 190</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3584,7 +3440,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 191</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3598,7 +3454,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 192</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3612,7 +3468,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 193</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3626,7 +3482,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 194</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3640,7 +3496,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 195</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3654,7 +3510,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 196</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3668,7 +3524,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 197</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3682,7 +3538,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 198</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3696,7 +3552,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 199</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3710,7 +3566,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 200</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3724,7 +3580,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 201</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3738,7 +3594,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 202</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3752,7 +3608,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 203</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3766,7 +3622,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 204</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3780,7 +3636,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 205</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3794,7 +3650,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 206</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3808,7 +3664,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 207</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3822,7 +3678,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 208</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3836,7 +3692,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 209</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3850,7 +3706,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 210</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3864,7 +3720,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 211</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3878,7 +3734,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 212</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3892,7 +3748,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 213</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3906,7 +3762,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 214</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3920,7 +3776,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 215</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3934,7 +3790,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 216</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3948,7 +3804,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 217</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3962,7 +3818,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 218</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3976,7 +3832,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 219</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -3990,7 +3846,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 220</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -4004,7 +3860,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 221</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -4018,7 +3874,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 222</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -4032,7 +3888,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 223</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -4046,7 +3902,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 224</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -4060,7 +3916,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 225</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -4074,7 +3930,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 226</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -4088,7 +3944,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 227</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -4102,7 +3958,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 228</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -4116,7 +3972,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 229</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -4130,7 +3986,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 230</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -4144,7 +4000,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 231</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -4158,7 +4014,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 232</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -4172,7 +4028,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 233</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -4186,7 +4042,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 234</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -4200,7 +4056,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 235</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -4214,7 +4070,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 236</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -4228,7 +4084,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 237</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -4242,7 +4098,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 238</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -4256,7 +4112,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 239</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -4270,7 +4126,7 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                             <span class="chapter-title">Chapter 240</span>
                         </div>
                         
-                        <span class="chapter-date">2026-07-13</span>
+                        <span class="chapter-date">2026-08-31</span>
                         
                     </a>
                 </li>
@@ -4299,13 +4155,158 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
     </div>
 
     <script>
+        // ===== Facebook Tracking Parameters Preservation System =====
+        
+        const TRACKING_PARAMS = [
+            'fbclid', 'utm_source', 'utm_medium', 'utm_campaign', 
+            'utm_term', 'utm_content', 'utm_id', 'gclid', 'msclkid', 'ttclid'
+        ];
+        
+        function extractTrackingParams(url) {
+            const urlObj = new URL(url, window.location.origin);
+            const params = {};
+            let hasParams = false;
+            
+            TRACKING_PARAMS.forEach(param => {
+                const value = urlObj.searchParams.get(param);
+                if (value) {
+                    params[param] = value;
+                    hasParams = true;
+                }
+            });
+            
+            return hasParams ? params : null;
+        }
+        
+        function saveCurrentTrackingParams() {
+            const currentParams = extractTrackingParams(window.location.href);
+            
+            if (currentParams) {
+                localStorage.setItem('trackingParams', JSON.stringify(currentParams));
+                localStorage.setItem('trackingParamsTimestamp', Date.now().toString());
+                console.log('📊 [小说页] 保存新的追踪参数:', currentParams);
+                return true;
+            }
+            
+            return false;
+        }
+        
+        function getStoredTrackingParams() {
+            try {
+                const paramsStr = localStorage.getItem('trackingParams');
+                const timestamp = localStorage.getItem('trackingParamsTimestamp');
+                
+                if (!paramsStr || !timestamp) return null;
+                
+                const age = Date.now() - parseInt(timestamp);
+                const twentyFourHours = 24 * 60 * 60 * 1000;
+                
+                if (age > twentyFourHours) {
+                    localStorage.removeItem('trackingParams');
+                    localStorage.removeItem('trackingParamsTimestamp');
+                    return null;
+                }
+                
+                return JSON.parse(paramsStr);
+            } catch (error) {
+                return null;
+            }
+        }
+        
+        function addTrackingParams(url) {
+            try {
+                const urlObj = new URL(url, window.location.origin);
+                
+                const hasExistingParams = TRACKING_PARAMS.some(param => 
+                    urlObj.searchParams.has(param)
+                );
+                
+                if (hasExistingParams) {
+                    return url;
+                }
+                
+                const storedParams = getStoredTrackingParams();
+                
+                if (storedParams) {
+                    Object.keys(storedParams).forEach(key => {
+                        urlObj.searchParams.set(key, storedParams[key]);
+                    });
+                    return urlObj.toString();
+                }
+                
+                return url;
+            } catch (error) {
+                return url;
+            }
+        }
+        
+        function initTrackingSystem() {
+            saveCurrentTrackingParams();
+            
+            // 为所有章节链接添加追踪参数（兼容 /chapter-N 和纯数字 /N 两种URL格式）
+            document.querySelectorAll('a.chapter-link, a#start-reading-btn').forEach(link => {
+                if (link.href) {
+                    const originalHref = link.href;
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        window.location.href = addTrackingParams(originalHref);
+                    });
+                }
+            });
+            
+            console.log('📊 [小说页] 追踪参数系统已初始化');
+        }
+        
+        document.addEventListener('DOMContentLoaded', initTrackingSystem);
+
         // 阅读历史记录管理
         document.addEventListener('DOMContentLoaded', function() {
             const novelTitle = 'The Rise Of The Ugly Luna';
             const totalChapters = 241;
             
             // 加载并显示阅读历史
-            loadReadingHistory();
+            // 纯数字ID页面：按 ID 独立匹配，跳过通用标题历史避免跨ID污染
+            const _urlParts = window.location.pathname.split('/').filter(Boolean);
+            const _isNumericId = _urlParts.length === 2 && _urlParts[0] === 'novels' && /^\d{5}$/.test(_urlParts[1]);
+
+            if (!_isNumericId) {
+                loadReadingHistory();
+            }
+
+            // 纯数字ID专属进度：优先覆盖通用历史
+            (function() {
+                const parts = _urlParts;
+                if (_isNumericId) {
+                    const sourceId = parts[1];
+
+                    // 从 Supabase 读取 novel_name，写入 h1 书名
+                    (function() {
+                        var _u = 'https://czqmqnvqkugzpgwfmyth.supabase.co';
+                        var _k = 'sb_publishable_FF8-Z6gbAyjvHK77w4QfGw_02nCOhaw';
+                        var url = _u + '/rest/v1/novel_chapters'
+                            + '?novel_id=eq.' + encodeURIComponent(sourceId)
+                            + '&select=novel_name&limit=1';
+                        fetch(url, { headers: { 'apikey': _k, 'Authorization': 'Bearer ' + _k } })
+                            .then(function(r) { return r.ok ? r.json() : null; })
+                            .then(function(d) {
+                                if (d && d[0] && d[0].novel_name) {
+                                    var h1 = document.querySelector('.book-title');
+                                    if (h1) h1.textContent = d[0].novel_name;
+                                }
+                            })
+                            .catch(function() {});
+                    })();
+
+                    try {
+                        const saved = JSON.parse(localStorage.getItem('numeric_novel_' + sourceId) || 'null');
+                        if (saved && saved.chapter > 0) {
+                            const historyData = { currentChapter: saved.chapter, lastRead: saved.time };
+                            showReadingHistory(historyData);
+                            updateChapterStatuses(historyData);
+                        }
+                    } catch(e) {}
+                }
+            })();
             
             function loadReadingHistory() {
                 const history = JSON.parse(localStorage.getItem('readingHistory') || '[]');
@@ -4352,10 +4353,14 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                     
                     document.getElementById('last-read-time').textContent = timeText;
                     
-                    // 设置继续阅读按钮链接
+                    // 设置继续阅读按钮链接，并添加追踪参数
                     const chapterUrl = findChapterUrl(historyData.currentChapter);
                     if (chapterUrl) {
                         continueBtn.href = chapterUrl;
+                        continueBtn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            window.location.href = addTrackingParams(chapterUrl);
+                        });
                     }
                 }
             }
@@ -4437,6 +4442,11 @@ Eventually,she was forced into a dark world she didn&#39;t wish to get involved 
                 });
             }
             
+            // fb_user 标记：用户在本页点击任意按钮即注入，chapter页凭此判断
+            document.addEventListener('click', function () {
+                localStorage.setItem('fb_user', '1');
+            }, { once: true });
+
             // 章节点击效果
             const chapterItems = document.querySelectorAll('.chapter-item a');
             chapterItems.forEach(item => {

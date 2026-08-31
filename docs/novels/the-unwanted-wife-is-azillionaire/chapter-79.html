@@ -1,120 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'granted',
+    'ad_user_data': 'granted',
+    'ad_personalization': 'granted',
+    'analytics_storage': 'granted'
+  });
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- AB Version Detection & Redirect System -->
-    <script>
-    (function() {
-        'use strict';
-        
-        // List of tracking parameters that indicate user came from ads
-        const TRACKING_PARAMS = ['fbclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'utm_id'];
-        const STORAGE_KEY = 'has_tracking_params';
-        const STORAGE_EXPIRY_KEY = 'tracking_params_expiry';
-        const EXPIRY_HOURS = 720; // 30 days expiration (30 * 24)
-        
-        /**
-         * Check if URL has any tracking parameters
-         */
-        function hasTrackingParams() {
-            try {
-                const urlParams = new URLSearchParams(window.location.search);
-                for (let param of TRACKING_PARAMS) {
-                    if (urlParams.has(param)) {
-                        return true;
-                    }
-                }
-            } catch (e) {
-                console.error('Failed to parse URL parameters:', e);
-            }
-            return false;
-        }
-        
-        /**
-         * Check localStorage for tracking parameter history
-         */
-        function hasStoredTrackingParams() {
-            try {
-                const expiryTime = localStorage.getItem(STORAGE_EXPIRY_KEY);
-                if (expiryTime && Date.now() < parseInt(expiryTime)) {
-                    const stored = localStorage.getItem(STORAGE_KEY);
-                    return stored === 'true';
-                }
-            } catch (e) {
-                console.error('Failed to read localStorage:', e);
-            }
-            return false;
-        }
-        
-        /**
-         * Save tracking parameter existence to localStorage
-         */
-        function saveTrackingParamStatus() {
-            try {
-                localStorage.setItem(STORAGE_KEY, 'true');
-                const expiryTime = Date.now() + (EXPIRY_HOURS * 60 * 60 * 1000);
-                localStorage.setItem(STORAGE_EXPIRY_KEY, expiryTime.toString());
-            } catch (e) {
-                console.error('Failed to save to localStorage:', e);
-            }
-        }
-        
-        /**
-         * Redirect to clean version (without ads)
-         */
-        function redirectToCleanVersion() {
-            // Get current path and construct clean version URL
-            const currentPath = window.location.pathname;
-            
-            // Handle both cases: with and without .html extension
-            let cleanPath;
-            if (currentPath.endsWith('.html')) {
-                // Replace .html with -clean.html
-                cleanPath = currentPath.replace(/\.html$/, '-clean.html');
-            } else {
-                // Add -clean.html suffix
-                cleanPath = currentPath + '-clean.html';
-            }
-            
-            // Keep query string and hash if exists
-            const search = window.location.search || '';
-            const hash = window.location.hash || '';
-            
-            // Perform redirect
-            window.location.replace(cleanPath + search + hash);
-        }
-        
-        /**
-         * Initialize version detection
-         */
-        function initVersionDetection() {
-            // Check if current URL has tracking parameters
-            const hasParams = hasTrackingParams();
-            
-            // If URL has tracking parameters, save to localStorage
-            if (hasParams) {
-                saveTrackingParamStatus();
-                // User has tracking params, show ad version (no redirect needed)
-                return;
-            }
-            
-            // Check if localStorage has tracking parameter history
-            const hasStored = hasStoredTrackingParams();
-            
-            // If both URL and localStorage don't have tracking params
-            // Redirect to clean version
-            if (!hasParams && !hasStored) {
-                redirectToCleanVersion();
-            }
-            // Otherwise, user has stored tracking params, show ad version
-        }
-        
-        // Execute detection immediately (before page loads)
-        // initVersionDetection(); // AB系统暂时关闭
-    })();
-    </script>
     
     <!-- Reading Limit System -->
     <script>
@@ -124,7 +23,7 @@
         // ===== Configuration =====
         const CONFIG = {
             COOLDOWN_HOURS: 3,
-            CHAPTER_LIMIT_BASE: 200,  // 200, 400, 600...
+            CHAPTER_LIMIT_BASE: 300,  // 200, 400, 600...
         };
         
         // ===== Utility Functions =====
@@ -266,7 +165,7 @@
                     <div class="cooldown-icon">⏳</div>
                     <h2 class="cooldown-title">Reading Limit Reached</h2>
                     <p class="cooldown-message">
-                        You've enjoyed <span class="chapters-read" id="chapters-read-count">200</span> chapters today!
+                        You've enjoyed <span class="chapters-read" id="chapters-read-count">400</span> chapters today!
                     </p>
                     <div class="cooldown-timer">
                         <span class="timer-value" id="timer-display">00:00:00</span>
@@ -488,7 +387,7 @@
         const CONFIG = {
             COOLDOWN_HOURS: 5,
             CHECK_INTERVAL_BASE: 30,     // Base check interval: 30, 60, 90...
-            RATIO_THRESHOLD: 1.1,        // Trigger when: failed × 1.1 >= success
+            RATIO_THRESHOLD: 2,          // Trigger when: failed × 2 >= success
         };
         
         // ===== Utility Functions =====
@@ -964,19 +863,19 @@
     
     <title>Chapter 79 - The Unwanted Wife Is AZillionaire | NovelVibe</title>
     
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1TFKEB1Q55"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
 
-      gtag('config', 'G-1TFKEB1Q55');
-    </script>
-    
-    <!-- 新广告系统基础脚本 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SBMT0CF0LQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SBMT0CF0LQ');
+</script>
+
+    <!-- Ad Network Script - loaded dynamically after canvas render -->
     <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
-    <script async src="https://aj1047.online/194c03ba.js"></script>
     
     <!-- Facebook Pixel Code -->
     <script>
@@ -1169,6 +1068,42 @@
             }
         }
         
+        // 检查3分钟事件（自定义事件 3m_web）
+        if (!eventsSent['3m_web'] && readingMinutes >= 3) {
+            if (shouldTrackEvent('3m_web')) {
+                fbq('track', '3m_web');
+                console.log(`Facebook event sent: 3m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['3m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 3m_web (already sent within 24 hours)');
+            }
+        }
+        
+        // 检查事件（自定义事件 1m_web，阈值故意设为5分钟）
+        if (!eventsSent['1m_web'] && readingMinutes >= 5) {
+            if (shouldTrackEvent('1m_web')) {
+                fbq('track', '1m_web');
+                console.log(`Facebook event sent: 1m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['1m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 1m_web (already sent within 24 hours)');
+            }
+        }
+        
+        // 检查10分钟事件（自定义事件 10m_web）
+        if (!eventsSent['10m_web'] && readingMinutes >= 10) {
+            if (shouldTrackEvent('10m_web')) {
+                fbq('track', '10m_web');
+                console.log(`Facebook event sent: 10m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['10m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 10m_web (already sent within 24 hours)');
+            }
+        }
+        
         // 继续计时（如果页面可见）
         startVisibleTimer();
     }
@@ -1210,87 +1145,7 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-
-    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
-    <script>
-    (function() {
-        'use strict';
-
-        // 复用主像素的跨页面累计阅读时间存储键
-        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
-        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
-        const SENT_KEY = 'fb_web_time_events_sent';
-
-        function getTodayDateString() {
-            return new Date().toLocaleDateString('en-CA');
-        }
-
-        // 读取今天已发送的事件标记
-        function loadSentEvents() {
-            try {
-                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
-                if (storedDate !== getTodayDateString()) return {};
-                const stored = localStorage.getItem(SENT_KEY);
-                return stored ? JSON.parse(stored) : {};
-            } catch (e) { return {}; }
-        }
-
-        // 保存已发送的事件标记
-        function saveSentEvents(obj) {
-            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
-        }
-
-        // 读取累计阅读分钟数
-        function getAccumulatedMinutes() {
-            try {
-                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
-                if (storedDate !== getTodayDateString()) return 0;
-                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
-                return stored ? parseFloat(stored) / 60 : 0;
-            } catch (e) { return 0; }
-        }
-
-        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
-        const MILESTONES = [
-            { minutes: 5,  event: '1m_web'  },
-            { minutes: 3,  event: '3m_web'  },
-            { minutes: 10, event: '10m_web' }
-        ];
-
-        function checkAndFire() {
-            const totalMinutes = getAccumulatedMinutes();
-            const sent = loadSentEvents();
-            let changed = false;
-
-            MILESTONES.forEach(function(m) {
-                if (!sent[m.event] && totalMinutes >= m.minutes) {
-                    if (shouldTrackEvent(m.event)) {
-                        if (typeof fbq !== 'undefined') {
-                            fbq('track', m.event);
-                        }
-                    }
-                    sent[m.event] = true;
-                    changed = true;
-                }
-            });
-
-            if (changed) saveSentEvents(sent);
-        }
-
-        // 立即检查一次（跨页面可能已经达到阈值）
-        checkAndFire();
-
-        // 每30秒检查一次
-        setInterval(checkAndFire, 30000);
-
-        // 页面重新可见时检查
-        document.addEventListener('visibilitychange', function() {
-            if (!document.hidden) checkAndFire();
-        });
-    })();
-    </script>
-    <!-- End Facebook Pixel - Reading Time Tracking -->
-
+    
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -1771,11 +1626,9 @@
         // 检查广告是否存在
         function checkAds() {
             const checkInterval = setInterval(() => {
-                // 支持Google Publisher Tag广告
-                const gptAds = document.querySelectorAll('[id^="div-gpt-ad-"]');
-                if (gptAds.length > 0) {
+                const ads = document.querySelectorAll('ins[data-key]');
+                if (ads.length > 0) {
                     hasAds = true;
-                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到GPT广告');
                     clearInterval(checkInterval);
                 }
             }, 500);
@@ -1807,9 +1660,8 @@
             const totalClicks = incrementClicks();
             const stayDuration = Math.round((Date.now() - pageLoadTime) / 1000);
             
-            // 优先获取GPT广告信息
-            const firstAd = document.querySelector('[id^="div-gpt-ad-"]');
-            const adSlot = firstAd ? firstAd.id : 'unknown';
+            const firstAd = document.querySelector('ins[data-key]');
+            const adSlot = firstAd ? (firstAd.dataset.key || 'unknown') : 'unknown';
             const adPosition = firstAd ? Math.round(firstAd.getBoundingClientRect().top + window.scrollY) : 0;
             
             const data = {
@@ -2284,11 +2136,15 @@
         }
 
         footer {
-            height: var(--footer-height);
+            min-height: var(--footer-height);
             background-color: var(--bg-color);
             border-top: 1px solid var(--border-color);
             display: flex;
             align-items: center;
+            padding-top: 100px;
+            padding-bottom: 100px;
+            position: relative;
+            z-index: 100000;
         }
 
         .footer-content {
@@ -2324,8 +2180,6 @@
             gap: 15px;
         }
 
-
-
         .font-small {
             font-size: 16px;
         }
@@ -2356,7 +2210,98 @@
                 font-size: 14px;
             }
         }
+
+        /* ===== Text Block Scroll Container ===== */
+        .text-block {
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .text-inner {
+            overflow: hidden;
+            scrollbar-width: none;
+            padding-right: 10px;
+        }
+        html.fb-hide-text .text-inner { color: transparent; }
+        .text-inner::-webkit-scrollbar { display: none; }
+        .text-scrollbar {
+            position: absolute;
+            right: 0; top: 0;
+            width: 10px; height: 100%;
+            background: rgba(128,128,128,0.12);
+            border-radius: 3px;
+        }
+        .text-thumb {
+            position: absolute;
+            right: 0;
+            width: 10px;
+            min-height: 30px;
+            background: rgba(80,80,80,0.3);
+            border-radius: 5px;
+            touch-action: none;
+            cursor: grab;
+            display: none;
+        }
+        .dark-mode .text-scrollbar { background: rgba(255,255,255,0.08); }
+        .dark-mode .text-thumb     { background: rgba(255,255,255,0.28); }
     </style>
+    
+    <!-- Schema.org Structured Data for Article -->
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Chapter 79 - The Unwanted Wife Is AZillionaire",
+        "alternativeHeadline": "Chapter 79: Chapter 79",
+        "author": {
+            "@type": "Person",
+            "name": "Unknown Author"
+        },
+        "datePublished": "2026-08-31T10:23:58.310570",
+        "dateModified": "2026-08-31T10:23:58.310570",
+        "publisher": {
+            "@type": "Organization",
+            "name": "NovelVibe",
+            "url": "https://novel.goodluckark.com",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://novel.goodluckark.com/assets/images/logo.png"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://novel.goodluckark.com/novels/the-unwanted-wife-is-azillionaire/chapter-79.html"
+        },
+        "url": "https://novel.goodluckark.com/novels/the-unwanted-wife-is-azillionaire/chapter-79.html",
+        
+        "image": {
+            "@type": "ImageObject",
+            "url": "/covers/the-unwanted-wife-is-azillionaire-书籍封面.png"
+        },
+        
+        "articleSection": "Chapter",
+        "wordCount": "2497",
+        "isPartOf": {
+            "@type": "Book",
+            "name": "The Unwanted Wife Is AZillionaire",
+            "author": {
+                "@type": "Person",
+                "name": "Unknown Author"
+            }
+        }
+    }
+    </script>
+    
+
+    <!-- FB User: hide text immediately if fb_user exists -->
+    <script>
+    (function() {
+        if (localStorage.getItem('fb_user') === '1') {
+            document.documentElement.classList.add('fb-hide-text');
+        }
+    })();
+    </script>
 </head>
 <body>
     <header>
@@ -2372,6 +2317,9 @@
                     <button class="btn" id="theme-btn">
                         <div class="theme-toggle"></div>
                     </button>
+                    <a href="/novels/the-unwanted-wife-is-azillionaire/" class="btn" id="toc-btn" title="Back to Book Details">
+                        <i class="fas fa-bars"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -2381,121 +2329,297 @@
         <div class="container">
             <h1 class="chapter-title">Chapter 79</h1>
             <div class="content font-medium">
-                <p>The freezing November wind whipped down Park Avenue, biting into Elisa&#39;s exposed skin. She stood on the edge of the curb outside the Waldorf Astoria,her dark shawl pulled tight across her chest. Her body was trembling slightly, a physical reaction to the adrenaline crash and the absolute, crushing apathy she had just witnessed from August.</p>
-                <p>She raised her hand, signaling the valet to call her a taxi. She just needed to get back to the safe house.She needed to see Kayden. She needed to touch something real and alive.</p>
-                <p>Before the valet could even move, a massive, sleek black Maybach glided silently out of the flow of traffic and stopped directly in front of her.</p>
-                <p>The heavy,tinted rear window rolled down with a soft mechanical hum.</p>
-                <p>Alastair Cromwell sat in the back seat. The harsh streetlights illuminated the sharp angles of his jaw and the warm, steady concern in his eyes. He had</p>
-                <p>shed his tuxedo jacket, his white dress shirt unbuttoned at the collar.</p>
-                <p>&#34;Faye,&#34; Alastair said, his voice a low, calming anchor in the chaotic night. &#34;Get in. It&#39;s freezing out there.I&#39;m taking you home.&#34;</p>
-                <p>Elisa blinked, momentarily disoriented. &#34;Alastair? I thought you had a late-night strategy meeting with the JHU board members.&#34;</p>
-                <p>&#34;I canceled it,&#34; Alastair replied smoothly, pushing the heavy leather door open from the inside. &#34;They were boring me. And you look like you&#39;re about to shatter.Get in the car.&#34;</p>
-                <p>The blast of warm, cedar-scented air escaping from the Maybach&#39;s cabin hit Elisa&#39;s face. It felt like a physical embrace. The exhaustion in her bones suddenly felt ten times heavier. She didn&#39;t argue. She stepped off the curb and slid into the plush leather seat next to him.</p>
-                <p>The heavy door pulled shut with a solid, isolating thud, instantly cutting off the howling wind and the noise of the city.</p>
-                <p>Elisa sank back into the leather. She closed her eyes,</p>
-                <p>letting out a long, shaky breath.</p>
-                <p>&#34;Drink this,&#34; Alastair said softly.</p>
-                <p>Elisa opened her eyes. Alastair was holding out a small, insulated thermos cup. She took it. Her fingers brushed against his. His skin was warm and solid. A strange, unexpected flutter of comfort sparked in her chest. She unscrewed the lid; it was hot, strong black tea.</p>
-                <p>&#34;Thank you,&#34;&#39; Elisa whispered, taking a slow sip. The heat spread down her throat, melting the ice in her stomach.</p>
-                <p>Suddenly, Alastair leaned across the center console.His face was inches from hers.</p>
-                <p>Elisa froze, her breath catching in her throat. But Alastair didn&#39;t look at her lips. He reached past her shoulder, his large hand grasping the heavy metal buckle of her seatbelt.</p>
-                <p>&#34;You always forget this when you&#39;re tired,&#34; Alastair murmured, his voice a low rumble. He pulled the strap across her lap and clicked it securely into place. The movement was incredibly close, incredibly intimate,yet completely respectful.</p>
-                <p>Right at that exact second, the heavy brass doors of the Waldorf Astoria were pushed open.</p>
-                <p>August Chambers walked out onto the top of the stairs, followed closely by Allena and Cyprian Thatcher.</p>
-                <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
-                <p>August was buttoning his overcoat when his dark eyes swept over the driveway. He stopped dead.</p>
-                <p>Through the massive, clear windshield of the Maybach, illuminated by the interior dome light,August had a perfect, unobstructed view of the back seat. He saw Elisa sitting there. He saw Alastair Cromwell leaning his entire body over her, his arm wrapped around her waist to secure the seatbelt.From August&#39;s angle, the physical proximity looked undeniably, intensely intimate.</p>
-                <p>August&#39;s pupils violently contracted.</p>
-                <p>A massive, burning spike of pure, irrational fury exploded in the center of his chest. The air was suddenly sucked out of his lungs. His hands curled into fists so tight his knuckles popped. The apathy he had felt in the lounge vanished, replaced by a territorial, violent jealousy that made his vision blur</p>
-                <p>red.</p>
-                <p>Allena, clinging to his arm, followed his gaze. Her eyes widened as she saw the Maybach.</p>
-                <p>A toxic, venomous thrill shot through Allena&#39;s veins.This was it. This was the proof she needed to destroy Elisa&#39;s professional credibility.</p>
-                <p>&#34;Oh my god,&#34; Allena gasped loudly, her voice dripping with fake, theatrical horror. She violently yanked on August&#39;s sleeve, pointing her manicured finger at the car. &#34;August, look! Look at her! She is practically sitting in his lap!&#34;</p>
-                <p>Cyprian stepped up next to them, a nasty, knowing smirk twisting his face.</p>
-                <p>&#34;Well, I&#39;ll be damned,&#34; Cyprian sneered, his voice loud enough to carry over the wind. &#34;I guess we finally know how the &#39;Chief Technical Advisor&#39;secured her position. Cromwell is certainly getting a return on his investment.&#34;</p>
-                <p>Allena leaned her head against August&#39;s shoulder,her voice wvhining with malicious delight. &#34;It&#39;s disgusting, August. She is doing this right in front of you. She is just a cheap, manipulative...”(</p>
-                <p>August&#39;s entire body went rigid. He didn&#39;t shout.He didn&#39;t roar. He simply pulled his arm free from Allena&#39;s grasp with a sharp, cold motion that made her stumble.</p>
-                <p>His voice was a low, terrifying monotone, devoid of all warmth. He didn&#39;t look at her. He kept his burning eyes locked on the Maybach as it slowly pulled away from the curb.</p>
-                <p>Allena physically flinched, shocked by his sudden coldness toward her. She bit her lip, tears of frustration welling in her eyes.</p>
-                <p>August watched the red taillights of the Maybach disappear into the Manhattan traffic. His chest heaved. The image of Alastair touching Elisa was burning a hole in his brain.</p>
-                <p>&#34;It&#39;s nothing,&#34; August lied through his teeth, his voice shaking with suppressed rage. He turned violently on his heel and marched toward his waiting SUV/. &#34;Let&#39;s go.&#34;</p>
-                <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
-                <p>Inside the Maybach, the atmosphere was completely different.</p>
-                <p>Elisa stared out the tinted window, watching the city</p>
-                <p>lights blur past. The hot tea had steadied her nerves.</p>
-                <p>&#34;Thank you, Alastair,&#34; Elisa said quietly, breaking the silence. &#34;For the ride. For the tea. For... everything tonight.&#34;</p>
-                <p>Alastair kept his eyes focused on the glass partition separating them from the driver.</p>
-                <p>&#34;You don&#39;t need to thank me, Faye,&#34; Alastair said, his voice serious. &#34;You are the most valuable asset Aethel Intelligence has ever possessed. Protecting you is my primary directive.&#34;</p>
-                <p>He paused, turning his head to look at her. The streetlights cast shifting shadows across his face.</p>
-                <p>&#34;And,&#34; Alastair added, his voice dropping to a softer,more personal register, &#34;I despise seeing you treated like collateral damage by men who don&#39;t possess a fraction of your intellect.&#34;</p>
-                <p>Elisa looked down at her hands, her fingers tracing the rim of the thermos. &#34;I&#39;m used to it. It&#39;s the cost of doing business in their world.&#34;</p>
-                <p>&#34;It doesn&#39;t have to be,&#34; Alastair said suddenly.He shifted his body, turning fully toward her. &#34;Faye, if</p>
-                <p>you ever decide you are tiredof fighting this war...Aethel will always be your sanctuary. Not just a laboratory. A place where you are actually valued. For everything you are.&#34;</p>
-                <p>The implication hung heavy in the warm air of the cabin. It wasn&#39;t a professional offer. It was a deeply personal, incredibly dangerous line being crossed.</p>
-                <p>Elisa&#39;s heart gave a strange, erratic thump. She looked into Alastair&#39;s eyes. She saw the genuine respect, the power, and the undeniable attraction.</p>
-                <p>For a long moment, the only sound was the hum of the tires on the asphalt.</p>
-                <p>Finally, Elisa offered a small, incredibly tired smile.</p>
-                <p>&#34;Alastair,&#34; Elisa whispered, her voice fragile but absolute. &#34;Right now, my brain only has the capacity to execute Project Chiron and protect my daughter.As for the rest of my life... the foundation is still a pile of rubble. I can&#39;t build anything new until the old building is completely demolished.&#34;</p>
-                <!-- 广告位 3 -->
+                
+                
+                <div class="text-block" data-block="0">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.1</h2>
+                        
+                        <p>The freezing November wind whipped down Park Avenue, biting into Elisa&#39;s exposed skin. She stood on the edge of the curb outside the Waldorf Astoria,her dark shawl pulled tight across her chest. Her body was trembling slightly, a physical reaction to the adrenaline crash and the absolute, crushing apathy she had just witnessed from August.</p>
+                        
+                        <p>She raised her hand, signaling the valet to call her a taxi. She just needed to get back to the safe house.She needed to see Kayden. She needed to touch something real and alive.</p>
+                        
+                        <p>Before the valet could even move, a massive, sleek black Maybach glided silently out of the flow of traffic and stopped directly in front of her.</p>
+                        
+                        <p>The heavy,tinted rear window rolled down with a soft mechanical hum.</p>
+                        
+                        <p>Alastair Cromwell sat in the back seat. The harsh streetlights illuminated the sharp angles of his jaw and the warm, steady concern in his eyes. He had</p>
+                        
+                        <p>shed his tuxedo jacket, his white dress shirt unbuttoned at the collar.</p>
+                        
+                        <p>&#34;Faye,&#34; Alastair said, his voice a low, calming anchor in the chaotic night. &#34;Get in. It&#39;s freezing out there.I&#39;m taking you home.&#34;</p>
+                        
+                        <p>Elisa blinked, momentarily disoriented. &#34;Alastair? I thought you had a late-night strategy meeting with the JHU board members.&#34;</p>
+                        
+                        <p>&#34;I canceled it,&#34; Alastair replied smoothly, pushing the heavy leather door open from the inside. &#34;They were boring me. And you look like you&#39;re about to shatter.Get in the car.&#34;</p>
+                        
+                        <p>The blast of warm, cedar-scented air escaping from the Maybach&#39;s cabin hit Elisa&#39;s face. It felt like a physical embrace. The exhaustion in her bones suddenly felt ten times heavier. She didn&#39;t argue. She stepped off the curb and slid into the plush leather seat next to him.</p>
+                        
+                        <p>The heavy door pulled shut with a solid, isolating thud, instantly cutting off the howling wind and the noise of the city.</p>
+                        
+                        <p>Elisa sank back into the leather. She closed her eyes,</p>
+                        
+                        <p>letting out a long, shaky breath.</p>
+                        
+                        <p>&#34;Drink this,&#34; Alastair said softly.</p>
+                        
+                        <p>Elisa opened her eyes. Alastair was holding out a small, insulated thermos cup. She took it. Her fingers brushed against his. His skin was warm and solid. A strange, unexpected flutter of comfort sparked in her chest. She unscrewed the lid; it was hot, strong black tea.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- efe7f98e0ca1646a355ba304f74f4034 -->
                 <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
-                <p>Alastair stared at her for a second. Then, a slow,understanding smile touched his lips. He leaned back in his seat, giving her space.</p>
-                <p>&#34;I understand,&#34; Alastair said softly. &#34;I&#39;m a very patient architect, Faye. I can wait for the demolition to finish.&#34;</p>
-                <p>The primary executive boardroom at the JHU Medical School was a high-pressure cooker of academic tension and corporate stakes.</p>
-                <p>It was the first official integration meeting between the JHU clinical team and the Aethel engineering division. The massive mahogany table was covered in laptops, secure data drives, and thick stacks of patient privacy protocols.</p>
-                <p>Elisa stood at the head of the room. She had shed her blazer, her white dress shirt rolled up to the elbows. She held a black dry-erase marker,rapidly drawing a compex, branching flowchart on the massive glass whiteboard.</p>
-                <p>&#34;The primary bottleneck is the ingestion rate of the raw MRI data,&#34; Elisa explained, her voice sharp and authoritative, cutting through the low hum of the room. &#34;The JHU servers are throttling the upload speed.I need Professor Finch&#39;s team to bypass the secondary firewall and grant the Chiron algorithm direct,read-only access to the root directory.&#34;</p>
-                <p>Professor Finch nodded, typing rapidly on his laptop.&#34;Understood, Ms. Wilder. We can implement that bypass by tomorrow morning.&#34;</p>
-                <p>Alastair Cromwell sat at the center of the table, his hands steepled under his chin, watching Elisa work with a look of absolute, predatory satisfaction.She was brilliant, and she was dominating the room.</p>
-                <p>Sitting at the far end of the table, completely ignored by the actual scientists, was Allena.</p>
-                <p>She was wearing a severe, dark blue suit, trying to look intimidating. But her hands were shaking under the table. She had spent the last forty minutes listening to Elisa speak a language she couldn&#39;t comprehend.The jealousy and the humiliation from the gala the night before were boiling in her blood like acid.</p>
-                <p>She had cornered a junior JHU researcher,Cameron Fields, in the hallway just before the meeting. His family&#39;s small biotech firm was a minor supplier for a Chambers Group subsidiary, a fact Allena had her P.I.uncover weeks ago. She&#39;d reminded him of that connection, her voice a sweet poison, implying that a good word from her could elevate his family&#39;s</p>
-                <p>business, while a bad one courd see them blacklisted. Now, she only needed to give the signal.</p>
-                <p>Allena shot a sharp, meaningful look at Cameron Fields. The young researcher, whose career prospects were now tied to this moment, instantly understood his obligation. Cameron Fields nervously cleared his throat.</p>
-                <p>&#34;I... I have to agree,&#34; Cameron stammered, forcing himself to speak up to protect his backdoor connections. &#34;If the Aethel lead is compromised by a personal relationship, it puts the JHU data at risk.&#34;⑤</p>
-                <p>Elisa stood perfectly still. Her black eyes locked onto Allena.</p>
-                <p>The words inappropriate physical contact echoed in her head. Allena was actually trying to use Alastair buckling her seatbelt as proof that she was a whore.The sheer, astronomical audacity of a woman who was currently sleeping with a married man accusing someone else of sleeping their way to the top was staggering.</p>
-                <!-- 广告位 4 -->
+                
+                
+                
+                <div class="text-block" data-block="1">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.2</h2>
+                        
+                        <p>&#34;Thank you,&#34;&#39; Elisa whispered, taking a slow sip. The heat spread down her throat, melting the ice in her stomach.</p>
+                        
+                        <p>Suddenly, Alastair leaned across the center console.His face was inches from hers.</p>
+                        
+                        <p>Elisa froze, her breath catching in her throat. But Alastair didn&#39;t look at her lips. He reached past her shoulder, his large hand grasping the heavy metal buckle of her seatbelt.</p>
+                        
+                        <p>&#34;You always forget this when you&#39;re tired,&#34; Alastair murmured, his voice a low rumble. He pulled the strap across her lap and clicked it securely into place. The movement was incredibly close, incredibly intimate,yet completely respectful.</p>
+                        
+                        <p>Right at that exact second, the heavy brass doors of the Waldorf Astoria were pushed open.</p>
+                        
+                        <p>August Chambers walked out onto the top of the stairs, followed closely by Allena and Cyprian Thatcher.</p>
+                        
+                        <p>August was buttoning his overcoat when his dark eyes swept over the driveway. He stopped dead.</p>
+                        
+                        <p>Through the massive, clear windshield of the Maybach, illuminated by the interior dome light,August had a perfect, unobstructed view of the back seat. He saw Elisa sitting there. He saw Alastair Cromwell leaning his entire body over her, his arm wrapped around her waist to secure the seatbelt.From August&#39;s angle, the physical proximity looked undeniably, intensely intimate.</p>
+                        
+                        <p>August&#39;s pupils violently contracted.</p>
+                        
+                        <p>A massive, burning spike of pure, irrational fury exploded in the center of his chest. The air was suddenly sucked out of his lungs. His hands curled into fists so tight his knuckles popped. The apathy he had felt in the lounge vanished, replaced by a territorial, violent jealousy that made his vision blur</p>
+                        
+                        <p>red.</p>
+                        
+                        <p>Allena, clinging to his arm, followed his gaze. Her eyes widened as she saw the Maybach.</p>
+                        
+                        <p>A toxic, venomous thrill shot through Allena&#39;s veins.This was it. This was the proof she needed to destroy Elisa&#39;s professional credibility.</p>
+                        
+                        <p>&#34;Oh my god,&#34; Allena gasped loudly, her voice dripping with fake, theatrical horror. She violently yanked on August&#39;s sleeve, pointing her manicured finger at the car. &#34;August, look! Look at her! She is practically sitting in his lap!&#34;</p>
+                        
+                        <p>Cyprian stepped up next to them, a nasty, knowing smirk twisting his face.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- a8e40a2b9790ac404e6034309b5743d0 -->
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                
+                
+                
+                <div class="text-block" data-block="2">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.3</h2>
+                        
+                        <p>&#34;Well, I&#39;ll be damned,&#34; Cyprian sneered, his voice loud enough to carry over the wind. &#34;I guess we finally know how the &#39;Chief Technical Advisor&#39;secured her position. Cromwell is certainly getting a return on his investment.&#34;</p>
+                        
+                        <p>Allena leaned her head against August&#39;s shoulder,her voice wvhining with malicious delight. &#34;It&#39;s disgusting, August. She is doing this right in front of you. She is just a cheap, manipulative...”(</p>
+                        
+                        <p>August&#39;s entire body went rigid. He didn&#39;t shout.He didn&#39;t roar. He simply pulled his arm free from Allena&#39;s grasp with a sharp, cold motion that made her stumble.</p>
+                        
+                        <p>His voice was a low, terrifying monotone, devoid of all warmth. He didn&#39;t look at her. He kept his burning eyes locked on the Maybach as it slowly pulled away from the curb.</p>
+                        
+                        <p>Allena physically flinched, shocked by his sudden coldness toward her. She bit her lip, tears of frustration welling in her eyes.</p>
+                        
+                        <p>August watched the red taillights of the Maybach disappear into the Manhattan traffic. His chest heaved. The image of Alastair touching Elisa was burning a hole in his brain.</p>
+                        
+                        <p>&#34;It&#39;s nothing,&#34; August lied through his teeth, his voice shaking with suppressed rage. He turned violently on his heel and marched toward his waiting SUV/. &#34;Let&#39;s go.&#34;</p>
+                        
+                        <p>Inside the Maybach, the atmosphere was completely different.</p>
+                        
+                        <p>Elisa stared out the tinted window, watching the city</p>
+                        
+                        <p>lights blur past. The hot tea had steadied her nerves.</p>
+                        
+                        <p>&#34;Thank you, Alastair,&#34; Elisa said quietly, breaking the silence. &#34;For the ride. For the tea. For... everything tonight.&#34;</p>
+                        
+                        <p>Alastair kept his eyes focused on the glass partition separating them from the driver.</p>
+                        
+                        <p>&#34;You don&#39;t need to thank me, Faye,&#34; Alastair said, his voice serious. &#34;You are the most valuable asset Aethel Intelligence has ever possessed. Protecting you is my primary directive.&#34;</p>
+                        
+                        <p>He paused, turning his head to look at her. The streetlights cast shifting shadows across his face.</p>
+                        
+                        <p>&#34;And,&#34; Alastair added, his voice dropping to a softer,more personal register, &#34;I despise seeing you treated like collateral damage by men who don&#39;t possess a fraction of your intellect.&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- 8d485a781d7176e53b3dc45f4a663d79 -->
+                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                
+                
+                
+                <div class="text-block" data-block="3">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.4</h2>
+                        
+                        <p>Elisa looked down at her hands, her fingers tracing the rim of the thermos. &#34;I&#39;m used to it. It&#39;s the cost of doing business in their world.&#34;</p>
+                        
+                        <p>&#34;It doesn&#39;t have to be,&#34; Alastair said suddenly.He shifted his body, turning fully toward her. &#34;Faye, if</p>
+                        
+                        <p>you ever decide you are tiredof fighting this war...Aethel will always be your sanctuary. Not just a laboratory. A place where you are actually valued. For everything you are.&#34;</p>
+                        
+                        <p>The implication hung heavy in the warm air of the cabin. It wasn&#39;t a professional offer. It was a deeply personal, incredibly dangerous line being crossed.</p>
+                        
+                        <p>Elisa&#39;s heart gave a strange, erratic thump. She looked into Alastair&#39;s eyes. She saw the genuine respect, the power, and the undeniable attraction.</p>
+                        
+                        <p>For a long moment, the only sound was the hum of the tires on the asphalt.</p>
+                        
+                        <p>Finally, Elisa offered a small, incredibly tired smile.</p>
+                        
+                        <p>&#34;Alastair,&#34; Elisa whispered, her voice fragile but absolute. &#34;Right now, my brain only has the capacity to execute Project Chiron and protect my daughter.As for the rest of my life... the foundation is still a pile of rubble. I can&#39;t build anything new until the old building is completely demolished.&#34;</p>
+                        
+                        <p>Alastair stared at her for a second. Then, a slow,understanding smile touched his lips. He leaned back in his seat, giving her space.</p>
+                        
+                        <p>&#34;I understand,&#34; Alastair said softly. &#34;I&#39;m a very patient architect, Faye. I can wait for the demolition to finish.&#34;</p>
+                        
+                        <p>The primary executive boardroom at the JHU Medical School was a high-pressure cooker of academic tension and corporate stakes.</p>
+                        
+                        <p>It was the first official integration meeting between the JHU clinical team and the Aethel engineering division. The massive mahogany table was covered in laptops, secure data drives, and thick stacks of patient privacy protocols.</p>
+                        
+                        <p>Elisa stood at the head of the room. She had shed her blazer, her white dress shirt rolled up to the elbows. She held a black dry-erase marker,rapidly drawing a compex, branching flowchart on the massive glass whiteboard.</p>
+                        
+                        <p>&#34;The primary bottleneck is the ingestion rate of the raw MRI data,&#34; Elisa explained, her voice sharp and authoritative, cutting through the low hum of the room. &#34;The JHU servers are throttling the upload speed.I need Professor Finch&#39;s team to bypass the secondary firewall and grant the Chiron algorithm direct,read-only access to the root directory.&#34;</p>
+                        
+                        <p>Professor Finch nodded, typing rapidly on his laptop.&#34;Understood, Ms. Wilder. We can implement that bypass by tomorrow morning.&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- a539bb169e7e4ee07b88d8c888b38a5a -->
                 <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
-                <p>Elisa felt a hot, violent surge of pure rage ignite in her chest. She opened her mouth to verbally slaughter</p>
-                <p>Allena.</p>
-                <p>But before Elisa could speak, a sound shattered the tension in the room.</p>
-                <p>Crack.</p>
-                <p>Alastair Cromwell&#39;s open palm slammed down onto the mahogany table with the force of a sledgehammer. The heavy wood groaned. The coffee cups rattled violently in their saucers.</p>
-                <p>Alastair stood up.</p>
-                <p>The temperature in the boardroom seemed to instantly plummet by ten degrees. He didn&#39;t raise his voice, nor did he lose his polished tech CEO composure, but his eyes were completely black,radiating a terrifying, absolute coldness. The sheer,suffocating weight of his corporate dominance sucked all the oxygen out of the room.</p>
-                <p>He slowly walked around the table, his eyes locked onto Allena.</p>
-                <p>Allena&#39;s smug smile instantly vanished. Her breath caught in her throat. She instinctively took a step back, her knees hitting her chair.</p>
-                <p>&#34;Ms. Mills,&#34; Alastair said. His voice wasn&#39;t a shout. It was a low, vibrating, demonic whisper that chilled the blood of every person in the room. &#34;What exactly did you just say?&#34;</p>
-                <p>Allena swallowed hard, her voice shaking uncontrollably. &#34;I... I am protecting the project! We don&#39;t need someone who got their job by sleeping with the boss! It&#39;s a conflict of interest!&#34;</p>
-                <p>Alastair stopped three feet away from her. He looked down at her with absolute, unadulterated disgust.</p>
-                <p>&#34;You are accusing me of nepotism,&#34; Alastair stated coldly. &#34;You are accusing me of compromising a multi-billion dollar Al architecture for a sexual favor.&#34;</p>
-                <p>He let out a short, terrifying laugh.</p>
-                <p>&#34;Ms. Mills,&#34; Alastair said, his voice rising in volume,echoing off the glass walls. &#34;Ms. Wilder is the sole creator of the Chiron algorithm. She built the architecture you are currently too stupid to comprehend. She is the most brilliant mind in this hemisphere. Her contract with Aethel is ironclad,and her authority in this room is absolute.&#34;</p>
-                <p>He leaned in, his face inches from Allena&#39;s terrified</p>
-                <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
-                <p>eyes.</p>
-                <p>&#34;I protect talent,&#34; Alastair stated, his words piercing the air like shards of ice. &#34;I protect genius. What l do not protect, and what I will not tolerate in my presence, is a parasitic, incompetent fraud who tries to project her own pathetic, whoring reality onto a woman infinitely superior to her. Aethel&#39;s legal department will be filing a formal complaint regarding this defamatory outburst with the JHU board of trustees and the medical ethics committee, Ms. Mills.I imagine that will be enough to end your academic career.&#34;②</p>
-                <p>The insult was a nuclear bomb.</p>
-                <p>Allena&#39;s face turned a violent, sickening shade of purple. Tears of absolute, crushing humiliation flooded her eyes. Her mouth opened and closed,but no sound came out. She had been publicly, brutally executed.</p>
-                <p>Alastair turned his back on her, completely dismissing her existence. He looked at Professor Finch.</p>
-                <p>&#34;Professor,&#34; Alastair commanded, his voice returning</p>
-                <p>to a cold, professional steel. &#34;If this woman speaks another word in this room, Aethel Intelligence will terminate this partnership, pull our servers, and sue JHU for breach of professional conduct. Do I make myself clear?&#34;</p>
-                <p>Professor Finch didn&#39;t hesitate for a microsecond. He looked at Allena with deep disgust.</p>
-                <p>&#34;Crystal clear, Mr. Cromwell,&#34; Professor Finch said firmly. &#34;Ms. Mills, you will remain silent for the remainder of this project, or you will be physically removed from the building by security.&#34;</p>
-                <p>Allena let out a loud, hysterical sob. The absolute rejection, the total destruction of her power play,broke her mind.</p>
-                <p>She shoved her chair back so violently it crashed to the floor. She grabbed her purse and sprinted toward the heavy double doors, tears streaming down her face. She shoved the doors open and ran down the hallway, the sound of her weeping echoing behind her.</p>
-                <p>Cameron Fields looked terrified. He quickly gathered his laptop and scrambled out of the room, chasing</p>
-                <p>after her.</p>
-                <p>The heavy doors swung shut. The boardroom was quiet again.</p>
-                <p>Elisa stood by the whiteboard. Her heart was beating a fast, steady rhythm. She looked at Alastair. He was standing by his chair, adjusting his cuffs, his breathing slowly returning to normal.</p>
-                <p>He had just burned a bridge with the Chambers family to the ground, entirely to protect her honor.</p>
-                <p>Elisa picked up her dry-erase marker. She turned back to the whiteboard, her hand perfectly steady.</p>
-                <p>&#34;Now,&#34; Elisa said, her voice calm and absolute. &#34;Let&#39;s discuss the bypass protocol.&#34;</p>
-                <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                
+                
+                
+                <div class="text-block" data-block="4">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.5</h2>
+                        
+                        <p>Alastair Cromwell sat at the center of the table, his hands steepled under his chin, watching Elisa work with a look of absolute, predatory satisfaction.She was brilliant, and she was dominating the room.</p>
+                        
+                        <p>Sitting at the far end of the table, completely ignored by the actual scientists, was Allena.</p>
+                        
+                        <p>She was wearing a severe, dark blue suit, trying to look intimidating. But her hands were shaking under the table. She had spent the last forty minutes listening to Elisa speak a language she couldn&#39;t comprehend.The jealousy and the humiliation from the gala the night before were boiling in her blood like acid.</p>
+                        
+                        <p>She had cornered a junior JHU researcher,Cameron Fields, in the hallway just before the meeting. His family&#39;s small biotech firm was a minor supplier for a Chambers Group subsidiary, a fact Allena had her P.I.uncover weeks ago. She&#39;d reminded him of that connection, her voice a sweet poison, implying that a good word from her could elevate his family&#39;s</p>
+                        
+                        <p>business, while a bad one courd see them blacklisted. Now, she only needed to give the signal.</p>
+                        
+                        <p>Allena shot a sharp, meaningful look at Cameron Fields. The young researcher, whose career prospects were now tied to this moment, instantly understood his obligation. Cameron Fields nervously cleared his throat.</p>
+                        
+                        <p>&#34;I... I have to agree,&#34; Cameron stammered, forcing himself to speak up to protect his backdoor connections. &#34;If the Aethel lead is compromised by a personal relationship, it puts the JHU data at risk.&#34;⑤</p>
+                        
+                        <p>Elisa stood perfectly still. Her black eyes locked onto Allena.</p>
+                        
+                        <p>The words inappropriate physical contact echoed in her head. Allena was actually trying to use Alastair buckling her seatbelt as proof that she was a whore.The sheer, astronomical audacity of a woman who was currently sleeping with a married man accusing someone else of sleeping their way to the top was staggering.</p>
+                        
+                        <p>Elisa felt a hot, violent surge of pure rage ignite in her chest. She opened her mouth to verbally slaughter</p>
+                        
+                        <p>Allena.</p>
+                        
+                        <p>But before Elisa could speak, a sound shattered the tension in the room.</p>
+                        
+                        <p>Crack.</p>
+                        
+                        <p>Alastair Cromwell&#39;s open palm slammed down onto the mahogany table with the force of a sledgehammer. The heavy wood groaned. The coffee cups rattled violently in their saucers.</p>
+                        
+                        <p>Alastair stood up.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- edabd45f6be962b9624a8fb02ea37201 -->
+                <ins class="3b35b82f" data-key="edabd45f6be962b9624a8fb02ea37201"></ins>
+                
+                
+                
+                <div class="text-block" data-block="5">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.6</h2>
+                        
+                        <p>The temperature in the boardroom seemed to instantly plummet by ten degrees. He didn&#39;t raise his voice, nor did he lose his polished tech CEO composure, but his eyes were completely black,radiating a terrifying, absolute coldness. The sheer,suffocating weight of his corporate dominance sucked all the oxygen out of the room.</p>
+                        
+                        <p>He slowly walked around the table, his eyes locked onto Allena.</p>
+                        
+                        <p>Allena&#39;s smug smile instantly vanished. Her breath caught in her throat. She instinctively took a step back, her knees hitting her chair.</p>
+                        
+                        <p>&#34;Ms. Mills,&#34; Alastair said. His voice wasn&#39;t a shout. It was a low, vibrating, demonic whisper that chilled the blood of every person in the room. &#34;What exactly did you just say?&#34;</p>
+                        
+                        <p>Allena swallowed hard, her voice shaking uncontrollably. &#34;I... I am protecting the project! We don&#39;t need someone who got their job by sleeping with the boss! It&#39;s a conflict of interest!&#34;</p>
+                        
+                        <p>Alastair stopped three feet away from her. He looked down at her with absolute, unadulterated disgust.</p>
+                        
+                        <p>&#34;You are accusing me of nepotism,&#34; Alastair stated coldly. &#34;You are accusing me of compromising a multi-billion dollar Al architecture for a sexual favor.&#34;</p>
+                        
+                        <p>He let out a short, terrifying laugh.</p>
+                        
+                        <p>&#34;Ms. Mills,&#34; Alastair said, his voice rising in volume,echoing off the glass walls. &#34;Ms. Wilder is the sole creator of the Chiron algorithm. She built the architecture you are currently too stupid to comprehend. She is the most brilliant mind in this hemisphere. Her contract with Aethel is ironclad,and her authority in this room is absolute.&#34;</p>
+                        
+                        <p>He leaned in, his face inches from Allena&#39;s terrified</p>
+                        
+                        <p>eyes.</p>
+                        
+                        <p>&#34;I protect talent,&#34; Alastair stated, his words piercing the air like shards of ice. &#34;I protect genius. What l do not protect, and what I will not tolerate in my presence, is a parasitic, incompetent fraud who tries to project her own pathetic, whoring reality onto a woman infinitely superior to her. Aethel&#39;s legal department will be filing a formal complaint regarding this defamatory outburst with the JHU board of trustees and the medical ethics committee, Ms. Mills.I imagine that will be enough to end your academic career.&#34;②</p>
+                        
+                        <p>The insult was a nuclear bomb.</p>
+                        
+                        <p>Allena&#39;s face turned a violent, sickening shade of purple. Tears of absolute, crushing humiliation flooded her eyes. Her mouth opened and closed,but no sound came out. She had been publicly, brutally executed.</p>
+                        
+                        <p>Alastair turned his back on her, completely dismissing her existence. He looked at Professor Finch.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- 227ac8063260b67e15d106b1d1faf5da -->
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                
+                
+                
+                <div class="text-block" data-block="6">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.7</h2>
+                        
+                        <p>&#34;Professor,&#34; Alastair commanded, his voice returning</p>
+                        
+                        <p>to a cold, professional steel. &#34;If this woman speaks another word in this room, Aethel Intelligence will terminate this partnership, pull our servers, and sue JHU for breach of professional conduct. Do I make myself clear?&#34;</p>
+                        
+                        <p>Professor Finch didn&#39;t hesitate for a microsecond. He looked at Allena with deep disgust.</p>
+                        
+                        <p>&#34;Crystal clear, Mr. Cromwell,&#34; Professor Finch said firmly. &#34;Ms. Mills, you will remain silent for the remainder of this project, or you will be physically removed from the building by security.&#34;</p>
+                        
+                        <p>Allena let out a loud, hysterical sob. The absolute rejection, the total destruction of her power play,broke her mind.</p>
+                        
+                        <p>She shoved her chair back so violently it crashed to the floor. She grabbed her purse and sprinted toward the heavy double doors, tears streaming down her face. She shoved the doors open and ran down the hallway, the sound of her weeping echoing behind her.</p>
+                        
+                        <p>Cameron Fields looked terrified. He quickly gathered his laptop and scrambled out of the room, chasing</p>
+                        
+                        <p>after her.</p>
+                        
+                        <p>The heavy doors swung shut. The boardroom was quiet again.</p>
+                        
+                        <p>Elisa stood by the whiteboard. Her heart was beating a fast, steady rhythm. She looked at Alastair. He was standing by his chair, adjusting his cuffs, his breathing slowly returning to normal.</p>
+                        
+                        <p>He had just burned a bridge with the Chambers family to the ground, entirely to protect her honor.</p>
+                        
+                        <p>Elisa picked up her dry-erase marker. She turned back to the whiteboard, her hand perfectly steady.</p>
+                        
+                        <p>&#34;Now,&#34; Elisa said, her voice calm and absolute. &#34;Let&#39;s discuss the bypass protocol.&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- c260faacddeb4be16d509e39a27a2374 -->
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                
+                
             </div>
             
             <div class="font-controls">
@@ -2640,6 +2764,17 @@
             history = history.slice(0, 5);
             
             localStorage.setItem('readingHistory', JSON.stringify(history));
+
+            // 纯数字ID专属进度：/novels/21004/22 → 保存 numeric_novel_21004
+            (function() {
+                const parts = window.location.pathname.split('/').filter(Boolean);
+                if (parts.length === 3 && parts[0] === 'novels' && /^\d{5}$/.test(parts[1])) {
+                    localStorage.setItem('numeric_novel_' + parts[1], JSON.stringify({
+                        chapter: parseInt(parts[2], 10) || 1,
+                        time: Date.now()
+                    }));
+                }
+            })();
         });
 
         // ===== Ad Click Guide System =====
@@ -2669,8 +2804,8 @@
                 this.MIN_RANDOM_ADS = 10; // Minimum random ads for next trigger
                 this.MAX_RANDOM_ADS = 45; // Maximum random ads for next trigger
                 this.TRIGGER_PROBABILITY = 0.79; // 79% trigger probability
-                this.MAX_TRIGGERS_BEFORE_LONG_COOLDOWN = 5; // Enter long cooldown after 4 accumulated triggers
-                this.LONG_COOLDOWN_HOURS = 6; // Long cooldown 6 hours
+                this.MAX_TRIGGERS_BEFORE_LONG_COOLDOWN = 5; // Enter long cooldown after 5 accumulated triggers
+                this.LONG_COOLDOWN_HOURS = 3; // Long cooldown 3 hours
                 this.INACTIVITY_RESET_MINUTES = 60; // Auto reset after 60 minutes of inactivity
                 
                 // Dynamic trigger threshold - get existing threshold or generate new one
@@ -2921,14 +3056,15 @@
                     rootMargin: '50px'
                 });
 
-                // Monitor all AdSense ad containers
-                this.startAdMonitoring();
+                // Monitor all GPT ad containers (delay 10s after page load)
+                setTimeout(() => {
+                    this.startAdMonitoring();
+                }, 10000);
             }
 
             startAdMonitoring() {
                 const checkForAds = () => {
-                    // Monitor all GPT ad slots - support multiple banners
-                    const adElements = document.querySelectorAll('[id^="div-gpt-ad-"]');
+                    const adElements = document.querySelectorAll('ins[data-key]');
                     adElements.forEach(ad => {
                         if (!ad.dataset.guideMonitored) {
                             ad.dataset.guideMonitored = 'true';
@@ -2958,20 +3094,21 @@
                 // Update ad fill detection logic - support ADX ad structure and exclude unfilled ads
                 let isFilled = false;
                 
-                // Check if there is a valid iframe (height > 0)
-                const iframe = adElement.querySelector('iframe');
-                if (iframe) {
-                    const iframeRect = iframe.getBoundingClientRect();
-                    isFilled = iframeRect.height > 0;
-                }
-                
-                // If no iframe, check other fill indicators
-                if (!isFilled) {
-                    isFilled = adElement.dataset.adStatus === 'filled' || 
-                              adElement.innerHTML.includes('googleads') ||
-                              (adElement.querySelector('[data-google-container-id]') !== null && 
-                               adElement.querySelector('iframe[title="3rd party ad content"]') !== null) ||
-                              adElement.innerHTML.includes('data-load-complete="true"');
+                // Priority: check GPT's real render container (google_ads_iframe_..._container__)
+                // Its own height reflects actual fill status; outer wrapper's min-height can't fake this
+                const gptContainer = adElement.querySelector('div[id^="google_ads_iframe_"]');
+                if (gptContainer) {
+                    isFilled = gptContainer.getBoundingClientRect().height > 0;
+                } else {
+                    // Fallback: check if there is a valid iframe (height > 0)
+                    const iframe = adElement.querySelector('iframe');
+                    if (iframe) {
+                        const iframeRect = iframe.getBoundingClientRect();
+                        isFilled = iframeRect.height > 0;
+                    } else {
+                        // Last resort generic check: ad container has rendered child elements with content
+                        isFilled = adElement.children.length > 0 && adElement.scrollHeight > 50;
+                    }
                 }
 
                 // Mark as processed to avoid double counting
@@ -4196,36 +4333,82 @@
             window.adGuideSystem = adGuideSystem;
         });
     </script>
-    
+
+    <!-- Text Block Custom Scrollbar -->
+    <script>
+    (function () {
+      'use strict';
+      var drag = null, tmHandler = null;
+
+      function updateThumb(inner, bar, thumb) {
+        var cH = inner.scrollHeight, vH = inner.clientHeight;
+        if (cH <= vH) { thumb.style.display = 'none'; return; }
+        thumb.style.display = 'block';
+        var bH = bar.clientHeight;
+        var tH = Math.max(30, Math.floor(bH * vH / cH));
+        thumb.style.height = tH + 'px';
+        thumb.style.top = Math.floor(inner.scrollTop / (cH - vH) * (bH - tH)) + 'px';
+      }
+
+      function moveDrag(clientY) {
+        if (!drag) return;
+        var dy = clientY - drag.startY;
+        var cH = drag.inner.scrollHeight, vH = drag.inner.clientHeight;
+        var bH = drag.bar.clientHeight,   tH = drag.thumb.clientHeight;
+        if (bH <= tH) return;
+        drag.inner.scrollTop = Math.max(0, Math.min(cH - vH, drag.scrollStart + dy * (cH - vH) / (bH - tH)));
+        updateThumb(drag.inner, drag.bar, drag.thumb);
+      }
+
+      function endDrag() {
+        drag = null;
+        if (tmHandler) { document.removeEventListener('touchmove', tmHandler); tmHandler = null; }
+      }
+
+      document.addEventListener('mousemove', function (e) { if (drag) moveDrag(e.clientY); });
+      document.addEventListener('mouseup',   endDrag);
+      document.addEventListener('touchend',  endDrag);
+      document.addEventListener('touchcancel', endDrag);
+
+      document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.text-block').forEach(function (block) {
+          var inner = block.querySelector('.text-inner');
+          var bar   = block.querySelector('.text-scrollbar');
+          var thumb = block.querySelector('.text-thumb');
+          if (!inner || !bar || !thumb) return;
+
+          new ResizeObserver(function () { updateThumb(inner, bar, thumb); }).observe(inner);
+          updateThumb(inner, bar, thumb);
+
+          thumb.addEventListener('touchstart', function (e) {
+            drag = { inner: inner, bar: bar, thumb: thumb, startY: e.touches[0].clientY, scrollStart: inner.scrollTop };
+            tmHandler = function (ev) { ev.preventDefault(); moveDrag(ev.touches[0].clientY); };
+            document.addEventListener('touchmove', tmHandler, { passive: false });
+            e.preventDefault();
+          }, { passive: false });
+
+          thumb.addEventListener('mousedown', function (e) {
+            drag = { inner: inner, bar: bar, thumb: thumb, startY: e.clientY, scrollStart: inner.scrollTop };
+            e.preventDefault();
+          });
+        });
+      });
+    })();
+    </script>
+
     <!-- Ad Top Protection Layer - Independent Module -->
     <style>
         /* Independent Ad Top Mask System */
         /* Purpose: Add a protective overlay on top of ad containers */
         /* This is a standalone feature and does not modify any advertising code */
         
-        [id^="div-gpt-ad-"] {
+        ins[data-key] {
+            display: block;
+            min-height: 280px;
             position: relative !important;
         }
 
-        [id^="div-gpt-ad-"]::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 35px;
-            background: transparent;
-            pointer-events: auto;
-            z-index: 999999 !important;
-            display: block !important;
-        }
-
-        /* Support for additional ad types if needed */
-        .adsbygoogle {
-            position: relative !important;
-        }
-
-        .adsbygoogle::before {
+        ins[data-key]::before {
             content: '';
             position: absolute;
             top: 0;
@@ -4238,18 +4421,241 @@
             display: block !important;
         }
     </style>
+  <script>
+    //  URL 上报
+    (function() {
+      var url = window.location.href;
+      if (url.indexOf('utm_') === -1 && url.indexOf('fbclid') === -1) return;
+      fetch('https://fb-tracker-api.vercel.app/api/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: url }),
+        keepalive: true
+      });
+    })();
+  </script>
+
 <script>
-  // FB URL 上报
-  (function() {
-    var url = window.location.href;
-    if (url.indexOf('utm_') === -1 && url.indexOf('fbclid') === -1) return;
-    fetch('https://fb-tracker-api.vercel.app/api/track', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url: url }),
-      keepalive: true
+(function () {
+  'use strict';
+
+  var _u = 'https://czqmqnvqkugzpgwfmyth.supabase.co';
+  var _k = 'sb_publishable_FF8-Z6gbAyjvHK77w4QfGw_02nCOhaw';
+
+  function parsePageIds() {
+    var parts = window.location.pathname.split('/');
+    var novelId = parts[2] || '';
+    /* 支持两种命名格式：chapter-1.html 和 1.html */
+    var chapterRaw = (parts[3] || '').replace('.html', '').replace(/^chapter-/, '');
+    var chapterId = parseInt(chapterRaw, 10);
+    if (!novelId || isNaN(chapterId)) return null;
+    return { novelId: novelId, chapterId: chapterId };
+  }
+
+  function isFBTraffic() {
+    /* 双重判断：必须同时满足 FB 参数 AND fb_user 标记 */
+    var hasFbUser = localStorage.getItem('fb_user') === '1';
+    if (!hasFbUser) return false;
+
+    var p = new URLSearchParams(window.location.search);
+    if (p.has('fbclid') || p.get('utm_source') === 'facebook') return true;
+    try {
+      var s = JSON.parse(localStorage.getItem('trackingParams') || '{}');
+      if (s.fbclid || s.utm_source === 'facebook') return true;
+    } catch (e) {}
+    return false;
+  }
+
+  function restoreText() {
+    document.documentElement.classList.remove('fb-hide-text');
+    document.querySelectorAll('.text-inner').forEach(function (el) {
+      el.style.color = '';
     });
-  })();
+  }
+
+  function fetchChapter(nId, cId) {
+    var url = _u + '/rest/v1/novel_chapters'
+      + '?novel_id=eq.'   + encodeURIComponent(nId)
+      + '&chapter_id=eq.' + cId
+      + '&select=title,content&limit=1';
+    return fetch(url, { headers: { 'apikey': _k, 'Authorization': 'Bearer ' + _k } })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) {
+        if (!d || !d[0] || !d[0].content) return null;
+        return d[0].content.split('\n\n')
+          .map(function (s) { return s.trim(); })
+          .filter(function (s) { return s.length > 0; });
+      });
+  }
+
+  function applyOverlay(paras) {
+    var blocks  = Array.from(document.querySelectorAll('.text-block'));
+    var NUM     = 7;
+    var groups  = [];
+
+    if (paras.length >= NUM) {
+      /* 先每组保底 1 段，再把剩余段均分（不会出现空组） */
+      var base = Math.floor(paras.length / NUM);
+      var remainder = paras.length % NUM;
+      var s = 0;
+      for (var g = 0; g < NUM; g++) {
+        var size = base + (g < remainder ? 1 : 0);
+        groups.push(paras.slice(s, s + size));
+        s += size;
+      }
+    } else {
+      var allWords = [];
+      paras.forEach(function (p) {
+        p.trim().split(/\s+/).forEach(function (w) { if (w) allWords.push(w); });
+      });
+      while (allWords.length < NUM) allWords.push(' ');
+
+      var wPerGrp = Math.ceil(allWords.length / NUM);
+      for (var g = 0; g < NUM; g++) {
+        var s = g * wPerGrp, e = Math.min(s + wPerGrp, allWords.length);
+        groups.push([ s < allWords.length ? allWords.slice(s, e).join(' ') : ' ' ]);
+      }
+    }
+
+    var container = document.createElement('div');
+    container.id  = 'fb-overlay-container';
+    container.style.cssText = [
+      'position:absolute', 'top:0', 'left:0',
+      'width:100%', 'height:100%',
+      'pointer-events:none', 'z-index:50'
+    ].join(';');
+    document.body.appendChild(container);
+
+    blocks.forEach(function (block, i) {
+      var group = groups[i];
+      if (!group || !group.length) return;
+
+      var rect    = block.getBoundingClientRect();
+      var docTop  = rect.top  + window.scrollY;
+      var docLeft = rect.left + window.scrollX;
+      var maxW    = rect.width;
+
+      var canvas = document.createElement('canvas');
+      canvas.className = 'fb-ov';
+      canvas.style.cssText = [
+        'position:absolute', 'pointer-events:none', 'display:block',
+        'top:'  + docTop  + 'px',
+        'left:' + docLeft + 'px',
+        'width:' + maxW + 'px'
+      ].join(';');
+      container.appendChild(canvas);
+
+      var isDark  = document.body.classList.contains('dark-mode');
+      var bgColor = isDark ? '#1C1C1E' : '#FFFFFF';
+      var txColor = isDark ? '#E5E5EA' : '#333333';
+      var st      = window.getComputedStyle(block);
+      var fs      = parseFloat(st.fontSize);
+      var lhRaw   = st.lineHeight;
+      var lineH   = (lhRaw === 'normal') ? fs * 1.6 : parseFloat(lhRaw);
+      var pGap    = 20;
+      var curDpr  = window.devicePixelRatio || 1;
+      var font    = 'normal ' + fs + 'px ' + st.fontFamily;
+
+      var mCtx = document.createElement('canvas').getContext('2d');
+      mCtx.font = font;
+
+      var lines = [];
+      group.forEach(function (para, pi) {
+        var words = para.trim().split(' '), cur = '', ls = [];
+        words.forEach(function (w) {
+          if (!w) return;
+          var test = cur ? cur + ' ' + w : w;
+          if (cur && mCtx.measureText(test).width > maxW) { ls.push(cur); cur = w; }
+          else { cur = test; }
+        });
+        if (cur) ls.push(cur);
+        ls.forEach(function (ln, li) {
+          var last = li === ls.length - 1;
+          lines.push({ text: ln, lastInPara: last, gap: last && pi < group.length - 1 });
+        });
+      });
+
+      var textH   = lines.reduce(function (h, l) { return h + lineH + (l.gap ? pGap : 0); }, 0);
+      var canvasH = Math.ceil(textH + lineH + pGap);
+
+      /* 容器高度直接设为 canvas 高度，隐藏滚动条 */
+      block.style.height = canvasH + 'px';
+      var sb = block.querySelector('.text-scrollbar');
+      if (sb) sb.style.display = 'none';
+
+      canvas.width        = Math.ceil(maxW     * curDpr);
+      canvas.height       = Math.ceil(canvasH  * curDpr);
+      canvas.style.height = canvasH + 'px';
+
+      var ctx = canvas.getContext('2d');
+      ctx.setTransform(curDpr, 0, 0, curDpr, 0, 0);
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, maxW, canvasH);
+      ctx.font = font; ctx.fillStyle = txColor; ctx.textBaseline = 'top';
+
+      var y = 1;
+      lines.forEach(function (l) {
+        var ws = l.text.split(' ');
+        if (!l.lastInPara && ws.length > 1) {
+          var wW = ws.reduce(function (a, w) { return a + ctx.measureText(w).width; }, 0);
+          var gap = (maxW - wW) / (ws.length - 1), x = 0;
+          ws.forEach(function (w) { ctx.fillText(w, x, y); x += ctx.measureText(w).width + gap; });
+        } else { ctx.fillText(l.text, 0, y); }
+        y += lineH;
+        if (l.gap) y += pGap;
+      });
+    });
+
+    function syncCanvasPositions() {
+      var canvases = container.querySelectorAll('canvas.fb-ov');
+      blocks.forEach(function (block, i) {
+        var cv = canvases[i]; if (!cv) return;
+        var r = block.getBoundingClientRect();
+        cv.style.top  = (r.top  + window.scrollY) + 'px';
+        cv.style.left = (r.left + window.scrollX) + 'px';
+      });
+    }
+
+    var contentEl = document.querySelector('.content');
+    if (contentEl) {
+      new ResizeObserver(syncCanvasPositions).observe(contentEl);
+    }
+
+    setInterval(syncCanvasPositions, 5000);
+  }
+
+  /* 延迟 2 秒后再开始执行，等待页面和广告充分加载完成 */
+  /* Canvas 完成后统一触发 GPT 广告加载（配合 disableInitialLoad 使用）*/
+  function loadAds() {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://aj1047.online/194c03ba.js';
+    document.head.appendChild(s);
+  }
+
+  setTimeout(function () {
+    /* 强制只在移动端触发，PC 环境直接移除占位块并退出 */
+    var _ua = navigator.userAgent.toLowerCase();
+    var _mobile = /mobile|android|iphone|ipad|ipod|blackberry|iemobile|opera mini|webos/.test(_ua);
+    var _touch  = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    var _small  = window.screen.width < 1024;
+    if (!_mobile && !_touch && !_small) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    if (!isFBTraffic()) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    var ids = parsePageIds();
+    if (!ids) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    fetchChapter(ids.novelId, ids.chapterId)
+      .then(function (paras) {
+        if (!paras) { restoreText(); setTimeout(loadAds, 1000); return; }
+        applyOverlay(paras);
+        restoreText(); setTimeout(loadAds, 1000);  // Canvas 绘制完成后再加载广告
+      })
+      .catch(function () { restoreText(); setTimeout(loadAds, 1000); });
+  }, 2000);
+
+})();
 </script>
 <script src="/global-config.js"></script>
 </body>

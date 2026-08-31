@@ -1,120 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'granted',
+    'ad_user_data': 'granted',
+    'ad_personalization': 'granted',
+    'analytics_storage': 'granted'
+  });
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- AB Version Detection & Redirect System -->
-    <script>
-    (function() {
-        'use strict';
-        
-        // List of tracking parameters that indicate user came from ads
-        const TRACKING_PARAMS = ['fbclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'utm_id'];
-        const STORAGE_KEY = 'has_tracking_params';
-        const STORAGE_EXPIRY_KEY = 'tracking_params_expiry';
-        const EXPIRY_HOURS = 720; // 30 days expiration (30 * 24)
-        
-        /**
-         * Check if URL has any tracking parameters
-         */
-        function hasTrackingParams() {
-            try {
-                const urlParams = new URLSearchParams(window.location.search);
-                for (let param of TRACKING_PARAMS) {
-                    if (urlParams.has(param)) {
-                        return true;
-                    }
-                }
-            } catch (e) {
-                console.error('Failed to parse URL parameters:', e);
-            }
-            return false;
-        }
-        
-        /**
-         * Check localStorage for tracking parameter history
-         */
-        function hasStoredTrackingParams() {
-            try {
-                const expiryTime = localStorage.getItem(STORAGE_EXPIRY_KEY);
-                if (expiryTime && Date.now() < parseInt(expiryTime)) {
-                    const stored = localStorage.getItem(STORAGE_KEY);
-                    return stored === 'true';
-                }
-            } catch (e) {
-                console.error('Failed to read localStorage:', e);
-            }
-            return false;
-        }
-        
-        /**
-         * Save tracking parameter existence to localStorage
-         */
-        function saveTrackingParamStatus() {
-            try {
-                localStorage.setItem(STORAGE_KEY, 'true');
-                const expiryTime = Date.now() + (EXPIRY_HOURS * 60 * 60 * 1000);
-                localStorage.setItem(STORAGE_EXPIRY_KEY, expiryTime.toString());
-            } catch (e) {
-                console.error('Failed to save to localStorage:', e);
-            }
-        }
-        
-        /**
-         * Redirect to clean version (without ads)
-         */
-        function redirectToCleanVersion() {
-            // Get current path and construct clean version URL
-            const currentPath = window.location.pathname;
-            
-            // Handle both cases: with and without .html extension
-            let cleanPath;
-            if (currentPath.endsWith('.html')) {
-                // Replace .html with -clean.html
-                cleanPath = currentPath.replace(/\.html$/, '-clean.html');
-            } else {
-                // Add -clean.html suffix
-                cleanPath = currentPath + '-clean.html';
-            }
-            
-            // Keep query string and hash if exists
-            const search = window.location.search || '';
-            const hash = window.location.hash || '';
-            
-            // Perform redirect
-            window.location.replace(cleanPath + search + hash);
-        }
-        
-        /**
-         * Initialize version detection
-         */
-        function initVersionDetection() {
-            // Check if current URL has tracking parameters
-            const hasParams = hasTrackingParams();
-            
-            // If URL has tracking parameters, save to localStorage
-            if (hasParams) {
-                saveTrackingParamStatus();
-                // User has tracking params, show ad version (no redirect needed)
-                return;
-            }
-            
-            // Check if localStorage has tracking parameter history
-            const hasStored = hasStoredTrackingParams();
-            
-            // If both URL and localStorage don't have tracking params
-            // Redirect to clean version
-            if (!hasParams && !hasStored) {
-                redirectToCleanVersion();
-            }
-            // Otherwise, user has stored tracking params, show ad version
-        }
-        
-        // Execute detection immediately (before page loads)
-        // initVersionDetection(); // AB系统暂时关闭
-    })();
-    </script>
     
     <!-- Reading Limit System -->
     <script>
@@ -124,7 +23,7 @@
         // ===== Configuration =====
         const CONFIG = {
             COOLDOWN_HOURS: 3,
-            CHAPTER_LIMIT_BASE: 200,  // 200, 400, 600...
+            CHAPTER_LIMIT_BASE: 300,  // 200, 400, 600...
         };
         
         // ===== Utility Functions =====
@@ -266,7 +165,7 @@
                     <div class="cooldown-icon">⏳</div>
                     <h2 class="cooldown-title">Reading Limit Reached</h2>
                     <p class="cooldown-message">
-                        You've enjoyed <span class="chapters-read" id="chapters-read-count">200</span> chapters today!
+                        You've enjoyed <span class="chapters-read" id="chapters-read-count">400</span> chapters today!
                     </p>
                     <div class="cooldown-timer">
                         <span class="timer-value" id="timer-display">00:00:00</span>
@@ -488,7 +387,7 @@
         const CONFIG = {
             COOLDOWN_HOURS: 5,
             CHECK_INTERVAL_BASE: 30,     // Base check interval: 30, 60, 90...
-            RATIO_THRESHOLD: 1.1,        // Trigger when: failed × 1.1 >= success
+            RATIO_THRESHOLD: 2,          // Trigger when: failed × 2 >= success
         };
         
         // ===== Utility Functions =====
@@ -964,19 +863,19 @@
     
     <title>Chapter 181 - The Unwanted Wife Is AZillionaire | NovelVibe</title>
     
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1TFKEB1Q55"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
 
-      gtag('config', 'G-1TFKEB1Q55');
-    </script>
-    
-    <!-- 新广告系统基础脚本 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SBMT0CF0LQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SBMT0CF0LQ');
+</script>
+
+    <!-- Ad Network Script - loaded dynamically after canvas render -->
     <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
-    <script async src="https://aj1047.online/194c03ba.js"></script>
     
     <!-- Facebook Pixel Code -->
     <script>
@@ -1169,6 +1068,42 @@
             }
         }
         
+        // 检查3分钟事件（自定义事件 3m_web）
+        if (!eventsSent['3m_web'] && readingMinutes >= 3) {
+            if (shouldTrackEvent('3m_web')) {
+                fbq('track', '3m_web');
+                console.log(`Facebook event sent: 3m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['3m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 3m_web (already sent within 24 hours)');
+            }
+        }
+        
+        // 检查事件（自定义事件 1m_web，阈值故意设为5分钟）
+        if (!eventsSent['1m_web'] && readingMinutes >= 5) {
+            if (shouldTrackEvent('1m_web')) {
+                fbq('track', '1m_web');
+                console.log(`Facebook event sent: 1m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['1m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 1m_web (already sent within 24 hours)');
+            }
+        }
+        
+        // 检查10分钟事件（自定义事件 10m_web）
+        if (!eventsSent['10m_web'] && readingMinutes >= 10) {
+            if (shouldTrackEvent('10m_web')) {
+                fbq('track', '10m_web');
+                console.log(`Facebook event sent: 10m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['10m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 10m_web (already sent within 24 hours)');
+            }
+        }
+        
         // 继续计时（如果页面可见）
         startVisibleTimer();
     }
@@ -1210,87 +1145,7 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-
-    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
-    <script>
-    (function() {
-        'use strict';
-
-        // 复用主像素的跨页面累计阅读时间存储键
-        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
-        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
-        const SENT_KEY = 'fb_web_time_events_sent';
-
-        function getTodayDateString() {
-            return new Date().toLocaleDateString('en-CA');
-        }
-
-        // 读取今天已发送的事件标记
-        function loadSentEvents() {
-            try {
-                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
-                if (storedDate !== getTodayDateString()) return {};
-                const stored = localStorage.getItem(SENT_KEY);
-                return stored ? JSON.parse(stored) : {};
-            } catch (e) { return {}; }
-        }
-
-        // 保存已发送的事件标记
-        function saveSentEvents(obj) {
-            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
-        }
-
-        // 读取累计阅读分钟数
-        function getAccumulatedMinutes() {
-            try {
-                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
-                if (storedDate !== getTodayDateString()) return 0;
-                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
-                return stored ? parseFloat(stored) / 60 : 0;
-            } catch (e) { return 0; }
-        }
-
-        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
-        const MILESTONES = [
-            { minutes: 5,  event: '1m_web'  },
-            { minutes: 3,  event: '3m_web'  },
-            { minutes: 10, event: '10m_web' }
-        ];
-
-        function checkAndFire() {
-            const totalMinutes = getAccumulatedMinutes();
-            const sent = loadSentEvents();
-            let changed = false;
-
-            MILESTONES.forEach(function(m) {
-                if (!sent[m.event] && totalMinutes >= m.minutes) {
-                    if (shouldTrackEvent(m.event)) {
-                        if (typeof fbq !== 'undefined') {
-                            fbq('track', m.event);
-                        }
-                    }
-                    sent[m.event] = true;
-                    changed = true;
-                }
-            });
-
-            if (changed) saveSentEvents(sent);
-        }
-
-        // 立即检查一次（跨页面可能已经达到阈值）
-        checkAndFire();
-
-        // 每30秒检查一次
-        setInterval(checkAndFire, 30000);
-
-        // 页面重新可见时检查
-        document.addEventListener('visibilitychange', function() {
-            if (!document.hidden) checkAndFire();
-        });
-    })();
-    </script>
-    <!-- End Facebook Pixel - Reading Time Tracking -->
-
+    
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -1771,11 +1626,9 @@
         // 检查广告是否存在
         function checkAds() {
             const checkInterval = setInterval(() => {
-                // 支持Google Publisher Tag广告
-                const gptAds = document.querySelectorAll('[id^="div-gpt-ad-"]');
-                if (gptAds.length > 0) {
+                const ads = document.querySelectorAll('ins[data-key]');
+                if (ads.length > 0) {
                     hasAds = true;
-                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到GPT广告');
                     clearInterval(checkInterval);
                 }
             }, 500);
@@ -1807,9 +1660,8 @@
             const totalClicks = incrementClicks();
             const stayDuration = Math.round((Date.now() - pageLoadTime) / 1000);
             
-            // 优先获取GPT广告信息
-            const firstAd = document.querySelector('[id^="div-gpt-ad-"]');
-            const adSlot = firstAd ? firstAd.id : 'unknown';
+            const firstAd = document.querySelector('ins[data-key]');
+            const adSlot = firstAd ? (firstAd.dataset.key || 'unknown') : 'unknown';
             const adPosition = firstAd ? Math.round(firstAd.getBoundingClientRect().top + window.scrollY) : 0;
             
             const data = {
@@ -2284,11 +2136,15 @@
         }
 
         footer {
-            height: var(--footer-height);
+            min-height: var(--footer-height);
             background-color: var(--bg-color);
             border-top: 1px solid var(--border-color);
             display: flex;
             align-items: center;
+            padding-top: 100px;
+            padding-bottom: 100px;
+            position: relative;
+            z-index: 100000;
         }
 
         .footer-content {
@@ -2324,8 +2180,6 @@
             gap: 15px;
         }
 
-
-
         .font-small {
             font-size: 16px;
         }
@@ -2356,7 +2210,98 @@
                 font-size: 14px;
             }
         }
+
+        /* ===== Text Block Scroll Container ===== */
+        .text-block {
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .text-inner {
+            overflow: hidden;
+            scrollbar-width: none;
+            padding-right: 10px;
+        }
+        html.fb-hide-text .text-inner { color: transparent; }
+        .text-inner::-webkit-scrollbar { display: none; }
+        .text-scrollbar {
+            position: absolute;
+            right: 0; top: 0;
+            width: 10px; height: 100%;
+            background: rgba(128,128,128,0.12);
+            border-radius: 3px;
+        }
+        .text-thumb {
+            position: absolute;
+            right: 0;
+            width: 10px;
+            min-height: 30px;
+            background: rgba(80,80,80,0.3);
+            border-radius: 5px;
+            touch-action: none;
+            cursor: grab;
+            display: none;
+        }
+        .dark-mode .text-scrollbar { background: rgba(255,255,255,0.08); }
+        .dark-mode .text-thumb     { background: rgba(255,255,255,0.28); }
     </style>
+    
+    <!-- Schema.org Structured Data for Article -->
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Chapter 181 - The Unwanted Wife Is AZillionaire",
+        "alternativeHeadline": "Chapter 178: Chapter 181",
+        "author": {
+            "@type": "Person",
+            "name": "Unknown Author"
+        },
+        "datePublished": "2026-08-31T10:23:59.712051",
+        "dateModified": "2026-08-31T10:23:59.712051",
+        "publisher": {
+            "@type": "Organization",
+            "name": "NovelVibe",
+            "url": "https://novel.goodluckark.com",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://novel.goodluckark.com/assets/images/logo.png"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://novel.goodluckark.com/novels/the-unwanted-wife-is-azillionaire/chapter-178.html"
+        },
+        "url": "https://novel.goodluckark.com/novels/the-unwanted-wife-is-azillionaire/chapter-178.html",
+        
+        "image": {
+            "@type": "ImageObject",
+            "url": "/covers/the-unwanted-wife-is-azillionaire-书籍封面.png"
+        },
+        
+        "articleSection": "Chapter",
+        "wordCount": "1464",
+        "isPartOf": {
+            "@type": "Book",
+            "name": "The Unwanted Wife Is AZillionaire",
+            "author": {
+                "@type": "Person",
+                "name": "Unknown Author"
+            }
+        }
+    }
+    </script>
+    
+
+    <!-- FB User: hide text immediately if fb_user exists -->
+    <script>
+    (function() {
+        if (localStorage.getItem('fb_user') === '1') {
+            document.documentElement.classList.add('fb-hide-text');
+        }
+    })();
+    </script>
 </head>
 <body>
     <header>
@@ -2372,6 +2317,9 @@
                     <button class="btn" id="theme-btn">
                         <div class="theme-toggle"></div>
                     </button>
+                    <a href="/novels/the-unwanted-wife-is-azillionaire/" class="btn" id="toc-btn" title="Back to Book Details">
+                        <i class="fas fa-bars"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -2381,78 +2329,211 @@
         <div class="container">
             <h1 class="chapter-title">Chapter 181</h1>
             <div class="content font-medium">
-                <p>Elisa lowered the encrypted phone from her ear.She slid the device deep into the pocket of her white coat. The sterile air of the supply closet smelled of iodine and bleached cotton, but all she could taste was the metallic tang of absolute,irreversible destruction.</p>
-                <p>She pushed the door open and stepped back into the chaotic hum of the emergency room corridor.</p>
-                <p>She did not look toward the triage desk. She did not look toward the pediatric bay where August was playing the devoted father.</p>
-                <p>She turned her back on it all and began the slow walk toward the staff locker room to end her shift.</p>
-                <p>Before she reached the corner, a horrific crash shattered the background noise of the hospital.</p>
-                <p>It was the distinct, piercing sound of heavy glass and expensive electronics smashing against a linoleum floor. The noise came directly from the VIP observation suite at the end of the hall. A rapid,high-pitched alarm immediately began to shriek.</p>
-                <p>Elisa stopped. The muscles in her jaw tightened.She changed direction, her rubber-soled shoes making no sound as she approached the half-open door of the VIP suite.</p>
-                <p>She pushed the door open.</p>
-                <p>The room was a disaster zone. Tate Mills, seven years old and supposedly burning with a severe viral fever, was standing on top of the hospital bed.He held a heavy stainless steel medical tray in his hands. With a vicious grunt, he hurled it at the wall -mounted vital signs monitor. The screen shattered, raining sharp plastic and glass down onto the floor.</p>
-                <p>Allena sat on the plush leather sofa in the corner.She was not stopping him. She had one hand resting over her bandaged forehead, but her lips were parted in a soft, indulgent laugh. She was actually watching her brother destroy a hospital room with a look of fond amusement.</p>
-                <p>A young ER nurse rushed forward,her hands raised in a desperate attempt to calm the boy.</p>
-                <p>Tate spun around. He grabbed the heavy, solid plastic paddle of a portable defibrillator from the crash cart next to the bed. He threw it with all his might directly at the nurse.</p>
-                <p>The heavy paddle struck the young woman squarely in the forehead. She let out a sharp cry of pain, stumbling backward and clutching her face as a red welt instantly formed.</p>
-                <p>Elisa stood in the doorway. The temperature in her veins dropped to absolute zero.</p>
-                <!-- 广告位 1 -->
-                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
-                <p>She did not rush forward to grabthe boy. The rigid carbon-fiber brace strapped tightly around her lower spine made sudden, violent movements impossible. Instead, she took one calm half-step</p>
-                <p>backward.</p>
-                <p>She reached into her coat pocket and pulled out her phone.</p>
-                <p>She opened the camera application, switched it to high-definition video, and hit record. She held the lens steady,capturing Tate ripping an IV pole down and Allena sitting on the couch,doing absolutely nothing to intervene.</p>
-                <p>Tate caught movement in his peripheral vision. He stopped tearing at the bedsheets and looked toward the door. He recognized the blue scrubs and the dark eyes above the surgical mask. It was the woman he hated.</p>
-                <p>His face twisted into an ugly sneer. He grabbed a heavy, full glass bottle of sterile saline solution from the bedside table. He pulled his arm back and hurled it directly at Elisa&#39;s head.</p>
-                <p>Elisa saw the projectile coming. She shifted her weight to the left, but the heavy brace restricted her torso. She could only tilt her neck.</p>
-                <p>The heavy glass bottle missed her face by an inch.It slammed into the metal doorframe right next to her shoulder and exploded. Saline water and sharp glass shards rained down on her white coat. The deafening crack of the impact made her ears ring,and she felt the icy shock of the liquid soaking through the fabric to her skin, but the hand holding the phone remained perfectly steady.</p>
-                <p>Allena finally stood up. She walked toward the center of the room, her heels crunching on the</p>
-                <!-- 广告位 2 -->
-                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
-                <p>broken glass. She looked at Elisa holding the phone and let out a scoff of pure, aristocratic disgust.</p>
-                <p>&#34;Put that away, you pathetic loser,&#34; Allena sneered,her voice dripping with class contempt. &#34;He is a child. He is sick and frustrated. You people are paid to clean up our messes. So get a broom and do your job.&#34;</p>
-                <p>Elisa did not speak. She kept the camera perfectly steady,recording every syllable of Allena&#39;s arrogant,ugly demand.</p>
-                <p>Heavy,rapid footsteps echoed down the hallway behind Elisa.</p>
-                <p>August Chambers strode toward the room, carrying two steaming cups of coffee from the hospital cafeteria. He stopped dead in his tracks when he saw the shattered glass spilling out into the corridor and Elisa standing in the doorway.</p>
-                <p>Allena saw August. The arrogant sneer vanished from her face in a fraction of a second. Her eyes widened, and her breathing became rapid and shallow.</p>
-                <p>She stumbled forward, carefully avoiding the glass,and threw herself against August&#39;s chest.</p>
-                <p>&#34;August,&#34; Allena whimpered, her voice trembling with fabricated terror. &#34;The nurse was so rough with him. She tried to force a needle into his arm and it scared him. He just panicked.&#34;</p>
-                <p>August dropped the coffee cups. They spilled dark liquid over his expensive leather shoes. He wrapped his arms around Allena, pulling her close, his face tight with concern.</p>
-                <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
-                <p>Then, he turned his head and looked at Elisa. The concern vanished, replaced by a look of absolute,venomous hatred.</p>
-                <p>&#34;Get out,&#34; August commanded, his voice a low,dangerous rumble. &#34;Get a cleaning crewv in here immediately, and then get out of my sight.&#34;</p>
-                <p>Elisa pressed the stop button on her screen. She slipped the phone back into her pocket. She did not argue. She did not defend the young nurse who was still crying in the corner.</p>
-                <p>She turned around and walked three steps to the nurses&#39; station terminal located just outside the bay.She logged in with her basic floor credentials and accessed the hospital&#39;s public procurement catalog,selecting the exact models of the FDA-approved cardiac monitor and the specialized defibrillator unit that Tate had just destroyed in his tantrum.She hit print.</p>
-                <p>The small thermal printer buzzed. A long,white receipt spooled out.</p>
-                <p>Elisa tore the paper from the machine. She walked back to the doorway. August was still holding Allena,glaring at her.</p>
-                <p>Elisa raised her hand and slapped the long receipt flat against the center of August&#39;s soaked dress</p>
-                <p>shirt.</p>
-                <p>&#34;Destruction of FDA-certified life-saving medical equipment is a federal felony,&#34; Elisa said. Her voice was completely flat,devoid of any human emotion.&#34;The replacement cost for the central monitoring system and the defibrillator is three hundred and seventy-five thousand dollars.Payable immediately to the hospital administration. Or I hand the video of your nephew assauting a medical worker to the police.&#34;</p>
-                <!-- 广告位 4 -->
-                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
-                <p>August looked down at the paper stuck to his chest.The sheer audacity of the demand made the veins in his neck bulge. His jaw locked.</p>
-                <p>&#34;You are out of your mind,&#34; August hissed, stepping toward her. &#34;You think a pittance like that means anything to me? Simon will have it wired before you can even file a report.&#34;</p>
-                <p>Before he could take another step, a sharp,piercing alarm erupted from his pocket.</p>
-                <p>It was not a standard ringtone. It was the maximum -priority, encrypted red alert from his private secure phone.</p>
-                <p>August froze. The anger on his face flickered,replaced by a sudden, sharp confusion. He pulled the phone fromn his pocket and answered it.</p>
-                <p>&#34;Speak,&#34; August barked.</p>
-                <p>Through the quiet hallway, Elisa could hear the frantic, high-pitched voice of Simon, August&#39;s chief of staff.</p>
-                <p>&#34;Mr. Chambers,&#34; Simon stammered, his voice</p>
-                <p>completely devoid of its usual professional calm.&#34;Wall Street just opened. We are under attack. A massive,coordinated short-selling volume just hit our core tech and medical holdings. It is a</p>
-                <!-- 广告位 5 -->
-                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
-                <p>bloodbath.&#34;</p>
-                <p>August&#39;s pupils dilated. The hand holding the phone gripped the plastic so hard his knuckles turned white.</p>
-                <p>&#34;How much?&#34; August demanded, his voice dropping to a harsh whisper.</p>
-                <p>&#34;One billion dollars in market cap evaporated in the first three minutes,&#34; Simon said, sounding like he was suffocating. &#34;The exchange is about to trigger a circuit breaker. Sir, they are burning us to the ground.&#34;</p>
-                <p>August lowered the phone slowly. He did not look at Allena. He looked straight ahead, his eyes locking onto Elisa.</p>
-                <p>He saw the pale skin, the cheap blue scrubs, and the dark, bottomless eyes staring back at him.A horrific,impossible realization began to claw its way up his throat.</p>
-                <p>Elisa looked at the man who had ruined her life.She looked at the empire crumbling around his feet.The corners of her mouth twitched upward into a slow,devastating smnile.</p>
-                <p>She did not make a sound. She simply mouthed two words, clear enough for him to read her lips.</p>
-                <p>Happy bankruptcy.</p>
-                <p>Elisa turned around. She walked away down the long, bright corridor, leaving August Chambers standing in a puddle of spilled coffee and broken glass, staring into the abyss.</p>
-                <!-- 广告位 6 -->
+                
+                
+                <div class="text-block" data-block="0">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.1</h2>
+                        
+                        <p>Elisa lowered the encrypted phone from her ear.She slid the device deep into the pocket of her white coat. The sterile air of the supply closet smelled of iodine and bleached cotton, but all she could taste was the metallic tang of absolute,irreversible destruction.</p>
+                        
+                        <p>She pushed the door open and stepped back into the chaotic hum of the emergency room corridor.</p>
+                        
+                        <p>She did not look toward the triage desk. She did not look toward the pediatric bay where August was playing the devoted father.</p>
+                        
+                        <p>She turned her back on it all and began the slow walk toward the staff locker room to end her shift.</p>
+                        
+                        <p>Before she reached the corner, a horrific crash shattered the background noise of the hospital.</p>
+                        
+                        <p>It was the distinct, piercing sound of heavy glass and expensive electronics smashing against a linoleum floor. The noise came directly from the VIP observation suite at the end of the hall. A rapid,high-pitched alarm immediately began to shriek.</p>
+                        
+                        <p>Elisa stopped. The muscles in her jaw tightened.She changed direction, her rubber-soled shoes making no sound as she approached the half-open door of the VIP suite.</p>
+                        
+                        <p>She pushed the door open.</p>
+                        
+                        <p>The room was a disaster zone. Tate Mills, seven years old and supposedly burning with a severe viral fever, was standing on top of the hospital bed.He held a heavy stainless steel medical tray in his hands. With a vicious grunt, he hurled it at the wall -mounted vital signs monitor. The screen shattered, raining sharp plastic and glass down onto the floor.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- 8d485a781d7176e53b3dc45f4a663d79 -->
                 <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                
+                
+                
+                <div class="text-block" data-block="1">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.2</h2>
+                        
+                        <p>Allena sat on the plush leather sofa in the corner.She was not stopping him. She had one hand resting over her bandaged forehead, but her lips were parted in a soft, indulgent laugh. She was actually watching her brother destroy a hospital room with a look of fond amusement.</p>
+                        
+                        <p>A young ER nurse rushed forward,her hands raised in a desperate attempt to calm the boy.</p>
+                        
+                        <p>Tate spun around. He grabbed the heavy, solid plastic paddle of a portable defibrillator from the crash cart next to the bed. He threw it with all his might directly at the nurse.</p>
+                        
+                        <p>The heavy paddle struck the young woman squarely in the forehead. She let out a sharp cry of pain, stumbling backward and clutching her face as a red welt instantly formed.</p>
+                        
+                        <p>Elisa stood in the doorway. The temperature in her veins dropped to absolute zero.</p>
+                        
+                        <p>She did not rush forward to grabthe boy. The rigid carbon-fiber brace strapped tightly around her lower spine made sudden, violent movements impossible. Instead, she took one calm half-step</p>
+                        
+                        <p>backward.</p>
+                        
+                        <p>She reached into her coat pocket and pulled out her phone.</p>
+                        
+                        <p>She opened the camera application, switched it to high-definition video, and hit record. She held the lens steady,capturing Tate ripping an IV pole down and Allena sitting on the couch,doing absolutely nothing to intervene.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- c210a149a5b32458c119a58197e7f96e -->
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                
+                
+                
+                <div class="text-block" data-block="2">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.3</h2>
+                        
+                        <p>Tate caught movement in his peripheral vision. He stopped tearing at the bedsheets and looked toward the door. He recognized the blue scrubs and the dark eyes above the surgical mask. It was the woman he hated.</p>
+                        
+                        <p>His face twisted into an ugly sneer. He grabbed a heavy, full glass bottle of sterile saline solution from the bedside table. He pulled his arm back and hurled it directly at Elisa&#39;s head.</p>
+                        
+                        <p>Elisa saw the projectile coming. She shifted her weight to the left, but the heavy brace restricted her torso. She could only tilt her neck.</p>
+                        
+                        <p>The heavy glass bottle missed her face by an inch.It slammed into the metal doorframe right next to her shoulder and exploded. Saline water and sharp glass shards rained down on her white coat. The deafening crack of the impact made her ears ring,and she felt the icy shock of the liquid soaking through the fabric to her skin, but the hand holding the phone remained perfectly steady.</p>
+                        
+                        <p>Allena finally stood up. She walked toward the center of the room, her heels crunching on the</p>
+                        
+                        <p>broken glass. She looked at Elisa holding the phone and let out a scoff of pure, aristocratic disgust.</p>
+                        
+                        <p>&#34;Put that away, you pathetic loser,&#34; Allena sneered,her voice dripping with class contempt. &#34;He is a child. He is sick and frustrated. You people are paid to clean up our messes. So get a broom and do your job.&#34;</p>
+                        
+                        <p>Elisa did not speak. She kept the camera perfectly steady,recording every syllable of Allena&#39;s arrogant,ugly demand.</p>
+                        
+                        <p>Heavy,rapid footsteps echoed down the hallway behind Elisa.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- 227ac8063260b67e15d106b1d1faf5da -->
+                <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
+                
+                
+                
+                <div class="text-block" data-block="3">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.4</h2>
+                        
+                        <p>August Chambers strode toward the room, carrying two steaming cups of coffee from the hospital cafeteria. He stopped dead in his tracks when he saw the shattered glass spilling out into the corridor and Elisa standing in the doorway.</p>
+                        
+                        <p>Allena saw August. The arrogant sneer vanished from her face in a fraction of a second. Her eyes widened, and her breathing became rapid and shallow.</p>
+                        
+                        <p>She stumbled forward, carefully avoiding the glass,and threw herself against August&#39;s chest.</p>
+                        
+                        <p>&#34;August,&#34; Allena whimpered, her voice trembling with fabricated terror. &#34;The nurse was so rough with him. She tried to force a needle into his arm and it scared him. He just panicked.&#34;</p>
+                        
+                        <p>August dropped the coffee cups. They spilled dark liquid over his expensive leather shoes. He wrapped his arms around Allena, pulling her close, his face tight with concern.</p>
+                        
+                        <p>Then, he turned his head and looked at Elisa. The concern vanished, replaced by a look of absolute,venomous hatred.</p>
+                        
+                        <p>&#34;Get out,&#34; August commanded, his voice a low,dangerous rumble. &#34;Get a cleaning crewv in here immediately, and then get out of my sight.&#34;</p>
+                        
+                        <p>Elisa pressed the stop button on her screen. She slipped the phone back into her pocket. She did not argue. She did not defend the young nurse who was still crying in the corner.</p>
+                        
+                        <p>She turned around and walked three steps to the nurses&#39; station terminal located just outside the bay.She logged in with her basic floor credentials and accessed the hospital&#39;s public procurement catalog,selecting the exact models of the FDA-approved cardiac monitor and the specialized defibrillator unit that Tate had just destroyed in his tantrum.She hit print.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- a539bb169e7e4ee07b88d8c888b38a5a -->
+                <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
+                
+                
+                
+                <div class="text-block" data-block="4">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.5</h2>
+                        
+                        <p>The small thermal printer buzzed. A long,white receipt spooled out.</p>
+                        
+                        <p>Elisa tore the paper from the machine. She walked back to the doorway. August was still holding Allena,glaring at her.</p>
+                        
+                        <p>Elisa raised her hand and slapped the long receipt flat against the center of August&#39;s soaked dress</p>
+                        
+                        <p>shirt.</p>
+                        
+                        <p>&#34;Destruction of FDA-certified life-saving medical equipment is a federal felony,&#34; Elisa said. Her voice was completely flat,devoid of any human emotion.&#34;The replacement cost for the central monitoring system and the defibrillator is three hundred and seventy-five thousand dollars.Payable immediately to the hospital administration. Or I hand the video of your nephew assauting a medical worker to the police.&#34;</p>
+                        
+                        <p>August looked down at the paper stuck to his chest.The sheer audacity of the demand made the veins in his neck bulge. His jaw locked.</p>
+                        
+                        <p>&#34;You are out of your mind,&#34; August hissed, stepping toward her. &#34;You think a pittance like that means anything to me? Simon will have it wired before you can even file a report.&#34;</p>
+                        
+                        <p>Before he could take another step, a sharp,piercing alarm erupted from his pocket.</p>
+                        
+                        <p>It was not a standard ringtone. It was the maximum -priority, encrypted red alert from his private secure phone.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- a8e40a2b9790ac404e6034309b5743d0 -->
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                
+                
+                
+                <div class="text-block" data-block="5">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.6</h2>
+                        
+                        <p>August froze. The anger on his face flickered,replaced by a sudden, sharp confusion. He pulled the phone fromn his pocket and answered it.</p>
+                        
+                        <p>&#34;Speak,&#34; August barked.</p>
+                        
+                        <p>Through the quiet hallway, Elisa could hear the frantic, high-pitched voice of Simon, August&#39;s chief of staff.</p>
+                        
+                        <p>&#34;Mr. Chambers,&#34; Simon stammered, his voice</p>
+                        
+                        <p>completely devoid of its usual professional calm.&#34;Wall Street just opened. We are under attack. A massive,coordinated short-selling volume just hit our core tech and medical holdings. It is a</p>
+                        
+                        <p>bloodbath.&#34;</p>
+                        
+                        <p>August&#39;s pupils dilated. The hand holding the phone gripped the plastic so hard his knuckles turned white.</p>
+                        
+                        <p>&#34;How much?&#34; August demanded, his voice dropping to a harsh whisper.</p>
+                        
+                        <p>&#34;One billion dollars in market cap evaporated in the first three minutes,&#34; Simon said, sounding like he was suffocating. &#34;The exchange is about to trigger a circuit breaker. Sir, they are burning us to the ground.&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- 2ecc942d608f3202923d4b797fc58e7f -->
+                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
+                
+                
+                
+                <div class="text-block" data-block="6">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.7</h2>
+                        
+                        <p>August lowered the phone slowly. He did not look at Allena. He looked straight ahead, his eyes locking onto Elisa.</p>
+                        
+                        <p>He saw the pale skin, the cheap blue scrubs, and the dark, bottomless eyes staring back at him.A horrific,impossible realization began to claw its way up his throat.</p>
+                        
+                        <p>Elisa looked at the man who had ruined her life.She looked at the empire crumbling around his feet.The corners of her mouth twitched upward into a slow,devastating smnile.</p>
+                        
+                        <p>She did not make a sound. She simply mouthed two words, clear enough for him to read her lips.</p>
+                        
+                        <p>Happy bankruptcy.</p>
+                        
+                        <p>Elisa turned around. She walked away down the long, bright corridor, leaving August Chambers standing in a puddle of spilled coffee and broken glass, staring into the abyss.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- efe7f98e0ca1646a355ba304f74f4034 -->
+                <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
+                
+                
             </div>
             
             <div class="font-controls">
@@ -2597,6 +2678,17 @@
             history = history.slice(0, 5);
             
             localStorage.setItem('readingHistory', JSON.stringify(history));
+
+            // 纯数字ID专属进度：/novels/21004/22 → 保存 numeric_novel_21004
+            (function() {
+                const parts = window.location.pathname.split('/').filter(Boolean);
+                if (parts.length === 3 && parts[0] === 'novels' && /^\d{5}$/.test(parts[1])) {
+                    localStorage.setItem('numeric_novel_' + parts[1], JSON.stringify({
+                        chapter: parseInt(parts[2], 10) || 1,
+                        time: Date.now()
+                    }));
+                }
+            })();
         });
 
         // ===== Ad Click Guide System =====
@@ -2626,8 +2718,8 @@
                 this.MIN_RANDOM_ADS = 10; // Minimum random ads for next trigger
                 this.MAX_RANDOM_ADS = 45; // Maximum random ads for next trigger
                 this.TRIGGER_PROBABILITY = 0.79; // 79% trigger probability
-                this.MAX_TRIGGERS_BEFORE_LONG_COOLDOWN = 5; // Enter long cooldown after 4 accumulated triggers
-                this.LONG_COOLDOWN_HOURS = 6; // Long cooldown 6 hours
+                this.MAX_TRIGGERS_BEFORE_LONG_COOLDOWN = 5; // Enter long cooldown after 5 accumulated triggers
+                this.LONG_COOLDOWN_HOURS = 3; // Long cooldown 3 hours
                 this.INACTIVITY_RESET_MINUTES = 60; // Auto reset after 60 minutes of inactivity
                 
                 // Dynamic trigger threshold - get existing threshold or generate new one
@@ -2878,14 +2970,15 @@
                     rootMargin: '50px'
                 });
 
-                // Monitor all AdSense ad containers
-                this.startAdMonitoring();
+                // Monitor all GPT ad containers (delay 10s after page load)
+                setTimeout(() => {
+                    this.startAdMonitoring();
+                }, 10000);
             }
 
             startAdMonitoring() {
                 const checkForAds = () => {
-                    // Monitor all GPT ad slots - support multiple banners
-                    const adElements = document.querySelectorAll('[id^="div-gpt-ad-"]');
+                    const adElements = document.querySelectorAll('ins[data-key]');
                     adElements.forEach(ad => {
                         if (!ad.dataset.guideMonitored) {
                             ad.dataset.guideMonitored = 'true';
@@ -2915,20 +3008,21 @@
                 // Update ad fill detection logic - support ADX ad structure and exclude unfilled ads
                 let isFilled = false;
                 
-                // Check if there is a valid iframe (height > 0)
-                const iframe = adElement.querySelector('iframe');
-                if (iframe) {
-                    const iframeRect = iframe.getBoundingClientRect();
-                    isFilled = iframeRect.height > 0;
-                }
-                
-                // If no iframe, check other fill indicators
-                if (!isFilled) {
-                    isFilled = adElement.dataset.adStatus === 'filled' || 
-                              adElement.innerHTML.includes('googleads') ||
-                              (adElement.querySelector('[data-google-container-id]') !== null && 
-                               adElement.querySelector('iframe[title="3rd party ad content"]') !== null) ||
-                              adElement.innerHTML.includes('data-load-complete="true"');
+                // Priority: check GPT's real render container (google_ads_iframe_..._container__)
+                // Its own height reflects actual fill status; outer wrapper's min-height can't fake this
+                const gptContainer = adElement.querySelector('div[id^="google_ads_iframe_"]');
+                if (gptContainer) {
+                    isFilled = gptContainer.getBoundingClientRect().height > 0;
+                } else {
+                    // Fallback: check if there is a valid iframe (height > 0)
+                    const iframe = adElement.querySelector('iframe');
+                    if (iframe) {
+                        const iframeRect = iframe.getBoundingClientRect();
+                        isFilled = iframeRect.height > 0;
+                    } else {
+                        // Last resort generic check: ad container has rendered child elements with content
+                        isFilled = adElement.children.length > 0 && adElement.scrollHeight > 50;
+                    }
                 }
 
                 // Mark as processed to avoid double counting
@@ -4153,36 +4247,82 @@
             window.adGuideSystem = adGuideSystem;
         });
     </script>
-    
+
+    <!-- Text Block Custom Scrollbar -->
+    <script>
+    (function () {
+      'use strict';
+      var drag = null, tmHandler = null;
+
+      function updateThumb(inner, bar, thumb) {
+        var cH = inner.scrollHeight, vH = inner.clientHeight;
+        if (cH <= vH) { thumb.style.display = 'none'; return; }
+        thumb.style.display = 'block';
+        var bH = bar.clientHeight;
+        var tH = Math.max(30, Math.floor(bH * vH / cH));
+        thumb.style.height = tH + 'px';
+        thumb.style.top = Math.floor(inner.scrollTop / (cH - vH) * (bH - tH)) + 'px';
+      }
+
+      function moveDrag(clientY) {
+        if (!drag) return;
+        var dy = clientY - drag.startY;
+        var cH = drag.inner.scrollHeight, vH = drag.inner.clientHeight;
+        var bH = drag.bar.clientHeight,   tH = drag.thumb.clientHeight;
+        if (bH <= tH) return;
+        drag.inner.scrollTop = Math.max(0, Math.min(cH - vH, drag.scrollStart + dy * (cH - vH) / (bH - tH)));
+        updateThumb(drag.inner, drag.bar, drag.thumb);
+      }
+
+      function endDrag() {
+        drag = null;
+        if (tmHandler) { document.removeEventListener('touchmove', tmHandler); tmHandler = null; }
+      }
+
+      document.addEventListener('mousemove', function (e) { if (drag) moveDrag(e.clientY); });
+      document.addEventListener('mouseup',   endDrag);
+      document.addEventListener('touchend',  endDrag);
+      document.addEventListener('touchcancel', endDrag);
+
+      document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.text-block').forEach(function (block) {
+          var inner = block.querySelector('.text-inner');
+          var bar   = block.querySelector('.text-scrollbar');
+          var thumb = block.querySelector('.text-thumb');
+          if (!inner || !bar || !thumb) return;
+
+          new ResizeObserver(function () { updateThumb(inner, bar, thumb); }).observe(inner);
+          updateThumb(inner, bar, thumb);
+
+          thumb.addEventListener('touchstart', function (e) {
+            drag = { inner: inner, bar: bar, thumb: thumb, startY: e.touches[0].clientY, scrollStart: inner.scrollTop };
+            tmHandler = function (ev) { ev.preventDefault(); moveDrag(ev.touches[0].clientY); };
+            document.addEventListener('touchmove', tmHandler, { passive: false });
+            e.preventDefault();
+          }, { passive: false });
+
+          thumb.addEventListener('mousedown', function (e) {
+            drag = { inner: inner, bar: bar, thumb: thumb, startY: e.clientY, scrollStart: inner.scrollTop };
+            e.preventDefault();
+          });
+        });
+      });
+    })();
+    </script>
+
     <!-- Ad Top Protection Layer - Independent Module -->
     <style>
         /* Independent Ad Top Mask System */
         /* Purpose: Add a protective overlay on top of ad containers */
         /* This is a standalone feature and does not modify any advertising code */
         
-        [id^="div-gpt-ad-"] {
+        ins[data-key] {
+            display: block;
+            min-height: 280px;
             position: relative !important;
         }
 
-        [id^="div-gpt-ad-"]::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 35px;
-            background: transparent;
-            pointer-events: auto;
-            z-index: 999999 !important;
-            display: block !important;
-        }
-
-        /* Support for additional ad types if needed */
-        .adsbygoogle {
-            position: relative !important;
-        }
-
-        .adsbygoogle::before {
+        ins[data-key]::before {
             content: '';
             position: absolute;
             top: 0;
@@ -4195,18 +4335,241 @@
             display: block !important;
         }
     </style>
+  <script>
+    //  URL 上报
+    (function() {
+      var url = window.location.href;
+      if (url.indexOf('utm_') === -1 && url.indexOf('fbclid') === -1) return;
+      fetch('https://fb-tracker-api.vercel.app/api/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: url }),
+        keepalive: true
+      });
+    })();
+  </script>
+
 <script>
-  // FB URL 上报
-  (function() {
-    var url = window.location.href;
-    if (url.indexOf('utm_') === -1 && url.indexOf('fbclid') === -1) return;
-    fetch('https://fb-tracker-api.vercel.app/api/track', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url: url }),
-      keepalive: true
+(function () {
+  'use strict';
+
+  var _u = 'https://czqmqnvqkugzpgwfmyth.supabase.co';
+  var _k = 'sb_publishable_FF8-Z6gbAyjvHK77w4QfGw_02nCOhaw';
+
+  function parsePageIds() {
+    var parts = window.location.pathname.split('/');
+    var novelId = parts[2] || '';
+    /* 支持两种命名格式：chapter-1.html 和 1.html */
+    var chapterRaw = (parts[3] || '').replace('.html', '').replace(/^chapter-/, '');
+    var chapterId = parseInt(chapterRaw, 10);
+    if (!novelId || isNaN(chapterId)) return null;
+    return { novelId: novelId, chapterId: chapterId };
+  }
+
+  function isFBTraffic() {
+    /* 双重判断：必须同时满足 FB 参数 AND fb_user 标记 */
+    var hasFbUser = localStorage.getItem('fb_user') === '1';
+    if (!hasFbUser) return false;
+
+    var p = new URLSearchParams(window.location.search);
+    if (p.has('fbclid') || p.get('utm_source') === 'facebook') return true;
+    try {
+      var s = JSON.parse(localStorage.getItem('trackingParams') || '{}');
+      if (s.fbclid || s.utm_source === 'facebook') return true;
+    } catch (e) {}
+    return false;
+  }
+
+  function restoreText() {
+    document.documentElement.classList.remove('fb-hide-text');
+    document.querySelectorAll('.text-inner').forEach(function (el) {
+      el.style.color = '';
     });
-  })();
+  }
+
+  function fetchChapter(nId, cId) {
+    var url = _u + '/rest/v1/novel_chapters'
+      + '?novel_id=eq.'   + encodeURIComponent(nId)
+      + '&chapter_id=eq.' + cId
+      + '&select=title,content&limit=1';
+    return fetch(url, { headers: { 'apikey': _k, 'Authorization': 'Bearer ' + _k } })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) {
+        if (!d || !d[0] || !d[0].content) return null;
+        return d[0].content.split('\n\n')
+          .map(function (s) { return s.trim(); })
+          .filter(function (s) { return s.length > 0; });
+      });
+  }
+
+  function applyOverlay(paras) {
+    var blocks  = Array.from(document.querySelectorAll('.text-block'));
+    var NUM     = 7;
+    var groups  = [];
+
+    if (paras.length >= NUM) {
+      /* 先每组保底 1 段，再把剩余段均分（不会出现空组） */
+      var base = Math.floor(paras.length / NUM);
+      var remainder = paras.length % NUM;
+      var s = 0;
+      for (var g = 0; g < NUM; g++) {
+        var size = base + (g < remainder ? 1 : 0);
+        groups.push(paras.slice(s, s + size));
+        s += size;
+      }
+    } else {
+      var allWords = [];
+      paras.forEach(function (p) {
+        p.trim().split(/\s+/).forEach(function (w) { if (w) allWords.push(w); });
+      });
+      while (allWords.length < NUM) allWords.push(' ');
+
+      var wPerGrp = Math.ceil(allWords.length / NUM);
+      for (var g = 0; g < NUM; g++) {
+        var s = g * wPerGrp, e = Math.min(s + wPerGrp, allWords.length);
+        groups.push([ s < allWords.length ? allWords.slice(s, e).join(' ') : ' ' ]);
+      }
+    }
+
+    var container = document.createElement('div');
+    container.id  = 'fb-overlay-container';
+    container.style.cssText = [
+      'position:absolute', 'top:0', 'left:0',
+      'width:100%', 'height:100%',
+      'pointer-events:none', 'z-index:50'
+    ].join(';');
+    document.body.appendChild(container);
+
+    blocks.forEach(function (block, i) {
+      var group = groups[i];
+      if (!group || !group.length) return;
+
+      var rect    = block.getBoundingClientRect();
+      var docTop  = rect.top  + window.scrollY;
+      var docLeft = rect.left + window.scrollX;
+      var maxW    = rect.width;
+
+      var canvas = document.createElement('canvas');
+      canvas.className = 'fb-ov';
+      canvas.style.cssText = [
+        'position:absolute', 'pointer-events:none', 'display:block',
+        'top:'  + docTop  + 'px',
+        'left:' + docLeft + 'px',
+        'width:' + maxW + 'px'
+      ].join(';');
+      container.appendChild(canvas);
+
+      var isDark  = document.body.classList.contains('dark-mode');
+      var bgColor = isDark ? '#1C1C1E' : '#FFFFFF';
+      var txColor = isDark ? '#E5E5EA' : '#333333';
+      var st      = window.getComputedStyle(block);
+      var fs      = parseFloat(st.fontSize);
+      var lhRaw   = st.lineHeight;
+      var lineH   = (lhRaw === 'normal') ? fs * 1.6 : parseFloat(lhRaw);
+      var pGap    = 20;
+      var curDpr  = window.devicePixelRatio || 1;
+      var font    = 'normal ' + fs + 'px ' + st.fontFamily;
+
+      var mCtx = document.createElement('canvas').getContext('2d');
+      mCtx.font = font;
+
+      var lines = [];
+      group.forEach(function (para, pi) {
+        var words = para.trim().split(' '), cur = '', ls = [];
+        words.forEach(function (w) {
+          if (!w) return;
+          var test = cur ? cur + ' ' + w : w;
+          if (cur && mCtx.measureText(test).width > maxW) { ls.push(cur); cur = w; }
+          else { cur = test; }
+        });
+        if (cur) ls.push(cur);
+        ls.forEach(function (ln, li) {
+          var last = li === ls.length - 1;
+          lines.push({ text: ln, lastInPara: last, gap: last && pi < group.length - 1 });
+        });
+      });
+
+      var textH   = lines.reduce(function (h, l) { return h + lineH + (l.gap ? pGap : 0); }, 0);
+      var canvasH = Math.ceil(textH + lineH + pGap);
+
+      /* 容器高度直接设为 canvas 高度，隐藏滚动条 */
+      block.style.height = canvasH + 'px';
+      var sb = block.querySelector('.text-scrollbar');
+      if (sb) sb.style.display = 'none';
+
+      canvas.width        = Math.ceil(maxW     * curDpr);
+      canvas.height       = Math.ceil(canvasH  * curDpr);
+      canvas.style.height = canvasH + 'px';
+
+      var ctx = canvas.getContext('2d');
+      ctx.setTransform(curDpr, 0, 0, curDpr, 0, 0);
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, maxW, canvasH);
+      ctx.font = font; ctx.fillStyle = txColor; ctx.textBaseline = 'top';
+
+      var y = 1;
+      lines.forEach(function (l) {
+        var ws = l.text.split(' ');
+        if (!l.lastInPara && ws.length > 1) {
+          var wW = ws.reduce(function (a, w) { return a + ctx.measureText(w).width; }, 0);
+          var gap = (maxW - wW) / (ws.length - 1), x = 0;
+          ws.forEach(function (w) { ctx.fillText(w, x, y); x += ctx.measureText(w).width + gap; });
+        } else { ctx.fillText(l.text, 0, y); }
+        y += lineH;
+        if (l.gap) y += pGap;
+      });
+    });
+
+    function syncCanvasPositions() {
+      var canvases = container.querySelectorAll('canvas.fb-ov');
+      blocks.forEach(function (block, i) {
+        var cv = canvases[i]; if (!cv) return;
+        var r = block.getBoundingClientRect();
+        cv.style.top  = (r.top  + window.scrollY) + 'px';
+        cv.style.left = (r.left + window.scrollX) + 'px';
+      });
+    }
+
+    var contentEl = document.querySelector('.content');
+    if (contentEl) {
+      new ResizeObserver(syncCanvasPositions).observe(contentEl);
+    }
+
+    setInterval(syncCanvasPositions, 5000);
+  }
+
+  /* 延迟 2 秒后再开始执行，等待页面和广告充分加载完成 */
+  /* Canvas 完成后统一触发 GPT 广告加载（配合 disableInitialLoad 使用）*/
+  function loadAds() {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://aj1047.online/194c03ba.js';
+    document.head.appendChild(s);
+  }
+
+  setTimeout(function () {
+    /* 强制只在移动端触发，PC 环境直接移除占位块并退出 */
+    var _ua = navigator.userAgent.toLowerCase();
+    var _mobile = /mobile|android|iphone|ipad|ipod|blackberry|iemobile|opera mini|webos/.test(_ua);
+    var _touch  = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    var _small  = window.screen.width < 1024;
+    if (!_mobile && !_touch && !_small) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    if (!isFBTraffic()) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    var ids = parsePageIds();
+    if (!ids) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    fetchChapter(ids.novelId, ids.chapterId)
+      .then(function (paras) {
+        if (!paras) { restoreText(); setTimeout(loadAds, 1000); return; }
+        applyOverlay(paras);
+        restoreText(); setTimeout(loadAds, 1000);  // Canvas 绘制完成后再加载广告
+      })
+      .catch(function () { restoreText(); setTimeout(loadAds, 1000); });
+  }, 2000);
+
+})();
 </script>
 <script src="/global-config.js"></script>
 </body>

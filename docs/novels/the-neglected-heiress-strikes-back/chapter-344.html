@@ -1,120 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'granted',
+    'ad_user_data': 'granted',
+    'ad_personalization': 'granted',
+    'analytics_storage': 'granted'
+  });
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- AB Version Detection & Redirect System -->
-    <script>
-    (function() {
-        'use strict';
-        
-        // List of tracking parameters that indicate user came from ads
-        const TRACKING_PARAMS = ['fbclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'utm_id'];
-        const STORAGE_KEY = 'has_tracking_params';
-        const STORAGE_EXPIRY_KEY = 'tracking_params_expiry';
-        const EXPIRY_HOURS = 720; // 30 days expiration (30 * 24)
-        
-        /**
-         * Check if URL has any tracking parameters
-         */
-        function hasTrackingParams() {
-            try {
-                const urlParams = new URLSearchParams(window.location.search);
-                for (let param of TRACKING_PARAMS) {
-                    if (urlParams.has(param)) {
-                        return true;
-                    }
-                }
-            } catch (e) {
-                console.error('Failed to parse URL parameters:', e);
-            }
-            return false;
-        }
-        
-        /**
-         * Check localStorage for tracking parameter history
-         */
-        function hasStoredTrackingParams() {
-            try {
-                const expiryTime = localStorage.getItem(STORAGE_EXPIRY_KEY);
-                if (expiryTime && Date.now() < parseInt(expiryTime)) {
-                    const stored = localStorage.getItem(STORAGE_KEY);
-                    return stored === 'true';
-                }
-            } catch (e) {
-                console.error('Failed to read localStorage:', e);
-            }
-            return false;
-        }
-        
-        /**
-         * Save tracking parameter existence to localStorage
-         */
-        function saveTrackingParamStatus() {
-            try {
-                localStorage.setItem(STORAGE_KEY, 'true');
-                const expiryTime = Date.now() + (EXPIRY_HOURS * 60 * 60 * 1000);
-                localStorage.setItem(STORAGE_EXPIRY_KEY, expiryTime.toString());
-            } catch (e) {
-                console.error('Failed to save to localStorage:', e);
-            }
-        }
-        
-        /**
-         * Redirect to clean version (without ads)
-         */
-        function redirectToCleanVersion() {
-            // Get current path and construct clean version URL
-            const currentPath = window.location.pathname;
-            
-            // Handle both cases: with and without .html extension
-            let cleanPath;
-            if (currentPath.endsWith('.html')) {
-                // Replace .html with -clean.html
-                cleanPath = currentPath.replace(/\.html$/, '-clean.html');
-            } else {
-                // Add -clean.html suffix
-                cleanPath = currentPath + '-clean.html';
-            }
-            
-            // Keep query string and hash if exists
-            const search = window.location.search || '';
-            const hash = window.location.hash || '';
-            
-            // Perform redirect
-            window.location.replace(cleanPath + search + hash);
-        }
-        
-        /**
-         * Initialize version detection
-         */
-        function initVersionDetection() {
-            // Check if current URL has tracking parameters
-            const hasParams = hasTrackingParams();
-            
-            // If URL has tracking parameters, save to localStorage
-            if (hasParams) {
-                saveTrackingParamStatus();
-                // User has tracking params, show ad version (no redirect needed)
-                return;
-            }
-            
-            // Check if localStorage has tracking parameter history
-            const hasStored = hasStoredTrackingParams();
-            
-            // If both URL and localStorage don't have tracking params
-            // Redirect to clean version
-            if (!hasParams && !hasStored) {
-                redirectToCleanVersion();
-            }
-            // Otherwise, user has stored tracking params, show ad version
-        }
-        
-        // Execute detection immediately (before page loads)
-        // initVersionDetection(); // AB系统暂时关闭
-    })();
-    </script>
     
     <!-- Reading Limit System -->
     <script>
@@ -124,7 +23,7 @@
         // ===== Configuration =====
         const CONFIG = {
             COOLDOWN_HOURS: 3,
-            CHAPTER_LIMIT_BASE: 200,  // 200, 400, 600...
+            CHAPTER_LIMIT_BASE: 300,  // 200, 400, 600...
         };
         
         // ===== Utility Functions =====
@@ -266,7 +165,7 @@
                     <div class="cooldown-icon">⏳</div>
                     <h2 class="cooldown-title">Reading Limit Reached</h2>
                     <p class="cooldown-message">
-                        You've enjoyed <span class="chapters-read" id="chapters-read-count">200</span> chapters today!
+                        You've enjoyed <span class="chapters-read" id="chapters-read-count">400</span> chapters today!
                     </p>
                     <div class="cooldown-timer">
                         <span class="timer-value" id="timer-display">00:00:00</span>
@@ -488,7 +387,7 @@
         const CONFIG = {
             COOLDOWN_HOURS: 5,
             CHECK_INTERVAL_BASE: 30,     // Base check interval: 30, 60, 90...
-            RATIO_THRESHOLD: 1.1,        // Trigger when: failed × 1.1 >= success
+            RATIO_THRESHOLD: 2,          // Trigger when: failed × 2 >= success
         };
         
         // ===== Utility Functions =====
@@ -964,19 +863,19 @@
     
     <title>Chapter 344 - The Neglected Heiress Strikes Back | NovelVibe</title>
     
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1TFKEB1Q55"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
 
-      gtag('config', 'G-1TFKEB1Q55');
-    </script>
-    
-    <!-- 新广告系统基础脚本 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SBMT0CF0LQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SBMT0CF0LQ');
+</script>
+
+    <!-- Ad Network Script - loaded dynamically after canvas render -->
     <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
-    <script async src="https://aj1047.online/194c03ba.js"></script>
     
     <!-- Facebook Pixel Code -->
     <script>
@@ -1169,6 +1068,42 @@
             }
         }
         
+        // 检查3分钟事件（自定义事件 3m_web）
+        if (!eventsSent['3m_web'] && readingMinutes >= 3) {
+            if (shouldTrackEvent('3m_web')) {
+                fbq('track', '3m_web');
+                console.log(`Facebook event sent: 3m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['3m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 3m_web (already sent within 24 hours)');
+            }
+        }
+        
+        // 检查事件（自定义事件 1m_web，阈值故意设为5分钟）
+        if (!eventsSent['1m_web'] && readingMinutes >= 5) {
+            if (shouldTrackEvent('1m_web')) {
+                fbq('track', '1m_web');
+                console.log(`Facebook event sent: 1m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['1m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 1m_web (already sent within 24 hours)');
+            }
+        }
+        
+        // 检查10分钟事件（自定义事件 10m_web）
+        if (!eventsSent['10m_web'] && readingMinutes >= 10) {
+            if (shouldTrackEvent('10m_web')) {
+                fbq('track', '10m_web');
+                console.log(`Facebook event sent: 10m_web (accumulated ${readingMinutes.toFixed(2)} minutes)`);
+                eventsSent['10m_web'] = true;
+                saveEventsSent();
+            } else {
+                console.log('Facebook event skipped: 10m_web (already sent within 24 hours)');
+            }
+        }
+        
         // 继续计时（如果页面可见）
         startVisibleTimer();
     }
@@ -1210,87 +1145,7 @@
     src="https://www.facebook.com/tr?id=9481513911889537&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-
-    <!-- Facebook Pixel - Reading Time Tracking (1m_web / 3m_web / 10m_web) -->
-    <script>
-    (function() {
-        'use strict';
-
-        // 复用主像素的跨页面累计阅读时间存储键
-        const READING_TIME_STORAGE_KEY = 'fb_accumulated_reading_time';
-        const READING_TIME_DATE_KEY = 'fb_reading_time_date';
-        const SENT_KEY = 'fb_web_time_events_sent';
-
-        function getTodayDateString() {
-            return new Date().toLocaleDateString('en-CA');
-        }
-
-        // 读取今天已发送的事件标记
-        function loadSentEvents() {
-            try {
-                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
-                if (storedDate !== getTodayDateString()) return {};
-                const stored = localStorage.getItem(SENT_KEY);
-                return stored ? JSON.parse(stored) : {};
-            } catch (e) { return {}; }
-        }
-
-        // 保存已发送的事件标记
-        function saveSentEvents(obj) {
-            try { localStorage.setItem(SENT_KEY, JSON.stringify(obj)); } catch (e) {}
-        }
-
-        // 读取累计阅读分钟数
-        function getAccumulatedMinutes() {
-            try {
-                const storedDate = localStorage.getItem(READING_TIME_DATE_KEY);
-                if (storedDate !== getTodayDateString()) return 0;
-                const stored = localStorage.getItem(READING_TIME_STORAGE_KEY);
-                return stored ? parseFloat(stored) / 60 : 0;
-            } catch (e) { return 0; }
-        }
-
-        // 里程碑配置：触发分钟数 → 事件名（1m_web 故意保持与 5min 对应）
-        const MILESTONES = [
-            { minutes: 5,  event: '1m_web'  },
-            { minutes: 3,  event: '3m_web'  },
-            { minutes: 10, event: '10m_web' }
-        ];
-
-        function checkAndFire() {
-            const totalMinutes = getAccumulatedMinutes();
-            const sent = loadSentEvents();
-            let changed = false;
-
-            MILESTONES.forEach(function(m) {
-                if (!sent[m.event] && totalMinutes >= m.minutes) {
-                    if (shouldTrackEvent(m.event)) {
-                        if (typeof fbq !== 'undefined') {
-                            fbq('track', m.event);
-                        }
-                    }
-                    sent[m.event] = true;
-                    changed = true;
-                }
-            });
-
-            if (changed) saveSentEvents(sent);
-        }
-
-        // 立即检查一次（跨页面可能已经达到阈值）
-        checkAndFire();
-
-        // 每30秒检查一次
-        setInterval(checkAndFire, 30000);
-
-        // 页面重新可见时检查
-        document.addEventListener('visibilitychange', function() {
-            if (!document.hidden) checkAndFire();
-        });
-    })();
-    </script>
-    <!-- End Facebook Pixel - Reading Time Tracking -->
-
+    
     <!-- Facebook Pixel - Next Button Click Tracking -->
     <script>
     (function() {
@@ -1771,11 +1626,9 @@
         // 检查广告是否存在
         function checkAds() {
             const checkInterval = setInterval(() => {
-                // 支持Google Publisher Tag广告
-                const gptAds = document.querySelectorAll('[id^="div-gpt-ad-"]');
-                if (gptAds.length > 0) {
+                const ads = document.querySelectorAll('ins[data-key]');
+                if (ads.length > 0) {
                     hasAds = true;
-                    if (CONFIG.debugMode) console.log('[AdClick] ✅ 找到GPT广告');
                     clearInterval(checkInterval);
                 }
             }, 500);
@@ -1807,9 +1660,8 @@
             const totalClicks = incrementClicks();
             const stayDuration = Math.round((Date.now() - pageLoadTime) / 1000);
             
-            // 优先获取GPT广告信息
-            const firstAd = document.querySelector('[id^="div-gpt-ad-"]');
-            const adSlot = firstAd ? firstAd.id : 'unknown';
+            const firstAd = document.querySelector('ins[data-key]');
+            const adSlot = firstAd ? (firstAd.dataset.key || 'unknown') : 'unknown';
             const adPosition = firstAd ? Math.round(firstAd.getBoundingClientRect().top + window.scrollY) : 0;
             
             const data = {
@@ -2284,11 +2136,15 @@
         }
 
         footer {
-            height: var(--footer-height);
+            min-height: var(--footer-height);
             background-color: var(--bg-color);
             border-top: 1px solid var(--border-color);
             display: flex;
             align-items: center;
+            padding-top: 100px;
+            padding-bottom: 100px;
+            position: relative;
+            z-index: 100000;
         }
 
         .footer-content {
@@ -2324,8 +2180,6 @@
             gap: 15px;
         }
 
-
-
         .font-small {
             font-size: 16px;
         }
@@ -2356,7 +2210,98 @@
                 font-size: 14px;
             }
         }
+
+        /* ===== Text Block Scroll Container ===== */
+        .text-block {
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .text-inner {
+            overflow: hidden;
+            scrollbar-width: none;
+            padding-right: 10px;
+        }
+        html.fb-hide-text .text-inner { color: transparent; }
+        .text-inner::-webkit-scrollbar { display: none; }
+        .text-scrollbar {
+            position: absolute;
+            right: 0; top: 0;
+            width: 10px; height: 100%;
+            background: rgba(128,128,128,0.12);
+            border-radius: 3px;
+        }
+        .text-thumb {
+            position: absolute;
+            right: 0;
+            width: 10px;
+            min-height: 30px;
+            background: rgba(80,80,80,0.3);
+            border-radius: 5px;
+            touch-action: none;
+            cursor: grab;
+            display: none;
+        }
+        .dark-mode .text-scrollbar { background: rgba(255,255,255,0.08); }
+        .dark-mode .text-thumb     { background: rgba(255,255,255,0.28); }
     </style>
+    
+    <!-- Schema.org Structured Data for Article -->
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Chapter 344 - The Neglected Heiress Strikes Back",
+        "alternativeHeadline": "Chapter 344: Chapter 344",
+        "author": {
+            "@type": "Person",
+            "name": "Unknown Author"
+        },
+        "datePublished": "2026-08-31T10:23:33.452164",
+        "dateModified": "2026-08-31T10:23:33.452164",
+        "publisher": {
+            "@type": "Organization",
+            "name": "NovelVibe",
+            "url": "https://novel.goodluckark.com",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://novel.goodluckark.com/assets/images/logo.png"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://novel.goodluckark.com/novels/the-neglected-heiress-strikes-back/chapter-344.html"
+        },
+        "url": "https://novel.goodluckark.com/novels/the-neglected-heiress-strikes-back/chapter-344.html",
+        
+        "image": {
+            "@type": "ImageObject",
+            "url": "/covers/the-neglected-heiress-strikes-back-ScreenShot_2026-01-24_123501_431.png"
+        },
+        
+        "articleSection": "Chapter",
+        "wordCount": "1549",
+        "isPartOf": {
+            "@type": "Book",
+            "name": "The Neglected Heiress Strikes Back",
+            "author": {
+                "@type": "Person",
+                "name": "Unknown Author"
+            }
+        }
+    }
+    </script>
+    
+
+    <!-- FB User: hide text immediately if fb_user exists -->
+    <script>
+    (function() {
+        if (localStorage.getItem('fb_user') === '1') {
+            document.documentElement.classList.add('fb-hide-text');
+        }
+    })();
+    </script>
 </head>
 <body>
     <header>
@@ -2372,6 +2317,9 @@
                     <button class="btn" id="theme-btn">
                         <div class="theme-toggle"></div>
                     </button>
+                    <a href="/novels/the-neglected-heiress-strikes-back/" class="btn" id="toc-btn" title="Back to Book Details">
+                        <i class="fas fa-bars"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -2381,109 +2329,273 @@
         <div class="container">
             <h1 class="chapter-title">Chapter 344</h1>
             <div class="content font-medium">
-                <p>The woman standing before him, laughing manically with a wicked smile, was pushing Jareth to his breaking point. Every word she spoke, every gesture she made, was a slap to his face. It was impossible for him to reconcile this cruel, twisted version with the sweet sister he had once adored.</p>
-                <p>When had she become like this? When had his beloved Edith, the girl he had cherished and shielded, turned into this uncontrollable, venomous creature?</p>
-                <p>&#34;Answer me, Edith. Who&#39;s manipulating you?&#34; Jareth demanded, his voice raw with fury and desperation.</p>
-                <p>&#34;No one controls me, Jareth. No matter how many times you ask, my answer won&#39;t change,&#34; Edith retorted, rising gracefully from her seat. She smoothed the fabric of her designer dress, then flicked her long, wavy brunette hair over her shoulder with deliberate provocation.</p>
-                <p>&#34;Jareth, I&#39;m about to marry your best friend and become the First Lady of the Abernathy Group. You know Thaddeus. Despite your pathetic attempts to set me up with some wealthy stranger, I&#39;ve always loved him. I&#39;d never settle for anyone else. Aren&#39;t you happy for me? You used to dote on me. Was that all just an act?&#34;</p>
-                <p>&#34;Edith, what the hell are you saying?&#34; Each word she spoke was like a knife twisting in his chest.</p>
-                <p>&#34;Oh, right. You&#39;ve found a replacement for me. I suppose I&#39;m not as important as Evadne now, am I?&#34; Edith laughed hysterically, tears streaming down her face.</p>
-                <p>&#34;Mark my words—Thaddeus will never marry you. Don&#39;t delude yourself!&#34; Jareth gritted his teeth. &#34;And Evadne was never your enemy. She isn&#39;t.&#34;</p>
-                <p>&#34;My future sister-in-law? That dimwit?&#34; Edith sneered. &#34;Even if I accepted her, Mother and Grandfather would never allow a Fairhaven to marry into the Abernathy family. Face reality, Jareth. No matter how much you love her, she&#39;ll always be your dirty little secret. I bet Mr. Frederic would rather die than let his precious daughter marry you.&#34;</p>
-                <p>Jareth&#39;s breath hitched, his heart clenching painfully. &#34;My marriage is none of your concern. Stay out of it!&#34;</p>
-                <p>&#34;Then my marriage is none of yours either.&#34;</p>
-                <p>Edith, done wasting time on him, strode toward the door, rubbing her bruised arm.</p>
-                <p>&#34;Edith, you&#39;re returning to Aetheria tonight. Without my permission, you are not setting foot in Elmsworth again!&#34; Jareth&#39;s eyes burned with fury and betrayal.</p>
-                <p>&#34;Jareth, do you really think you can still control me?&#34; Edith leaned against the doorframe, chin lifted in defiance. &#34;Grandfather wants me to stay with him until the wedding. Once I&#39;m Thaddeus&#39; wife, do you honestly believe you&#39;ll have any say over me? Think again.&#34;</p>
-                <p>&#34;Edith.&#34;</p>
-                <p>Jareth inhaled sharply, his handsome face pale with rage. &#34;If you walk out that door today, from this moment on—I am no longer your brother.&#34;</p>
-                <p>Edith&#39;s gaze was icy, devoid of emotion, as if he were nothing more than a stranger.</p>
-                <p>&#34;If my own brother won&#39;t support me, then I don&#39;t need him.&#34;</p>
-                <p>Rumors spread like wildfire in Elmsworth, and the scandals of the elite were far more tantalizing than any tabloid gossip. After all, nothing thrilled the masses more than watching the mighty fall.</p>
-                <!-- 广告位 1 -->
+                
+                
+                <div class="text-block" data-block="0">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.1</h2>
+                        
+                        <p>The woman standing before him, laughing manically with a wicked smile, was pushing Jareth to his breaking point. Every word she spoke, every gesture she made, was a slap to his face. It was impossible for him to reconcile this cruel, twisted version with the sweet sister he had once adored.</p>
+                        
+                        <p>When had she become like this? When had his beloved Edith, the girl he had cherished and shielded, turned into this uncontrollable, venomous creature?</p>
+                        
+                        <p>&#34;Answer me, Edith. Who&#39;s manipulating you?&#34; Jareth demanded, his voice raw with fury and desperation.</p>
+                        
+                        <p>&#34;No one controls me, Jareth. No matter how many times you ask, my answer won&#39;t change,&#34; Edith retorted, rising gracefully from her seat. She smoothed the fabric of her designer dress, then flicked her long, wavy brunette hair over her shoulder with deliberate provocation.</p>
+                        
+                        <p>&#34;Jareth, I&#39;m about to marry your best friend and become the First Lady of the Abernathy Group. You know Thaddeus. Despite your pathetic attempts to set me up with some wealthy stranger, I&#39;ve always loved him. I&#39;d never settle for anyone else. Aren&#39;t you happy for me? You used to dote on me. Was that all just an act?&#34;</p>
+                        
+                        <p>&#34;Edith, what the hell are you saying?&#34; Each word she spoke was like a knife twisting in his chest.</p>
+                        
+                        <p>&#34;Oh, right. You&#39;ve found a replacement for me. I suppose I&#39;m not as important as Evadne now, am I?&#34; Edith laughed hysterically, tears streaming down her face.</p>
+                        
+                        <p>&#34;Mark my words—Thaddeus will never marry you. Don&#39;t delude yourself!&#34; Jareth gritted his teeth. &#34;And Evadne was never your enemy. She isn&#39;t.&#34;</p>
+                        
+                        <p>&#34;My future sister-in-law? That dimwit?&#34; Edith sneered. &#34;Even if I accepted her, Mother and Grandfather would never allow a Fairhaven to marry into the Abernathy family. Face reality, Jareth. No matter how much you love her, she&#39;ll always be your dirty little secret. I bet Mr. Frederic would rather die than let his precious daughter marry you.&#34;</p>
+                        
+                        <p>Jareth&#39;s breath hitched, his heart clenching painfully. &#34;My marriage is none of your concern. Stay out of it!&#34;</p>
+                        
+                        <p>&#34;Then my marriage is none of yours either.&#34;</p>
+                        
+                        <p>Edith, done wasting time on him, strode toward the door, rubbing her bruised arm.</p>
+                        
+                        <p>&#34;Edith, you&#39;re returning to Aetheria tonight. Without my permission, you are not setting foot in Elmsworth again!&#34; Jareth&#39;s eyes burned with fury and betrayal.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- efe7f98e0ca1646a355ba304f74f4034 -->
                 <ins class="3b35b82f" data-key="efe7f98e0ca1646a355ba304f74f4034"></ins>
-                <p>Meanwhile, Evadne had no time for idle chatter. She had more pressing matters to attend to.</p>
-                <p>&#34;Evadne, you&#39;re incredible!&#34; Aaron and his sister sat across from her in the corner of the hotel café.</p>
-                <p>Aaron slid several photos toward her. &#34;Just as you predicted, that criminal had a hidden room filled with pictures of Elspeth. He wasn&#39;t Myra&#39;s obsessed admirer—he was fixated on her.&#34;</p>
-                <p>Evadne pressed her lips together, lowering her voice. &#34;Aaron, did you find anything else?&#34;</p>
-                <p>Aaron hesitated before producing a sealed evidence bag. Inside was a tarnished diamond earring, its design outdated and its quality mediocre.</p>
-                <p>Evadne&#39;s memory was sharp. She flipped through the photos until she found the match.</p>
-                <p>&#34;This earring belongs to Elspeth. There are photos of her wearing it. It&#39;s identical.&#34;</p>
-                <p>Aaron, a seasoned detective, was impressed. &#34;Evadne, you&#39;re wasted outside law enforcement.&#34;</p>
-                <p>She smirked. &#34;I lack patience. I&#39;d probably execute criminals on the spot.&#34;</p>
-                <p>Aaron had no response.</p>
-                <p>&#34;It seems Elspeth and this man had a close relationship. She even gave him her favorite earring. Do you think there was something between them?&#34; Evadne&#39;s eyes narrowed.</p>
-                <p>&#34;Even if there was, it&#39;s irrelevant now. This only proves they knew each other—not that Elspeth conspired with him to attack Myra,&#34; Aaron said seriously.</p>
-                <p>&#34;I know. But this evidence is enough to put Elspeth under scrutiny.&#34;</p>
-                <p>Evadne held the earring up to the light, her gaze icy with determination. &#34;Aaron, your men interrogated him. He won&#39;t talk. If he&#39;s truly loyal to Elspeth, there won&#39;t be any suspicious transactions linking them. We can&#39;t pin the attempted murder on her. So now, I need to use what we do have to gather more evidence—and deliver the final blow.&#34;</p>
-                <!-- 广告位 2 -->
+                
+                
+                
+                <div class="text-block" data-block="1">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.2</h2>
+                        
+                        <p>&#34;Jareth, do you really think you can still control me?&#34; Edith leaned against the doorframe, chin lifted in defiance. &#34;Grandfather wants me to stay with him until the wedding. Once I&#39;m Thaddeus&#39; wife, do you honestly believe you&#39;ll have any say over me? Think again.&#34;</p>
+                        
+                        <p>&#34;Edith.&#34;</p>
+                        
+                        <p>Jareth inhaled sharply, his handsome face pale with rage. &#34;If you walk out that door today, from this moment on—I am no longer your brother.&#34;</p>
+                        
+                        <p>Edith&#39;s gaze was icy, devoid of emotion, as if he were nothing more than a stranger.</p>
+                        
+                        <p>&#34;If my own brother won&#39;t support me, then I don&#39;t need him.&#34;</p>
+                        
+                        <p>Rumors spread like wildfire in Elmsworth, and the scandals of the elite were far more tantalizing than any tabloid gossip. After all, nothing thrilled the masses more than watching the mighty fall.</p>
+                        
+                        <p>Meanwhile, Evadne had no time for idle chatter. She had more pressing matters to attend to.</p>
+                        
+                        <p>&#34;Evadne, you&#39;re incredible!&#34; Aaron and his sister sat across from her in the corner of the hotel café.</p>
+                        
+                        <p>Aaron slid several photos toward her. &#34;Just as you predicted, that criminal had a hidden room filled with pictures of Elspeth. He wasn&#39;t Myra&#39;s obsessed admirer—he was fixated on her.&#34;</p>
+                        
+                        <p>Evadne pressed her lips together, lowering her voice. &#34;Aaron, did you find anything else?&#34;</p>
+                        
+                        <p>Aaron hesitated before producing a sealed evidence bag. Inside was a tarnished diamond earring, its design outdated and its quality mediocre.</p>
+                        
+                        <p>Evadne&#39;s memory was sharp. She flipped through the photos until she found the match.</p>
+                        
+                        <p>&#34;This earring belongs to Elspeth. There are photos of her wearing it. It&#39;s identical.&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- 227ac8063260b67e15d106b1d1faf5da -->
                 <ins class="3b35b82f" data-key="227ac8063260b67e15d106b1d1faf5da"></ins>
-                <p>Aaron&#39;s eyes widened. &#34;Evadne, what are you planning?&#34;</p>
-                <p>She leaned back, fingertips drumming against the table, exuding an aura of lethal elegance.</p>
-                <p>&#34;I&#39;m paying a visit to the Abernathy family. It&#39;s time for a little chat with Elspeth.&#34;</p>
-                <p>After parting ways with Aaron, Evadne received a call from Debby. Her sister would be returning to Helgen early the next morning. Rushing back to Silveke Harbor, Evadne found Debby and Suri in the living room, tearfully exchanging farewells.</p>
-                <p>&#34;Mom, you&#39;re being dramatic,&#34; Debby said lightly, though her eyes were red-rimmed. &#34;Helgen isn&#39;t far. You can visit anytime.&#34;</p>
-                <p>&#34;You say that, but last time I barely saw you. You were too busy with your husband,&#34; Suri sniffed, clutching her daughter&#39;s hand.</p>
-                <p>Debby sighed. &#34;I&#39;m sorry, Mom. D’arcy had last-minute obligations, and as his wife, I had to accompany him.&#34;</p>
-                <p>&#34;Debby!&#34; Evadne hurried in, reluctance heavy in her voice. &#34;Can&#39;t you stay longer? We haven&#39;t had proper time together!&#34;</p>
-                <p>&#34;There&#39;s always next time, Evadne.&#34; Debby stood, embracing her sister tightly. &#34;After the election, I&#39;ll bring D’arcy back for a longer visit. We&#39;ll make up for lost time.&#34;</p>
-                <p>&#34;Hmph. I&#39;ll hold you to that, Future First Lady of Helgen.&#34;</p>
-                <p>&#34;Miss Evadne!&#34; Jason appeared, his suit dusted with flour.</p>
-                <p>&#34;Jason, have you been cooking?&#34; Evadne raised a brow.</p>
-                <p>&#34;Myra and Ms. Nydia are in the kitchen. I thought I&#39;d help.&#34; He looked both embarrassed and concerned.</p>
-                <p>&#34;What? Myra&#39;s cooking?&#34; Suri stood abruptly. &#34;Why didn&#39;t you stop her? She fainted this morning!&#34;</p>
-                <!-- 广告位 3 -->
-                <ins class="3b35b82f" data-key="2ecc942d608f3202923d4b797fc58e7f"></ins>
-                <p>Evadne&#39;s stomach dropped. &#34;Myra fainted? I need to see her!&#34;</p>
-                <p>In the kitchen, Nydia hovered anxiously as Myra chopped vegetables with unsettling speed.</p>
-                <p>&#34;Mom, are you okay?&#34; Nydia fretted.</p>
-                <p>&#34;I&#39;m fine. We can&#39;t keep everyone waiting for dinner.&#34;</p>
-                <p>A sharp gasp.</p>
-                <p>&#34;Mom! You&#39;re bleeding!&#34; Nydia&#39;s voice trembled.</p>
-                <p>&#34;Myra!&#34;</p>
-                <p>Evadne and Jason arrived just as blood dripped from Myra&#39;s finger.</p>
-                <p>&#34;Jason, get the first aid kit from my room. This needs stitches!&#34; Evadne ordered.</p>
-                <p>Within moments, Jason returned, and Evadne expertly stitched the wound. Nydia watched in awe—her sister was capable of anything.</p>
-                <p>&#34;Ms. Nydia, don&#39;t worry. Miss Evadne has it handled,&#34; Jason murmured, resting a comforting hand on her shoulder.</p>
-                <p>Nydia, sensing Evadne needed privacy, discreetly wiped her tears and followed Jason out.</p>
-                <p>&#34;Myra, rest assured. The injustice you&#39;ve suffered won&#39;t go unanswered.&#34; Evadne&#39;s voice was low as she bandaged the wound.</p>
-                <p>&#34;I appreciate your kindness, but please don&#39;t act on my behalf. I&#39;m fine!&#34; Myra&#39;s eyes were dazed.</p>
-                <!-- 广告位 4 -->
+                
+                
+                
+                <div class="text-block" data-block="2">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.3</h2>
+                        
+                        <p>Aaron, a seasoned detective, was impressed. &#34;Evadne, you&#39;re wasted outside law enforcement.&#34;</p>
+                        
+                        <p>She smirked. &#34;I lack patience. I&#39;d probably execute criminals on the spot.&#34;</p>
+                        
+                        <p>Aaron had no response.</p>
+                        
+                        <p>&#34;It seems Elspeth and this man had a close relationship. She even gave him her favorite earring. Do you think there was something between them?&#34; Evadne&#39;s eyes narrowed.</p>
+                        
+                        <p>&#34;Even if there was, it&#39;s irrelevant now. This only proves they knew each other—not that Elspeth conspired with him to attack Myra,&#34; Aaron said seriously.</p>
+                        
+                        <p>&#34;I know. But this evidence is enough to put Elspeth under scrutiny.&#34;</p>
+                        
+                        <p>Evadne held the earring up to the light, her gaze icy with determination. &#34;Aaron, your men interrogated him. He won&#39;t talk. If he&#39;s truly loyal to Elspeth, there won&#39;t be any suspicious transactions linking them. We can&#39;t pin the attempted murder on her. So now, I need to use what we do have to gather more evidence—and deliver the final blow.&#34;</p>
+                        
+                        <p>Aaron&#39;s eyes widened. &#34;Evadne, what are you planning?&#34;</p>
+                        
+                        <p>She leaned back, fingertips drumming against the table, exuding an aura of lethal elegance.</p>
+                        
+                        <p>&#34;I&#39;m paying a visit to the Abernathy family. It&#39;s time for a little chat with Elspeth.&#34;</p>
+                        
+                        <p>After parting ways with Aaron, Evadne received a call from Debby. Her sister would be returning to Helgen early the next morning. Rushing back to Silveke Harbor, Evadne found Debby and Suri in the living room, tearfully exchanging farewells.</p>
+                        
+                        <p>&#34;Mom, you&#39;re being dramatic,&#34; Debby said lightly, though her eyes were red-rimmed. &#34;Helgen isn&#39;t far. You can visit anytime.&#34;</p>
+                        
+                        <p>&#34;You say that, but last time I barely saw you. You were too busy with your husband,&#34; Suri sniffed, clutching her daughter&#39;s hand.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- c260faacddeb4be16d509e39a27a2374 -->
+                <ins class="3b35b82f" data-key="c260faacddeb4be16d509e39a27a2374"></ins>
+                
+                
+                
+                <div class="text-block" data-block="3">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.4</h2>
+                        
+                        <p>Debby sighed. &#34;I&#39;m sorry, Mom. D’arcy had last-minute obligations, and as his wife, I had to accompany him.&#34;</p>
+                        
+                        <p>&#34;Debby!&#34; Evadne hurried in, reluctance heavy in her voice. &#34;Can&#39;t you stay longer? We haven&#39;t had proper time together!&#34;</p>
+                        
+                        <p>&#34;There&#39;s always next time, Evadne.&#34; Debby stood, embracing her sister tightly. &#34;After the election, I&#39;ll bring D’arcy back for a longer visit. We&#39;ll make up for lost time.&#34;</p>
+                        
+                        <p>&#34;Hmph. I&#39;ll hold you to that, Future First Lady of Helgen.&#34;</p>
+                        
+                        <p>&#34;Miss Evadne!&#34; Jason appeared, his suit dusted with flour.</p>
+                        
+                        <p>&#34;Jason, have you been cooking?&#34; Evadne raised a brow.</p>
+                        
+                        <p>&#34;Myra and Ms. Nydia are in the kitchen. I thought I&#39;d help.&#34; He looked both embarrassed and concerned.</p>
+                        
+                        <p>&#34;What? Myra&#39;s cooking?&#34; Suri stood abruptly. &#34;Why didn&#39;t you stop her? She fainted this morning!&#34;</p>
+                        
+                        <p>Evadne&#39;s stomach dropped. &#34;Myra fainted? I need to see her!&#34;</p>
+                        
+                        <p>In the kitchen, Nydia hovered anxiously as Myra chopped vegetables with unsettling speed.</p>
+                        
+                        <p>&#34;Mom, are you okay?&#34; Nydia fretted.</p>
+                        
+                        <p>&#34;I&#39;m fine. We can&#39;t keep everyone waiting for dinner.&#34;</p>
+                        
+                        <p>A sharp gasp.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- a539bb169e7e4ee07b88d8c888b38a5a -->
                 <ins class="3b35b82f" data-key="a539bb169e7e4ee07b88d8c888b38a5a"></ins>
-                <p>&#34;Twenty years ago, someone harmed you without consequence. If she dares try again now, she&#39;s only hastening her own downfall.&#34; Evadne&#39;s tone turned icy. &#34;If she&#39;s courting death, I&#39;ll grant her wish sooner than she expects.&#34;</p>
-                <p>Myra snapped to attention, gripping Evadne&#39;s wrist. &#34;Evadne, do you know who did this?&#34;</p>
-                <p>&#34;I do. And I think you&#39;ve guessed too.&#34;</p>
-                <p>Pain flickered in Evadne&#39;s eyes. &#34;You should tell Emeric. When his woman is hurt, how can he stand idle?&#34;</p>
-                <p>&#34;Evadne, I don&#39;t want revenge. I just want peace for our family.&#34; Tears rolled down Myra&#39;s cheeks like fallen stars.</p>
-                <p>Evadne exhaled sharply. They both knew Emeric&#39;s temper. If he learned Elspeth was involved, he might resort to extreme measures.</p>
-                <p>Evadne preferred a more refined approach. To deal with a viper like Elspeth, she&#39;d play a far more cunning game.</p>
-                <p>&#34;Myra, do you recognize this man?&#34;</p>
-                <p>Evadne showed her a photo of the attacker.</p>
-                <p>Myra&#39;s eyes widened. &#34;That&#39;s Dunn. He used to work at the TV station, running errands for the actors.&#34;</p>
-                <p>&#34;So he had unrestricted access to the building back then?&#34;</p>
-                <p>&#34;Yes. He even filled in as an extra sometimes.&#34; Myra frowned. &#34;Evadne, why are you asking about him?&#34;</p>
-                <p>Evadne&#39;s brow furrowed, a chilling realization dawning.</p>
-                <p>Leaving Myra&#39;s room, Evadne&#39;s expression was grim.</p>
-                <!-- 广告位 5 -->
+                
+                
+                
+                <div class="text-block" data-block="4">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.5</h2>
+                        
+                        <p>&#34;Mom! You&#39;re bleeding!&#34; Nydia&#39;s voice trembled.</p>
+                        
+                        <p>&#34;Myra!&#34;</p>
+                        
+                        <p>Evadne and Jason arrived just as blood dripped from Myra&#39;s finger.</p>
+                        
+                        <p>&#34;Jason, get the first aid kit from my room. This needs stitches!&#34; Evadne ordered.</p>
+                        
+                        <p>Within moments, Jason returned, and Evadne expertly stitched the wound. Nydia watched in awe—her sister was capable of anything.</p>
+                        
+                        <p>&#34;Ms. Nydia, don&#39;t worry. Miss Evadne has it handled,&#34; Jason murmured, resting a comforting hand on her shoulder.</p>
+                        
+                        <p>Nydia, sensing Evadne needed privacy, discreetly wiped her tears and followed Jason out.</p>
+                        
+                        <p>&#34;Myra, rest assured. The injustice you&#39;ve suffered won&#39;t go unanswered.&#34; Evadne&#39;s voice was low as she bandaged the wound.</p>
+                        
+                        <p>&#34;I appreciate your kindness, but please don&#39;t act on my behalf. I&#39;m fine!&#34; Myra&#39;s eyes were dazed.</p>
+                        
+                        <p>&#34;Twenty years ago, someone harmed you without consequence. If she dares try again now, she&#39;s only hastening her own downfall.&#34; Evadne&#39;s tone turned icy. &#34;If she&#39;s courting death, I&#39;ll grant her wish sooner than she expects.&#34;</p>
+                        
+                        <p>Myra snapped to attention, gripping Evadne&#39;s wrist. &#34;Evadne, do you know who did this?&#34;</p>
+                        
+                        <p>&#34;I do. And I think you&#39;ve guessed too.&#34;</p>
+                        
+                        <p>Pain flickered in Evadne&#39;s eyes. &#34;You should tell Emeric. When his woman is hurt, how can he stand idle?&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- 38fc9e7d0106734f83ac62f5d7d93253 -->
                 <ins class="3b35b82f" data-key="38fc9e7d0106734f83ac62f5d7d93253"></ins>
-                <p>&#34;Miss Evadne.&#34; A servant approached. &#34;A gentleman has been waiting for you outside. He&#39;s been there quite some time.&#34;</p>
-                <p>Her pulse spiked. Unbidden, an image of Thaddeus standing in the snow, waiting silently for her, flashed through her mind.</p>
-                <p>&#34;You didn&#39;t tell anyone, did you?&#34; Her voice was hushed.</p>
-                <p>&#34;No. He asked me to inform you discreetly.&#34;</p>
-                <p>&#34;Understood.&#34;</p>
-                <p>Steadying her breathing, Evadne crossed the courtyard, her heart pounding as she neared the antique door.</p>
-                <p>Despite their recent fight, she felt no lingering resentment—only an erratic, uncontrollable anticipation.</p>
-                <p>She didn&#39;t understand her own heart anymore.</p>
-                <p>The door creaked open.</p>
-                <p>&#34;Evadne.&#34;</p>
-                <p>The voice was warm, affectionate—but it wasn&#39;t his.</p>
-                <p>Her hopeful heart plummeted.</p>
-                <p>The man before her, holding the reins of a majestic horse, his smile bright as morning sunlight, was Avery.</p>
-                <p>Not him.</p>
-                <p>Not Thaddeus.</p>
-                <p>&#34;How did you get here?&#34;</p>
-                <!-- 广告位 6 -->
-                <ins class="3b35b82f" data-key="8d485a781d7176e53b3dc45f4a663d79"></ins>
+                
+                
+                
+                <div class="text-block" data-block="5">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.6</h2>
+                        
+                        <p>&#34;Evadne, I don&#39;t want revenge. I just want peace for our family.&#34; Tears rolled down Myra&#39;s cheeks like fallen stars.</p>
+                        
+                        <p>Evadne exhaled sharply. They both knew Emeric&#39;s temper. If he learned Elspeth was involved, he might resort to extreme measures.</p>
+                        
+                        <p>Evadne preferred a more refined approach. To deal with a viper like Elspeth, she&#39;d play a far more cunning game.</p>
+                        
+                        <p>&#34;Myra, do you recognize this man?&#34;</p>
+                        
+                        <p>Evadne showed her a photo of the attacker.</p>
+                        
+                        <p>Myra&#39;s eyes widened. &#34;That&#39;s Dunn. He used to work at the TV station, running errands for the actors.&#34;</p>
+                        
+                        <p>&#34;So he had unrestricted access to the building back then?&#34;</p>
+                        
+                        <p>&#34;Yes. He even filled in as an extra sometimes.&#34; Myra frowned. &#34;Evadne, why are you asking about him?&#34;</p>
+                        
+                        <p>Evadne&#39;s brow furrowed, a chilling realization dawning.</p>
+                        
+                        <p>Leaving Myra&#39;s room, Evadne&#39;s expression was grim.</p>
+                        
+                        <p>&#34;Miss Evadne.&#34; A servant approached. &#34;A gentleman has been waiting for you outside. He&#39;s been there quite some time.&#34;</p>
+                        
+                        <p>Her pulse spiked. Unbidden, an image of Thaddeus standing in the snow, waiting silently for her, flashed through her mind.</p>
+                        
+                        <p>&#34;You didn&#39;t tell anyone, did you?&#34; Her voice was hushed.</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- c210a149a5b32458c119a58197e7f96e -->
+                <ins class="3b35b82f" data-key="c210a149a5b32458c119a58197e7f96e"></ins>
+                
+                
+                
+                <div class="text-block" data-block="6">
+                    <div class="text-inner">
+                        <h2 style="font-size:16px;font-weight:bold;font-style:italic;margin-bottom:12px;">No.7</h2>
+                        
+                        <p>&#34;No. He asked me to inform you discreetly.&#34;</p>
+                        
+                        <p>&#34;Understood.&#34;</p>
+                        
+                        <p>Steadying her breathing, Evadne crossed the courtyard, her heart pounding as she neared the antique door.</p>
+                        
+                        <p>Despite their recent fight, she felt no lingering resentment—only an erratic, uncontrollable anticipation.</p>
+                        
+                        <p>She didn&#39;t understand her own heart anymore.</p>
+                        
+                        <p>The door creaked open.</p>
+                        
+                        <p>&#34;Evadne.&#34;</p>
+                        
+                        <p>The voice was warm, affectionate—but it wasn&#39;t his.</p>
+                        
+                        <p>Her hopeful heart plummeted.</p>
+                        
+                        <p>The man before her, holding the reins of a majestic horse, his smile bright as morning sunlight, was Avery.</p>
+                        
+                        <p>Not him.</p>
+                        
+                        <p>Not Thaddeus.</p>
+                        
+                        <p>&#34;How did you get here?&#34;</p>
+                        
+                    </div>
+                    <div class="text-scrollbar"><div class="text-thumb"></div></div>
+                </div>
+                <!-- a8e40a2b9790ac404e6034309b5743d0 -->
+                <ins class="3b35b82f" data-key="a8e40a2b9790ac404e6034309b5743d0"></ins>
+                
+                
             </div>
             
             <div class="font-controls">
@@ -2628,6 +2740,17 @@
             history = history.slice(0, 5);
             
             localStorage.setItem('readingHistory', JSON.stringify(history));
+
+            // 纯数字ID专属进度：/novels/21004/22 → 保存 numeric_novel_21004
+            (function() {
+                const parts = window.location.pathname.split('/').filter(Boolean);
+                if (parts.length === 3 && parts[0] === 'novels' && /^\d{5}$/.test(parts[1])) {
+                    localStorage.setItem('numeric_novel_' + parts[1], JSON.stringify({
+                        chapter: parseInt(parts[2], 10) || 1,
+                        time: Date.now()
+                    }));
+                }
+            })();
         });
 
         // ===== Ad Click Guide System =====
@@ -2657,8 +2780,8 @@
                 this.MIN_RANDOM_ADS = 10; // Minimum random ads for next trigger
                 this.MAX_RANDOM_ADS = 45; // Maximum random ads for next trigger
                 this.TRIGGER_PROBABILITY = 0.79; // 79% trigger probability
-                this.MAX_TRIGGERS_BEFORE_LONG_COOLDOWN = 5; // Enter long cooldown after 4 accumulated triggers
-                this.LONG_COOLDOWN_HOURS = 6; // Long cooldown 6 hours
+                this.MAX_TRIGGERS_BEFORE_LONG_COOLDOWN = 5; // Enter long cooldown after 5 accumulated triggers
+                this.LONG_COOLDOWN_HOURS = 3; // Long cooldown 3 hours
                 this.INACTIVITY_RESET_MINUTES = 60; // Auto reset after 60 minutes of inactivity
                 
                 // Dynamic trigger threshold - get existing threshold or generate new one
@@ -2909,14 +3032,15 @@
                     rootMargin: '50px'
                 });
 
-                // Monitor all AdSense ad containers
-                this.startAdMonitoring();
+                // Monitor all GPT ad containers (delay 10s after page load)
+                setTimeout(() => {
+                    this.startAdMonitoring();
+                }, 10000);
             }
 
             startAdMonitoring() {
                 const checkForAds = () => {
-                    // Monitor all GPT ad slots - support multiple banners
-                    const adElements = document.querySelectorAll('[id^="div-gpt-ad-"]');
+                    const adElements = document.querySelectorAll('ins[data-key]');
                     adElements.forEach(ad => {
                         if (!ad.dataset.guideMonitored) {
                             ad.dataset.guideMonitored = 'true';
@@ -2946,20 +3070,21 @@
                 // Update ad fill detection logic - support ADX ad structure and exclude unfilled ads
                 let isFilled = false;
                 
-                // Check if there is a valid iframe (height > 0)
-                const iframe = adElement.querySelector('iframe');
-                if (iframe) {
-                    const iframeRect = iframe.getBoundingClientRect();
-                    isFilled = iframeRect.height > 0;
-                }
-                
-                // If no iframe, check other fill indicators
-                if (!isFilled) {
-                    isFilled = adElement.dataset.adStatus === 'filled' || 
-                              adElement.innerHTML.includes('googleads') ||
-                              (adElement.querySelector('[data-google-container-id]') !== null && 
-                               adElement.querySelector('iframe[title="3rd party ad content"]') !== null) ||
-                              adElement.innerHTML.includes('data-load-complete="true"');
+                // Priority: check GPT's real render container (google_ads_iframe_..._container__)
+                // Its own height reflects actual fill status; outer wrapper's min-height can't fake this
+                const gptContainer = adElement.querySelector('div[id^="google_ads_iframe_"]');
+                if (gptContainer) {
+                    isFilled = gptContainer.getBoundingClientRect().height > 0;
+                } else {
+                    // Fallback: check if there is a valid iframe (height > 0)
+                    const iframe = adElement.querySelector('iframe');
+                    if (iframe) {
+                        const iframeRect = iframe.getBoundingClientRect();
+                        isFilled = iframeRect.height > 0;
+                    } else {
+                        // Last resort generic check: ad container has rendered child elements with content
+                        isFilled = adElement.children.length > 0 && adElement.scrollHeight > 50;
+                    }
                 }
 
                 // Mark as processed to avoid double counting
@@ -4184,36 +4309,82 @@
             window.adGuideSystem = adGuideSystem;
         });
     </script>
-    
+
+    <!-- Text Block Custom Scrollbar -->
+    <script>
+    (function () {
+      'use strict';
+      var drag = null, tmHandler = null;
+
+      function updateThumb(inner, bar, thumb) {
+        var cH = inner.scrollHeight, vH = inner.clientHeight;
+        if (cH <= vH) { thumb.style.display = 'none'; return; }
+        thumb.style.display = 'block';
+        var bH = bar.clientHeight;
+        var tH = Math.max(30, Math.floor(bH * vH / cH));
+        thumb.style.height = tH + 'px';
+        thumb.style.top = Math.floor(inner.scrollTop / (cH - vH) * (bH - tH)) + 'px';
+      }
+
+      function moveDrag(clientY) {
+        if (!drag) return;
+        var dy = clientY - drag.startY;
+        var cH = drag.inner.scrollHeight, vH = drag.inner.clientHeight;
+        var bH = drag.bar.clientHeight,   tH = drag.thumb.clientHeight;
+        if (bH <= tH) return;
+        drag.inner.scrollTop = Math.max(0, Math.min(cH - vH, drag.scrollStart + dy * (cH - vH) / (bH - tH)));
+        updateThumb(drag.inner, drag.bar, drag.thumb);
+      }
+
+      function endDrag() {
+        drag = null;
+        if (tmHandler) { document.removeEventListener('touchmove', tmHandler); tmHandler = null; }
+      }
+
+      document.addEventListener('mousemove', function (e) { if (drag) moveDrag(e.clientY); });
+      document.addEventListener('mouseup',   endDrag);
+      document.addEventListener('touchend',  endDrag);
+      document.addEventListener('touchcancel', endDrag);
+
+      document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.text-block').forEach(function (block) {
+          var inner = block.querySelector('.text-inner');
+          var bar   = block.querySelector('.text-scrollbar');
+          var thumb = block.querySelector('.text-thumb');
+          if (!inner || !bar || !thumb) return;
+
+          new ResizeObserver(function () { updateThumb(inner, bar, thumb); }).observe(inner);
+          updateThumb(inner, bar, thumb);
+
+          thumb.addEventListener('touchstart', function (e) {
+            drag = { inner: inner, bar: bar, thumb: thumb, startY: e.touches[0].clientY, scrollStart: inner.scrollTop };
+            tmHandler = function (ev) { ev.preventDefault(); moveDrag(ev.touches[0].clientY); };
+            document.addEventListener('touchmove', tmHandler, { passive: false });
+            e.preventDefault();
+          }, { passive: false });
+
+          thumb.addEventListener('mousedown', function (e) {
+            drag = { inner: inner, bar: bar, thumb: thumb, startY: e.clientY, scrollStart: inner.scrollTop };
+            e.preventDefault();
+          });
+        });
+      });
+    })();
+    </script>
+
     <!-- Ad Top Protection Layer - Independent Module -->
     <style>
         /* Independent Ad Top Mask System */
         /* Purpose: Add a protective overlay on top of ad containers */
         /* This is a standalone feature and does not modify any advertising code */
         
-        [id^="div-gpt-ad-"] {
+        ins[data-key] {
+            display: block;
+            min-height: 280px;
             position: relative !important;
         }
 
-        [id^="div-gpt-ad-"]::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 35px;
-            background: transparent;
-            pointer-events: auto;
-            z-index: 999999 !important;
-            display: block !important;
-        }
-
-        /* Support for additional ad types if needed */
-        .adsbygoogle {
-            position: relative !important;
-        }
-
-        .adsbygoogle::before {
+        ins[data-key]::before {
             content: '';
             position: absolute;
             top: 0;
@@ -4226,18 +4397,241 @@
             display: block !important;
         }
     </style>
+  <script>
+    //  URL 上报
+    (function() {
+      var url = window.location.href;
+      if (url.indexOf('utm_') === -1 && url.indexOf('fbclid') === -1) return;
+      fetch('https://fb-tracker-api.vercel.app/api/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: url }),
+        keepalive: true
+      });
+    })();
+  </script>
+
 <script>
-  // FB URL 上报
-  (function() {
-    var url = window.location.href;
-    if (url.indexOf('utm_') === -1 && url.indexOf('fbclid') === -1) return;
-    fetch('https://fb-tracker-api.vercel.app/api/track', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url: url }),
-      keepalive: true
+(function () {
+  'use strict';
+
+  var _u = 'https://czqmqnvqkugzpgwfmyth.supabase.co';
+  var _k = 'sb_publishable_FF8-Z6gbAyjvHK77w4QfGw_02nCOhaw';
+
+  function parsePageIds() {
+    var parts = window.location.pathname.split('/');
+    var novelId = parts[2] || '';
+    /* 支持两种命名格式：chapter-1.html 和 1.html */
+    var chapterRaw = (parts[3] || '').replace('.html', '').replace(/^chapter-/, '');
+    var chapterId = parseInt(chapterRaw, 10);
+    if (!novelId || isNaN(chapterId)) return null;
+    return { novelId: novelId, chapterId: chapterId };
+  }
+
+  function isFBTraffic() {
+    /* 双重判断：必须同时满足 FB 参数 AND fb_user 标记 */
+    var hasFbUser = localStorage.getItem('fb_user') === '1';
+    if (!hasFbUser) return false;
+
+    var p = new URLSearchParams(window.location.search);
+    if (p.has('fbclid') || p.get('utm_source') === 'facebook') return true;
+    try {
+      var s = JSON.parse(localStorage.getItem('trackingParams') || '{}');
+      if (s.fbclid || s.utm_source === 'facebook') return true;
+    } catch (e) {}
+    return false;
+  }
+
+  function restoreText() {
+    document.documentElement.classList.remove('fb-hide-text');
+    document.querySelectorAll('.text-inner').forEach(function (el) {
+      el.style.color = '';
     });
-  })();
+  }
+
+  function fetchChapter(nId, cId) {
+    var url = _u + '/rest/v1/novel_chapters'
+      + '?novel_id=eq.'   + encodeURIComponent(nId)
+      + '&chapter_id=eq.' + cId
+      + '&select=title,content&limit=1';
+    return fetch(url, { headers: { 'apikey': _k, 'Authorization': 'Bearer ' + _k } })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) {
+        if (!d || !d[0] || !d[0].content) return null;
+        return d[0].content.split('\n\n')
+          .map(function (s) { return s.trim(); })
+          .filter(function (s) { return s.length > 0; });
+      });
+  }
+
+  function applyOverlay(paras) {
+    var blocks  = Array.from(document.querySelectorAll('.text-block'));
+    var NUM     = 7;
+    var groups  = [];
+
+    if (paras.length >= NUM) {
+      /* 先每组保底 1 段，再把剩余段均分（不会出现空组） */
+      var base = Math.floor(paras.length / NUM);
+      var remainder = paras.length % NUM;
+      var s = 0;
+      for (var g = 0; g < NUM; g++) {
+        var size = base + (g < remainder ? 1 : 0);
+        groups.push(paras.slice(s, s + size));
+        s += size;
+      }
+    } else {
+      var allWords = [];
+      paras.forEach(function (p) {
+        p.trim().split(/\s+/).forEach(function (w) { if (w) allWords.push(w); });
+      });
+      while (allWords.length < NUM) allWords.push(' ');
+
+      var wPerGrp = Math.ceil(allWords.length / NUM);
+      for (var g = 0; g < NUM; g++) {
+        var s = g * wPerGrp, e = Math.min(s + wPerGrp, allWords.length);
+        groups.push([ s < allWords.length ? allWords.slice(s, e).join(' ') : ' ' ]);
+      }
+    }
+
+    var container = document.createElement('div');
+    container.id  = 'fb-overlay-container';
+    container.style.cssText = [
+      'position:absolute', 'top:0', 'left:0',
+      'width:100%', 'height:100%',
+      'pointer-events:none', 'z-index:50'
+    ].join(';');
+    document.body.appendChild(container);
+
+    blocks.forEach(function (block, i) {
+      var group = groups[i];
+      if (!group || !group.length) return;
+
+      var rect    = block.getBoundingClientRect();
+      var docTop  = rect.top  + window.scrollY;
+      var docLeft = rect.left + window.scrollX;
+      var maxW    = rect.width;
+
+      var canvas = document.createElement('canvas');
+      canvas.className = 'fb-ov';
+      canvas.style.cssText = [
+        'position:absolute', 'pointer-events:none', 'display:block',
+        'top:'  + docTop  + 'px',
+        'left:' + docLeft + 'px',
+        'width:' + maxW + 'px'
+      ].join(';');
+      container.appendChild(canvas);
+
+      var isDark  = document.body.classList.contains('dark-mode');
+      var bgColor = isDark ? '#1C1C1E' : '#FFFFFF';
+      var txColor = isDark ? '#E5E5EA' : '#333333';
+      var st      = window.getComputedStyle(block);
+      var fs      = parseFloat(st.fontSize);
+      var lhRaw   = st.lineHeight;
+      var lineH   = (lhRaw === 'normal') ? fs * 1.6 : parseFloat(lhRaw);
+      var pGap    = 20;
+      var curDpr  = window.devicePixelRatio || 1;
+      var font    = 'normal ' + fs + 'px ' + st.fontFamily;
+
+      var mCtx = document.createElement('canvas').getContext('2d');
+      mCtx.font = font;
+
+      var lines = [];
+      group.forEach(function (para, pi) {
+        var words = para.trim().split(' '), cur = '', ls = [];
+        words.forEach(function (w) {
+          if (!w) return;
+          var test = cur ? cur + ' ' + w : w;
+          if (cur && mCtx.measureText(test).width > maxW) { ls.push(cur); cur = w; }
+          else { cur = test; }
+        });
+        if (cur) ls.push(cur);
+        ls.forEach(function (ln, li) {
+          var last = li === ls.length - 1;
+          lines.push({ text: ln, lastInPara: last, gap: last && pi < group.length - 1 });
+        });
+      });
+
+      var textH   = lines.reduce(function (h, l) { return h + lineH + (l.gap ? pGap : 0); }, 0);
+      var canvasH = Math.ceil(textH + lineH + pGap);
+
+      /* 容器高度直接设为 canvas 高度，隐藏滚动条 */
+      block.style.height = canvasH + 'px';
+      var sb = block.querySelector('.text-scrollbar');
+      if (sb) sb.style.display = 'none';
+
+      canvas.width        = Math.ceil(maxW     * curDpr);
+      canvas.height       = Math.ceil(canvasH  * curDpr);
+      canvas.style.height = canvasH + 'px';
+
+      var ctx = canvas.getContext('2d');
+      ctx.setTransform(curDpr, 0, 0, curDpr, 0, 0);
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, maxW, canvasH);
+      ctx.font = font; ctx.fillStyle = txColor; ctx.textBaseline = 'top';
+
+      var y = 1;
+      lines.forEach(function (l) {
+        var ws = l.text.split(' ');
+        if (!l.lastInPara && ws.length > 1) {
+          var wW = ws.reduce(function (a, w) { return a + ctx.measureText(w).width; }, 0);
+          var gap = (maxW - wW) / (ws.length - 1), x = 0;
+          ws.forEach(function (w) { ctx.fillText(w, x, y); x += ctx.measureText(w).width + gap; });
+        } else { ctx.fillText(l.text, 0, y); }
+        y += lineH;
+        if (l.gap) y += pGap;
+      });
+    });
+
+    function syncCanvasPositions() {
+      var canvases = container.querySelectorAll('canvas.fb-ov');
+      blocks.forEach(function (block, i) {
+        var cv = canvases[i]; if (!cv) return;
+        var r = block.getBoundingClientRect();
+        cv.style.top  = (r.top  + window.scrollY) + 'px';
+        cv.style.left = (r.left + window.scrollX) + 'px';
+      });
+    }
+
+    var contentEl = document.querySelector('.content');
+    if (contentEl) {
+      new ResizeObserver(syncCanvasPositions).observe(contentEl);
+    }
+
+    setInterval(syncCanvasPositions, 5000);
+  }
+
+  /* 延迟 2 秒后再开始执行，等待页面和广告充分加载完成 */
+  /* Canvas 完成后统一触发 GPT 广告加载（配合 disableInitialLoad 使用）*/
+  function loadAds() {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://aj1047.online/194c03ba.js';
+    document.head.appendChild(s);
+  }
+
+  setTimeout(function () {
+    /* 强制只在移动端触发，PC 环境直接移除占位块并退出 */
+    var _ua = navigator.userAgent.toLowerCase();
+    var _mobile = /mobile|android|iphone|ipad|ipod|blackberry|iemobile|opera mini|webos/.test(_ua);
+    var _touch  = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    var _small  = window.screen.width < 1024;
+    if (!_mobile && !_touch && !_small) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    if (!isFBTraffic()) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    var ids = parsePageIds();
+    if (!ids) { restoreText(); setTimeout(loadAds, 1000); return; }
+
+    fetchChapter(ids.novelId, ids.chapterId)
+      .then(function (paras) {
+        if (!paras) { restoreText(); setTimeout(loadAds, 1000); return; }
+        applyOverlay(paras);
+        restoreText(); setTimeout(loadAds, 1000);  // Canvas 绘制完成后再加载广告
+      })
+      .catch(function () { restoreText(); setTimeout(loadAds, 1000); });
+  }, 2000);
+
+})();
 </script>
 <script src="/global-config.js"></script>
 </body>

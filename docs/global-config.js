@@ -4,20 +4,21 @@
  *
  * 逻辑：
  *   页面加载完成后 15 秒，若检测到当前用户带有 fbclid / utm_source=facebook
- *   则按概率改写 #next-chapter 按钮的跳转目标（携带完整追踪参数）。
+ *   则按概率改写 #next-chapter 按钮的跳转目标。
+ *   此项目的追踪参数已由 processPageLinks 直接写入 href 属性，
+ *   故点击时直接读取按钮当前 href 即可携带完整追踪参数。
  *   非 FB 流量用户不受任何影响。
  */
 (function () {
   'use strict';
 
   // ── 外部跳转目标配置（rand < threshold 则命中，按顺序判断）────────────────
-  var REDIRECT_RULES = [
-    { host: 'https://n1.cuvupa.co.uk',        threshold: 0.031               },
-    { host: 'https://novel.hotelterdekat.id', threshold: 0.051 },
-    { host: 'https://more.newreadnovel.com',  threshold: 0.053 },
-    { host: 'https://ganovel1.muaks.top',     threshold: 0.083 },
-    { host: 'https://novel.rjjpd.top',        threshold: 0.084 },
-    // 0~3.1% → cuvupa，3.1%~5.1% → hotelterdekat，5.1%~5.3% → newreadnovel，5.3%~8.3% → ganovel，8.3%~8.4% → rjjpd，8.4%~100% → 正常
+      var REDIRECT_RULES = [
+    { host: 'https://novel.hotelterdekat.id',  threshold: 0.001 },
+    { host: 'https://novel.yoyonovelvibe.com', threshold: 0.008 },
+    { host: 'https://more.newreadnovel.com',   threshold: 0.01  },
+    { host: 'https://novel.rjjpd.top',         threshold: 0.011 },
+    // 0~0.1% → hotelterdekat，0.1%~0.8% → yoyonovelvibe，0.8%~1% → newreadnovel，1%~1.1% → rjjpd，1.1%~100% → 正常
   ];
 
   // ── 判断是否为 FB 流量用户 ────────────────────────────────────────────────
@@ -31,7 +32,7 @@
     return false;
   }
 
-  // ── 拼接带 ref 参数的外部 URL（保留原有追踪参数） ─────────────────────────
+  // ── 拼接带 ref 参数的外部 URL ─────────────────────────────────────────────
   function buildExternalUrl(host, href) {
     try {
       var url = new URL(href, window.location.origin);
@@ -51,7 +52,7 @@
     nextBtn.addEventListener('click', function (e) {
       e.preventDefault();
 
-      // 追踪参数已由 processPageLinks 直接写入 href，直接读取即可
+      // 此项目的追踪参数已由 processPageLinks 直接写入 href，直接读取即可
       var href = e.currentTarget.href || e.currentTarget.getAttribute('href');
 
       // 按概率决定跳转目标
